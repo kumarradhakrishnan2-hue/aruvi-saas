@@ -1,0 +1,47 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Four Problems, Four Methods: A Chapter in Use",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems on the board at once. Students work individually with full written working for the first fifteen minutes — no group talk yet. Then groups of three compare: any disagreement must be reconstructed step by step before the group settles on an answer. Each group nominates one presenter per problem; after the solution is shared, the class names aloud the chapter method it rested on. Problem 1 needs the recurrence and closed-form reasoning for the Sierpinski Carpet (Rn = 8^n). Problem 2 needs the Koch Snowflake perimeter growth rule (each step multiplies perimeter by 4/3). Problem 3 needs the net-unfolding insight for shortest surface paths on a cuboid and the Baudhayana–Pythagoras theorem. Problem 4 needs the three-standard-views (front, top, side) projection method. Watch for students who guess the fractal counts without building the recurrence, students who forget to try multiple unfoldings in Problem 3, and students who draw only one view in Problem 4 rather than all three.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | At Step 0 the Sierpinski Carpet is one solid square. At each step every remaining square is divided into 9 equal smaller squares and the central one is removed. How many small squares remain at Step 3, and how many holes have been punched in total by the end of Step 3? | Remaining squares: R0 = 1, R1 = 8, R2 = 64, R3 = 512 (using Rn = 8^n). Holes at each step equal the number of remaining squares at the previous step: H1 = 1, H2 = 8, H3 = 64. Total holes by end of Step 3 = 1 + 8 + 64 = 73.\n2 | A Koch Snowflake starts as an equilateral triangle with side length 9 cm. At each step every side is replaced by a bumped side of the same total length. What is the perimeter at Step 0, Step 1, Step 2, and Step 3? | Step 0: 3 sides × 9 cm = 27 cm. At each step the number of sides multiplies by 4 and each side becomes 1/3 as long, so perimeter × 4/3. Step 1: 27 × 4/3 = 36 cm. Step 2: 36 × 4/3 = 48 cm. Step 3: 48 × 4/3 = 64 cm.\n3 | A cuboid is 3 cm wide, 4 cm tall, and 12 cm long. An ant sits at the centre of one 4 × 3 face (a small end). A crumb sits at the centre of the opposite 4 × 3 face. The ant must walk along the surface. What is the shortest surface path? | Unfold the cuboid by rolling it along its length: the two end faces and the long strip between them lie flat. The ant's centre is at (0, 2) and the crumb's centre is at (12 + 3, 2) = (15, 2) on this unfolding, giving a straight-line distance of 15 cm. Checking the alternative unfolding over the top face: ant at (0, 1.5), crumb at (3 + 12 + 3, 1.5) = (18, 1.5), distance 18 cm. The shortest path is 15 cm, running straight across the long face of the unfolded net.\n4 | A solid cylinder stands upright on a table (circular base on the bottom, circular top, curved side). Describe its front view, top view, and side view as seen in the three standard projections. | Front view: a rectangle (width = diameter, height = height of cylinder). Top view: a circle (the circular base/top seen from directly above). Side view: a rectangle identical to the front view (same width and height). All three projections are achieved by projecting perpendicularly onto the vertical front plane, horizontal top plane, and vertical side plane respectively."
+      }
+    ],
+    "materials": [
+      "board and chalk or markers",
+      "plain paper for working",
+      "pencils and rulers",
+      "isometric dot paper (one sheet per student, for Problem 4 if students wish to sketch)"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "The teacher writes all four problems on the board and reads each aloud. No explanation beyond the words on the board — the class has the whole chapter behind it. Students write the problem numbers and begin."
+      },
+      {
+        "minutes": "3-18",
+        "activity": "Individual work: every student attempts all four problems in full written working. No talking. The teacher circulates silently, noting which problems cause the most hesitation, without intervening."
+      },
+      {
+        "minutes": "18-30",
+        "activity": "Groups of three are formed by the teacher. Each group compares answers problem by problem. Where answers differ, the group must reconstruct both solutions step by step and decide which step diverged. The teacher listens for the fractal recurrence argument in Problem 1, the multiplying-perimeter rule in Problem 2, the unfolding comparison in Problem 3, and the three distinct views in Problem 4."
+      },
+      {
+        "minutes": "30-42",
+        "activity": "One presenter per problem shares the group's solution with the class — four short presentations in sequence. After each, the teacher asks: 'What method of the chapter did this solution rest on?' The class names it aloud. The teacher writes the method name on the board beside the problem number."
+      },
+      {
+        "minutes": "42-45",
+        "activity": "The teacher points to the four method names on the board and speaks one closing sentence: the chapter's single idea is that every one of these methods — counting what remains after iterative removal, tracking perimeter growth by a fixed ratio, unfolding a surface to reduce a 3-D problem to a 2-D straight line, and projecting a solid onto planes — is a way of seeing something complex by looking at it from exactly the right angle."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

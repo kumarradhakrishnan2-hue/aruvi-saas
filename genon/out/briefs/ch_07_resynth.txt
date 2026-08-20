@@ -1,337 +1,565 @@
-ARUVI — CLOSING SYNTHESIS RE-AUTHORING · SCIENCE · MIDDLE STAGE
+ARUVI — CLOSING SYNTHESIS RE-AUTHORING · MATHEMATICS · MIDDLE STAGE
 
 You are re-writing ONE unit: the closing whole-chapter synthesis of a chapter's fullest
-lesson plan. This unit is served in two situations, and it must be excellent in both:
+lesson plan. It is served in two situations and must be excellent in both:
 
 1. As the FINAL unit of the fullest plan — the class finishes the chapter with it.
 2. As ONE EXTRA 45-minute period appended to a SHORTER complete plan of the same
-   chapter, whose own final unit (given below) already consolidated the chapter
+   chapter, whose own final unit (given below) already drew the chapter together
    yesterday.
 
-THE UNIT YOU ARE WRITING closes the chapter through one fresh, concrete application: a
-scenario, artefact, dataset, place or design problem the chapter itself never uses. The
-class brings the chapter's concepts; the unit puts them to work in the new setting, and
-what the task shows IS the synthesis — the chapter drawn together by using it whole, not
-by summarising it.
+THE UNIT YOU ARE WRITING closes the chapter by putting its methods to work on a small set
+of problems the teacher poses. Solving them IS the synthesis: the chapter is drawn
+together by being used, not by being recited.
 
 PROPERTIES OF THE UNIT:
-- It opens directly onto its fresh setting: the first band presents the new material and
-  puts the first question to the class.
-- Every concept or skill it calls on appears in EVERY unit-title map given below — the
-  shorter plans differ in what they cover; write only to what all of them share.
-- Its vehicle (the kind of task: scenario cards, argument construction, data table,
-  concept map, design brief, error correction, narrative trace…) is different in kind
-  from every FINAL UNIT given below, and it uses none of the specific stories, quotes,
-  objects, questions or catchphrases those final units use.
-- Its closing band consolidates what THE TASK ITSELF showed, naming the chapter's central
-  ideas as the reason the task worked — earned closure, not ceremony.
-- All materials are in its own `materials` list: things any classroom has or the unit
-  itself makes.
-- Band narration never states a quantity of minutes or any calendar time — the band's
-  `minutes` field carries the clock.
+- It carries TWO TO FOUR problems, each reaching for a DIFFERENT major method of the
+  chapter, and together spanning its main strands. Each problem is stated in full, with
+  its numbers, inside the band that poses it — a teacher reads the band aloud and the
+  class can start.
+- The problems are the TEACHER'S OWN, written for this unit and posed on the board. The
+  mathematics in each is the chapter's, and nothing is invented or imported.
+- THE PROBLEMS AND THEIR SOLUTIONS LIVE IN ONE TABLE, in `visual_aids` — three columns,
+  `No. | Problem | Solution`, one row per problem. The Problem cell states the problem in
+  one or two plain sentences with its numbers. The Solution cell gives the answer and the
+  few steps that reach it, in plain words and figures — brief enough for a teacher to read
+  at a glance while the class works, and no longer than the problem it answers. This table
+  is the teacher's whole worked reference.
+- EACH PROBLEM IS WELL-POSED AND SELF-CONSISTENT. It states everything needed to solve it,
+  its data agree with each other and with the solution beside it, and it has one answer.
+  Where a count is named ("the four corner cells", "the six expressions you can form"),
+  that count is the number the problem's own conditions produce. Where a figure carries
+  measurements, they can all hold at once. Where a construction is described, the described
+  construction is the one the solution works on.
+- THE SOLUTION CELL IS THE SETTLED ANSWER. Work each problem out fully first; then write
+  only the route that reaches the answer and the answer itself. Trials that failed,
+  possibilities considered and rejected, re-checks and corrections belong to the working,
+  not to the page a teacher reads at the board. Every step written is a step that holds:
+  a justification names the fact it rests on, and never assumes what it is proving.
+- `teacher_notes` is SHORT — a few sentences at most. It says how the sitting is run and
+  what to watch for as students work; the mathematics is in the table, and is not repeated
+  here. Name, for each problem, only the chapter method it needs — the method its own
+  solution actually uses — and warn only about errors that problem can produce.
+- Its `textbook_items_in_class` and `homework` are both `[]`, and its band text names no
+  page, no exercise and no book item. The class works from the board.
+- Its shape gives every student a full attempt before any answer is public: the problems
+  are posed, worked individually with full working, compared in small groups where a
+  disagreement is reconstructed step by step, and then presented — and each presentation
+  is followed by the class NAMING the chapter method the solution rested on.
+- The closing band states the chapter's one idea in a sentence, as the reason the problems
+  yielded — earned closure, not ceremony.
+- It is ONE sitting and weighs the same as any other: 45 minutes, a handful of
+  bands, materials any classroom has. Depth here is the demand of the problems, never the
+  quantity of material.
+- Every method it calls on appears in EVERY unit-title map given below — the shorter plans
+  differ in what they reach, so write only to what all of them share, and treat the
+  SHORTEST map as binding.
+- Its vehicle differs in kind from every FINAL UNIT given below, and it reuses none of
+  their specific contexts, objects, puzzles or framing questions.
+- Band narration never states a quantity of minutes and never points beyond this sitting —
+  the band's `minutes` field carries the clock.
 
 OUTPUT — exactly this JSON object, nothing else:
 {
   "synthesis_unit": {
     "activity_title": "…",
-    "activity_description": "…",
-    "pedagogical_approach": "…",
-    "teacher_notes": "…",
+    "pedagogical_method": "one of: Discovery · Problem-solving · Play-way · Inductive ·
+      Deductive — the method this unit runs on",
+    "section_goal": "recall | reason | apply — the goal this unit works at",
+    "teacher_notes": "a few sentences: how the sitting runs, what to watch for, and the
+      chapter method each problem needs — NOT the solutions, which are in the table",
+    "visual_aids": [
+      {"type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | … | …\n2 | … | …"}
+    ],
     "materials": ["…"],
     "time_bands": [
       {"minutes": "0-N", "activity": "…"},
       …bands in sequence, integer boundaries, last band ends at 45…
     ],
+    "textbook_items_in_class": [],
     "homework": []
   }
 }
-No other keys — the platform carries the unit's number, stage and duration itself.
+No other keys — the platform carries the unit's number, duration, section coverage and
+synthesis marker itself.
 
 CHAPTER SUMMARY:
 
-Chapter 7: Particulate Nature of Matter
-
-Section 7.1 introduces the central question of what matter is made up of. Through Activity 7.1 (breaking and grinding chalk), students explore whether matter can be subdivided indefinitely. The activity establishes that even after grinding chalk to fine powder, each speck remains chalk — a physical change only. The key term introduced is constituent particle: the basic indivisible unit that makes up a larger piece of a substance. Activity 7.2 (dissolving sugar in water) reinforces this idea. After stirring, sugar particles become invisible yet their presence is confirmed by taste; the chapter explains that sugar breaks into its constituent particles, which occupy the interparticle spaces between water molecules. These two activities together establish the foundational idea that all matter is composed of an extremely large number of very small particles invisible even under an ordinary microscope.
-
-Section 7.2 addresses what determines the physical state of matter. The chapter explains that constituent particles are held together by interparticle attractions — forces that are attractive in nature. The strength of these attractions depends on the nature of the substance and the interparticle distance, with even a slight increase in distance causing a drastic weakening of the force. A sidebar, "Our Scientific Heritage," notes that Acharya Kanad, the ancient Indian philosopher, first proposed the concept of Parmanu (atom) — tiny, indivisible, eternal particles — in his work Vaisheshika Sutras.
-
-Subsection 7.2.1 covers the solid state. Activity 7.3 (collecting and hammering solid objects — iron nail, rock salt, stone, wood, key, aluminium) leads to the observation that all have a definite shape and volume. This is because particles in solids are tightly packed with very strong interparticle attractions that hold them in fixed positions; particles can only vibrate about their positions and cannot move past each other. When heated, vibrations intensify until the particles abandon their fixed positions and the interparticle forces weaken — this is the melting point, defined as the minimum temperature at which a solid becomes a liquid at atmospheric pressure. A data table gives melting points of ice (0°C), urea (133°C), and iron (1538°C) to illustrate how the strength of interparticle forces varies across substances.
-
-Subsection 7.2.2 examines the liquid state. Activity 7.4 (transferring 200 mL of water across three differently shaped containers A, B, C) demonstrates that liquids take the shape of their container but maintain a fixed volume. Liquids' particles are free to move but only within a limited space, making interparticle attractions slightly weaker than in solids. The section defines boiling point as the temperature at which a liquid converts to vapour at atmospheric pressure; at this point, particles have enough energy to escape the liquid entirely, and bubble formation occurs throughout the bulk. Evaporation — which occurs at all temperatures at the surface — is distinguished as a slower process occurring even below the boiling point.
-
-Subsection 7.2.3 explores the gaseous state. Activity 7.5 (collecting smoke from a burning incense stick in Gas Jar A, then allowing it to spread into an inverted Gas Jar B) shows that gas fills all available space. This demonstrates that gas particles move freely in all directions, interparticle attractions are negligible, and gases have neither a fixed shape nor a fixed volume. An alternative demonstration using iodine vapour (solid iodine subliming inside a closed jar) is mentioned. The section concludes by classifying both liquids and gases as fluids because both flow and do not retain a fixed shape.
-
-Section 7.3 investigates how interparticle spacing differs across the three states. Activity 7.6 (syringe experiment: compressing air by pushing a plunger, then repeating with water) establishes that gases are highly compressible because their particles have large spaces between them, while water is practically incompressible. Activity 7.7 (adding sugar to water, marking the water level before and after dissolution) shows that the solution volume is less than the sum of the individual volumes, proving that interparticle spaces exist in liquids and that dissolved particles fit into those spaces. Repeating with insoluble sand confirms the contrast: sand particles settle and add volume rather than dissolving. A summary diagram (Fig. 7.12) illustrates particle packing in the three states: minimum spacing in solids, moderate spacing in liquids, and maximum spacing in gases. A "A Step Further" sidebar clarifies that the term "particle" in Suspended Particulate Matter (SPM, referring to dust in air pollution) is different in scale from constituent particles like atoms and molecules.
-
-Section 7.4 examines how particles move in different states. Activity 7.8 (dropping potassium permanganate into water) shows the spread of pink colour from the grain eventually reaching the entire tumbler, demonstrating that liquid particles are in constant motion. A "Think Like a Scientist" box extends this: repeating the activity with hot, room-temperature, and ice-cold water shows that particle movement — and therefore rate of spreading — increases with temperature. Activity 7.9 (burning an incense stick in one corner of a room) demonstrates that fragrance spreads throughout the space, providing evidence that gas particles are in constant, rapid, random motion that carries scent particles in all directions. The chapter closes with a synthesis paragraph explaining that thermal energy is the underlying driver: low thermal energy in solids means strong interparticle attraction and only vibration; at the melting point thermal energy overcomes attractions allowing liquid-state movement; in the gaseous state thermal energy is sufficient to overcome attractions entirely, enabling free movement. A summary table compares interparticle spacing, packing, attraction strength, and particle movement across solid, liquid, and gas states.
+{
+  "stage": "middle",
+  "subject": "mathematics",
+  "grade": "viii",
+  "chapter_number": 7,
+  "chapter_title": "Proportional Reasoning-1",
+  "sections": [
+    { "ref": "section 7.1", "title": "Observing Similarity in Change", "section_goal": ["recall", "reason"] },
+    { "ref": "section 7.2", "title": "Ratios", "section_goal": ["recall"] },
+    { "ref": "section 7.3", "title": "Ratios in their Simplest Form", "section_goal": ["apply"] },
+    { "ref": "section 7.4", "title": "Problem Solving with Proportional Reasoning", "section_goal": ["reason", "apply"] },
+    { "ref": "section 7.5", "title": "Sharing, but Not Equally!", "section_goal": ["reason", "apply"] },
+    { "ref": "section 7.6", "title": "Unit Conversions", "section_goal": ["apply"] }
+  ],
+  "prose_summary": "Section 7.1 identifies the concept of proportional change by having students observe digital images of a tiger at different sizes. Images A, C, and D look similar while B and E appear distorted. Students discover through measurement that similarity arises when width and height change by the same multiplicative factor — not by a constant additive difference. This introduces the core idea that proportional relationships are multiplicative. Students reason through why subtracting the same amount from both dimensions does not preserve shape, grounding the intuition before any formal definition is given.\n\nSection 7.2 defines the ratio as the formal mathematical tool for representing proportional relationships. The ratio of width to height of image A is expressed as 60:40 and students learn that a ratio a:b means for every a units of the first quantity there are b units of the second. The section shows that ratios of images A, C, and D are proportional because multiplying both terms by the same factor produces the other ratio, and introduces the double-colon notation a:b::c:d to denote that two ratios are in proportion.\n\nSection 7.3 applies the procedure of simplifying ratios to their lowest terms by dividing both terms by their HCF. Students find that images A and D both reduce to 3:2, confirming proportionality, while images B (2:1) and E (1:1) do not match. The section establishes that two ratios are in proportion when their simplest forms are identical, giving students a reliable algorithmic check for proportionality.\n\nSection 7.4 develops problem-solving fluency with proportional reasoning through twelve worked examples and two student activities. Examples 1–3 practise identifying proportional ratios and solving simple context problems (lemonade sweetness, wall cement). Examples 4–7 extend to open-ended classroom problems (school teacher-student ratio, blackboard dimensions) and fractional factors. The Trairasika subsection introduces the ancient Indian Rule of Three — the pramana:phala::ichchha:ichchhaphala framework of Aryabhata — and derives cross multiplication (ad = bc) algebraically, giving students both the historical motivation and the algebraic proof. Examples 8–12 apply cross multiplication to speed-distance-time problems (mid-day meal rice, car travel, tea price comparison), reinforcing the importance of unit consistency and distinguishing between directly proportional and inversely proportional situations (Puneeth's speed-time problem is flagged as a non-example where the Rule of Three does not apply).\n\nSection 7.5 introduces the concept of dividing a whole quantity into parts in a given ratio — sharing, but not equally. Through a hands-on activity with counters, students explore dividing 12 objects in the ratio 3:1 by iterative dealing. The section then develops the general formula: to divide x in the ratio m:n, the two parts are m·x/(m+n) and n·x/(m+n). Examples 11 and 12 apply this to business profit sharing (Prashanti and Bhuvan's food cart) and mixture alteration (adding cement to a sand-cement mix to change the ratio), building both computational fluency and multi-step reasoning.\n\nSection 7.6 provides a reference table of unit conversions — length (metres to feet), area (square metres, acres, hectares), volume (mL to cc, litres), and temperature (Celsius to Fahrenheit) — needed for solving real-world proportional reasoning problems. The section does not develop new concepts but equips students to handle problems where quantities appear in different units before a proportion can be set up. A Figure it Out set of twelve problems integrates all prior skills with these conversions, covering contexts from planetary distances to ancient Lilavati problems, coin alloys, and farming manure quantities.",
+  "enumerated_activities": [
+    {
+      "id": "A-1",
+      "source_section": "section 7.4",
+      "book_ref": "Activity 1, p.170",
+      "description": "Students find all ingredients and quantities for a favourite dish for their family, then scale the quantities proportionally to serve 15 guests — a real-life application of the Rule of Three."
+    },
+    {
+      "id": "A-2",
+      "source_section": "section 7.4",
+      "book_ref": "Activity 2, p.171",
+      "description": "Students visit a market, collect prices for different sizes of the same shampoo (sachet, small, medium, large), and investigate whether price is proportional to volume. They discuss ecological and commercial implications of the findings."
+    },
+    {
+      "id": "A-3",
+      "source_section": "section 7.5",
+      "book_ref": "Activity 3, p.172",
+      "description": "Pairs of students share 12 physical counters in different ways, first equally (ratio 1:1) then in non-equal ratios (5:7, 3:1, 4:3), building concrete intuition for partitioning a whole in a given ratio before the algebraic formula is introduced."
+    }
+  ],
+  "enumerated_worked_examples": [
+    {
+      "id": "WE-1",
+      "source_section": "section 7.4",
+      "book_ref": "Example 1, section 7.4 p.162",
+      "description": "Check whether ratios 3:4 and 72:96 are proportional by reducing both to simplest form using HCF."
+    },
+    {
+      "id": "WE-2",
+      "source_section": "section 7.4",
+      "book_ref": "Example 2, section 7.4 p.162",
+      "description": "Kesang's lemonade problem: scale sugar proportionally from 6 glasses / 10 spoons to 18 glasses by finding the multiplicative factor."
+    },
+    {
+      "id": "WE-3",
+      "source_section": "section 7.4",
+      "book_ref": "Example 3, section 7.4 p.163",
+      "description": "Nitin and Hari building a compound wall: compare length-to-cement ratios (60:3 and 40:2) to determine the walls are equally strong."
+    },
+    {
+      "id": "WE-4",
+      "source_section": "section 7.4",
+      "book_ref": "Example 4, section 7.4 p.163",
+      "description": "Open-ended: students compute the teacher-to-student ratio in their own school and compare it to the example school's ratio of 5:170."
+    },
+    {
+      "id": "WE-5",
+      "source_section": "section 7.4",
+      "book_ref": "Example 5, section 7.4 p.163",
+      "description": "Students measure classroom blackboard dimensions, compute the width:height ratio, and draw a proportionally scaled rectangle in their notebooks."
+    },
+    {
+      "id": "WE-6",
+      "source_section": "section 7.4",
+      "book_ref": "Example 6, section 7.4 p.164",
+      "description": "Neelima's age ratio: shows that adding the same number to both ratio terms changes the ratio — 3:30 (simplest 1:10) becomes 12:39 (simplest 4:13)."
+    },
+    {
+      "id": "WE-7",
+      "source_section": "section 7.4",
+      "book_ref": "Example 7, section 7.4 p.164",
+      "description": "Fill in missing terms for ratios proportional to 14:21: find 28:42, 6:9, and 2:3 using multiplicative factors including fractions."
+    },
+    {
+      "id": "WE-8",
+      "source_section": "section 7.4",
+      "book_ref": "Example 8, section 7.4 p.167",
+      "description": "Mid-day meal rice problem (Trairasika): reduce rice proportionally from 15 kg for 120 students to the quantity needed for 80 students using the Rule of Three."
+    },
+    {
+      "id": "WE-9",
+      "source_section": "section 7.4",
+      "book_ref": "Example 9, section 7.4 p.169",
+      "description": "Car travel problem: 90 km in 150 minutes; find distance in 240 minutes using cross multiplication, emphasising unit consistency (hours converted to minutes)."
+    },
+    {
+      "id": "WE-10",
+      "source_section": "section 7.4",
+      "book_ref": "Example 10, section 7.4 p.169",
+      "description": "Tea price comparison: Himachal (200g for ₹200) vs Meghalaya (1 kg for ₹800); convert units, simplify ratios (1:1 vs 5:4), and determine which is more expensive per kg."
+    },
+    {
+      "id": "WE-11",
+      "source_section": "section 7.5",
+      "book_ref": "Example 11, section 7.5 p.174",
+      "description": "Prashanti and Bhuvan's food cart: divide ₹4,000 profit in the ratio 75,000:25,000 (simplest 3:1), yielding ₹3,000 and ₹1,000 shares."
+    },
+    {
+      "id": "WE-12",
+      "source_section": "section 7.5",
+      "book_ref": "Example 12, section 7.5 p.174",
+      "description": "Mixture alteration: 40 kg of sand:cement in ratio 3:1; find how much cement to add so the new ratio becomes 5:2. Multi-step: find existing cement (10 kg), compute required cement (12 kg), add 2 kg."
+    }
+  ],
+  "enumerated_exercises": [
+    {
+      "id": "E-1",
+      "source_section": "section 7.3",
+      "book_ref": "Figure it Out Q1, section 7.3 p.165",
+      "description": "Circle the true proportion statements among six given ratios (e.g. 4:7::12:21, 8:3::24:6, etc.)."
+    },
+    {
+      "id": "E-2",
+      "source_section": "section 7.3",
+      "book_ref": "Figure it Out Q2, section 7.3 p.165",
+      "description": "Write three ratios proportional to 4:9."
+    },
+    {
+      "id": "E-3",
+      "source_section": "section 7.3",
+      "book_ref": "Figure it Out Q3, section 7.3 p.165",
+      "description": "Fill in missing numbers for ratios proportional to 18:24 (3:_, 12:_, 20:_, 27:_)."
+    },
+    {
+      "id": "E-4",
+      "source_section": "section 7.3",
+      "book_ref": "Figure it Out Q4, section 7.3 p.166",
+      "description": "Identify which among rectangles A–E are similar to each other by measuring dimensions and comparing ratios."
+    },
+    {
+      "id": "E-5",
+      "source_section": "section 7.3",
+      "book_ref": "Figure it Out Q5, section 7.3 p.166",
+      "description": "Draw a smaller and a bigger rectangle with the same width:height ratio as a given rectangle; compare with classmates and discuss."
+    },
+    {
+      "id": "E-6",
+      "source_section": "section 7.3",
+      "book_ref": "Figure it Out Q6, section 7.3 p.166",
+      "description": "Find the ratio of grey bricks to coloured bricks in two brick wall patterns (a) and (b), simplified to lowest terms."
+    },
+    {
+      "id": "E-7",
+      "source_section": "section 7.3",
+      "book_ref": "Figure it Out Q7, section 7.3 p.167",
+      "description": "Measure a friend's body (head, torso, arms, legs), write head:torso, torso:arms, torso:legs ratios, and draw a figure with proportional measurements; discuss realism."
+    },
+    {
+      "id": "E-8",
+      "source_section": "section 7.4",
+      "book_ref": "Figure it Out Q1, section 7.4 p.170",
+      "description": "Earth travels 940 million km in a year; find distance in one week using proportional reasoning."
+    },
+    {
+      "id": "E-9",
+      "source_section": "section 7.4",
+      "book_ref": "Figure it Out Q2, section 7.4 p.170",
+      "description": "Mason builds a house with outer and inner walls; 1450 bricks per 10 ft; find total bricks needed for the full wall layout (total 108 ft)."
+    },
+    {
+      "id": "E-10",
+      "source_section": "section 7.5",
+      "book_ref": "Figure it Out Q1, section 7.5 p.175",
+      "description": "Divide ₹4,500 into two parts in the ratio 2:3."
+    },
+    {
+      "id": "E-11",
+      "source_section": "section 7.5",
+      "book_ref": "Figure it Out Q2, section 7.5 p.175",
+      "description": "Acid and water mixed in ratio 1:5; find quantities of each in 240 mL solution."
+    },
+    {
+      "id": "E-12",
+      "source_section": "section 7.5",
+      "book_ref": "Figure it Out Q3, section 7.5 p.175",
+      "description": "Blue and yellow mixed 3:5 to make 40 mL green paint; find amounts of each colour; then find new ratio after adding 20 mL yellow."
+    },
+    {
+      "id": "E-13",
+      "source_section": "section 7.5",
+      "book_ref": "Figure it Out Q4, section 7.5 p.175",
+      "description": "Rice and urad dal in ratio 2:1 for idlis; find cups of each needed for 6 cups total mixture."
+    },
+    {
+      "id": "E-14",
+      "source_section": "section 7.5",
+      "book_ref": "Figure it Out Q5, section 7.5 p.175",
+      "description": "Orange paint made with red:yellow = 3:5; a full bucket of yellow is added; find new ratio of red to yellow."
+    },
+    {
+      "id": "E-15",
+      "source_section": "section 7.6",
+      "book_ref": "Figure it Out Q1, section 7.6 p.176",
+      "description": "Anagh mixes 600 mL orange juice and 900 mL apple juice; write the ratio in simplest form."
+    },
+    {
+      "id": "E-16",
+      "source_section": "section 7.6",
+      "book_ref": "Figure it Out Q2, section 7.6 p.176",
+      "description": "3 buses carried 162 students last year; find how many buses are needed for 204 students this year and whether they will be full."
+    },
+    {
+      "id": "E-17",
+      "source_section": "section 7.6",
+      "book_ref": "Figure it Out Q3, section 7.6 p.176",
+      "description": "Compare population density of Delhi (30 million, 1484 sq.km) and Mumbai (20 million, 550 sq.km) to determine which is more crowded."
+    },
+    {
+      "id": "E-18",
+      "source_section": "section 7.6",
+      "book_ref": "Figure it Out Q4, section 7.6 p.176",
+      "description": "A crane of height 155 cm has neck:body in ratio 4:6; find neck length for the student's own height using the same ratio."
+    },
+    {
+      "id": "E-19",
+      "source_section": "section 7.6",
+      "book_ref": "Figure it Out Q5, section 7.6 p.176",
+      "description": "Ancient Lilavati problem: if 2½ palas of saffron costs 3/7 niskas, how much can be bought for 9 niskas?"
+    },
+    {
+      "id": "E-20",
+      "source_section": "section 7.6",
+      "book_ref": "Figure it Out Q6, section 7.6 p.177",
+      "description": "Harmain is 1 year old, brother is 5; find when the ratio of their ages will be 1:2."
+    },
+    {
+      "id": "E-21",
+      "source_section": "section 7.6",
+      "book_ref": "Figure it Out Q7, section 7.6 p.177",
+      "description": "Mass of equal volumes of gold and water in ratio 37:2; if 1 litre water = 1 kg, find mass of 1 litre gold."
+    },
+    {
+      "id": "E-22",
+      "source_section": "section 7.6",
+      "book_ref": "Figure it Out Q8, section 7.6 p.177",
+      "description": "Farmer applies 10 tonnes manure per acre; plot is 200 ft × 500 ft; find manure needed using unit conversion (1 acre = 43,560 sq ft)."
+    },
+    {
+      "id": "E-23",
+      "source_section": "section 7.6",
+      "book_ref": "Figure it Out Q9, section 7.6 p.177",
+      "description": "Tap fills 500 mL mug in 15 seconds; find time to fill a 10-litre bucket."
+    },
+    {
+      "id": "E-24",
+      "source_section": "section 7.6",
+      "book_ref": "Figure it Out Q10, section 7.6 p.177",
+      "description": "1 acre of land costs ₹15,00,000; find cost of 2,400 sq ft of the same land."
+    },
+    {
+      "id": "E-25",
+      "source_section": "section 7.6",
+      "book_ref": "Figure it Out Q11, section 7.6 p.177",
+      "description": "Tractor ploughs 4 times faster than oxen; oxen take 6 hours/acre; find total time for oxen and tractor to plough 20-acre field."
+    },
+    {
+      "id": "E-26",
+      "source_section": "section 7.6",
+      "book_ref": "Figure it Out Q12, section 7.6 p.177",
+      "description": "₹10 coin is copper:nickel alloy in ratio 3:1, mass 7.74 g; find cost of each metal given copper = ₹906/kg and nickel = ₹1,341/kg."
+    }
+  ],
+  "conceptual_demand": 3,
+  "activity_count": 3,
+  "demo_count": 0,
+  "exec_load": 2
+}
 
 
 ======================================================================
 
-THE FULLEST PLAN (18 units). The unit you write REPLACES its final unit, closing this arc:
+THE FULLEST PLAN (17 units). The unit you write REPLACES its final unit, closing this arc:
 
-U1: Chalk, Powder, and an Unanswered Question
-U2: Sugar That Vanishes but Stays
-U3: Nails, Rocks, and Rulers — What Solids Share
-U4: 200 mL of Water, Three Containers
-U5: Smoke in a Jar — Classifying Gas
-U6: Compressing Air, Resisting Water
-U7: Does Sugar Fit Inside Water?
-U8: The Three-State Particle Packing Picture
-U9: Permanganate Trails — Motion in Liquids
-U10: Hot, Cold, and In Between — Temperature and Spreading Rate
-U11: Fragrance Across the Room — Motion in Gases
-U12: Solids Don't Flow — Motion in the Solid State
-U13: Why Does a Solid Melt? Thermal Energy Meets Attraction
-U14: Boiling, Evaporating, and Why They Are Different
-U15: Sand in Water — When Particles Don't Fit
-U16: The Thermal Energy Arc — From Solid to Gas
-U17: Acharya Kanad and the Limits of Division
+U1: Which Tiger Images Look Right? Spotting Proportional Change
+U2: Why Does Additive Change Distort? Building the Argument
+U3: Naming the Relationship: What Is a Ratio?
+U4: Simplest Form: The HCF Test for Proportionality
+U5: Ratios in Real Objects: Bricks, Bodies, and Rectangles
+U6: Checking Proportionality: From Lemonade to Cement Walls
+U7: Classroom Ratios and Missing Terms: Open-Ended Proportional Thinking
+U8: The Rule of Three: Aryabhata's Framework and Its Algebraic Proof
+U9: Cross Multiplication in Action: Distance, Time, and Tea Prices
+U10: Scaling a Recipe: Real-World Rule of Three
+U11: Is Price Proportional to Volume? A Market Investigation
+U12: Sharing 12 Counters: Building Intuition for Ratio Partitioning
+U13: Altering Mixtures and Partitioning Amounts: Multi-Step Ratio Problems
+U14: Idlis, Paint, and Ratios: Consolidating Partition Problems
+U15: Converting Units Before Proportions: Length, Area, and Volume
+U16: Ancient Problems and Modern Contexts: Lilavati to Land Costs
 U<final>: ← the unit you are writing
 
-THE SHORTER PLANS (4). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
+THE SHORTER PLANS (2). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
 
-
---- PLAN OF 16 UNITS — unit-title map ---
-U1: Chalk, Sugar, and the Invisible Particle
-U2: Naming the Invisible: Constituent Particles and Interparticle Space
-U3: Sorting the Solid World: Shape, Volume, and the Hammer Test
-U4: Water in Three Containers: Classifying Liquid Behaviour
-U5: Smoke Without Boundaries: Classifying Gas Behaviour
-U6: Fluids, Melting Points, and Boiling Points: Formalising the Classification
-U7: Syringe Investigation: Why Can Air Be Squashed but Water Cannot?
-U8: The Vanishing Volume: Sugar Dissolves into Interparticle Spaces
-U9: Potassium Permanganate Spreading: Explaining Motion in Liquids
-U10: Fragrance Across the Room: Explaining Motion in Gases
-U11: Thermal Energy as the Driver: Connecting Heat to Particle Behaviour
-U12: Hot, Cold, and Room Temperature: Temperature Affects Spreading Rate
-U13: Predicting Melting and Boiling from Interparticle Attraction
-U14: State Change in Reverse: Applying the Model to Condensation and Solidification
-U15: Particulate Model as a Unified Lens: Properties and State Changes Together
-U16: Explaining the Unexplained: Novel Phenomena Through the Particulate Lens
-
---- its FINAL unit, in full ---
-{
- "period_number": 16,
- "period_duration_minutes": 45,
- "progression_stage": 5,
- "stage_label": "Integrate and apply: using the particulate model to represent properties and explain state changes simultaneously",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "Explaining the Unexplained: Novel Phenomena Through the Particulate Lens",
- "activity_description": "Students are presented with three novel phenomena drawn from the chapter's 'Think Like a Scientist' and 'A Step Further' material — phenomena they have not explicitly explained before — and must apply the integrated particulate model to produce complete written explanations that combine state classification, property identification, and causal mechanism.",
- "roles": [
-  {
-   "actor": "Students (Individual)",
-   "role_description": "Each student independently writes complete explanations for all three novel phenomena, drawing only on the particulate model vocabulary and causal framework built across the chapter."
-  },
-  {
-   "actor": "Teacher",
-   "role_description": "Presents the three phenomena, clarifies only what the phenomenon is (not how to explain it), and circulates to identify responses for a closing class discussion."
-  }
- ],
- "time_bands": [
-  {
-   "minutes": "0-7",
-   "activity": "Teacher presents the three novel phenomena and confirms: students have all the tools they need from the chapter — the task is to deploy them independently."
-  },
-  {
-   "minutes": "7-30",
-   "activity": "Students independently write explanations for each phenomenon, using constituent particles, interparticle attraction, spacing, motion, and thermal energy as causal elements."
-  },
-  {
-   "minutes": "30-40",
-   "activity": "Teacher selects two contrasting responses for one phenomenon and presents them to the class, inviting students to evaluate which is more complete and why."
-  },
-  {
-   "minutes": "40-45",
-   "activity": "Teacher closes by connecting the three explanations to the chapter's central idea: the particulate model is a single unified framework that can represent both observable properties and state-change mechanisms for any substance."
-  }
- ],
- "teacher_notes": "The previous unit practised integration with group support; this unit requires each student to demonstrate it independently with novel phenomena — the highest cognitive demand of the chapter. A misconception to watch: students may revert to observable-only descriptions ('the ice melted') without the particle-level causal account — require both levels in every explanation. Because this plan is served whole, students have the full arc of the chapter to draw on, and the closing discussion should make that arc explicit.",
- "materials": [
-  "Three novel-phenomenon prompt cards (from Think Like a Scientist and A Step Further material in the chapter)",
-  "Lined writing sheets"
- ],
- "homework": []
-}
 
 --- PLAN OF 14 UNITS — unit-title map ---
-U1: Can Matter Be Divided Forever? The Chalk and Sugar Investigations
-U2: How Small Is a Constituent Particle? Estimating the Invisible
-U3: Solids, Liquids, Gases — Sorting by What You Can Observe
-U4: Naming the Properties — Melting Points, Boiling Points, and the Fluid Family
-U5: Compressibility and Interparticle Spacing — The Syringe Inquiry
-U6: Interparticle Attractions — The Force That Determines the State
-U7: Thermal Energy as the Driver — Hot, Room, and Cold Water Spreading
-U8: Gas Particles in Motion — The Incense Stick Diffusion Activity
-U9: The Three-State Summary Table — Discovering the Pattern Across Properties
-U10: What Happens at the Melting Point? — Reasoning Through the Solid-to-Liquid Transition
-U11: Evaporation vs Boiling — A Particle-Level Distinction
-U12: Gas State Explained — From Negligible Attractions to Free Movement
-U13: The Integrated Challenge — Predicting State and Explaining It
-U14: State-Change Reasoning Across Both Strands — The Complete Particulate Account
+U1: Tiger Images: Spotting the Odd One Out
+U2: Why Multiplicative? Arguing from Measurements
+U3: Naming the Relationship: Ratios and Proportion Notation
+U4: Reducing Ratios: HCF as the Simplification Tool
+U5: Ratios in Shape and Body: Measuring Proportionality
+U6: Proportionality Checks and Ratio Behaviour
+U7: The Rule of Three: Trairasika and Cross Multiplication
+U8: Scaling Recipes and Comparing Prices: Rule of Three in Action
+U9: Multi-Step Proportions: Bricks, Ratios, and Real Contexts
+U10: Counters and the Logic of Unequal Sharing
+U11: Partitioning Quantities: Mixtures and Profit Problems
+U12: Unit Conversion Table and Its Role in Proportional Problems
+U13: Ancient Problems, Alloys, and Farming: Proportions Across Contexts
+U14: Land, Coins, and Tractor Problems: Extended Proportional Reasoning
 
 --- its FINAL unit, in full ---
 {
  "period_number": 14,
  "period_duration_minutes": 45,
- "progression_stage": 5,
- "stage_label": "Reason across both classification and particulate representation simultaneously",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "State-Change Reasoning Across Both Strands — The Complete Particulate Account",
- "activity_description": "Students tackle a layered problem: given a substance that transitions from solid to liquid to gas, they must classify the state at each stage using observable properties, then construct a continuous particle-level narrative explaining why each transition occurs — integrating observable-property classification and particulate-model representation in a single coherent account.",
- "roles": [
+ "synthesis": false,
+ "textbook_segments": [
   {
-   "actor": "Students (Individual)",
-   "role_description": "Construct a written narrative that classifies each state and explains each transition using the particulate model, then evaluate a peer's narrative against the criterion of complete integration."
-  },
-  {
-   "actor": "Teacher",
-   "role_description": "Poses the layered problem, supports students who stall at the transition explanation, and facilitates the peer evaluation with a specific integration criterion."
+   "ref": "section 7.6",
+   "title": "Unit Conversions"
   }
  ],
+ "section_goal": "apply",
+ "activity_title": "Land, Coins, and Tractor Problems: Extended Proportional Reasoning",
+ "pedagogical_method": "Problem-solving",
+ "textbook_items_in_class": [
+  {
+   "id": "E-24",
+   "type": "exercise",
+   "source_section": "section 7.6",
+   "book_ref": "Figure it Out Q10, section 7.6 p.177",
+   "description": "1 acre of land costs ₹15,00,000; find cost of 2,400 sq ft of the same land."
+  },
+  {
+   "id": "E-25",
+   "type": "exercise",
+   "source_section": "section 7.6",
+   "book_ref": "Figure it Out Q11, section 7.6 p.177",
+   "description": "Tractor ploughs 4 times faster than oxen; oxen take 6 hours/acre; find total time for oxen and tractor to plough 20-acre field."
+  },
+  {
+   "id": "E-26",
+   "type": "exercise",
+   "source_section": "section 7.6",
+   "book_ref": "Figure it Out Q12, section 7.6 p.177",
+   "description": "₹10 coin is copper:nickel alloy in ratio 3:1, mass 7.74 g; find cost of each metal given copper = ₹906/kg and nickel = ₹1,341/kg."
+  }
+ ],
+ "homework": [],
  "time_bands": [
   {
-   "minutes": "0-8",
-   "activity": "Teacher introduces the layered problem: imagine a substance being heated from a solid state through melting to a liquid, then further heated to its boiling point and beyond — write the complete account of what happens at the observable and particle level at each stage."
+   "minutes": "0–15",
+   "activity": "Students work through Figure it Out Q10, section 7.6 p.177 (\"1 acre of land costs ₹15,00,000; find cost of 2,400 sq ft of the same land...\") — converting 2,400 sq ft to acres using the table value (1 acre = 43,560 sq ft), then scaling the price proportionally. Teacher asks volunteers to show the full conversion and proportion setup on the board."
   },
   {
-   "minutes": "8-28",
-   "activity": "Students individually construct their written narrative, classifying the state at each stage and explaining each transition using thermal energy, interparticle attractions, and particle movement."
+   "minutes": "15–30",
+   "activity": "Students attempt Figure it Out Q11, section 7.6 p.177 (\"Tractor ploughs 4 times faster than oxen; oxen take 6 hours/acre; find total time for oxen and tractor to plough 20-acre field...\"). Students identify how many acres each ploughs, compute time for each, and add — comparing this problem to the inversely proportional speed-time examples flagged in section 7.4 to confirm whether direct or inverse proportionality applies."
   },
   {
-   "minutes": "28-40",
-   "activity": "Students exchange narratives with a peer and evaluate whether the peer's account (a) correctly classifies each state from observable properties and (b) explains each transition with the particulate model — both criteria must be met for the account to be complete."
+   "minutes": "30–42",
+   "activity": "Students tackle Figure it Out Q12, section 7.6 p.177 (\"₹10 coin is copper:nickel alloy in ratio 3:1, mass 7.74 g; find cost of each metal given copper = ₹906/kg and nickel = ₹1,341/kg...\") — finding the mass of each metal using the partitioning formula from section 7.5, converting grams to kilograms, then multiplying by price per kg. Small groups compare answers and reconcile any discrepancy."
   },
   {
-   "minutes": "40-45",
-   "activity": "Teacher highlights two or three narratives (anonymised) that show strong integration, and one that classifies well but explains poorly, closing the chapter's arc at its highest cognitive demand."
+   "minutes": "42–45",
+   "activity": "Class close: the teacher poses a one-sentence synthesis question — 'Name one situation in daily life where you would need both unit conversion and ratio partitioning together' — and two or three students respond aloud. The teacher affirms and connects the response to the chapter's core idea of multiplicative proportional reasoning."
   }
  ],
- "teacher_notes": "This is the chapter's culminating unit, where the full integrated cognitive operation — classify by observable properties AND represent with the particulate model — is demanded in a single sustained task. In the previous unit students practised the integration in short scenario bursts; here they must sustain it across a complete state-change sequence. Watch for narratives that describe what happens at each stage (solid is hard, liquid flows) without explaining why (because thermal energy has overcome the interparticle attractions, allowing particles to move past each other); the peer-evaluation criterion makes this distinction explicit. Sharing an exemplary integrated narrative with the class at the close is the most effective way to model the chapter's highest-order target.",
+ "teacher_notes": "The coin-alloy problem integrates unit conversion (g to kg), ratio partitioning, and rate multiplication in a single multi-step problem — the richest item in the chapter. Students who rush tend to forget the g-to-kg conversion; insist on a units line in every step. The tractor problem requires students to decide whether the situation is directly or inversely proportional before setting up — this is a deliberate callback to the Puneeth speed-time discussion in section 7.4.",
  "materials": [
-  "Student notebooks",
-  "Peer evaluation checklist (two criteria: classification from observable properties; transition explanation using particulate model)"
- ],
- "homework": []
-}
-
---- PLAN OF 12 UNITS — unit-title map ---
-U1: Chalk, Powder, and the Invisible Particle
-U2: Sugar Vanishes — But Is It Gone?
-U3: Solid Objects Under the Hammer
-U4: Water Finds Its Shape — But Keeps Its Volume
-U5: Smoke Fills the Jar — Classifying Gases
-U6: Push the Plunger — Compressibility Reveals Spacing
-U7: Sugar Fits the Gaps — Volume Less Than the Sum
-U8: Pink Spreading — Particles in Constant Motion
-U9: Hot, Cold, Room — Temperature Drives the Spread
-U10: Fragrance Fills the Room — Gas Particles in Rapid Random Motion
-U11: Thermal Energy — The Driver Behind It All
-U12: Model Meets Evidence — Explaining Unfamiliar Observations
-
---- its FINAL unit, in full ---
-{
- "period_number": 12,
- "period_duration_minutes": 45,
- "progression_stage": 5,
- "stage_label": "Apply the particulate model to explain properties and state changes across all three states",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "Model Meets Evidence — Explaining Unfamiliar Observations",
- "activity_description": "Students are presented with a set of new scenarios drawn from the chapter's 'Think Like a Scientist' extension and exercise questions — such as why a compressed gas cylinder stores more gas, why evaporation cools a surface, and why a substance with a very high melting point is hard to hammer flat. For each scenario, students apply the full particulate model to construct an explanation.",
- "roles": [
-  {
-   "actor": "Students (Groups)",
-   "role_description": "Read each scenario, identify which element of the particulate model is most relevant, and construct a written explanation that connects the submicroscopic model to the observable outcome."
-  },
-  {
-   "actor": "Teacher",
-   "role_description": "Circulates to probe explanations with questions such as 'what are the particles doing at the surface?' and 'what does a high melting point tell you about attraction strength?'."
-  }
- ],
- "time_bands": [
-  {
-   "minutes": "0-8",
-   "activity": "Teacher frames the unit's task: the particulate model is only powerful if it can explain observations the chapter did not specifically rehearse — today students test that power."
-  },
-  {
-   "minutes": "8-30",
-   "activity": "Groups work through the scenario set, writing an explanation for each that explicitly names the relevant element of the particulate model — constituent particles, interparticle attraction, spacing, or motion — and states how it produces the observable effect."
-  },
-  {
-   "minutes": "30-40",
-   "activity": "Groups share explanations for one scenario each; class evaluates whether each explanation correctly identifies the relevant model element and produces an accurate causal chain."
-  },
-  {
-   "minutes": "40-45",
-   "activity": "Teacher draws together the chapter's arc from the constituent particle idea in Unit 1 to the full explanatory model now applied to new contexts, noting the two strands — classification and particulate representation — that ran in parallel throughout."
-  }
- ],
- "teacher_notes": "This closing unit is Stage 5's application test and the chapter's endpoint, so make the full arc visible: students began by observing that matter can be subdivided and classified, and now they can explain any observable property of any state using the particulate model. A likely weakness is surface-level explanations that name the model element without connecting it causally to the observable outcome — insist on the 'because' in every explanation. The two strands of the chapter — classification by observable properties and explanation by the particulate model — converge here, and naming that convergence explicitly helps students see the chapter as a coherent whole rather than a set of disconnected activities.",
- "materials": [
-  "Scenario card set (printed)",
-  "Chapter summary table (reference copy)",
-  "Writing sheets"
- ],
- "homework": []
+  "Chalk/whiteboard",
+  "Notebooks",
+  "Textbook p.177",
+  "Calculator (optional)"
+ ]
 }
 
 --- PLAN OF 10 UNITS — unit-title map ---
-U1: Chalk and Sugar: First Evidence for Particles
-U2: Invisible but Real: Interparticle Spaces in Liquids
-U3: Shape, Volume, and Compressibility: Sorting the Three States
-U4: Smoke, Spread, and Fluid Flow: Observing Gas and Liquid Behaviour
-U5: Why Particles Stay Together: Interparticle Attraction and Distance
-U6: Particle Motion in Liquids: Permanganate Spread and Temperature
-U7: Gas Particles in Motion: Fragrance, Freedom, and Negligible Forces
-U8: Melting, Boiling, and Evaporation: Thermal Energy Changes State
-U9: Fig. 7.12 Unpacked: Building and Defending the Particle Summary
-U10: The Acharya Kanad Connection: Parmanu, Evidence, and Limits of the Model
+U1: Which Images Look the Same? Spotting Proportional Change
+U2: Why Addition Fails: Arguing the Multiplicative Rule
+U3: Naming the Relationship: Introducing Ratios and Proportion Notation
+U4: Simplifying Ratios and Identifying True Proportions
+U5: From Body Ratios to Context Problems: Proportionality in Action
+U6: The Rule of Three: Aryabhata's Framework and Cross Multiplication
+U7: Cross Multiplication in Context: Speed, Price, and Scaling Recipes
+U8: Dealing Counters: Building the Formula for Sharing in a Ratio
+U9: Mixture Problems and Multi-Step Ratio Splitting
+U10: Proportional Reasoning Across Units: Real-World and Historical Problems
 
 --- its FINAL unit, in full ---
 {
  "period_number": 10,
  "period_duration_minutes": 45,
- "progression_stage": 4,
- "stage_label": "Apply the integrated model: thermal energy drives state changes",
- "pedagogical_approach": "Hands-on Science",
- "activity_title": "The Acharya Kanad Connection: Parmanu, Evidence, and Limits of the Model",
- "activity_description": "Students revisit the 'Our Scientific Heritage' sidebar on Acharya Kanad's Parmanu concept and the 'A Step Further' note on SPM, then design a two-column argument — what the activities in this chapter provide as evidence for the particle model, and what remains unresolved or requires assumptions — producing a written evaluation of the model's explanatory power.",
- "roles": [
+ "synthesis": false,
+ "textbook_segments": [
   {
-   "actor": "Teacher",
-   "role_description": "Opens by reading the Parmanu sidebar aloud, frames the task as evaluating the chapter's own evidence, and circulates to ensure students distinguish empirical observations from model-level inferences."
-  },
-  {
-   "actor": "Students (Individual)",
-   "role_description": "Construct a two-column argument independently — evidence from activities that supports the particle model, and limitations or assumptions the model requires — and write a concluding sentence on the model's overall explanatory power."
+   "ref": "section 7.6",
+   "title": "Unit Conversions"
   }
  ],
+ "section_goal": "apply",
+ "activity_title": "Proportional Reasoning Across Units: Real-World and Historical Problems",
+ "pedagogical_method": "Problem-solving",
+ "textbook_items_in_class": [
+  {
+   "id": "E-15",
+   "type": "exercise",
+   "source_section": "section 7.6",
+   "book_ref": "Figure it Out Q1, section 7.6 p.176",
+   "description": "Anagh mixes 600 mL orange juice and 900 mL apple juice; write the ratio in simplest form."
+  },
+  {
+   "id": "E-17",
+   "type": "exercise",
+   "source_section": "section 7.6",
+   "book_ref": "Figure it Out Q3, section 7.6 p.176",
+   "description": "Compare population density of Delhi (30 million, 1484 sq.km) and Mumbai (20 million, 550 sq.km) to determine which is more crowded."
+  },
+  {
+   "id": "E-19",
+   "type": "exercise",
+   "source_section": "section 7.6",
+   "book_ref": "Figure it Out Q5, section 7.6 p.176",
+   "description": "Ancient Lilavati problem: if 2½ palas of saffron costs 3/7 niskas, how much can be bought for 9 niskas?"
+  },
+  {
+   "id": "E-22",
+   "type": "exercise",
+   "source_section": "section 7.6",
+   "book_ref": "Figure it Out Q8, section 7.6 p.177",
+   "description": "Farmer applies 10 tonnes manure per acre; plot is 200 ft × 500 ft; find manure needed using unit conversion (1 acre = 43,560 sq ft)."
+  },
+  {
+   "id": "E-26",
+   "type": "exercise",
+   "source_section": "section 7.6",
+   "book_ref": "Figure it Out Q12, section 7.6 p.177",
+   "description": "₹10 coin is copper:nickel alloy in ratio 3:1, mass 7.74 g; find cost of each metal given copper = ₹906/kg and nickel = ₹1,341/kg."
+  }
+ ],
+ "homework": [],
  "time_bands": [
   {
-   "minutes": "0-8",
-   "activity": "Teacher reads the Parmanu sidebar aloud and briefly notes the SPM distinction; class discusses: what can we actually see, and what do we infer from what we see?"
+   "minutes": "0–8",
+   "activity": "Introduce the unit-conversion reference table from section 7.6 (length, area, volume, temperature). Students read out the conversion factors aloud; teacher explains that many real-world proportion problems require converting units before setting up the ratio."
   },
   {
-   "minutes": "8-30",
-   "activity": "Students independently construct the two-column argument: left column lists specific activities (chalk grinding, sugar dissolution, syringe compression, permanganate spread, fragrance detection) with what each evidences; right column lists what is assumed or unresolved."
+   "minutes": "8–18",
+   "activity": "Figure it Out Q1 (p.176) (\"Anagh mixes 600 mL orange juice and 900 mL apple juice; write ratio in simplest form....\") and Figure it Out Q3 (p.176) (\"compare population density of Delhi and Mumbai....\") — students work individually, ensuring units are consistent before computing each ratio."
   },
   {
-   "minutes": "30-40",
-   "activity": "Students share concluding sentences; class discussion evaluates whether the activities together make the particle model convincing, and why no single activity is sufficient on its own."
+   "minutes": "18–30",
+   "activity": "Figure it Out Q5 (p.176) (\"ancient Lilavati problem: if 2½ palas of saffron costs 3/7 niskas, how much for 9 niskas....\") — teacher introduces the Lilavati attribution (Bhaskara), then students set up the Rule of Three proportion with fractional values, computing the answer. Discuss: how is this structurally identical to the car and rice problems encountered earlier?"
   },
   {
-   "minutes": "40-45",
-   "activity": "Teacher closes by connecting the chapter's ten-unit arc: from the first question 'what is matter made of?' to the student's own evaluation of the model that answers it."
+   "minutes": "30–40",
+   "activity": "Figure it Out Q8 (p.177) (\"10 tonnes manure per acre; plot is 200 ft × 500 ft; find manure needed....\") — students convert square feet to acres using the given conversion factor, then apply proportional reasoning. Partners check unit labels at each step."
+  },
+  {
+   "minutes": "40–45",
+   "activity": "Figure it Out Q12 (p.177) (\"₹10 coin in ratio 3:1 copper:nickel, mass 7.74 g; find cost of each metal....\") — students split the mass using the sharing formula from section 7.5, then apply the price rate. This problem intentionally integrates skills from sections 7.3, 7.5 and 7.6. A volunteer shares their solution path."
   }
  ],
- "teacher_notes": "This closing unit asks students to step back and evaluate the very model they have been building — a higher-order operation that is appropriate here because it is the chapter's terminus. A common difficulty is students listing activities without stating what each one evidences; redirect by asking 'what specific claim about particles does grinding chalk support?' and distinguishing that from 'what did you observe?' The Acharya Kanad connection is not decorative — it positions the particle idea as a hypothesis that scientific activities test, which is the intellectual stance the whole chapter has been cultivating.",
+ "teacher_notes": "Section 7.6 is an application unit — its value is in showing students that the tools they have built (ratio simplification, cross multiplication, sharing formula) all apply once units are made consistent. The most common error is setting up a proportion before converting units; insisting on a 'unit-check step' before any calculation addresses this systematically. Figure it Out Q12 (p.177) is a natural capstone because it draws together ratio splitting (section 7.5) and unit-aware proportional reasoning (section 7.6) in a single problem.",
  "materials": [
-  "chapter text (sections 'Our Scientific Heritage' and 'A Step Further')",
-  "notebooks",
-  "blank two-column argument template"
- ],
- "homework": []
+  "Section 7.6 textbook p.176–177",
+  "Unit-conversion reference table (printed or projected)",
+  "Calculators",
+  "Notebooks"
+ ]
 }
 
 ======================================================================

@@ -1,0 +1,1478 @@
+{
+ "filename": "ch_09_canonical.json",
+ "saved_at": "2026-08-19T11:14:02",
+ "plan_status": "canonical",
+ "chapter_number": 9,
+ "chapter_title": "Geometric Twins",
+ "grade": "Grade VII",
+ "subject": "Mathematics",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 40,
+   "count": 15
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 15 periods = 600 minutes\nTotal: 15 periods · 10h 0min",
+ "genon_canonical": {
+  "generated": "2026-08-19",
+  "schedule": "15x40",
+  "constitution": "LP v3.9 / assessment v3.5",
+  "source": "generate_canonical.py one mathematics vii 9",
+  "ledger_ts": "20260818_205348_math_vii_09_top",
+  "validation": "clean",
+  "synthesis_reauthor": {
+   "spec": "ARV-D-181 · F1 2026-08-19 (the double-closer collision)",
+   "at": "2026-08-20T10:47:33",
+   "ledger_ts": "20260819_210337_math_vii_09_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_09_canonical_p12.json": "2026-08-19T13:38:18",
+    "ch_09_canonical_p09.json": "2026-08-19T13:38:19"
+   },
+   "replaced_in": "backup/resynth/mathematics_vii_ch09_20260819_210337_math_vii_09_resynth.json"
+  },
+  "repairs": [
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-20T11:02:16",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-187": {
+      "note": "the re-authored closer's notes point at its own Material table",
+      "edits": [
+       {
+        "unit": 15,
+        "field": "teacher_notes",
+        "old": "Pose all four problems on the board at once. Students work i…",
+        "new": "Refer to Prepared Table (see material: 'Problems and solutio…"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 9.1",
+       "title": "Geometric Twins"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "What Makes Two Figures Exactly the Same?",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-1",
+       "type": "exercise",
+       "source_section": "section 9.1",
+       "book_ref": "Figure it Out Q1, section 9.1 p.3",
+       "description": "Check if the two given figures are congruent."
+      },
+      {
+       "id": "E-2",
+       "type": "exercise",
+       "source_section": "section 9.1",
+       "book_ref": "Figure it Out Q2, section 9.1 p.3",
+       "description": "Circle the pairs of figures that appear congruent."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Open with the signboard-replication scenario from section 9.1: a symbol must be reproduced on a second board too large to trace. Students discuss in pairs: what information would you need to recreate it exactly? Collect ideas on the board."
+      },
+      {
+       "minutes": "8–18",
+       "activity": "Explore the two-arm-length problem: AB = 4 cm, BC = 8 cm with a free angle at B. Students draw three different-looking symbols from those two measurements alone, then add ∠ABC = 80° and redraw — observing that fixing the included angle fixes the shape and size. Students articulate in their own words what “same shape and size” means."
+      },
+      {
+       "minutes": "18–28",
+       "activity": "Introduce the term “congruent” and the superimposition test (rotation and flipping are allowed). Work through Figure it Out Q1, section 9.1 p.3 (“Check if the two given figures are congruent.”) as a class, verifying the superimposition idea."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Students work individually or in pairs on Figure it Out Q2, section 9.1 p.3 (“Circle the pairs of figures that appear congruent.”). Brief whole-class share: how did you decide? Reinforce that rotation and reflection do not destroy congruence."
+      }
+     ],
+     "teacher_notes": "Watch for students who think that figures in different orientations cannot be congruent — the signboard scenario is ideal for countering this. Common error: deciding congruence by shape alone, ignoring size; press students to check both. The two-arm exploration produces the intuition that underlies every condition developed later in the chapter.",
+     "materials": [
+      "Ruler",
+      "Protractor",
+      "Plain paper",
+      "Pencil"
+     ]
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 9.1",
+       "title": "Geometric Twins"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Enough Measurements to Reproduce Any Figure",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-3",
+       "type": "exercise",
+       "source_section": "section 9.1",
+       "book_ref": "Figure it Out Q3, section 9.1 p.3–4",
+       "description": "State what measurements you would take to create a figure congruent to a given (a) circle and (b) rectangle, and use this to state how you would check whether two circles, and two rectangles, are congruent."
+      },
+      {
+       "id": "E-4",
+       "type": "exercise",
+       "source_section": "section 9.1",
+       "book_ref": "Figure it Out Q4, section 9.1 p.4",
+       "description": "Decide how to check whether two figures of the given type are congruent, and use the method to identify whether each of the following pairs is congruent."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Quick recall: students name the three measurements that fixed the signboard symbol (AB, BC, ∠ABC = 80°) and state the definition of congruent figures. Introduce the day’s question: what is the minimum information needed to reproduce a circle? a rectangle?"
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Students explore Figure it Out Q3, section 9.1 p.3–4 (“State what measurements you would take to create a figure congruent to a given (a) circle and (b) rectangle, and use this to state how you would check whether two circles, and two rectangles, are congruent.”) in small groups. They attempt to draw circles and rectangles from minimal measurements, then test with a partner’s set."
+      },
+      {
+       "minutes": "22–34",
+       "activity": "Groups share findings; class agrees on minimum: one radius for a circle, two adjacent sides for a rectangle. Transition to Figure it Out Q4, section 9.1 p.4 (“Decide how to check whether two figures of the given type are congruent, and use the method to identify whether each of the following pairs is congruent.”). Students apply their minimum-measurement strategy to each pair."
+      },
+      {
+       "minutes": "34–40",
+       "activity": "Class discussion: summarise the emerging principle — congruence requires matching every feature that can vary freely in that figure type. Students write a one-sentence conclusion in their notebooks."
+      }
+     ],
+     "teacher_notes": "Students often list more measurements than necessary for a circle (e.g., both radius and diameter); ask “if I know the radius, do I need anything else?” to sharpen the idea of minimum sufficiency. Watch for students who measure angles of a rectangle but miss that all angles are already fixed at 90°. The minimum-measurement framework here anticipates the congruence conditions for triangles introduced in section 9.2.",
+     "materials": [
+      "Ruler",
+      "Compass",
+      "Protractor",
+      "Plain paper"
+     ]
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 9.1",
+       "title": "Geometric Twins"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Reasoning About When Equal Parts Guarantee Congruence",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-3",
+       "type": "exercise",
+       "source_section": "section 9.1",
+       "book_ref": "Figure it Out Q3, section 9.1 p.3–4",
+       "description": "State what measurements you would take to create a figure congruent to a given (a) circle and (b) rectangle, and use this to state how you would check whether two circles, and two rectangles, are congruent."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Pose the reasoning question: the signboard scenario established that two arm lengths alone do not guarantee congruence. Why not? Students articulate: the angle between them is free to vary. Teacher writes the general claim: “two measurements that leave at least one feature free cannot guarantee congruence.”"
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Students reason through the circle case from Figure it Out Q3, section 9.1 p.3–4 (“State what measurements you would take to create a figure congruent to a given (a) circle and (b) rectangle…”): why does one radius fully determine a circle? Because once the radius is fixed there is nothing else that can vary. Class extends this to the rectangle: two adjacent sides fix all four sides and all four angles (since angles are locked at 90°). Students write a ‘because’ sentence for each."
+      },
+      {
+       "minutes": "22–34",
+       "activity": "Structured discussion: can two figures be congruent if they have the same area but different shapes? Students construct counterexamples (a 2 × 8 and a 4 × 4 rectangle). This sharpens the distinction between necessary and sufficient conditions for congruence."
+      },
+      {
+       "minutes": "34–40",
+       "activity": "Students write three statements of the form “___ alone is/is not enough to guarantee congruence of ___, because ___” (e.g., radius for circles, perimeter for rectangles). Volunteer students read theirs aloud; class evaluates the reasoning."
+      }
+     ],
+     "teacher_notes": "The goal is for students to reason about sufficiency, not just recall procedures. A common error is accepting perimeter alone as sufficient for a rectangle — draw a 1 × 9 and a 3 × 3 to show it is not. Having established the minimum-measurement principle for simple figures, the reasoning framework carries directly into the triangle-congruence conditions of section 9.2.",
+     "materials": [
+      "Ruler",
+      "Plain paper",
+      "Pencil",
+      "Blackboard"
+     ]
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 9.2",
+       "title": "Congruence of Triangles"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Building the SSS Condition Through Construction",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-6",
+       "type": "exercise",
+       "source_section": "section 9.2",
+       "book_ref": "Figure it Out Q2, section 9.2 p.8",
+       "description": "Determine whether the given triangles (sides 6 cm, 5 cm, 3.5 cm) are congruent. If yes, express the congruence."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Introduce Meera and Rabia’s problem: they need to replicate a triangular frame (sides 40, 60, 80 cm) too large to trace. Students discuss: what information do you need? Scale the triangle to 4, 6, 8 cm. Students draw a base segment of 4 cm."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Students perform Rabia’s arc construction: from one endpoint of the base, swing an arc of 6 cm; from the other, swing an arc of 8 cm. The two arcs meet at a point; join to form the triangle. Students compare their triangles with a partner by superimposing cut-outs and observe that all are identical, establishing the SSS condition through direct experience."
+      },
+      {
+       "minutes": "22–32",
+       "activity": "Teacher formalises SSS: equal sidelengths guarantee congruence. Introduce congruence notation ∆ABC ≅ ∆XYZ and the vertex-correspondence rule. Explain why ∆ACB ≅ ∆XYZ is incorrect while ∆ACB ≅ ∆XZY is valid — the order encodes the correspondence."
+      },
+      {
+       "minutes": "32–40",
+       "activity": "Students apply these ideas to Figure it Out Q2, section 9.2 p.8 (“Determine whether the given triangles (sides 6 cm, 5 cm, 3.5 cm) are congruent. If yes, express the congruence.”), writing the congruence statement with correct vertex order."
+      }
+     ],
+     "teacher_notes": "The most common error at this stage is writing the congruence statement with vertices in an arbitrary order; stress that each vertex in the first name corresponds to the vertex in the same position in the second. Watch also for students who draw the arc from the wrong endpoint — walking among groups during construction catches this quickly. The rectangle-diagonal example in section 9.2 is worth mentioning as additional practice for finding correct correspondence.",
+     "materials": [
+      "Ruler",
+      "Compass",
+      "Scissors",
+      "Plain paper",
+      "Pencil"
+     ]
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 9.2",
+       "title": "Congruence of Triangles"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Correspondence, Notation, and Why AAA Fails",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-5",
+       "type": "exercise",
+       "source_section": "section 9.2",
+       "book_ref": "Figure it Out Q1, section 9.2 p.8",
+       "description": "Suppose ∆HEN is congruent to ∆BIG. List all the other correct ways of expressing this congruence."
+      },
+      {
+       "id": "E-7",
+       "type": "exercise",
+       "source_section": "section 9.2",
+       "book_ref": "Figure it Out Q3, section 9.2 p.9",
+       "description": "Given AB = AD and CB = CD, identify any pair of congruent triangles and explain why, and decide with reasons whether AC divides ∠BAD and ∠BCD into two equal parts."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Review the vertex-correspondence rule with a quick example. Students then tackle Figure it Out Q1, section 9.2 p.8 (“Suppose ∆HEN is congruent to ∆BIG. List all the other correct ways of expressing this congruence.”), listing all valid restatements."
+      },
+      {
+       "minutes": "8–20",
+       "activity": "Introduce the AAA case: three angles equal (30°, 70°, 80°). Students construct two triangles with these angles but different side lengths, superimpose, and observe they are the same shape but not the same size. Class states the conclusion: AAA gives similar but not necessarily congruent triangles, so AAA is not a congruence condition."
+      },
+      {
+       "minutes": "20–32",
+       "activity": "Students work on Figure it Out Q3, section 9.2 p.9 (“Given AB = AD and CB = CD, identify any pair of congruent triangles and explain why, and decide with reasons whether AC divides ∠BAD and ∠BCD into two equal parts.”). They must identify which condition applies and write a ‘because’ argument."
+      },
+      {
+       "minutes": "32–40",
+       "activity": "Class debrief: volunteers explain their reasoning for the angle-bisection conclusion. Teacher draws out the logical chain — congruence statement → corresponding angles are equal → angle is bisected — as a model for deductive argument."
+      }
+     ],
+     "teacher_notes": "Students often argue that AAA should work “because the shape is the same”; the construction of two differently sized triangles with equal angles is the clearest refutation. For Figure it Out Q3, watch for students who identify the correct triangles but write the congruence statement with vertices in the wrong order, losing the angle-bisection conclusion. The diagonal-rectangle example from section 9.2 makes a good self-study pointer for finding correspondence via a common side.",
+     "materials": [
+      "Ruler",
+      "Protractor",
+      "Plain paper",
+      "Pencil",
+      "Blackboard"
+     ]
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 9.2",
+       "title": "Congruence of Triangles"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "SAS Confirmed, SSA Fails — Building the Argument",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-8",
+       "type": "exercise",
+       "source_section": "section 9.2",
+       "book_ref": "Figure it Out Q4, section 9.2 p.9",
+       "description": "Given DF = DG and FE = GE, decide whether ∆DFE and ∆GED are congruent to each other."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Students investigate SAS: fix two sides and the included angle, construct the triangle, compare with a partner’s. All copies are congruent. Class articulates why: once the included angle is fixed, the third vertex is determined — there is no freedom left. Teacher states SAS as a confirmed condition."
+      },
+      {
+       "minutes": "12–26",
+       "activity": "Investigate SSA: fix two sides and a non-included angle. Using a two-arc construction (PQ fixed, one angle at P fixed, arc of given length from Q), students discover that the arc can cut the angle line at two different points, giving two non-congruent triangles ∆PQR and ∆PQS. Class concludes SSA is not a general congruence condition."
+      },
+      {
+       "minutes": "26–36",
+       "activity": "Students apply reasoning to Figure it Out Q4, section 9.2 p.9 (“Given DF = DG and FE = GE, decide whether ∆DFE and ∆GED are congruent to each other.”). They identify the equal parts, name the condition, and write the congruence statement or explain why it does or does not hold."
+      },
+      {
+       "minutes": "36–40",
+       "activity": "Quick summary: students state one sentence each for why SAS works and why SSA does not. Teacher records these on the board as a growing conditions-table."
+      }
+     ],
+     "teacher_notes": "The SSA failure is the unit’s key conceptual moment; insist that students actually draw both possible triangles before accepting the argument. Watch for the error of confusing the included and non-included angle — labelling the diagram clearly before beginning the construction helps. The growing conditions-table on the board should list SSS and SAS as confirmed, AAA and SSA as failed, preparing students for ASA and AAS in the next run.",
+     "materials": [
+      "Ruler",
+      "Compass",
+      "Protractor",
+      "Plain paper",
+      "Pencil",
+      "Blackboard"
+     ]
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 9.2",
+       "title": "Congruence of Triangles"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "ASA, AAS, and the Midpoint Argument",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-9",
+       "type": "exercise",
+       "source_section": "section 9.2",
+       "book_ref": "Figure it Out Q1, section 9.2 p.13",
+       "description": "Identify whether the triangles (marked 7 cm, 47°, 5 cm) are congruent, state which condition you used, and express the congruence."
+      },
+      {
+       "id": "E-10",
+       "type": "exercise",
+       "source_section": "section 9.2",
+       "book_ref": "Figure it Out Q2, section 9.2 p.13–14",
+       "description": "Given that CD and AB are parallel and AB = CD, find the other equal parts in the figure (using equal alternate angles) and, if the two triangles are congruent, express the congruence."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Develop ASA: two angles and the included side. Students construct a triangle with given angles at each end of a base segment, then compare. All copies match — because fixing both angles at the base determines how far the two sides must travel before meeting. Teacher states ASA as confirmed."
+      },
+      {
+       "minutes": "12–20",
+       "activity": "Derive AAS from ASA: if two angles are known, the third is determined (angles sum to 180°), so a non-included side becomes effectively the included side of the recovered ASA arrangement. Teacher shows this algebraically and adds AAS to the conditions-table."
+      },
+      {
+       "minutes": "20–32",
+       "activity": "Students work on Figure it Out Q1, section 9.2 p.13 (“Identify whether the triangles (marked 7 cm, 47°, 5 cm) are congruent, state which condition you used, and express the congruence.”) and Figure it Out Q2, section 9.2 p.13–14 (“Given that CD and AB are parallel and AB = CD, find the other equal parts in the figure (using equal alternate angles) and, if the two triangles are congruent, express the congruence.”)."
+      },
+      {
+       "minutes": "32–40",
+       "activity": "Discuss Q2: alternate angles from parallel lines act as the “found” equal parts, completing the condition. Teacher highlights the logical pattern — known parallel lines → known equal angles → congruence condition met — as a reusable proof strategy."
+      }
+     ],
+     "teacher_notes": "Students sometimes confuse ASA and AAS, thinking they are different conditions; the AAS derivation from ASA via the angle-sum rule is the clearest way to show they both guarantee congruence for the same underlying reason. Watch for students who accept ASA without checking that the side really is the included one. The midpoint argument (O is the midpoint of AD and BC, vertically opposite angles) from the section 9.2 prose is worth directing confident students to read on their own.",
+     "materials": [
+      "Ruler",
+      "Protractor",
+      "Plain paper",
+      "Pencil",
+      "Blackboard"
+     ]
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 9.2",
+       "title": "Congruence of Triangles"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "The RHS Condition and Why SSA Works for Right Triangles",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-11",
+       "type": "exercise",
+       "source_section": "section 9.2",
+       "book_ref": "Figure it Out Q3, section 9.2 p.14",
+       "description": "Given ∠ABC = ∠DBC and ∠ACB = ∠DCB, show that ∠BAC = ∠BDC and decide whether the two triangles are congruent."
+      },
+      {
+       "id": "E-12",
+       "type": "exercise",
+       "source_section": "section 9.2",
+       "book_ref": "Figure it Out Q4, section 9.2 p.14",
+       "description": "Identify the equal parts in the figure, given that ∠ABD = ∠DCA and ∠ACB = ∠DBC."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–14",
+       "activity": "Introduce RHS: a right-angled triangle with equal hypotenuse and one leg. Students draw a perpendicular from a point, mark an arc (hypotenuse) and another arc (leg) — the foot of the perpendicular is determined, so only one triangle is formed. Compare with a partner: all match. Class explains why SSA is rescued here — the right angle constrains the figure enough to eliminate the second solution that plagued the general SSA case."
+      },
+      {
+       "minutes": "14–26",
+       "activity": "Students work on Figure it Out Q3, section 9.2 p.14 (“Given ∠ABC = ∠DBC and ∠ACB = ∠DCB, show that ∠BAC = ∠BDC and decide whether the two triangles are congruent.”). They must derive the third angle using the angle-sum rule and name the condition."
+      },
+      {
+       "minutes": "26–38",
+       "activity": "Students tackle Figure it Out Q4, section 9.2 p.14 (“Identify the equal parts in the figure, given that ∠ABD = ∠DCA and ∠ACB = ∠DBC.”). They list the given equal parts, identify additional equalities from the congruence, and write the congruence statement."
+      },
+      {
+       "minutes": "38–40",
+       "activity": "Teacher updates the conditions-table: SSS, SAS, ASA, AAS, RHS confirmed; AAA, SSA (general) not sufficient. Students read the completed table aloud as a class."
+      }
+     ],
+     "teacher_notes": "The core reasoning moment is why the right angle removes the ambiguity of SSA — help students see that with a 90° angle fixed and the hypotenuse fixed, the Pythagorean relationship forces the third side; there is no second solution. Watch for students who try to apply RHS when the equal sides are not the hypotenuse. Completing the conditions-table makes a natural reference for the application work in the next run of this section.",
+     "materials": [
+      "Ruler",
+      "Compass",
+      "Protractor",
+      "Plain paper",
+      "Pencil",
+      "Blackboard"
+     ]
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 9.2",
+       "title": "Congruence of Triangles"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Applying All Five Conditions to Identify and Express Congruence",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-9",
+       "type": "exercise",
+       "source_section": "section 9.2",
+       "book_ref": "Figure it Out Q1, section 9.2 p.13",
+       "description": "Identify whether the triangles (marked 7 cm, 47°, 5 cm) are congruent, state which condition you used, and express the congruence."
+      },
+      {
+       "id": "E-10",
+       "type": "exercise",
+       "source_section": "section 9.2",
+       "book_ref": "Figure it Out Q2, section 9.2 p.13–14",
+       "description": "Given that CD and AB are parallel and AB = CD, find the other equal parts in the figure (using equal alternate angles) and, if the two triangles are congruent, express the congruence."
+      },
+      {
+       "id": "E-11",
+       "type": "exercise",
+       "source_section": "section 9.2",
+       "book_ref": "Figure it Out Q3, section 9.2 p.14",
+       "description": "Given ∠ABC = ∠DBC and ∠ACB = ∠DCB, show that ∠BAC = ∠BDC and decide whether the two triangles are congruent."
+      },
+      {
+       "id": "E-12",
+       "type": "exercise",
+       "source_section": "section 9.2",
+       "book_ref": "Figure it Out Q4, section 9.2 p.14",
+       "description": "Identify the equal parts in the figure, given that ∠ABD = ∠DCA and ∠ACB = ∠DBC."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Brief review: students name the five sufficient conditions (SSS, SAS, ASA, AAS, RHS) and one condition that fails (SSA). Teacher poses the strategy question: given a diagram, how do you decide which condition to use? Students suggest a method: list all given equal parts, then check which condition they match."
+      },
+      {
+       "minutes": "8–22",
+       "activity": "Students work in pairs on fresh applications: Figure it Out Q1, section 9.2 p.13 (“Identify whether the triangles (marked 7 cm, 47°, 5 cm) are congruent, state which condition you used, and express the congruence.”) and Figure it Out Q2, section 9.2 p.13–14 (“Given that CD and AB are parallel and AB = CD, find the other equal parts in the figure (using equal alternate angles) and, if the two triangles are congruent, express the congruence.”). Students must write a full justification including the condition name."
+      },
+      {
+       "minutes": "22–36",
+       "activity": "Students work on Figure it Out Q3, section 9.2 p.14 (“Given ∠ABC = ∠DBC and ∠ACB = ∠DCB, show that ∠BAC = ∠BDC and decide whether the two triangles are congruent.”) and Figure it Out Q4, section 9.2 p.14 (“Identify the equal parts in the figure, given that ∠ABD = ∠DCA and ∠ACB = ∠DBC.”), extending to deducing equal parts from the congruence statement."
+      },
+      {
+       "minutes": "36–40",
+       "activity": "Students share one complete solution each (problem and justification) with the class. Teacher highlights any instances where the congruence statement’s vertex order was used correctly to read off a deduced equality."
+      }
+     ],
+     "teacher_notes": "The focus here is fluency in applying the conditions, not rediscovering them. A common error is naming the correct condition but writing the congruence statement in an order that contradicts the correspondence visible in the diagram — insist students trace the matching vertices before writing. Students who finish quickly can be asked to pose their own triangle-congruence problem for a partner.",
+     "materials": [
+      "Ruler",
+      "Protractor",
+      "Plain paper",
+      "Pencil"
+     ]
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 9.2",
+       "title": "Congruence of Triangles"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Deducing Parallelism and Angle Bisection from Congruent Triangles",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-7",
+       "type": "exercise",
+       "source_section": "section 9.2",
+       "book_ref": "Figure it Out Q3, section 9.2 p.9",
+       "description": "Given AB = AD and CB = CD, identify any pair of congruent triangles and explain why, and decide with reasons whether AC divides ∠BAD and ∠BCD into two equal parts."
+      },
+      {
+       "id": "E-8",
+       "type": "exercise",
+       "source_section": "section 9.2",
+       "book_ref": "Figure it Out Q4, section 9.2 p.9",
+       "description": "Given DF = DG and FE = GE, decide whether ∆DFE and ∆GED are congruent to each other."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Establish the proof pattern: once two triangles are proved congruent, any pair of corresponding parts (CPCT — corresponding parts of congruent triangles) are equal. Students state two consequences: equal sides can be deduced, and equal angles can show that lines are parallel (via alternate or corresponding angle converse)."
+      },
+      {
+       "minutes": "10–24",
+       "activity": "Students work on Figure it Out Q3, section 9.2 p.9 (“Given AB = AD and CB = CD, identify any pair of congruent triangles and explain why, and decide with reasons whether AC divides ∠BAD and ∠BCD into two equal parts.”), writing a full two-step argument: first the congruence, then the angle-bisection deduction."
+      },
+      {
+       "minutes": "24–36",
+       "activity": "Students work on Figure it Out Q4, section 9.2 p.9 (“Given DF = DG and FE = GE, decide whether ∆DFE and ∆GED are congruent to each other.”), carefully checking whether the vertex correspondence in the statement matches the given equal parts."
+      },
+      {
+       "minutes": "36–40",
+       "activity": "Whole-class discussion: what is the difference between claiming two triangles are congruent and proving it? Students articulate: proof requires naming the condition and listing all the required equal parts explicitly."
+      }
+     ],
+     "teacher_notes": "Students frequently jump to the conclusion without stating which pairs of parts are equal and why — insist on the three-step structure: state the equal parts, name the condition, write the congruence statement. Watch for the error of listing only two pairs of equal parts when the condition requires three. The pattern of proving congruence to deduce further equalities (angle bisection, parallelism) is the main tool used again in section 9.3.",
+     "materials": [
+      "Ruler",
+      "Plain paper",
+      "Pencil",
+      "Blackboard"
+     ]
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 9.3",
+       "title": "Angles of Isosceles and Equilateral Triangles"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Proving the Isosceles Triangle Angle Theorem via Congruence",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-13",
+       "type": "exercise",
+       "source_section": "section 9.3",
+       "book_ref": "Figure it Out Q1, section 9.3 p.20",
+       "description": "Given ∆AIR ≅ ∆FLY, identify the corresponding vertices, sides, and angles."
+      },
+      {
+       "id": "E-17",
+       "type": "exercise",
+       "source_section": "section 9.3",
+       "book_ref": "Figure it Out Q5, section 9.3 p.21",
+       "description": "Find ∠B and ∠C if A is the centre of the circle and the marked angle at A is 120°."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Open with an isosceles triangle AB = AC, ∠A = 80°. Students guess ∠B and ∠C, then measure. Teacher poses the challenge: can we prove this is always true — that angles opposite equal sides are always equal — without measuring?"
+      },
+      {
+       "minutes": "10–24",
+       "activity": "Walk through the altitude construction: drop AD from A perpendicular to BC, meeting it at D. Students identify the two right triangles formed and list the equal parts: AB = AC (given), AD = AD (common side), right angle at D. Teacher guides the RHS application: ∆ADB ≅ ∆ADC. From corresponding parts, ∠B = ∠C. Students write the proof in their own words."
+      },
+      {
+       "minutes": "24–34",
+       "activity": "Students work on Figure it Out Q1, section 9.3 p.20 (“Given ∆AIR ≅ ∆FLY, identify the corresponding vertices, sides, and angles.”), practising the skill of reading all the equalities from a congruence statement — the same skill used in the proof above."
+      },
+      {
+       "minutes": "34–40",
+       "activity": "Students begin Figure it Out Q5, section 9.3 p.21 (“Find ∠B and ∠C if A is the centre of the circle and the marked angle at A is 120°.”), identifying which triangle is isosceles and applying the theorem just proved. Answers shared at the close."
+      }
+     ],
+     "teacher_notes": "The proof technique here — constructing an altitude to split the isosceles triangle into two congruent right triangles — is a model that students will reuse in later geometry. A common error is assuming BD = DC without proving it; the RHS congruence delivers BD = DC as a by-product, so point this out explicitly. The proof illustrates how congruence, established in section 9.2, becomes the engine for deriving new angle facts.",
+     "materials": [
+      "Ruler",
+      "Protractor",
+      "Plain paper",
+      "Pencil",
+      "Blackboard"
+     ]
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 9.3",
+       "title": "Angles of Isosceles and Equilateral Triangles"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "All Angles Equal 60°: The Equilateral Triangle Argument",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-14",
+       "type": "exercise",
+       "source_section": "section 9.3",
+       "book_ref": "Figure it Out Q2, section 9.3 p.20",
+       "description": "Each case (a)–(e) gives measurements from two triangles; identify the pairs that are congruent, with reason, and express the congruence whenever they are congruent."
+      },
+      {
+       "id": "E-18",
+       "type": "exercise",
+       "source_section": "section 9.3",
+       "book_ref": "Figure it Out Q6, section 9.3 p.21",
+       "description": "Find the missing angles in the figure, using the convention that segments marked with a single tick are equal to each other and those with a double tick are equal to each other."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "From the isosceles result established through the RHS proof (angles opposite equal sides are equal), apply it twice to an equilateral triangle: AB = AC gives ∠B = ∠C; AB = BC gives ∠A = ∠C. Students write: all three angles are equal. Since ∠A + ∠B + ∠C = 180°, each must be 60°. Students verify by measuring a drawn equilateral triangle."
+      },
+      {
+       "minutes": "12–24",
+       "activity": "Students work on Figure it Out Q2, section 9.3 p.20 (“Each case (a)–(e) gives measurements from two triangles; identify the pairs that are congruent, with reason, and express the congruence whenever they are congruent.”), applying all five conditions across a variety of measurement combinations."
+      },
+      {
+       "minutes": "24–36",
+       "activity": "Students work on Figure it Out Q6, section 9.3 p.21 (“Find the missing angles in the figure, using the convention that segments marked with a single tick are equal to each other and those with a double tick are equal to each other.”), applying the isosceles-angle theorem and the equilateral result to multi-step angle-finding."
+      },
+      {
+       "minutes": "36–40",
+       "activity": "Class discussion: students share one multi-step angle-finding solution, narrating each logical step. Teacher emphasises the chain: equal sides → congruent triangles → equal angles → angle sum → missing angle."
+      }
+     ],
+     "teacher_notes": "The double application of the isosceles result to the equilateral triangle is the key logical step; students sometimes apply it only once and conclude two angles are equal, stopping short. Watch for students who use the 60° result without justification — the deductive chain (two applications of isosceles → all equal → angle sum) should be written out. Real-world images of the Louvre pyramid and Howrah Bridge in the section can be used to motivate why these properties matter.",
+     "materials": [
+      "Ruler",
+      "Protractor",
+      "Plain paper",
+      "Pencil",
+      "Blackboard"
+     ]
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 9.3",
+       "title": "Angles of Isosceles and Equilateral Triangles"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Proving Parallelism and Exploring Multiple Congruences in a Square",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-15",
+       "type": "exercise",
+       "source_section": "section 9.3",
+       "book_ref": "Figure it Out Q3, section 9.3 p.20",
+       "description": "Given OB = OC and OA = OD, show that AB is parallel to CD (using AD as a transversal and equal alternate angles)."
+      },
+      {
+       "id": "E-16",
+       "type": "exercise",
+       "source_section": "section 9.3",
+       "book_ref": "Figure it Out Q4, section 9.3 p.21",
+       "description": "ABCD is a square; show that ∆ABC ≅ ∆ADC and decide whether ∆ABC is also congruent to ∆CDA. Give more examples of triangles congruent in two different ways, and an example of two triangles congruent in six different ways."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–14",
+       "activity": "Students work on Figure it Out Q3, section 9.3 p.20 (“Given OB = OC and OA = OD, show that AB is parallel to CD (using AD as a transversal and equal alternate angles).”). Teacher guides: identify the two triangles, state the equal parts (OB = OC, OA = OD, and vertically opposite angles at O by SAS), deduce equal alternate angles, invoke the parallel-line converse."
+      },
+      {
+       "minutes": "14–28",
+       "activity": "Students work on Figure it Out Q4, section 9.3 p.21 (“ABCD is a square; show that ∆ABC ≅ ∆ADC and decide whether ∆ABC is also congruent to ∆CDA. Give more examples of triangles congruent in two different ways, and an example of two triangles congruent in six different ways.”). Students first identify all equal parts in a square (all sides equal, all angles 90°), write the congruence statements with correct vertex orders, then explore additional congruences."
+      },
+      {
+       "minutes": "28–38",
+       "activity": "Students share their examples of triangles congruent in two and six ways. Class discusses: what symmetry in the figure makes multiple valid congruences possible? Teacher draws out the idea that higher symmetry creates more valid vertex correspondences."
+      },
+      {
+       "minutes": "38–40",
+       "activity": "Students write a one-sentence answer: why does the vertex-order matter when a figure has multiple valid congruences? This closes the reasoning arc of the section."
+      }
+     ],
+     "teacher_notes": "The parallelism proof requires using vertically opposite angles — students should recognise these from their earlier work with intersecting lines. A common error in the square problem is writing ∆ABC ≅ ∆CDA without checking that this vertex order correctly maps each vertex to its correspondent; insist on verifying the side-lengths under the proposed correspondence. The exploration of six valid congruences between two equilateral triangles is a rich extension for students who finish quickly.",
+     "materials": [
+      "Ruler",
+      "Plain paper",
+      "Pencil",
+      "Blackboard"
+     ]
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 40,
+     "textbook_segments": [
+      {
+       "ref": "section 9.3",
+       "title": "Angles of Isosceles and Equilateral Triangles"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Consolidating Angle Deduction with Tick-Mark Figures",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-17",
+       "type": "exercise",
+       "source_section": "section 9.3",
+       "book_ref": "Figure it Out Q5, section 9.3 p.21",
+       "description": "Find ∠B and ∠C if A is the centre of the circle and the marked angle at A is 120°."
+      },
+      {
+       "id": "E-18",
+       "type": "exercise",
+       "source_section": "section 9.3",
+       "book_ref": "Figure it Out Q6, section 9.3 p.21",
+       "description": "Find the missing angles in the figure, using the convention that segments marked with a single tick are equal to each other and those with a double tick are equal to each other."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Introduce tick-mark convention: single ticks mark one set of equal segments, double ticks another. Students practise reading a tick-marked figure to list all implied equalities before attempting any calculation."
+      },
+      {
+       "minutes": "12–26",
+       "activity": "Students work on Figure it Out Q5, section 9.3 p.21 (“Find ∠B and ∠C if A is the centre of the circle and the marked angle at A is 120°.”). They identify the isosceles triangle (radii AB = AC), apply the angle-opposite-equal-sides theorem, use the angle sum to find ∠B and ∠C."
+      },
+      {
+       "minutes": "26–38",
+       "activity": "Students work on Figure it Out Q6, section 9.3 p.21 (“Find the missing angles in the figure, using the convention that segments marked with a single tick are equal to each other and those with a double tick are equal to each other.”), applying the isosceles-angle theorem multiple times across a multi-triangle figure."
+      },
+      {
+       "minutes": "38–40",
+       "activity": "Class checks answers; teacher asks: which step in the multi-triangle problem required the most reasoning? Students identify the chain of deductions that linked the two sets of tick-marked sides."
+      }
+     ],
+     "teacher_notes": "Students sometimes misread double-tick marks as doubling the length rather than indicating equality with other double-tick sides; clarify this convention explicitly at the start. A common computational error in Q5 is subtracting 120° from 180° instead of recognising the isosceles pair and using the angle-sum rule correctly. Encourage students to annotate each step with the theorem name (e.g., “isosceles theorem”, “angle sum”) as a habit of deductive writing.",
+     "materials": [
+      "Ruler",
+      "Protractor",
+      "Plain paper",
+      "Pencil",
+      "Blackboard"
+     ]
+    },
+    {
+     "period_number": 15,
+     "period_duration_minutes": 40,
+     "synthesis": true,
+     "textbook_segments": [
+      {
+       "ref": "section 9.1",
+       "title": "Geometric Twins"
+      },
+      {
+       "ref": "section 9.2",
+       "title": "Congruence of Triangles"
+      },
+      {
+       "ref": "section 9.3",
+       "title": "Angles of Isosceles and Equilateral Triangles"
+      }
+     ],
+     "activity_title": "Congruence at Work: Four Problems, Five Conditions",
+     "pedagogical_method": "Problem-solving",
+     "section_goal": "apply",
+     "teacher_notes": "Refer to Prepared Table (see material: 'Problems and solutions') for the problems in full and their worked solutions. Pose all four problems on the board at once. Students work individually for the first fifteen minutes — full written working, not just answers. Then groups of three compare: any disagreement is reconstructed step by step before the group settles on a solution. Each group nominates one presenter per problem; after each presentation, the class names the chapter method used before moving on. Watch for: (P1) students writing the congruence statement with vertices in the wrong order — insist the correspondence is read off the equal parts; (P2) students claiming AAA is sufficient — push them to identify which condition actually applies and why size is fixed; (P3) students who spot equal sides but cannot locate the included angle — the SAS condition requires the angle to sit between the two sides; (P4) students who find ∠B or ∠C but stop — both must be deduced and the route through the congruence result must be shown explicitly. Methods: P1 uses SSS; P2 uses ASA (and the angle-sum property to convert AAS to ASA); P3 uses SAS leading to a parallelism deduction; P4 uses the isosceles base-angle theorem, itself proved by RHS congruence.",
+     "visual_aids": [
+      {
+       "type": "table",
+       "title": "Problems and solutions",
+       "table": "No. | Problem | Solution\n1 | Triangle PQR has PQ = 5 cm, QR = 7 cm, PR = 6 cm. Triangle XYZ has XY = 7 cm, YZ = 6 cm, XZ = 5 cm. Are the two triangles congruent? If yes, write the congruence statement. | All three sides match: PQ = XZ = 5 cm, PR = YZ = 6 cm, QR = XY = 7 cm. By SSS, ∆PQR ≅ ∆XZY. (Vertex order: P↔X, Q↔Z, R↔Y, checked against the equal pairs.)\n2 | In ∆ABC and ∆DEF, ∠A = 55°, AB = 8 cm, ∠B = 65°; and ∠D = 55°, DE = 8 cm, ∠E = 65°. Are the triangles congruent? State the condition used. | The included side between the two known angles is AB = DE = 8 cm, with ∠A = ∠D = 55° and ∠B = ∠E = 65° on either side. This is the ASA condition. ∆ABC ≅ ∆DEF. (The third angles are equal too — each is 180° − 55° − 65° = 60° — but ASA is the operative condition because the side is included.)\n3 | In quadrilateral ABCD, AB = CD and ∠ABC = ∠DCB (both are angles at B and C respectively, with BC as the common side). Show that ∆ABC ≅ ∆DCB, and deduce that AD is parallel to BC. | In ∆ABC and ∆DCB: AB = DC (given), BC = CB (common side), ∠ABC = ∠DCB (given) — the equal angle is included between the two equal sides. By SAS, ∆ABC ≅ ∆DCB. Corresponding parts give ∠ACB = ∠DBC. These are alternate interior angles for lines AD and BC with transversal AC (and BD). Since alternate angles are equal, AD ∥ BC.\n4 | Triangle LMN has LM = LN and ∠MLN = 40°. Find ∠LMN and ∠LNM, showing your reasoning. | Draw the altitude from L to MN, meeting MN at D. ∆LDM and ∆LDN share hypotenuses LM = LN and the common leg LD, with right angles at D. By RHS, ∆LDM ≅ ∆LDN, so ∠LMN = ∠LNM. Angle sum: ∠LMN + ∠LNM = 180° − 40° = 140°. Since the two base angles are equal, ∠LMN = ∠LNM = 70°."
+      }
+     ],
+     "materials": [
+      "Ruler",
+      "Protractor",
+      "Plain paper or notebook",
+      "Pencil"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-3",
+       "activity": "Teacher writes all four problems on the board and reads each aloud. Students read them over and write the problem numbers in their notebooks. No discussion yet — the task is understood individually first."
+      },
+      {
+       "minutes": "3-18",
+       "activity": "Individual work: students attempt all four problems with full written working. Teacher circulates silently, noting where errors in vertex correspondence, condition identification, or angle deduction arise — these become the focus of the group stage."
+      },
+      {
+       "minutes": "18-28",
+       "activity": "Groups of three compare solutions. Any disagreement on a problem is reconstructed line by line — the group does not move to the next problem until a shared, written argument is agreed. Teacher nudges groups that are stuck by asking: 'Which parts are given as equal? Is the angle between the two sides, or outside them?'"
+      },
+      {
+       "minutes": "28-38",
+       "activity": "Four brief presentations — one per problem, one group each. After each solution is shared, the class calls out the chapter method it rested on (SSS, ASA, SAS, or RHS + base-angle theorem). The teacher confirms and, where needed, corrects vertex order in the congruence statement or the identification of the included angle."
+      },
+      {
+       "minutes": "38-40",
+       "activity": "Closing statement: the teacher asks, 'Why did every one of these problems yield — what was the tool?' Students respond aloud; the teacher states the chapter's one idea: congruence gives us a precise way to know that two figures are exactly the same, and that precision lets us deduce equal angles, equal sides, and parallel lines that we could not see directly."
+      }
+     ],
+     "textbook_items_in_class": [],
+     "homework": []
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 40,
+   "count": 15,
+   "total_minutes": 600
+  },
+  "coverage_handoff": {
+   "section_a": {
+    "goal_cluster": [
+     "recall"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 9.1",
+      "section_title": "Geometric Twins",
+      "goal": "recall",
+      "anchor_id": "E-1",
+      "anchor_book_ref": "Figure it Out Q1, section 9.1 p.3",
+      "anchor_description": "Check if the two given figures are congruent."
+     },
+     {
+      "section_ref": "section 9.1",
+      "section_title": "Geometric Twins",
+      "goal": "recall",
+      "anchor_id": "E-3",
+      "anchor_book_ref": "Figure it Out Q3, section 9.1 p.3–4",
+      "anchor_description": "State what measurements you would take to create a figure congruent to a given (a) circle and (b) rectangle, and use this to state how you would check whether two circles, and two rectangles, are congruent."
+     }
+    ]
+   },
+   "section_b": {
+    "goal_cluster": [
+     "reason"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 9.1",
+      "section_title": "Geometric Twins",
+      "goal": "reason",
+      "anchor_id": "E-3",
+      "anchor_book_ref": "Figure it Out Q3, section 9.1 p.3–4",
+      "anchor_description": "State what measurements you would take to create a figure congruent to a given (a) circle and (b) rectangle, and use this to state how you would check whether two circles, and two rectangles, are congruent."
+     },
+     {
+      "section_ref": "section 9.2",
+      "section_title": "Congruence of Triangles",
+      "goal": "reason",
+      "anchor_id": "E-6",
+      "anchor_book_ref": "Figure it Out Q2, section 9.2 p.8",
+      "anchor_description": "Determine whether the given triangles (sides 6 cm, 5 cm, 3.5 cm) are congruent. If yes, express the congruence."
+     },
+     {
+      "section_ref": "section 9.2",
+      "section_title": "Congruence of Triangles",
+      "goal": "reason",
+      "anchor_id": "E-5",
+      "anchor_book_ref": "Figure it Out Q1, section 9.2 p.8",
+      "anchor_description": "Suppose ∆HEN is congruent to ∆BIG. List all the other correct ways of expressing this congruence."
+     },
+     {
+      "section_ref": "section 9.2",
+      "section_title": "Congruence of Triangles",
+      "goal": "reason",
+      "anchor_id": "E-8",
+      "anchor_book_ref": "Figure it Out Q4, section 9.2 p.9",
+      "anchor_description": "Given DF = DG and FE = GE, decide whether ∆DFE and ∆GED are congruent to each other."
+     },
+     {
+      "section_ref": "section 9.2",
+      "section_title": "Congruence of Triangles",
+      "goal": "reason",
+      "anchor_id": "E-9",
+      "anchor_book_ref": "Figure it Out Q1, section 9.2 p.13",
+      "anchor_description": "Identify whether the triangles (marked 7 cm, 47°, 5 cm) are congruent, state which condition you used, and express the congruence."
+     },
+     {
+      "section_ref": "section 9.2",
+      "section_title": "Congruence of Triangles",
+      "goal": "reason",
+      "anchor_id": "E-11",
+      "anchor_book_ref": "Figure it Out Q3, section 9.2 p.14",
+      "anchor_description": "Given ∠ABC = ∠DBC and ∠ACB = ∠DCB, show that ∠BAC = ∠BDC and decide whether the two triangles are congruent."
+     },
+     {
+      "section_ref": "section 9.3",
+      "section_title": "Angles of Isosceles and Equilateral Triangles",
+      "goal": "reason",
+      "anchor_id": "E-13",
+      "anchor_book_ref": "Figure it Out Q1, section 9.3 p.20",
+      "anchor_description": "Given ∆AIR ≅ ∆FLY, identify the corresponding vertices, sides, and angles."
+     },
+     {
+      "section_ref": "section 9.3",
+      "section_title": "Angles of Isosceles and Equilateral Triangles",
+      "goal": "reason",
+      "anchor_id": "E-14",
+      "anchor_book_ref": "Figure it Out Q2, section 9.3 p.20",
+      "anchor_description": "Each case (a)–(e) gives measurements from two triangles; identify the pairs that are congruent, with reason, and express the congruence whenever they are congruent."
+     },
+     {
+      "section_ref": "section 9.3",
+      "section_title": "Angles of Isosceles and Equilateral Triangles",
+      "goal": "reason",
+      "anchor_id": "E-15",
+      "anchor_book_ref": "Figure it Out Q3, section 9.3 p.20",
+      "anchor_description": "Given OB = OC and OA = OD, show that AB is parallel to CD (using AD as a transversal and equal alternate angles)."
+     },
+     {
+      "section_ref": "section 9.3",
+      "section_title": "Angles of Isosceles and Equilateral Triangles",
+      "goal": "reason",
+      "anchor_id": "E-17",
+      "anchor_book_ref": "Figure it Out Q5, section 9.3 p.21",
+      "anchor_description": "Find ∠B and ∠C if A is the centre of the circle and the marked angle at A is 120°."
+     }
+    ]
+   },
+   "section_c": {
+    "goal_cluster": [
+     "apply"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 9.2",
+      "section_title": "Congruence of Triangles",
+      "goal": "apply",
+      "anchor_id": "E-9",
+      "anchor_book_ref": "Figure it Out Q1, section 9.2 p.13",
+      "anchor_description": "Identify whether the triangles (marked 7 cm, 47°, 5 cm) are congruent, state which condition you used, and express the congruence."
+     },
+     {
+      "section_ref": "section 9.2",
+      "section_title": "Congruence of Triangles",
+      "goal": "apply",
+      "anchor_id": "E-7",
+      "anchor_book_ref": "Figure it Out Q3, section 9.2 p.9",
+      "anchor_description": "Given AB = AD and CB = CD, identify any pair of congruent triangles and explain why, and decide with reasons whether AC divides ∠BAD and ∠BCD into two equal parts."
+     },
+     {
+      "section_ref": "section 9.3",
+      "section_title": "Angles of Isosceles and Equilateral Triangles",
+      "goal": "apply",
+      "anchor_id": "E-16",
+      "anchor_book_ref": "Figure it Out Q4, section 9.3 p.21",
+      "anchor_description": "ABCD is a square; show that ∆ABC ≅ ∆ADC and decide whether ∆ABC is also congruent to ∆CDA. Give more examples of triangles congruent in two different ways, and an example of two triangles congruent in six different ways."
+     }
+    ]
+   }
+  },
+  "assessment_items": [
+   {
+    "section_code": "A",
+    "section_title": "Recall and Apply",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-A-1",
+      "section_ref": "section 9.1",
+      "section_title": "Geometric Twins",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "Which of the following correctly states what it means for two figures to be congruent?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "They have exactly the same shape and size, so one can be superimposed exactly on the other (allowing rotation and flipping).",
+        "is_correct": true
+       },
+       {
+        "label": "B",
+        "text": "They have the same area but may differ in shape.",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "They have the same perimeter and the same number of sides.",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "They have the same shape but may differ in size.",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "Option C: Congruent figures have exactly the same shape and size and can be superimposed exactly on each other, with rotation and flipping permitted.",
+       "method_one_line": "Apply the definition of congruence from section 9.1: same shape and size, exact superimposition allowed with rotation or reflection.",
+       "what_each_option_reveals": {
+        "D": "The student is confusing congruence with similarity; similar figures share shape but not necessarily size.",
+        "B": "The student is confusing congruence with equal area; equal area does not imply same shape or size.",
+        "C": "The student is conflating congruence with having the same perimeter and side count, neither of which alone guarantees exact replication."
+       },
+       "inclusivity": {
+        "support": "Look back at the signboard example in section 9.1 and reread the definition there.",
+        "challenge": "Write your own definition of congruence in a single sentence using the word 'superimpose', then give one example and one non-example."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 9.1 p.3",
+       "description": "Check if the two given figures are congruent."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-2",
+      "section_ref": "section 9.1",
+      "section_title": "Geometric Twins",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "A student wants to recreate a rectangle so that the copy is congruent to the original. What is the minimum information the student needs?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "The area of the rectangle.",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "The length of one diagonal only.",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "The lengths of two adjacent sides.",
+        "is_correct": true
+       },
+       {
+        "label": "D",
+        "text": "The perimeter of the rectangle.",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "Option C: Two adjacent side lengths. All four angles of a rectangle are already fixed at 90°, so knowing two adjacent sides fixes all four sides and therefore the shape and size completely.",
+       "method_one_line": "Apply the minimum-measurement principle from section 9.1: list the features that are free to vary in a rectangle, then count the measurements needed to fix them all.",
+       "what_each_option_reveals": {
+        "D": "The student thinks perimeter is sufficient; but a 1 × 9 and a 3 × 3 rectangle have the same perimeter yet are not congruent.",
+        "A": "The student thinks area is sufficient; but a 2 × 8 and a 4 × 4 rectangle have equal areas yet are not congruent.",
+        "B": "The student thinks one diagonal fixes the rectangle; a diagonal alone does not determine both side lengths — many rectangles can share the same diagonal length."
+       },
+       "inclusivity": {
+        "support": "Try drawing two different rectangles that each have a perimeter of 20 cm to see why perimeter alone is not enough.",
+        "challenge": "Explain in your own words why two adjacent sides are enough for a rectangle but two sides alone are not enough for a general quadrilateral."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3, section 9.1 p.3–4",
+       "description": "State what measurements you would take to create a figure congruent to a given (a) circle and (b) rectangle, and use this to state how you would check whether two circles, and two rectangles, are congruent."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "B",
+    "section_title": "Reason and Explain",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-B-1",
+      "section_ref": "section 9.1",
+      "section_title": "Geometric Twins",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "Two students each draw a figure using two arm lengths of 5 cm and 9 cm but without fixing the angle between the arms. Explain why their figures may not be congruent to each other, and state what additional measurement would guarantee that their figures are congruent.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Because the angle between the two arms is free to vary, many different figures can be built from the same two arm lengths. The figures will be congruent only if both students also use the same included angle between the two arms. With the same two arm lengths and the same included angle, the shape and size are completely fixed.",
+       "method_one_line": "Apply the reasoning from section 9.1: two lengths leave the included angle free, so a third measurement — the included angle — is needed to fix the figure.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Sketch two figures each using arms of 5 cm and 9 cm but with different angles between them to see why they look different.",
+        "challenge": "What if, instead of the included angle, you fixed the length of the straight line connecting the two free endpoints — would that also guarantee congruence? Explain why or why not."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3, section 9.1 p.3–4",
+       "description": "State what measurements you would take to create a figure congruent to a given (a) circle and (b) rectangle, and use this to state how you would check whether two circles, and two rectangles, are congruent."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-2",
+      "section_ref": "section 9.2",
+      "section_title": "Congruence of Triangles",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "Two triangles each have sides of 6 cm, 5 cm, and 3.5 cm. A student claims they must be congruent by SSS. Write out the reasoning the student should give, including how to identify the correct vertex correspondence.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "The SSS condition states that if three sides of one triangle equal three sides of another, the triangles are congruent. Here, all three side lengths match (6 cm, 5 cm, 3.5 cm). To write the congruence correctly, match each vertex of the first triangle to the vertex of the second that is opposite the equal side: the vertex opposite the 6 cm side in the first triangle corresponds to the vertex opposite the 6 cm side in the second, and similarly for the other two sides. With the correct correspondence established, the congruence statement follows.",
+       "method_one_line": "Apply the SSS condition from section 9.2: equal sidelengths guarantee congruence; vertex correspondence is determined by matching each vertex to the one opposite the equal side.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Talk through the answer with a partner before writing: name the three pairs of equal sides aloud, then decide which vertices match.",
+        "challenge": "If the side lengths were 6 cm, 5 cm, and 3.5 cm in the first triangle but 6 cm, 5 cm, and 4 cm in the second, what is the conclusion? Explain which condition or failure applies."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q2, section 9.2 p.8",
+       "description": "Determine whether the given triangles (sides 6 cm, 5 cm, 3.5 cm) are congruent. If yes, express the congruence."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-3",
+      "section_ref": "section 9.2",
+      "section_title": "Congruence of Triangles",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "∆PQR ≅ ∆XYZ. Without any diagram, list all the pairs of equal sides and all the pairs of equal angles that follow from this congruence statement, explaining how you read each pair from the vertex order.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "From ∆PQR ≅ ∆XYZ, the vertex order tells us: P corresponds to X, Q to Y, R to Z. Equal sides: PQ = XY (sides joining the first and second corresponding vertices), QR = YZ (second and third), PR = XZ (first and third). Equal angles: ∠P = ∠X (angle at the first corresponding vertex), ∠Q = ∠Y (second), ∠R = ∠Z (third). Each pair is read by matching the position in the two names.",
+       "method_one_line": "Apply the vertex-correspondence rule from section 9.2: the position of each letter in the congruence statement encodes which side and which angle are equal.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Write P↔X, Q↔Y, R↔Z as a table, then use it to list each pair of sides and angles.",
+        "challenge": "Write a different but equally valid congruence statement for the same pair of triangles and verify that it gives exactly the same six equalities."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 9.2 p.8",
+       "description": "Suppose ∆HEN is congruent to ∆BIG. List all the other correct ways of expressing this congruence."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-4",
+      "section_ref": "section 9.2",
+      "section_title": "Congruence of Triangles",
+      "goal": "reason",
+      "question_type": "ECR",
+      "prompt": "Explain why SSA is not a reliable congruence condition for triangles in general. Use the idea of a two-arc construction to support your explanation.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "In SSA, two sides and a non-included angle are given. Fix one side PQ as the base and draw the given angle at P. The second given side must reach from Q to land on the angle line. When you draw an arc of the given length from Q, this arc may cross the angle line at two different points (call them R and S), producing two non-congruent triangles ∆PQR and ∆PQS. Both triangles satisfy the SSA data (same two sides PQ and QR = QS, same angle at P) yet they are not congruent. This shows SSA does not guarantee a unique triangle, so it is not a sufficient congruence condition.",
+       "method_one_line": "Apply the two-arc construction from section 9.2 to show that the SSA data permits two distinct triangles, disproving sufficiency.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw the construction step by step: base PQ, the angle line at P, then the arc from Q — mark both crossing points and label the two triangles.",
+        "challenge": "Identify one special case in which SSA does guarantee congruence, name it, and explain why the ambiguity disappears in that case."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q4, section 9.2 p.9",
+       "description": "Given DF = DG and FE = GE, decide whether ∆DFE and ∆GED are congruent to each other."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-5",
+      "section_ref": "section 9.2",
+      "section_title": "Congruence of Triangles",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "In a figure, ∠ABC = ∠DBC and ∠ACB = ∠DCB. Show that ∠BAC = ∠BDC. Which condition guarantees that the two triangles are congruent, and what is the congruence statement?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "In triangles ABC and DBC, the given equalities are ∠ABC = ∠DBC and ∠ACB = ∠DCB, and the side BC is common. Since the angles of a triangle sum to 180°, ∠BAC = 180° − ∠ABC − ∠ACB and ∠BDC = 180° − ∠DBC − ∠DCB; because ∠ABC = ∠DBC and ∠ACB = ∠DCB, these expressions are equal, so ∠BAC = ∠BDC. The two triangles share side BC, and have two pairs of equal angles with BC as the included side for one pair or reducible to ASA; by ASA (∠ABC = ∠DBC, BC common, ∠ACB = ∠DCB) the triangles are congruent: ∆ABC ≅ ∆DBC.",
+       "method_one_line": "Apply the angle-sum rule to derive the third pair of equal angles, then name the ASA condition with BC as the included side.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Write out the angle-sum equation for each triangle separately, substitute the given equalities, and compare.",
+        "challenge": "Write the congruence statement in a second valid form and verify that it gives the same six equalities as the first."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 9.2 p.13",
+       "description": "Identify whether the triangles (marked 7 cm, 47°, 5 cm) are congruent, state which condition you used, and express the congruence."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-6",
+      "section_ref": "section 9.2",
+      "section_title": "Congruence of Triangles",
+      "goal": "reason",
+      "question_type": "ECR",
+      "prompt": "In a figure, O is the midpoint of segment AD and also the midpoint of segment BC. Using any appropriate congruence condition, prove that triangles AOB and DOC are congruent, and state one geometric conclusion you can draw from the congruence.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Since O is the midpoint of AD, AO = OD. Since O is the midpoint of BC, BO = OC. The angles at O in the two triangles are vertically opposite (∠AOB and ∠DOC), so ∠AOB = ∠DOC. With two pairs of equal sides and the included angle equal, the SAS condition applies: ∆AOB ≅ ∆DOC. From the congruence, AB = DC (corresponding sides), so the two segments are equal — or alternatively ∠OAB = ∠ODC, which means AB is parallel to DC (equal alternate angles with AD as transversal).",
+       "method_one_line": "Apply SAS: AO = DO (midpoint), BO = CO (midpoint), and vertically opposite angles at O; then read off corresponding parts.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "List the three pairs of equal parts one by one before naming the condition.",
+        "challenge": "What if O were not the midpoint of both segments but were only the midpoint of AD — would SAS still apply? Explain what changes."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3, section 9.2 p.14",
+       "description": "Given ∠ABC = ∠DBC and ∠ACB = ∠DCB, show that ∠BAC = ∠BDC and decide whether the two triangles are congruent."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-7",
+      "section_ref": "section 9.3",
+      "section_title": "Angles of Isosceles and Equilateral Triangles",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "Given ∆AIR ≅ ∆FLY, write down all three pairs of equal sides and all three pairs of equal angles.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "From ∆AIR ≅ ∆FLY: vertices correspond as A↔F, I↔L, R↔Y. Equal sides: AI = FL, IR = LY, AR = FY. Equal angles: ∠A = ∠F, ∠I = ∠L, ∠R = ∠Y.",
+       "method_one_line": "Read the vertex-correspondence from the congruence notation and list each pair of matching sides and angles in order.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Write the correspondence table A↔F, I↔L, R↔Y, then use it to fill in the six equalities one by one.",
+        "challenge": "Write two other valid congruence statements for the same pair of triangles and check that each gives the same six equalities."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 9.3 p.20",
+       "description": "Given ∆AIR ≅ ∆FLY, identify the corresponding vertices, sides, and angles."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-8",
+      "section_ref": "section 9.3",
+      "section_title": "Angles of Isosceles and Equilateral Triangles",
+      "goal": "reason",
+      "question_type": "ECR",
+      "prompt": "Using the congruence of triangles, prove that the angles opposite the equal sides of an isosceles triangle are equal. Clearly state the congruence condition you use and the corresponding parts you quote.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Let triangle ABC have AB = AC. Draw the altitude from A to BC, meeting BC at D. In triangles ADB and ADC: the right angle at D is equal in both (∠ADB = ∠ADC = 90°); the hypotenuses AB and AC are equal (given); and AD is the common side. By the RHS condition, ∆ADB ≅ ∆ADC. As corresponding parts of congruent triangles, ∠ABD = ∠ACD, that is ∠B = ∠C. Therefore the angles opposite the equal sides are equal.",
+       "method_one_line": "Construct the altitude from the apex to the base, apply RHS to the two right triangles formed, and quote ∠B = ∠C as corresponding parts.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw the altitude first and label all the equal parts you can see before writing the proof.",
+        "challenge": "What other congruence condition (apart from RHS) could justify ∆ADB ≅ ∆ADC? Write the alternative proof."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q2, section 9.3 p.20",
+       "description": "Each case (a)–(e) gives measurements from two triangles; identify the pairs that are congruent, with reason, and express the congruence whenever they are congruent."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-9",
+      "section_ref": "section 9.3",
+      "section_title": "Angles of Isosceles and Equilateral Triangles",
+      "goal": "reason",
+      "question_type": "ECR",
+      "prompt": "OB = OC and OA = OD. Prove that AB is parallel to CD, using a congruence argument and the properties of alternate angles.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Consider triangles AOB and DOC. OA = OD (given) and OB = OC (given). The angles ∠AOB and ∠DOC are vertically opposite, so they are equal. By SAS, ∆AOB ≅ ∆DOC. As corresponding parts, ∠OAB = ∠ODC. These are alternate angles formed by transversal AD cutting lines AB and CD. Since the alternate angles are equal, AB is parallel to CD.",
+       "method_one_line": "Apply SAS at the intersection point O using the given equal segments and vertically opposite angles, then invoke the converse of the alternate angles theorem.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Identify and label the vertically opposite angles at O before writing the proof.",
+        "challenge": "What if OA = OD but OB ≠ OC — would you still be able to prove AB ∥ CD? Explain."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3, section 9.3 p.20",
+       "description": "Given OB = OC and OA = OD, show that AB is parallel to CD (using AD as a transversal and equal alternate angles)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-10",
+      "section_ref": "section 9.3",
+      "section_title": "Angles of Isosceles and Equilateral Triangles",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "A is the centre of a circle and B, C are two points on the circle such that ∠BAC = 120°. Without measuring, find ∠ABC and ∠ACB, showing your reasoning.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Since A is the centre and B, C are on the circle, AB and AC are both radii, so AB = AC. Triangle ABC is isosceles. By the isosceles-angle theorem (angles opposite equal sides are equal), ∠ABC = ∠ACB. The three angles sum to 180°, so ∠ABC + ∠ACB = 180° − 120° = 60°. Since the two base angles are equal, ∠ABC = ∠ACB = 30°.",
+       "method_one_line": "Identify the isosceles triangle formed by two radii, apply the isosceles-angle theorem, and use the angle-sum rule to find each base angle.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Write the equation ∠ABC + ∠ACB + 120° = 180° and use the fact that ∠ABC = ∠ACB to solve.",
+        "challenge": "If ∠BAC were changed to any angle x, write a general formula for ∠ABC and ∠ACB in terms of x."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q5, section 9.3 p.21",
+       "description": "Find ∠B and ∠C if A is the centre of the circle and the marked angle at A is 120°."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "C",
+    "section_title": "Apply in Context",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-C-1",
+      "section_ref": "section 9.2",
+      "section_title": "Congruence of Triangles",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "In triangle PQR, PQ = 7 cm, QR = 5 cm, and ∠PQR = 47°. In triangle LMN, LM = 7 cm, MN = 5 cm, and ∠LMN = 47°. State the congruence condition that applies, write the congruence statement with correct vertex correspondence, and find the length of PR given that LN = 9 cm.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "The two sides PQ = LM = 7 cm and QR = MN = 5 cm with the included angle ∠PQR = ∠LMN = 47°. The SAS condition applies: ∆PQR ≅ ∆LMN. By the congruence, corresponding sides PR and LN are equal, so PR = LN = 9 cm.",
+       "method_one_line": "Apply SAS: two sides and the included angle match; then use corresponding parts of congruent triangles to equate PR and LN.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw and label both triangles, marking the equal sides with single and double ticks and the equal angle with an arc before writing the condition.",
+        "challenge": "If ∠PQR were not the included angle but instead ∠QPR = 47°, which condition (if any) would apply? Explain."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 9.2 p.13",
+       "description": "Identify whether the triangles (marked 7 cm, 47°, 5 cm) are congruent, state which condition you used, and express the congruence."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-2",
+      "section_ref": "section 9.2",
+      "section_title": "Congruence of Triangles",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "In a figure, AB = AD = 6 cm and CB = CD = 4 cm. AC is drawn. Show that triangles ABC and ADC are congruent, state the condition used, and find ∠BAC if ∠DAC = 35°.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "In triangles ABC and ADC: AB = AD = 6 cm (given), CB = CD = 4 cm (given), and AC is the common side. All three sides of one triangle equal the three sides of the other: SSS applies. ∆ABC ≅ ∆ADC. As corresponding parts, ∠BAC = ∠DAC = 35°. So AC bisects ∠BAD and ∠BAC = 35°.",
+       "method_one_line": "Apply SSS with the two given equal sides and the common side AC; then quote ∠BAC = ∠DAC as corresponding parts of congruent triangles.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "List the three pairs of equal sides, one per line, before naming the condition.",
+        "challenge": "Show that AC also bisects ∠BCD, giving the full reason using the same congruence."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3, section 9.2 p.9",
+       "description": "Given AB = AD and CB = CD, identify any pair of congruent triangles and explain why, and decide with reasons whether AC divides ∠BAD and ∠BCD into two equal parts."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-3",
+      "section_ref": "section 9.3",
+      "section_title": "Angles of Isosceles and Equilateral Triangles",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "ABCD is a square with side 5 cm. Diagonal AC divides it into triangles ABC and ACD. (a) Show that ∆ABC ≅ ∆CDA by stating the condition and the three pairs of equal parts. (b) Find all the angles of triangle ABC.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "(a) In triangles ABC and CDA: AB = CD = 5 cm (sides of the square), BC = DA = 5 cm (sides of the square), and AC = CA is the common diagonal. By SSS, ∆ABC ≅ ∆CDA. (b) Triangle ABC has AB = BC = 5 cm (sides of the square) and ∠ABC = 90° (angle of the square). So ∆ABC is an isosceles right triangle. The two base angles are equal: ∠BAC = ∠BCA = (180° − 90°) ÷ 2 = 45°. The angles of triangle ABC are 90°, 45°, and 45°.",
+       "method_one_line": "Apply SSS using the three pairs of equal sides (two square sides and the common diagonal); then use the isosceles-angle theorem and the angle-sum rule to find the angles.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw the square, draw the diagonal, and label all equal sides with ticks before writing the proof.",
+        "challenge": "Write a second valid congruence statement for the same pair of triangles (different vertex order) and verify it gives the same six equalities."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q4, section 9.3 p.21",
+       "description": "ABCD is a square; show that ∆ABC ≅ ∆ADC and decide whether ∆ABC is also congruent to ∆CDA. Give more examples of triangles congruent in two different ways, and an example of two triangles congruent in six different ways."
+      },
+      "verified": true
+     }
+    ]
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

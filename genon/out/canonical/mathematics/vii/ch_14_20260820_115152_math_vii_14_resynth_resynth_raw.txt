@@ -1,0 +1,48 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Four Problems, Two Strands — Constructions and Tiling at Work",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems on the board at once and give the class twelve minutes of individual silent work with full working in their notebooks. Then allow five minutes in pairs or threes: any disagreement is reconstructed step by step, not just compared by answer. Four students present, one per problem; after each presentation the class names the chapter method it used before the next problem is taken up. Problem 1 needs the perpendicular-bisector construction and its congruence justification — watch for students who find the midpoint by measuring rather than by compass. Problem 2 needs angle bisection applied twice (bisect 90° to get 45°, bisect 45° to get 22.5°) — watch for students who assume a 22.5° angle can be produced in one bisection step. Problem 3 needs the colouring argument — watch for students who attempt to tile by trial and stop at one failed arrangement rather than proving impossibility by colour count. Problem 4 needs the parity argument — watch for students who count squares correctly but forget that the tile covers exactly two, or who apply the colouring argument where the simpler count suffices.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | Draw a segment PQ of length 8 cm. Using only a ruler and compass, find its midpoint M and construct the perpendicular bisector of PQ. Mark a point R on the perpendicular bisector, 3 cm from M. Measure RP and RQ and state what you find. | Open the compass to any radius greater than 4 cm. With centre P, draw arcs above and below PQ. With the same radius and centre Q, draw arcs above and below PQ cutting the first arcs at A and B. Join AB; it crosses PQ at M, which is the midpoint (PM = MQ = 4 cm). R lies on AB, 3 cm from M. By the perpendicular-bisector property — any point equidistant from P and Q lies on the bisector — RP = RQ. Measuring confirms RP = RQ = 5 cm (since triangle RPM is right-angled with legs 4 cm and 3 cm, so RP = √(16 + 9) = 5 cm).\n2 | Construct a 90° angle at a point T on a line. By bisecting, obtain a 45° angle. Bisect the 45° angle to obtain a 22.5° angle. Verify by naming the sequence of bisections used. | Construct 90° at T: treat T as the midpoint of a segment on the line, draw arcs of equal radius from the two endpoints and join their intersection to T. Bisect the 90° angle — draw an arc centred at T cutting both arms, then arcs of equal radius from those two cut-points and join T to their intersection — giving 45°. Bisect the 45° angle by the same procedure to obtain 22.5°. The sequence is: 90° → bisect → 45° → bisect → 22.5°. Each bisection uses the congruence ∆OBC ≅ ∆OAC (SSS) to confirm the bisecting ray divides the angle exactly in half.\n3 | A region is made from a 4 × 4 square grid with the four corner unit squares removed, leaving 12 unit squares. Can this region be tiled by 2 × 1 tiles? Give a proof, not just a trial. | Colour the region like a chessboard. In the full 4 × 4 grid the 16 squares alternate black and white, giving 8 of each. The four corner squares of a 4 × 4 grid are all the same colour — they sit at positions (1,1), (1,4), (4,1), (4,4), and in chessboard colouring these are all the same colour (say black, if (1,1) is black). Removing all four leaves 4 black and 8 white squares. Every 2 × 1 tile covers exactly one black and one white square, so any tiling would require equal numbers of each colour. Since 4 ≠ 8, the region cannot be tiled. No arrangement of tiles can succeed.\n4 | A rectangular grid has 5 rows and 6 columns. Can it be tiled by 2 × 1 tiles? Now remove one unit square from the grid. Without specifying which square is removed, decide whether the remaining 29 squares can always be tiled by 2 × 1 tiles, and justify your answer. | The 5 × 6 grid has 30 unit squares. Since 30 is even, the parity argument does not rule it out, and the grid can indeed be tiled (tile each pair of rows horizontally: five rows give two complete pairs plus one row of 6, which is tiled by three horizontal tiles along the remaining row — in fact since 6 is even, tile column by column: each column of 5 has odd squares, but grouping the 6 columns in pairs of adjacent columns gives six 5 × 2 blocks each tileable by five horizontal tiles, so the whole grid is tileable). Removing one square leaves 29 squares. Since 29 is odd and each tile covers exactly 2 squares, the total covered by any number of tiles is always even. An odd number of squares can never be covered exactly by 2 × 1 tiles. Therefore the remaining 29 squares cannot be tiled, regardless of which square is removed."
+      }
+    ],
+    "materials": [
+      "compass",
+      "ruler",
+      "pencil",
+      "coloured pencils (two colours)",
+      "notebook or squared paper"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "The teacher writes all four problems on the board, reads each aloud once, and names the tools available: compass, ruler, pencil, two colours. No further instruction — students open their notebooks and begin."
+      },
+      {
+        "minutes": "3-15",
+        "activity": "Individual silent work. Every student attempts all four problems, writing complete working. The teacher circulates without giving answers, noting which problems draw hesitation."
+      },
+      {
+        "minutes": "15-20",
+        "activity": "Students turn to a neighbour. Any pair with different answers to the same problem reconstructs both solutions step by step to find where they diverge; they do not simply adopt one answer."
+      },
+      {
+        "minutes": "20-35",
+        "activity": "Four students present, one per problem. Each writes key steps on the board. After each presentation, before moving on, the class calls out the chapter method the solution rested on — perpendicular bisector and its congruence justification; angle bisection applied twice; colouring argument; parity argument. The teacher accepts the name only when a student can state what property of the tile or construction the method exploits."
+      },
+      {
+        "minutes": "35-40",
+        "activity": "The teacher asks: what is the one idea that let every one of these problems yield? The class arrives at it together: a construction or a tiling can be settled by reasoning about what is preserved — equal distances force a point onto the bisector, congruent triangles force an angle to be halved, a tile's colour constraint forces counts to match. The chapter closes on that sentence."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

@@ -1,0 +1,1367 @@
+{
+  "filename": "ch_10_canonical_p08.json",
+  "saved_at": "2026-08-20T12:45:58",
+  "plan_status": "canonical",
+  "chapter_number": 10,
+  "chapter_title": "Fun at Class Party!",
+  "grade": "Grade III",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 40,
+      "count": 8
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 8 periods = 320 minutes\nTotal: 8 periods · 5h 20min",
+  "genon_canonical": {
+    "generated": "2026-08-20",
+    "schedule": "8x40",
+    "constitution": "LP v1.4 / assessment v1.4",
+    "source": "generate_canonical.py one mathematics iii 10",
+    "ledger_ts": "20260820_121241_math_iii_10_p08",
+    "validation": "clean",
+    "repairs": [
+      {
+        "tool": "genon/repair_c3.py v1.0",
+        "at": "2026-08-20T12:47:37",
+        "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+        "defects": {
+          "ARV-D-188": {
+            "note": "stem repointed at the page its own exercise block names",
+            "edits": [
+              {
+                "item": 15,
+                "field": "prompt",
+                "old": "The line below is 6 cm long. Which of the following best describes a line that is longer than this line?",
+                "new": "The line on p.130 is 6 cm long. Which of the following best describes a line that is longer than this line?"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "at": "2026-08-20T12:52:38",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 8,
+            "field": "band:3",
+            "rule": "register/completion",
+            "removed": "built across the chapter",
+            "replaced_with": "",
+            "note": "completion claim struck; what the understanding IS survives and is the part the teacher needs | survives: …the conceptual understanding about what makes a unit reliable.…"
+          }
+        ],
+        "ban_hits_before": 1,
+        "ban_hits_after": 0
+      }
+    ]
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S1"
+          ],
+          "section_titles": [
+            "Comparing lengths using informal tools"
+          ],
+          "activity_title": "Hand spans, footsteps, and why we get different answers",
+          "synthesis": false,
+          "tasks_in_class": [
+            {
+              "id": "T-1",
+              "intent": "reason",
+              "method": "Inquiry",
+              "section_ref": "S1",
+              "book_ref": "Let us Do Q1, p.128",
+              "description": "Discuss and explain what various activities are shown in the party picture."
+            },
+            {
+              "id": "T-3",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S1",
+              "book_ref": "Let us Do Q3, p.128",
+              "description": "Will Leena and Adi get the same measurement of the table using their hand spans? Discuss."
+            },
+            {
+              "id": "T-6",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S1",
+              "book_ref": "Let us Do Q6, p.128",
+              "description": "Find the distance between two walls of the classroom and discuss different ways of measuring it."
+            },
+            {
+              "id": "T-7",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S1",
+              "book_ref": "Let us Do Q7, p.128",
+              "description": "Identify all ways children use to measure length in the picture; which way is better and why?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Open with the party picture. Children study Let us Do Q1, p.128 (“Discuss and explain what various activities are shown in the party picture”) in pairs and share one observation each with the class."
+            },
+            {
+              "minutes": "8–20",
+              "activity": "Class discussion on Let us Do Q3, p.128 (“Will Leena and Adi get the same measurement of the table....”). Children measure their desk width with their own hand spans, compare results, and name the reason for different counts."
+            },
+            {
+              "minutes": "20–32",
+              "activity": "Groups physically measure the gap between two classroom walls using footsteps and a ribbon — Let us Do Q6, p.128 (“Find the distance between two walls of the classroom....”). Groups report their counts and note disagreements."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Whole-class debrief using Let us Do Q7, p.128 (“Identify all ways children use to measure length....”). Class builds a shared list on the board of informal units used and votes on which method is fairest and why."
+            }
+          ],
+          "teacher_notes": "Children often think that a bigger hand span is more accurate rather than recognising that inconsistency is the core problem with any person-dependent unit. When a child says ‘my measurement is right’, invite the class to ask ‘right for whom?’ to surface the key idea. Let us Do Q2 (Shelly finding the door height) and Q4 (circling the longest ponytail) are closely related visual comparison tasks; assign them as additional practice if time permits.",
+          "materials": [
+            "Ribbon or string length roughly matching classroom wall gap",
+            "Rulers or pencils for hand-span marking (optional)",
+            "Textbook open to p.128"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S1"
+          ],
+          "section_titles": [
+            "Comparing lengths using informal tools"
+          ],
+          "activity_title": "Paper strings on the board — shortest, longest, and how many more",
+          "synthesis": false,
+          "tasks_in_class": [
+            {
+              "id": "T-8",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S1",
+              "book_ref": "Let us Do Q1, p.129",
+              "description": "Colour the shortest paper string red and the longest green; discuss how you identified each."
+            },
+            {
+              "id": "T-9",
+              "intent": "reason",
+              "method": "Problem-solving",
+              "section_ref": "S1",
+              "book_ref": "Let us Do Q2, p.129",
+              "description": "How many more paper strings are needed to decorate the border of the green board?"
+            },
+            {
+              "id": "T-10",
+              "intent": "solve",
+              "method": "Problem-solving",
+              "section_ref": "S1",
+              "book_ref": "Let us Do Q3, p.129",
+              "description": "How many of the given unit-string are needed to decorate the entire border of the board?"
+            },
+            {
+              "id": "T-5",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S1",
+              "book_ref": "Let us Do Q5, p.128",
+              "description": "Tick paper strings in the classroom that are as long as the height of the window."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Children study the decorated board picture and work on Let us Do Q1, p.129 (“Colour the shortest paper string red and the longest green....”). Pairs share their reasoning before the class agrees on the answer."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Whole-class work on Let us Do Q2, p.129 (“How many more paper strings are needed to decorate the border of the green board?”). Children count visible strings, count the total border spaces, and subtract — teacher records thinking on the board."
+            },
+            {
+              "minutes": "22–32",
+              "activity": "Children solve Let us Do Q3, p.129 (“How many of the given unit-string are needed to decorate the entire border of the board?”) individually, then compare answers. Teacher draws out the idea that a shorter unit-string means more pieces are needed."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Quick hands-on activity — Let us Do Q5, p.128 (“Tick paper strings in the classroom that are as long as the height of the window.”). Children cut or hold a string against the window height and identify matches around the room."
+            }
+          ],
+          "teacher_notes": "A common error is counting only the strings that are already on the board rather than working out how many are needed for the full border; prompt children to count gaps as well as strings. The discussion of identifying shortest and longest in Q1 of p.129 should draw explicitly on the earlier finding that different measurement tools give different results — that same variability makes a visual, side-by-side comparison the more reliable strategy here.",
+          "materials": [
+            "Lengths of wool or string for the window-height activity",
+            "Crayons (red and green) for colouring exercise",
+            "Textbook open to pp.128–129"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S2"
+          ],
+          "section_titles": [
+            "Drawing and comparing lengths"
+          ],
+          "activity_title": "Thread matching, drawing longer and shorter, completing the moustache",
+          "synthesis": false,
+          "tasks_in_class": [
+            {
+              "id": "T-11",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S2",
+              "book_ref": "Let us Do Q1, p.130",
+              "description": "Cut and paste a wool or cotton thread as long as the line given below."
+            },
+            {
+              "id": "T-12",
+              "intent": "practice",
+              "method": "Problem-solving",
+              "section_ref": "S2",
+              "book_ref": "Let us Do Q2, p.130",
+              "description": "Draw a string longer than the string given below."
+            },
+            {
+              "id": "T-13",
+              "intent": "practice",
+              "method": "Problem-solving",
+              "section_ref": "S2",
+              "book_ref": "Let us Do Q3, p.130",
+              "description": "Draw a string shorter than the decoration string Shelly and Adi are holding."
+            },
+            {
+              "id": "T-14",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S2",
+              "book_ref": "Let us Do Q4, p.130",
+              "description": "Draw the other half of the moustache to match the given half."
+            },
+            {
+              "id": "T-15",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S2",
+              "book_ref": "Let us Do Q5, p.130",
+              "description": "Look at the string lights and help Adi choose the longest one; discuss how you found out."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Children cut a length of wool or thread equal to the printed line — Let us Do Q1, p.130 (“Cut and paste a wool or cotton thread as long as the line given below.”). Pairs check each other’s cut by laying thread alongside the line."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Children draw in their books — Let us Do Q2, p.130 (“Draw a string longer than the string given below.”) then Let us Do Q3, p.130 (“Draw a string shorter than the decoration string....”). Teacher circulates; children hold up books so neighbours can check relative length."
+            },
+            {
+              "minutes": "22–32",
+              "activity": "Children complete the moustache symmetry task — Let us Do Q4, p.130 (“Draw the other half of the moustache to match the given half.”). Teacher guides by asking children to count squares or fold the paper along the centre line to check their drawing."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Whole-class discussion on Let us Do Q5, p.130 (“Look at the string lights and help Adi choose the longest one....”). Children explain their strategy — visual scanning, counting bulbs, tracing the path — and the class decides which method is most reliable."
+            }
+          ],
+          "teacher_notes": "Children sometimes draw a line that is merely different rather than strictly longer or shorter; after drawing, ask them to place their pencil at the starting points of both lines simultaneously to confirm the relationship. The moustache task requires matching length and curve — a child who draws the correct length but a different curve shape should be asked to fold the page and check whether the halves align.",
+          "materials": [
+            "Wool or thin cotton thread, scissors, glue stick",
+            "Ruler (for personal reference only, not for measuring)",
+            "Textbook open to p.130"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S3",
+            "S4"
+          ],
+          "section_titles": [
+            "Indirect measurement with a common unit",
+            "Body measurement exploration"
+          ],
+          "activity_title": "Thread as go-between: does the table fit? And do body proportions hold?",
+          "synthesis": false,
+          "tasks_in_class": [
+            {
+              "id": "T-16",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S3",
+              "book_ref": "Let us Play, p.132",
+              "description": "Make a bridge using boxes or bags; guess and check which classroom objects can go through it."
+            },
+            {
+              "id": "T-17",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S4",
+              "book_ref": "Are these true for all? Q1, p.133",
+              "description": "Measure and tick: Is your head 3 handspans round? True or False."
+            },
+            {
+              "id": "T-18",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S4",
+              "book_ref": "Are these true for all? Q2, p.133",
+              "description": "Measure and tick: Is the length of your forearm equal to the length of your feet? True or False."
+            },
+            {
+              "id": "T-19",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S4",
+              "book_ref": "Are these true for all? Q3, p.133",
+              "description": "Measure and tick: Is your height equal to the length of your arms wide open? True or False."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–16",
+              "activity": "Groups build a bridge gap using two stacks of books or bags — Let us Play, p.132 (“Make a bridge using boxes or bags; guess and check which classroom objects can go through it.”). Before testing each object, every child writes a guess. The class discusses how a thread cut to the bridge width helps predict whether something fits without moving it to the bridge."
+            },
+            {
+              "minutes": "16–28",
+              "activity": "Children work on Are these true for all? Q1–Q2, p.133 — measuring head circumference with a string (three hand-span lengths), then comparing forearm and foot length. Partners measure each other and record True or False."
+            },
+            {
+              "minutes": "28–40",
+              "activity": "Children measure arm span and height — Are these true for all? Q3, p.133 (“Is your height equal to the length of your arms wide open?”). Class compiles results on the board: how many found True, how many False? Discussion closes on the finding that body proportions differ from person to person."
+            }
+          ],
+          "teacher_notes": "The bridge activity embeds the same logic as the door-and-table problem in the textbook prose: a thread cut to the gap is carried to the object, so the two lengths are compared without moving either to the other. Children who skip the guess step miss the estimation strand — insist on recording the guess before testing. In the body-proportion tasks, children frequently assume the claims must be true; having them tally class results publicly makes the variability concrete.",
+          "materials": [
+            "Two equal stacks of books or bags to form a bridge gap",
+            "Lengths of string or wool for each group",
+            "Textbook open to pp.132–133"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S5"
+          ],
+          "section_titles": [
+            "Introducing the metre as a standard unit"
+          ],
+          "activity_title": "Making a metre rope and sorting heights",
+          "synthesis": false,
+          "tasks_in_class": [
+            {
+              "id": "T-20",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S5",
+              "book_ref": "Measure your height activity, p.135",
+              "description": "Measure your height using the one-metre mark on the wall; record friends' names as more or less than one metre."
+            },
+            {
+              "id": "T-21",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S5",
+              "book_ref": "Circle the tallest activity, p.135",
+              "description": "Circle the tallest among the children shown and discuss how you decided."
+            },
+            {
+              "id": "T-22",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S5",
+              "book_ref": "Objects table activity, p.136",
+              "description": "Write names of objects around you whose length is one metre, more than one metre, and less than one metre."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Using a metre rod, teacher marks exactly one metre on the classroom wall (or door frame). Each child stands against the mark — Measure your height activity, p.135 (“Measure your height using the one-metre mark on the wall; record friends’ names as more or less than one metre.”). Children record two names in each column. Teacher folds the rope in half and then in quarters to introduce half metre and quarter metre."
+            },
+            {
+              "minutes": "12–24",
+              "activity": "Children study the picture for Circle the tallest activity, p.135 (“Circle the tallest among the children shown and discuss how you decided.”). Pairs discuss, then share reasoning: children who used the metre reference line in the picture explain their method to those who guessed visually."
+            },
+            {
+              "minutes": "24–40",
+              "activity": "Children walk the classroom and list objects for the three categories — Objects table activity, p.136 (“Write names of objects around you whose length is one metre, more than one metre, and less than one metre.”). Groups compare lists; the class builds a shared board table."
+            }
+          ],
+          "teacher_notes": "The key conceptual move here is that the metre rope is made from the metre rod, so every child’s rope is exactly the same length — this is what makes it a standard unit. Contrast this explicitly with hand spans, which differed child to child in the opening activities. A frequent error is listing objects by height when the task asks about length — prompt children to think about which dimension they are comparing to the rope.",
+          "materials": [
+            "Metre rod (one per class)",
+            "String or rope cut to exactly one metre per group of four",
+            "Textbook open to pp.135–136"
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S6"
+          ],
+          "section_titles": [
+            "Measuring with metre, half metre, and quarter metre"
+          ],
+          "activity_title": "Filling the objects table and the jumping competition",
+          "synthesis": false,
+          "tasks_in_class": [
+            {
+              "id": "T-23",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S6",
+              "book_ref": "Let us Do Q1, p.137",
+              "description": "Find lengths of different objects using one metre, half metre, and quarter metre ropes; fill the table."
+            },
+            {
+              "id": "T-24",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S6",
+              "book_ref": "Let us Do Q2, p.137",
+              "description": "Draw a start line and a one-metre line; jump and record which children jump more than a quarter, half, and a full metre."
+            },
+            {
+              "id": "T-25",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S6",
+              "book_ref": "Let us Do Q3, p.137",
+              "description": "Throw a ball or disc as far as you can; measure how far the throw was."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–18",
+              "activity": "Groups use their metre, half-metre, and quarter-metre ropes to measure classroom objects and fill the structured table — Let us Do Q1, p.137 (“Find lengths of different objects using one metre, half metre, and quarter metre ropes; fill the table.”). Teacher checks that children choose the appropriate rope for each object before measuring."
+            },
+            {
+              "minutes": "18–30",
+              "activity": "In an open area or corridor, children draw a start line and a one-metre line, then take turns jumping — Let us Do Q2, p.137 (“Draw a start line and a one-metre line; jump and record which children jump more than a quarter, half, and a full metre.”). A recorder marks each jump with a chalk dot and the group decides which category it belongs to."
+            },
+            {
+              "minutes": "30–40",
+              "activity": "Children throw a soft ball or flat disc from a fixed line and measure the distance with the metre rope — Let us Do Q3, p.137 (“Throw a ball or disc as far as you can; measure how far the throw was.”). Groups record distances in the three metre-fraction categories and share the longest throw in the class."
+            }
+          ],
+          "teacher_notes": "Children sometimes try to use only the full metre rope for every object, even when a quarter-metre rope fits more naturally; ask them to pick the smallest rope that still reaches the end of the object. In the jumping activity, a child whose jump lands between the quarter-metre and half-metre marks needs to decide which category to record — this is a productive moment for estimation and rounding conversation.",
+          "materials": [
+            "Metre, half-metre, and quarter-metre ropes (one set per group)",
+            "Chalk for marking start and distance lines",
+            "Soft ball or flat disc (beanbag works well)",
+            "Textbook open to p.137"
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S6"
+          ],
+          "section_titles": [
+            "Measuring with metre, half metre, and quarter metre"
+          ],
+          "activity_title": "Estimating, cutting, folding, footsteps, and measuring the wall",
+          "synthesis": false,
+          "tasks_in_class": [
+            {
+              "id": "T-26",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S6",
+              "book_ref": "Let us Do Q1, p.138",
+              "description": "Measure the height of your teacher or parent using a metre-long rope or strip."
+            },
+            {
+              "id": "T-27",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S6",
+              "book_ref": "Let us Do Q2, p.138",
+              "description": "Estimate and cut a one-metre long wool or thread; verify with the metre rope whose estimate is closest."
+            },
+            {
+              "id": "T-28",
+              "intent": "solve",
+              "method": "Problem-solving",
+              "section_ref": "S6",
+              "book_ref": "Let us Do Q3, p.138",
+              "description": "Cut a one-metre rope into 4 equal pieces. How many cuts did you make?"
+            },
+            {
+              "id": "T-29",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S6",
+              "book_ref": "Let us Do Q4, p.138",
+              "description": "How many footsteps fit into a metre rope?"
+            },
+            {
+              "id": "T-30",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S6",
+              "book_ref": "Let us Do Q5, p.138",
+              "description": "Use a metre rope to find how long a side of the class wall is."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "A volunteer teacher or older student stands while children lay the metre rope against the side of the body — Let us Do Q1, p.138 (“Measure the height of your teacher or parent using a metre-long rope or strip.”). Children record how many full metres and whether a remainder is more or less than half a metre."
+            },
+            {
+              "minutes": "10–20",
+              "activity": "Each child tears a length of wool that they believe is exactly one metre — Let us Do Q2, p.138 (“Estimate and cut a one-metre long wool or thread; verify with the metre rope whose estimate is closest.”). Children lay their piece beside the rope; the class ranks estimates from closest to farthest. Discussion: what body reference helped?"
+            },
+            {
+              "minutes": "20–28",
+              "activity": "Children take a one-metre length of rope and fold then cut it into four equal pieces — Let us Do Q3, p.138 (“Cut a one-metre rope into 4 equal pieces. How many cuts did you make?”). Children count cuts and check that four pieces result. Teacher asks: how many cuts do you need for four pieces — not five, not three?"
+            },
+            {
+              "minutes": "28–40",
+              "activity": "Children lay the metre rope on the floor and count how many of their footsteps fit — Let us Do Q4, p.138 (“How many footsteps fit into a metre rope?”). Then groups measure one side of the classroom wall by counting how many times the rope fits — Let us Do Q5, p.138 (“Use a metre rope to find how long a side of the class wall is.”). Results are compared across groups."
+            }
+          ],
+          "teacher_notes": "The cutting task (Q3) is a classic source of the off-by-one error: children who answer ‘four cuts’ are counting the cuts incorrectly — folding the rope in half twice (three cuts) gives four equal pieces. Ask children to count the pieces on the table before writing their answer. The footsteps activity returns to the variability idea from the opening of the chapter: different children will report different footstep counts for the same one metre, which is the same reason informal units were found wanting.",
+          "materials": [
+            "Metre rope (one per child or pair)",
+            "Wool or thin string for estimating activity (about 1.5 m per child)",
+            "Scissors for cutting",
+            "Textbook open to p.138"
+          ]
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5",
+            "S6"
+          ],
+          "section_titles": [
+            "Comparing lengths using informal tools",
+            "Drawing and comparing lengths",
+            "Indirect measurement with a common unit",
+            "Body measurement exploration",
+            "Introducing the metre as a standard unit",
+            "Measuring with metre, half metre, and quarter metre"
+          ],
+          "activity_title": "Measuring station carousel: revisiting the whole journey from strings to metre",
+          "synthesis": false,
+          "tasks_in_class": [
+            {
+              "id": "T-7",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S1",
+              "book_ref": "Let us Do Q7, p.128",
+              "description": "Identify all ways children use to measure length in the picture; which way is better and why?"
+            },
+            {
+              "id": "T-15",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S2",
+              "book_ref": "Let us Do Q5, p.130",
+              "description": "Look at the string lights and help Adi choose the longest one; discuss how you found out."
+            },
+            {
+              "id": "T-27",
+              "intent": "reason",
+              "method": "Problem-solving",
+              "section_ref": "S6",
+              "book_ref": "Let us Do Q2, p.138",
+              "description": "Estimate and cut a one-metre long wool or thread; verify with the metre rope whose estimate is closest."
+            },
+            {
+              "id": "T-10",
+              "intent": "solve",
+              "method": "Problem-solving",
+              "section_ref": "S1",
+              "book_ref": "Let us Do Q3, p.129",
+              "description": "How many of the given unit-string are needed to decorate the entire border of the board?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Open discussion: children revisit Let us Do Q7, p.128 (“Identify all ways children use to measure length in the picture; which way is better and why?”). They now give fuller reasons — naming inconsistency for informal units and the shared, person-independent character of the metre."
+            },
+            {
+              "minutes": "10–20",
+              "activity": "Children return to Let us Do Q5, p.130 (“Look at the string lights and help Adi choose the longest one; discuss how you found out.”). This time the teacher asks: could you use a thread to compare without putting the lights side by side? Children apply the indirect-comparison idea from the bridge and door activities."
+            },
+            {
+              "minutes": "20–30",
+              "activity": "Quick estimation challenge — Let us Do Q2, p.138 (“Estimate and cut a one-metre long wool or thread; verify with the metre rope whose estimate is closest.”). Children who have done this before try to improve their body-reference technique; children meeting it for the first time use the class discussion to calibrate."
+            },
+            {
+              "minutes": "30–40",
+              "activity": "Children work individually on Let us Do Q3, p.129 (“How many of the given unit-string are needed to decorate the entire border of the board?”). This wraps the numeric strand — counting a unit along a border — with the conceptual understanding about what makes a unit reliable."
+            }
+          ],
+          "teacher_notes": "This consolidation unit brings together the chapter’s conceptual thread — informal units give inconsistent results; a common unit (metre) removes person-dependence — so tasks are chosen to make that contrast explicit rather than to cover new ground. Children who found the border problem in the paper-strings section straightforward should be asked to explain why the unit-string’s length matters, connecting the numeric answer to the conceptual point.",
+          "materials": [
+            "Wool or string lengths and scissors for estimation activity",
+            "Metre rope (one per pair)",
+            "Textbook open to pp.128–138"
+          ]
+        }
+      ]
+    },
+    "period_schedule": {
+      "duration_minutes": 40,
+      "count": 8
+    },
+    "coverage_handoff": {
+      "explore": {
+        "tasks": [
+          {
+            "task_id": "T-6",
+            "intent": "explore",
+            "section_ref": "S1",
+            "book_ref": "Let us Do Q6, p.128",
+            "description": "Find the distance between two walls of the classroom and discuss different ways of measuring it."
+          },
+          {
+            "task_id": "T-11",
+            "intent": "explore",
+            "section_ref": "S2",
+            "book_ref": "Let us Do Q1, p.130",
+            "description": "Cut and paste a wool or cotton thread as long as the line given below."
+          },
+          {
+            "task_id": "T-14",
+            "intent": "explore",
+            "section_ref": "S2",
+            "book_ref": "Let us Do Q4, p.130",
+            "description": "Draw the other half of the moustache to match the given half."
+          },
+          {
+            "task_id": "T-16",
+            "intent": "explore",
+            "section_ref": "S3",
+            "book_ref": "Let us Play, p.132",
+            "description": "Make a bridge using boxes or bags; guess and check which classroom objects can go through it."
+          },
+          {
+            "task_id": "T-19",
+            "intent": "explore",
+            "section_ref": "S4",
+            "book_ref": "Are these true for all? Q3, p.133",
+            "description": "Measure and tick: Is your height equal to the length of your arms wide open? True or False."
+          },
+          {
+            "task_id": "T-20",
+            "intent": "explore",
+            "section_ref": "S5",
+            "book_ref": "Measure your height activity, p.135",
+            "description": "Measure your height using the one-metre mark on the wall; record friends' names as more or less than one metre."
+          },
+          {
+            "task_id": "T-22",
+            "intent": "explore",
+            "section_ref": "S5",
+            "book_ref": "Objects table activity, p.136",
+            "description": "Write names of objects around you whose length is one metre, more than one metre, and less than one metre."
+          },
+          {
+            "task_id": "T-24",
+            "intent": "explore",
+            "section_ref": "S6",
+            "book_ref": "Let us Do Q2, p.137",
+            "description": "Draw a start line and a one-metre line; jump and record which children jump more than a quarter, half, and a full metre."
+          },
+          {
+            "task_id": "T-30",
+            "intent": "explore",
+            "section_ref": "S6",
+            "book_ref": "Let us Do Q5, p.138",
+            "description": "Use a metre rope to find how long a side of the class wall is."
+          }
+        ]
+      },
+      "reason": {
+        "tasks": [
+          {
+            "task_id": "T-3",
+            "intent": "reason",
+            "section_ref": "S1",
+            "book_ref": "Let us Do Q3, p.128",
+            "description": "Will Leena and Adi get the same measurement of the table using their hand spans? Discuss."
+          },
+          {
+            "task_id": "T-8",
+            "intent": "reason",
+            "section_ref": "S1",
+            "book_ref": "Let us Do Q1, p.129",
+            "description": "Colour the shortest paper string red and the longest green; discuss how you identified each."
+          },
+          {
+            "task_id": "T-15",
+            "intent": "reason",
+            "section_ref": "S2",
+            "book_ref": "Let us Do Q5, p.130",
+            "description": "Look at the string lights and help Adi choose the longest one; discuss how you found out."
+          },
+          {
+            "task_id": "T-21",
+            "intent": "reason",
+            "section_ref": "S5",
+            "book_ref": "Circle the tallest activity, p.135",
+            "description": "Circle the tallest among the children shown and discuss how you decided."
+          },
+          {
+            "task_id": "T-27",
+            "intent": "reason",
+            "section_ref": "S6",
+            "book_ref": "Let us Do Q2, p.138",
+            "description": "Estimate and cut a one-metre long wool or thread; verify with the metre rope whose estimate is closest."
+          }
+        ]
+      },
+      "practice": {
+        "tasks": [
+          {
+            "task_id": "T-12",
+            "intent": "practice",
+            "section_ref": "S2",
+            "book_ref": "Let us Do Q2, p.130",
+            "description": "Draw a string longer than the string given below."
+          },
+          {
+            "task_id": "T-13",
+            "intent": "practice",
+            "section_ref": "S2",
+            "book_ref": "Let us Do Q3, p.130",
+            "description": "Draw a string shorter than the decoration string Shelly and Adi are holding."
+          }
+        ]
+      },
+      "solve": {
+        "tasks": [
+          {
+            "task_id": "T-10",
+            "intent": "solve",
+            "section_ref": "S1",
+            "book_ref": "Let us Do Q3, p.129",
+            "description": "How many of the given unit-string are needed to decorate the entire border of the board?"
+          },
+          {
+            "task_id": "T-28",
+            "intent": "solve",
+            "section_ref": "S6",
+            "book_ref": "Let us Do Q3, p.138",
+            "description": "Cut a one-metre rope into 4 equal pieces. How many cuts did you make?"
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "section_code": "A",
+        "section_title": "Explore",
+        "items": [
+          {
+            "id": "Q-A-1",
+            "intent": "explore",
+            "section_ref": "S1",
+            "section_title": "Comparing lengths using informal tools",
+            "question_type": "SCR",
+            "prompt": "Ravi measures the length of a table using his hand span. He gets 8 hand spans. His friend Priya measures the same table and gets 10 hand spans. The table has not changed. Why did they get different answers?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Ravi and Priya have different sized hand spans. Because their hand spans are not the same length, they get a different number when measuring the same table.",
+              "method_one_line": "Compare the size of the informal unit (hand span) used by each child — different hand spans give different counts for the same length.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: let them measure a desk with their own hand span and a partner's and compare counts; stretch: ask what unit they would use so everyone always gets the same answer."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q6, p.128",
+              "description": "Find the distance between two walls of the classroom and discuss different ways of measuring it."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-2",
+            "intent": "explore",
+            "section_ref": "S2",
+            "section_title": "Drawing and comparing lengths",
+            "question_type": "SCR",
+            "prompt": "Look at the line below. Draw a line in your book that is longer than this line. Then draw another line that is shorter than this line.\n—————————————\nLabel the longer line L and the shorter line S.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The line labelled L must be visibly longer than the reference line, and the line labelled S must be visibly shorter than the reference line.",
+              "method_one_line": "Start both new lines at the same point as the reference line; if the new line extends beyond the reference line it is longer, and if it ends before it is shorter.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: let them cut a thread to the printed line and compare by placing it; stretch: ask them to draw a third line exactly halfway between L and S."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q2, p.130",
+              "description": "Draw a string longer than the string given below."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-3",
+            "intent": "explore",
+            "section_ref": "S2",
+            "section_title": "Drawing and comparing lengths",
+            "question_type": "MCQ",
+            "prompt": "Meera wants to check whether a box fits inside a cupboard without carrying the box to the cupboard. What should she do?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "Ask a friend who is taller to look at both and guess.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "Lift the box and carry it to the cupboard to try.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "Measure the box with her hand span and then measure the cupboard with her hand span.",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "Use a piece of thread cut to the width of the box, then check if that thread fits inside the cupboard opening.",
+                "is_correct": true
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Option A — cut a thread to the width of the box and use it to check the cupboard opening.",
+              "method_one_line": "Use a thread as a common intermediary: cut it to one measurement, then carry it to the second object to compare without moving either object.",
+              "what_each_option_reveals": {
+                "C": "The child understands measurement but has not recognised that hand spans vary from person to person, so the two counts cannot be reliably compared.",
+                "B": "The child reverts to direct comparison by moving the object, missing the point that the thread method avoids this.",
+                "A": "The child relies on visual estimation without any measuring tool, which is unreliable for close comparisons."
+              },
+              "inclusivity": "Struggling: act it out with a book and a shelf gap using a thread; stretch: ask what other situations the thread trick could help with."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q4, p.130",
+              "description": "Draw the other half of the moustache to match the given half."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-4",
+            "intent": "explore",
+            "section_ref": "S3",
+            "section_title": "Indirect measurement with a common unit",
+            "question_type": "SCR",
+            "prompt": "Aman builds a tunnel from two stacks of books. Before he tests each object, he wants to guess whether it will fit through the tunnel. He cuts a piece of thread as wide as the tunnel opening. Describe how he uses this thread to decide whether a lunch box will fit through the tunnel.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Aman holds the thread against the width of the lunch box. If the lunch box is narrower than the thread, it will fit through the tunnel. If the lunch box is wider than the thread, it will not fit.",
+              "method_one_line": "Compare the thread (cut to the tunnel width) against the object's width — the thread acts as a portable copy of the tunnel opening.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: let them build a small tunnel with books and physically test with a thread; stretch: ask what happens if the thread and the box are exactly the same width — will it fit?"
+            },
+            "exercise": {
+              "book_ref": "Let us Play, p.132",
+              "description": "Make a bridge using boxes or bags; guess and check which classroom objects can go through it."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-5",
+            "intent": "explore",
+            "section_ref": "S4",
+            "section_title": "Body measurement exploration",
+            "question_type": "MCQ",
+            "prompt": "Sana measures her arm span (arms stretched wide) and her height. She finds they are equal. Her friend Jaya tries the same and finds her arm span is a little shorter than her height. What does this tell us?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "Arm span is always shorter than height for everyone.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "Body proportions are not the same for every person.",
+                "is_correct": true
+              },
+              {
+                "label": "C",
+                "text": "Jaya measured her height wrongly.",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "Sana's arms are broken.",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Option A — body proportions differ from person to person.",
+              "method_one_line": "Collect and compare data across several children — if results differ, the claim is not universally true.",
+              "what_each_option_reveals": {
+                "C": "The child assumes the claim must be true and attributes any disagreement to measurement error rather than natural variation.",
+                "A": "The child overgeneralises from Jaya's single case, swinging to an equally unfounded universal claim in the opposite direction.",
+                "D": "The child has not engaged with the mathematical meaning of the comparison at all."
+              },
+              "inclusivity": "Struggling: have them measure two classmates and compare results side by side; stretch: ask them to predict how many children in the class will find True and explain their reasoning."
+            },
+            "exercise": {
+              "book_ref": "Are these true for all? Q3, p.133",
+              "description": "Measure and tick: Is your height equal to the length of your arms wide open? True or False."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-6",
+            "intent": "explore",
+            "section_ref": "S5",
+            "section_title": "Introducing the metre as a standard unit",
+            "question_type": "SCR",
+            "prompt": "Kavya made a one-metre rope using the metre rod in class. Her friend Deepa also made a one-metre rope using the same metre rod. Will the two ropes be the same length? How is this different from measuring with hand spans?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Yes, both ropes will be the same length, because both were made using the same metre rod. This is different from hand spans, which vary in size from person to person and give different counts for the same object.",
+              "method_one_line": "A rope made from a metre rod is always exactly one metre — the standard unit does not change from person to person, unlike a hand span.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: let them hold their rope beside a classmate's and check; stretch: ask what would happen if two children in different schools both had metre ropes — would theirs match too, and why?"
+            },
+            "exercise": {
+              "book_ref": "Measure your height activity, p.135",
+              "description": "Measure your height using the one-metre mark on the wall; record friends' names as more or less than one metre."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-7",
+            "intent": "explore",
+            "section_ref": "S5",
+            "section_title": "Introducing the metre as a standard unit",
+            "question_type": "MCQ",
+            "prompt": "Which of these objects is most likely to have a length of about one metre?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "A classroom door width",
+                "is_correct": true
+              },
+              {
+                "label": "B",
+                "text": "A fingernail",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "A pencil",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "A school bus",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Option B — a classroom door width is close to one metre.",
+              "method_one_line": "Compare each object to the one-metre rope made in class — a pencil and fingernail are far shorter, a school bus is far longer, and a door width is close to one metre.",
+              "what_each_option_reveals": {
+                "C": "The child has not internalised the length of one metre; a standard pencil is roughly 15–17 cm, far less than one metre.",
+                "B": "The child is not yet relating the metre to real objects; a fingernail is only about 1 cm.",
+                "D": "The child confuses a long object with a one-metre object; a school bus is many metres long."
+              },
+              "inclusivity": "Struggling: let them carry their metre rope around the room and find one object that matches; stretch: name one object longer than one metre and one shorter than half a metre in the classroom."
+            },
+            "exercise": {
+              "book_ref": "Objects table activity, p.136",
+              "description": "Write names of objects around you whose length is one metre, more than one metre, and less than one metre."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-8",
+            "intent": "explore",
+            "section_ref": "S6",
+            "section_title": "Measuring with metre, half metre, and quarter metre",
+            "question_type": "SCR",
+            "prompt": "In a jumping game, Ritu's jump is marked on the floor. When the children check with their ropes, Ritu's jump is longer than the quarter-metre mark but shorter than the half-metre mark. Write the sentence that best describes Ritu's jump.",
+            "visual_stimulus": "number_line: 0 | quarter metre | Ritu's jump | half metre | one metre",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Ritu's jump is more than a quarter metre but less than a half metre.",
+              "method_one_line": "Place the jump mark between the quarter-metre and half-metre positions on the floor and read off the category it falls in.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: let them lay the quarter-metre and half-metre ropes on the floor and physically place a pencil between them; stretch: ask which rope they would use to describe Ritu's jump most precisely, and why."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q2, p.137",
+              "description": "Draw a start line and a one-metre line; jump and record which children jump more than a quarter, half, and a full metre."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-9",
+            "intent": "explore",
+            "section_ref": "S6",
+            "section_title": "Measuring with metre, half metre, and quarter metre",
+            "question_type": "SCR",
+            "prompt": "Arjun uses his metre rope to measure one side of the classroom wall. He places the rope end-to-end and counts. He gets 5 full lengths and a little bit left over. Write what Arjun says about the length of that wall.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The side of the wall is a little more than 5 metres long.",
+              "method_one_line": "Count the number of full rope lengths placed end-to-end along the wall; if a remainder is left, the total is more than that number of metres.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: let them practise on a shorter surface (a table edge) counting rope lengths first; stretch: ask whether the remainder looks closer to a quarter metre or a half metre, and write the full description."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q5, p.138",
+              "description": "Use a metre rope to find how long a side of the class wall is."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "B",
+        "section_title": "Reason",
+        "items": [
+          {
+            "id": "Q-B-1",
+            "intent": "reason",
+            "section_ref": "S1",
+            "section_title": "Comparing lengths using informal tools",
+            "question_type": "MCQ",
+            "prompt": "Tia and Rohan both measure the same classroom door using their footsteps. Tia counts 4 footsteps and Rohan counts 5 footsteps. Which explanation is correct?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "Rohan walked faster, so he counted more steps.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "The door changed size between the two measurements.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "Tia counted wrong and made a mistake.",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "Tia's feet are bigger than Rohan's, so she needs fewer steps to cover the same length.",
+                "is_correct": true
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Option A — Tia's feet are bigger, so each step covers more length and she needs fewer steps.",
+              "method_one_line": "Bigger unit = fewer counts for the same length; smaller unit = more counts — compare the unit size to explain the count difference.",
+              "what_each_option_reveals": {
+                "A": "The child confuses the act of walking with the length of each step, applying a time or speed idea where a length idea is needed.",
+                "B": "The child has not understood that the object stays fixed; the measurement tool (footstep) is what changes.",
+                "C": "The child assumes only one answer is right and attributes any difference to error rather than unit size."
+              },
+              "inclusivity": "Struggling: have them compare a large and small pencil laid end-to-end along a desk and count how many of each fit; stretch: ask what would happen if both used the same sized foot."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q3, p.128",
+              "description": "Will Leena and Adi get the same measurement of the table using their hand spans? Discuss."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-2",
+            "intent": "reason",
+            "section_ref": "S1",
+            "section_title": "Comparing lengths using informal tools",
+            "question_type": "SCR",
+            "prompt": "There are five paper strings hanging on the board. The children want to find the shortest and the longest without taking them down. Describe two things they could look at or do to decide.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "They could look at where the bottom ends of the strings hang — the string whose bottom is highest up is shortest, and the one whose bottom hangs lowest is longest. They could also hold a thread alongside each string to compare, or line up the tops and look at the bottoms.",
+              "method_one_line": "Fix one end (top) level and compare where the other ends fall — the one that falls lowest is longest; alternatively, use a thread as a portable measure.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: give them two strips of paper to hold at the same top point and compare where the bottoms fall; stretch: ask how they would order all five from shortest to longest."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q1, p.129",
+              "description": "Colour the shortest paper string red and the longest green; discuss how you identified each."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-3",
+            "intent": "reason",
+            "section_ref": "S2",
+            "section_title": "Drawing and comparing lengths",
+            "question_type": "MCQ",
+            "prompt": "Adi has three string lights. He cannot put them side by side to compare. Which method will most reliably tell him which string light is longest?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "Ask the person who bought them which is longest.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "Count the number of bulbs on each string light.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "Cut a thread to match the length of each string light, label the threads, then compare the threads side by side.",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "Look at all three from across the room and guess.",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Option A — cut a thread to match each string light's length, label the threads, then compare them side by side.",
+              "method_one_line": "Use a thread as a portable copy of each length — bring the copies together to compare without moving the original objects.",
+              "what_each_option_reveals": {
+                "D": "The child uses visual estimation without a measuring tool, which is unreliable for close comparisons.",
+                "B": "The child confuses the number of bulbs (which depends on bulb spacing) with the length of the string.",
+                "A": "The child seeks information rather than measuring — this gives no actual length data."
+              },
+              "inclusivity": "Struggling: let them try option B first on two very similar lengths and experience its unreliability, then try option A; stretch: ask how they would record the result so someone else could check it later."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q5, p.130",
+              "description": "Look at the string lights and help Adi choose the longest one; discuss how you found out."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-4",
+            "intent": "reason",
+            "section_ref": "S5",
+            "section_title": "Introducing the metre as a standard unit",
+            "question_type": "SCR",
+            "prompt": "Three children measure the length of a saree. Pooja uses a pencil and counts 42 pencil-lengths. Sunil uses his arm and counts 7 arm-lengths. Mira uses a metre rope and counts 5 metres. Whose measurement is most useful if someone in another city also wants to measure a saree of the same length? Explain why.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Mira's measurement is most useful because a metre rope is the same length everywhere — it is a standard unit. Pooja's pencil and Sunil's arm length will be different sizes in another city, so those measurements cannot be matched reliably.",
+              "method_one_line": "A standard unit (metre) is the same length for every person in every place; informal units (pencil, arm length) vary and cannot be reproduced by someone else.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: ask them which measurement they could recreate at home without seeing the original pencil or arm; stretch: ask what problem arises even with the metre rope if the rope was not made carefully from the metre rod."
+            },
+            "exercise": {
+              "book_ref": "Circle the tallest activity, p.135",
+              "description": "Circle the tallest among the children shown and discuss how you decided."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-5",
+            "intent": "reason",
+            "section_ref": "S6",
+            "section_title": "Measuring with metre, half metre, and quarter metre",
+            "question_type": "SCR",
+            "prompt": "Neha guesses that a piece of wool is one metre long and cuts it. She then places her cut piece next to the metre rope and sees that her piece is shorter. What does this tell her about her estimate? What should she do differently next time to make a better guess?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Her estimate was too short — she cut less than one metre. Next time she should use a body reference such as her arm span or the distance from the floor to her hip (whichever is close to one metre) to calibrate her guess before cutting.",
+              "method_one_line": "Compare the estimated length to the metre rope and name the direction of error; use a known body reference to improve the next estimate.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: let them first measure a body part against the metre rope to find a good reference, then re-estimate; stretch: ask them to predict whether most children in the class would cut too short or too long, and why."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q2, p.138",
+              "description": "Estimate and cut a one-metre long wool or thread; verify with the metre rope whose estimate is closest."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "C",
+        "section_title": "Practise",
+        "items": [
+          {
+            "id": "Q-C-1",
+            "intent": "practice",
+            "section_ref": "S2",
+            "section_title": "Drawing and comparing lengths",
+            "question_type": "MCQ",
+            "prompt": "The line on p.130 is 6 cm long. Which of the following best describes a line that is longer than this line?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "A line that has a different colour.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "A line that is the same length as this line.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "A line that starts at the same point and ends before this line ends.",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "A line that starts at the same point and goes beyond where this line ends.",
+                "is_correct": true
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Option B — a longer line starts at the same point and extends beyond the end of the reference line.",
+              "method_one_line": "Align the starting points of both lines; if the new line's end goes past the reference line's end, it is longer.",
+              "what_each_option_reveals": {
+                "C": "The child has the direction reversed — a line ending before the reference is shorter, not longer.",
+                "B": "The child has not distinguished between equal and longer.",
+                "A": "The child is attending to a visual property (colour) that has no bearing on length."
+              },
+              "inclusivity": "Struggling: give them two strips of paper to hold at the same starting point and physically compare; stretch: draw both a longer and a shorter line and label each correctly."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q2, p.130",
+              "description": "Draw a string longer than the string given below."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-2",
+            "intent": "practice",
+            "section_ref": "S2",
+            "section_title": "Drawing and comparing lengths",
+            "question_type": "MCQ",
+            "prompt": "Look at these three lines. Which line is the shortest?",
+            "visual_stimulus": "| Line | Description |\n| P | Starts at the left edge, ends at the middle of the page |\n| Q | Starts at the left edge, ends one-quarter from the left |\n| R | Starts at the left edge, ends at the right edge |",
+            "options": [
+              {
+                "label": "A",
+                "text": "Line P",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "Line Q",
+                "is_correct": true
+              },
+              {
+                "label": "C",
+                "text": "Line R",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "Lines P and R are equal",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Option B — Line Q, which ends at one-quarter from the left, is the shortest.",
+              "method_one_line": "All lines start at the same point; the one whose end is closest to the start is the shortest.",
+              "what_each_option_reveals": {
+                "A": "The child has not compared endpoints carefully — P ends at the middle, which is farther than Q's endpoint.",
+                "C": "The child may have chosen the most visually prominent line rather than comparing endpoints.",
+                "D": "The child is guessing rather than comparing — P ends at the middle and R ends at the right edge, so they are not equal."
+              },
+              "inclusivity": "Struggling: let them draw three lines of clearly different lengths and identify shortest by pointing; stretch: order all three lines from shortest to longest and explain the reasoning."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q3, p.130",
+              "description": "Draw a string shorter than the decoration string Shelly and Adi are holding."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "D",
+        "section_title": "Solve",
+        "items": [
+          {
+            "id": "Q-D-1",
+            "intent": "solve",
+            "section_ref": "S1",
+            "section_title": "Comparing lengths using informal tools",
+            "question_type": "NUM",
+            "prompt": "A green board has a border made of paper strings. The top and bottom edges of the board each need 4 paper strings. The left and right edges each need 3 paper strings. There are already 5 paper strings on the board. How many more paper strings are needed to complete the border?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Total strings needed = 4 + 4 + 3 + 3 = 14. Strings already on board = 5. More strings needed = 14 − 5 = 9.",
+              "method_one_line": "Add up the strings needed for all four edges to get the total, then subtract the strings already placed.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: draw a simple rectangle and write the number on each side, then add; stretch: ask what happens to the answer if one edge needs 5 strings instead of 4."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q3, p.129",
+              "description": "How many of the given unit-string are needed to decorate the entire border of the board?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-D-2",
+            "intent": "solve",
+            "section_ref": "S6",
+            "section_title": "Measuring with metre, half metre, and quarter metre",
+            "question_type": "NUM",
+            "prompt": "Pari has a rope that is one metre long. She wants to cut it into 4 equal pieces. How many cuts does she need to make?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "3 cuts. Each cut separates one piece from the rest: the first cut gives 2 pieces, the second gives 3 pieces, and the third gives 4 pieces.",
+              "method_one_line": "Number of cuts = number of pieces minus one; to get 4 pieces, make 4 − 1 = 3 cuts.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: let them fold a strip of paper into four parts and count the fold lines (= cuts); stretch: ask how many cuts are needed for 6 equal pieces and explain the pattern."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q3, p.138",
+              "description": "Cut a one-metre rope into 4 equal pieces. How many cuts did you make?"
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

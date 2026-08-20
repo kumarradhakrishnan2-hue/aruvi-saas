@@ -1,0 +1,48 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Four Problems, Two Methods — Constructions and Tilings at Work",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems on the board at once. Students work individually for the first stretch — full working, no skipping steps — then compare in groups of three, reconstructing any disagreement step by step rather than voting. Each group nominates one presenter per problem; after each presentation the class names the chapter method the solution rested on. Watch for: Problem 1 — students must draw both pairs of arcs on opposite sides of AB and use equal radii; the perpendicular bisector method is what is needed. Problem 2 — students bisect a right angle to reach 45°, then bisect again to reach 22.5°; angle bisection is the method. Problem 3 — students must copy the given angle at the new point by transferring the isosceles triangle, then argue equal corresponding angles; copying an angle to construct a parallel line is the method. Problem 4 — students apply the colouring argument: each 2 × 1 tile covers exactly one black and one white square, so unequal colour counts make tiling impossible; the chessboard colouring argument is the method. The solutions are in the table below; do not read them aloud before students have worked.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | Draw a segment AB of length 8 cm. Using only a ruler and compass, find its exact midpoint M. How do you know M is the midpoint? | Open the compass to any radius greater than 4 cm. Draw arcs above and below AB centred at A, then arcs of the same radius centred at B. Join the two intersection points; this line crosses AB at M. M is the midpoint because ∆(intersection point)·A·M ≅ ∆(intersection point)·B·M by SSS, so AM = MB = 4 cm.\n2 | Construct a 90° angle at a point P on a line, then bisect it to get 45°, then bisect that to get 22.5°. Mark all three angles clearly. | Treat P as the midpoint of a segment on the line; draw the perpendicular bisector through P — this gives 90°. Bisect the 90° angle using equal-radius arcs from both arms to get 45°. Bisect the 45° angle the same way to get 22.5°. Each bisection uses SSS congruence to show the bisector ray divides the angle equally.\n3 | A line l is drawn on the board with a point Q above it. Construct a line through Q that is parallel to l, using only a ruler and compass. Justify why your line is parallel. | Draw a transversal through Q meeting l at a point R. At Q, copy the angle that the transversal makes with l: set the compass at R to mark equal arcs on both arms, transfer the same arc to Q, and mark the same chord length to fix the ray. The new ray through Q makes an equal corresponding angle with the transversal, so by the converse of the corresponding-angles theorem the line through Q is parallel to l.\n4 | A region is formed by a 4 × 3 grid of unit squares with the top-left corner square and the bottom-right corner square both removed, leaving 10 unit squares. Can this region be tiled by 2 × 1 tiles? Give a reason. | Colour the grid like a chessboard. In a 4 × 3 grid the top-left square is, say, black and the bottom-right square is also black (they are the same colour because they sit at positions (1,1) and (4,3) — the sum of coordinates is even in both cases if black squares have even coordinate-sums, but check: (1,1)→2 even, black; (4,3)→7 odd, white. So the two removed squares are different colours: one black, one white. After removal the count is 5 black and 5 white — equal. The parity check also passes: 10 is even. The region may be tileable; in fact a valid tiling can be drawn. Answer: the colouring argument does not rule it out, and a tiling exists."
+      }
+    ],
+    "materials": [
+      "ruler",
+      "compass",
+      "pencil",
+      "notebook or blank paper",
+      "two colours of pencil or crayon"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "The teacher writes all four problems on the board, reads each aloud once, and confirms that students understand what is being asked. No methods are named. Students open their notebooks and begin."
+      },
+      {
+        "minutes": "3-20",
+        "activity": "Students work individually on all four problems, showing every construction arc, every congruence label, and every colouring step in full. The teacher circulates without giving hints — note where students draw arcs on only one side of AB, skip the SSS justification, or try to tile by trial rather than by colour-counting."
+      },
+      {
+        "minutes": "20-30",
+        "activity": "Groups of three compare answers. Any disagreement is resolved by reconstructing the solution step by step — not by majority vote. Groups prepare one person to present each problem to the class."
+      },
+      {
+        "minutes": "30-38",
+        "activity": "Four brief presentations, one per problem. After each, the teacher asks the class: 'Which chapter method did this solution use?' The class states the method by name — perpendicular bisector construction, angle bisection, copying an angle for parallel lines, chessboard colouring argument — before the next presentation begins."
+      },
+      {
+        "minutes": "38-40",
+        "activity": "The teacher asks for one sentence that names the chapter's single connecting idea. After a few voices, the teacher states it: a ruler and compass can settle construction questions exactly because equal distances force congruent triangles, and a colouring can settle tiling questions exactly because each tile is forced to cover one square of each colour — in both halves of this chapter, the right constraint makes an apparently hard problem yield at once."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

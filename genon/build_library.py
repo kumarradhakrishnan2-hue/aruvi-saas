@@ -55,6 +55,7 @@ from aruvi_core.genon.serve import (                               # noqa: E402
 from aruvi_core.assessment_norm import mistyped_tag                # noqa: E402
 import variant_plans as vp_mod                                     # noqa: E402
 from register_scan import scan_plan, scanned_fields                # noqa: E402
+import stem_deixis                                                 # noqa: E402  (C5 check 12)
 from summary_sections import (                                     # noqa: E402
     NONE as SUMMARY_UNREADABLE, STRUCTURED as SUMMARY_STRUCTURED,
     closing_anchors, reconcile as reconcile_sections, section_waivers,
@@ -620,6 +621,51 @@ def certify(subject, grade, ch, row):
             lines.append("      -> either correct the stimulus to satisfy the tag it declares, "
                          "or drop the tag; a tagged stimulus that fails its contract renders as "
                          "prose and loses the representation it asked for")
+
+    # ── C5 CHECK 12 · THE STEM POINTS AT A STIMULUS THAT IS NOT THERE ────────────
+    # (2026-08-19, ARV-D-188 — founder-found by reading a served plan, not by a report.)
+    #
+    # mathematics III ch 5 Q-A-1: *"On the dot grid below, draw a simple rangoli design…"*
+    # with `visual_stimulus: ""`. There is no dot grid. It certified ALL PASS, and so did
+    # sixty others across english and mathematics.
+    #
+    # WHY EVERY EXISTING CHECK IS BLIND TO IT, and the reason is structural rather than an
+    # oversight. The gate directly above validates what a model DECLARES — and an EMPTY
+    # stimulus declares nothing, so `mistyped_tag` returns None on the first line. Every
+    # other stimulus check reads the stimulus field alone. Nothing anywhere compares the
+    # stem's LANGUAGE against the field beside it, which is the only place this defect
+    # exists. Same shape as check 11: two fields certification reads separately and never
+    # reconciles.
+    #
+    # ASYMMETRIC, like check 11. A promised FIGURE gates — the item cannot be answered at
+    # any period count. A promised WORKSPACE ("draw in the box below") is ADVISORY: nothing
+    # is missing in the content sense, the item wants a drawing area, and in 88% of measured
+    # cases its own `exercise` block already names the textbook page that has one.
+    #
+    # It GATES ON MATHEMATICS ONLY, and `stem_deixis._GATES` carries the reasoning: english
+    # stems talk about text that is itself full of the word ("the child imagines people
+    # below staring up"), and where the referent is a real list it lives in a field that
+    # varies by spine. A gate that fails a correct poem item is switched off in a week
+    # (runbook trap 4), so english returns an advisory shortlist ruled on at C7 — the same
+    # treatment social_sciences gets from check 11, for the same reason.
+    for name, s_ in lib:
+        raw = json.loads((lib_dir_of(subject, grade) / name).read_text())
+        hits = stem_deixis.scan_plan(raw)
+        figs = [h for h in hits if h["kind"] == stem_deixis.FIGURE]
+        work = [h for h in hits if h["kind"] == stem_deixis.WORKSPACE]
+        if stem_deixis.gates_for(subject):
+            note(not figs, f"{name}: no stem points at a figure the item does not carry "
+                           f"({len(figs)} does)", name if figs else None)
+        elif figs:
+            lines.append(f"      ADVISORY {name}: {len(figs)} stem(s) point at absent "
+                         f"material — english stems quote their own text, so this is read, "
+                         f"not failed")
+        for h in (figs + work)[:8]:
+            lines.append(f"      {h['id']} [{h['kind']}] {h['phrase']!r} — {h['stem'][:88]}")
+        if work:
+            lines.append(f"      ADVISORY {name}: {len(work)} workspace pointer(s) — the item "
+                         f"wants a drawing area, not content; repoint at the `exercise` page "
+                         f"(genon/repair_c3.py ARV-D-188) or supply one")
 
     # ── ITEM-SHAPE GATES (2026-08-12, ARV-D-123 — found at S5's C3) ──────────────
     # Two checks, both free, both closing the same hole: NOTHING IN THE PIPELINE READS AN

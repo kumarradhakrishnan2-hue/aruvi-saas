@@ -3520,6 +3520,11 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 .uv-tnotes-rib[open] summary::after { content: "–"; }
 .uv-tnotes-teaser { font-family: var(--f-body); font-style: italic; font-size: 13px; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1; }
 .uv-tnotes-rib[open] .uv-tnotes-teaser { display: none; }
+/* The Material-tab pointer that opens a re-authored closer's notes (founder 2026-08-20).
+   Weight alone carries it — the rib is already clay-edged and a second clay accent inside
+   it would compete with the kicker. Colour stays --ink so it reads as emphasis in the
+   sentence, not as a link. */
+.uv-tnotes-ref { font-weight: 600; color: var(--ink); }
 .uv-tnotes-rib p { font-family: var(--f-body); font-style: italic; font-size: 14.5px; line-height: 1.6; margin: 0; padding: 0 12px 10px; }
 
 .uv-slotk { display: block; margin: 18px 0 7px; }

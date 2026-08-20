@@ -1,0 +1,1415 @@
+{
+ "filename": "ch_04_canonical.json",
+ "saved_at": "2026-08-19T17:39:58",
+ "plan_status": "canonical",
+ "chapter_number": 4,
+ "chapter_title": "Vacation with My Nani Maa",
+ "grade": "Grade III",
+ "subject": "Mathematics",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 40,
+   "count": 11
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 11 periods = 440 minutes\nTotal: 11 periods · 7h 20min",
+ "genon_canonical": {
+  "generated": "2026-08-19",
+  "schedule": "11x40",
+  "constitution": "LP v1.4 / assessment v1.4",
+  "source": "generate_canonical.py one mathematics iii 4",
+  "ledger_ts": "20260819_133718_math_iii_04_top",
+  "validation": "clean",
+  "repairs": [
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-19T17:50:43",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-185": {
+      "note": "declared edit",
+      "edits": [
+       {
+        "where": "item{'id': 'Q-A-2'}",
+        "field": "visual_stimulus",
+        "old": "number_line: [Frame 1: 8+4] | [Frame 2: 8−4]",
+        "new": ""
+       }
+      ]
+     }
+    }
+   },
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-19T21:01:06",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-188": {
+      "note": "stem repointed at the page its own exercise block names",
+      "edits": [
+       {
+        "item": 2,
+        "field": "prompt",
+        "old": "Draw dots on the two tens frames below — one to show 8 + 4 and one to show 8 – 4. Then write the number sentence for each.",
+        "new": "Draw dots on the two tens frames on p.30 — one to show 8 + 4 and one to show 8 – 4. Then write the number sentence for each."
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S1"
+     ],
+     "section_titles": [
+      "Finding hidden numbers (missing addend)"
+     ],
+     "activity_title": "Nani Maa's Hidden-Seed Magic Trick",
+     "tasks_in_class": [
+      {
+       "id": "T-1",
+       "intent": "explore",
+       "method": "Play-way",
+       "section_ref": "S1",
+       "book_ref": "Let us Do, p.29",
+       "description": "Perform the hidden-seed magic trick with friends; write the number of hidden seeds in the table for six total-and-visible pairs."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "The teacher reveals Nani Maa's magic trick: show a small pile of seeds, hide some under a handkerchief, announce the total. Children guess the hidden count by thinking 'what do I add to what I see to reach the total?' Invite two or three children to try guessing aloud and share their reasoning."
+      },
+      {
+       "minutes": "8–22",
+       "activity": "Children work in pairs with seeds and a handkerchief. One partner hides seeds while the other records total and visible counts on a small paper strip. They swap roles so both experience hiding and finding. Each pair aims to complete all six total-and-visible pairs from Let us Do, p.29 (\"Perform the hidden-seed magic trick…\")."
+      },
+      {
+       "minutes": "22–33",
+       "activity": "Pairs complete the six-row table in Let us Do, p.29 (\"Perform the hidden-seed magic trick…\") by writing the hidden count beside each pair. The teacher circulates, prompting: 'How did you figure out that number?' Children are encouraged to say the number sentence aloud: 'I saw 4, total is 9, so 5 are hiding.'"
+      },
+      {
+       "minutes": "33–40",
+       "activity": "Brief whole-class share: a volunteer reads one row of their table, and the class checks by acting it out. The teacher draws attention to the pattern — total, visible, and hidden form a tight trio — and names the idea of a missing addend without formal vocabulary pressure."
+      }
+     ],
+     "teacher_notes": "Children often count all visible seeds from scratch rather than reasoning from the total; encourage the question 'What do we already know?' to redirect attention to the total as the starting point. The concrete act of hiding and revealing is essential before any written table work, so give the physical play its full unhurried space. A common slip is writing the visible count in the hidden column — a quick check of one row with seeds still on the table corrects this immediately.",
+     "materials": [
+      "Seeds or small counters (about 20 per pair)",
+      "Handkerchief or cloth square (one per pair)",
+      "Paper strips or notebooks for recording"
+     ]
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S2"
+     ],
+     "section_titles": [
+      "Addition and subtraction within 20 using tens frames"
+     ],
+     "activity_title": "Balushahi Boxes and the Tens Frame Bridge",
+     "tasks_in_class": [
+      {
+       "id": "T-2",
+       "intent": "explore",
+       "method": "Play-way",
+       "section_ref": "S2",
+       "book_ref": "Let us Do, p.30",
+       "description": "Draw the number of dots for 7 balushahi + 5 balushahi and 7 balushahi – 5 balushahi; complete the number sentences."
+      },
+      {
+       "id": "T-3",
+       "intent": "practice",
+       "method": "Problem-solving",
+       "section_ref": "S2",
+       "book_ref": "Let us Do, p.31",
+       "description": "Use the tens frame to solve: (a) 6+8 (b) 5+10 (c) 9–6 (d) 18–9."
+      }
+     ],
+     "homework": [
+      {
+       "id": "T-4",
+       "intent": "reason",
+       "method": "Play-way",
+       "section_ref": "S2",
+       "book_ref": "Let us Play, p.31",
+       "description": "Card Game: shuffle four sets of number cards 1–10; take turns opening one card; keep any three cards that form an addition or subtraction statement."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Teacher sets the balushahi story: one box has 7 sweets, another has 5. Children draw dots on a tens-frame outline on their paper — first filling 7 dots, then 5 more — and write the addition sentence. They then cross out 5 dots from the same frame and write the subtraction sentence. Let us Do, p.30 (\"Draw the number of dots for 7 balushahi + 5 balushahi…\")."
+      },
+      {
+       "minutes": "10–20",
+       "activity": "Class discusses what they notice: the same 7 and 5 appear in both sentences. Teacher highlights that addition and subtraction share the same number trio, prompting children to say the relationship in their own words. A quick check: call out a total and one part, children say the other part using their tens frames."
+      },
+      {
+       "minutes": "20–35",
+       "activity": "Children work individually on Let us Do, p.31 (\"Use the tens frame to solve: (a) 6+8 (b) 5+10 (c) 9–6 (d) 18–9\"). They draw the tens-frame dots for each expression and write the answer. The teacher circulates, encouraging children who reach 18–9 to use two frames."
+      },
+      {
+       "minutes": "35–40",
+       "activity": "Whole-class check of one addition and one subtraction answer. Teacher asks: 'Did anyone use 18–9 to check 9+9?' Homework: the Card Game from Let us Play, p.31 (\"shuffle four sets of number cards 1–10…\") is explained — children are asked to play once at home and bring one addition and one subtraction statement they found."
+      }
+     ],
+     "teacher_notes": "Children frequently treat addition and subtraction as unrelated operations; the tens-frame dot model makes their shared trio (7, 5, 12) visible, so return to it whenever confusion appears. A common error on 18–9 is writing 8 because children subtract only the ones digit; guiding them to fill the frame first, then remove, avoids this. The card game builds fluency with the same relationships through play and is well suited to a home context.",
+     "materials": [
+      "Printed or drawn tens-frame outlines (two per child)",
+      "Pencils and crayons for dot drawing",
+      "Number cards 1–10 (four sets per group, for homework explanation)"
+     ]
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S3"
+     ],
+     "section_titles": [
+      "Addition and subtraction on the ginladi within 100"
+     ],
+     "activity_title": "Stamp Stories: Three Paths on the Bead String",
+     "tasks_in_class": [
+      {
+       "id": "T-5",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S3",
+       "book_ref": "Let us Do, p.32",
+       "description": "Nandini and Chirag have 22 stamps; Nani Maa's brother gives 30 more — find the total using the ginladi."
+      },
+      {
+       "id": "T-6",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S3",
+       "book_ref": "Let us Do, p.33",
+       "description": "52 stamps total, 37 with famous persons — find how many show monuments (52 – 37); find other ways on the number line."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Teacher narrates: Nandini and Chirag have 22 stamps; Nani Maa's brother gives them 30 more. Three children model three jump strategies for 15+7 on a class bead string (or drawn number line): count on one by one; jump to the nearest ten then step on; overshoot and jump back. Class observes that all three arrive at the same answer."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Children use their own ginladi (or a number-line strip) to solve Let us Do, p.32 (\"Nandini and Chirag have 22 stamps; Nani Maa's brother gives 30 more…\"). They mark their jumps and write 22 + 30 = ? below. Teacher circulates, asking 'Which jump did you make first?'"
+      },
+      {
+       "minutes": "22–35",
+       "activity": "Children tackle Let us Do, p.33 (\"52 stamps total, 37 with famous persons — find how many show monuments…\"). They mark a jump from 37 to 52 (or from 52 back to 37) and record 52 – 37 = ?. The teacher prompts: 'Can you find a different way on the number line?'"
+      },
+      {
+       "minutes": "35–40",
+       "activity": "Two volunteers share their number-line drawings for 52 – 37, showing different jump paths. Class confirms the answers match. Teacher draws attention to the idea that the number line (ginladi) shows the journey, not just the answer."
+      }
+     ],
+     "teacher_notes": "Children often count individual beads for 22+30 rather than jumping the whole ten at once; demonstrate a single 10-bead jump explicitly to build the habit. A frequent error on 52–37 is counting up from 52 instead of from 37; redirect by asking 'Where do we start our walk?' The emphasis on multiple paths (not a single method) is the section's core insight and deserves repeated verbal affirmation.",
+     "materials": [
+      "Bead strings or 1–100 number-line strips (one per pair)",
+      "Pencils for marking jumps",
+      "Class demonstration bead string or number-line poster"
+     ]
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S3"
+     ],
+     "section_titles": [
+      "Addition and subtraction on the ginladi within 100"
+     ],
+     "activity_title": "How Many More? Then Jump by Tens",
+     "tasks_in_class": [
+      {
+       "id": "T-7",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S3",
+       "book_ref": "Let us Do, p.33",
+       "description": "They have 52 stamps and want 75 — figure out how many more stamps they need using the number line."
+      },
+      {
+       "id": "T-9",
+       "intent": "reason",
+       "method": "Inductive",
+       "section_ref": "S3",
+       "book_ref": "Let us Do Q2, p.34",
+       "description": "A frog is at 7 and jumps 10 beads at a time — mark the beads it will land on and write the numbers."
+      },
+      {
+       "id": "T-11",
+       "intent": "reason",
+       "method": "Inductive",
+       "section_ref": "S3",
+       "book_ref": "Let us Do Q4, p.34",
+       "description": "The grasshopper at 76 jumps backward by 10 each time — mark all beads it will jump on and write the numbers."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Children place a finger at 52 on their number-line strip and work Let us Do, p.33 (\"They have 52 stamps and want 75 — figure out how many more stamps they need…\"). They draw jumps from 52 to 75 and write the missing addend. Teacher asks: 'Did you jump in one go or in steps?'"
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Teacher introduces the frog: it sits at 7 and always jumps exactly 10 beads forward. Children mark landing spots on their number-line strip (Let us Do Q2, p.34 (\"A frog is at 7 and jumps 10 beads at a time…\")). They write the sequence and look for a pattern in the ones digit."
+      },
+      {
+       "minutes": "25–36",
+       "activity": "The grasshopper at 76 jumps backward by 10 each time (Let us Do Q4, p.34 (\"The grasshopper at 76 jumps backward by 10 each time…\")). Children mark landings and write the sequence. Teacher prompts: 'What do you notice about the ones digit going backwards?'"
+      },
+      {
+       "minutes": "36–40",
+       "activity": "Class shares observations: the ones digit stays the same in both the frog's forward jumps and the grasshopper's backward jumps. Teacher names this a 'skip by tens' pattern and invites one child to call out the next number in each sequence beyond what was marked."
+      }
+     ],
+     "teacher_notes": "Children working on 52 to 75 often make the jump all the way to 75 in one stride and write 23 correctly, but some count back from 75 to 52 and get confused about direction; anchor the question as 'how many beads does the frog travel from 52 to reach 75?' The ones-digit invariance under +10 jumps is the key inductive discovery and is worth a deliberate pause — let children state it in their own words before moving on. Tasks T-10 (frog from 23) and T-8 (structured practice) are available as additional practice; note them to children who finish early.",
+     "materials": [
+      "1–100 number-line strips (one per child)",
+      "Pencils or coloured crayons for marking landings",
+      "Small cut-out frog and grasshopper images (optional, for demonstration)"
+     ]
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S3"
+     ],
+     "section_titles": [
+      "Addition and subtraction on the ginladi within 100"
+     ],
+     "activity_title": "Fluency on the Ginladi: Four Computations and Jump Tables",
+     "tasks_in_class": [
+      {
+       "id": "T-8",
+       "intent": "practice",
+       "method": "Problem-solving",
+       "section_ref": "S3",
+       "book_ref": "Let us Do Q1, p.34",
+       "description": "Solve using a ginladi: (a) 34+6 (b) 23+12 (c) 33–5 (d) 42–15."
+      },
+      {
+       "id": "T-12",
+       "intent": "practice",
+       "method": "Problem-solving",
+       "section_ref": "S3",
+       "book_ref": "Let us Do Q5, p.35",
+       "description": "Fill in the jump tables by jumping as instructed for Jump 5, Jump 6, and Jump 9 from given starting numbers."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–5",
+       "activity": "Brief warm-up: teacher calls out 45 and children say the number that is 10 more, then 10 less, without writing — a quick oral exercise building on the skip-by-tens insight from work with the frog and grasshopper patterns."
+      },
+      {
+       "minutes": "5–22",
+       "activity": "Children work individually on Let us Do Q1, p.34 (\"Solve using a ginladi: (a) 34+6 (b) 23+12 (c) 33–5 (d) 42–15\"). They draw jumps on their number-line strip and write each number sentence. Teacher circulates, asking 'Which ten did you jump to first?'"
+      },
+      {
+       "minutes": "22–36",
+       "activity": "Children fill the jump tables in Let us Do Q5, p.35 (\"Fill in the jump tables by jumping as instructed for Jump 5, Jump 6, and Jump 9…\"). They use the number-line strip to land on each next value, then record it. The teacher highlights that each table is an additive sequence."
+      },
+      {
+       "minutes": "36–40",
+       "activity": "Class checks: teacher reads the first entry of the Jump 9 table aloud and children call out subsequent values together. Any disagreement is resolved on the class number line."
+      }
+     ],
+     "teacher_notes": "On 42–15 children frequently subtract the larger digit from the smaller in each place independently, getting 33 instead of 27; the number-line strip shows the jump landing well below 33, which makes the error visible. For the jump tables, children sometimes add the jump size to the table's row number rather than to the previous entry — prompt 'Where did you land last time?' to keep the chain continuous. Additional tasks T-9, T-10, and T-11 are available for children who complete the tables quickly.",
+     "materials": [
+      "1–100 number-line strips (one per child)",
+      "Pencils",
+      "Textbook open to pp.34–35"
+     ]
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S4"
+     ],
+     "section_titles": [
+      "Addition and subtraction on the 100-number grid"
+     ],
+     "activity_title": "Moving on the Hundred-Chart: Arrows Show the Way",
+     "tasks_in_class": [
+      {
+       "id": "T-13",
+       "intent": "reason",
+       "method": "Play-way",
+       "section_ref": "S4",
+       "book_ref": "Let us Play, p.35",
+       "description": "Number Grid Game: players roll two dice to form a two-digit number and move a counter forward or backward on the 100 grid; first to reach 91–100 wins."
+      },
+      {
+       "id": "T-14",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S4",
+       "book_ref": "Let us Do Q1(a–d), p.36",
+       "description": "Use the number grid to find where each player lands: (a) 45+34 (b) 75+56 (c) 30+66 (d) 89+63; show thinking by drawing arrows in the grid."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Teacher demonstrates on the class hundred-chart: place a counter on 24, roll a 3 — move right three squares to 27. Roll a 2 on the tens die — move down two rows to 47. Children observe and say the sentence: '24 + 3 = 27, then 27 + 20 = 47, so 24 + 23 = 47.' The grid encodes place value through direction."
+      },
+      {
+       "minutes": "8–22",
+       "activity": "Pairs play the Number Grid Game from Let us Play, p.35 (\"players roll two dice to form a two-digit number and move a counter forward or backward…\"). Each player records the number sentence for each move. The teacher circulates, asking: 'Why did you move down? How many tens is that?'"
+      },
+      {
+       "minutes": "22–36",
+       "activity": "Children work on Let us Do Q1(a–d), p.36 (\"Use the number grid to find where each player lands: (a) 45+34 (b) 75+56 (c) 30+66 (d) 89+63…\") drawing arrows on a grid in their notebook or on printed grids. For sums over 100 they note the counter goes beyond the grid."
+      },
+      {
+       "minutes": "36–40",
+       "activity": "Class shares answers for 89+63, discussing what happens when the counter reaches 100 and keeps moving — an informal first encounter with sums beyond 100 that the chapter extends shortly."
+      }
+     ],
+     "teacher_notes": "Children often confuse right-movement (ones) with down-movement (tens) when they first use the grid; a colour code — blue arrows for ones moves, red arrows for tens moves — helps distinguish them without extra language. On 75+56, reaching beyond 100 surprises many children; affirm that the grid just isn't big enough and the calculation still works. The grid and the ginladi are two ways of showing the same addition; noting this connection strengthens both models.",
+     "materials": [
+      "Printed 100-number grids (one per child or pair)",
+      "Counters or coins",
+      "Two dice per pair",
+      "Pencils and two coloured crayons for drawing arrows"
+     ]
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S5"
+     ],
+     "section_titles": [
+      "Magic Sums — row and column addition puzzles"
+     ],
+     "activity_title": "Nani Maa's Newspaper Puzzle: Rows, Columns, Diagonals",
+     "tasks_in_class": [
+      {
+       "id": "T-15",
+       "intent": "reason",
+       "method": "Inductive",
+       "section_ref": "S5",
+       "book_ref": "Magic Sums, p.37",
+       "description": "Observe the completed Magic Sums puzzle; fill three incomplete grids so each row and column adds to the given target; add blue-box and red-box numbers and describe what you find."
+      },
+      {
+       "id": "T-16",
+       "intent": "reason",
+       "method": "Inductive",
+       "section_ref": "S5",
+       "book_ref": "Magic Sums, p.37",
+       "description": "Fill the blanks to complete the magic square (3×3 grid with 3, 9, and 6 given)."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Teacher displays the completed Magic Sums example from p.37. Children add one row, then one column, then a diagonal (blue boxes) together and call out totals. Teacher asks: 'Do any two paths give the same total?' Children check all rows, columns, and both diagonals — a shared discovery moment."
+      },
+      {
+       "minutes": "10–28",
+       "activity": "Children work on Magic Sums, p.37 (\"fill three incomplete grids so each row and column adds to the given target; add blue-box and red-box numbers…\"). They fill the three partially completed grids, then sum the blue-box entries and the red-box entries separately and write what they notice. Pair discussion is encouraged."
+      },
+      {
+       "minutes": "28–37",
+       "activity": "Children tackle Magic Sums, p.37 (\"Fill the blanks to complete the magic square (3×3 grid with 3, 9, and 6 given)\"). With only three cells filled, children must use the row and column totals to reason backwards. Teacher prompts: 'Which row can you complete first?'"
+      },
+      {
+       "minutes": "37–40",
+       "activity": "Quick share: one volunteer explains which row they solved first and why. Teacher affirms that noticing what sums are equal is a form of mathematical thinking, not just arithmetic."
+      }
+     ],
+     "teacher_notes": "Children often try numbers randomly rather than using the known total as a constraint; prompt 'If two cells in a row are filled, how do you find the third?' to shift from guessing to reasoning. A common error in the magic square is placing the same digit in two cells — remind children that each digit 1–9 is used exactly once in the full puzzle. The diagonal equality (blue = red) is an emergent observation; do not announce it in advance — let children discover it.",
+     "materials": [
+      "Textbook open to p.37",
+      "Pencils",
+      "Optional: printed grid worksheets for children who want more working space"
+     ]
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S6"
+     ],
+     "section_titles": [
+      "Adding and subtracting two-digit numbers beyond 100"
+     ],
+     "activity_title": "Radish Harvest: Box Diagrams and Matchstick Bundles",
+     "tasks_in_class": [
+      {
+       "id": "T-17",
+       "intent": "explore",
+       "method": "Play-way",
+       "section_ref": "S6",
+       "book_ref": "Let us Do, p.38",
+       "description": "Estimate total radishes; draw the 25+36 problem as a box diagram; find the answer using matchstick bundles or the number line; find other ways on the number line."
+      },
+      {
+       "id": "T-18",
+       "intent": "reason",
+       "method": "Inductive",
+       "section_ref": "S6",
+       "book_ref": "p.39",
+       "description": "Estimate the number of carrots in a box of 100 (with 65 tomatoes); circle the bundle of sticks showing the correct count; solve 100–65 on the number line."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Teacher sets the harvest context: two groups of children collect radishes — 25 in one pile and 36 in another. Children first give a quick estimate of the total (more than 50? more than 60?) and explain their estimate in one sentence. This foregrounds estimation before calculation."
+      },
+      {
+       "minutes": "10–25",
+       "activity": "Children open the textbook at p.38 and work Let us Do, p.38 (\"Estimate total radishes; draw the 25+36 problem as a box diagram; find the answer using matchstick bundles or the number line…\"). They draw two boxes side by side labelled 25 and 36, then use matchstick-bundle sketches (bundles of ten plus single sticks) or their number-line strip to find 25+36. Those who finish early look for a second way on the number line."
+      },
+      {
+       "minutes": "25–37",
+       "activity": "Children move to p.39: a box holds 100 items — 65 are tomatoes — how many are carrots? They estimate first, then circle the matchstick bundle that shows 35, and finally solve 100–65 on the number line (p.39, \"Estimate the number of carrots in a box of 100…\")."
+      },
+      {
+       "minutes": "37–40",
+       "activity": "Class checks the two answers together. Teacher asks: 'Did your estimate help you spot a mistake?' Children note whether their estimate and calculation agreed."
+      }
+     ],
+     "teacher_notes": "Children frequently skip the estimation step and move straight to calculation; insist on at least one spoken estimate before any pencil work, framing it as a habit rather than an extra task. For the box diagram, some children draw only one box — emphasise that the two parts sit beside each other with a larger whole box around them. On 100–65, the error of writing 45 (subtracting tens from tens and ones from ones independently) is common; the number-line jump from 65 to 100 corrects it visually.",
+     "materials": [
+      "Number-line strips 0–120 (one per child)",
+      "Matchsticks or thin sticks grouped in tens (or pencil sketches)",
+      "Textbook open to pp.38–39"
+     ]
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S6"
+     ],
+     "section_titles": [
+      "Adding and subtracting two-digit numbers beyond 100"
+     ],
+     "activity_title": "Apple Harvest: Estimating Beyond 100 and Finding the Difference",
+     "tasks_in_class": [
+      {
+       "id": "T-19",
+       "intent": "explore",
+       "method": "Inquiry",
+       "section_ref": "S6",
+       "book_ref": "p.40",
+       "description": "Draw a box diagram for 85+67 apples; estimate whether the total is more or less than 100 and explain your reasoning."
+      },
+      {
+       "id": "T-20",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S6",
+       "book_ref": "p.41",
+       "description": "Find 85+67 using the number line; find who collected more apples and by how much (85–67)."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Children open to p.40. Teacher asks: 'Before we calculate, is 85+67 more or less than 100? How do you know?' Children discuss in pairs, then draw the box diagram for 85+67 from p.40 (\"Draw a box diagram for 85+67 apples; estimate whether the total is more or less than 100…\"). Several estimates are shared aloud with brief reasons."
+      },
+      {
+       "minutes": "10–25",
+       "activity": "Children extend their number-line strip (or use one labelled up to 160) to find 85+67 from p.41 (\"Find 85+67 using the number line…\"). They mark jumps, record the total, and compare it with their estimate. Teacher circulates: 'Where did you cross 100? What helped you keep going?'"
+      },
+      {
+       "minutes": "25–36",
+       "activity": "Children solve the second question on p.41 (\"find who collected more apples and by how much (85–67)\") by marking a jump from 67 to 85 on the number line. They write 85 – 67 = ? and record the difference. Teacher links: 'The same two numbers, now a subtraction — just as with the tens frame and balushahi.'"
+      },
+      {
+       "minutes": "36–40",
+       "activity": "Class compares their estimates from the opening with the computed answer. Teacher asks: 'Was anyone surprised by how far past 100 the total went?' Children name one strategy that helped them go past 100 on the number line."
+      }
+     ],
+     "teacher_notes": "The key conceptual move here is extending the number line beyond 100 — some children treat 100 as a wall and stop; physically drawing a longer strip on their page (or taping two strips) overcomes this. On 85–67, children who subtract from 85 rather than jumping from 67 tend to get confused near the tens boundary; reframe it as 'how far from 67 to 85?' to restore direction. The connection between today's apple context and earlier addition-subtraction pairs (balushahi, stamps) is worth naming explicitly to reinforce the part-part-whole structure.",
+     "materials": [
+      "Extended number-line strips 0–160 (or two strips taped together)",
+      "Pencils",
+      "Textbook open to pp.40–41"
+     ]
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S6"
+     ],
+     "section_titles": [
+      "Adding and subtracting two-digit numbers beyond 100"
+     ],
+     "activity_title": "Word Problems, Race to 100, and Estimation Matching",
+     "tasks_in_class": [
+      {
+       "id": "T-21",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S6",
+       "book_ref": "p.42",
+       "description": "Q1–Q5: Solve word problems (books sold, cricket runs, vadas, dried plants) by drawing box diagrams and using matchstick bundles or number line; make and share your own word problem."
+      },
+      {
+       "id": "T-22",
+       "intent": "reason",
+       "method": "Play-way",
+       "section_ref": "S6",
+       "book_ref": "Let us Play, p.42",
+       "description": "Two-player game: alternate adding a number between 1 and 10 to a running total; first player to reach exactly 100 wins."
+      },
+      {
+       "id": "T-23",
+       "intent": "reason",
+       "method": "Inductive",
+       "section_ref": "S6",
+       "book_ref": "Let us Do Q1–2, p.43",
+       "description": "Q1: Estimate each expression and match it to 'more than 100' or 'less than 100'. Q2: Solve all the expressions using a number line and write the answers."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–18",
+       "activity": "Children work on the word problems from p.42 (\"Q1–Q5: Solve word problems… by drawing box diagrams and using matchstick bundles or number line\"). They choose their own representation for each problem and write the number sentence. After Q5, each child writes one original word problem using numbers beyond 50 and swaps with a neighbour to solve."
+      },
+      {
+       "minutes": "18–28",
+       "activity": "Pairs play the Race to 100 game from Let us Play, p.42 (\"alternate adding a number between 1 and 10 to a running total; first player to reach exactly 100 wins\"). Each player tracks the running total in their notebook. Teacher encourages children to think ahead: 'What do you want the total to be before your last turn?'"
+      },
+      {
+       "minutes": "28–38",
+       "activity": "Children complete Let us Do Q1–2, p.43 (\"Q1: Estimate each expression and match it to 'more than 100' or 'less than 100'. Q2: Solve all the expressions using a number line…\"). They match estimates first, then compute and check whether their matches were correct."
+      },
+      {
+       "minutes": "38–40",
+       "activity": "Quick show of hands: how many estimates in Q1 matched the computed answer? Teacher affirms that close estimation is a skill — not luck — built from knowing how close each addend is to a round ten."
+      }
+     ],
+     "teacher_notes": "For the word problems, children often reach for the number line immediately without drawing the box diagram — insist on the diagram as a reasoning step, not decoration, because it makes the operation choice visible. In Race to 100, children who add 1 every turn never win; after one game, prompt 'What number would you want to be on before your last turn?' to surface strategic thinking. On Q1 of p.43, some children compute before estimating — encourage them to cover their working and estimate first, then uncover.",
+     "materials": [
+      "Number-line strips 0–150",
+      "Textbook open to pp.42–43",
+      "Pencils",
+      "Notebooks for recording game running totals and original word problems"
+     ]
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 40,
+     "synthesis": true,
+     "section_refs": [
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5",
+      "S6"
+     ],
+     "section_titles": [
+      "Finding hidden numbers (missing addend)",
+      "Addition and subtraction within 20 using tens frames",
+      "Addition and subtraction on the ginladi within 100",
+      "Addition and subtraction on the 100-number grid",
+      "Magic Sums — row and column addition puzzles",
+      "Adding and subtracting two-digit numbers beyond 100"
+     ],
+     "activity_title": "Nani Maa's Grand Tour: Connecting Every Model and Strategy",
+     "tasks_in_class": [],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Teacher lays five 'stations' as cards on the board — a handkerchief, a tens frame, a bead string, a 100-grid, and a box diagram — each representing one concrete model children have worked with. In pairs, children discuss: 'What kind of problem did each model help you solve?' Pairs share one model-problem link each."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Children receive a 'Nani Maa's journey' sheet with five fresh problems — one for each model — spanning missing addend (hidden seeds), tens-frame addition within 20, ginladi subtraction within 100, number-grid addition, and a sum beyond 100 using a box diagram. Each child chooses which model to use for each problem and records their choice alongside their working."
+      },
+      {
+       "minutes": "22–30",
+       "activity": "Children attempt a mini Magic Sums challenge: a 3×3 grid with three cells filled (different from any grid in the chapter) where each row and column must sum to 15. They reason from the known row or column totals to find the missing entries, drawing on the pattern-recognition insight from the newspaper puzzle."
+      },
+      {
+       "minutes": "30–37",
+       "activity": "Groups of three share their journey sheets: each child explains one problem, naming the model they chose and why. Listeners can suggest an alternative model. The teacher circulates, asking: 'Could you have used the ginladi instead of the box diagram here?'"
+      },
+      {
+       "minutes": "37–40",
+       "activity": "Whole-class close: teacher draws a single large number — for example, 152 — and asks 'Which of Nani Maa's tools would you pick to add 39 to this, and why?' Children call out answers with brief reasons, tying the chapter's full toolkit together in one final exchange."
+      }
+     ],
+     "teacher_notes": "The synthesis works best when children articulate their model choice rather than simply computing; the goal is awareness that multiple tools exist and that context guides selection. If children reach for the number line for every problem on the journey sheet, pause the room and ask a group to show the box-diagram approach — diversity of method is the point. The mini Magic Sums grid should have a unique solution; verify before the unit that the three given cells leave no ambiguity.",
+     "materials": [
+      "'Nani Maa's journey' printed sheet with five fresh problems (one per model)",
+      "Mini Magic Sums grid printed or drawn on the board",
+      "Number-line strips 0–160",
+      "Pencils",
+      "Optional: small seed bags, tens-frame outlines, matchstick bundles as physical props at each station card"
+     ]
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 40,
+   "count": 11,
+   "total_minutes": 440
+  },
+  "coverage_handoff": {
+   "explore": {
+    "tasks": [
+     {
+      "task_id": "T-1",
+      "intent": "explore",
+      "section_ref": "S1",
+      "book_ref": "Let us Do, p.29",
+      "description": "Perform the hidden-seed magic trick with friends; write the number of hidden seeds in the table for six total-and-visible pairs."
+     },
+     {
+      "task_id": "T-2",
+      "intent": "explore",
+      "section_ref": "S2",
+      "book_ref": "Let us Do, p.30",
+      "description": "Draw the number of dots for 7 balushahi + 5 balushahi and 7 balushahi – 5 balushahi; complete the number sentences."
+     },
+     {
+      "task_id": "T-17",
+      "intent": "explore",
+      "section_ref": "S6",
+      "book_ref": "Let us Do, p.38",
+      "description": "Estimate total radishes; draw the 25+36 problem as a box diagram; find the answer using matchstick bundles or the number line; find other ways on the number line."
+     },
+     {
+      "task_id": "T-19",
+      "intent": "explore",
+      "section_ref": "S6",
+      "book_ref": "p.40",
+      "description": "Draw a box diagram for 85+67 apples; estimate whether the total is more or less than 100 and explain your reasoning."
+     }
+    ]
+   },
+   "reason": {
+    "tasks": [
+     {
+      "task_id": "T-4",
+      "intent": "reason",
+      "section_ref": "S2",
+      "book_ref": "Let us Play, p.31",
+      "description": "Card Game: shuffle four sets of number cards 1–10; take turns opening one card; keep any three cards that form an addition or subtraction statement."
+     },
+     {
+      "task_id": "T-9",
+      "intent": "reason",
+      "section_ref": "S3",
+      "book_ref": "Let us Do Q2, p.34",
+      "description": "A frog is at 7 and jumps 10 beads at a time — mark the beads it will land on and write the numbers."
+     },
+     {
+      "task_id": "T-11",
+      "intent": "reason",
+      "section_ref": "S3",
+      "book_ref": "Let us Do Q4, p.34",
+      "description": "The grasshopper at 76 jumps backward by 10 each time — mark all beads it will jump on and write the numbers."
+     },
+     {
+      "task_id": "T-13",
+      "intent": "reason",
+      "section_ref": "S4",
+      "book_ref": "Let us Play, p.35",
+      "description": "Number Grid Game: players roll two dice to form a two-digit number and move a counter forward or backward on the 100 grid; first to reach 91–100 wins."
+     },
+     {
+      "task_id": "T-15",
+      "intent": "reason",
+      "section_ref": "S5",
+      "book_ref": "Magic Sums, p.37",
+      "description": "Observe the completed Magic Sums puzzle; fill three incomplete grids so each row and column adds to the given target; add blue-box and red-box numbers and describe what you find."
+     },
+     {
+      "task_id": "T-18",
+      "intent": "reason",
+      "section_ref": "S6",
+      "book_ref": "p.39",
+      "description": "Estimate the number of carrots in a box of 100 (with 65 tomatoes); circle the bundle of sticks showing the correct count; solve 100–65 on the number line."
+     },
+     {
+      "task_id": "T-23",
+      "intent": "reason",
+      "section_ref": "S6",
+      "book_ref": "Let us Do Q1–2, p.43",
+      "description": "Q1: Estimate each expression and match it to 'more than 100' or 'less than 100'. Q2: Solve all the expressions using a number line and write the answers."
+     }
+    ]
+   },
+   "practice": {
+    "tasks": [
+     {
+      "task_id": "T-3",
+      "intent": "practice",
+      "section_ref": "S2",
+      "book_ref": "Let us Do, p.31",
+      "description": "Use the tens frame to solve: (a) 6+8 (b) 5+10 (c) 9–6 (d) 18–9."
+     },
+     {
+      "task_id": "T-8",
+      "intent": "practice",
+      "section_ref": "S3",
+      "book_ref": "Let us Do Q1, p.34",
+      "description": "Solve using a ginladi: (a) 34+6 (b) 23+12 (c) 33–5 (d) 42–15."
+     },
+     {
+      "task_id": "T-12",
+      "intent": "practice",
+      "section_ref": "S3",
+      "book_ref": "Let us Do Q5, p.35",
+      "description": "Fill in the jump tables by jumping as instructed for Jump 5, Jump 6, and Jump 9 from given starting numbers."
+     }
+    ]
+   },
+   "solve": {
+    "tasks": [
+     {
+      "task_id": "T-5",
+      "intent": "solve",
+      "section_ref": "S3",
+      "book_ref": "Let us Do, p.32",
+      "description": "Nandini and Chirag have 22 stamps; Nani Maa's brother gives 30 more — find the total using the ginladi."
+     },
+     {
+      "task_id": "T-7",
+      "intent": "solve",
+      "section_ref": "S3",
+      "book_ref": "Let us Do, p.33",
+      "description": "They have 52 stamps and want 75 — figure out how many more stamps they need using the number line."
+     },
+     {
+      "task_id": "T-14",
+      "intent": "solve",
+      "section_ref": "S4",
+      "book_ref": "Let us Do Q1(a–d), p.36",
+      "description": "Use the number grid to find where each player lands: (a) 45+34 (b) 75+56 (c) 30+66 (d) 89+63; show thinking by drawing arrows in the grid."
+     },
+     {
+      "task_id": "T-20",
+      "intent": "solve",
+      "section_ref": "S6",
+      "book_ref": "p.41",
+      "description": "Find 85+67 using the number line; find who collected more apples and by how much (85–67)."
+     },
+     {
+      "task_id": "T-21",
+      "intent": "solve",
+      "section_ref": "S6",
+      "book_ref": "p.42",
+      "description": "Q1–Q5: Solve word problems (books sold, cricket runs, vadas, dried plants) by drawing box diagrams and using matchstick bundles or number line; make and share your own word problem."
+     }
+    ]
+   }
+  },
+  "assessment_items": [
+   {
+    "section_code": "A",
+    "section_title": "Explore",
+    "items": [
+     {
+      "id": "Q-A-1",
+      "intent": "explore",
+      "section_ref": "S1",
+      "section_title": "Finding hidden numbers (missing addend)",
+      "question_type": "SCR",
+      "prompt": "There are 11 seeds in all. You can see 4 seeds on the table. How many seeds are hiding under the cloth? Show how you know.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "7 seeds are hiding. The child should show 4 + 7 = 11 or 11 – 4 = 7.",
+       "method_one_line": "Think: what number added to 4 makes 11? Count on from 4 until you reach 11.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: let the child use seeds or counters and a cloth to act it out; stretch: ask the child to find two different ways to show why 7 must be the hidden number."
+      },
+      "exercise": {
+       "book_ref": "Let us Do, p.29",
+       "description": "Perform the hidden-seed magic trick with friends; write the number of hidden seeds in the table for six total-and-visible pairs."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-2",
+      "intent": "explore",
+      "section_ref": "S2",
+      "section_title": "Addition and subtraction within 20 using tens frames",
+      "question_type": "SCR",
+      "prompt": "Draw dots on the two tens frames on p.30 — one to show 8 + 4 and one to show 8 – 4. Then write the number sentence for each.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Frame 1: 12 dots total; number sentence 8 + 4 = 12. Frame 2: 4 dots remaining after crossing out 4; number sentence 8 – 4 = 4.",
+       "method_one_line": "Fill 8 dots first, then add 4 more for the sum, or cross out 4 for the difference.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: provide a printed tens-frame outline so the child can draw dots without drawing the grid; stretch: ask the child to write one more pair (different numbers, same tens frame) that shows the same addition-subtraction relationship."
+      },
+      "exercise": {
+       "book_ref": "Let us Do, p.30",
+       "description": "Draw the number of dots for 7 balushahi + 5 balushahi and 7 balushahi – 5 balushahi; complete the number sentences."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-3",
+      "intent": "explore",
+      "section_ref": "S6",
+      "section_title": "Adding and subtracting two-digit numbers beyond 100",
+      "question_type": "MCQ",
+      "prompt": "Renu has 48 mangoes and Sita has 62 mangoes. Without calculating, which is the best estimate of their total?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "Around 100",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "Around 110",
+        "is_correct": true
+       },
+       {
+        "label": "C",
+        "text": "Around 150",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "Around 50",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "Around 110. 48 is close to 50 and 62 is close to 60; 50 + 60 = 110.",
+       "method_one_line": "Round each number to the nearest ten, then add the rounded values.",
+       "what_each_option_reveals": {
+        "D": "The child may be estimating only one of the two numbers rather than their sum.",
+        "A": "The child rounded both numbers down to 50 and added, ignoring that 62 is greater than 50.",
+        "C": "The child overestimated, perhaps rounding 62 up to 80 or 90 without checking."
+       },
+       "inclusivity": "Support: have the child locate 48 and 62 on a number line and point to the tens nearest each before estimating; stretch: ask the child to judge whether the true answer is more or less than their estimate and explain why."
+      },
+      "exercise": {
+       "book_ref": "Let us Do, p.38",
+       "description": "Estimate total radishes; draw the 25+36 problem as a box diagram; find the answer using matchstick bundles or the number line; find other ways on the number line."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-4",
+      "intent": "explore",
+      "section_ref": "S6",
+      "section_title": "Adding and subtracting two-digit numbers beyond 100",
+      "question_type": "SCR",
+      "prompt": "A basket has 100 oranges. 72 of them are ripe. Draw a box diagram to show this situation. Is the number of unripe oranges more than 50 or less than 50? Explain your thinking.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "The box diagram shows a whole box labelled 100 split into two parts: 72 (ripe) and 28 (unripe). 28 is less than 50.",
+       "method_one_line": "Draw the whole as one box, split into two labelled parts; reason that the missing part is 100 – 72 = 28, which is less than 50.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: give the child a printed rectangle and ask them to write 100 on top and 72 inside the left portion before finding the right portion; stretch: ask the child to check their estimate by computing 100 – 72 on the number line."
+      },
+      "exercise": {
+       "book_ref": "p.40",
+       "description": "Draw a box diagram for 85+67 apples; estimate whether the total is more or less than 100 and explain your reasoning."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "B",
+    "section_title": "Reason",
+    "items": [
+     {
+      "id": "Q-B-1",
+      "intent": "reason",
+      "section_ref": "S2",
+      "section_title": "Addition and subtraction within 20 using tens frames",
+      "question_type": "MCQ",
+      "prompt": "Priya picks 3 cards from a set numbered 1–10. She wants to make a subtraction statement. Which three cards should she pick?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "3, 8, 4",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "4, 9, 5",
+        "is_correct": true
+       },
+       {
+        "label": "C",
+        "text": "6, 2, 9",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "7, 1, 9",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "4, 9, 5 — because 9 – 4 = 5 (or 9 – 5 = 4) is a valid subtraction statement. Verification: 9 – 4 = 5 ✓ and 4 + 5 = 9 ✓.",
+       "method_one_line": "Check whether the smallest two numbers add up to the largest; if yes, a subtraction statement is possible.",
+       "what_each_option_reveals": {
+        "A": "3 + 4 = 7, not 8 — the child may not have checked whether the two smaller numbers sum to the largest.",
+        "C": "6 + 2 = 8, not 9 — the child chose three cards without verifying the addition relationship.",
+        "D": "7 + 1 = 8, not 9 — same error; the child did not check the part-part-whole relationship."
+       },
+       "inclusivity": "Support: let the child use physical number cards and try adding two of them to see if they reach the third; stretch: ask the child to find a second set of three cards (different from all four options) that also makes a subtraction statement."
+      },
+      "exercise": {
+       "book_ref": "Let us Play, p.31",
+       "description": "Card Game: shuffle four sets of number cards 1–10; take turns opening one card; keep any three cards that form an addition or subtraction statement."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-2",
+      "intent": "reason",
+      "section_ref": "S3",
+      "section_title": "Addition and subtraction on the ginladi within 100",
+      "question_type": "SCR",
+      "prompt": "A frog sits on bead 13 of a bead string and jumps forward 10 beads each time. Write the first five numbers the frog lands on. What do you notice about the ones digit in each number?",
+      "visual_stimulus": "number_line: 13 | ... | ... | ... | ... | ...",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "The frog lands on 23, 33, 43, 53, 63. The ones digit stays 3 every time.",
+       "method_one_line": "Add 10 to each landing number to find the next; the ones digit never changes when jumping by 10.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: have the child mark each landing on a number-line strip with a pencil dot before writing the numbers; stretch: ask the child what number the frog would be on after 8 jumps, and how they know without marking every step."
+      },
+      "exercise": {
+       "book_ref": "Let us Do Q2, p.34",
+       "description": "A frog is at 7 and jumps 10 beads at a time — mark the beads it will land on and write the numbers."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-3",
+      "intent": "reason",
+      "section_ref": "S3",
+      "section_title": "Addition and subtraction on the ginladi within 100",
+      "question_type": "SCR",
+      "prompt": "A grasshopper is at 94 on a bead string and jumps backward 10 beads each time. Write all the numbers it lands on until it cannot jump back 10 any more. What pattern do you see?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "84, 74, 64, 54, 44, 34, 24, 14, 4. The ones digit is always 4; the tens digit decreases by 1 each jump.",
+       "method_one_line": "Subtract 10 from each landing to find the next; stop when the result would be less than 0.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: have the child mark 94 on a number-line strip and physically slide their finger back 10 each time, recording the stopping point; stretch: ask the child whether a grasshopper starting at 91 jumping back by 10 would ever land on the same number as this grasshopper, and why or why not."
+      },
+      "exercise": {
+       "book_ref": "Let us Do Q4, p.34",
+       "description": "The grasshopper at 76 jumps backward by 10 each time — mark all beads it will jump on and write the numbers."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-4",
+      "intent": "reason",
+      "section_ref": "S4",
+      "section_title": "Addition and subtraction on the 100-number grid",
+      "question_type": "MCQ",
+      "prompt": "Asha places a counter on 32 on the hundred-chart. She moves it right 4 squares, then down 3 rows. Where does the counter land?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "36",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "62",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "66",
+        "is_correct": true
+       },
+       {
+        "label": "D",
+        "text": "69",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "66. Moving right 4 from 32 reaches 36; moving down 3 rows adds 30, reaching 66.",
+       "method_one_line": "Right moves add ones; down moves add tens — 32 + 4 = 36, then 36 + 30 = 66.",
+       "what_each_option_reveals": {
+        "A": "The child added ones correctly (32 + 4 = 36) but forgot to move down, ignoring the tens part of the journey.",
+        "D": "The child may have added 4 ones and 3 ones (not 3 tens), treating down-moves as right-moves.",
+        "B": "The child moved down first (32 + 30 = 62) but ignored the 4 right-moves, reversing or omitting one step."
+       },
+       "inclusivity": "Support: let the child trace the moves on a printed hundred-chart, using different colours for right-moves and down-moves; stretch: ask the child to describe the move from 32 to 66 using a single addition sentence without using the grid."
+      },
+      "exercise": {
+       "book_ref": "Let us Play, p.35",
+       "description": "Number Grid Game: players roll two dice to form a two-digit number and move a counter forward or backward on the 100 grid; first to reach 91–100 wins."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-5",
+      "intent": "reason",
+      "section_ref": "S5",
+      "section_title": "Magic Sums — row and column addition puzzles",
+      "question_type": "SCR",
+      "prompt": "Look at this partly filled grid. Each row and each column must add up to 12. Fill in the missing numbers.",
+      "visual_stimulus": "| 5 | 3 | ? |\n| ? | 2 | 6 |\n| 3 | ? | 2 |",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Row 1: 5 + 3 + 4 = 12, so the missing number is 4. Row 2: ? + 2 + 6 = 12, so the missing number is 4. Row 3: 3 + ? + 2 = 12, so the missing number is 7. Verification by columns: col 1 = 5+4+3 = 12 ✓; col 2 = 3+2+7 = 12 ✓; col 3 = 4+6+2 = 12 ✓.",
+       "method_one_line": "Find the sum of the known entries in each row; subtract from 12 to find the missing entry, then verify columns.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: have the child add the two known numbers in each row aloud first, then ask 'what do we need to add to reach 12?'; stretch: ask the child to check whether all three columns also add to 12 and explain what this tells them about the grid."
+      },
+      "exercise": {
+       "book_ref": "Magic Sums, p.37",
+       "description": "Observe the completed Magic Sums puzzle; fill three incomplete grids so each row and column adds to the given target; add blue-box and red-box numbers and describe what you find."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-6",
+      "intent": "reason",
+      "section_ref": "S6",
+      "section_title": "Adding and subtracting two-digit numbers beyond 100",
+      "question_type": "MCQ",
+      "prompt": "A crate holds 100 tomatoes. 58 tomatoes have been packed. Which number sentence shows how many tomatoes are left to pack, and is that number more or less than 50?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "100 – 58 = 42; less than 50",
+        "is_correct": true
+       },
+       {
+        "label": "B",
+        "text": "100 – 58 = 48; less than 50",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "100 + 58 = 158; more than 50",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "100 – 58 = 52; more than 50",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "100 – 58 = 42; 42 is less than 50.",
+       "method_one_line": "Jump from 58 to 100 on the number line: 58 → 60 is 2, then 60 → 100 is 40; total jump = 42.",
+       "what_each_option_reveals": {
+        "B": "The child used subtraction correctly but made an arithmetic error, likely subtracting 8 – 0 as 8 instead of regrouping the tens.",
+        "C": "The child added instead of subtracting, not recognising that 'left to pack' requires finding the missing part.",
+        "D": "The child subtracted ones digits from tens digits independently (10 – 5 = 5, 0 – 8 treated as 2), a common place-value error."
+       },
+       "inclusivity": "Support: have the child draw a number-line jump from 58 to 100 in two steps (to the next ten, then to 100) before writing the sentence; stretch: ask the child to find a different jump path from 58 to 100 that gives the same total distance."
+      },
+      "exercise": {
+       "book_ref": "p.39",
+       "description": "Estimate the number of carrots in a box of 100 (with 65 tomatoes); circle the bundle of sticks showing the correct count; solve 100–65 on the number line."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-7",
+      "intent": "reason",
+      "section_ref": "S6",
+      "section_title": "Adding and subtracting two-digit numbers beyond 100",
+      "question_type": "MCQ",
+      "prompt": "Without calculating, decide whether each sum is more than 100 or less than 100. Which group is correct?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "63 + 48 → more than 100; 45 + 43 → less than 100",
+        "is_correct": true
+       },
+       {
+        "label": "B",
+        "text": "63 + 48 → less than 100; 45 + 43 → more than 100",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "63 + 48 → more than 100; 45 + 43 → more than 100",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "63 + 48 → less than 100; 45 + 43 → less than 100",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "63 + 48: 60 + 40 = 100, so with extra ones the sum exceeds 100 (actually 111); 45 + 43: 40 + 40 = 80, well below 100 (actually 88). Correct group: 63 + 48 more than 100; 45 + 43 less than 100.",
+       "method_one_line": "Round each addend to the nearest ten; add the rounded values; if the rounded sum is already at or above 100, the true sum is more than 100.",
+       "what_each_option_reveals": {
+        "B": "The child reversed both judgements, perhaps comparing addend size to 50 rather than to a rounded sum.",
+        "C": "The child correctly identified 63 + 48 as more than 100 but overestimated 45 + 43, perhaps seeing two numbers in the 40s and thinking their sum reaches 100.",
+        "D": "The child underestimated both sums, possibly reasoning from the tens digit of each addend in isolation rather than adding them together."
+       },
+       "inclusivity": "Support: have the child locate each addend on a number-line strip, jump the tens first, and see whether they pass 100; stretch: ask the child to find the actual answers and check whether the estimates were correct."
+      },
+      "exercise": {
+       "book_ref": "Let us Do Q1–2, p.43",
+       "description": "Q1: Estimate each expression and match it to 'more than 100' or 'less than 100'. Q2: Solve all the expressions using a number line and write the answers."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "C",
+    "section_title": "Practise",
+    "items": [
+     {
+      "id": "Q-C-1",
+      "intent": "practice",
+      "section_ref": "S2",
+      "section_title": "Addition and subtraction within 20 using tens frames",
+      "question_type": "MCQ",
+      "prompt": "Use a tens frame to find 7 + 8.",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "13",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "14",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "15",
+        "is_correct": true
+       },
+       {
+        "label": "D",
+        "text": "16",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "15. Fill 7 dots in one frame; add 8 more — 3 fill the first frame to 10, leaving 5 in the next frame; 10 + 5 = 15.",
+       "method_one_line": "Fill the tens frame to 10 using part of the second number, then count the leftover dots.",
+       "what_each_option_reveals": {
+        "B": "The child may have added 7 + 7 = 14, doubling the first addend instead of adding 8.",
+        "D": "The child likely added 8 + 8 = 16, doubling the second addend.",
+        "A": "The child may have added 7 + 6 = 13, subtracting 2 from 8 instead of 1 when bridging to 10."
+       },
+       "inclusivity": "Support: provide a printed tens-frame outline so the child can physically draw and count dots; stretch: ask the child to use the tens-frame result to write the related subtraction sentence immediately."
+      },
+      "exercise": {
+       "book_ref": "Let us Do, p.31",
+       "description": "Use the tens frame to solve: (a) 6+8 (b) 5+10 (c) 9–6 (d) 18–9."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-2",
+      "intent": "practice",
+      "section_ref": "S3",
+      "section_title": "Addition and subtraction on the ginladi within 100",
+      "question_type": "NUM",
+      "prompt": "Use a number line to solve: 56 – 18 = ?",
+      "visual_stimulus": "number_line: 38 | ... | ... | 56",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "38. From 56, jump back 6 to reach 50, then jump back 12 more to reach 38. Alternative: jump from 18 forward to 20 (2 steps), then 20 to 56 (36 steps); total = 38.",
+       "method_one_line": "Jump from 56 back to the nearest ten (50), then continue jumping back the remaining amount.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: have the child first mark 56 and then draw one jump back to 50 before deciding the second jump; stretch: ask the child to find a second path (jumping forward from 18 to 56) and confirm both give 38."
+      },
+      "exercise": {
+       "book_ref": "Let us Do Q1, p.34",
+       "description": "Solve using a ginladi: (a) 34+6 (b) 23+12 (c) 33–5 (d) 42–15."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-3",
+      "intent": "practice",
+      "section_ref": "S3",
+      "section_title": "Addition and subtraction on the ginladi within 100",
+      "question_type": "SCR",
+      "prompt": "Complete the jump table below. Each number in the row is found by adding 7 to the one before it.",
+      "visual_stimulus": "number_line: 4 | 11 | ... | ... | 32 | ...",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "4, 11, 18, 25, 32, 39. Adding 7 each time: 4+7=11, 11+7=18, 18+7=25, 25+7=32, 32+7=39. Verification by reverse: 39–7=32 ✓, 32–7=25 ✓, 25–7=18 ✓, 18–7=11 ✓.",
+       "method_one_line": "Add 7 to each entry to find the next; verify by subtracting 7 from each entry back to the start.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: have the child mark each number on a number-line strip and draw a jump of 7 to find the next landing; stretch: ask the child to state what the 10th number in this sequence would be and explain their method."
+      },
+      "exercise": {
+       "book_ref": "Let us Do Q5, p.35",
+       "description": "Fill in the jump tables by jumping as instructed for Jump 5, Jump 6, and Jump 9 from given starting numbers."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "D",
+    "section_title": "Solve",
+    "items": [
+     {
+      "id": "Q-D-1",
+      "intent": "solve",
+      "section_ref": "S3",
+      "section_title": "Addition and subtraction on the ginladi within 100",
+      "question_type": "NUM",
+      "prompt": "Meena has 34 stickers. Her uncle gives her 40 more stickers. How many stickers does Meena have altogether? Use the number line to find your answer.",
+      "visual_stimulus": "number_line: 34 | ... | ... | ...",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "74 stickers. Jump from 34 forward by 40 (four jumps of 10) to reach 74. Verification: 74 – 40 = 34 ✓.",
+       "method_one_line": "Jump 40 forward from 34 on the number line in four steps of 10.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: have the child draw four separate arcs of 10 from 34 and label each landing (44, 54, 64, 74); stretch: ask the child to describe a single-jump way to add 40 and explain why it gives the same answer."
+      },
+      "exercise": {
+       "book_ref": "Let us Do, p.32",
+       "description": "Nandini and Chirag have 22 stamps; Nani Maa's brother gives 30 more — find the total using the ginladi."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-D-2",
+      "intent": "solve",
+      "section_ref": "S3",
+      "section_title": "Addition and subtraction on the ginladi within 100",
+      "question_type": "NUM",
+      "prompt": "Rajan has 43 marbles and wants to collect 60. How many more marbles does he need? Use the number line to find your answer.",
+      "visual_stimulus": "number_line: 43 | ... | 60",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "17 more marbles. Jump from 43 to 50 (7 steps), then 50 to 60 (10 steps); 7 + 10 = 17. Verification: 43 + 17 = 60 ✓.",
+       "method_one_line": "Jump from 43 to the nearest ten (50), then from 50 to 60; add the two partial jumps.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: have the child locate 43 and 60 on a number-line strip and count the gap by placing a finger at 43 and sliding to 60; stretch: ask the child to find a second path (e.g. one jump of 17) and confirm both paths give the same answer."
+      },
+      "exercise": {
+       "book_ref": "Let us Do, p.33",
+       "description": "They have 52 stamps and want 75 — figure out how many more stamps they need using the number line."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-D-3",
+      "intent": "solve",
+      "section_ref": "S4",
+      "section_title": "Addition and subtraction on the 100-number grid",
+      "question_type": "NUM",
+      "prompt": "A player's counter is on 23. The player rolls and adds 45. Use the number grid to find where the counter lands.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "68. Move right 5 (ones): 23 → 28; move down 4 rows (tens: 40): 28 → 68. Verification: 23 + 45 = 68 ✓ (23 + 40 = 63, 63 + 5 = 68).",
+       "method_one_line": "Move right for ones, then down for tens on the hundred-chart; 23 + 5 = 28, then 28 + 40 = 68.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: have the child use a printed hundred-chart and physically move a finger or counter step by step; stretch: ask the child to write the addition as a single number sentence and verify by computing 23 + 45 without the grid."
+      },
+      "exercise": {
+       "book_ref": "Let us Do Q1(a–d), p.36",
+       "description": "Use the number grid to find where each player lands: (a) 45+34 (b) 75+56 (c) 30+66 (d) 89+63; show thinking by drawing arrows in the grid."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-D-4",
+      "intent": "solve",
+      "section_ref": "S6",
+      "section_title": "Adding and subtracting two-digit numbers beyond 100",
+      "question_type": "NUM",
+      "prompt": "In a school garden, children collected 76 flowers on Monday and 58 flowers on Tuesday. How many flowers did they collect in all two days?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "134 flowers. 76 + 58: jump from 76 to 80 (4), then 80 to 130 (50), then 130 to 134 (4); total = 134. Verification: 134 – 58 = 76 ✓.",
+       "method_one_line": "Jump from 76 to the next ten (80), then add the tens of 58 to reach 130, then add the remaining ones to reach 134.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: have the child draw a box diagram with 76 and 58 as parts and the total as the whole, then use a number-line strip extending beyond 100 to find the answer; stretch: ask the child to find the difference between the two days' collections and name who collected more."
+      },
+      "exercise": {
+       "book_ref": "p.41",
+       "description": "Find 85+67 using the number line; find who collected more apples and by how much (85–67)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-D-5",
+      "intent": "solve",
+      "section_ref": "S6",
+      "section_title": "Adding and subtracting two-digit numbers beyond 100",
+      "question_type": "NUM",
+      "prompt": "A baker made 95 rotis in the morning and 48 rotis in the evening. She sold 67 rotis during the day. How many rotis are left at the end of the day?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "76 rotis left. Total made: 95 + 48 = 143. Rotis left: 143 – 67 = 76. Verification: 76 + 67 = 143 ✓ and 95 + 48 = 143 ✓.",
+       "method_one_line": "First add both morning and evening batches on the number line to get the total, then subtract the number sold.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: have the child draw a box diagram first — two parts (95 and 48) making the whole, then the sold portion removed — before computing each step on the number line; stretch: ask the child to write their own two-step word problem using different numbers and solve it."
+      },
+      "exercise": {
+       "book_ref": "p.42",
+       "description": "Q1–Q5: Solve word problems (books sold, cricket runs, vadas, dried plants) by drawing box diagrams and using matchstick bundles or number line; make and share your own word problem."
+      },
+      "verified": true
+     }
+    ]
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

@@ -1,0 +1,1588 @@
+{
+ "filename": "ch_08_canonical_p11.json",
+ "saved_at": "2026-08-20T12:45:58",
+ "plan_status": "canonical",
+ "chapter_number": 8,
+ "chapter_title": "Weight and Capacity",
+ "grade": "Grade V",
+ "subject": "Mathematics",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 40,
+   "count": 11
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 11 periods = 440 minutes\nTotal: 11 periods · 7h 20min",
+ "genon_canonical": {
+  "generated": "2026-08-20",
+  "schedule": "11x40",
+  "constitution": "LP v1.4 / assessment v1.4",
+  "source": "generate_canonical.py one mathematics v 8",
+  "ledger_ts": "20260820_121241_math_v_08_p11",
+  "validation": "clean",
+  "repairs": [
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-20T12:49:45",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-194": {
+      "note": "declared edit",
+      "edits": [
+       {
+        "where": "item{'id': 'Q-B-6'}",
+        "field": "visual_stimulus",
+        "old": "number_line: 6 people | 12 people\nnumber_line: 900 g | ...",
+        "new": "6 people | 12 people\n900 g | ..."
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S1",
+      "S2"
+     ],
+     "section_titles": [
+      "Check! Check! — Judging Household Weights",
+      "Reading Weighing Scales"
+     ],
+     "activity_title": "Is That Weight Right? Reading Scales and Judging Units",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-1",
+       "intent": "reason",
+       "method": "Inquiry",
+       "section_ref": "S1",
+       "book_ref": "Check! Check!, p.104",
+       "description": "Tick the items from Anu's list whose recorded weights look correct (almirah 40g, bed 60kg, rice bag 5kg, sofa 30g, bucket 1kg800g, water bottle 650g, refrigerator 50g)."
+      },
+      {
+       "id": "T-2",
+       "intent": "practice",
+       "method": "Problem-solving",
+       "section_ref": "S2",
+       "book_ref": "Let Us Do, p.104",
+       "description": "Read six dial weighing scales (a–f) showing different weights and write the correct weight for each."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Open with a quick class discussion: hold up (or name) familiar objects — a bag of rice, a chair, a pencil — and ask children to say whether each should be weighed in grams or kilograms and roughly how heavy it might be. Then introduce Check! Check!, p.104 (\"Tick the items from Anu's list whose recorded weights look correct....\"). Children work in pairs, deciding for each item whether the unit and number are plausible; invite two or three pairs to share their reasoning aloud."
+      },
+      {
+       "minutes": "12–28",
+       "activity": "Distribute or project images of dial weighing scales. Introduce the teacher note about how the zero works on each scale type — point out that some scales start from a positive value. Children complete Let Us Do, p.104 (\"Read six dial weighing scales (a–f) showing different weights....\"), writing the reading for each dial."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Whole-class review: call out each scale letter and ask a child to read their answer and explain how they identified the sub-division. Address any dial where children read the wrong interval (e.g. treating every mark as 100 g when the marks are 250 g). Close by asking: 'What is the most important thing to check before reading any scale?'"
+      }
+     ],
+     "teacher_notes": "A common error here is reading every dial interval as the same value regardless of the scale's maximum capacity — children often assume each small mark equals 100 g on every scale. Draw attention to the maximum value and the number of divisions before children begin reading. The plausibility task in Check! Check! is best run as a brief discussion rather than silent work, so reasoning about gram-versus-kilogram becomes explicit.",
+     "materials": [
+      "Textbook open to pp. 104",
+      "Blackboard or projected dial scale images"
+     ]
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S3",
+      "S4"
+     ],
+     "section_titles": [
+      "Different Units but Same Measure (kg and g)",
+      "Converting Between kg and g"
+     ],
+     "activity_title": "Matching Bags and Cracking Conversions on the Number Line",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-3",
+       "intent": "reason",
+       "method": "Inductive",
+       "section_ref": "S3",
+       "book_ref": "Different Units but Same Measure, p.105",
+       "description": "Match bags on Weighing Balance 1 (kg) with equivalent bags on Weighing Balance 2 (g), then fill in missing values on the double number line (kg and g)."
+      },
+      {
+       "id": "T-4",
+       "intent": "reason",
+       "method": "Inquiry",
+       "section_ref": "S4",
+       "book_ref": "Let Us Find Q1, p.106",
+       "description": "Decide who is correct about 5 kg 50 g in grams — Shamim (5,050 g) or Rehan (5,500 g) — and explain why."
+      },
+      {
+       "id": "T-5",
+       "intent": "practice",
+       "method": "Problem-solving",
+       "section_ref": "S4",
+       "book_ref": "Let Us Find Q2, p.106",
+       "description": "Complete the double number line and fill in 6 conversions: (a) 7kg67g=___g (b) 3kg300g=___g (c) 8kg69g=___g (d) 10,760g=___kg___g (e) 4,080g=___kg___g (f) 12,042g=___kg___g."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Work through Different Units but Same Measure, p.105 (\"Match bags on Weighing Balance 1 (kg) with equivalent bags on Weighing Balance 2 (g)....\"). Draw the double number line on the board with 0 kg and 0 g aligned; children call out matching values as you fill in the rungs. Arrive together at the relationship: multiplying by 1,000 converts kg to g."
+      },
+      {
+       "minutes": "12–22",
+       "activity": "Pose Let Us Find Q1, p.106 (\"Decide who is correct about 5 kg 50 g in grams — Shamim (5,050 g) or Rehan (5,500 g)....\"). Children discuss in pairs for a brief time, then explain aloud. Use the board to show why 50 g stays as 50, not 500 — the grams column does not shift one place simply because it is a small number."
+      },
+      {
+       "minutes": "22–40",
+       "activity": "Children complete Let Us Find Q2, p.106 (\"Complete the double number line and fill in 6 conversions....\") independently. Circulate; watch for children who convert the grams column by multiplying by 1,000 a second time (e.g. writing 7,067,000 for 7 kg 67 g). Review the six answers together, inviting children to read out their method."
+      }
+     ],
+     "teacher_notes": "The most persistent error in this section is treating the grams part of a compound quantity as hundreds rather than units — so 5 kg 50 g becomes 5,500 g instead of 5,050 g. Addressing this head-on through the 'Who is right?' item before the practice drill pays dividends across all later sections. Reinforce that when converting kg and g to grams, only the kg part is multiplied by 1,000; the g part is then added as it stands.",
+     "materials": [
+      "Textbook open to pp. 105–106",
+      "Blackboard for double number line"
+     ]
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S5"
+     ],
+     "section_titles": [
+      "Comparison between Different Weights"
+     ],
+     "activity_title": "Picnic Weights: Ordering and Comparing Compound Quantities",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-6",
+       "intent": "reason",
+       "method": "Inductive",
+       "section_ref": "S5",
+       "book_ref": "Comparison between Different Weights Q1(a)(b)(c), p.107",
+       "description": "From the picnic fruit list, identify (a) highest weight, (b) least weight, (c) arrange fruits in descending order of weight."
+      },
+      {
+       "id": "T-7",
+       "intent": "reason",
+       "method": "Problem-solving",
+       "section_ref": "S5",
+       "book_ref": "Comparison between Different Weights Q2(a–f), p.107",
+       "description": "Compare weight pairs using <, =, > signs: (a) 1kg600g vs 1,700g (b) 1kg600g vs 1kg60g (c) 10kg35g vs 10035g (d) 1kg600g vs 2kg500g (e) 5kg50g vs 4kg500g (f) 900g+7,000g vs 7kg+900g."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–14",
+       "activity": "Read aloud Harpreet's picnic list (watermelon 3 kg, pineapple 1 kg 750 g, apples 1 kg 250 g, mangoes 2 kg). Ask children: how do we compare kg+g quantities with pure-kg quantities? Establish that converting everything to grams gives a common basis. Children complete Comparison between Different Weights Q1(a)(b)(c), p.107 (\"From the picnic fruit list, identify (a) highest weight, (b) least weight, (c) arrange in descending order....\") in pairs and share."
+      },
+      {
+       "minutes": "14–34",
+       "activity": "Children work independently on Comparison between Different Weights Q2(a–f), p.107 (\"Compare weight pairs using <, =, > signs....\"). Draw attention to pair (f) — 900 g + 7,000 g vs 7 kg + 900 g — before they begin, reminding them to add the parts on each side before comparing."
+      },
+      {
+       "minutes": "34–40",
+       "activity": "Whole-class check of Q2: write each pair on the board and ask different children to supply the sign and state the converted values. Focus discussion on any pair where the two sides convert to the same number of grams, reinforcing the = case."
+      }
+     ],
+     "teacher_notes": "Children frequently compare only the kg part of a compound quantity and ignore the grams — so they may write 1 kg 600 g = 1 kg 60 g without noticing the grams differ. The fix is to insist on writing both sides as pure grams before placing the sign; building this habit on every item in Q2 is the goal. Pair (f), which involves adding two weights before comparing, often catches children who skip the addition step.",
+     "materials": [
+      "Textbook open to p.107",
+      "Blackboard for worked comparison"
+     ]
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S6"
+     ],
+     "section_titles": [
+      "Milligram — A Tiny Unit"
+     ],
+     "activity_title": "Tiny Weights: Milligrams, Comparison, and the King's Puzzle",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-8",
+       "intent": "practice",
+       "method": "Problem-solving",
+       "section_ref": "S6",
+       "book_ref": "Let Us Find Q1, p.108",
+       "description": "If a sugar sachet weighs 5 g, how much is it in milligrams?"
+      },
+      {
+       "id": "T-9",
+       "intent": "practice",
+       "method": "Play-way",
+       "section_ref": "S6",
+       "book_ref": "Let Us Find Q2, p.108",
+       "description": "Complete the double number line relating g and mg with missing values."
+      },
+      {
+       "id": "T-12",
+       "intent": "reason",
+       "method": "Inductive",
+       "section_ref": "S6",
+       "book_ref": "Let Us Find Q5(a–f), p.109",
+       "description": "Compare weight pairs using <, =, > signs: (a) 20g vs 200mg (b) 16g50mg vs 50g16mg (c) 2,010mg vs 2g100mg (d) 9,000mg vs 90g (e) 5,000g vs 7,500g (f) 800mg+88mg vs 880mg+8mg."
+      },
+      {
+       "id": "T-15",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S6",
+       "book_ref": "King's Weight (a)(b)(c), p.109",
+       "description": "King donates wheat = 10× his weight. (a) If he donates 800 kg, what is his weight? (b) If he donated 780 kg last year, what was last year's weight? (c) How much weight did he gain this year?"
+      }
+     ],
+     "homework": [
+      {
+       "id": "T-10",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S6",
+       "book_ref": "Let Us Find Q3, p.108",
+       "description": "An ornament weighs 4 g 100 mg. What is its weight in milligrams?"
+      },
+      {
+       "id": "T-11",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S6",
+       "book_ref": "Let Us Find Q4, p.108",
+       "description": "A goldsmith's ornament weighs 10 g 500 mg. What is its weight in milligrams?"
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Introduce milligrams through context: ants weigh 1–5 mg; a medicine tablet may weigh a few hundred mg. Ask children to name objects they associate with very small weights. Establish 1 g = 1,000 mg by analogy with 1 kg = 1,000 g. Children complete Let Us Find Q1, p.108 (\"If a sugar sachet weighs 5 g, how much is it in milligrams?\") and share their reasoning."
+      },
+      {
+       "minutes": "10–20",
+       "activity": "Draw the g–mg double number line on the board. Children fill missing values collaboratively — Let Us Find Q2, p.108 (\"Complete the double number line relating g and mg with missing values.\"). Extend the line to show 2 g, 3 g, etc., so children see the pattern multiplying by 1,000 each time."
+      },
+      {
+       "minutes": "20–30",
+       "activity": "Children work independently on Let Us Find Q5(a–f), p.109 (\"Compare weight pairs using <, =, > signs....\"). Pair (a) — 20 g vs 200 mg — is worth doing as a class first, converting both to mg: 20,000 mg vs 200 mg. Then children complete the rest and discuss pair (f), which requires adding before comparing."
+      },
+      {
+       "minutes": "30–40",
+       "activity": "Pose King's Weight (a)(b)(c), p.109 (\"King donates wheat = 10× his weight....\") as a whole-class puzzle. Children work in pairs on (a) and (b) using division; then (c) requires subtraction. Share and verify: 800 ÷ 10 = 80 kg; 780 ÷ 10 = 78 kg; 80 − 78 = 2 kg."
+      }
+     ],
+     "teacher_notes": "Children often confuse the direction of conversion — multiplying when they should divide and vice versa. Anchor the rule: to convert g to mg, multiply by 1,000; to convert mg to g, divide by 1,000. The King's Weight puzzle is intentionally phrased to require inverse reasoning (dividing by 10), which is good preparation for multi-step problems; note that Let Us Find Q3 and Q4 (compound g+mg to mg conversions) are assigned as homework and carry the same place-value care as the kg+g → g work earlier.",
+     "materials": [
+      "Textbook open to pp. 108–109",
+      "Blackboard for g–mg double number line"
+     ]
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S7",
+      "S8"
+     ],
+     "section_titles": [
+      "From Tiny to Big — The Full Unit Hierarchy",
+      "The Grocery Store — Adding and Subtracting Weights"
+     ],
+     "activity_title": "The Full Weight Chain and Grocery Store Calculations",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-16",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S8",
+       "book_ref": "Let Us Do Q1, p.111",
+       "description": "A restaurant owner uses 5kg200g, 8kg900g, and 12kg600g of onions over 3 days. Find the total weight."
+      },
+      {
+       "id": "T-18",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S8",
+       "book_ref": "Let Us Do Q3, p.111",
+       "description": "4kg500g of sand is used from a 10kg sack. How much sand is left?"
+      },
+      {
+       "id": "T-22",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S8",
+       "book_ref": "Let Us Do Q7, p.111",
+       "description": "65kg flour purchased; 42kg275g used for langar; next day 52kg500g bought. What is the total flour now available?"
+      }
+     ],
+     "homework": [
+      {
+       "id": "T-19",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S8",
+       "book_ref": "Let Us Do Q4, p.111",
+       "description": "A rice sack weighs 9kg750g. After use it weighs 3kg700g. How much rice was used?"
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Present the full unit hierarchy panel from the textbook: 1,000 mg = 1 g → 1,000 g = 1 kg → 100 kg = 1 quintal → 10 quintals = 1 tonne. Write it as a chain on the board and invite children to read it aloud. Ask two quick oral questions (e.g. 'How many kg in 1 tonne?') to confirm the chain is secure before moving to operations."
+      },
+      {
+       "minutes": "8–18",
+       "activity": "Model column addition using Rathna's grocery purchase (2 kg 500 g + 1 kg 750 g), showing how 1,250 g becomes 1 kg 250 g by regrouping. Children then solve Let Us Do Q1, p.111 (\"A restaurant owner uses 5kg200g, 8kg900g, and 12kg600g of onions....\"). One volunteer writes their column working on the board."
+      },
+      {
+       "minutes": "18–28",
+       "activity": "Model column subtraction using 2 kg 500 g − 1 kg 750 g, emphasising the regrouping step: when the grams column cannot subtract, borrow 1 kg (= 1,000 g). Children solve Let Us Do Q3, p.111 (\"4kg500g of sand is used from a 10kg sack.\"). Confirm that 10 kg = 9 kg 1,000 g before subtracting."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Children work independently on Let Us Do Q7, p.111 (\"65kg flour purchased; 42kg275g used for langar; next day 52kg500g bought....\"). This multi-step problem requires subtraction then addition; prompt children to write each step separately. Review the answer as a class, checking the order of operations."
+      }
+     ],
+     "teacher_notes": "The most common error in column subtraction of compound quantities is failing to regroup from the kg column — children subtract g from g without noticing the bottom g is larger than the top. Reinforce the rule: if the grams in the minuend are smaller than in the subtrahend, convert 1 kg to 1,000 g and add it to the grams column before subtracting. The multi-step Gurdwara problem in Q7 rewards laying out the working in two clearly labelled steps; encourage that habit. Additional practice items Let Us Do Q2, Q5, Q6 are available in the textbook for further consolidation.",
+     "materials": [
+      "Textbook open to pp. 110–111",
+      "Blackboard for column addition and subtraction layout"
+     ]
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S9"
+     ],
+     "section_titles": [
+      "More Operations on Weight — Multiplication and Division"
+     ],
+     "activity_title": "Multiplying and Dividing Weights: Grocery Costs and Equal Shares",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-24",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S9",
+       "book_ref": "Let Us Do Q2, p.112",
+       "description": "A box of nuts (4kg800g) is equally distributed into 4 boxes. What is the weight of each box in grams?"
+      },
+      {
+       "id": "T-25",
+       "intent": "reason",
+       "method": "Inductive",
+       "section_ref": "S9",
+       "book_ref": "Let Us Do Q2 (scaling), p.112",
+       "description": "4 people need 500g rice. How much rice for 8 people? Use the double number line (×2 scaling)."
+      },
+      {
+       "id": "T-27",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S9",
+       "book_ref": "Let Us Do Q4(a)(b)(c), p.113",
+       "description": "Nitesh (scrap dealer): (a) cost of 16kg newspaper @₹8/kg; (b) cost of 20kg iron @₹200/10kg; (c) cost of 10kg plastic @₹30/5kg. Make double number lines for (b) and (c)."
+      }
+     ],
+     "homework": [
+      {
+       "id": "T-26",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S9",
+       "book_ref": "Let Us Do Q3, p.113",
+       "description": "5 kg of tomatoes cost ₹73. How much will 10 kg cost? (Use double number line.)"
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Model multiplication of a compound weight: 4 × 10 kg 500 g, shown first by distributing (4 × 10 kg = 40 kg; 4 × 500 g = 2,000 g = 2 kg; total 42 kg), then by converting to g first (4 × 10,500 g = 42,000 g). Children then solve Let Us Do Q2, p.112 (\"A box of nuts (4kg800g) is equally distributed into 4 boxes....\"), choosing either the 'divide kg and g separately' or 'convert-to-g' method."
+      },
+      {
+       "minutes": "12–22",
+       "activity": "Draw the double number line for Let Us Do Q2 (scaling), p.112 (\"4 people need 500g rice. How much rice for 8 people?\"). Children identify the ×2 relationship and extend the line. Ask: what if there were 16 people? — guiding them to see the proportional chain rather than repeating addition."
+      },
+      {
+       "minutes": "22–40",
+       "activity": "Children work through Let Us Do Q4(a)(b)(c), p.113 (\"Nitesh — scrap dealer....\"). Part (a) is direct multiplication; parts (b) and (c) require constructing double number lines to find the per-kg rate before multiplying. Children work in pairs; one pair per part presents their number line on the board."
+      }
+     ],
+     "teacher_notes": "When dividing compound quantities, children sometimes divide only the kg part and forget to convert the remainder in kg to grams and continue dividing — for example, 4 kg 800 g ÷ 4 may yield 1 kg with 800 g 'left over' rather than 1 kg 200 g. Walk through the two-step approach explicitly: divide kg first, convert any remainder to g, add the g part, divide again. The grocery cost table task (Let Us Do Q1, p.112) provides rich multi-step practice and is available for extension or additional homework.",
+     "materials": [
+      "Textbook open to pp. 112–113",
+      "Blackboard for double number line"
+     ]
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S10",
+      "S11"
+     ],
+     "section_titles": [
+      "Measuring Capacity — Introducing Litres and Millilitres",
+      "Big to Small, Small to Big — l and ml Conversion"
+     ],
+     "activity_title": "How Much Does a Bucket Hold? Introducing and Converting Capacity",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-28",
+       "intent": "reason",
+       "method": "Inquiry",
+       "section_ref": "S10",
+       "book_ref": "Measuring Capacity Q1, p.113",
+       "description": "Discuss: how much water and milk is needed for 2 cups of tea? Is 1 l too much, or is 500 ml enough?"
+      },
+      {
+       "id": "T-29",
+       "intent": "reason",
+       "method": "Inquiry",
+       "section_ref": "S10",
+       "book_ref": "Measuring Capacity Q2, p.113",
+       "description": "A bucket can hold a maximum of 20 ml of water — is this correct? Which unit should be used?"
+      },
+      {
+       "id": "T-30",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S11",
+       "book_ref": "Big to Small, Small to Big Q1, p.113",
+       "description": "Ramiz drinks two 500 ml bottles at school. Fill: _ml + _ml = _ml. How many litres does he drink?"
+      },
+      {
+       "id": "T-31",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S11",
+       "book_ref": "Big to Small, Small to Big Q2, p.113",
+       "description": "Muskaan drinks 3 l of water a day. How many times must she refill a 500 ml bottle? How many ml does she drink?"
+      },
+      {
+       "id": "T-32",
+       "intent": "practice",
+       "method": "Problem-solving",
+       "section_ref": "S11",
+       "book_ref": "Big to Small, Small to Big Q3, p.114",
+       "description": "Write the total capacity (in l and ml) of each set of containers shown in four pictures."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Lead the discussion for Measuring Capacity Q1, p.113 (\"Discuss: how much water and milk is needed for 2 cups of tea?...\"). Invite children to gesture or describe how much 1 l feels like (a full water bottle, a carton of juice). Transition to Measuring Capacity Q2, p.113 (\"A bucket can hold a maximum of 20 ml....\") — ask children to vote: correct or not? Elicit that litres, not millilitres, is the appropriate unit for a bucket."
+      },
+      {
+       "minutes": "12–24",
+       "activity": "Children complete Big to Small, Small to Big Q1, p.113 (\"Ramiz drinks two 500 ml bottles....\") and Q2, p.113 (\"Muskaan drinks 3 l....\"). Work Q1 on the board together: 500 + 500 = 1,000 ml = 1 l. For Q2, use repeated addition on the board: 500, 1,000, 1,500, 2,000, 2,500, 3,000 — counting the number of steps (6 refills)."
+      },
+      {
+       "minutes": "24–40",
+       "activity": "Children complete Big to Small, Small to Big Q3, p.114 (\"Write the total capacity (in l and ml) of each set of containers shown in four pictures.\"). Circulate; check that children are totalling across containers and expressing the result in both litres and millilitres. Review all four answers together."
+      }
+     ],
+     "teacher_notes": "Children bring informal knowledge of litres (water bottles, cold drink bottles) but rarely of millilitres; the two discussion prompts are the key conceptual entry point and should not be rushed. A common error in Q3 is forgetting to add all containers in a set before converting — children who add only the largest and smallest miss the middle containers. The capacity unit parallel to the earlier kg/g work (× 1,000 to go from l to ml) should be stated explicitly to activate the transfer.",
+     "materials": [
+      "Textbook open to pp. 113–114",
+      "A 1-litre water bottle or carton (for reference)"
+     ]
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S12"
+     ],
+     "section_titles": [
+      "Different Units but Same Measure — l and ml Double Number Line"
+     ],
+     "activity_title": "Milkman's Number Line: Converting Litres and Millilitres",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-33",
+       "intent": "practice",
+       "method": "Play-way",
+       "section_ref": "S12",
+       "book_ref": "Different Units but Same Measure (milkman), p.114",
+       "description": "Complete the double number line (l and ml) and fill the milkman's weekly delivery table converting between l and ml for five families."
+      },
+      {
+       "id": "T-34",
+       "intent": "reason",
+       "method": "Inquiry",
+       "section_ref": "S12",
+       "book_ref": "Let Us Think Q1, p.115",
+       "description": "Mary says 1l400ml = 1,400ml; Daisy says 1,040ml. Who is correct and why?"
+      },
+      {
+       "id": "T-35",
+       "intent": "practice",
+       "method": "Problem-solving",
+       "section_ref": "S12",
+       "book_ref": "Let Us Think Q2(a–f), p.115",
+       "description": "Convert and fill: (a) 3l8ml=___ml (b) 9l90ml=___ml (c) 14,075ml=___l___ml (d) 8l86ml=___ml (e) 12,200ml=___l___ml (f) 18,350ml=___l___ml."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–14",
+       "activity": "Introduce the milkman's delivery context (Khayal chacha; Bhalerao family orders 2 l daily, vessel marked only in ml). Draw the l–ml double number line on the board together with the class. Children complete the double number line and fill the milkman's weekly delivery table — Different Units but Same Measure (milkman), p.114 — for five families, converting between l and ml."
+      },
+      {
+       "minutes": "14–22",
+       "activity": "Pose Let Us Think Q1, p.115 (\"Mary says 1l400ml = 1,400ml; Daisy says 1,040ml. Who is correct and why?\"). Children write their answer and reasoning individually, then compare with a partner. Draw out the correct reasoning: 1 l = 1,000 ml, so 1 l 400 ml = 1,000 + 400 = 1,400 ml; treating ml as hundreds gives the wrong 1,040."
+      },
+      {
+       "minutes": "22–40",
+       "activity": "Children complete Let Us Think Q2(a–f), p.115 (\"Convert and fill....\") independently. Circulate; watch especially for item (a) 3 l 8 ml — where children often write 3,800 ml instead of 3,008 ml. Review all six answers on the board, asking children to state the conversion calculation for each."
+      }
+     ],
+     "teacher_notes": "The place-value error flagged by the 'Who is correct?' item — treating 400 ml as 400, not realising 1 l 40 ml would give 1,040 ml — mirrors exactly the 5 kg 50 g issue from the weight conversion unit. Pointing this out explicitly helps children see the underlying structure: the millilitres part is always added as it stands, never shifted. Items (a) and (d) in Q2 deliberately contain single-digit-tens ml values (8 ml, 86 ml) to probe this error directly.",
+     "materials": [
+      "Textbook open to pp. 114–115",
+      "Blackboard for l–ml double number line"
+     ]
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S13"
+     ],
+     "section_titles": [
+      "Let Us Compare — Petrol Pump; Adding and Subtracting Capacity"
+     ],
+     "activity_title": "Petrol Pump Maths: Comparing and Operating with Litres",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-36",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S13",
+       "book_ref": "Let Us Compare Q2(a)(b), p.116",
+       "description": "Fill total fuel per vehicle type in table; (a) how much more fuel for buses than trucks? (b) total fuel from pump on that day?"
+      },
+      {
+       "id": "T-37",
+       "intent": "reason",
+       "method": "Inductive",
+       "section_ref": "S13",
+       "book_ref": "Let Us Compare Q3(a–e), p.116",
+       "description": "Compare capacity pairs using <, =, >: (a) 5l600ml vs 5,400ml (b) 10l100ml vs 1l600ml (c) 190ml+800ml vs 800ml+109ml (d) 3l600ml vs 3,600ml (e) 4l50ml vs 4l500ml."
+      },
+      {
+       "id": "T-38",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S13",
+       "book_ref": "Let Us Compare Q4, p.116",
+       "description": "Tina bought 2l500ml petrol; Sam bought 2l800ml more than Tina. How much petrol did Sam buy?"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–14",
+       "activity": "Set up the petrol pump scenario from p.116: different vehicle types fill up at different quantities per vehicle. Model the column addition of l + ml quantities with regrouping (e.g. 1,300 ml → 1 l 300 ml). Children complete Let Us Compare Q2(a)(b), p.116 (\"Fill total fuel per vehicle type in table; (a) how much more fuel for buses than trucks? (b) total fuel from pump on that day?\")."
+      },
+      {
+       "minutes": "14–26",
+       "activity": "Children complete Let Us Compare Q3(a–e), p.116 (\"Compare capacity pairs using <, =, >....\"). Do pair (d) — 3 l 600 ml vs 3,600 ml — together first as a class to show they are equal. Pair (c) requires adding each side before comparing; highlight this before children work independently."
+      },
+      {
+       "minutes": "26–40",
+       "activity": "Model subtraction with regrouping for capacity: 9 l − 5 l 300 ml, using column method (1 l = 1,000 ml). Children then solve Let Us Compare Q4, p.116 (\"Tina bought 2l500ml petrol; Sam bought 2l800ml more than Tina.\"). Review: 2 l 500 ml + 2 l 800 ml = 5 l 300 ml."
+      }
+     ],
+     "teacher_notes": "The comparison task in Q3 contains a deliberate = case (3 l 600 ml vs 3,600 ml) that children sometimes mark as > out of habit; slowing down and converting both sides to ml before placing any sign is the reliable strategy to emphasise. In the addition of Q4, regrouping 1,300 ml to 1 l 300 ml is the critical step — children who add the ml column and then stop short (writing 2 l 500 ml + 2 l 800 ml = 4 l 1,300 ml without simplifying) need the regrouping rule made explicit.",
+     "materials": [
+      "Textbook open to p.116",
+      "Blackboard for column addition with regrouping"
+     ]
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S14"
+     ],
+     "section_titles": [
+      "Let Us Solve — Multi-step Capacity Word Problems"
+     ],
+     "activity_title": "Multi-step Capacity Problems: Bottles, Glasses, and Oil Drums",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-39",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S14",
+       "book_ref": "Let Us Solve Q1, p.118",
+       "description": "Riya fills one 2l bottle + four 500ml bottles; Aarav fills three 750ml bottles. Who filled more? How much more?"
+      },
+      {
+       "id": "T-40",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S14",
+       "book_ref": "Let Us Solve Q2(a)(b)(c), p.118",
+       "description": "Milk poured equally into 8 glasses (360ml each), 120ml left. (a) Total capacity of 8 glasses? (b) Initial milk in bottle? (c) Cost of 3l milk @₹40/l?"
+      },
+      {
+       "id": "T-41",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S14",
+       "book_ref": "Let Us Solve Q3(a)(b)(c), p.118",
+       "description": "Juice vendor: 5l container, each glass 250ml. (a) How many full glasses? (b) After 10 glasses served, juice left? (c) Earnings selling 5l @₹25/250ml?"
+      }
+     ],
+     "homework": [
+      {
+       "id": "T-42",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S14",
+       "book_ref": "Let Us Solve Q4, p.118",
+       "description": "8l400ml of oil equally poured into 7 containers. How much oil per container?"
+      },
+      {
+       "id": "T-43",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S14",
+       "book_ref": "Let Us Solve Q5, p.118",
+       "description": "One container holds 1l75ml of buttermilk. How much buttermilk in 8 such containers?"
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Children solve Let Us Solve Q1, p.118 (\"Riya fills one 2l bottle + four 500ml bottles; Aarav fills three 750ml bottles. Who filled more? How much more?\"). Prompt them to convert all to ml before comparing: Riya = 2,000 + 2,000 = 4,000 ml; Aarav = 2,250 ml. A volunteer writes the working on the board."
+      },
+      {
+       "minutes": "12–26",
+       "activity": "Children work through Let Us Solve Q2(a)(b)(c), p.118 (\"Milk poured equally into 8 glasses (360ml each), 120ml left....\") in pairs. Part (a): 8 × 360 = 2,880 ml. Part (b): 2,880 + 120 = 3,000 ml = 3 l. Part (c): 3 × ₹40 = ₹120. Each pair traces all three steps on paper before discussing."
+      },
+      {
+       "minutes": "26–40",
+       "activity": "Children work through Let Us Solve Q3(a)(b)(c), p.118 (\"Juice vendor: 5l container....\"). Part (a): 5,000 ÷ 250 = 20 glasses. Part (b): 20 − 10 = 10 glasses left → 10 × 250 = 2,500 ml = 2 l 500 ml. Part (c): 20 × ₹25 = ₹500. Review on the board; confirm children record intermediate answers before the final step."
+      }
+     ],
+     "teacher_notes": "Multi-step problems are where children most often lose track of what they have found and what they still need — encourage writing a label beside each calculation (e.g. 'total ml in glasses', 'total with leftover'). A frequent error in Q3 is computing earnings for only the 10 glasses served rather than all 20 (the full 5 l is assumed sold) — read part (c) carefully with the class before they calculate. Let Us Solve Q4 and Q5 are assigned as homework; Q4 requires dividing a compound quantity and Q5 multiplying, consolidating the multiplication/division work from the grocery store unit.",
+     "materials": [
+      "Textbook open to p.118",
+      "Blackboard for multi-step working layout"
+     ]
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S14"
+     ],
+     "section_titles": [
+      "Let Us Solve — Multi-step Capacity Word Problems"
+     ],
+     "activity_title": "Consolidation: Reviewing and Extending Capacity Problem-Solving",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-42",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S14",
+       "book_ref": "Let Us Solve Q4, p.118",
+       "description": "8l400ml of oil equally poured into 7 containers. How much oil per container?"
+      },
+      {
+       "id": "T-43",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S14",
+       "book_ref": "Let Us Solve Q5, p.118",
+       "description": "One container holds 1l75ml of buttermilk. How much buttermilk in 8 such containers?"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Open with a rapid oral review: ask children to convert aloud — 3 l 7 ml to ml, 4,050 ml to l and ml, 2 l 300 ml + 1 l 800 ml. Take answers from volunteers and address any errors on the board, connecting back to the × 1,000 rule for l–ml established in the double number line work."
+      },
+      {
+       "minutes": "10–26",
+       "activity": "Children work through Let Us Solve Q4, p.118 (\"8l400ml of oil equally poured into 7 containers. How much oil per container?\"). Model the approach: convert 8 l 400 ml to 8,400 ml; 8,400 ÷ 7 = 1,200 ml = 1 l 200 ml. Children then solve independently, writing the division step clearly. A volunteer shares their working."
+      },
+      {
+       "minutes": "26–40",
+       "activity": "Children solve Let Us Solve Q5, p.118 (\"One container holds 1l75ml of buttermilk. How much buttermilk in 8 such containers?\"). Two approaches are available: distribute (8 × 1 l = 8 l; 8 × 75 ml = 600 ml; total 8 l 600 ml) or convert first (8 × 1,075 ml = 8,600 ml). Children compare their method with a partner and confirm both routes agree. Close with a class discussion on which approach they find more reliable and why."
+      }
+     ],
+     "teacher_notes": "Dividing a compound capacity quantity (Q4) requires the same two-step logic as dividing compound weights: convert to ml first, divide, then convert back — children who try to divide 8 l and 400 ml separately get 8 ÷ 7, which does not work out neatly, prompting them to see the value of the single-unit approach. For Q5, both the distributive and convert-first methods give the same result; explicitly confirming this develops checking habits. Encouraging children to verify their answer using the alternate method is worth the extra minutes it takes.",
+     "materials": [
+      "Textbook open to p.118",
+      "Blackboard for division and multiplication working"
+     ]
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 40,
+   "count": 11
+  },
+  "coverage_handoff": {
+   "explore": {
+    "tasks": []
+   },
+   "reason": {
+    "tasks": [
+     {
+      "task_id": "T-1",
+      "intent": "reason",
+      "section_ref": "S1",
+      "book_ref": "Check! Check!, p.104",
+      "description": "Tick the items from Anu's list whose recorded weights look correct (almirah 40g, bed 60kg, rice bag 5kg, sofa 30g, bucket 1kg800g, water bottle 650g, refrigerator 50g)."
+     },
+     {
+      "task_id": "T-3",
+      "intent": "reason",
+      "section_ref": "S3",
+      "book_ref": "Different Units but Same Measure, p.105",
+      "description": "Match bags on Weighing Balance 1 (kg) with equivalent bags on Weighing Balance 2 (g), then fill in missing values on the double number line (kg and g)."
+     },
+     {
+      "task_id": "T-4",
+      "intent": "reason",
+      "section_ref": "S4",
+      "book_ref": "Let Us Find Q1, p.106",
+      "description": "Decide who is correct about 5 kg 50 g in grams — Shamim (5,050 g) or Rehan (5,500 g) — and explain why."
+     },
+     {
+      "task_id": "T-7",
+      "intent": "reason",
+      "section_ref": "S5",
+      "book_ref": "Comparison between Different Weights Q2(a–f), p.107",
+      "description": "Compare weight pairs using <, =, > signs: (a) 1kg600g vs 1,700g (b) 1kg600g vs 1kg60g (c) 10kg35g vs 10035g (d) 1kg600g vs 2kg500g (e) 5kg50g vs 4kg500g (f) 900g+7,000g vs 7kg+900g."
+     },
+     {
+      "task_id": "T-12",
+      "intent": "reason",
+      "section_ref": "S6",
+      "book_ref": "Let Us Find Q5(a–f), p.109",
+      "description": "Compare weight pairs using <, =, > signs: (a) 20g vs 200mg (b) 16g50mg vs 50g16mg (c) 2,010mg vs 2g100mg (d) 9,000mg vs 90g (e) 5,000g vs 7,500g (f) 800mg+88mg vs 880mg+8mg."
+     },
+     {
+      "task_id": "T-25",
+      "intent": "reason",
+      "section_ref": "S9",
+      "book_ref": "Let Us Do Q2 (scaling), p.112",
+      "description": "4 people need 500g rice. How much rice for 8 people? Use the double number line (×2 scaling)."
+     },
+     {
+      "task_id": "T-34",
+      "intent": "reason",
+      "section_ref": "S12",
+      "book_ref": "Let Us Think Q1, p.115",
+      "description": "Mary says 1l400ml = 1,400ml; Daisy says 1,040ml. Who is correct and why?"
+     },
+     {
+      "task_id": "T-37",
+      "intent": "reason",
+      "section_ref": "S13",
+      "book_ref": "Let Us Compare Q3(a–e), p.116",
+      "description": "Compare capacity pairs using <, =, >: (a) 5l600ml vs 5,400ml (b) 10l100ml vs 1l600ml (c) 190ml+800ml vs 800ml+109ml (d) 3l600ml vs 3,600ml (e) 4l50ml vs 4l500ml."
+     }
+    ]
+   },
+   "practice": {
+    "tasks": [
+     {
+      "task_id": "T-2",
+      "intent": "practice",
+      "section_ref": "S2",
+      "book_ref": "Let Us Do, p.104",
+      "description": "Read six dial weighing scales (a–f) showing different weights and write the correct weight for each."
+     },
+     {
+      "task_id": "T-5",
+      "intent": "practice",
+      "section_ref": "S4",
+      "book_ref": "Let Us Find Q2, p.106",
+      "description": "Complete the double number line and fill in 6 conversions: (a) 7kg67g=___g (b) 3kg300g=___g (c) 8kg69g=___g (d) 10,760g=___kg___g (e) 4,080g=___kg___g (f) 12,042g=___kg___g."
+     },
+     {
+      "task_id": "T-8",
+      "intent": "practice",
+      "section_ref": "S6",
+      "book_ref": "Let Us Find Q1, p.108",
+      "description": "If a sugar sachet weighs 5 g, how much is it in milligrams?"
+     },
+     {
+      "task_id": "T-33",
+      "intent": "practice",
+      "section_ref": "S12",
+      "book_ref": "Different Units but Same Measure (milkman), p.114",
+      "description": "Complete the double number line (l and ml) and fill the milkman's weekly delivery table converting between l and ml for five families."
+     },
+     {
+      "task_id": "T-35",
+      "intent": "practice",
+      "section_ref": "S12",
+      "book_ref": "Let Us Think Q2(a–f), p.115",
+      "description": "Convert and fill: (a) 3l8ml=___ml (b) 9l90ml=___ml (c) 14,075ml=___l___ml (d) 8l86ml=___ml (e) 12,200ml=___l___ml (f) 18,350ml=___l___ml."
+     }
+    ]
+   },
+   "solve": {
+    "tasks": [
+     {
+      "task_id": "T-15",
+      "intent": "solve",
+      "section_ref": "S6",
+      "book_ref": "King's Weight (a)(b)(c), p.109",
+      "description": "King donates wheat = 10× his weight. (a) If he donates 800 kg, what is his weight? (b) If he donated 780 kg last year, what was last year's weight? (c) How much weight did he gain this year?"
+     },
+     {
+      "task_id": "T-18",
+      "intent": "solve",
+      "section_ref": "S8",
+      "book_ref": "Let Us Do Q3, p.111",
+      "description": "4kg500g of sand is used from a 10kg sack. How much sand is left?"
+     },
+     {
+      "task_id": "T-22",
+      "intent": "solve",
+      "section_ref": "S8",
+      "book_ref": "Let Us Do Q7, p.111",
+      "description": "65kg flour purchased; 42kg275g used for langar; next day 52kg500g bought. What is the total flour now available?"
+     },
+     {
+      "task_id": "T-24",
+      "intent": "solve",
+      "section_ref": "S9",
+      "book_ref": "Let Us Do Q2, p.112",
+      "description": "A box of nuts (4kg800g) is equally distributed into 4 boxes. What is the weight of each box in grams?"
+     },
+     {
+      "task_id": "T-36",
+      "intent": "solve",
+      "section_ref": "S13",
+      "book_ref": "Let Us Compare Q2(a)(b), p.116",
+      "description": "Fill total fuel per vehicle type in table; (a) how much more fuel for buses than trucks? (b) total fuel from pump on that day?"
+     },
+     {
+      "task_id": "T-39",
+      "intent": "solve",
+      "section_ref": "S14",
+      "book_ref": "Let Us Solve Q1, p.118",
+      "description": "Riya fills one 2l bottle + four 500ml bottles; Aarav fills three 750ml bottles. Who filled more? How much more?"
+     },
+     {
+      "task_id": "T-41",
+      "intent": "solve",
+      "section_ref": "S14",
+      "book_ref": "Let Us Solve Q3(a)(b)(c), p.118",
+      "description": "Juice vendor: 5l container, each glass 250ml. (a) How many full glasses? (b) After 10 glasses served, juice left? (c) Earnings selling 5l @₹25/250ml?"
+     },
+     {
+      "task_id": "T-42",
+      "intent": "solve",
+      "section_ref": "S14",
+      "book_ref": "Let Us Solve Q4, p.118",
+      "description": "8l400ml of oil equally poured into 7 containers. How much oil per container?"
+     }
+    ]
+   }
+  },
+  "assessment_items": [
+   {
+    "section_code": "B",
+    "section_title": "Reason",
+    "items": [
+     {
+      "id": "Q-B-1",
+      "intent": "reason",
+      "section_ref": "S1",
+      "section_title": "Check! Check! — Judging Household Weights",
+      "question_type": "MCQ",
+      "prompt": "A school bag full of books is weighed. Which weight is most reasonable for it?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "4 g",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "4 kg",
+        "is_correct": true
+       },
+       {
+        "label": "C",
+        "text": "40 mg",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "400 kg",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "4 kg",
+       "method_one_line": "Match the object to everyday experience and choose the unit and value that makes sense — a bag of books is a kilogram-scale object, not grams or hundreds of kilograms.",
+       "what_each_option_reveals": {
+        "A": "The student confuses grams with kilograms and imagines the bag as extremely light, like a feather.",
+        "D": "The student has selected kilograms correctly but has no sense of the magnitude — 400 kg is the weight of a large animal.",
+        "C": "The student has confused milligrams (used for tiny objects like medicine) with an appropriate everyday unit."
+       },
+       "inclusivity": "Support: let the child hold a 1 kg object and compare; stretch: ask them to give a reasonable weight for two other classroom objects."
+      },
+      "exercise": {
+       "book_ref": "Check! Check!, p.104",
+       "description": "Tick the items from Anu's list whose recorded weights look correct (almirah 40g, bed 60kg, rice bag 5kg, sofa 30g, bucket 1kg800g, water bottle 650g, refrigerator 50g)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-2",
+      "intent": "reason",
+      "section_ref": "S3",
+      "section_title": "Different Units but Same Measure (kg and g)",
+      "question_type": "SCR",
+      "prompt": "A bag is placed on one balance that reads 3 kg and on another balance that reads 3,000 g. Are these the same weight or different weights? Write one sentence explaining how you know.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "They are the same weight because 1 kg = 1,000 g, so 3 kg = 3 × 1,000 g = 3,000 g.",
+       "method_one_line": "Multiply kilograms by 1,000 to convert to grams and compare.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: let them use the double number line to count up in 1,000s; stretch: ask what 3 kg 500 g would read in grams on the second balance."
+      },
+      "exercise": {
+       "book_ref": "Different Units but Same Measure, p.105",
+       "description": "Match bags on Weighing Balance 1 (kg) with equivalent bags on Weighing Balance 2 (g), then fill in missing values on the double number line (kg and g)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-3",
+      "intent": "reason",
+      "section_ref": "S4",
+      "section_title": "Converting Between kg and g",
+      "question_type": "MCQ",
+      "prompt": "Priya says 6 kg 8 g = 6,800 g. Arjun says 6 kg 8 g = 6,008 g. Who is correct?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "Arjun, because 6 kg = 6,000 g and you add 8 g to get 6,008 g",
+        "is_correct": true
+       },
+       {
+        "label": "B",
+        "text": "Both are correct; 6,800 g and 6,008 g are the same",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "Both are wrong; the correct answer is 68,000 g",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "Priya, because 8 g becomes 800 g when you move it to grams",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "Arjun is correct: 6 kg = 6,000 g; 6,000 + 8 = 6,008 g.",
+       "method_one_line": "Convert kilograms to grams by multiplying by 1,000, then add the grams as they are.",
+       "what_each_option_reveals": {
+        "D": "The student multiplies the grams part by 100, incorrectly treating 8 g as 800 g.",
+        "C": "The student multiplies the whole compound number 6 and 8 together and then by 1,000, confusing the two parts.",
+        "B": "The student does not recognise that two different numbers of grams cannot both equal 6 kg 8 g."
+       },
+       "inclusivity": "Support: write 6 kg 8 g in a place-value grid (kg | g) and convert step by step; stretch: try 9 kg 9 g and then 9 kg 90 g and explain why they give different answers."
+      },
+      "exercise": {
+       "book_ref": "Let Us Find Q1, p.106",
+       "description": "Decide who is correct about 5 kg 50 g in grams — Shamim (5,050 g) or Rehan (5,500 g) — and explain why."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-4",
+      "intent": "reason",
+      "section_ref": "S5",
+      "section_title": "Comparison between Different Weights",
+      "question_type": "MCQ",
+      "prompt": "Which symbol correctly fills the blank? 2 kg 50 g ___ 2,500 g",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "<",
+        "is_correct": true
+       },
+       {
+        "label": "B",
+        "text": "=",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": ">",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "Cannot be compared",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "< because 2 kg 50 g = 2,050 g, which is less than 2,500 g.",
+       "method_one_line": "Convert both quantities to grams, then compare the resulting numbers.",
+       "what_each_option_reveals": {
+        "C": "The student reads 50 g as 500 g (place-value error), getting 2,500 g = 2,500 g and then choosing > by mistake.",
+        "B": "The student reads 50 g as 500 g, obtaining 2,500 g on both sides and marking them equal.",
+        "D": "The student believes mixed units cannot be compared without a calculator or further information."
+       },
+       "inclusivity": "Support: write both sides as pure grams on the number line before choosing; stretch: write your own pair where a kg+g quantity equals a pure-g quantity."
+      },
+      "exercise": {
+       "book_ref": "Comparison between Different Weights Q2(a–f), p.107",
+       "description": "Compare weight pairs using <, =, > signs: (a) 1kg600g vs 1,700g (b) 1kg600g vs 1kg60g (c) 10kg35g vs 10035g (d) 1kg600g vs 2kg500g (e) 5kg50g vs 4kg500g (f) 900g+7,000g vs 7kg+900g."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-5",
+      "intent": "reason",
+      "section_ref": "S6",
+      "section_title": "Milligram — A Tiny Unit",
+      "question_type": "MCQ",
+      "prompt": "Which of these is the correct comparison? 3 g 10 mg ___ 3,100 mg",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "3 g 10 mg > 3,100 mg",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "3 g 10 mg = 3,100 mg",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "3 g 10 mg < 3,100 mg",
+        "is_correct": true
+       },
+       {
+        "label": "D",
+        "text": "3 g 10 mg > 3,010 mg",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "< because 3 g 10 mg = 3,010 mg, and 3,010 < 3,100.",
+       "method_one_line": "Convert grams to milligrams by multiplying by 1,000, then add the milligrams as they are, and compare.",
+       "what_each_option_reveals": {
+        "A": "The student converts 10 mg as 100 mg (place-value shift error), getting 3,100 > 3,100 — contradictory, showing confusion.",
+        "B": "The student converts 3 g 10 mg as 3,100 mg, making the same tens-to-hundreds place-value error as in the kg/g section.",
+        "D": "The student correctly converts 3 g 10 mg = 3,010 mg but then writes > instead of =, misreading the comparison."
+       },
+       "inclusivity": "Support: write 3 g 10 mg in a g | mg grid and convert step by step; stretch: find a value in mg that falls exactly between 3 g and 3 g 10 mg."
+      },
+      "exercise": {
+       "book_ref": "Let Us Find Q5(a–f), p.109",
+       "description": "Compare weight pairs using <, =, > signs: (a) 20g vs 200mg (b) 16g50mg vs 50g16mg (c) 2,010mg vs 2g100mg (d) 9,000mg vs 90g (e) 5,000g vs 7,500g (f) 800mg+88mg vs 880mg+8mg."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-6",
+      "intent": "reason",
+      "section_ref": "S9",
+      "section_title": "More Operations on Weight — Multiplication and Division",
+      "question_type": "SCR",
+      "prompt": "6 people need 900 g of flour altogether. How much flour do 12 people need? Show your reasoning using a doubling relationship.",
+      "visual_stimulus": "6 people | 12 people\n900 g | ...",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "12 people need 1,800 g of flour, because 12 = 6 × 2, so 900 g × 2 = 1,800 g.",
+       "method_one_line": "Identify the doubling (×2) relationship between the two group sizes and apply the same multiplier to the quantity.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: draw the double number line together and mark the known values first; stretch: ask how much flour 24 people would need and extend the number line another step."
+      },
+      "exercise": {
+       "book_ref": "Let Us Do Q2 (scaling), p.112",
+       "description": "4 people need 500g rice. How much rice for 8 people? Use the double number line (×2 scaling)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-7",
+      "intent": "reason",
+      "section_ref": "S12",
+      "section_title": "Different Units but Same Measure — l and ml Double Number Line",
+      "question_type": "MCQ",
+      "prompt": "Rohan says 2 l 5 ml = 2,500 ml. Priya says 2 l 5 ml = 2,005 ml. Who is correct?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "Both are correct because 2,500 and 2,005 are close enough",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "Both are wrong; the answer is 25,000 ml",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "Priya, because 2 l = 2,000 ml and you add 5 ml to get 2,005 ml",
+        "is_correct": true
+       },
+       {
+        "label": "D",
+        "text": "Rohan, because 5 ml becomes 500 ml when converted",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "Priya is correct: 2 l = 2,000 ml; 2,000 + 5 = 2,005 ml.",
+       "method_one_line": "Multiply litres by 1,000 to get millilitres, then add the millilitre part as it stands.",
+       "what_each_option_reveals": {
+        "D": "The student multiplies the ml part by 100, treating 5 ml as 500 ml — the same place-value inflation error seen in weight conversion.",
+        "B": "The student multiplies the compound number 25 by 1,000, losing the distinction between the litre and millilitre parts.",
+        "A": "The student rounds carelessly rather than computing exactly, not recognising that 495 ml is a large difference."
+       },
+       "inclusivity": "Support: write 2 l 5 ml in an l | ml grid and convert step by step; stretch: write three l+ml values where the ml part is a single digit and convert each."
+      },
+      "exercise": {
+       "book_ref": "Let Us Think Q1, p.115",
+       "description": "Mary says 1l400ml = 1,400ml; Daisy says 1,040ml. Who is correct and why?"
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-8",
+      "intent": "reason",
+      "section_ref": "S13",
+      "section_title": "Let Us Compare — Petrol Pump; Adding and Subtracting Capacity",
+      "question_type": "MCQ",
+      "prompt": "Which symbol correctly fills the blank? 4 l 80 ml ___ 4,800 ml",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "<",
+        "is_correct": true
+       },
+       {
+        "label": "B",
+        "text": "=",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": ">",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "Cannot be determined",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "< because 4 l 80 ml = 4,080 ml, and 4,080 < 4,800.",
+       "method_one_line": "Convert litres and millilitres to millilitres by multiplying litres by 1,000 and adding the ml, then compare.",
+       "what_each_option_reveals": {
+        "C": "The student reads 80 ml as 800 ml, producing 4,800 > 4,800 — a contradictory result from the place-value error.",
+        "B": "The student reads 80 ml as 800 ml, producing 4,800 = 4,800 and selecting equality.",
+        "D": "The student believes mixed-unit quantities cannot be compared without more information."
+       },
+       "inclusivity": "Support: convert both sides to ml on the number line step by step; stretch: write your own pair where l+ml is greater than the pure-ml value on the right."
+      },
+      "exercise": {
+       "book_ref": "Let Us Compare Q3(a–e), p.116",
+       "description": "Compare capacity pairs using <, =, >: (a) 5l600ml vs 5,400ml (b) 10l100ml vs 1l600ml (c) 190ml+800ml vs 800ml+109ml (d) 3l600ml vs 3,600ml (e) 4l50ml vs 4l500ml."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "C",
+    "section_title": "Practise",
+    "items": [
+     {
+      "id": "Q-C-1",
+      "intent": "practice",
+      "section_ref": "S2",
+      "section_title": "Reading Weighing Scales",
+      "question_type": "MCQ",
+      "prompt": "A dial scale has a maximum of 5 kg and 20 equal divisions. The pointer rests at the 7th mark. What weight does the scale show?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "1 kg 250 g",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "1 kg 750 g",
+        "is_correct": true
+       },
+       {
+        "label": "C",
+        "text": "3 kg 500 g",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "700 g",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "1 kg 750 g. Each division = 5 kg ÷ 20 = 250 g; 7th mark = 7 × 250 g = 1,750 g = 1 kg 750 g.",
+       "method_one_line": "Divide the maximum capacity by the number of divisions to find each division's value, then multiply by the pointer's position.",
+       "what_each_option_reveals": {
+        "D": "The student reads the pointer number (7) as 700 g without working out each division's value.",
+        "A": "The student correctly counts 5 divisions but uses 250 g each, arriving at only 5 marks instead of 7.",
+        "C": "The student doubles the correct answer, possibly treating each mark as 500 g instead of 250 g."
+       },
+       "inclusivity": "Support: draw the scale and mark divisions 1–7 with running totals; stretch: describe what the 15th mark would read on this same scale."
+      },
+      "exercise": {
+       "book_ref": "Let Us Do, p.104",
+       "description": "Read six dial weighing scales (a–f) showing different weights and write the correct weight for each."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-2",
+      "intent": "practice",
+      "section_ref": "S4",
+      "section_title": "Converting Between kg and g",
+      "question_type": "NUM",
+      "prompt": "Convert 9 kg 4 g to grams. Write your answer as a number.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "9,004 g",
+       "method_one_line": "Multiply 9 by 1,000 to get 9,000, then add 4 to get 9,004 g.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: use the double number line to reach 9,000 first, then count on 4; stretch: convert 9 kg 4 g back to kg and g from 9,004 g as a check."
+      },
+      "exercise": {
+       "book_ref": "Let Us Find Q2, p.106",
+       "description": "Complete the double number line and fill in 6 conversions: (a) 7kg67g=___g (b) 3kg300g=___g (c) 8kg69g=___g (d) 10,760g=___kg___g (e) 4,080g=___kg___g (f) 12,042g=___kg___g."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-3",
+      "intent": "practice",
+      "section_ref": "S6",
+      "section_title": "Milligram — A Tiny Unit",
+      "question_type": "NUM",
+      "prompt": "A vitamin tablet weighs 2 g. How many milligrams is that? Write your answer as a number.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "2,000 mg",
+       "method_one_line": "Multiply grams by 1,000 to convert to milligrams: 2 × 1,000 = 2,000 mg.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: use the g–mg double number line and count up in steps of 1,000; stretch: express 2,000 mg back as g+mg to confirm the conversion works both ways."
+      },
+      "exercise": {
+       "book_ref": "Let Us Find Q1, p.108",
+       "description": "If a sugar sachet weighs 5 g, how much is it in milligrams?"
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-4",
+      "intent": "practice",
+      "section_ref": "S12",
+      "section_title": "Different Units but Same Measure — l and ml Double Number Line",
+      "question_type": "MCQ",
+      "prompt": "A milk bottle contains 5 l 6 ml of milk. How many millilitres is this?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "506 ml",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "5,006 ml",
+        "is_correct": true
+       },
+       {
+        "label": "C",
+        "text": "5,060 ml",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "5,600 ml",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "5,006 ml. 5 l = 5,000 ml; 5,000 + 6 = 5,006 ml.",
+       "method_one_line": "Multiply litres by 1,000 and add the millilitres as they stand.",
+       "what_each_option_reveals": {
+        "D": "The student multiplies 6 ml by 100 (place-value shift), treating 6 ml as 600 ml.",
+        "C": "The student inserts a zero before 6 in the wrong position, writing 060 instead of 006.",
+        "A": "The student concatenates the digits 5 and 6 without converting litres, ignoring the multiplicative relationship."
+       },
+       "inclusivity": "Support: write 5 l 6 ml in an l | ml grid and convert column by column; stretch: write 5,006 ml back as l+ml and explain how you know the ml part is 6 not 60 or 600."
+      },
+      "exercise": {
+       "book_ref": "Let Us Think Q2(a–f), p.115",
+       "description": "Convert and fill: (a) 3l8ml=___ml (b) 9l90ml=___ml (c) 14,075ml=___l___ml (d) 8l86ml=___ml (e) 12,200ml=___l___ml (f) 18,350ml=___l___ml."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-5",
+      "intent": "practice",
+      "section_ref": "S12",
+      "section_title": "Different Units but Same Measure — l and ml Double Number Line",
+      "question_type": "NUM",
+      "prompt": "A water tank holds 11,050 ml of water. Write this as litres and millilitres: ___ l ___ ml. Write the two numbers separated by a comma (litres, then millilitres).",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "11 l, 50 ml. 11,050 ÷ 1,000 = 11 remainder 50.",
+       "method_one_line": "Divide the total millilitres by 1,000; the quotient is the litres and the remainder is the millilitres.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: subtract 1,000 ml at a time and count how many times until less than 1,000 remains; stretch: convert 11,005 ml the same way and explain why it gives a different ml part."
+      },
+      "exercise": {
+       "book_ref": "Different Units but Same Measure (milkman), p.114",
+       "description": "Complete the double number line (l and ml) and fill the milkman's weekly delivery table converting between l and ml for five families."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "D",
+    "section_title": "Solve",
+    "items": [
+     {
+      "id": "Q-D-1",
+      "intent": "solve",
+      "section_ref": "S6",
+      "section_title": "Milligram — A Tiny Unit",
+      "question_type": "NUM",
+      "prompt": "A king donates grain equal to 10 times his own weight. This year he donated 960 kg of grain. How many kilograms does the king weigh?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "96 kg. Divide the donated grain by 10: 960 ÷ 10 = 96 kg.",
+       "method_one_line": "Divide the donation amount by 10 to find the king's weight.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: use repeated subtraction or a double number line showing ×10; stretch: if the king gained 4 kg this year, what was last year's donation?"
+      },
+      "exercise": {
+       "book_ref": "King's Weight (a)(b)(c), p.109",
+       "description": "King donates wheat = 10× his weight. (a) If he donates 800 kg, what is his weight? (b) If he donated 780 kg last year, what was last year's weight? (c) How much weight did he gain this year?"
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-D-2",
+      "intent": "solve",
+      "section_ref": "S8",
+      "section_title": "The Grocery Store — Adding and Subtracting Weights",
+      "question_type": "NUM",
+      "prompt": "A sack of rice weighs 12 kg. After cooking for a school lunch, 7 kg 600 g of rice was used. How many grams of rice remain in the sack?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "4,400 g. 12 kg − 7 kg 600 g = 4 kg 400 g = 4,400 g. (12,000 g − 7,600 g = 4,400 g.)",
+       "method_one_line": "Convert both quantities to grams and subtract: 12,000 − 7,600 = 4,400 g.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: write both as grams on the number line and count back; stretch: if another 1 kg 800 g is used the next day, how much remains?"
+      },
+      "exercise": {
+       "book_ref": "Let Us Do Q3, p.111",
+       "description": "4kg500g of sand is used from a 10kg sack. How much sand is left?"
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-D-3",
+      "intent": "solve",
+      "section_ref": "S8",
+      "section_title": "The Grocery Store — Adding and Subtracting Weights",
+      "question_type": "NUM",
+      "prompt": "A community kitchen had 80 kg of wheat. They used 35 kg 450 g on the first day. The next morning they received 28 kg 200 g more. How many grams of wheat do they have now?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "72,750 g. Step 1: 80,000 − 35,450 = 44,550 g. Step 2: 44,550 + 28,200 = 72,750 g.",
+       "method_one_line": "Convert all quantities to grams, subtract the used amount, then add the new delivery.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: write each step in a column with labels; stretch: express the final answer in kg and g as well."
+      },
+      "exercise": {
+       "book_ref": "Let Us Do Q7, p.111",
+       "description": "65kg flour purchased; 42kg275g used for langar; next day 52kg500g bought. What is the total flour now available?"
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-D-4",
+      "intent": "solve",
+      "section_ref": "S9",
+      "section_title": "More Operations on Weight — Multiplication and Division",
+      "question_type": "NUM",
+      "prompt": "A delivery crate holds 6 kg 600 g of mangoes. It is divided equally into 6 smaller bags. How many grams of mangoes does each bag contain?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "1,100 g. 6 kg 600 g = 6,600 g; 6,600 ÷ 6 = 1,100 g.",
+       "method_one_line": "Convert the total to grams, then divide by the number of bags.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: use repeated subtraction of 6 from 6,600; stretch: express 1,100 g as kg and g and check by multiplying back."
+      },
+      "exercise": {
+       "book_ref": "Let Us Do Q2, p.112",
+       "description": "A box of nuts (4kg800g) is equally distributed into 4 boxes. What is the weight of each box in grams?"
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-D-5",
+      "intent": "solve",
+      "section_ref": "S13",
+      "section_title": "Let Us Compare — Petrol Pump; Adding and Subtracting Capacity",
+      "question_type": "NUM",
+      "prompt": "At a petrol station, cars filled 45 l 600 ml and motorcycles filled 18 l 900 ml in the morning. How many millilitres of petrol were sold altogether?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "64,500 ml. 45,600 + 18,900 = 64,500 ml.",
+       "method_one_line": "Convert both quantities to millilitres and add.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: add the l and ml parts separately (45 + 18 = 63 l; 600 + 900 = 1,500 ml = 1 l 500 ml; total 64 l 500 ml); stretch: convert the total back to l and ml as a check."
+      },
+      "exercise": {
+       "book_ref": "Let Us Compare Q2(a)(b), p.116",
+       "description": "Fill total fuel per vehicle type in table; (a) how much more fuel for buses than trucks? (b) total fuel from pump on that day?"
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-D-6",
+      "intent": "solve",
+      "section_ref": "S14",
+      "section_title": "Let Us Solve — Multi-step Capacity Word Problems",
+      "question_type": "NUM",
+      "prompt": "Reena fills one 3 l bottle and five 400 ml bottles for a school trip. Dev fills four 600 ml bottles. Who filled more water, and by how many millilitres?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Reena filled more, by 600 ml. Reena: 3,000 + 5 × 400 = 3,000 + 2,000 = 5,000 ml. Dev: 4 × 600 = 2,400 ml. Difference: 5,000 − 2,400 = 2,600 ml.",
+       "method_one_line": "Convert all containers to millilitres, sum each person's total, then subtract to find the difference.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: draw each set of containers with its ml value labelled before adding; stretch: how many 400 ml bottles would Dev need to match Reena's total exactly?"
+      },
+      "exercise": {
+       "book_ref": "Let Us Solve Q1, p.118",
+       "description": "Riya fills one 2l bottle + four 500ml bottles; Aarav fills three 750ml bottles. Who filled more? How much more?"
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-D-7",
+      "intent": "solve",
+      "section_ref": "S14",
+      "section_title": "Let Us Solve — Multi-step Capacity Word Problems",
+      "question_type": "NUM",
+      "prompt": "A lemonade vendor has a 4 l container. Each cup holds 200 ml. How many full cups can the vendor fill, and how much lemonade (in ml) is left over after filling those cups?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "20 full cups; 0 ml left over. 4,000 ÷ 200 = 20 exactly.",
+       "method_one_line": "Convert litres to millilitres, then divide by the cup size to find the number of cups.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: use repeated subtraction of 200 from 4,000 and count the steps; stretch: if the vendor sells each cup at ₹15, what are the total earnings?"
+      },
+      "exercise": {
+       "book_ref": "Let Us Solve Q3(a)(b)(c), p.118",
+       "description": "Juice vendor: 5l container, each glass 250ml. (a) How many full glasses? (b) After 10 glasses served, juice left? (c) Earnings selling 5l @₹25/250ml?"
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-D-8",
+      "intent": "solve",
+      "section_ref": "S14",
+      "section_title": "Let Us Solve — Multi-step Capacity Word Problems",
+      "question_type": "NUM",
+      "prompt": "9 l 450 ml of cooking oil is poured equally into 9 containers. How many millilitres of oil does each container hold?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "1,050 ml. 9 l 450 ml = 9,450 ml; 9,450 ÷ 9 = 1,050 ml.",
+       "method_one_line": "Convert the total to millilitres and divide by the number of containers.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: convert to ml first, then divide on a number line in equal jumps; stretch: express 1,050 ml as l and ml and verify by multiplying back."
+      },
+      "exercise": {
+       "book_ref": "Let Us Solve Q4, p.118",
+       "description": "8l400ml of oil equally poured into 7 containers. How much oil per container?"
+      },
+      "verified": true
+     }
+    ]
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

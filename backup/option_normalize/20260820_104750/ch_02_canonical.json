@@ -1,0 +1,1337 @@
+{
+ "filename": "ch_02_canonical.json",
+ "saved_at": "2026-08-19T11:40:08",
+ "plan_status": "canonical",
+ "chapter_number": 2,
+ "chapter_title": "Power Play",
+ "grade": "Grade VIII",
+ "subject": "Mathematics",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 45,
+   "count": 12
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 45 minutes × 12 periods = 540 minutes\nTotal: 12 periods · 9h 0min",
+ "genon_canonical": {
+  "generated": "2026-08-19",
+  "schedule": "12x45",
+  "constitution": "LP v3.9 / assessment v3.5",
+  "source": "generate_canonical.py one mathematics viii 2",
+  "ledger_ts": "20260818_205348_math_viii_02_top",
+  "validation": "clean",
+  "recovered_from": "ch_02_20260818_205348_math_viii_02_top_raw.txt",
+  "recovered_note": "parse recovered at ₹0 from the saved raw after 41 serialization repair(s): Fold different types of paper (regular sheet, news; Fill the table of paper-fold thicknesses for folds; Fill in the missing thickness values in the table ; Express repeated-multiplication expressions in exp; Express 32400 as a product of prime factors in exp …; the generation itself is the metered run logged at 20260818_205348_math_viii_02_top",
+  "synthesis_reauthor": {
+   "spec": "ARV-D-181 · F1 2026-08-19 (the double-closer collision)",
+   "at": "2026-08-20T10:47:33",
+   "ledger_ts": "20260819_210337_math_viii_02_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_02_canonical_p10.json": "2026-08-19T13:38:18",
+    "ch_02_canonical_p07.json": "2026-08-19T13:38:18"
+   },
+   "replaced_in": "backup/resynth/mathematics_viii_ch02_20260819_210337_math_viii_02_resynth.json"
+  }
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 2.1",
+       "title": "Experiencing the Power Play"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Fold, Observe, Record: Meeting Exponential Growth",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "A-1",
+       "type": "activity",
+       "source_section": "section 2.1",
+       "book_ref": "Activity 1, p.19",
+       "description": "Fold different types of paper (regular sheet, newspaper, tissue) repeatedly and record how many times each can be folded. Observe the pattern of thickness doubling with each fold."
+      },
+      {
+       "id": "E-1",
+       "type": "exercise",
+       "source_section": "section 2.1",
+       "book_ref": "Math Talk, section 2.1 p.20",
+       "description": "Fill the table of paper-fold thicknesses for folds 18–26, then 27–30, then 31–45. Observe and discuss the pattern of exponential growth."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Distribute sheets of regular paper, newspaper, and tissue. Students carry out Activity 1, p.19 (\"Fold different types of paper (regular sheet, newspaper, tissue) repeatedly and record how many times each can be folded....\"), working in pairs, recording the maximum fold count for each paper type on the board."
+      },
+      {
+       "minutes": "8–20",
+       "activity": "Class pools results. Teacher draws out the key observation: each fold doubles the thickness. Students begin constructing the doubling sequence from 1 sheet's thickness, confirming the multiplicative pattern by successive multiplication rather than addition."
+      },
+      {
+       "minutes": "20–35",
+       "activity": "Students work on Math Talk, section 2.1 p.20 (\"Fill the table of paper-fold thicknesses for folds 18–26, then 27–30, then 31–45....\"), filling in missing entries. Pairs share their computed values aloud, and the class debates whether the 46-fold height can really exceed the Earth–Moon distance."
+      },
+      {
+       "minutes": "35–45",
+       "activity": "Brief whole-class discussion: students articulate in their own words why repeated doubling grows so much faster than repeated addition. Teacher records a one-sentence class definition of 'multiplicative growth' on the board for students to copy."
+      }
+     ],
+     "teacher_notes": "Build explicitly on the doubling pattern students observe in the folding experiment before connecting it to the table — the physical sensation of resistance after a few folds anchors the abstraction. Watch for students who add a fixed number to each row instead of multiplying by 2; ask them to re-examine the relationship between consecutive thickness values. Example 2, section 2.1 p.20 offers an additional numeric illustration of the doubling rule that you may walk advanced students through independently.",
+     "materials": [
+      "Regular A4 paper sheets (one per pair)",
+      "Newspaper sheets (one per pair)",
+      "Tissue paper sheets (one per pair)",
+      "Ruler or measuring tape",
+      "Chalk/whiteboard"
+     ]
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 2.1",
+       "title": "Experiencing the Power Play"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Why Does Doubling Dominate? Reasoning the Growth Gap",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "A-2",
+       "type": "activity",
+       "source_section": "section 2.1",
+       "book_ref": "Activity 2, p.20",
+       "description": "Fill in the missing thickness values in the table for folds 18–26 (given fold 17 ≈ 131 cm, fold 20 ≈ 10.4 m) and then for folds 27–30 and 31–45 to experience the scale of exponential growth."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Students are given two parallel sequences on the board: a sequence that adds 1 cm each step (linear) and the paper-fold doubling sequence. Groups compute both up to step 10 and record values side by side. The stark contrast in magnitude is noted without comment initially."
+      },
+      {
+       "minutes": "10–25",
+       "activity": "Groups work on Activity 2, p.20 (\"Fill in the missing thickness values in the table for folds 18–26 (given fold 17 ≈ 131 cm, fold 20 ≈ 10.4 m) and then for folds 27–30 and 31–45....\"). Students use the given anchor values to fill forward and backward, reasoning about what operation connects consecutive rows."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Groups present one surprising entry from their completed table. Teacher facilitates reasoning discussion: 'Why does the multiplicative sequence overtake any additive one eventually?' Students construct an argument in 2–3 sentences and share with the class."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Class consolidates: multiplicative growth is characterised by a fixed ratio between consecutive terms rather than a fixed difference. Students write a one-sentence explanation comparing the two growth types in their notebooks."
+      }
+     ],
+     "teacher_notes": "Having established in the earlier work that each fold doubles the thickness, this unit presses students to articulate why multiplicative growth is fundamentally different — not just bigger. A common reasoning error is claiming 'doubling adds more each time', which is true but misses the structural point; redirect by asking students to compute the ratio of consecutive terms in each sequence. The goal is to close the section's reasoning arc so students can name the distinction clearly before the chapter moves to notation.",
+     "materials": [
+      "Completed fold tables from students' notebooks",
+      "Chalk/whiteboard",
+      "Graph paper (optional, for plotting both sequences)"
+     ]
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 2.2",
+       "title": "Exponential Notation and Operations"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Naming the Power: Exponential Notation and Prime Factorisation",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-2",
+       "type": "exercise",
+       "source_section": "section 2.2",
+       "book_ref": "Figure it Out Q1, section 2.2 p.22",
+       "description": "Express repeated-multiplication expressions in exponential form: (i) 6×6×6×6, (ii) y×y, (iii) b×b×b×b, (iv) 5×5×7×7×7, (v) 2×2×a×a, (vi) a×a×a×c×c×c×c×d."
+      },
+      {
+       "id": "WE-1",
+       "type": "worked_example",
+       "source_section": "section 2.2",
+       "book_ref": "Example, section 2.2 p.22",
+       "description": "Express 32400 as a product of prime factors in exponential form using a factor tree: 32400 = 2⁴ × 5² × 3⁴."
+      },
+      {
+       "id": "E-3",
+       "type": "exercise",
+       "source_section": "section 2.2",
+       "book_ref": "Figure it Out Q2, section 2.2 p.23",
+       "description": "Express each number as a product of prime-factor powers in exponential form: (i) 648, (ii) 405, (iii) 540, (iv) 3600."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Teacher introduces the base-exponent notation nᵃ as compact repeated multiplication, linking directly to the paper-fold doubling sequence (each thickness = 2ⁿ times the original). The distinction between base, exponent, and power is defined clearly. Students then attempt Figure it Out Q1, section 2.2 p.22 (\"Express repeated-multiplication expressions in exponential form: (i) 6×6×6×6, (ii) y×y....\"), writing answers individually."
+      },
+      {
+       "minutes": "10–25",
+       "activity": "Teacher walks through Example, section 2.2 p.22 (\"Express 32400 as a product of prime factors in exponential form using a factor tree: 32400 = 2⁴ × 5² × 3⁴.\") step by step on the board, narrating each factoring decision. Students annotate their own factor trees alongside."
+      },
+      {
+       "minutes": "25–40",
+       "activity": "Students independently attempt Figure it Out Q2, section 2.2 p.23 (\"Express each number as a product of prime-factor powers in exponential form: (i) 648, (ii) 405, (iii) 540, (iv) 3600.\"). Two volunteers write their trees on the board; class checks and corrects collectively."
+      },
+      {
+       "minutes": "40–45",
+       "activity": "Quick oral review: teacher calls out a small composite number and students respond in chorus with its prime-power factorisation. Class articulates the rule that every composite number has a unique prime factorisation in exponential form."
+      }
+     ],
+     "teacher_notes": "Students often confuse 2³ with 2×3; stress that the exponent tells how many times the base is written as a factor, not what it is multiplied by. The factor-tree method for prime factorisation in exponential form is new to many students at this point — build slowly through the worked example before releasing them to Q2. Example, section 2.2 p.23 (expressing algebraic products like a³b²) is worth assigning as independent reading for students who finish Q2 early.",
+     "materials": [
+      "Chalk/whiteboard",
+      "Notebooks",
+      "Textbook p.22–23"
+     ]
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 2.2",
+       "title": "Exponential Notation and Operations"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Laws of Exponents: Product, Power-of-Power, and Same-Base Products",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "E-4",
+       "type": "exercise",
+       "source_section": "section 2.2",
+       "book_ref": "Figure it Out Q3, section 2.2 p.23",
+       "description": "Write the numerical value of each exponential expression: (i) 2×10³, (ii) 7²×2³, (iii) 3×4⁴, (iv) (–3)²×(–5)², (v) 3²×10⁴, (vi) (–2)⁵×(–10)⁶."
+      },
+      {
+       "id": "WE-2",
+       "type": "worked_example",
+       "source_section": "section 2.2",
+       "book_ref": "Example, section 2.2 p.24",
+       "description": "Write p⁴ × p⁶ in exponential form: p⁴ × p⁶ = p¹⁰, illustrating the product rule nᵃ × nᵇ = nᵃ⁺ᵇ with an algebraic base."
+      },
+      {
+       "id": "WE-3",
+       "type": "worked_example",
+       "source_section": "section 2.2",
+       "book_ref": "Example, section 2.2 p.24",
+       "description": "Evaluate 4⁶ in two ways: as (4³)² = 64² = 4096 and as (4²)³ = 16³ = 4096, demonstrating the power-of-a-power rule."
+      },
+      {
+       "id": "E-5",
+       "type": "exercise",
+       "source_section": "section 2.2",
+       "book_ref": "Math Talk, section 2.2 p.24",
+       "description": "Use the product rule to compute: (i) 2⁹, (ii) 5⁷, (iii) 4⁶ — each by splitting the exponent into two convenient parts and multiplying the resulting values."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Students work on Figure it Out Q3, section 2.2 p.23 (\"Write the numerical value of each exponential expression: (i) 2×10³, (ii) 7²×2³....\") to consolidate evaluation of exponential expressions before laws are introduced. Answers are shared and corrected as a class."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Teacher builds the product rule inductively: write 2³ × 2² in expanded form, count the total factors of 2, and arrive at 2⁵ = 2³⁺². Repeat with 3² × 3⁴. Students generalise the rule nᵃ × nᵇ = nᵃ⁺ᵇ. Teacher then presents Example, section 2.2 p.24 (\"Write p⁴ × p⁶ in exponential form: p⁴ × p⁶ = p¹⁰....\") to show the rule works for algebraic bases."
+      },
+      {
+       "minutes": "22–35",
+       "activity": "Teacher walks through Example, section 2.2 p.24 (\"Evaluate 4⁶ in two ways: as (4³)² = 64² = 4096 and as (4²)³ = 16³ = 4096....\"). Students notice both routes agree and conjecture the power-of-a-power rule (nᵃ)ᵇ = nᵃᵇ. Class verifies with a second numeric example of their choice."
+      },
+      {
+       "minutes": "35–45",
+       "activity": "Students attempt Math Talk, section 2.2 p.24 (\"Use the product rule to compute: (i) 2⁹, (ii) 5⁷, (iii) 4⁶ — each by splitting the exponent into two convenient parts....\"), choosing their own split strategies. Two or three strategies are shared and compared."
+      }
+     ],
+     "teacher_notes": "The most persistent error here is applying the product rule across different bases — students write 2³ × 3² = 6⁵. Stress that nᵃ × nᵇ = nᵃ⁺ᵇ requires the same base on both sides; when bases differ, the rule does not apply. Figure it Out, section 2.2 p.24 (expressing each power as a power-of-a-power in multiple ways) gives additional drill on the power-of-a-power rule and is a strong independent task for confident students.",
+     "materials": [
+      "Chalk/whiteboard",
+      "Notebooks",
+      "Textbook p.23–24"
+     ]
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 2.2",
+       "title": "Exponential Notation and Operations"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Same-Power Rules, Combinatorics, and Passwords",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-4",
+       "type": "worked_example",
+       "source_section": "section 2.2",
+       "book_ref": "Example, section 2.2 p.25",
+       "description": "Compute 2⁵ × 5⁵ using the rule mᵃ × nᵃ = (mn)ᵃ: 2⁵ × 5⁵ = 10⁵ = 1,00,000."
+      },
+      {
+       "id": "WE-5",
+       "type": "worked_example",
+       "source_section": "section 2.2",
+       "book_ref": "Example, section 2.2 p.25",
+       "description": "Simplify 10⁴ ÷ 5⁴ using the quotient rule mᵃ ÷ nᵃ = (m÷n)ᵃ: 10⁴ ÷ 5⁴ = 2⁴ = 16."
+      },
+      {
+       "id": "E-6",
+       "type": "exercise",
+       "source_section": "section 2.2",
+       "book_ref": "Figure it Out, section 2.2 p.24",
+       "description": "Express each power as a power-of-a-power in at least two different ways: (i) 8⁶, (ii) 7¹⁵, (iii) 9¹⁴, (iv) 5⁸."
+      },
+      {
+       "id": "E-7",
+       "type": "exercise",
+       "source_section": "section 2.2",
+       "book_ref": "Try This, section 2.2 p.26",
+       "description": "Think about how many password combinations are possible in different real-world contexts: (i) Indian Pincodes, (ii) mobile numbers, (iii) vehicle registration numbers. Find out how these codes are allotted/generated."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Teacher presents Example, section 2.2 p.25 (\"Compute 2⁵ × 5⁵ using the rule mᵃ × nᵃ = (mn)ᵃ: 2⁵ × 5⁵ = 10⁵ = 1,00,000.\") and Example, section 2.2 p.25 (\"Simplify 10⁴ ÷ 5⁴ using the quotient rule mᵃ ÷ nᵃ = (m÷n)ᵃ: 10⁴ ÷ 5⁴ = 2⁴ = 16.\") back to back. Students note that these rules require equal exponents across different bases, contrasting with the earlier same-base laws."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Students work on Figure it Out, section 2.2 p.24 (\"Express each power as a power-of-a-power in at least two different ways: (i) 8⁶, (ii) 7¹⁵, (iii) 9¹⁴, (iv) 5⁸.\") in pairs. Volunteers share their different decompositions; class discusses which decompositions use the product-of-powers rule and which use power-of-a-power."
+      },
+      {
+       "minutes": "25–40",
+       "activity": "Groups tackle Try This, section 2.2 p.26 (\"Think about how many password combinations are possible in different real-world contexts: (i) Indian Pincodes, (ii) mobile numbers, (iii) vehicle registration numbers....\"). Each group models one context using exponential notation and presents their expression with a brief justification."
+      },
+      {
+       "minutes": "40–45",
+       "activity": "Quick class discussion: students compare the magnitudes of the password counts across contexts using exponential notation, practising the laws to simplify and compare. Teacher poses one extension question about an alphanumeric code for students to think about."
+      }
+     ],
+     "teacher_notes": "Students frequently confuse the two same-power rules: mᵃ × nᵃ = (mn)ᵃ applies when exponents are equal and bases differ, while nᵃ × nᵇ = nᵃ⁺ᵇ applies when bases are equal and exponents differ. A quick side-by-side on the board ('same exponent, different base' vs. 'same base, different exponent') prevents this. The password-counting context makes the combinatorics strand visible and engaging — let students argue about whether alphabetic positions matter before they compute.",
+     "materials": [
+      "Chalk/whiteboard",
+      "Notebooks",
+      "Textbook p.24–26"
+     ]
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 2.3",
+       "title": "The Other Side of Powers"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Zero and Negative Exponents: Reasoning from the Division Law",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-6",
+       "type": "worked_example",
+       "source_section": "section 2.3",
+       "book_ref": "Example, section 2.3 p.27",
+       "description": "Derive the division law nᵃ ÷ nᵇ = nᵃ⁻ᵇ by cancelling common factors: 2⁴ ÷ 2³ = 2¹, 2⁴ ÷ 2² = 2², step by step."
+      },
+      {
+       "id": "E-8",
+       "type": "exercise",
+       "source_section": "section 2.3",
+       "book_ref": "Math Talk, section 2.3 p.27",
+       "description": "Express 2¹⁰⁰ ÷ 2²⁵ as a power of 2 using the division rule."
+      },
+      {
+       "id": "WE-7",
+       "type": "worked_example",
+       "source_section": "section 2.3",
+       "book_ref": "Example, section 2.3 p.28",
+       "description": "Define n⁰ = 1 by applying the division rule to 2⁴ ÷ 2⁴ = 2⁰ = 1, then extend to show x⁰ = 1 for any non-zero x."
+      },
+      {
+       "id": "E-9",
+       "type": "exercise",
+       "source_section": "section 2.3",
+       "book_ref": "Math Talk, section 2.3 p.28",
+       "description": "Discuss why n cannot be 0 in the division law nᵃ ÷ nᵇ = nᵃ⁻ᵇ, and define n⁰ using the derived identity 2⁴ ÷ 2⁴ = 1."
+      },
+      {
+       "id": "WE-8",
+       "type": "worked_example",
+       "source_section": "section 2.3",
+       "book_ref": "Example, section 2.3 p.28",
+       "description": "Define negative exponents: 2⁴ ÷ 2⁵ = 2⁻¹ = 1/2; 2⁴ ÷ 2¹⁰ = 2⁻⁶ = 1/64. Show that n⁻ᵃ = 1/nᵃ and equivalently nᵃ = 1/n⁻ᵃ."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Teacher derives the division rule from first principles at the board, working through Example, section 2.3 p.27 (\"Derive the division law nᵃ ÷ nᵇ = nᵃ⁻ᵇ by cancelling common factors: 2⁴ ÷ 2³ = 2¹, 2⁴ ÷ 2² = 2², step by step.\"). Students immediately apply it via Math Talk, section 2.3 p.27 (\"Express 2¹⁰⁰ ÷ 2²⁵ as a power of 2....\") to confirm fluency."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Teacher presents Example, section 2.3 p.28 (\"Define n⁰ = 1 by applying the division rule to 2⁴ ÷ 2⁴ = 2⁰ = 1....\") as a logical consequence of the division rule. Students then argue through Math Talk, section 2.3 p.28 (\"Discuss why n cannot be 0 in the division law....\") in pairs, producing a written justification for why 0⁰ is undefined."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Teacher extends the argument through Example, section 2.3 p.28 (\"Define negative exponents: 2⁴ ÷ 2⁵ = 2⁻¹ = 1/2; 2⁴ ÷ 2¹⁰ = 2⁻⁶ = 1/64....\"). Students verify 2⁻¹ = 1/2 by computing the division directly, confirming the definition makes the law consistent. Class articulates the general rule n⁻ᵃ = 1/nᵃ."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Students write a three-step chain of reasoning in their notebooks: division rule → zero exponent → negative exponent, each step with one numeric example. This consolidates the deductive arc of the unit."
+      }
+     ],
+     "teacher_notes": "The deductive chain here is unusually tight — each definition is forced by the requirement that the division rule remain consistent — and students who see this find the definitions memorable rather than arbitrary. The most common reasoning gap is claiming '0⁰ = 1 because anything to the zero is 1'; Math Talk, section 2.3 p.28 is designed to surface exactly this gap, so give it genuine discussion time. Students who want extra challenge may be pointed to Figure it Out, section 2.3 p.29 (negative-exponent equivalents) as independent reading.",
+     "materials": [
+      "Chalk/whiteboard",
+      "Notebooks",
+      "Textbook p.27–28"
+     ]
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 2.3",
+       "title": "The Other Side of Powers"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Power Lines and Negative Exponent Arithmetic",
+     "pedagogical_method": "Play-way",
+     "textbook_items_in_class": [
+      {
+       "id": "E-10",
+       "type": "exercise",
+       "source_section": "section 2.3",
+       "book_ref": "Figure it Out, section 2.3 p.29",
+       "description": "Write equivalent forms of negative exponents: (i) 2⁻⁴, (ii) 10⁻⁵, (iii) (–7)⁻², (iv) (–5)⁻³, (v) 10⁻¹⁰⁰."
+      },
+      {
+       "id": "E-11",
+       "type": "exercise",
+       "source_section": "section 2.3",
+       "book_ref": "Figure it Out, section 2.3 p.29",
+       "description": "Simplify and write in exponential form: (i) 2⁻⁴ × 2⁷, (ii) 3² × 3⁻⁵ × 3⁶, (iii) p³ × p⁻¹⁰, (iv) 2⁴ × (–4)⁻², (v) 8ᵖ × 8ᵍ."
+      },
+      {
+       "id": "E-12",
+       "type": "exercise",
+       "source_section": "section 2.3",
+       "book_ref": "Figure it Out, section 2.3 p.30",
+       "description": "Use the power line for 7 to answer fill-in questions: e.g., 2401×49 = ?, 49³ = ?, 343×2401 = ?, 16807/49 = ?, 7/343 = ?, 16807/823543 = ?, 117649 × 1/343 = ?, (1/343)×(1/343) = ?."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Students complete Figure it Out, section 2.3 p.29 (\"Write equivalent forms of negative exponents: (i) 2⁻⁴, (ii) 10⁻⁵, (iii) (–7)⁻², (iv) (–5)⁻³, (v) 10⁻¹⁰⁰.\") individually as a warm-up drill, converting between reciprocal fractions and negative-exponent notation. Answers discussed orally with a focus on sign of the result."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Students work on Figure it Out, section 2.3 p.29 (\"Simplify and write in exponential form: (i) 2⁻⁴ × 2⁷, (ii) 3² × 3⁻⁵ × 3⁶, (iii) p³ × p⁻¹⁰, (iv) 2⁴ × (–4)⁻², (v) 8ᵖ × 8ᵍ.\") in pairs, applying the product rule with integer exponents. Students narrate each step aloud to their partner before writing."
+      },
+      {
+       "minutes": "25–40",
+       "activity": "Class turns to Figure it Out, section 2.3 p.30 (\"Use the power line for 7 to answer fill-in questions: e.g., 2401×49 = ?, 49³ = ?, 343×2401 = ?....\"). Teacher introduces the power-line visual: powers of 7 arranged in order with multiplication by 7 moving right and division by 7 moving left. Students use the line as a game board — given a product or quotient, they 'slide' to the answer."
+      },
+      {
+       "minutes": "40–45",
+       "activity": "Students pose one power-line puzzle of their own (choose a base, choose two positions, write the product or quotient) and exchange with a neighbour to solve. Teacher collects two or three to display on the board."
+      }
+     ],
+     "teacher_notes": "The power-line game makes the symmetry between positive and negative exponents spatial and intuitive — sliding right multiplies by the base, sliding left divides. Watch for students who treat negative exponents as negative numbers; the power-line context corrects this concretely because the positions to the left of zero are fractions, not negatives. Figure it Out, section 2.3 p.29 item (iv), involving (–4)⁻², is a useful diagnostic: a student who writes a negative answer has confused sign of the base with sign of the exponent.",
+     "materials": [
+      "Chalk/whiteboard",
+      "Textbook p.29–30",
+      "Notebooks",
+      "Rulers (for drawing power-line diagrams)"
+     ]
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 2.4",
+       "title": "Powers of 10"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Place Value, Decimals, and Scientific Notation",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-13",
+       "type": "exercise",
+       "source_section": "section 2.4",
+       "book_ref": "Figure it Out, section 2.4 p.30",
+       "description": "Write these numbers in expanded form using powers of 10: (i) 172, (ii) 5642, (iii) 6374."
+      },
+      {
+       "id": "WE-9",
+       "type": "worked_example",
+       "source_section": "section 2.4",
+       "book_ref": "Example, section 2.4 p.30",
+       "description": "Write 47561 in expanded form using powers of 10: (4×10⁴) + (7×10³) + (5×10²) + (6×10¹) + (1×10⁰)."
+      },
+      {
+       "id": "WE-10",
+       "type": "worked_example",
+       "source_section": "section 2.4",
+       "book_ref": "Example, section 2.4 p.30",
+       "description": "Write 561.903 in expanded form using positive and negative powers of 10: (5×10²) + (6×10¹) + (1×10⁰) + (9×10⁻¹) + (0×10⁻²) + (3×10⁻³)."
+      },
+      {
+       "id": "WE-11",
+       "type": "worked_example",
+       "source_section": "section 2.4",
+       "book_ref": "Example, section 2.4 p.31",
+       "description": "Convert 5900 to scientific notation in multiple ways, establishing that the standard form is 5.9 × 10³. Similarly convert 20800 = 2.08 × 10⁴ and 80,00,000 = 8 × 10⁶."
+      },
+      {
+       "id": "E-14",
+       "type": "exercise",
+       "source_section": "section 2.4",
+       "book_ref": "Figure it Out, section 2.4 p.32",
+       "description": "Express the following numbers in standard (scientific) form: (i) 59,853; (ii) 65,950; (iii) 34,30,000; (iv) 70,04,00,00,000."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Students quickly complete Figure it Out, section 2.4 p.30 (\"Write these numbers in expanded form using powers of 10: (i) 172, (ii) 5642, (iii) 6374.\") to anchor place-value intuition in exponential form. Answers are verified as a class."
+      },
+      {
+       "minutes": "10–22",
+       "activity": "Teacher works through Example, section 2.4 p.30 (\"Write 47561 in expanded form using powers of 10: (4×10⁴) + (7×10³)....\") and then Example, section 2.4 p.30 (\"Write 561.903 in expanded form using positive and negative powers of 10: (5×10²) + (6×10¹) + (1×10⁰) + (9×10⁻¹)....\"), emphasising that the decimal point is where positive and negative powers of 10 meet. Students annotate their textbooks."
+      },
+      {
+       "minutes": "22–35",
+       "activity": "Teacher motivates scientific notation by writing the Sun's distance from the galactic centre in full digits, then presenting Example, section 2.4 p.31 (\"Convert 5900 to scientific notation in multiple ways, establishing that the standard form is 5.9 × 10³....\"). The constraint 1 ≤ x < 10 is derived by asking: 'which form is unambiguous and easy to read?' Students discuss in pairs and then articulate the rule."
+      },
+      {
+       "minutes": "35–45",
+       "activity": "Students work on Figure it Out, section 2.4 p.32 (\"Express the following numbers in standard (scientific) form: (i) 59,853; (ii) 65,950; (iii) 34,30,000; (iv) 70,04,00,00,000.\") independently. Two students write their answers on the board and explain the exponent-choice reasoning."
+      }
+     ],
+     "teacher_notes": "Students commonly place the decimal incorrectly when converting to scientific notation — for instance writing 59,853 as 5.9853 × 10⁴ but then dropping digits, or failing to count place shifts correctly. A reliable check: multiply back and verify the result equals the original. The conceptual point that the exponent conveys magnitude while the coefficient conveys precision (approximate vs. exact measurement) should be noted explicitly — the chapter returns to this in section 2.5. Example, section 2.4 p.31 (converting 20800 and 80,00,000) offers additional practice for students who finish early.",
+     "materials": [
+      "Chalk/whiteboard",
+      "Textbook p.30–32",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 2.5",
+       "title": "Did You Ever Wonder?"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Estimation in Context: Weights, Coins, and Ladder Steps",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-12",
+       "type": "worked_example",
+       "source_section": "section 2.5",
+       "book_ref": "Example, section 2.5 p.33",
+       "description": "Model the Tulābhāra problem: assuming Roxie's weight = 45 kg and jaggery cost = ₹70/kg, compute worth of donated jaggery = 45 × 70 = ₹3150; similarly for wheat."
+      },
+      {
+       "id": "E-15",
+       "type": "exercise",
+       "source_section": "section 2.5",
+       "book_ref": "Figure it Out, section 2.5 p.33",
+       "description": "Estimate the worth (in rupees) of jaggery equal to Roxie's weight and wheat equal to Estu's weight for the Tulābhāra scenario. Make necessary assumptions about weights and current market prices."
+      },
+      {
+       "id": "E-16",
+       "type": "exercise",
+       "source_section": "section 2.5",
+       "book_ref": "Try This, section 2.5 p.34",
+       "description": "Estimate the number of 1-rupee coins needed to equal a person's weight. First guess instinctively, then model and compute. Extend to 5-rupee coins and 10-rupee notes."
+      },
+      {
+       "id": "WE-13",
+       "type": "worked_example",
+       "source_section": "section 2.5",
+       "book_ref": "Example, section 2.5 p.35",
+       "description": "Calculate the number of 20 cm steps in a ladder to the Moon (3,84,400 km), deriving 1,92,20,00,000 steps ≈ 1.922 × 10⁹ — linear growth — contrasted with just 46 exponential folds."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Teacher introduces the Tulābhāra tradition and the two-phase approach: guess first, then model. Students read Example, section 2.5 p.33 (\"Model the Tulābhāra problem: assuming Roxie's weight = 45 kg and jaggery cost = ₹70/kg, compute worth of donated jaggery = 45 × 70 = ₹3150....\") in pairs and identify each modelling assumption explicitly."
+      },
+      {
+       "minutes": "12–22",
+       "activity": "Students tackle Figure it Out, section 2.5 p.33 (\"Estimate the worth (in rupees) of jaggery equal to Roxie's weight and wheat equal to Estu's weight....\") with their own assumed weights and current market prices. Groups compare estimates and discuss how assumption changes affect the answer."
+      },
+      {
+       "minutes": "22–33",
+       "activity": "Groups move to Try This, section 2.5 p.34 (\"Estimate the number of 1-rupee coins needed to equal a person's weight. First guess instinctively, then model and compute. Extend to 5-rupee coins and 10-rupee notes.\"). Students record instinctive guesses, then compute systematically, expressing the final count in scientific notation."
+      },
+      {
+       "minutes": "33–45",
+       "activity": "Teacher walks through Example, section 2.5 p.35 (\"Calculate the number of 20 cm steps in a ladder to the Moon (3,84,400 km), deriving 1,92,20,00,000 steps ≈ 1.922 × 10⁹....\"). Students place this figure on the exponent scale alongside the 46-fold result, articulating in writing why the same distance is reached by vastly fewer exponential folds than linear steps."
+      }
+     ],
+     "teacher_notes": "The guess-then-compute protocol is the pedagogical heart of section 2.5 — resist giving students the model before they guess, because the surprise of being wrong drives engagement with the computation. Watch for groups who skip the modelling step and jump to computation; ask them to list every assumption they are making before they multiply. Students who confuse linear and multiplicative growth at this stage (adding steps vs. doubling folds) benefit from seeing both counts written in scientific notation side by side.",
+     "materials": [
+      "Chalk/whiteboard",
+      "Textbook p.33–35",
+      "Notebooks",
+      "Calculator (optional, for large multiplications)"
+     ]
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 2.5",
+       "title": "Did You Ever Wonder?"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Large Numbers in Nature, Time, and the Cosmos",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-20",
+       "type": "exercise",
+       "source_section": "section 2.5",
+       "book_ref": "Figure it Out, section 2.5 p.38",
+       "description": "Calculate using scientific notation from the animal-population data: (i) ants per human, (ii) number of starling flocks of 10,000, (iii) total leaves if each of 3×10¹² trees has 10⁴ leaves, (iv) sheets of paper needed to reach the Moon."
+      },
+      {
+       "id": "E-22",
+       "type": "exercise",
+       "source_section": "section 2.5",
+       "book_ref": "Figure it Out, section 2.5 p.42",
+       "description": "Calculate using scientific notation from the time-scale data: (i) time in seconds to count all stars in the universe (2×10²³) at one per second; (ii) time to drink all water on Earth (200 ml/glass every 10 seconds)."
+      },
+      {
+       "id": "E-21",
+       "type": "exercise",
+       "source_section": "section 2.5",
+       "book_ref": "Try This, section 2.5 p.39",
+       "description": "Estimate Roxie's age in hours (given she completed 13 years a few weeks ago), and find Estu's date of birth given he is 4070 days old. Find out how old you would be if you had lived for a million seconds."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Students work in groups on Figure it Out, section 2.5 p.38 (\"Calculate using scientific notation from the animal-population data: (i) ants per human, (ii) number of starling flocks of 10,000, (iii) total leaves if each of 3×10¹² trees has 10⁴ leaves, (iv) sheets of paper needed to reach the Moon.\"). Each calculation is expressed in scientific notation with the exponent laws applied explicitly."
+      },
+      {
+       "minutes": "15–28",
+       "activity": "Groups present one result each and explain the exponent arithmetic used. Teacher draws out the pattern: multiplying two numbers in scientific notation means multiplying coefficients and adding exponents. Students articulate this as a rule."
+      },
+      {
+       "minutes": "28–38",
+       "activity": "Students individually attempt Try This, section 2.5 p.39 (\"Estimate Roxie's age in hours (given she completed 13 years a few weeks ago), and find Estu's date of birth given he is 4070 days old. Find out how old you would be if you had lived for a million seconds.\"). The conversion chain (years → days → hours → seconds) is set up with students choosing their own rounding assumptions and expressing each intermediate result in scientific notation."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Class examines two entries from Figure it Out, section 2.5 p.42 (\"Calculate using scientific notation from the time-scale data: (i) time in seconds to count all stars in the universe....\") together, placing the answers on an informal powers-of-10 time-scale on the board. Students note which quantities are larger than the age of the universe."
+      }
+     ],
+     "teacher_notes": "The key skill consolidating here is fluency with operations in scientific notation — multiplying coefficients and adding exponents, then adjusting if the coefficient falls outside [1, 10). Watch for students who add coefficients instead of multiplying when combining two scientific-notation quantities. Try This, section 2.5 p.39 is a gentle conversion exercise that builds the habit of expressing everyday quantities in powers of 10; students who are surprised by the size of a million seconds are having a productive conceptual moment.",
+     "materials": [
+      "Chalk/whiteboard",
+      "Textbook p.38–42",
+      "Notebooks",
+      "Calculator (optional)"
+     ]
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 2.5A",
+       "title": "A Pinch of History"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Indian Naming Traditions and the Googol: History of Large Numbers",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-24",
+       "type": "exercise",
+       "source_section": "section 2.5A",
+       "book_ref": "Figure it Out, section 2.5A p.43",
+       "description": "What does the first part of each name (million, billion, trillion, quadrillion …) denote in the American naming system?"
+      },
+      {
+       "id": "E-25",
+       "type": "exercise",
+       "source_section": "section 2.5A",
+       "book_ref": "Try This, section 2.5A p.43",
+       "description": "Find the highest denomination currency note ever printed in the world and express its face value using powers of 10 in scientific notation."
+      },
+      {
+       "id": "E-26",
+       "type": "exercise",
+       "source_section": "section 2.5A",
+       "book_ref": "Figure it Out Q1, section 2.5A p.44",
+       "description": "Find the units digit in the value of 22²⁴ ÷ 43². [Hint: 4 = 2²]"
+      },
+      {
+       "id": "E-27",
+       "type": "exercise",
+       "source_section": "section 2.5A",
+       "book_ref": "Figure it Out Q2, section 2.5A p.44",
+       "description": "There are 5 bottles in a container. Every day a new container is brought in. How many bottles are there after 40 days?"
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Teacher presents the historical context: texts from Lalitavistara, Mahaviracharya's Ganita-sara-sangraha, and Jaina texts assigned names to powers of 10 as large as 10⁹⁶ and beyond. Students read the relevant section-2.5A passage and list the Indian names (lakh, crore, arab, kharab, neel, padma, shankh) alongside their power-of-10 equivalents in a notebook table."
+      },
+      {
+       "minutes": "12–22",
+       "activity": "Students work on Figure it Out, section 2.5A p.43 (\"What does the first part of each name (million, billion, trillion, quadrillion …) denote in the American naming system?\") and then compare the Indian and American systems — the Indian system extends by factors of 100 and the American by factors of 1000. Students express both extension rules in exponential notation."
+      },
+      {
+       "minutes": "22–32",
+       "activity": "Students investigate Try This, section 2.5A p.43 (\"Find the highest denomination currency note ever printed in the world and express its face value using powers of 10 in scientific notation.\") in pairs, pooling any prior knowledge and reasoning about the order of magnitude. Findings are shared and placed on the historical timeline on the board."
+      },
+      {
+       "minutes": "32–45",
+       "activity": "Class works through Figure it Out Q1, section 2.5A p.44 (\"Find the units digit in the value of 22²⁴ ÷ 43². [Hint: 4 = 2²]\") and Figure it Out Q2, section 2.5A p.44 (\"There are 5 bottles in a container. Every day a new container is brought in. How many bottles are there after 40 days?\") as a discovery exercise in applying exponent laws to find patterns in units digits and exponential sequences."
+      }
+     ],
+     "teacher_notes": "The historical strand is genuinely motivating for many students and should not be rushed — let the scale of 10⁹⁶ land before moving to exercises. A common confusion in the naming comparison is thinking the Indian 'crore' and American 'hundred million' are numerically different; confirm both equal 10⁸ before moving on. Figure it Out Q1 requires the insight that the units digit of powers of 2 cycles with period 4, which is a beautiful pattern worth drawing attention to.",
+     "materials": [
+      "Chalk/whiteboard",
+      "Textbook p.43–44",
+      "Notebooks",
+      "Reference materials or device for currency record research (optional)"
+     ]
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 45,
+     "synthesis": true,
+     "textbook_segments": [
+      {
+       "ref": "section 2.1",
+       "title": "Experiencing the Power Play"
+      },
+      {
+       "ref": "section 2.2",
+       "title": "Exponential Notation and Operations"
+      },
+      {
+       "ref": "section 2.3",
+       "title": "The Other Side of Powers"
+      },
+      {
+       "ref": "section 2.4",
+       "title": "Powers of 10"
+      },
+      {
+       "ref": "section 2.5",
+       "title": "Did You Ever Wonder?"
+      },
+      {
+       "ref": "section 2.5A",
+       "title": "A Pinch of History"
+      }
+     ],
+     "activity_title": "Power Play in Four Moves",
+     "pedagogical_method": "Problem-solving",
+     "section_goal": "apply",
+     "teacher_notes": "Pose all four problems on the board at once. Students work entirely alone for the first fifteen minutes, writing every step in full. Small groups of three then compare working; any disagreement is reconstructed step by step before the group moves on. Each group nominates one presenter per problem; after the solution is shown the class names the chapter method it rested on before the next presenter speaks. Problem 1 needs prime factorisation in exponential form (factor-tree method). Problem 2 needs the product, power-of-a-power, and division laws together with zero and negative exponents. Problem 3 needs the definition of negative exponents and the extension of all laws to integer exponents. Problem 4 needs scientific notation with powers of 10 and the product-of-same-powers law. Watch for students writing 10⁹ + 10⁹ = 10¹⁸ in Problem 4 — insist they factor out to 2 × 10⁹.",
+     "visual_aids": [
+      {
+       "type": "table",
+       "title": "Problems and solutions",
+       "table": "No. | Problem | Solution\n1 | Express 7560 as a product of prime factors in exponential form. Then write 7560² in exponential form without multiplying out. | Factor tree: 7560 = 2³ × 3³ × 5 × 7. So 7560² = (2³ × 3³ × 5 × 7)² = 2⁶ × 3⁶ × 5² × 7², by the power-of-a-power rule applied to each factor.\n2 | Simplify and write as a single power: (3⁴ × 3⁻²)³ ÷ 3⁵. | Inside the bracket: 3⁴ × 3⁻² = 3⁴⁺⁽⁻²⁾ = 3². Raise to the power 3: (3²)³ = 3⁶. Divide: 3⁶ ÷ 3⁵ = 3⁶⁻⁵ = 3¹ = 3.\n3 | Write 2⁻³ × 5⁻³ as a single power of a single base, then give its value as a fraction. | Using the product-of-same-powers rule in reverse: 2⁻³ × 5⁻³ = (2 × 5)⁻³ = 10⁻³ = 1/10³ = 1/1000.\n4 | The number of red blood cells in a human body is about 2.5 × 10¹³, and the number of platelets is about 1.5 × 10¹². How many red blood cells and platelets are there in total? Write your answer in scientific notation. | Convert to same power of 10: 2.5 × 10¹³ = 25 × 10¹². Total = (25 + 1.5) × 10¹² = 26.5 × 10¹² = 2.65 × 10¹³."
+      }
+     ],
+     "materials": [
+      "Chalkboard or whiteboard",
+      "Notebooks and pencils"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-3",
+       "activity": "Teacher writes all four problems on the board in silence, one below the other. No explanation is given. Students read, write the problems in their notebooks, and begin."
+      },
+      {
+       "minutes": "3-18",
+       "activity": "Individual work, full working written down for every problem. No discussion. Teacher circulates and watches — not correcting, but noting which steps students are unsure about."
+      },
+      {
+       "minutes": "18-28",
+       "activity": "Groups of three form. Members compare their working problem by problem. Where answers differ, the group reconstructs both solutions from the first step where the paths diverge and decides which is right. Each group agrees on a single working to present."
+      },
+      {
+       "minutes": "28-41",
+       "activity": "Four short presentations, one per problem — each group sends one voice. After the solution for each problem is shown and confirmed, the teacher asks the class: 'Which chapter method did this solution rest on?' The class names it before the next problem is presented."
+      },
+      {
+       "minutes": "41-45",
+       "activity": "Teacher closes by asking: 'What is the one idea behind everything we used today?' After brief responses, the teacher states the chapter's idea on the board: a fixed multiplier applied repeatedly produces powers — and those powers obey clean laws that make any size of number manageable."
+      }
+     ],
+     "textbook_items_in_class": [],
+     "homework": []
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 45,
+   "count": 12
+  },
+  "coverage_handoff": {
+   "section_a": {
+    "goal_cluster": [
+     "recall"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 2.1",
+      "section_title": "Experiencing the Power Play",
+      "goal": "recall",
+      "anchor_id": "E-1",
+      "anchor_book_ref": "Math Talk, section 2.1 p.20",
+      "anchor_description": "Fill the table of paper-fold thicknesses for folds 18–26, then 27–30, then 31–45. Observe and discuss the pattern of exponential growth."
+     },
+     {
+      "section_ref": "section 2.2",
+      "section_title": "Exponential Notation and Operations",
+      "goal": "recall",
+      "anchor_id": "E-3",
+      "anchor_book_ref": "Figure it Out Q2, section 2.2 p.23",
+      "anchor_description": "Express each number as a product of prime-factor powers in exponential form: (i) 648, (ii) 405, (iii) 540, (iv) 3600."
+     },
+     {
+      "section_ref": "section 2.2",
+      "section_title": "Exponential Notation and Operations",
+      "goal": "recall",
+      "anchor_id": "E-4",
+      "anchor_book_ref": "Figure it Out Q3, section 2.2 p.23",
+      "anchor_description": "Write the numerical value of each exponential expression: (i) 2×10³, (ii) 7²×2³, (iii) 3×4⁴, (iv) (–3)²×(–5)², (v) 3²×10⁴, (vi) (–2)⁵×(–10)⁶."
+     },
+     {
+      "section_ref": "section 2.5A",
+      "section_title": "A Pinch of History",
+      "goal": "recall",
+      "anchor_id": "E-24",
+      "anchor_book_ref": "Figure it Out, section 2.5A p.43",
+      "anchor_description": "What does the first part of each name (million, billion, trillion, quadrillion …) denote in the American naming system?"
+     }
+    ]
+   },
+   "section_b": {
+    "goal_cluster": [
+     "reason"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 2.1",
+      "section_title": "Experiencing the Power Play",
+      "goal": "reason",
+      "anchor_id": "A-2",
+      "anchor_book_ref": "Activity 2, p.20",
+      "anchor_description": "Fill in the missing thickness values in the table for folds 18–26 (given fold 17 ≈ 131 cm, fold 20 ≈ 10.4 m) and then for folds 27–30 and 31–45 to experience the scale of exponential growth."
+     },
+     {
+      "section_ref": "section 2.3",
+      "section_title": "The Other Side of Powers",
+      "goal": "reason",
+      "anchor_id": "E-8",
+      "anchor_book_ref": "Math Talk, section 2.3 p.27",
+      "anchor_description": "Express 2¹⁰⁰ ÷ 2²⁵ as a power of 2 using the division rule."
+     }
+    ]
+   },
+   "section_c": {
+    "goal_cluster": [
+     "apply"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 2.2",
+      "section_title": "Exponential Notation and Operations",
+      "goal": "apply",
+      "anchor_id": "E-6",
+      "anchor_book_ref": "Figure it Out, section 2.2 p.24",
+      "anchor_description": "Express each power as a power-of-a-power in at least two different ways: (i) 8⁶, (ii) 7¹⁵, (iii) 9¹⁴, (iv) 5⁸."
+     },
+     {
+      "section_ref": "section 2.3",
+      "section_title": "The Other Side of Powers",
+      "goal": "apply",
+      "anchor_id": "E-10",
+      "anchor_book_ref": "Figure it Out, section 2.3 p.29",
+      "anchor_description": "Write equivalent forms of negative exponents: (i) 2⁻⁴, (ii) 10⁻⁵, (iii) (–7)⁻², (iv) (–5)⁻³, (v) 10⁻¹⁰⁰."
+     },
+     {
+      "section_ref": "section 2.4",
+      "section_title": "Powers of 10",
+      "goal": "apply",
+      "anchor_id": "E-13",
+      "anchor_book_ref": "Figure it Out, section 2.4 p.30",
+      "anchor_description": "Write these numbers in expanded form using powers of 10: (i) 172, (ii) 5642, (iii) 6374."
+     },
+     {
+      "section_ref": "section 2.5",
+      "section_title": "Did You Ever Wonder?",
+      "goal": "apply",
+      "anchor_id": "E-15",
+      "anchor_book_ref": "Figure it Out, section 2.5 p.33",
+      "anchor_description": "Estimate the worth (in rupees) of jaggery equal to Roxie's weight and wheat equal to Estu's weight for the Tulābhāra scenario. Make necessary assumptions about weights and current market prices."
+     },
+     {
+      "section_ref": "section 2.5",
+      "section_title": "Did You Ever Wonder?",
+      "goal": "apply",
+      "anchor_id": "E-20",
+      "anchor_book_ref": "Figure it Out, section 2.5 p.38",
+      "anchor_description": "Calculate using scientific notation from the animal-population data: (i) ants per human, (ii) number of starling flocks of 10,000, (iii) total leaves if each of 3×10¹² trees has 10⁴ leaves, (iv) sheets of paper needed to reach the Moon."
+     },
+     {
+      "section_ref": "section 2.5A",
+      "section_title": "A Pinch of History",
+      "goal": "apply",
+      "anchor_id": "E-29",
+      "anchor_book_ref": "Figure it Out Q4, section 2.5A p.44",
+      "anchor_description": "Examine each statement and decide if it is Always True, Only Sometimes True, or Never True: (i) cube numbers are also square numbers; (ii) fourth powers are also square numbers; (iii) fifth power divisible by cube; (iv) product of two cubes is a cube; (v) q⁴⁶ is both a 4th power and a 6th power."
+     }
+    ]
+   }
+  },
+  "assessment_items": [
+   {
+    "section_code": "A",
+    "section_title": "Recall and Apply",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-A-1",
+      "section_ref": "section 2.1",
+      "section_title": "Experiencing the Power Play",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "A sheet of paper is 0.1 mm thick. After each fold its thickness doubles. What is the thickness (in mm) of the paper after 4 folds?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "0.4 mm",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "0.8 mm",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "1.6 mm",
+        "is_correct": true
+       },
+       {
+        "label": "D",
+        "text": "3.2 mm",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "1.6 mm. Starting thickness = 0.1 mm; after 4 folds, thickness = 0.1 × 2⁴ = 0.1 × 16 = 1.6 mm.",
+       "method_one_line": "Multiply the starting thickness by 2 raised to the number of folds: 0.1 × 2⁴ = 1.6 mm.",
+       "what_each_option_reveals": {
+        "A": "The student multiplied 0.1 by 4 (additive thinking) instead of using the doubling rule repeatedly.",
+        "B": "The student computed 0.1 × 2³ = 0.8, applying only three doublings instead of four.",
+        "D": "The student computed 0.1 × 2⁵ = 3.2, counting one extra fold."
+       },
+       "inclusivity": {
+        "support": "Let the student re-read the thickness table in the textbook and identify the operation connecting any two consecutive rows.",
+        "challenge": "Ask the student to express the general thickness after n folds as a formula and use it to find when the thickness exceeds 10 cm."
+       }
+      },
+      "exercise": {
+       "book_ref": "Math Talk, section 2.1 p.20",
+       "description": "Fill the table of paper-fold thicknesses for folds 18–26, then 27–30, then 31–45. Observe and discuss the pattern of exponential growth."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-2",
+      "section_ref": "section 2.2",
+      "section_title": "Exponential Notation and Operations",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "Which of the following correctly expresses 360 as a product of its prime factors in exponential form?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "2³ × 3² × 5",
+        "is_correct": true
+       },
+       {
+        "label": "B",
+        "text": "2² × 3² × 5²",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "2³ × 3 × 5²",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "2² × 3³ × 5",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "2³ × 3² × 5. Factor tree: 360 = 2 × 180 = 2 × 2 × 90 = 2 × 2 × 2 × 45 = 2³ × 9 × 5 = 2³ × 3² × 5.",
+       "method_one_line": "Build a factor tree for 360, collecting prime factors, then write each prime with its count as an exponent.",
+       "what_each_option_reveals": {
+        "B": "The student divided by 2 only twice, missing a factor of 2, and over-counted the factor of 5.",
+        "C": "The student correctly found three 2s but then assigned only one 3 and two 5s, misreading 45 as 5×9 then writing 5² instead of 5¹.",
+        "D": "The student found an extra factor of 3, likely misreading 90 = 2 × 45 = 2 × 3³ × 5 instead of 2 × 3² × 5."
+       },
+       "inclusivity": {
+        "support": "Allow the student to draw the factor tree step by step, circling each prime as they reach it.",
+        "challenge": "Ask the student to express a four-digit number of their choice in prime-power form and verify by multiplying back."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q2, section 2.2 p.23",
+       "description": "Express each number as a product of prime-factor powers in exponential form: (i) 648, (ii) 405, (iii) 540, (iv) 3600."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-3",
+      "section_ref": "section 2.2",
+      "section_title": "Exponential Notation and Operations",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "What is the numerical value of (–2)⁵ × (–10)²?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "–200",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "200",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "–3200",
+        "is_correct": true
+       },
+       {
+        "label": "D",
+        "text": "3200",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "–3200. (–2)⁵ = –32 (odd exponent, negative base gives negative result); (–10)² = 100 (even exponent gives positive result); product = –32 × 100 = –3200.",
+       "method_one_line": "Evaluate each factor separately, applying the sign rule for negative bases, then multiply.",
+       "what_each_option_reveals": {
+        "D": "The student ignored or dropped the negative sign on (–2)⁵, treating it as 2⁵ = 32, giving 32 × 100 = 3200.",
+        "A": "The student added the bases (–2 + –10 = –12) and multiplied by the sum of exponents (5 + 2 = 7) or made an arithmetic error leading to –200.",
+        "B": "The student computed 2 × 10 = 20, then raised to the sum of exponents 5 + 2 = 7, or made a similar base-confusion error, arriving at a small positive value."
+       },
+       "inclusivity": {
+        "support": "Ask the student to write out (–2)⁵ as (–2)×(–2)×(–2)×(–2)×(–2) and count the sign changes step by step.",
+        "challenge": "Ask the student to determine, without computing, whether (–3)¹⁰⁰ × (–5)⁷ is positive or negative, and explain the reasoning."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q3, section 2.2 p.23",
+       "description": "Write the numerical value of each exponential expression: (i) 2×10³, (ii) 7²×2³, (iii) 3×4⁴, (iv) (–3)²×(–5)², (v) 3²×10⁴, (vi) (–2)⁵×(–10)⁶."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-4",
+      "section_ref": "section 2.5A",
+      "section_title": "A Pinch of History",
+      "goal": "recall",
+      "question_type": "SCR",
+      "prompt": "In the Indian naming system for large numbers, what are the names given to 10⁵, 10⁷, and 10⁹? Write each name and confirm its value using powers of 10.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "10⁵ is one lakh, 10⁷ is one crore, and 10⁹ is one arab (also called 100 crore). Each can be confirmed: 1 lakh = 1,00,000 = 10⁵; 1 crore = 1,00,00,000 = 10⁷; 1 arab = 1,00,00,00,000 = 10⁹.",
+       "method_one_line": "Recall the Indian naming convention covered in section 2.5A and match each name to its power-of-10 equivalent.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Let the student look back at the Indian naming table in section 2.5A of the textbook to confirm the names.",
+        "challenge": "Ask the student to write one additional name from the list (for example, kharab or neel) with its power-of-10 value in scientific notation."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out, section 2.5A p.43",
+       "description": "What does the first part of each name (million, billion, trillion, quadrillion …) denote in the American naming system?"
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "B",
+    "section_title": "Reason and Explain",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-B-1",
+      "section_ref": "section 2.1",
+      "section_title": "Experiencing the Power Play",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "A sequence grows by adding 3 at each step: 2, 5, 8, 11, … Another sequence grows by multiplying by 3 at each step: 2, 6, 18, 54, … Both sequences start at 2. Explain, using the ideas of additive and multiplicative growth from your textbook, why the second sequence will eventually far exceed the first, no matter how large the first sequence grows.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "In the additive sequence each term increases by the same fixed amount (3), so after n steps the value is 2 + 3n — a linear function of n. In the multiplicative sequence each term is multiplied by 3, so after n steps the value is 2 × 3ⁿ — an exponential function of n. Because 3ⁿ grows without bound and grows faster than any fixed multiple of n, the multiplicative sequence overtakes the additive one and remains ahead for all larger values of n. The ratio between consecutive terms in the multiplicative sequence is always 3, whereas the ratio in the additive sequence decreases toward 1, confirming that the multiplicative sequence grows proportionally faster at every step.",
+       "method_one_line": "Contrast fixed-difference (linear) growth with fixed-ratio (exponential) growth, using the paper-folding doubling argument from section 2.1.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Ask the student to compute the first six terms of each sequence and discuss with a partner which grows faster before writing their explanation.",
+        "challenge": "Change the multiplier to 1.01 (just 1% growth) and ask whether the multiplicative sequence still eventually overtakes the additive one, and why."
+       }
+      },
+      "exercise": {
+       "book_ref": "Activity 2, p.20",
+       "description": "Fill in the missing thickness values in the table for folds 18–26 (given fold 17 ≈ 131 cm, fold 20 ≈ 10.4 m) and then for folds 27–30 and 31–45 to experience the scale of exponential growth."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-2",
+      "section_ref": "section 2.3",
+      "section_title": "The Other Side of Powers",
+      "goal": "reason",
+      "question_type": "ECR",
+      "prompt": "Using only the division law nᵃ ÷ nᵇ = nᵃ⁻ᵇ (where n ≠ 0), construct a step-by-step argument to show that 5⁰ = 1 and that 5⁻³ = 1/125. Your argument must show why the base cannot be zero.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Step 1: Apply the division law with equal exponents: 5⁴ ÷ 5⁴ = 5⁴⁻⁴ = 5⁰. But 5⁴ ÷ 5⁴ = 625 ÷ 625 = 1. Therefore 5⁰ = 1. Step 2: Apply the division law when the denominator exponent exceeds the numerator's: 5² ÷ 5⁵ = 5²⁻⁵ = 5⁻³. But 5² ÷ 5⁵ = 25 ÷ 3125 = 1/125. Therefore 5⁻³ = 1/125, i.e., 5⁻³ = 1/5³. Step 3 (why n ≠ 0): If n = 0, then nᵃ = 0 for any positive a, and 0ᵃ ÷ 0ᵃ = 0 ÷ 0 is undefined — division by zero is not allowed — so the division law cannot be applied and 0⁰ remains undefined.",
+       "method_one_line": "Apply nᵃ ÷ nᵃ = 1 and nᵃ ÷ nᵇ = 1/nᵇ⁻ᵃ (for b > a) to derive both definitions, then invoke the prohibition on division by zero.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Ask the student to first verify the division law numerically with 2⁴ ÷ 2⁴ and 2⁴ ÷ 2⁵ before writing the general argument.",
+        "challenge": "Ask the student to use the same reasoning to show that n⁻ᵃ × nᵃ = 1 for any non-zero n, and explain what this tells us about negative and positive exponents being reciprocals."
+       }
+      },
+      "exercise": {
+       "book_ref": "Math Talk, section 2.3 p.27",
+       "description": "Express 2¹⁰⁰ ÷ 2²⁵ as a power of 2 using the division rule."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "C",
+    "section_title": "Apply in Context",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-C-1",
+      "section_ref": "section 2.2",
+      "section_title": "Exponential Notation and Operations",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A locker uses only the digits 1, 2, and 3 for its passcode. The passcode is exactly 4 digits long and digits may repeat. Using the product rule for exponents, write the total number of possible passcodes in exponential form and then compute its numerical value.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Each of the 4 positions can be filled by any of 3 digits independently. The total number of passcodes = 3 × 3 × 3 × 3 = 3⁴. Computing: 3⁴ = 81. So there are 81 possible passcodes.",
+       "method_one_line": "Recognise each digit position as an independent choice of 3 options, multiply using the repeated-multiplication definition to write 3⁴, then evaluate.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Ask the student to first list all passcodes starting with '1' to count them, then multiply by 3 for the other starting digits.",
+        "challenge": "Extend the problem: if the locker used all digits 0–9 instead of just 1–3, how many more passcodes would be possible? Express the difference in exponential form."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out, section 2.2 p.24",
+       "description": "Express each power as a power-of-a-power in at least two different ways: (i) 8⁶, (ii) 7¹⁵, (iii) 9¹⁴, (iv) 5⁸."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-2",
+      "section_ref": "section 2.3",
+      "section_title": "The Other Side of Powers",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Simplify the expression 3⁻² × 3⁵ × 3⁻¹ and write the result as a single power of 3. Then write its numerical value.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Applying the product rule with integer exponents: 3⁻² × 3⁵ × 3⁻¹ = 3^(–2 + 5 + (–1)) = 3². The numerical value is 3² = 9.",
+       "method_one_line": "Add all exponents — treating negative exponents as negative integers — to apply the product rule nᵃ × nᵇ = nᵃ⁺ᵇ, then evaluate.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Ask the student to convert each factor to a fraction first (3⁻² = 1/9, 3⁵ = 243, 3⁻¹ = 1/3) and multiply, then verify the result matches 3².",
+        "challenge": "Change the expression to p⁻ᵃ × pᵇ × p⁻ᶜ and ask the student to write a general condition on a, b, c that makes the result equal to p⁰ = 1."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out, section 2.3 p.29",
+       "description": "Write equivalent forms of negative exponents: (i) 2⁻⁴, (ii) 10⁻⁵, (iii) (–7)⁻², (iv) (–5)⁻³, (v) 10⁻¹⁰⁰."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-3",
+      "section_ref": "section 2.4",
+      "section_title": "Powers of 10",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Write the number 30407.06 in expanded form using powers of 10 (including negative powers for the decimal part). Then express 30407.06 in standard scientific notation.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Expanded form: (3×10⁴) + (0×10³) + (4×10²) + (0×10¹) + (7×10⁰) + (0×10⁻¹) + (6×10⁻²). Scientific notation: 3.040706 × 10⁴ (since 1 ≤ 3.040706 < 10 and shifting the decimal 4 places left requires multiplying by 10⁴).",
+       "method_one_line": "Assign each digit its place-value power of 10 for the expanded form; for scientific notation, move the decimal so the coefficient is in [1, 10) and record the number of shifts as the exponent.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Ask the student to first write the number in a place-value table (ten-thousands, thousands, hundreds, tens, ones, tenths, hundredths) before converting each column to a power of 10.",
+        "challenge": "Ask the student to convert 3.040706 × 10⁴ back to standard decimal form and then write it in expanded form starting from the 10² term, to practise reversibility."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out, section 2.4 p.30",
+       "description": "Write these numbers in expanded form using powers of 10: (i) 172, (ii) 5642, (iii) 6374."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-4",
+      "section_ref": "section 2.5",
+      "section_title": "Did You Ever Wonder?",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A standard notebook has 200 pages, each page 0.1 mm thick. Estimate how many notebooks you would need to stack to reach a height of 1 km. Make your assumptions explicit, compute the answer, and express it in scientific notation.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Assumption: 1 km = 1,000,000 mm = 10⁶ mm. Each notebook thickness = 200 pages × 0.1 mm/page = 20 mm = 2 × 10¹ mm. Number of notebooks = 10⁶ mm ÷ (2 × 10¹ mm) = (10⁶)/(2 × 10¹) = (1/2) × 10⁵ = 5 × 10⁴. So approximately 5 × 10⁴ (fifty thousand) notebooks are needed.",
+       "method_one_line": "Convert all lengths to the same unit (mm), divide total height by thickness per notebook, then express the quotient using scientific-notation division of powers of 10.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Give the student the intermediate step: each notebook is 20 mm thick; ask them to compute how many 20-mm stacks make 1,000,000 mm.",
+        "challenge": "Ask the student to re-solve assuming each page is 0.08 mm thick (a common thinner paper), and compare whether the answer changes by a full power of 10."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out, section 2.5 p.33",
+       "description": "Estimate the worth (in rupees) of jaggery equal to Roxie's weight and wheat equal to Estu's weight for the Tulābhāra scenario. Make necessary assumptions about weights and current market prices."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-5",
+      "section_ref": "section 2.5",
+      "section_title": "Did You Ever Wonder?",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "There are approximately 2.5 × 10⁷ ants per square kilometre of tropical forest, and a forest covers 6 × 10⁵ square kilometres. Calculate the total number of ants in the forest and express your answer in scientific notation.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Total ants = (2.5 × 10⁷) × (6 × 10⁵) = (2.5 × 6) × 10^(7+5) = 15 × 10¹² = 1.5 × 10¹³.",
+       "method_one_line": "Multiply the coefficients (2.5 × 6 = 15) and add the exponents (7 + 5 = 12), then adjust so the coefficient is in [1, 10): 15 × 10¹² = 1.5 × 10¹³.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Ask the student to first multiply 2.5 × 6 on paper, then add the exponents separately, before combining.",
+        "challenge": "Ask the student to find how many times larger this ant population is than the current estimated human population of approximately 8 × 10⁹, expressing the ratio as a power of 10."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out, section 2.5 p.38",
+       "description": "Calculate using scientific notation from the animal-population data: (i) ants per human, (ii) number of starling flocks of 10,000, (iii) total leaves if each of 3×10¹² trees has 10⁴ leaves, (iv) sheets of paper needed to reach the Moon."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-6",
+      "section_ref": "section 2.5A",
+      "section_title": "A Pinch of History",
+      "goal": "apply",
+      "question_type": "SCR",
+      "prompt": "Is it Always True, Only Sometimes True, or Never True that the fourth power of a whole number is also a perfect square? Justify your answer using exponential notation.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Always True. Let n be any whole number. Then n⁴ = (n²)². This uses the power-of-a-power rule: (n²)² = n^(2×2) = n⁴. Since n⁴ equals (n²)², it is always the square of n², which is itself a whole number. Therefore every fourth power is a perfect square, with no exceptions.",
+       "method_one_line": "Rewrite n⁴ as (n²)² using the power-of-a-power rule to show it is always a square of the whole number n².",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Ask the student to verify with two or three examples (2⁴ = 16 = 4², 3⁴ = 81 = 9²) before attempting the general argument.",
+        "challenge": "Ask the student to determine whether a sixth power is always both a perfect square and a perfect cube, and justify using the power-of-a-power rule."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q4, section 2.5A p.44",
+       "description": "Examine each statement and decide if it is Always True, Only Sometimes True, or Never True: (i) cube numbers are also square numbers; (ii) fourth powers are also square numbers; (iii) fifth power divisible by cube; (iv) product of two cubes is a cube; (v) q⁴⁶ is both a 4th power and a 6th power."
+      },
+      "verified": true
+     }
+    ]
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

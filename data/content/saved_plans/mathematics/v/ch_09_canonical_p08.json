@@ -1,0 +1,1132 @@
+{
+ "filename": "ch_09_canonical_p08.json",
+ "saved_at": "2026-08-20T12:45:58",
+ "plan_status": "canonical",
+ "chapter_number": 9,
+ "chapter_title": "Coconut Farm",
+ "grade": "Grade V",
+ "subject": "Mathematics",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 40,
+   "count": 8
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 8 periods = 320 minutes\nTotal: 8 periods · 5h 20min",
+ "genon_canonical": {
+  "generated": "2026-08-20",
+  "schedule": "8x40",
+  "constitution": "LP v1.4 / assessment v1.4",
+  "source": "generate_canonical.py one mathematics v 9",
+  "ledger_ts": "20260820_121241_math_v_09_p08",
+  "validation": "clean",
+  "repairs": [
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-20T12:53:42",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-195": {
+      "note": "declared edit",
+      "edits": [
+       {
+        "where": "item{'id': 'Q-B-4'}",
+        "field": "teacher_guide",
+        "old": {
+         "expected_answer": "",
+         "method_one_line": "",
+         "what_each_option_reveals": {},
+         "inclusivity": "[Verification failed] Refer to the book task anchored to S2."
+        },
+        "new": {
+         "expected_answer": "The next line is 6,000 ÷ 6,000 = 1. Each time the divisor is multiplied by 10, the answer is divided by 10 — so the quotient goes 1,000, 100, 10, 1. A child may say this as 'the answer loses a zero each time', which is the same observation in place-value language and should be accepted; press once for WHY, so the reasoning is about the divisor growing rather than about zeros disappearing.",
+         "method_one_line": "Read down the divisors: each is ten times the one above, so each answer is one tenth of the one above.",
+         "what_each_option_reveals": {},
+         "inclusivity": "Support: write the three quotients in a column (1,000 · 100 · 10) so the child sees the pattern in the answers before writing the fourth line; stretch: ask what the line AFTER that would be, and why 6,000 ÷ 60,000 does not give a whole number."
+        }
+       }
+      ]
+     }
+    }
+   },
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-20T12:54:23",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-195": {
+      "note": "declared edit",
+      "edits": [
+       {
+        "where": "item{'id': 'Q-B-4'}",
+        "field": "prompt",
+        "old": null,
+        "new": "Rani writes a pattern:\n6,000 ÷ 6 = 1,000\n6,000 ÷ 60 = 100\n6,000 ÷ 600 = 10\nWrite the next line of Rani's pattern. Then explain in one sentence what happens to the answer each time the divisor becomes ten times bigger."
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S1"
+     ],
+     "section_titles": [
+      "Division facts and multiplication–division relationship"
+     ],
+     "activity_title": "Every multiplication hides two division facts",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-1",
+       "intent": "reason",
+       "method": "Inductive",
+       "section_ref": "S1",
+       "book_ref": "Think and answer, p.119",
+       "description": "Given 35÷1=___, write the corresponding multiplication fact and two division facts that follow."
+      },
+      {
+       "id": "T-2",
+       "intent": "reason",
+       "method": "Play-way",
+       "section_ref": "S1",
+       "book_ref": "Let Us Play, p.120",
+       "description": "Identify numbers to fill circles so that square values are the products or quotients of the circle numbers in a multiplication-division web."
+      },
+      {
+       "id": "T-3",
+       "intent": "practice",
+       "method": "Problem-solving",
+       "section_ref": "S1",
+       "book_ref": "Let Us Do Q1, p.120",
+       "description": "Solve four multiplication problems (30×30, 400×8, 15×60, 200×16) and write two division statements for each."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Draw a 5×7 coconut array on the board. Ask children how many coconuts there are in all, then guide them to state the multiplication fact 5×7=35. Ask: if we share 35 equally into 5 rows, how many in each? Collect two division sentences from the class and write them alongside the multiplication fact to make the inverse relationship visible."
+      },
+      {
+       "minutes": "10–20",
+       "activity": "Think and answer, p.119 (\"Given 35÷1=___, write the corresponding multiplication fact…\"): children record 35÷1=35 and then derive the two division facts 35÷35=1 and 35÷1=35, writing all three sentences. Pairs share and compare. Bring out that N=D×Q by pointing back to the array."
+      },
+      {
+       "minutes": "20–32",
+       "activity": "Let Us Play, p.120 (\"Identify numbers to fill circles so that square values are products or quotients…\"): small groups complete the multiplication-division web, reasoning about which circle values satisfy both the multiplication and division conditions simultaneously. Groups share one interesting solution with the class."
+      },
+      {
+       "minutes": "32–40",
+       "activity": "Let Us Do Q1, p.120 (\"Solve four multiplication problems…and write two division statements for each\"): children work individually on 30×30, 400×8, 15×60, 200×16, writing the product and then the two matching division facts. Teacher circulates, checking that division sentences are correctly formed."
+      }
+     ],
+     "teacher_notes": "The key idea is that one multiplication fact generates exactly two division facts, and this unit builds that understanding concretely through the coconut array before moving to symbolic work. A common error is writing the dividend and divisor in the wrong positions (e.g. writing 7÷35 instead of 35÷7); prompt children to check that the largest number is always the dividend. The multiplication-division web in Let Us Play is intentionally open-ended — accept multiple valid completions.",
+     "materials": [
+      "Blackboard and chalk",
+      "Squared paper or grid sheets for drawing arrays"
+     ]
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S2"
+     ],
+     "section_titles": [
+      "Patterns in division and place value"
+     ],
+     "activity_title": "Scaling dividends and divisors: what changes, what stays?",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-4",
+       "intent": "reason",
+       "method": "Inductive",
+       "section_ref": "S2",
+       "book_ref": "Let Us Do Q2, p.121",
+       "description": "Solve 18 division problems arranged in scaling patterns; fill two place value (H–T–O) charts and discuss what happens to quotients in each case."
+      },
+      {
+       "id": "T-7",
+       "intent": "reason",
+       "method": "Inquiry",
+       "section_ref": "S2",
+       "book_ref": "Let Us Do Q3, p.122",
+       "description": "₹5500 distributed equally among 5 employees; what if distributed among 10? Will each get more or less? How much would be needed to give all the same amount?"
+      },
+      {
+       "id": "T-8",
+       "intent": "reason",
+       "method": "Problem-solving",
+       "section_ref": "S2",
+       "book_ref": "Let Us Do Q4, p.122",
+       "description": "Place numbers 1–8 in boxes so all four operations (÷, ×, +, −) are correct with no repetition."
+      }
+     ],
+     "homework": [
+      {
+       "id": "T-5",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S2",
+       "book_ref": "Let Us Do Q1, p.122",
+       "description": "Sabina cycles 160 km in 20 days. How many kilometres does she cycle each day?"
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–18",
+       "activity": "Let Us Do Q2, p.121 (\"Solve 18 division problems arranged in scaling patterns; fill two place value (H–T–O) charts…\"): teacher writes the first set (e.g. 150÷3, 1500÷3, 15000÷3) on the board and children fill the H–T–O chart for each. After the first set, pause and ask: what happened to each quotient digit's column when we multiplied the dividend by 10? Children complete the second set independently and articulate the pattern."
+      },
+      {
+       "minutes": "18–28",
+       "activity": "Let Us Do Q3, p.122 (\"₹5500 distributed equally among 5 employees; what if distributed among 10?…\"): children compute 5500÷5, then predict and compute 5500÷10 before discussing whether each person gets more or less. The follow-up question — how much total money is needed to keep each share the same — requires reasoning about the relationship between divisor and dividend."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Let Us Do Q4, p.122 (\"Place numbers 1–8 in boxes so all four operations are correct with no repetition\"): children work in pairs, using trial and reasoning. Teacher circulates asking 'How did you decide which number to try first?' to surface the structure of the puzzle. Additional practice: Let Us Do Q2 and Q5 (p.122) may be set as classwork or homework for further consolidation."
+      }
+     ],
+     "teacher_notes": "The H–T–O chart is the central model of this unit: it makes the shift in quotient digits visible when the dividend is scaled. A common error is treating the scaling as additive rather than multiplicative — children write 150÷3=50 and then guess 1500÷3=500+10 rather than seeing that all digits shift one column left. Let Us Do Q2 and Q5 (p.122) offer additional scaling practice and missing-number work; route these as classwork extensions or homework as the class warrants.",
+     "materials": [
+      "Blackboard and chalk",
+      "Printed or drawn H–T–O chart grids"
+     ]
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S2",
+      "S3"
+     ],
+     "section_titles": [
+      "Patterns in division and place value",
+      "Mental strategies for division"
+     ],
+     "activity_title": "Closing scaling patterns; splitting dividends mentally",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-9",
+       "intent": "practice",
+       "method": "Problem-solving",
+       "section_ref": "S2",
+       "book_ref": "Let Us Do Q5, p.122",
+       "description": "Fill in 8 blanks (a–h) using the relationship N=D×Q (e.g. ___÷18=100, 870÷___=87)."
+      },
+      {
+       "id": "T-10",
+       "intent": "solve",
+       "method": "Inductive",
+       "section_ref": "S3",
+       "book_ref": "Try It! Q1–6, p.123",
+       "description": "Apply splitting and/or repeated halving strategies to solve: 64÷4, 265÷5, 1560÷8, 4824÷24, 168÷8, 144÷4 using scaffolded diagram frames."
+      }
+     ],
+     "homework": [
+      {
+       "id": "T-6",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S2",
+       "book_ref": "Let Us Do Q2, p.122",
+       "description": "How many ₹100 notes does Seema need to buy coconuts worth ₹4200?"
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Let Us Do Q5, p.122 (\"Fill in 8 blanks using the relationship N=D×Q…\"): children apply the inverse relationship to find missing dividends and divisors. Teacher asks: 'If ___÷18=100, what multiplication fact helps you?' Pairs discuss before writing. This consolidates the scaling and inverse work built on in the patterns section."
+      },
+      {
+       "minutes": "12–40",
+       "activity": "Try It! Q1–6, p.123 (\"Apply splitting and/or repeated halving strategies…\"): teacher models 1248÷6 on the board as a split — 1200÷6 + 48÷6 — using a diagram frame. Introduce the subtraction split (1992÷4 = 2000÷4 − 8÷4) and repeated halving (128÷4: halve to 64, halve to 32). Children then work through Q1–6 individually using the scaffold frames, choosing the strategy that suits each dividend. Pairs compare methods used for the same problem."
+      }
+     ],
+     "teacher_notes": "This unit finishes the missing-number work from the patterns section and then opens the mental strategies section, keeping both sections moving without gap. The most productive discussion point is strategy choice: a child who uses splitting for 64÷4 and one who uses repeated halving will both get 16, making it natural to ask which felt easier and why. A common error in subtraction splits is forgetting to subtract the second part after dividing (computing 2000÷4 but not subtracting 8÷4); draw the split diagram prominently to counter this.",
+     "materials": [
+      "Blackboard and chalk",
+      "Printed or hand-drawn splitting-frame diagrams"
+     ]
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S4"
+     ],
+     "section_titles": [
+      "Long division using partial quotients and remainder"
+     ],
+     "activity_title": "Susie's and Sunitha's farm: partial quotient division",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-11",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S4",
+       "book_ref": "Let Us Solve (a–h), p.124",
+       "description": "Solve eight division problems using partial quotient strategies: 256÷4, 545÷5, 147÷7, 1212÷6, 648÷12, 9648÷48, 775÷25, 796÷4."
+      },
+      {
+       "id": "T-13",
+       "intent": "explore",
+       "method": "Inquiry",
+       "section_ref": "S4",
+       "book_ref": "Let Us Learn to Divide, p.125",
+       "description": "Complete scaffolded partial-quotient frames for 726÷4 and 902÷16; verify using N=D×Q+R and check whether 726=4×181 and 902=16×56."
+      }
+     ],
+     "homework": [
+      {
+       "id": "T-12",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S4",
+       "book_ref": "Susie's Farm in Kerala Q1, p.124",
+       "description": "582 coconuts sold equally to 6 customers; how many each? How many bags of 25 needed for 97 coconuts? Discuss which method (Susie's or Sunitha's) is better."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Introduce partial quotients using 256÷4 on the board: subtract multiples of 4 in steps (4×50=200, remainder 56; 4×10=40, remainder 16; 4×4=16, done), adding partial quotients 50+10+4=64. Show Sunitha's variant — choosing 4×60=240 first to halve the steps. Then direct children to Let Us Solve (a–h), p.124 (\"Solve eight division problems using partial quotient strategies…\"), working through the first two together and the rest in pairs."
+      },
+      {
+       "minutes": "15–40",
+       "activity": "Let Us Learn to Divide, p.125 (\"Complete scaffolded partial-quotient frames for 726÷4 and 902÷16; verify using N=D×Q+R…\"): children complete the two frames, then use multiplication to check: does 4×181+remainder = 726? Does 16×56+remainder = 902? Teacher asks: 'How do you know your remainder is correct and not too big?' Bring out that the remainder must always be less than the divisor."
+      }
+     ],
+     "teacher_notes": "The partial quotient method builds on the splitting strategy introduced in the mental strategies section: both decompose the dividend into manageable chunks. A common error is stopping subtraction too early and leaving a remainder larger than the divisor; stress the check R < D throughout. Susie's Farm in Kerala Q1 (p.124) extends the concept into word problems and method comparison; it is set for homework so children can rehearse the algorithm before tackling word-problem applications.",
+     "materials": [
+      "Blackboard and chalk",
+      "Partial-quotient frame worksheets or hand-drawn scaffold frames"
+     ]
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S4"
+     ],
+     "section_titles": [
+      "Long division using partial quotients and remainder"
+     ],
+     "activity_title": "Word problems on the coconut farm: applying partial quotients",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-14",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S4",
+       "book_ref": "Let Us Solve Q1–5, p.126",
+       "description": "Word problems: oil from 4376 coconuts (4376÷8); theatre samosa packs; buses for 342 students; Sofia's note combinations; picnic cost split; check N=D×Q+R for six division problems (a–f)."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Open with a quick oral check: teacher says a product (e.g. 4×181+2) and children state the dividend. This activates the N=D×Q+R relationship before moving to word problems."
+      },
+      {
+       "minutes": "8–35",
+       "activity": "Let Us Solve Q1–5, p.126 (\"Word problems: oil from 4376 coconuts; theatre samosa packs; buses for 342 students…; check N=D×Q+R for six problems a–f\"): children read each problem, identify dividend and divisor, choose a partial quotient approach, compute, and verify with N=D×Q+R. Work individually; pairs cross-check. Teacher focuses discussion on the bus and samosa problems where the remainder changes the real-world answer (need one extra bus; packs left over)."
+      },
+      {
+       "minutes": "35–40",
+       "activity": "Brief whole-class share: one volunteer states the answer to the buses problem and explains how the remainder affected the number of buses needed. Teacher reinforces the idea that a remainder in a real problem changes the conclusion, not just the arithmetic."
+      }
+     ],
+     "teacher_notes": "The coconut farm and transport word problems bring out that remainders have meaning beyond arithmetic — an extra bus must be hired, not ignored. A common error is dropping the remainder entirely when answering the real-world question; prompt children to ask 'What does the remainder represent here?' before writing their final answer. The six N=D×Q+R checks at the end of Let Us Solve offer structured verification practice that consolidates the partial quotient section before the standard algorithm is introduced.",
+     "materials": [
+      "Blackboard and chalk",
+      "Textbook (p.126)"
+     ]
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S5"
+     ],
+     "section_titles": [
+      "Division using place value (standard algorithm)"
+     ],
+     "activity_title": "Distributing Hundreds, Tens, Ones: the place-value algorithm",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-15",
+       "intent": "practice",
+       "method": "Inductive",
+       "section_ref": "S5",
+       "book_ref": "Let Us Divide (a–d), p.130–131",
+       "description": "Complete four division problems (7032÷6, 3005÷5, 2874÷14, 9805÷32) using both partial quotient scaffold and place-value (Th–H–T–O) algorithm side by side."
+      },
+      {
+       "id": "T-16",
+       "intent": "reason",
+       "method": "Inquiry",
+       "section_ref": "S5",
+       "book_ref": "Let Us Do Q1, p.131",
+       "description": "Find missing divisors or dividends in 10 scaffolded division frames so there is no remainder; solve riddle: 3-digit number ÷5=42 and ×2=420."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–18",
+       "activity": "Teacher demonstrates 324÷3 using a Th–H–T–O column layout: 3H÷3=1H (write 1 in H column), 2T÷3 — not enough, regroup 2T as 20O + 4O = 24O; 24÷3=8 (write 8 in O column). Quotient: 108. Repeat with 136÷6 to show a zero quotient digit. Children then attempt Let Us Divide (a–d), p.130–131 (\"Complete four division problems…using both partial quotient scaffold and place-value algorithm side by side\"), completing the Th–H–T–O layout alongside the partial quotient scaffold for each."
+      },
+      {
+       "minutes": "18–40",
+       "activity": "Let Us Do Q1, p.131 (\"Find missing divisors or dividends in 10 scaffolded frames…; solve riddle: 3-digit number ÷5=42 and ×2=420\"): children use the inverse relationship (N=D×Q when R=0) to work backwards and find missing values. The riddle at the end asks them to identify a number satisfying two conditions simultaneously — encourage a pair-discussion before writing."
+      }
+     ],
+     "teacher_notes": "The side-by-side comparison of partial quotients and the place-value algorithm is the structural heart of this unit; children should see that both methods distribute the same dividend and reach the same quotient. The most common error is failing to write a zero when a place-value digit cannot be divided — for example getting 72 instead of 702 for 7032÷6; make the zero placeholder explicit in the Th–H–T–O grid. The riddle in Let Us Do Q1 is a strong reasoning extension: discuss it whole-class if time allows.",
+     "materials": [
+      "Blackboard and chalk",
+      "Th–H–T–O grid worksheets or drawn columns on paper"
+     ]
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S5"
+     ],
+     "section_titles": [
+      "Division using place value (standard algorithm)"
+     ],
+     "activity_title": "Multi-step word problems and extended practice",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-17",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S5",
+       "book_ref": "Let Us Solve Q1–8, p.132–133",
+       "description": "Word problems: theatre shows for 475 people; ice cream per friend; biscuits per person per day; six division problems with remainder check; pattern sets A/B/C; cycle rally distance; identify missing information in 4 problems; bookshelf resource constraint problem."
+      },
+      {
+       "id": "T-18",
+       "intent": "solve",
+       "method": "Problem-solving",
+       "section_ref": "S5",
+       "book_ref": "Vegetable Market table, p.134",
+       "description": "Complete Munshi Lal's erased record book: find missing total amounts, quantities, and cost per kg for 4 vegetables using multiplication and division."
+      }
+     ],
+     "homework": [
+      {
+       "id": "T-19",
+       "intent": "practice",
+       "method": "Problem-solving",
+       "section_ref": "S5",
+       "book_ref": "Let Us Solve Q1–12, p.134",
+       "description": "Divide 12 problems (506÷5, 918÷8, 8126÷7, 9324÷4, 876÷6, 7008÷3, 934÷12, 829÷23, 705÷18, 8704÷32, 6790÷45, 5074÷21) using place value; identify remainder; check N=D×Q+R."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–25",
+       "activity": "Let Us Solve Q1–8, p.132–133 (\"Word problems: theatre shows, ice cream, biscuits, cycle rally, missing information, bookshelf constraint…\"): children work through the problems individually, writing a division sentence before computing. Teacher pauses the class at the missing-information problems: 'What do you need to know before you can divide? Is it written in the problem?' Groups identify what is absent. The bookshelf problem requires multiple divisions; pairs compare which resource runs out first."
+      },
+      {
+       "minutes": "25–40",
+       "activity": "Vegetable Market table, p.134 (\"Complete Munshi Lal's erased record book…find missing totals, quantities, and cost per kg for 4 vegetables\"): children use both multiplication and division to fill the erased cells, treating each row as a related-fact family. Teacher models the first vegetable row together, then children complete the remaining three independently."
+      }
+     ],
+     "teacher_notes": "The missing-information problems in Let Us Solve Q1–8 develop a habit of reading problems critically before computing — a skill that reaches beyond division. A common error on the Vegetable Market table is assuming that a missing total is always found by multiplication; some rows require division to find a quantity, and the direction of reasoning changes depending on which cell is erased. Let Us Solve Q1–12 (p.134) is substantial procedural practice best set for home consolidation.",
+     "materials": [
+      "Blackboard and chalk",
+      "Textbook (p.132–134)"
+     ]
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 40,
+     "section_refs": [
+      "S6"
+     ],
+     "section_titles": [
+      "Mathematical statements and reasoning about operations"
+     ],
+     "activity_title": "Always, Sometimes, Never: reasoning about operation rules",
+     "synthesis": false,
+     "tasks_in_class": [
+      {
+       "id": "T-20",
+       "intent": "reason",
+       "method": "Inductive",
+       "section_ref": "S6",
+       "book_ref": "Mathematical Statements Q1, p.135",
+       "description": "Determine True or False for 5 equations: 8×9=70+2; 20−6=7×3; 48÷3=4×4; 89−9=90+0; 25+10=45−10."
+      },
+      {
+       "id": "T-21",
+       "intent": "reason",
+       "method": "Problem-solving",
+       "section_ref": "S6",
+       "book_ref": "Mathematical Statements Q2, p.135",
+       "description": "Complete 4 statements to make them true: 7×6=___+17; 87+6=___×31; 63+___=74−4; ___÷9=16÷2."
+      },
+      {
+       "id": "T-22",
+       "intent": "reason",
+       "method": "Inductive",
+       "section_ref": "S6",
+       "book_ref": "Mathematical Statements Q3, p.135",
+       "description": "Find 5 examples for 'odd+odd=even'; find examples or counterexamples for '×2 gives odd'; give 3 examples and 3 counterexamples for 'halving always gives even'."
+      },
+      {
+       "id": "T-23",
+       "intent": "reason",
+       "method": "Inquiry",
+       "section_ref": "S6",
+       "book_ref": "Mathematical Statements Q4, p.135",
+       "description": "Tick Always/Sometimes/Never for 5 statements about adding 10, subtraction order, doubling-halving in multiplication, odd×n=even, and multiplying by 5."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Mathematical Statements Q1, p.135 (\"Determine True or False for 5 equations: 8×9=70+2; 20−6=7×3; 48÷3=4×4; 89−9=90+0; 25+10=45−10\"): children evaluate each equation independently, then share with a partner. Whole-class check: teacher reads each; children show thumbs up/down. Discuss why 48÷3=4×4 is true by computing both sides."
+      },
+      {
+       "minutes": "10–20",
+       "activity": "Mathematical Statements Q2, p.135 (\"Complete 4 statements to make them true: 7×6=___+17; 87+6=___×31; 63+___=74−4; ___÷9=16÷2\"): children compute the known side first, then work backwards to find the missing value. Teacher targets the last statement: ___÷9=16÷2 requires computing 16÷2=8 first and then reasoning that ___=8×9=72."
+      },
+      {
+       "minutes": "20–32",
+       "activity": "Mathematical Statements Q3, p.135 (\"Find 5 examples for 'odd+odd=even'; find examples or counterexamples for '×2 gives odd'; give 3 examples and 3 counterexamples for 'halving always gives even'\"): children work in pairs, generating their own number examples. The multiplication-by-2 claim never yields an odd number — children should conclude 'never true' by trying several cases. Halving: children find that odd numbers give non-whole results, prompting discussion about what 'halving' means for odd numbers."
+      },
+      {
+       "minutes": "32–40",
+       "activity": "Mathematical Statements Q4, p.135 (\"Tick Always/Sometimes/Never for 5 statements about adding 10, subtraction order, doubling-halving, odd×n, multiplying by 5\"): children decide for each statement, then pairs compare. Whole-class close: teacher takes one contested statement and asks volunteers to argue both sides using examples and counterexamples."
+      }
+     ],
+     "teacher_notes": "This unit shifts from computation to generalisation, asking children to treat arithmetic statements as claims to be tested rather than procedures to execute. A common error is marking a statement 'Always true' after finding just one confirming example — counter with 'Can you find a case where it fails?' to build the habit of looking for counterexamples. Mathematical Statements Q3's halving task is particularly rich: children who try to halve an odd number encounter a non-integer and need to articulate why the statement is only 'sometimes true.'",
+     "materials": [
+      "Blackboard and chalk",
+      "Textbook (p.135)",
+      "Slips of paper for generating own number examples"
+     ]
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 40,
+   "count": 8
+  },
+  "coverage_handoff": {
+   "explore": {
+    "tasks": [
+     {
+      "task_id": "T-13",
+      "intent": "explore",
+      "section_ref": "S4",
+      "book_ref": "Let Us Learn to Divide, p.125",
+      "description": "Complete scaffolded partial-quotient frames for 726÷4 and 902÷16; verify using N=D×Q+R and check whether 726=4×181 and 902=16×56."
+     }
+    ]
+   },
+   "reason": {
+    "tasks": [
+     {
+      "task_id": "T-2",
+      "intent": "reason",
+      "section_ref": "S1",
+      "book_ref": "Let Us Play, p.120",
+      "description": "Identify numbers to fill circles so that square values are the products or quotients of the circle numbers in a multiplication-division web."
+     },
+     {
+      "task_id": "T-4",
+      "intent": "reason",
+      "section_ref": "S2",
+      "book_ref": "Let Us Do Q2, p.121",
+      "description": "Solve 18 division problems arranged in scaling patterns; fill two place value (H–T–O) charts and discuss what happens to quotients in each case."
+     },
+     {
+      "task_id": "T-7",
+      "intent": "reason",
+      "section_ref": "S2",
+      "book_ref": "Let Us Do Q3, p.122",
+      "description": "₹5500 distributed equally among 5 employees; what if distributed among 10? Will each get more or less? How much would be needed to give all the same amount?"
+     },
+     {
+      "task_id": "T-8",
+      "intent": "reason",
+      "section_ref": "S2",
+      "book_ref": "Let Us Do Q4, p.122",
+      "description": "Place numbers 1–8 in boxes so all four operations (÷, ×, +, −) are correct with no repetition."
+     },
+     {
+      "task_id": "T-16",
+      "intent": "reason",
+      "section_ref": "S5",
+      "book_ref": "Let Us Do Q1, p.131",
+      "description": "Find missing divisors or dividends in 10 scaffolded division frames so there is no remainder; solve riddle: 3-digit number ÷5=42 and ×2=420."
+     },
+     {
+      "task_id": "T-22",
+      "intent": "reason",
+      "section_ref": "S6",
+      "book_ref": "Mathematical Statements Q3, p.135",
+      "description": "Find 5 examples for 'odd+odd=even'; find examples or counterexamples for '×2 gives odd'; give 3 examples and 3 counterexamples for 'halving always gives even'."
+     },
+     {
+      "task_id": "T-23",
+      "intent": "reason",
+      "section_ref": "S6",
+      "book_ref": "Mathematical Statements Q4, p.135",
+      "description": "Tick Always/Sometimes/Never for 5 statements about adding 10, subtraction order, doubling-halving in multiplication, odd×n=even, and multiplying by 5."
+     }
+    ]
+   },
+   "practice": {
+    "tasks": [
+     {
+      "task_id": "T-3",
+      "intent": "practice",
+      "section_ref": "S1",
+      "book_ref": "Let Us Do Q1, p.120",
+      "description": "Solve four multiplication problems (30×30, 400×8, 15×60, 200×16) and write two division statements for each."
+     },
+     {
+      "task_id": "T-9",
+      "intent": "practice",
+      "section_ref": "S2",
+      "book_ref": "Let Us Do Q5, p.122",
+      "description": "Fill in 8 blanks (a–h) using the relationship N=D×Q (e.g. ___÷18=100, 870÷___=87)."
+     },
+     {
+      "task_id": "T-15",
+      "intent": "practice",
+      "section_ref": "S5",
+      "book_ref": "Let Us Divide (a–d), p.130–131",
+      "description": "Complete four division problems (7032÷6, 3005÷5, 2874÷14, 9805÷32) using both partial quotient scaffold and place-value (Th–H–T–O) algorithm side by side."
+     }
+    ]
+   },
+   "solve": {
+    "tasks": [
+     {
+      "task_id": "T-10",
+      "intent": "solve",
+      "section_ref": "S3",
+      "book_ref": "Try It! Q1–6, p.123",
+      "description": "Apply splitting and/or repeated halving strategies to solve: 64÷4, 265÷5, 1560÷8, 4824÷24, 168÷8, 144÷4 using scaffolded diagram frames."
+     },
+     {
+      "task_id": "T-11",
+      "intent": "solve",
+      "section_ref": "S4",
+      "book_ref": "Let Us Solve (a–h), p.124",
+      "description": "Solve eight division problems using partial quotient strategies: 256÷4, 545÷5, 147÷7, 1212÷6, 648÷12, 9648÷48, 775÷25, 796÷4."
+     },
+     {
+      "task_id": "T-14",
+      "intent": "solve",
+      "section_ref": "S4",
+      "book_ref": "Let Us Solve Q1–5, p.126",
+      "description": "Word problems: oil from 4376 coconuts (4376÷8); theatre samosa packs; buses for 342 students; Sofia's note combinations; picnic cost split; check N=D×Q+R for six division problems (a–f)."
+     },
+     {
+      "task_id": "T-17",
+      "intent": "solve",
+      "section_ref": "S5",
+      "book_ref": "Let Us Solve Q1–8, p.132–133",
+      "description": "Word problems: theatre shows for 475 people; ice cream per friend; biscuits per person per day; six division problems with remainder check; pattern sets A/B/C; cycle rally distance; identify missing information in 4 problems; bookshelf resource constraint problem."
+     },
+     {
+      "task_id": "T-18",
+      "intent": "solve",
+      "section_ref": "S5",
+      "book_ref": "Vegetable Market table, p.134",
+      "description": "Complete Munshi Lal's erased record book: find missing total amounts, quantities, and cost per kg for 4 vegetables using multiplication and division."
+     }
+    ]
+   }
+  },
+  "assessment_items": [
+   {
+    "section_code": "A",
+    "section_title": "Explore",
+    "items": [
+     {
+      "id": "Q-A-1",
+      "intent": "explore",
+      "section_ref": "S4",
+      "section_title": "Long division using partial quotients and remainder",
+      "question_type": "SCR",
+      "prompt": "Divide 856 by 4 using the partial quotient method. Show your steps by subtracting multiples of 4 from 856. Then check your answer by writing the multiplication statement using N = D × Q + R.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "856 ÷ 4 = 214 with remainder 0. One valid set of steps: subtract 4×200=800 (remainder 56), then 4×14=56 (remainder 0); partial quotients sum to 214. Check: 4×214+0=856.",
+       "method_one_line": "Subtract multiples of the divisor in steps, add the partial quotients, and verify with N=D×Q+R.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Struggling learners may start with smaller multiples (4×10 at a time); early finishers can try 1248÷6 using the same method."
+      },
+      "exercise": {
+       "book_ref": "Let Us Learn to Divide, p.125",
+       "description": "Complete scaffolded partial-quotient frames for 726÷4 and 902÷16; verify using N=D×Q+R and check whether 726=4×181 and 902=16×56."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "B",
+    "section_title": "Reason",
+    "items": [
+     {
+      "id": "Q-B-1",
+      "intent": "reason",
+      "section_ref": "S1",
+      "section_title": "Division facts and multiplication–division relationship",
+      "question_type": "SCR",
+      "prompt": "A multiplication fact gives the product 48. One of the factors is 6. Write the multiplication fact and the two division facts that come from it.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "6×8=48; 48÷6=8; 48÷8=6.",
+       "method_one_line": "A multiplication fact N=D×Q gives two division facts: N÷D=Q and N÷Q=D.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Struggling learners can draw a 6×8 array to count the total; early finishers write a second multiplication fact that gives 48 (e.g. 2×24) and its two division facts."
+      },
+      "exercise": {
+       "book_ref": "Let Us Play, p.120",
+       "description": "Identify numbers to fill circles so that square values are the products or quotients of the circle numbers in a multiplication-division web."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-2",
+      "intent": "reason",
+      "section_ref": "S2",
+      "section_title": "Patterns in division and place value",
+      "question_type": "MCQ",
+      "prompt": "Look at the pattern: 240÷3=80 and 2400÷3=800. What is the value of 24000÷3?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "8",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "800",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "8000",
+        "is_correct": true
+       },
+       {
+        "label": "D",
+        "text": "80000",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "8000",
+       "method_one_line": "Each time the dividend is multiplied by 10, the quotient is also multiplied by 10, shifting its digits one column to the left in the place value chart.",
+       "what_each_option_reveals": {
+        "B": "The student did not apply the ×10 scaling and repeated the previous quotient.",
+        "D": "The student applied the scaling one extra step, multiplying by 10 twice instead of once.",
+        "A": "The student moved the digit in the wrong direction, dividing the quotient instead of multiplying."
+       },
+       "inclusivity": "Struggling learners can fill a H–T–O chart for each step; early finishers write the next two terms of the pattern (240000÷3 and 2400000÷3)."
+      },
+      "exercise": {
+       "book_ref": "Let Us Do Q2, p.121",
+       "description": "Solve 18 division problems arranged in scaling patterns; fill two place value (H–T–O) charts and discuss what happens to quotients in each case."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-3",
+      "intent": "reason",
+      "section_ref": "S2",
+      "section_title": "Patterns in division and place value",
+      "question_type": "SCR",
+      "prompt": "₹6000 is shared equally among 6 workers. Then the same amount is shared among 12 workers. Will each worker in the second group get more or less? Write both amounts and explain why.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "6000÷6=1000; 6000÷12=500. Each worker in the second group gets ₹500, which is less. When more people share the same total, each person's share decreases.",
+       "method_one_line": "Divide the same total by each divisor; the larger the divisor, the smaller the quotient.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Struggling learners can draw 6 boxes and 12 boxes and distribute counters; early finishers find how much total money is needed so that 12 workers each get ₹1000."
+      },
+      "exercise": {
+       "book_ref": "Let Us Do Q3, p.122",
+       "description": "₹5500 distributed equally among 5 employees; what if distributed among 10? Will each get more or less? How much would be needed to give all the same amount?"
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-4",
+      "intent": "reason",
+      "section_ref": "S2",
+      "section_title": "Patterns in division and place value",
+      "question_type": "SCR",
+      "prompt": "Rani writes a pattern:\n6,000 ÷ 6 = 1,000\n6,000 ÷ 60 = 100\n6,000 ÷ 600 = 10\nWrite the next line of Rani's pattern. Then explain in one sentence what happens to the answer each time the divisor becomes ten times bigger.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "The next line is 6,000 ÷ 6,000 = 1. Each time the divisor is multiplied by 10, the answer is divided by 10 — so the quotient goes 1,000, 100, 10, 1. A child may say this as 'the answer loses a zero each time', which is the same observation in place-value language and should be accepted; press once for WHY, so the reasoning is about the divisor growing rather than about zeros disappearing.",
+       "method_one_line": "Read down the divisors: each is ten times the one above, so each answer is one tenth of the one above.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Support: write the three quotients in a column (1,000 · 100 · 10) so the child sees the pattern in the answers before writing the fourth line; stretch: ask what the line AFTER that would be, and why 6,000 ÷ 60,000 does not give a whole number."
+      },
+      "exercise": {
+       "book_ref": "Let Us Do Q4, p.122",
+       "description": "Place numbers 1–8 in boxes so all four operations (÷, ×, +, −) are correct with no repetition."
+      },
+      "verified": false
+     },
+     {
+      "id": "Q-B-5",
+      "intent": "reason",
+      "section_ref": "S5",
+      "section_title": "Division using place value (standard algorithm)",
+      "question_type": "SCR",
+      "prompt": "A number divided by 8 gives a quotient of 115 with no remainder. What is the number? Show how you found it.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "920. Since N=D×Q+R and R=0, the number is 8×115=920.",
+       "method_one_line": "Use the inverse relationship N=D×Q when there is no remainder.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Struggling learners can use the partial quotient method in reverse (8×100=800, 8×15=120, 800+120=920); early finishers find a 4-digit number that gives quotient 115 when divided by a different single-digit divisor."
+      },
+      "exercise": {
+       "book_ref": "Let Us Do Q1, p.131",
+       "description": "Find missing divisors or dividends in 10 scaffolded division frames so there is no remainder; solve riddle: 3-digit number ÷5=42 and ×2=420."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-6",
+      "intent": "reason",
+      "section_ref": "S6",
+      "section_title": "Mathematical statements and reasoning about operations",
+      "question_type": "SCR",
+      "prompt": "A student says: 'Multiplying any number by 2 always gives an even number.' Give three examples to support this claim, and then explain whether it is always, sometimes, or never true.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Examples: 3×2=6, 7×2=14, 11×2=22 — all even. The statement is always true because multiplying by 2 gives a multiple of 2, and all multiples of 2 are even.",
+       "method_one_line": "Test several cases and reason about the structure: any number × 2 is always a multiple of 2.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Struggling learners can list the first ten multiples of 2 and check; early finishers investigate whether multiplying by 4 also always gives an even number and explain why."
+      },
+      "exercise": {
+       "book_ref": "Mathematical Statements Q3, p.135",
+       "description": "Find 5 examples for 'odd+odd=even'; find examples or counterexamples for '×2 gives odd'; give 3 examples and 3 counterexamples for 'halving always gives even'."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-7",
+      "intent": "reason",
+      "section_ref": "S6",
+      "section_title": "Mathematical statements and reasoning about operations",
+      "question_type": "MCQ",
+      "prompt": "Is the statement 'multiplying a number by 5 always gives a number ending in 0 or 5' always true, sometimes true, or never true?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "Always true",
+        "is_correct": true
+       },
+       {
+        "label": "B",
+        "text": "Never true",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "Sometimes true — only for even numbers",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "Sometimes true — only for odd numbers",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "Always true. Every multiple of 5 ends in either 0 or 5.",
+       "method_one_line": "List several multiples of 5 and observe that the ones digit is always 0 or 5.",
+       "what_each_option_reveals": {
+        "B": "The student has not checked any multiples of 5 or is confusing this with a different rule.",
+        "C": "The student has noticed that even multiples of 5 end in 0, but has not checked odd multiples, which end in 5.",
+        "D": "The student has noticed that odd multiples of 5 end in 5, but has not checked even multiples, which end in 0."
+       },
+       "inclusivity": "Struggling learners can skip-count by 5 and circle the ones digit each time; early finishers investigate what ones digits appear in multiples of 4 and explain the pattern."
+      },
+      "exercise": {
+       "book_ref": "Mathematical Statements Q4, p.135",
+       "description": "Tick Always/Sometimes/Never for 5 statements about adding 10, subtraction order, doubling-halving in multiplication, odd×n=even, and multiplying by 5."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "C",
+    "section_title": "Practise",
+    "items": [
+     {
+      "id": "Q-C-1",
+      "intent": "practice",
+      "section_ref": "S1",
+      "section_title": "Division facts and multiplication–division relationship",
+      "question_type": "MCQ",
+      "prompt": "Which pair of division facts comes from the multiplication fact 9 × 7 = 63?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "9÷63=7 and 7÷63=9",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "63÷9=8 and 63÷8=9",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "63÷7=9 and 63÷9=7",
+        "is_correct": true
+       },
+       {
+        "label": "D",
+        "text": "63÷3=21 and 63÷21=3",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "63÷7=9 and 63÷9=7",
+       "method_one_line": "From N=D×Q, identify the two factor pairs (9,7) and write both division facts with 63 as the dividend.",
+       "what_each_option_reveals": {
+        "B": "The student has used an incorrect quotient (8 instead of 7), suggesting an error in recalling the multiplication fact.",
+        "D": "The student has used a different factor pair for 63 (3×21) rather than the one given in the original multiplication fact.",
+        "A": "The student has placed the product in the divisor position, reversing the dividend-divisor relationship."
+       },
+       "inclusivity": "Struggling learners can draw a 9×7 array and count to confirm the total; early finishers write a second multiplication fact for 63 and its two division facts."
+      },
+      "exercise": {
+       "book_ref": "Let Us Do Q1, p.120",
+       "description": "Solve four multiplication problems (30×30, 400×8, 15×60, 200×16) and write two division statements for each."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-2",
+      "intent": "practice",
+      "section_ref": "S2",
+      "section_title": "Patterns in division and place value",
+      "question_type": "MCQ",
+      "prompt": "Using the relationship N = D × Q, what is the missing number: ___÷ 15 = 100?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "115",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "150",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "1500",
+        "is_correct": true
+       },
+       {
+        "label": "D",
+        "text": "10000",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "1500. Since N=D×Q, the missing dividend is 15×100=1500.",
+       "method_one_line": "Use N=D×Q: multiply the divisor by the quotient to find the dividend.",
+       "what_each_option_reveals": {
+        "A": "The student added the divisor and quotient instead of multiplying.",
+        "B": "The student multiplied 15×10 instead of 15×100, suggesting a place value error.",
+        "D": "The student multiplied 100×100, ignoring the divisor altogether."
+       },
+       "inclusivity": "Struggling learners can write 15×___=___ and fill the quotient side first; early finishers create two more missing-number statements of their own using the same relationship."
+      },
+      "exercise": {
+       "book_ref": "Let Us Do Q5, p.122",
+       "description": "Fill in 8 blanks (a–h) using the relationship N=D×Q (e.g. ___÷18=100, 870÷___=87)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-3",
+      "intent": "practice",
+      "section_ref": "S5",
+      "section_title": "Division using place value (standard algorithm)",
+      "question_type": "NUM",
+      "prompt": "Divide 3005 by 5 using the place value method. Write the quotient and remainder.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Quotient 601, remainder 0. Place value working: 3÷5 — not enough hundreds, regroup; 30÷5=6 (hundreds give 6 in hundreds place); 0÷5=0 (write 0 in tens place); 5÷5=1 (ones place). Final: 601 remainder 0. Check: 5×601=3005.",
+       "method_one_line": "Distribute thousands, hundreds, tens, ones in turn, regrouping where needed and writing 0 in the quotient where a digit cannot be divided.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Struggling learners can use the partial quotient method first (5×600=3000, 5×1=5) and then match to the place value layout; early finishers verify with N=D×Q+R and then try 3005÷7."
+      },
+      "exercise": {
+       "book_ref": "Let Us Divide (a–d), p.130–131",
+       "description": "Complete four division problems (7032÷6, 3005÷5, 2874÷14, 9805÷32) using both partial quotient scaffold and place-value (Th–H–T–O) algorithm side by side."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "D",
+    "section_title": "Solve",
+    "items": [
+     {
+      "id": "Q-D-1",
+      "intent": "solve",
+      "section_ref": "S3",
+      "section_title": "Mental strategies for division",
+      "question_type": "NUM",
+      "prompt": "Use the splitting strategy to find 1680 ÷ 8. Show how you split the dividend.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "210. Split: 1600÷8=200 and 80÷8=10; 200+10=210.",
+       "method_one_line": "Split the dividend into two parts that are each easy to divide by 8, then add the two quotients.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Struggling learners can use the repeated halving method (1680÷2=840, 840÷2=420, 420÷2=210) as an alternative; early finishers use a subtraction split instead (1600+80 vs 2000−320)."
+      },
+      "exercise": {
+       "book_ref": "Try It! Q1–6, p.123",
+       "description": "Apply splitting and/or repeated halving strategies to solve: 64÷4, 265÷5, 1560÷8, 4824÷24, 168÷8, 144÷4 using scaffolded diagram frames."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-D-2",
+      "intent": "solve",
+      "section_ref": "S4",
+      "section_title": "Long division using partial quotients and remainder",
+      "question_type": "NUM",
+      "prompt": "A school has 648 books to be packed equally into boxes of 12. How many boxes are needed? How many books are left over?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "54 boxes, 0 books left over. 648÷12=54 with remainder 0. Partial quotient check: 12×50=600, remainder 48; 12×4=48, remainder 0; total quotient 54. Check: 12×54=648.",
+       "method_one_line": "Apply partial quotient division: subtract multiples of 12 from 648 in convenient steps and sum the partial quotients.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Struggling learners can start with smaller multiples (12×10 at a time); early finishers find how many boxes of 15 would be needed for the same 648 books and compare the remainder."
+      },
+      "exercise": {
+       "book_ref": "Let Us Solve (a–h), p.124",
+       "description": "Solve eight division problems using partial quotient strategies: 256÷4, 545÷5, 147÷7, 1212÷6, 648÷12, 9648÷48, 775÷25, 796÷4."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-D-3",
+      "intent": "solve",
+      "section_ref": "S4",
+      "section_title": "Long division using partial quotients and remainder",
+      "question_type": "NUM",
+      "prompt": "A farmer collects 4376 coconuts. Each coconut gives 8 ml of oil. Wait — the problem is the other way: 4376 ml of oil comes from a batch of coconuts, with 8 ml per coconut. How many coconuts were in the batch?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "547 coconuts. 4376÷8=547 with remainder 0. Partial quotient: 8×500=4000, remainder 376; 8×47=376, remainder 0; total 547. Check: 8×547=4376.",
+       "method_one_line": "Divide the total by the amount per coconut using partial quotients; verify with N=D×Q+R.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Struggling learners can start with 8×400=3200 and work from the remaining 1176; early finishers check their answer by computing 8×547 and confirm it equals 4376."
+      },
+      "exercise": {
+       "book_ref": "Let Us Solve Q1–5, p.126",
+       "description": "Word problems: oil from 4376 coconuts (4376÷8); theatre samosa packs; buses for 342 students; Sofia's note combinations; picnic cost split; check N=D×Q+R for six division problems (a–f)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-D-4",
+      "intent": "solve",
+      "section_ref": "S5",
+      "section_title": "Division using place value (standard algorithm)",
+      "question_type": "NUM",
+      "prompt": "A theatre has 475 chairs arranged in equal rows. If there are 19 rows, how many chairs are in each row? How many chairs are left without a row?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "25 chairs per row, 0 left over. 475÷19=25 remainder 0. Place value working: 47÷19: 19×2=38, 19×3=57 (too large), so 2; remainder 47−38=9; bring down 5 to give 95; 95÷19=5 exactly. Quotient 25, remainder 0. Check: 19×25=475.",
+       "method_one_line": "Apply the place value algorithm: trial-divide the leading digits by the divisor at each step, bring down the next digit, and repeat.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Struggling learners can use the partial quotient approach (19×20=380, remainder 95; 19×5=95) before moving to the place value layout; early finishers change the number of rows to 25 and find the new remainder."
+      },
+      "exercise": {
+       "book_ref": "Let Us Solve Q1–8, p.132–133",
+       "description": "Word problems: theatre shows for 475 people; ice cream per friend; biscuits per person per day; six division problems with remainder check; pattern sets A/B/C; cycle rally distance; identify missing information in 4 problems; bookshelf resource constraint problem."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-D-5",
+      "intent": "solve",
+      "section_ref": "S5",
+      "section_title": "Division using place value (standard algorithm)",
+      "question_type": "NUM",
+      "prompt": "Munshi Lal's record shows that he sold tomatoes at ₹18 per kg and collected ₹1620 in total. How many kilograms of tomatoes did he sell?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "90 kg. 1620÷18=90 with remainder 0. Place value: 162÷18=9 (write 9 in tens place); 0÷18=0 (write 0 in ones place). Quotient 90. Check: 18×90=1620.",
+       "method_one_line": "Divide the total amount by the price per kilogram using the place value algorithm.",
+       "what_each_option_reveals": {},
+       "inclusivity": "Struggling learners can use partial quotients (18×50=900, 18×40=720, 900+720=1620) to check; early finishers find the total if the price changes to ₹20 per kg and the quantity stays 90 kg."
+      },
+      "exercise": {
+       "book_ref": "Vegetable Market table, p.134",
+       "description": "Complete Munshi Lal's erased record book: find missing total amounts, quantities, and cost per kg for 4 vegetables using multiplication and division."
+      },
+      "verified": true
+     }
+    ]
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

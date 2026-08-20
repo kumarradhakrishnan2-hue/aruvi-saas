@@ -1,305 +1,665 @@
-ARUVI — CLOSING SYNTHESIS RE-AUTHORING · SCIENCE · MIDDLE STAGE
+ARUVI — CLOSING SYNTHESIS RE-AUTHORING · MATHEMATICS · MIDDLE STAGE
 
 You are re-writing ONE unit: the closing whole-chapter synthesis of a chapter's fullest
-lesson plan. This unit is served in two situations, and it must be excellent in both:
+lesson plan. It is served in two situations and must be excellent in both:
 
 1. As the FINAL unit of the fullest plan — the class finishes the chapter with it.
 2. As ONE EXTRA 45-minute period appended to a SHORTER complete plan of the same
-   chapter, whose own final unit (given below) already consolidated the chapter
+   chapter, whose own final unit (given below) already drew the chapter together
    yesterday.
 
-THE UNIT YOU ARE WRITING closes the chapter through one fresh, concrete application: a
-scenario, artefact, dataset, place or design problem the chapter itself never uses. The
-class brings the chapter's concepts; the unit puts them to work in the new setting, and
-what the task shows IS the synthesis — the chapter drawn together by using it whole, not
-by summarising it.
+THE UNIT YOU ARE WRITING closes the chapter by putting its methods to work on a small set
+of problems the teacher poses. Solving them IS the synthesis: the chapter is drawn
+together by being used, not by being recited.
 
 PROPERTIES OF THE UNIT:
-- It opens directly onto its fresh setting: the first band presents the new material and
-  puts the first question to the class.
-- Every concept or skill it calls on appears in EVERY unit-title map given below — the
-  shorter plans differ in what they cover; write only to what all of them share.
-- Its vehicle (the kind of task: scenario cards, argument construction, data table,
-  concept map, design brief, error correction, narrative trace…) is different in kind
-  from every FINAL UNIT given below, and it uses none of the specific stories, quotes,
-  objects, questions or catchphrases those final units use.
-- Its closing band consolidates what THE TASK ITSELF showed, naming the chapter's central
-  ideas as the reason the task worked — earned closure, not ceremony.
-- All materials are in its own `materials` list: things any classroom has or the unit
-  itself makes.
-- Band narration never states a quantity of minutes or any calendar time — the band's
-  `minutes` field carries the clock.
+- It carries TWO TO FOUR problems, each reaching for a DIFFERENT major method of the
+  chapter, and together spanning its main strands. Each problem is stated in full, with
+  its numbers, inside the band that poses it — a teacher reads the band aloud and the
+  class can start.
+- The problems are the TEACHER'S OWN, written for this unit and posed on the board. The
+  mathematics in each is the chapter's, and nothing is invented or imported.
+- THE PROBLEMS AND THEIR SOLUTIONS LIVE IN ONE TABLE, in `visual_aids` — three columns,
+  `No. | Problem | Solution`, one row per problem. The Problem cell states the problem in
+  one or two plain sentences with its numbers. The Solution cell gives the answer and the
+  few steps that reach it, in plain words and figures — brief enough for a teacher to read
+  at a glance while the class works, and no longer than the problem it answers. This table
+  is the teacher's whole worked reference.
+- EACH PROBLEM IS WELL-POSED AND SELF-CONSISTENT. It states everything needed to solve it,
+  its data agree with each other and with the solution beside it, and it has one answer.
+  Where a count is named ("the four corner cells", "the six expressions you can form"),
+  that count is the number the problem's own conditions produce. Where a figure carries
+  measurements, they can all hold at once. Where a construction is described, the described
+  construction is the one the solution works on.
+- THE SOLUTION CELL IS THE SETTLED ANSWER. Work each problem out fully first; then write
+  only the route that reaches the answer and the answer itself. Trials that failed,
+  possibilities considered and rejected, re-checks and corrections belong to the working,
+  not to the page a teacher reads at the board. Every step written is a step that holds:
+  a justification names the fact it rests on, and never assumes what it is proving.
+- `teacher_notes` is SHORT — a few sentences at most. It says how the sitting is run and
+  what to watch for as students work; the mathematics is in the table, and is not repeated
+  here. Name, for each problem, only the chapter method it needs — the method its own
+  solution actually uses — and warn only about errors that problem can produce.
+- Its `textbook_items_in_class` and `homework` are both `[]`, and its band text names no
+  page, no exercise and no book item. The class works from the board.
+- Its shape gives every student a full attempt before any answer is public: the problems
+  are posed, worked individually with full working, compared in small groups where a
+  disagreement is reconstructed step by step, and then presented — and each presentation
+  is followed by the class NAMING the chapter method the solution rested on.
+- The closing band states the chapter's one idea in a sentence, as the reason the problems
+  yielded — earned closure, not ceremony.
+- It is ONE sitting and weighs the same as any other: 45 minutes, a handful of
+  bands, materials any classroom has. Depth here is the demand of the problems, never the
+  quantity of material.
+- Every method it calls on appears in EVERY unit-title map given below — the shorter plans
+  differ in what they reach, so write only to what all of them share, and treat the
+  SHORTEST map as binding.
+- Its vehicle differs in kind from every FINAL UNIT given below, and it reuses none of
+  their specific contexts, objects, puzzles or framing questions.
+- Band narration never states a quantity of minutes and never points beyond this sitting —
+  the band's `minutes` field carries the clock.
 
 OUTPUT — exactly this JSON object, nothing else:
 {
   "synthesis_unit": {
     "activity_title": "…",
-    "activity_description": "…",
-    "pedagogical_approach": "…",
-    "teacher_notes": "…",
+    "pedagogical_method": "one of: Discovery · Problem-solving · Play-way · Inductive ·
+      Deductive — the method this unit runs on",
+    "section_goal": "recall | reason | apply — the goal this unit works at",
+    "teacher_notes": "a few sentences: how the sitting runs, what to watch for, and the
+      chapter method each problem needs — NOT the solutions, which are in the table",
+    "visual_aids": [
+      {"type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | … | …\n2 | … | …"}
+    ],
     "materials": ["…"],
     "time_bands": [
       {"minutes": "0-N", "activity": "…"},
       …bands in sequence, integer boundaries, last band ends at 45…
     ],
+    "textbook_items_in_class": [],
     "homework": []
   }
 }
-No other keys — the platform carries the unit's number, stage and duration itself.
+No other keys — the platform carries the unit's number, duration, section coverage and
+synthesis marker itself.
 
 CHAPTER SUMMARY:
 
-Chapter 11: Keeping Time with the Skies
-
-11.1 How Does the Moon's Appearance Change and Why?
-
-The chapter opens with a student noticing the Moon visible during the daytime at a kite festival, which prompts inquiry into why the Moon's visible shape changes each night. The section sets up a sustained observation activity (Activity 11.1) in which students track the Moon over a full month, documenting its appearance, the size of the bright portion, and its angular separation from the Sun each day. Students are directed to begin this observation after a full Moon day and to switch from sunrise to sunset viewing midway through the cycle.
-
-11.1.1 Phases of the Moon
-
-This subsection introduces the terminology and cycle of lunar phases. Over roughly two weeks, the bright portion of the Moon decreases from a full circle to a half circle to invisibility — this is the waning period, called Krishna Paksha in India. The Moon then brightens over the next two weeks through the waxing period (Shukla Paksha), returning to a full Moon. The specific shapes encountered during the cycle are named: full Moon (Purnima), new Moon (Amavasya), gibbous (more than half illuminated), and crescent (less than half illuminated). The complete cycle from one full Moon to the next takes about one month. The key definition introduced is that the changing shapes of the bright portion of the Moon as seen from Earth are called the phases of the Moon.
-
-11.1.2 Locating the Moon
-
-This subsection explains how knowing a Moon's phase helps predict where and when to find it in the sky. On a full Moon day, the Moon is nearly opposite the Sun; as the bright portion shrinks during waning, the Moon appears progressively closer to the Sun at sunrise. A half-circle waning Moon is overhead at sunrise; a crescent waning Moon is very close to the Sun. A waxing Moon is easiest to spot at sunset, and a waning Moon at sunrise. The Moon rises about 50 minutes later each day because the Moon advances in its orbit while Earth completes one rotation, and Earth must rotate a little further for the Moon to return to the same apparent position. A student activity is noted (checking moonrise times from the Positional Astronomy Centre website over several consecutive days).
-
-11.1.3 Making sense of our observations
-
-This subsection provides the causal explanation for lunar phases. The Moon does not emit its own light but shines by reflecting sunlight; the hemisphere facing the Sun is always illuminated, while the hemisphere facing away is dark. As the Moon revolves around the Earth, the portion of the illuminated hemisphere visible to an observer on Earth changes continuously, producing the phases. Activity 11.2 models this using a ball on a stick, with a torch representing the Sun and the student's head representing the Earth: rotating with the ball outstretched, the student observes the same progression of illuminated shapes seen in the lunar cycle. The section also clarifies a common misconception — Earth's shadow on the Moon causes a lunar eclipse, not the phases. Lunar eclipses occur only on full Moon days and solar eclipses only on new Moon days, but not every month, because the Moon's orbit is slightly tilted relative to Earth's orbit around the Sun.
-
-11.2 How Did Calendars Come into Existence?
-
-This section explains how three recurring astronomical cycles gave rise to the three fundamental units of calendar time. Earth's rotation on its axis causes the Sun to appear to move across the sky daily; the average time from one solar noon to the next is 24 hours, called the mean solar day. Activity 11.3 has students measure this by tracking the shortest shadow cast by a vertical stick over several days. The Moon's phase cycle of about 29.5 days provides the basis for the month. Earth's revolution around the Sun in approximately 365.25 days, producing one cycle of seasons, defines the solar year. Fig. 11.8 illustrates these three nested cycles as the foundation of the calendar system.
-
-11.2.1 Lunar calendars
-
-Lunar calendars were developed by tracking 12 cycles of Moon phases within a season cycle. A lunar month is about 29.5 days, so a lunar year of 12 months totals approximately 354 days. The key limitation introduced is that the lunar year falls about 11 days short of the solar year, so the seasons gradually drift out of alignment with the lunar months over successive years.
-
-11.2.2 Solar calendars
-
-Solar calendars were created to keep the months synchronised with the seasons, which was important for agriculture. The Gregorian calendar, the most widely used today, is a solar calendar of 365 days, with month lengths adjusted (28, 30, or 31 days) to sum to this total. Because Earth's revolution takes approximately 365.25 days, an extra day is added every four years as a leap year (February gains a 29th day). Fine corrections are needed: century years (e.g. 1700, 1800, 1900) skip the leap year, but every 400 years (e.g. 1600, 2000) the leap year is restored, keeping the calendar accurately aligned with the seasons over long periods. The section also introduces the tropical year (time between successive spring equinoxes, the basis of the Gregorian calendar) and the sidereal year (time for the same stars to rise again at sunset, about 20 minutes longer), which astronomers use to track Earth's orbital position.
-
-11.2.3 Luni-solar calendars
-
-Luni-solar calendars use the Moon's phases to count months but add a corrective intercalary month (Adhika Maasa) every two to three years when the accumulated gap between the lunar year (354 days) and the solar year (365 days) reaches roughly a full month. This keeps the calendar broadly synchronised with the seasons while retaining lunar months as the primary unit. Many Indian regional calendars are luni-solar. The section notes two conventions within luni-solar calendars: Amant (month starts after new Moon, ends at next new Moon) and Purnimant (month starts after full Moon, ends at next full Moon). The names of the twelve Indian lunar months are listed: Chaitra, Vaisakha, Jyeshtha, Ashadha, Shravana, Bhadrapada, Ashwin, Kartika, Margashirsha, Pausha, Magha, and Phalguna. The section also includes a scientific heritage box describing how ancient Indian observers, including the Taittiriya Samhita and the Surya Siddhanta, recorded the Sun's northward (Uttarayan) and southward (Dakshinayan) movement and tracked solstices using background star patterns.
-
-11.2.4 The Indian National Calendar
-
-The Indian National Calendar is a solar calendar established by the Government of India following the recommendations of the Calendar Reform Committee (1952), chaired by astrophysicist Meghnad Saha. It has been in official use since 21 March 1956. The year begins on 22 March (the day after the spring equinox) and consists of 365 days. Months have either 30 or 31 days; the second through sixth months have 31 days and the rest have 30. In leap years (aligned with the Gregorian calendar), a day is added to Chaitra, and the new year begins on 21 March. The calendar's month names are drawn from traditional Indian calendars, and its principles follow the Surya Siddhanta.
-
-11.3 Are Festivals Related to Astronomical Phenomena?
-
-This section connects calendar systems to Indian festivals. Many festivals fall on specific lunar phases: Diwali on the new Moon of Kartika, Holi on the full Moon of Phalguna, Buddha Purnima on the full Moon of Vaisakha, Eid-ul-Fitr after sighting the crescent Moon at the end of Ramazan, and Dussehra on the tenth day of Ashwina. Because these are lunar or luni-solar dates, they fall on different Gregorian calendar dates each year. Festivals based on luni-solar calendars shift by less than a month across years (because the intercalary month corrects the drift), while purely lunar festivals like Eid can shift across different Gregorian months entirely. A small number of Indian festivals (Makar Sankranti, Pongal, Bihu, Vaisakhi) follow a solar sidereal calendar and therefore occur on nearly the same Gregorian date each year, though they slowly drift due to the difference between the sidereal and tropical years (about one day per 71 years). The Positional Astronomy Center publishes the Rashtriya Panchang annually to standardise festival dates across India's time zones.
-
-11.4 Why Do We Launch Artificial Satellites in Space?
-
-The Moon is Earth's natural satellite. Beyond it, many human-made artificial satellites orbit Earth, typically about 800 km above the surface, completing one orbit in roughly 100 minutes. They are visible as fast-moving points of light just before sunrise or after sunset. Artificial satellites serve purposes including communication, navigation, weather monitoring, disaster management, and scientific research. Activity 11.4 is a sky-watching activity directing students to spot satellites with the naked eye or binoculars, and to use mobile apps or websites for satellite pass predictions. The section highlights ISRO contributions: the Cartosat series for Earth imaging and the Bhuvan platform, AstroSat for astronomical observation, and missions Chandrayaan 1/2/3, Aditya L1, and Mangalyaan. Student-built satellites such as AzaadiSat, InspireSat-1, and Jugnu are also noted. A step-further box raises the issue of space debris — defunct satellites and rocket parts that can collide with active satellites and require international cooperation to manage.
+{
+  "stage": "middle",
+  "subject": "mathematics",
+  "grade": "viii",
+  "chapter_number": 11,
+  "chapter_title": "Exploring Some Geometric Themes",
+  "sections": [
+    { "ref": "section 4.1", "title": "Fractals", "section_goal": ["recall", "reason"] },
+    { "ref": "section 4.1.1", "title": "Sierpinski Carpet", "section_goal": ["reason"] },
+    { "ref": "section 4.1.2", "title": "Sierpinski Gasket", "section_goal": ["apply"] },
+    { "ref": "section 4.1.3", "title": "Koch Snowflake", "section_goal": ["apply"] },
+    { "ref": "section 4.1.4", "title": "Fractals in Art", "section_goal": ["recall"] },
+    { "ref": "section 4.2", "title": "Visualising Solids", "section_goal": ["apply"] },
+    { "ref": "section 4.2.1", "title": "Build it in Your Imagination", "section_goal": ["apply"] },
+    { "ref": "section 4.2.2", "title": "Making Solids", "section_goal": ["recall", "apply"] },
+    { "ref": "section 4.2.3", "title": "Shortest Paths on a Cube", "section_goal": ["reason"] },
+    { "ref": "section 4.2.4", "title": "Projections", "section_goal": ["recall", "apply"] },
+    { "ref": "section 4.2.5", "title": "Shadows", "section_goal": ["reason"] },
+    { "ref": "section 4.2.6", "title": "Isometric Projections", "section_goal": ["recall", "apply"] },
+    { "ref": "section 4.2.7", "title": "Drawing on Isometric Grids", "section_goal": ["apply"] }
+  ],
+  "prose_summary": "Section 4.1 introduces fractals and identifies them as self-similar geometric objects in which the same or similar pattern repeats at smaller and smaller scales. The section opens by recognising fractals in nature — ferns, trees, clouds, coastlines, mountains, and lightning — before proceeding to construct and reason about mathematical fractals. The introductory pages establish the concept firmly so that the three named fractals that follow can be understood both visually and analytically.\n\nSection 4.1.1 reasons about the Sierpinski Carpet by constructing it iteratively: a square is divided into nine smaller squares and the central square removed, then the procedure is repeated on the eight remaining squares. The section then derives recurrence relations — Rn+1 = 8Rn for remaining squares and Hn+1 = Hn + Rn for holes — and uses these to find the closed-form formula Rn = 8^n. Students are guided through an activity of drawing the first few steps and then analysing the pattern of holes and remaining squares using the recurrence. The section demands genuine algebraic reasoning: recognising how local rules generate global formulas and building a table to verify the pattern before generalising.\n\nSection 4.1.2 applies a parallel construction to the Sierpinski Gasket (Sierpinski Triangle): an equilateral triangle is subdivided by joining midpoints into four smaller equilateral triangles, the central one removed, and the procedure repeated. The section includes a reasoning prompt — proving that midpoint-joining divides an equilateral triangle into four identical equilateral triangles — and then extends to computing holes, remaining triangles, and areas at each step. Students draw the sequence, compute counts, and find the area of the remaining region at the nth step for both the Carpet and the Gasket.\n\nSection 4.1.3 applies the same iterative construction philosophy to the Koch Snowflake, attributing it to Swedish mathematician Von Koch (1904) and noting it was encountered in Grade 6. Each side of an equilateral triangle is divided into thirds, an equilateral triangle raised over the middle third, and the middle portion removed — effectively replacing each side with a bump. Students compute the number of sides and the perimeter at each step, practising geometric series reasoning as the perimeter grows without bound while the shape remains bounded.\n\nSection 4.1.4 recalls the presence of fractal-like patterns in human art and architecture across cultures — including the Kandariya Mahadev Temple in Khajuraho (c. 1025 CE), Nigerian Fulani wedding blankets, and the work of M.C. Escher — providing cultural and aesthetic grounding without any computation.\n\nSection 4.2 opens the second major theme by introducing the idea that seeing a solid means seeing its profile from a specific viewpoint, and that the same solid can produce very different profiles depending on the direction of viewing. This framing motivates the visualisation exercises that follow and connects everyday experience (shadows, cartoons, photographs) to mathematical structure.\n\nSection 4.2.1 applies spatial visualisation through a set of imagination-only exercises — no paper drawing allowed. Students mentally picture their name reversed, cut corners from imaginary squares and triangles, and identify the resulting shapes. They then apply this skill to solids: identifying a solid whose profile is a square, a circle, or a triangle, and imagining solids with contrasting profiles from two perpendicular viewpoints (rectangular–circular, circular–triangular, rectangular–triangular, trapezium–circular, pentagonal–rectangular).\n\nSection 4.2.2 recalls and applies the vocabulary and properties of common three-dimensional solids — cuboid, parallelepiped, cylinder, cone, prism, pyramid, tetrahedron, octahedron, and dodecahedron — including faces, edges, and vertices. It then introduces the concept of a net (the flat shape obtained by unfolding a solid) and applies it by having students identify valid nets of a cube (including the Try This task for the regular tetrahedron and square pyramid), draw nets of cuboids with specified dimensions, reason about nets of a cylinder and cone, and make physical cutouts to verify. The section also notes that a cube has exactly 11 distinct nets and an octahedron likewise, and that a dodecahedron has 43,380 nets.\n\nSection 4.2.3 reasons about the shortest path between two points on the surface of a cuboid using the key insight that a path on the cuboid surface corresponds to a path of the same length on any net, so the shortest surface path corresponds to the straight-line path on the appropriate unfolding. The section guides students through two introductory cases (ant–laddu, where one standard unfolding gives a straight line) and then a trickier case (6 × 30 × 12 cm cuboid) where multiple unfoldings must be compared and the Baudhayana–Pythagoras theorem used to compute distances, requiring students to enumerate all distinct unfoldings and select the minimum.\n\nSection 4.2.4 recalls the definition of projection (the perpendicular mapping of a point or object onto a plane) and applies it to reason about projections of lines, squares, parallelograms, polygons, cubes, and cones. The section establishes that projection preserves parallelism — parallel lines project to parallel lines — and introduces the three standard engineering views: front view (vertical plane), top view (horizontal plane), and side view (side plane). It shows that a given projection does not uniquely determine the object (multiple objects can share the same projection), motivating the use of three simultaneous projections.\n\nSection 4.2.5 reasons about the physical counterpart of projection through a shadows experiment: shining a torch perpendicularly at an object near a wall produces a shadow that, as the torch moves infinitely far away, converges to the mathematical projection. The section uses sunlight as the real-world example of a parallel light source producing true projections, and derives that since the projection of a pair of parallel lines is always parallel, the shadow of a parallelogram is always a parallelogram regardless of orientation.\n\nSection 4.2.6 recalls and applies the concept of isometric projection: an orientation of a cube in which the projections of all edges are equal in length. The section explains that balancing a cube on a corner vertex and projecting downward produces this isometric view (a regular hexagon with all edges and their projections equal), and that this structure tiles the plane with hexagons to form the isometric grid used in engineering drawing. Students reason about why the three families of parallel edges map to three directions on the grid.\n\nSection 4.2.7 applies isometric grid drawing to represent three-dimensional solids on paper. The section connects the three axes (height, depth, length) to the three edge directions on the isometric grid (vertical, two diagonals), uses the five Tetris shapes (arrangements of four cubes) as drawing exercises, and shows step-by-step how to draw a 1×1×1 cube and a row of four cubes along various orientations. Students draw given solids on the isometric grid, recreate an impossible path and an impossible triangle (Penrose triangle), and discuss why spatial illusions arise from isometric drawings.",
+  "enumerated_activities": [
+    {
+      "id": "A-1",
+      "source_section": "section 4.1.1",
+      "book_ref": "Sierpinski Carpet activity, p.71",
+      "description": "Draw the initial few steps (at least till Step 2) of the shape sequence that leads to the Sierpinski Carpet."
+    },
+    {
+      "id": "A-2",
+      "source_section": "section 4.2.1",
+      "book_ref": "Build it in Your Imagination activity, p.75",
+      "description": "A set of mental visualisation prompts to be done without drawing on paper — picture name reversed, cut corners of imaginary squares and triangles, and identify resulting shapes purely through spatial imagination."
+    },
+    {
+      "id": "A-3",
+      "source_section": "section 4.2.5",
+      "book_ref": "Shadows Try This, p.94",
+      "description": "Place an object in front of a wall, shine a torch perpendicular to the wall, and observe the shadow; then vary the distance between torch and object to see how the shadow changes; use sunlight to observe true projections."
+    },
+    {
+      "id": "A-4",
+      "source_section": "section 4.2.6",
+      "book_ref": "Isometric Projections Math Talk, p.97",
+      "description": "Construct a model of a cube and balance it on one corner vertex to understand why all projected edges have equal length in an isometric projection."
+    }
+  ],
+  "enumerated_worked_examples": [
+    {
+      "id": "WE-1",
+      "source_section": "section 4.1.1",
+      "book_ref": "Sierpinski Carpet worked derivation, p.71",
+      "description": "Derives the recurrence Rn+1 = 8Rn and the closed formula Rn = 8^n for remaining squares, and the recurrence Hn+1 = Hn + Rn for holes, with a table of values for steps 0–3."
+    },
+    {
+      "id": "WE-2",
+      "source_section": "section 4.2.2",
+      "book_ref": "Net of a cube, Fig. 4.1, p.80",
+      "description": "Presents a net of a cube (Fig. 4.1) and discusses practical aspects of making a cube from its net — sturdiness, attachment mechanisms, and flaps — distinguishing the mathematical net from physical construction aids."
+    },
+    {
+      "id": "WE-3",
+      "source_section": "section 4.2.3",
+      "book_ref": "Shortest path ant-laddu worked cases, p.84-87",
+      "description": "Works through two ant–laddu cases: (1) ant at centre of side face, laddu at centre of top face — unfolding shows a straight-line path; (2) ant at face centre of an 8×2×4 cm cuboid, showing the standard unfolding sends the path outside the net and a different unfolding gives the true shortest path. Then a trickier 6×30×12 cm case shows multiple unfoldings with different path lengths and uses the Baudhayana theorem to compute d = 40 cm for one candidate."
+    },
+    {
+      "id": "WE-4",
+      "source_section": "section 4.2.4",
+      "book_ref": "Projection of a line, Fig. 4.3, p.89",
+      "description": "Defines projection formally: OP perpendicular to plane M means angle POX = 90° for all lines OX on M. Then analyses projection of a line segment: draws AE perpendicular to BC in a right triangle to show p (projected length) is less than or equal to l (actual length), with equality when the line is parallel to the projection plane."
+    },
+    {
+      "id": "WE-5",
+      "source_section": "section 4.2.4",
+      "book_ref": "Three views of lines and cuboids, Fig. 4.6, p.90-92",
+      "description": "Shows front view, top view, and side view for several differently-oriented lines and cuboids, demonstrating that different objects can give the same projection and motivating the use of three simultaneous standard views."
+    },
+    {
+      "id": "WE-6",
+      "source_section": "section 4.2.7",
+      "book_ref": "Isometric drawing of 1×1×1 cube and row of four cubes, p.99-100",
+      "description": "Step-by-step demonstration of how to draw a 1×1×1 cube on isometric paper by associating height to the vertical direction and depth/length to the two diagonal directions; then draws the first Tetris shape (row of four cubes) oriented along the depth axis, showing both cube-by-cube and all-at-once approaches."
+    }
+  ],
+  "enumerated_exercises": [
+    {
+      "id": "E-1",
+      "source_section": "section 4.1.1",
+      "book_ref": "Sierpinski Carpet Figure it Out Q1, p.71",
+      "description": "Show that the midpoint-joining construction of the Sierpinski Carpet produces the given pattern."
+    },
+    {
+      "id": "E-2",
+      "source_section": "section 4.1.2",
+      "book_ref": "Sierpinski Gasket Math Talk, p.72",
+      "description": "Show that by joining the midpoints of an equilateral triangle, it is divided into 4 identical equilateral triangles. (Hint: corner triangles are isosceles.)"
+    },
+    {
+      "id": "E-3",
+      "source_section": "section 4.1.2",
+      "book_ref": "Figure it Out Q1, section 4.1.2, p.72",
+      "description": "Draw the initial few steps (at least till Step 2) of the shape sequence that leads to the Sierpinski Triangle."
+    },
+    {
+      "id": "E-4",
+      "source_section": "section 4.1.2",
+      "book_ref": "Figure it Out Q2, section 4.1.2, p.72",
+      "description": "Find the number of holes and the number of triangles that remain at each step of the Sierpinski Triangle sequence."
+    },
+    {
+      "id": "E-5",
+      "source_section": "section 4.1.2",
+      "book_ref": "Figure it Out Q3, section 4.1.2, p.72",
+      "description": "Find the area of the region remaining at the nth step for both the Sierpinski Carpet and the Sierpinski Triangle sequences, taking the starting area to be 1 sq. unit."
+    },
+    {
+      "id": "E-6",
+      "source_section": "section 4.1.3",
+      "book_ref": "Figure it Out Q1, section 4.1.3, p.73",
+      "description": "Draw the initial few steps (at least till Step 2) of the shape sequence that leads to the Koch Snowflake."
+    },
+    {
+      "id": "E-7",
+      "source_section": "section 4.1.3",
+      "book_ref": "Figure it Out Q2, section 4.1.3, p.73",
+      "description": "Find the number of sides in the nth step of the shape sequence leading to the Koch Snowflake."
+    },
+    {
+      "id": "E-8",
+      "source_section": "section 4.1.3",
+      "book_ref": "Figure it Out Q3, section 4.1.3, p.73",
+      "description": "Find the perimeter of the Koch Snowflake shape at the nth step, taking the starting equilateral triangle to have side length 1 unit."
+    },
+    {
+      "id": "E-9",
+      "source_section": "section 4.2.1",
+      "book_ref": "Build it in Your Imagination Q1, p.75",
+      "description": "Picture your name mentally and read off the letters backwards by sight, not by sound; try with a friend's name."
+    },
+    {
+      "id": "E-10",
+      "source_section": "section 4.2.1",
+      "book_ref": "Build it in Your Imagination Q2, p.76",
+      "description": "Cut off the four corners of an imaginary square with each cut going between midpoints of adjacent edges; identify the remaining shape and how the four corners reassemble into another square."
+    },
+    {
+      "id": "E-11",
+      "source_section": "section 4.2.1",
+      "book_ref": "Build it in Your Imagination Q3, p.76",
+      "description": "Mark the sides of an equilateral triangle into thirds and cut off each corner as far as the marks; identify the resulting shape."
+    },
+    {
+      "id": "E-12",
+      "source_section": "section 4.2.1",
+      "book_ref": "Build it in Your Imagination Q4, p.76",
+      "description": "Mark the sides of a square into thirds and cut off each corner as far as the marks; identify the remaining shape."
+    },
+    {
+      "id": "E-13",
+      "source_section": "section 4.2.1",
+      "book_ref": "Build it in Your Imagination Q5, p.77",
+      "description": "Describe a solid and a viewpoint whose profile has a square outline."
+    },
+    {
+      "id": "E-14",
+      "source_section": "section 4.2.1",
+      "book_ref": "Build it in Your Imagination Q6, p.77",
+      "description": "Describe a solid and a viewpoint whose profile has a circular outline."
+    },
+    {
+      "id": "E-15",
+      "source_section": "section 4.2.1",
+      "book_ref": "Build it in Your Imagination Q7, p.77",
+      "description": "Describe a solid and a viewpoint whose profile has a triangular outline."
+    },
+    {
+      "id": "E-16",
+      "source_section": "section 4.2.1",
+      "book_ref": "Build it in Your Imagination Q8, p.77",
+      "description": "Visualise a solid with a rectangular profile from one viewpoint and a circular profile from another."
+    },
+    {
+      "id": "E-17",
+      "source_section": "section 4.2.1",
+      "book_ref": "Build it in Your Imagination Q9, p.77",
+      "description": "Visualise a solid with a circular profile from one viewpoint and a triangular profile from another."
+    },
+    {
+      "id": "E-18",
+      "source_section": "section 4.2.1",
+      "book_ref": "Build it in Your Imagination Q10, p.77",
+      "description": "Visualise a solid with a rectangular profile from one viewpoint and a triangular profile from another."
+    },
+    {
+      "id": "E-19",
+      "source_section": "section 4.2.1",
+      "book_ref": "Build it in Your Imagination Q11, p.77",
+      "description": "Visualise a solid with a trapezium-shaped profile from one viewpoint and a circular profile from another."
+    },
+    {
+      "id": "E-20",
+      "source_section": "section 4.2.1",
+      "book_ref": "Build it in Your Imagination Q12, p.77",
+      "description": "Visualise a solid with a pentagonal profile from one viewpoint and a rectangular profile from another."
+    },
+    {
+      "id": "E-21",
+      "source_section": "section 4.2.2",
+      "book_ref": "Figure it Out Q1, section 4.2.2, p.80",
+      "description": "Identify which of six given flat shapes (i)–(vi) are valid nets of a cube, first by visualisation then by cutout verification."
+    },
+    {
+      "id": "E-22",
+      "source_section": "section 4.2.2",
+      "book_ref": "Figure it Out Q2, section 4.2.2, p.81",
+      "description": "Find all 11 nets of a cube, treating two nets as the same if one can be obtained from the other by rotation or flip."
+    },
+    {
+      "id": "E-23",
+      "source_section": "section 4.2.2",
+      "book_ref": "Figure it Out Q3, section 4.2.2, p.81",
+      "description": "Draw nets of a cuboid with side lengths (i) 5 cm, 3 cm, 1 cm and (ii) 6 cm, 3 cm, 2 cm."
+    },
+    {
+      "id": "E-24",
+      "source_section": "section 4.2.2",
+      "book_ref": "Try This — regular tetrahedron net, p.81",
+      "description": "Draw a net with appropriate measurements that can be folded into a regular tetrahedron; verify by making an actual cutout."
+    },
+    {
+      "id": "E-25",
+      "source_section": "section 4.2.2",
+      "book_ref": "Try This — square pyramid net, p.81",
+      "description": "Draw a net with appropriate measurements that can be folded into a square pyramid; verify by making an actual cutout."
+    },
+    {
+      "id": "E-26",
+      "source_section": "section 4.2.2",
+      "book_ref": "Math Talk — cylinder net, p.82",
+      "description": "Determine what the net of a cylinder looks like and identify the side lengths of the rectangle obtained when the curved surface is cut along the height."
+    },
+    {
+      "id": "E-27",
+      "source_section": "section 4.2.2",
+      "book_ref": "Math Talk — cone net, p.82",
+      "description": "Determine how the net of a cone looks after slitting along a slant line and unrolling; explain why the boundary of the net is a portion of a circle with centre O."
+    },
+    {
+      "id": "E-28",
+      "source_section": "section 4.2.2",
+      "book_ref": "Try This — triangular prism net, p.82",
+      "description": "Draw a net with appropriate measurements that can be folded into a triangular prism; verify by making an actual cutout."
+    },
+    {
+      "id": "E-29",
+      "source_section": "section 4.2.2",
+      "book_ref": "Math Talk — octahedron net, p.83",
+      "description": "Visualise the net of an octahedron; make a cutout of the given net (all equilateral triangles) and fold it to form an octahedron."
+    },
+    {
+      "id": "E-30",
+      "source_section": "section 4.2.2",
+      "book_ref": "Math Talk — prism faces/edges/vertices, p.79",
+      "description": "For a prism whose congruent polygons have 10 sides (and n sides in general), find the number of faces, edges, and vertices."
+    },
+    {
+      "id": "E-31",
+      "source_section": "section 4.2.2",
+      "book_ref": "Math Talk — pyramid faces/edges/vertices, p.79",
+      "description": "For a pyramid whose base has 10 sides (and n sides in general), find the number of faces, edges, and vertices."
+    },
+    {
+      "id": "E-32",
+      "source_section": "section 4.2.3",
+      "book_ref": "Shortest Paths Try This, p.87",
+      "description": "Find the shortest path on the surface of a 6×30×12 cm cuboid between the ant (centre of one face) and the laddu (centre of the back face) by listing all distinct unfoldings, computing path lengths (using the Baudhayana theorem where needed), and identifying the minimum."
+    },
+    {
+      "id": "E-33",
+      "source_section": "section 4.2.4",
+      "book_ref": "Figure it Out Q1, section 4.2.4, p.92",
+      "description": "Observe the front, top, and side views of the different lines in Fig. 4.6 and identify any relation between their lengths."
+    },
+    {
+      "id": "E-34",
+      "source_section": "section 4.2.4",
+      "book_ref": "Figure it Out Q2, section 4.2.4, p.92",
+      "description": "Find the front view, top view, and side view of each of the following solids in a fixed orientation: cube, cuboid, parallelepiped, cylinder, cone, prism, and pyramid."
+    },
+    {
+      "id": "E-35",
+      "source_section": "section 4.2.4",
+      "book_ref": "Figure it Out Q3, section 4.2.4, p.93",
+      "description": "Match each of the given objects (shown as images) with its front view, top view, and side view projections."
+    },
+    {
+      "id": "E-36",
+      "source_section": "section 4.2.5",
+      "book_ref": "Figure it Out Q1, section 4.2.5, p.95",
+      "description": "Draw the top view, front view, and side view of each of the five given combinations of identical cubes."
+    },
+    {
+      "id": "E-37",
+      "source_section": "section 4.2.5",
+      "book_ref": "Figure it Out Q2, section 4.2.5, p.95",
+      "description": "Imagine eight identical cubes glued to form the letter 'L': (i) describe the side and top views; (ii) add cubes to make a given letter from front and top; (iii) add more to specify all three views; (iv) invent other letter combinations achievable with a single solid."
+    },
+    {
+      "id": "E-38",
+      "source_section": "section 4.2.5",
+      "book_ref": "Figure it Out Q3, section 4.2.5, p.96",
+      "description": "Match each of the seven given sets of front, top, and side views with the corresponding solid (from (i) to (vii))."
+    },
+    {
+      "id": "E-39",
+      "source_section": "section 4.2.5",
+      "book_ref": "Figure it Out Q4, section 4.2.5, p.96",
+      "description": "Using identical cubes, make a solid that gives each of the nine specified sets of top, front, and side view projections ((i) through (ix))."
+    },
+    {
+      "id": "E-40",
+      "source_section": "section 4.2.5",
+      "book_ref": "Figure it Out Q5, section 4.2.5, p.97",
+      "description": "Find the number of cubes in a given stack of identical cubes shown in an isometric-style illustration."
+    },
+    {
+      "id": "E-41",
+      "source_section": "section 4.2.5",
+      "book_ref": "Figure it Out Q6, section 4.2.5, p.97",
+      "description": "Identify all the different shapes the projection of a cube can make under different orientations."
+    },
+    {
+      "id": "E-42",
+      "source_section": "section 4.2.7",
+      "book_ref": "Figure it Out Q1, section 4.2.7, p.100",
+      "description": "In addition to the 5 Tetris shapes in Fig. 4.8, determine if there are any additional ways of gluing four cubes together along faces; visualise and draw any additional shapes on the isometric grid."
+    },
+    {
+      "id": "E-43",
+      "source_section": "section 4.2.7",
+      "book_ref": "Figure it Out Q2, section 4.2.7, p.101",
+      "description": "Draw a set of specified three-dimensional solids on the isometric grid, determining the direction (up or down along the height axis) for each edge."
+    },
+    {
+      "id": "E-44",
+      "source_section": "section 4.2.7",
+      "book_ref": "Figure it Out Q3, section 4.2.7, p.101",
+      "description": "Identify what is strange about the path of a given ball on an isometric grid (an impossible path) and recreate it on the isometric grid."
+    },
+    {
+      "id": "E-45",
+      "source_section": "section 4.2.7",
+      "book_ref": "Figure it Out Q4, section 4.2.7, p.101",
+      "description": "Observe an impossible (Penrose) triangle: (i) determine whether it could be built from actual cubes and find its front, top, and side profiles; (ii) recreate it on an isometric grid; (iii) explain why the spatial illusion works."
+    }
+  ],
+  "conceptual_demand": 3,
+  "activity_count": 4,
+  "demo_count": 0,
+  "exec_load": 1
+}
 
 
 ======================================================================
 
-THE FULLEST PLAN (15 units). The unit you write REPLACES its final unit, closing this arc:
+THE FULLEST PLAN (17 units). The unit you write REPLACES its final unit, closing this arc:
 
-U1: Noticing the Moon: What Changes and When?
-U2: Tracking the Moon: A Month of Observations (Activity 11.1)
-U3: Naming the Phases: Vocabulary of the Lunar Cycle
-U4: Light, Ball, and Head: Modelling the Phases (Activity 11.2)
-U5: Why Not Every Month? Eclipses vs. Phases
-U6: Predicting the Moon: Phase, Position, and Viewing Window
-U7: From Sky to Calendar: Discovering the Day, Month, and Year (Activity 11.3)
-U8: Lunar and Solar Calendars: The 11-Day Problem
-U9: The Luni-Solar Solution: Adhika Maasa and Indian Calendars
-U10: India's Official Calendar: The Indian National Calendar
-U11: Satellites in the Sky: Spotting and Understanding Orbital Motion (Activity 11.4)
-U12: What Do Satellites Do? Uses, ISRO Missions, and Space Debris
-U13: Natural vs. Artificial: Comparing Orbital Characteristics
-U14: Festivals, Phases, and Calendars: Applying the Full Framework
+U1: Recognising Self-Similarity in Nature and Geometry
+U2: Building the Carpet: Recurrence Relations from Iteration
+U3: Midpoints, Triangles, and Counting the Gasket
+U4: Bumps on Every Side: Perimeter of the Koch Snowflake
+U5: Fractal Patterns Across Cultures and History
+U6: Seeing Solids Without Drawing: Pure Mental Geometry
+U7: Two-Profile Solids: Rectangular, Circular, Triangular Views
+U8: Faces, Edges, Vertices, and the Vocabulary of Solids
+U9: Nets: Unfolding Solids and Folding Them Back
+U10: More Nets: Pyramids, Prisms, and Polyhedral Surprises
+U11: Unfolding Cuboids to Find the Shortest Surface Path
+U12: Projections: Mapping Solids onto Planes
+U13: Three Views of Solids: Drawing and Matching Projections
+U14: Shadows as Physical Projections: Parallelism Preserved
+U15: Reconstructing Solids from Three Views
+U16: Balancing a Cube: The Isometric View and Its Grid
 U<final>: ← the unit you are writing
 
-THE SHORTER PLANS (3). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
+THE SHORTER PLANS (2). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
 
 
---- PLAN OF 13 UNITS — unit-title map ---
-U1: A Month of Moon Watching
-U2: Naming the Shapes We See
-U3: When and Where to Find the Moon
-U4: Ball, Torch, and Head — Modelling Phases
-U5: Why Not an Eclipse Every Month?
-U6: Shortest Shadow, Longest Day — Finding the Solar Day
-U7: Month and Year — Where the Numbers Come From
-U8: Three Solutions to the Same Problem
-U9: Gregorian Fine-Corrections and the Indian National Calendar
-U10: Festivals as Calendar Evidence
-U11: Spotting Satellites — Natural and Artificial
-U12: What Satellites Do — ISRO Missions and Space Debris
-U13: Tracing Phenomena to Their Orbital Cause
+--- PLAN OF 14 UNITS — unit-title map ---
+U1: Spotting Self-Similarity in Nature and Shapes
+U2: Building the Carpet and Tracing Its Growth Rules
+U3: Constructing the Gasket and Computing Its Measures
+U4: Growing the Snowflake: Sides and Perimeter
+U5: Fractal Patterns Across Cultures and Centuries
+U6: Seeing Solids Through Their Profiles
+U7: Two-Viewpoint Solids: Extending Spatial Imagination
+U8: Naming Solids and Unfolding Their Nets
+U9: Drawing and Making Nets of Varied Solids
+U10: Unfolding a Cuboid to Find the Shortest Surface Path
+U11: Projecting Lines and Solids onto Planes
+U12: Shadows as Physical Projections: The Parallelogram Argument
+U13: The Hexagonal View: Isometric Projection from a Corner
+U14: Representing Solids and Impossible Figures on the Isometric Grid
 
 --- its FINAL unit, in full ---
 {
- "period_number": 13,
+ "period_number": 14,
  "period_duration_minutes": 45,
- "progression_stage": 5,
- "stage_label": "Explain artificial satellites and their role as extensions of Earth-sky observation",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "Tracing Phenomena to Their Orbital Cause",
- "activity_description": "Students respond to a set of novel scenarios — a festival's date, a satellite's twilight visibility, a calendar's intercalary month, a lunar eclipse — and for each must trace the phenomenon back to the specific periodic motion of Earth or Moon that causes it, demonstrating the chapter's dissolution-test capacity across all four topic threads.",
- "roles": [
+ "textbook_segments": [
   {
-   "actor": "Teacher",
-   "role_description": "Presents six novel scenarios on cards or the board and facilitates a structured inquiry where students work individually first, then pool reasoning in groups."
-  },
-  {
-   "actor": "Students (Individual)",
-   "role_description": "Each student writes a causal trace for each scenario — naming the phenomenon, the relevant periodic motion, and the mechanism linking them — before comparing with group members."
-  },
-  {
-   "actor": "Students (Groups)",
-   "role_description": "Groups compare individual traces, identify any scenario where members disagree, and produce a consensus trace with the group's best justification."
+   "ref": "section 4.2.7",
+   "title": "Drawing on Isometric Grids"
   }
  ],
+ "section_goal": "apply",
+ "activity_title": "Representing Solids and Impossible Figures on the Isometric Grid",
+ "pedagogical_method": "Problem-solving",
+ "synthesis": false,
+ "textbook_items_in_class": [
+  {
+   "id": "WE-6",
+   "type": "worked_example",
+   "source_section": "section 4.2.7",
+   "book_ref": "Isometric drawing of 1×1×1 cube and row of four cubes, p.99-100",
+   "description": "Step-by-step demonstration of how to draw a 1×1×1 cube on isometric paper by associating height to the vertical direction and depth/length to the two diagonal directions; then draws the first Tetris shape (row of four cubes) oriented along the depth axis, showing both cube-by-cube and all-at-once approaches."
+  },
+  {
+   "id": "E-42",
+   "type": "exercise",
+   "source_section": "section 4.2.7",
+   "book_ref": "Figure it Out Q1, section 4.2.7, p.100",
+   "description": "In addition to the 5 Tetris shapes in Fig. 4.8, determine if there are any additional ways of gluing four cubes together along faces; visualise and draw any additional shapes on the isometric grid."
+  },
+  {
+   "id": "E-43",
+   "type": "exercise",
+   "source_section": "section 4.2.7",
+   "book_ref": "Figure it Out Q2, section 4.2.7, p.101",
+   "description": "Draw a set of specified three-dimensional solids on the isometric grid, determining the direction (up or down along the height axis) for each edge."
+  },
+  {
+   "id": "E-44",
+   "type": "exercise",
+   "source_section": "section 4.2.7",
+   "book_ref": "Figure it Out Q3, section 4.2.7, p.101",
+   "description": "Identify what is strange about the path of a given ball on an isometric grid (an impossible path) and recreate it on the isometric grid."
+  },
+  {
+   "id": "E-45",
+   "type": "exercise",
+   "source_section": "section 4.2.7",
+   "book_ref": "Figure it Out Q4, section 4.2.7, p.101",
+   "description": "Observe an impossible (Penrose) triangle: (i) determine whether it could be built from actual cubes and find its front, top, and side profiles; (ii) recreate it on an isometric grid; (iii) explain why the spatial illusion works."
+  }
+ ],
+ "homework": [],
  "time_bands": [
   {
-   "minutes": "0-6",
-   "activity": "Teacher distributes the six scenario cards and gives students a brief individual reading period to note which chapter thread each scenario belongs to."
+   "minutes": "0–12",
+   "activity": "Students study Isometric drawing of 1×1×1 cube and row of four cubes, p.99-100 (\"Step-by-step demonstration of how to draw a 1×1×1 cube on isometric paper by associating height to the vertical direction and depth/length to the two diagonal directions….\"), then draw a single 1×1×1 cube on isometric dot paper, labelling the three edge directions: vertical (height), and two diagonals (depth, length)."
   },
   {
-   "minutes": "6-22",
-   "activity": "Students individually write causal traces for all six scenarios, working silently."
+   "minutes": "12–25",
+   "activity": "Students complete Figure it Out Q1, section 4.2.7, p.100 (\"In addition to the 5 Tetris shapes in Fig. 4.8, determine if there are any additional ways of gluing four cubes together along faces….\"), drawing each of the five standard Tetris shapes on the isometric grid and checking whether any additional arrangement is possible. They then draw the assigned solids in Figure it Out Q2, section 4.2.7, p.101 (\"Draw a set of specified three-dimensional solids on the isometric grid….\"), deciding the direction of each edge before drawing."
   },
   {
-   "minutes": "22-36",
-   "activity": "Groups compare traces, flag disagreements, and produce a consensus trace for the one scenario they found most difficult."
+   "minutes": "25–38",
+   "activity": "Students tackle Figure it Out Q3, section 4.2.7, p.101 (\"Identify what is strange about the path of a given ball on an isometric grid (an impossible path) and recreate it on the isometric grid.\") — they describe the impossibility in one sentence and then recreate the figure. They then examine Figure it Out Q4, section 4.2.7, p.101 (\"Observe an impossible (Penrose) triangle: (i) determine whether it could be built from actual cubes….\"), determining whether the Penrose triangle could be physically constructed and computing its front, top, and side profiles."
   },
   {
-   "minutes": "36-45",
-   "activity": "Three groups share their consensus trace for their hardest scenario; teacher draws explicit links to the dissolution test concept — tracing all phenomena to the observable periodic motions of Earth and Moon."
+   "minutes": "38–45",
+   "activity": "Students write a one-paragraph explanation of why the Penrose triangle is an optical illusion: the isometric grid removes the depth cues that would reveal the local consistency failures, so the eye reads each local corner as valid and the global impossibility goes undetected. The class shares and compares explanations."
   }
  ],
- "teacher_notes": "This is the plan's closing unit, where students must range across all five stages to trace phenomena to their orbital causes — the chapter's highest cognitive demand. The six scenarios should span all four topic threads (phases, eclipses, calendar types, satellite visibility) so no student can succeed by mastering only one thread; if students stall on the calendar scenarios, prompt them to return to the three-column comparison table from Unit 8 as a scaffold. The closing teacher synthesis should name the unifying idea explicitly: every phenomenon in this chapter — a crescent Moon at sunrise, a festival date shifting by eleven days, a satellite appearing at dusk — is an observable consequence of a periodic orbital motion.",
+ "teacher_notes": "Students who try to draw on isometric dot paper without first committing to which axis is vertical quickly produce inconsistent figures; insisting on labelling the three directions before the first line prevents this. The Penrose triangle explanation (Q4 part iii) is genuinely challenging: the key idea is that each local corner of the triangle looks consistent in the isometric view because the projection discards depth information, and the global contradiction only appears when you try to trace the whole path.",
  "materials": [
-  "Six novel scenario cards (one scenario per card, enough for all groups)",
-  "Student notebooks"
- ],
- "homework": []
+  "isometric dot paper (one sheet per student)",
+  "pencils",
+  "rulers",
+  "textbook"
+ ]
 }
 
---- PLAN OF 11 UNITS — unit-title map ---
-U1: Noticing the Moon in the Day Sky
-U2: Mapping the Lunar Cycle: Phase Names and Positions
-U3: Ball-and-Torch: Modelling Illuminated Hemispheres
-U4: Eclipses: When Shadows Actually Matter
-U5: Three Cycles, Three Units: Day, Month, Year
-U6: Why Lunar Calendars Drift: The 11-Day Problem
-U7: Solar, Luni-Solar, and the Indian National Calendar: Three Solutions
-U8: Festivals Anchored to the Sky: Phase-Based and Solar-Based
-U9: Spotting Satellites: Natural and Artificial Orbits
-U10: From Orbit to Observation: Explaining Three Phenomena from One Framework
-U11: The Orbital Mechanics Behind What We See: A Chapter-Wide Causal Investigation
+--- PLAN OF 10 UNITS — unit-title map ---
+U1: Fractals in Nature and the Language of Self-Similarity
+U2: Recurrence Rules and Formulas for the Sierpinski Carpet
+U3: Building and Computing the Sierpinski Gasket
+U4: Koch Snowflake: Growing Perimeter, Bounded Shape — and Fractals in Culture
+U5: Profiles and Imagination: Seeing Solids from Every Angle
+U6: Nets, Solids, and the Art of Unfolding
+U7: Unfolding the Shortest Route: Surface Paths on a Cuboid
+U8: Projections, Shadows, and Three Standard Views
+U9: The Isometric View: Equal Edges, Hexagonal Grid
+U10: Drawing Solids on Isometric Grids — Including Impossible Figures
 
 --- its FINAL unit, in full ---
 {
- "period_number": 11,
+ "period_number": 10,
  "period_duration_minutes": 45,
- "progression_stage": 5,
- "stage_label": "Trace celestial phenomena to periodic orbital motions",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "The Orbital Mechanics Behind What We See: A Chapter-Wide Causal Investigation",
- "activity_description": "Students consolidate the chapter's central explanatory claim — that every phenomenon studied (phases, eclipses, calendar units, festival timing, satellite visibility) traces to periodic motions of Earth and Moon in their orbits — by constructing an annotated cause-and-effect map that explicitly links each phenomenon to its governing orbital motion.",
- "roles": [
+ "synthesis": false,
+ "textbook_segments": [
   {
-   "actor": "Teacher",
-   "role_description": "Facilitates the construction of the cause-and-effect map by posing targeted questions that surface gaps and ensure causal links are explicit rather than merely associative."
-  },
-  {
-   "actor": "Students (Groups)",
-   "role_description": "Construct the cause-and-effect map collaboratively, then each group presents one causal chain from orbital motion to observable phenomenon, explaining the mechanism at each step."
-  },
-  {
-   "actor": "Students (Individual)",
-   "role_description": "After group presentation, each student writes a two-to-three sentence answer to the chapter's opening question: why does the Moon's visible shape change each night, and how does this connect to how we keep time?"
+   "ref": "section 4.2.7",
+   "title": "Drawing on Isometric Grids"
   }
  ],
+ "section_goal": "apply",
+ "activity_title": "Drawing Solids on Isometric Grids — Including Impossible Figures",
+ "pedagogical_method": "Problem-solving",
+ "textbook_items_in_class": [
+  {
+   "id": "WE-6",
+   "type": "worked_example",
+   "source_section": "section 4.2.7",
+   "book_ref": "Isometric drawing of 1×1×1 cube and row of four cubes, p.99-100",
+   "description": "Step-by-step demonstration of how to draw a 1×1×1 cube on isometric paper by associating height to the vertical direction and depth/length to the two diagonal directions; then draws the first Tetris shape (row of four cubes) oriented along the depth axis, showing both cube-by-cube and all-at-once approaches."
+  },
+  {
+   "id": "E-42",
+   "type": "exercise",
+   "source_section": "section 4.2.7",
+   "book_ref": "Figure it Out Q1, section 4.2.7, p.100",
+   "description": "In addition to the 5 Tetris shapes in Fig. 4.8, determine if there are any additional ways of gluing four cubes together along faces; visualise and draw any additional shapes on the isometric grid."
+  },
+  {
+   "id": "E-43",
+   "type": "exercise",
+   "source_section": "section 4.2.7",
+   "book_ref": "Figure it Out Q2, section 4.2.7, p.101",
+   "description": "Draw a set of specified three-dimensional solids on the isometric grid, determining the direction (up or down along the height axis) for each edge."
+  },
+  {
+   "id": "E-44",
+   "type": "exercise",
+   "source_section": "section 4.2.7",
+   "book_ref": "Figure it Out Q3, section 4.2.7, p.101",
+   "description": "Identify what is strange about the path of a given ball on an isometric grid (an impossible path) and recreate it on the isometric grid."
+  },
+  {
+   "id": "E-45",
+   "type": "exercise",
+   "source_section": "section 4.2.7",
+   "book_ref": "Figure it Out Q4, section 4.2.7, p.101",
+   "description": "Observe an impossible (Penrose) triangle: (i) determine whether it could be built from actual cubes and find its front, top, and side profiles; (ii) recreate it on an isometric grid; (iii) explain why the spatial illusion works."
+  }
+ ],
+ "homework": [],
  "time_bands": [
   {
-   "minutes": "0-12",
-   "activity": "Groups begin constructing their cause-and-effect map, starting from the three periodic motions as root causes and branching outward to their observable consequences — phases, eclipses, day, month, year, festival dates, satellite visibility windows."
+   "minutes": "0–10",
+   "activity": "Review the three axis directions on the isometric grid (vertical = height; two diagonals = depth and length) from section 4.2.7. Walk through Isometric drawing of 1×1×1 cube and row of four cubes, p.99-100 (\"step-by-step demonstration of how to draw a 1×1×1 cube on isometric paper….\") together, having students copy each step on their own isometric paper."
   },
   {
-   "minutes": "12-28",
-   "activity": "Each group presents one causal chain, explaining the mechanism linking orbital motion to the phenomenon; classmates add or challenge links on their own maps."
+   "minutes": "10–22",
+   "activity": "Students attempt Figure it Out Q1, section 4.2.7, p.100 (\"in addition to the 5 Tetris shapes in Fig. 4.8, determine if there are any additional ways of gluing four cubes together along faces….\") — first counting and listing all distinct arrangements of four cubes mentally, then drawing each on isometric paper. Pairs compare drawings."
   },
   {
-   "minutes": "28-40",
-   "activity": "Students individually write their response to the chapter's opening question, drawing on the full map to trace the Moon's changing appearance to reflected sunlight and changing viewing angles, and connecting this to the month as a calendar unit."
+   "minutes": "22–33",
+   "activity": "Students work on Figure it Out Q2, section 4.2.7, p.101 (\"draw a set of specified three-dimensional solids on the isometric grid, determining the direction (up or down along the height axis) for each edge.\"), drawing each specified solid on isometric paper. Circulate: check that height, depth, and length are consistently mapped to the three grid directions."
   },
   {
-   "minutes": "40-45",
-   "activity": "Teacher asks one or two students to read their individual response; class identifies whether the causal chain — orbital motion to observation to timekeeping — is complete."
+   "minutes": "33–45",
+   "activity": "Students tackle Figure it Out Q3, section 4.2.7, p.101 (\"identify what is strange about the path of a given ball on an isometric grid (an impossible path) and recreate it.\") and Figure it Out Q4, section 4.2.7, p.101 (\"observe an impossible (Penrose) triangle: determine whether it could be built from actual cubes….\"). Students draw the impossible path and Penrose triangle, then write one sentence explaining why the illusion works on a flat isometric drawing but not in three dimensions. Close with a brief class share."
   }
  ],
- "teacher_notes": "This closing unit asks students to do what the chapter's dissolution test requires: explain phases, calendars, and satellites by tracing each to the periodic motions of Earth and Moon. Students who stall often do so at the calendar link — they can explain phases but struggle to articulate that the month is the Moon's phase cycle measured, so prompt that specific connection if it is missing. The cause-and-effect map is the product of this unit; no prior unit's output needs to be present because each group builds it here from knowledge, not from a physical artefact.",
+ "teacher_notes": "Students frequently make the error of drawing 'up' edges in a random diagonal direction rather than consistently using the vertical on the isometric grid; reinforce that vertical grid lines always represent height. The impossible figures in section 4.2.7 are a deliberate culmination — they show that isometric drawing can represent things that cannot physically exist, which connects back to the idea (established in the projection work) that a 2D representation does not uniquely determine a 3D object. Isometric drawing of 1×1×1 cube and row of four cubes, p.99-100 is the model to which students should return if they lose orientation during independent drawing.",
  "materials": [
-  "Blank paper or large notebook pages for cause-and-effect maps",
-  "Coloured pencils if available"
- ],
- "homework": []
-}
-
---- PLAN OF 9 UNITS — unit-title map ---
-U1: Tracking the Moon: What Changes Night to Night?
-U2: Naming the Shapes: Phase Vocabulary in Action
-U3: When and Where to Look: Predicting Moon Visibility
-U4: The Ball-and-Torch Model: Why Does the Moon Change Shape?
-U5: Three Cycles, Three Units: How Calendars Were Born
-U6: Lunar, Solar, Luni-Solar: Solving the Calendar Problem
-U7: Why Does Diwali Move but Pongal Does Not?
-U8: Spotting Satellites: Artificial Moons and Their Orbits
-U9: Phenomena, Motions, Calendars: Closing the Arc
-
---- its FINAL unit, in full ---
-{
- "period_number": 9,
- "period_duration_minutes": 45,
- "progression_stage": 6,
- "stage_label": "Trace each celestial phenomenon to its underlying orbital motion",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "Phenomena, Motions, Calendars: Closing the Arc",
- "activity_description": "Students receive a set of scenario cards — each describing a celestial observation or calendar puzzle — and must trace each back to the specific orbital motion responsible, explaining the causal chain from motion to observable phenomenon to calendar consequence. Scenarios include phase prediction, eclipse conditions, calendar drift, festival date behaviour, and satellite visibility.",
- "roles": [
-  {
-   "actor": "Teacher",
-   "role_description": "Distributes scenario cards, sets the task of writing a causal chain for each, and circulates to probe the depth of orbital-motion reasoning rather than surface recall."
-  },
-  {
-   "actor": "Students (Groups)",
-   "role_description": "Work through each scenario card, writing a causal chain that names the orbital motion, describes the observable phenomenon it produces, and identifies the calendar or practical consequence."
-  }
- ],
- "time_bands": [
-  {
-   "minutes": "0-8",
-   "activity": "Teacher frames the task: every phenomenon in this chapter — Moon phases, eclipses, the day, the month, the year, festival date shifts, and satellite visibility — can be traced to one or more of three orbital motions: Earth's rotation, the Moon's revolution around Earth, and Earth's revolution around the Sun."
-  },
-  {
-   "minutes": "8-30",
-   "activity": "Groups work through scenario cards (one card per group member initially, then compared within the group), writing a three-part causal chain: orbital motion → observable phenomenon → calendar or practical consequence."
-  },
-  {
-   "minutes": "30-42",
-   "activity": "Groups exchange one scenario card with another group and evaluate the received causal chain for completeness and accuracy, marking any step where the orbital motion was incorrectly named or the causal link was missing."
-  },
-  {
-   "minutes": "42-45",
-   "activity": "Teacher closes by tracing one scenario aloud as a model causal chain, drawing together the full arc of the chapter from the opening kite-festival Moon sighting to the orbital mechanics underlying everything students observed."
-  }
- ],
- "teacher_notes": "This final unit asks students to perform the exact cognitive operation named in the chapter's dissolution test — tracing celestial phenomena to the periodic orbital motions that produce them — across all four topic areas of the chapter simultaneously. A common slip at this stage is writing causal chains that name the phenomenon twice rather than identifying the orbital motion as the root cause; when you see this, prompt the group to ask 'what is the Earth or Moon doing?' before they write the first step. The peer-evaluation of exchanged scenario cards in the later bands is a deliberate accountability move: it surfaces gaps in reasoning that individual writing alone would not reveal.",
- "materials": [
-  "Scenario cards — one set per group (six to eight cards covering phases, eclipses, calendar drift, festival date behaviour, satellite visibility)",
-  "Blank paper for causal chain writing",
-  "Pencils"
- ],
- "homework": []
+  "isometric dot paper (one or two sheets per student)",
+  "pencil, ruler",
+  "board with isometric grid drawn for demonstration"
+ ]
 }
 
 ======================================================================

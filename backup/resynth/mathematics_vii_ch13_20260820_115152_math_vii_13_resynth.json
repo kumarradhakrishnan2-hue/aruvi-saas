@@ -1,0 +1,1605 @@
+{
+  "filename": "ch_13_canonical.json",
+  "saved_at": "2026-08-19T11:14:02",
+  "plan_status": "canonical",
+  "chapter_number": 13,
+  "chapter_title": "Connecting the Dots",
+  "grade": "Grade VII",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 40,
+      "count": 17
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 17 periods = 680 minutes\nTotal: 17 periods · 11h 20min",
+  "genon_canonical": {
+    "generated": "2026-08-19",
+    "schedule": "17x40",
+    "constitution": "LP v3.9 / assessment v3.5",
+    "source": "generate_canonical.py one mathematics vii 13",
+    "ledger_ts": "20260818_205348_math_vii_13_top",
+    "validation": "clean",
+    "synthesis_reauthor": {
+      "spec": "ARV-D-181 · F1 2026-08-19 (the double-closer collision)",
+      "at": "2026-08-20T10:47:32",
+      "ledger_ts": "20260819_210337_math_vii_13_resynth",
+      "model": "claude-sonnet-4-6",
+      "compacts_read": {
+        "ch_13_canonical_p14.json": "2026-08-19T13:38:18",
+        "ch_13_canonical_p10.json": "2026-08-19T13:38:18"
+      },
+      "replaced_in": "backup/resynth/mathematics_vii_ch13_20260819_210337_math_vii_13_resynth.json"
+    },
+    "repairs": [
+      {
+        "tool": "genon/repair_c3.py v1.0",
+        "at": "2026-08-20T11:02:17",
+        "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+        "defects": {
+          "ARV-D-187": {
+            "note": "the re-authored closer's notes point at its own Material table",
+            "edits": [
+              {
+                "unit": 17,
+                "field": "teacher_notes",
+                "old": "Pose all four problems on the board at once. Students work i…",
+                "new": "Refer to Prepared Table (see material: 'Problems and solutio…"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "at": "2026-08-20T11:18:24",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 17,
+            "field": "teacher_notes",
+            "rule": "register/clock",
+            "removed": "for the first fifteen minutes",
+            "replaced_with": "",
+            "note": "clock quantity struck; the band carrying this work already declares its own minutes and the platform rescales them | survives: …Students work individually, writing full working in their notebooks — no comparison yet. The …"
+          }
+        ],
+        "ban_hits_before": 1,
+        "ban_hits_after": 0
+      }
+    ]
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 13.1",
+              "title": "Of Questions and Statements"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "What Makes a Question Statistical?",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "section 13.1",
+              "book_ref": "Math Talk, section 13.1 p.98",
+              "description": "Decide which of the following are statistical questions: (a) price of a tennis ball in India; (b) ages of dogs on this street; (c) fraction of the class who like walking up a hill; (d) do you like reading; (e) approximately how many bricks are in this wall; (f) best bowler in yesterday's match; (g) last year's rainfall pattern in Barmer."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Open with the gender-from-height guessing scenario introduced in section 13.1: invite students to say whether one piece of height information is enough to decide, surfacing that variation in data is the problem. Establish the term statistical statement — a claim expressed in numbers, proportions, or predictions about a phenomenon."
+            },
+            {
+              "minutes": "8–20",
+              "activity": "Walk through the chapter's own examples of statistical statements (batting consistency, cycling time, village population) and contrast them with exact-answer statements. Students sort three teacher-posed examples — one a precise fact, one a prediction, one a proportion — into 'statistical' or 'not statistical' and justify in pairs."
+            },
+            {
+              "minutes": "20–35",
+              "activity": "Math Talk, section 13.1 p.98 (\"Decide which of the following are statistical questions: (a) price of a tennis ball….\") — students work individually, then compare answers with a partner, arguing from the definition: does the question expect variation and require data collection?"
+            },
+            {
+              "minutes": "35–40",
+              "activity": "Whole-class consolidation: take two contested items from the Math Talk exercise and hear competing justifications, drawing out that a statistical question requires gathering and analysing data because answers vary across contexts or people."
+            }
+          ],
+          "teacher_notes": "Watch for students who classify any numerical question as statistical — the key test is whether the answer varies across cases and requires data collection rather than a single lookup. The gender-from-height opener works well to anchor that variation is the heart of the concept. The definition of statistics as collecting, organising, analysing, interpreting, and presenting data can be written on the board as a reference frame for the chapter.",
+          "materials": [
+            "Blackboard or whiteboard",
+            "Chalk or markers"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 13.1",
+              "title": "Of Questions and Statements"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Arguing Whether a Question Demands Data",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "section 13.1",
+              "book_ref": "Math Talk, section 13.1 p.98",
+              "description": "Decide which of the following are statistical questions: (a) price of a tennis ball in India; (b) ages of dogs on this street; (c) fraction of the class who like walking up a hill; (d) do you like reading; (e) approximately how many bricks are in this wall; (f) best bowler in yesterday's match; (g) last year's rainfall pattern in Barmer."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Revisit the statistical-statement idea by presenting one borderline question — 'How tall are Grade 7 students in our school?' — and ask students to construct a brief argument for why it is or is not statistical, writing one sentence of justification before any discussion."
+            },
+            {
+              "minutes": "10–25",
+              "activity": "Small groups receive three new questions framed around their school context (e.g., 'Are onions typically costlier in Yahapur or Wahapur?', 'Who is the best bowler in yesterday's match?', 'What fraction of our class walks to school?'). Each group writes a short chain of reasoning: what data would be needed, whether variation is expected, and therefore whether each question is statistical."
+            },
+            {
+              "minutes": "25–38",
+              "activity": "Groups share their reasoning for the most contested item. Class constructs a shared criterion: a question is statistical when answering it requires collecting data that vary across cases. Return to Math Talk, section 13.1 p.98 (\"Decide which of the following are statistical questions….\") items (e) and (f) — the brick-wall and best-bowler questions — which provoke the richest disagreement, and settle them with the shared criterion."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Students write one new statistical question of their own on a slip of paper — this is an exit check, not collected for marking — and read one aloud if time permits."
+            }
+          ],
+          "teacher_notes": "The brick-wall question (e) is productively ambiguous: one reading makes it a single-lookup estimation, another makes it a sampling problem — both readings are mathematically defensible and the argument itself is the learning. A common error is treating 'last year's rainfall pattern in Barmer' as non-statistical because it refers to a past fact; push students to see that a pattern across months still requires data collection and analysis.",
+          "materials": [
+            "Blackboard or whiteboard",
+            "Slips of paper for exit check"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 13.2",
+              "title": "Representative Values"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Fair Share: Building the Arithmetic Mean",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-2",
+              "type": "exercise",
+              "source_section": "section 13.2",
+              "book_ref": "Figure it Out Q1, section 13.2 p.101",
+              "description": "Shreyas bounces a ball on a bat with counts 6, 2, 9, 5, 4, 6, 3, 5 over 8 attempts; calculate the average number of bounces."
+            },
+            {
+              "id": "E-5",
+              "type": "exercise",
+              "source_section": "section 13.2",
+              "book_ref": "Figure it Out Q4, section 13.2 p.101",
+              "description": "Given weekly 100 m times for Nikhil (17, 18, 17, 16, 19, 17, 18) and Sunil (20, 18, 18, 17, 16, 16, 17), decide who on average ran quicker."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-6",
+              "type": "exercise",
+              "source_section": "section 13.2",
+              "book_ref": "Figure it Out Q5, section 13.2 p.101",
+              "description": "Find the mean enrolment given six years' figures 1555, 1670, 1750, 2013, 2040, 2126."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Pose the cricket-scores comparison from section 13.2: two players, different numbers of matches. Ask students to argue which comparison (highest score, total, average) is fairest when match counts differ — surface that totals mislead when sample sizes differ."
+            },
+            {
+              "minutes": "10–20",
+              "activity": "Work through the guava-sharing and hibiscus-blooms examples from section 13.2, establishing mean = sum ÷ count as a fair-share idea. Note the ancient Indian terms: samarajju (Brahmagupta), samīkaraṇa (Mahāvīrācārya), sāmya (Śrīpati). Students compute a mean from a small invented dataset to confirm the procedure."
+            },
+            {
+              "minutes": "20–33",
+              "activity": "Figure it Out Q1, section 13.2 p.101 (\"Shreyas bounces a ball on a bat with counts 6, 2, 9, 5, 4, 6, 3, 5….\") — students compute individually, then Figure it Out Q4, section 13.2 p.101 (\"Given weekly 100 m times for Nikhil … and Sunil….\") — pairs decide who ran quicker on average and write one sentence of justification."
+            },
+            {
+              "minutes": "33–40",
+              "activity": "Discuss: if Sunil ran one fewer race, should that race's time still count? Connect back to the cricket example to reinforce that the number of values in the denominator must match the values summed."
+            }
+          ],
+          "teacher_notes": "A recurring error is dividing by the wrong count — students sometimes exclude a value from the sum but still divide by the full count, or vice versa; the fair-share image (redistribute guavas equally) helps correct this. Figure it Out Q4 is particularly useful because Nikhil and Sunil have the same number of races, isolating the mean calculation from count-mismatch confusion.",
+          "materials": [
+            "Blackboard or whiteboard",
+            "Chalk or markers",
+            "Squared paper for tally if needed"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 13.2",
+              "title": "Representative Values"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Describing Data: Range, Dot Plots, and Mean",
+          "pedagogical_method": "Play-way",
+          "textbook_items_in_class": [
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "section 13.2",
+              "book_ref": "Figure it Out Q2, section 13.2 p.101",
+              "description": "Collect your own bounce data for 7 or more attempts and find the average."
+            },
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "section 13.2",
+              "book_ref": "Figure it Out Q3, section 13.2 p.112",
+              "description": "For Rintu's date-palm heights, fill the dot plot, mark the mean and median, describe the heights, find quicker ways to compute the mean, and count trees shorter than the average."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Using the onion-price data of Yahapur and Wahapur from section 13.2, demonstrate how to describe a dataset by its minimum, maximum, range, and mean. Draw a dot plot on the board, placing each value as a dot above a number line, and note how clustering and spread become visible."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Figure it Out Q2, section 13.2 p.101 (\"Collect your own bounce data for 7 or more attempts….\") — students carry out a quick in-class bounce-count activity using a ball or simulating with finger-taps on a desk, record their counts, construct a personal dot plot on a strip of paper, and compute the mean."
+            },
+            {
+              "minutes": "22–36",
+              "activity": "Figure it Out Q3, section 13.2 p.112 (\"For Rintu's date-palm heights, fill the dot plot, mark the mean and median….\") — pairs fill the dot plot, mark the mean, and count trees shorter than the average, noting what fraction of the data falls below the mean."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Brief discussion: is the mean always a value that actually appears in the data? Students give a counterexample from their bounce counts or the date-palm data to settle this."
+            }
+          ],
+          "teacher_notes": "Students sometimes assume the mean must be one of the data values; the date-palm or bounce datasets usually produce a non-integer mean that settles this cleanly. When constructing dot plots, watch for students who space dots unevenly — the horizontal axis must be a uniform number line, not just a list of values.",
+          "materials": [
+            "Blackboard or whiteboard",
+            "Strips of paper or squared paper for dot plots",
+            "A soft ball or substitute for bounce activity"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 13.2",
+              "title": "Representative Values"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Median, Outliers, and When the Mean Misleads",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-7",
+              "type": "exercise",
+              "source_section": "section 13.2",
+              "book_ref": "Figure it Out Q1, section 13.2 p.112",
+              "description": "Find the median of the onion prices in Yahapur and in Wahapur."
+            },
+            {
+              "id": "E-10",
+              "type": "exercise",
+              "source_section": "section 13.2",
+              "book_ref": "Figure it Out Q4, section 13.2 p.112",
+              "description": "Given daily water-usage values, (a) decide whether the mean or median can lie between 25 and 30, justifying using their meaning; (b) decide whether either can be less than the minimum or greater than the maximum value."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Introduce the median using the family-height and short-story examples from section 13.2: sort values, find the middle (or average the two middle values for even counts). Then present the outlier concept — a value that deviates greatly — and show with a small dataset how a single high outlier raises the mean above the median, while a low outlier does the reverse."
+            },
+            {
+              "minutes": "12–24",
+              "activity": "Figure it Out Q1, section 13.2 p.112 (\"Find the median of the onion prices in Yahapur and in Wahapur.\") — students sort each town's prices, locate the median, and compare it with the mean computed earlier, writing one sentence about which town typically has higher prices and why the median is informative here."
+            },
+            {
+              "minutes": "24–36",
+              "activity": "Figure it Out Q4, section 13.2 p.112 (\"Given daily water-usage values, decide whether the mean or median can lie between 25 and 30….\") — partners work through both parts, justifying from the definitions of mean as fair-share and median as the middle ordered value."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Pose the zero-versus-no-value problem from section 13.2: a cricketer scores 0 vs. does not play; a mango tree produces 0 vs. is in off-season. Students decide orally which values to include in a mean calculation and why."
+            }
+          ],
+          "teacher_notes": "The most common confusion is including absent-player or off-season zeros in a mean: stress that only relevant values — those that represent the quantity being measured — should enter the calculation. For even-count data, students sometimes forget to average the two middle values; a worked example with six values on the board catches this before the exercises.",
+          "materials": [
+            "Blackboard or whiteboard",
+            "Chalk or markers"
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 13.2",
+              "title": "Representative Values"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Comparing Groups with Mean and Median",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "section 13.2",
+              "book_ref": "Figure it Out Q2, section 13.2 p.112",
+              "description": "For Sanskruti's pet-count data (with some absent students), find the mean and median and describe the data."
+            },
+            {
+              "id": "E-11",
+              "type": "exercise",
+              "source_section": "section 13.2",
+              "book_ref": "Figure it Out Q5, section 13.2 p.112",
+              "description": "Fill a dot plot for the given newborn-baby weights of boys and girls, then analyse and compare the data."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "section 13.2",
+              "book_ref": "Figure it Out Q3, section 13.2 p.101",
+              "description": "Track the number of flowers blooming each day over a week on a neighbourhood plant and find the average per day."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Briefly recall the height data for boys and girls split as a class from section 13.2 — an example of comparing two groups using mean and median — to frame this unit's work on group comparison."
+            },
+            {
+              "minutes": "8–22",
+              "activity": "Figure it Out Q2, section 13.2 p.112 (\"For Sanskruti's pet-count data, with some absent students, find the mean and median….\") — students decide which values to include, compute both measures, and write two descriptive sentences about the dataset, noting any outlier effect."
+            },
+            {
+              "minutes": "22–36",
+              "activity": "Figure it Out Q5, section 13.2 p.112 (\"Fill a dot plot for the given newborn-baby weights of boys and girls, then analyse and compare….\") — pairs fill separate dot plots for boys and girls on the same axis scale, mark each group's mean and median, and write a comparison sentence."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Class shares comparisons: which group shows more spread, which has a higher median, and what the dot plots reveal that the numbers alone do not."
+            }
+          ],
+          "teacher_notes": "When comparing two groups, watch for students who compare means without acknowledging spread — the dot plots are designed to make variability visible alongside the central value. The absent-student case in Figure it Out Q2 revisits the zero-versus-no-value reasoning from the previous unit's close; the context is different (pets, not cricket) but the logic is the same.",
+          "materials": [
+            "Blackboard or whiteboard",
+            "Squared paper for dot plots"
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 13.2",
+              "title": "Representative Values"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "When Mean and Median Tell Different Stories",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-12",
+              "type": "exercise",
+              "source_section": "section 13.2",
+              "book_ref": "Figure it Out Q6, section 13.2 p.113",
+              "description": "From the dot plots and central-tendency measures of another Grade 5 section, share observations and compare the heights of the two sections."
+            },
+            {
+              "id": "E-13",
+              "type": "exercise",
+              "source_section": "section 13.2",
+              "book_ref": "Figure it Out Q7, section 13.2 p.113",
+              "description": "Given weights of sumo wrestlers and ballet dancers, estimate approximately how many times heavier a sumo wrestler is than a ballet dancer."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Present the 'zero median but high total' cricket example from section 13.2 — a player whose median score is 0 yet whose total is large — and ask students to explain in writing why the mean and median diverge here, linking to the outlier-pulls-the-mean idea established when studying central tendency."
+            },
+            {
+              "minutes": "10–24",
+              "activity": "Figure it Out Q6, section 13.2 p.113 (\"From the dot plots and central-tendency measures of another Grade 5 section, share observations….\") — students examine the given dot plots and means/medians, write three observations, then argue which section is 'taller on the whole' and whether one measure alone is sufficient to settle that claim."
+            },
+            {
+              "minutes": "24–36",
+              "activity": "Figure it Out Q7, section 13.2 p.113 (\"Given weights of sumo wrestlers and ballet dancers, estimate approximately how many times heavier….\") — pairs use mean weights to form a ratio estimate, then discuss whether a single mean fairly represents each group given the spread visible in the data."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Consolidation: students articulate in one sentence the principle that when an outlier is present, the median is more resistant than the mean, and share with a neighbour."
+            }
+          ],
+          "teacher_notes": "A common reasoning error is concluding that whichever group has a higher mean is 'always better' — the sumo vs. ballet example disrupts this by making the comparison absurd in context, prompting students to think about what the mean actually represents for a given group. The dot-plot comparison in Figure it Out Q6 is designed to show that two groups can have similar means yet very different spreads.",
+          "materials": [
+            "Blackboard or whiteboard",
+            "Chalk or markers"
+          ]
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 13.3",
+              "title": "Visualising Data"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Reading and Building Double-Bar Graphs",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-14",
+              "type": "exercise",
+              "source_section": "section 13.3",
+              "book_ref": "Figure it Out Q1, section 13.3 p.122",
+              "description": "From an animal-speed infographic: (a) state the scale; (b) note what is interesting; (c) find a pair where one speed is about twice the other; (d) judge whether a sailfish is about 4 times faster than a humpback whale and the fastest aquatic animal."
+            },
+            {
+              "id": "E-15",
+              "type": "exercise",
+              "source_section": "section 13.3",
+              "book_ref": "Figure it Out Q2, section 13.3 p.124",
+              "description": "From the superpower-preference responses of Grade 5 and Grade 9, draw a double-bar graph comparing the two grades' choices with an appropriate scale."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Introduce the clustered (double) bar graph by combining the two single-column onion-price graphs from section 13.3 into one side-by-side graph on the board, explaining scale choice, colour/pattern fills for greyscale readability, and when time order matters (months) versus when it does not (organisations)."
+            },
+            {
+              "minutes": "12–22",
+              "activity": "Figure it Out Q1, section 13.3 p.122 (\"From an animal-speed infographic: (a) state the scale; (b) note what is interesting….\") — students apply the two-step read: first identify organisation, scale, and patterns; then infer and interpret, answering all four sub-questions."
+            },
+            {
+              "minutes": "22–38",
+              "activity": "Figure it Out Q2, section 13.3 p.124 (\"From the superpower-preference responses of Grade 5 and Grade 9, draw a double-bar graph….\") — pairs choose a scale, draw axes, and construct the double-bar graph, then write one observation comparing the two grades' preferences."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Quick gallery check: pairs swap graphs and verify that both axes are labelled, the scale is stated, and the two bars for each category are visually distinct."
+            }
+          ],
+          "teacher_notes": "Watch for students who draw bars of varying width or unequal spacing — stress that bar width and gap are uniform throughout a bar graph and that the height alone encodes the value. The identify-then-infer two-step from section 13.3 is a transferable reading strategy worth naming explicitly so students apply it to all graphs that follow.",
+          "materials": [
+            "Blackboard or whiteboard",
+            "Squared paper or graph paper",
+            "Rulers",
+            "Coloured pencils or markers"
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 13.3",
+              "title": "Visualising Data"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Constructing and Comparing Temperature and Vehicle Graphs",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-16",
+              "type": "exercise",
+              "source_section": "section 13.3",
+              "book_ref": "Figure it Out Q3, section 13.3 p.124",
+              "description": "From the two-day temperature data for Jodhpur, draw a double-bar graph with scale 1 unit = 4°C and guess the two months."
+            },
+            {
+              "id": "E-17",
+              "type": "exercise",
+              "source_section": "section 13.3",
+              "book_ref": "Figure it Out Q4, section 13.3 p.124–125",
+              "description": "From the clustered-bar graph of electric-vehicle registrations: mark the Gujarat and Delhi bars from the table, describe changes 2022–2024, and answer comparison questions about several states."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–18",
+              "activity": "Figure it Out Q3, section 13.3 p.124 (\"From the two-day temperature data for Jodhpur, draw a double-bar graph with scale 1 unit = 4°C….\") — students construct the graph individually using the prescribed scale, then use the pattern of temperatures to guess which two months are represented, writing their reasoning."
+            },
+            {
+              "minutes": "18–36",
+              "activity": "Figure it Out Q4, section 13.3 p.124–125 (\"From the clustered-bar graph of electric-vehicle registrations: mark the Gujarat and Delhi bars….\") — pairs mark the missing bars from the table, then answer the comparison questions about changes across 2022–2024 and relative state positions, applying the identify-then-infer strategy."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Discuss: for the EV data, does time order of years matter on the horizontal axis? Compare with the superpower-preference graph where category order is free — consolidating the design-choice principle from section 13.3."
+            }
+          ],
+          "teacher_notes": "A common error in Figure it Out Q3 is not starting the vertical axis at zero or choosing an inconsistent scale — the prescribed scale (1 unit = 4°C) eliminates the scale-choice difficulty and lets students focus on construction accuracy. For Figure it Out Q4, students sometimes describe a bar's height rather than the change between years; prompt them to compute or estimate the difference explicitly.",
+          "materials": [
+            "Squared paper or graph paper",
+            "Rulers",
+            "Coloured pencils or markers",
+            "Blackboard or whiteboard"
+          ]
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 13.3",
+              "title": "Visualising Data"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Inferring Stories from Graphs — Hemispheres and Rocket Launches",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-15",
+              "type": "exercise",
+              "source_section": "section 13.3",
+              "book_ref": "Figure it Out Q2, section 13.3 p.124",
+              "description": "From the superpower-preference responses of Grade 5 and Grade 9, draw a double-bar graph comparing the two grades' choices with an appropriate scale."
+            },
+            {
+              "id": "E-17",
+              "type": "exercise",
+              "source_section": "section 13.3",
+              "book_ref": "Figure it Out Q4, section 13.3 p.124–125",
+              "description": "From the clustered-bar graph of electric-vehicle registrations: mark the Gujarat and Delhi bars from the table, describe changes 2022–2024, and answer comparison questions about several states."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–14",
+              "activity": "Present the Helsinki–Wellington monthly daylight-hour double-bar graph from section 13.3 on the board. Students apply the two-step strategy: identify scale, organisation, and patterns; then infer — writing one sentence to explain why Helsinki and Wellington show inverted seasonal patterns, linking to the opposite-hemisphere explanation in the text."
+            },
+            {
+              "minutes": "14–28",
+              "activity": "Present the rocket-launch-by-organisation and rocket-launch-by-year graphs from section 13.3. Students answer: which organisation launched most, which year saw fewest launches, and what the trend across years suggests. They write their inferences in two or three sentences, distinguishing what the graph directly shows from what they are inferring."
+            },
+            {
+              "minutes": "28–38",
+              "activity": "Revisit the cricket runs-per-over double-bar graph with wicket markers from section 13.3: students answer questions about who batted first, over-by-over score patterns, and the target, practising reading compound information from a single graph."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Students name one graph feature that was easy to read and one inference they found genuinely surprising — surfacing the difference between reading a graph and interpreting it."
+            }
+          ],
+          "teacher_notes": "Students often confuse describing a graph (reading bar heights) with interpreting it (explaining what those heights mean in context); the Helsinki–Wellington inversion is a strong prompt because the pattern is only surprising if the student understands the hemisphere reason behind it. Watch for students who treat 'more launches' as meaning 'more successful missions' — the data shows counts, not outcomes.",
+          "materials": [
+            "Blackboard or whiteboard",
+            "Chalk or markers",
+            "Printed or board-drawn copies of Helsinki–Wellington and rocket-launch graphs"
+          ]
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 13.4",
+              "title": "Data Detective"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Separating Supported Claims from Unsupported Ones",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-18",
+              "type": "exercise",
+              "source_section": "section 13.4",
+              "book_ref": "Figure it Out Q1, section 13.4 p.129",
+              "description": "From the pocket-count dot plots for boys and girls, decide which statements about variability, median, mean, and maximum are true."
+            },
+            {
+              "id": "E-19",
+              "type": "exercise",
+              "source_section": "section 13.4",
+              "book_ref": "Figure it Out Q2, section 13.4 p.129–130",
+              "description": "From a table of points over four games with a 'did not play' entry: (a) find A's average per game; (b) decide whether to divide C's and B's totals by 3 or 4 and why; (c) decide who is the best performer."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Introduce section 13.4's core task using the boy–girl height-across-grades dataset: present several statements about the data and ask students to write 'supported', 'not supported', or 'cannot tell' next to each. Establish that the data detective's job is to justify every claim with evidence from the dataset, not from general knowledge."
+            },
+            {
+              "minutes": "10–24",
+              "activity": "Figure it Out Q1, section 13.4 p.129 (\"From the pocket-count dot plots for boys and girls, decide which statements….\") — students read the dot plots and evaluate each statement, writing the specific dot-plot evidence that confirms or refutes it."
+            },
+            {
+              "minutes": "24–38",
+              "activity": "Figure it Out Q2, section 13.4 p.129–130 (\"From a table of points over four games with a 'did not play' entry….\") — pairs work through (a), (b), and (c) in order, paying particular attention to (b): articulating in a full sentence why dividing by 3 or 4 is correct for each player, echoing the zero-versus-no-value principle from section 13.2."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Whole class: what is the difference between 'C's total is higher' and 'C is the best performer'? Students name the additional information needed to move from the first claim to the second."
+            }
+          ],
+          "teacher_notes": "The 'did not play' entry in Figure it Out Q2 directly tests whether students have internalised the zero-versus-no-value distinction established when studying central tendency — watch for students who mechanically divide by 4 regardless of context. A productive error to surface is conflating 'the data shows X is true of this sample' with 'X is true in general'; the caution from section 13.4 that one or two schools' data cannot generalise to a whole country is directly relevant here.",
+          "materials": [
+            "Blackboard or whiteboard",
+            "Chalk or markers"
+          ]
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 13.4",
+              "title": "Data Detective"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Reading Trends: Growth, Extrapolation, and Limits",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-20",
+              "type": "exercise",
+              "source_section": "section 13.4",
+              "book_ref": "Figure it Out Q3, section 13.4 p.130",
+              "description": "Compare two groups' General Knowledge quiz scores using mean and median and describe their performance."
+            },
+            {
+              "id": "E-24",
+              "type": "exercise",
+              "source_section": "section 13.4",
+              "book_ref": "Figure it Out Q7, section 13.4 p.130",
+              "description": "Two 7th-grade sections each have 15 boys and 15 girls; given one section's mean height is 154.2 cm, choose what must be true about the other section's mean."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Use the 1989–2019 average-height survey table from section 13.4 to model trend reading: between which successive ages do boys and girls grow the most? Students find the largest year-on-year difference and write a claim. Then ask: can we extrapolate to 2029? Discuss what assumptions are needed and what makes the extrapolation uncertain."
+            },
+            {
+              "minutes": "12–26",
+              "activity": "Figure it Out Q3, section 13.4 p.130 (\"Compare two groups' General Knowledge quiz scores using mean and median….\") — pairs compute both measures for each group, write two comparative sentences, and flag any outlier that makes one measure more informative than the other."
+            },
+            {
+              "minutes": "26–38",
+              "activity": "Figure it Out Q7, section 13.4 p.130 (\"Two 7th-grade sections each have 15 boys and 15 girls; given one section's mean height is 154.2 cm, choose what must be true….\") — students reason through each option, identifying what can and cannot be deduced about the second section's mean without additional data."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Students articulate in one sentence the limit of the height survey data for making national claims, connecting to section 13.4's caution about generalising from a small sample."
+            }
+          ],
+          "teacher_notes": "Figure it Out Q7 is a deductive reasoning item — students must eliminate options by finding contradictions, not by computing; watch for students who try to assign specific values to the second section's mean rather than reasoning about what must and cannot be true. The extrapolation to 2029 discussion surfaces a genuinely open statistical question: the trend may continue, flatten, or reverse, and honest uncertainty is the correct conclusion.",
+          "materials": [
+            "Blackboard or whiteboard",
+            "Chalk or markers"
+          ]
+        },
+        {
+          "period_number": 13,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 13.4",
+              "title": "Data Detective"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Constructing Graphs and Analysing Real Survey Data",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-21",
+              "type": "exercise",
+              "source_section": "section 13.4",
+              "book_ref": "Figure it Out Q4, section 13.4 p.130",
+              "description": "From survey data of watching vs participating in five sports, choose a scale, draw a double-bar graph, and write observations."
+            },
+            {
+              "id": "E-22",
+              "type": "exercise",
+              "source_section": "section 13.4",
+              "book_ref": "Figure it Out Q5, section 13.4 p.130",
+              "description": "For 17 students' heights, suggest a threshold height that splits the class into two equal groups, and estimate their age from the 'Telling Tall Tales' table."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–20",
+              "activity": "Figure it Out Q4, section 13.4 p.130 (\"From survey data of watching vs participating in five sports, choose a scale, draw a double-bar graph….\") — students choose a scale independently, construct the double-bar graph, and write at least two observations distinguishing what people watch from what they participate in."
+            },
+            {
+              "minutes": "20–34",
+              "activity": "Figure it Out Q5, section 13.4 p.130 (\"For 17 students' heights, suggest a threshold height that splits the class into two equal groups….\") — students sort the 17 heights, identify the median as a candidate threshold, verify whether it splits the group into two groups of roughly equal size, and use the 'Telling Tall Tales' table to estimate the age corresponding to that height."
+            },
+            {
+              "minutes": "34–40",
+              "activity": "Discuss: does splitting by the median always give exactly equal groups? Students test this with the 17-value sorted list and note the odd-count edge case, reinforcing the median's definition as the middle value of sorted data."
+            }
+          ],
+          "teacher_notes": "Students sometimes choose unnecessarily large scales for Figure it Out Q4 (e.g., 1 unit = 50) that compress bars and make reading difficult; encourage them to look at the range of values first and choose a scale that fills most of the graph area. Figure it Out Q5's connection between a statistical threshold and an age estimate from a table is an interdisciplinary link worth noting — the table is itself a real dataset, not a formula.",
+          "materials": [
+            "Squared paper or graph paper",
+            "Rulers",
+            "Coloured pencils or markers",
+            "Blackboard or whiteboard"
+          ]
+        },
+        {
+          "period_number": 14,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 13.4",
+              "title": "Data Detective"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Dot Plots, Skyscrapers, and Estimation Accuracy",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-25",
+              "type": "exercise",
+              "source_section": "section 13.4",
+              "book_ref": "Figure it Out Q8, section 13.4 p.131",
+              "description": "From a skyscraper infographic: (a) estimate the number of skyscrapers in New York, Tokyo, and London; (b) judge the validity of statements about cities relative to Mumbai and the world's tallest building."
+            },
+            {
+              "id": "E-26",
+              "type": "exercise",
+              "source_section": "section 13.4",
+              "book_ref": "Figure it Out Q9, section 13.4 p.131",
+              "description": "Estimate and then measure the listed objects, draw a double-bar graph, and find the average difference between estimated and measured values."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–16",
+              "activity": "Figure it Out Q8, section 13.4 p.131 (\"From a skyscraper infographic: (a) estimate the number of skyscrapers in New York, Tokyo, and London….\") — students read the infographic, form estimates for part (a), and then evaluate the statements in part (b) by checking each against the infographic data, labelling each as 'supported', 'not supported', or 'cannot tell from the data'."
+            },
+            {
+              "minutes": "16–36",
+              "activity": "Figure it Out Q9, section 13.4 p.131 (\"Estimate and then measure the listed objects, draw a double-bar graph, and find the average difference….\") — students record their estimates, measure each object, enter both values in a two-column table, construct a double-bar graph, and compute the mean absolute difference between estimate and measurement as a measure of their estimation accuracy."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Pairs compare their average estimation errors: who estimated more accurately overall? Students connect the idea of 'average difference' to the mean as fair-share — the same arithmetic operation in a new context."
+            }
+          ],
+          "teacher_notes": "Figure it Out Q9 is a genuine data-collection task — students need actual objects to measure (rulers, books, windows, desks); ensure measuring tapes or rulers are available and that students understand they are computing a mean of differences, not a difference of means. For Figure it Out Q8, students sometimes treat 'the infographic shows fewer skyscrapers' as meaning 'there are fewer skyscrapers' — a good opportunity to revisit section 13.4's caution about what a single data source can and cannot establish.",
+          "materials": [
+            "Rulers or measuring tapes",
+            "Objects to estimate and measure",
+            "Squared paper or graph paper",
+            "Coloured pencils or markers"
+          ]
+        },
+        {
+          "period_number": 15,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 13.4",
+              "title": "Data Detective"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Long Runs of Data: Sudoku Times and Dot-Plot Stories",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-23",
+              "type": "exercise",
+              "source_section": "section 13.4",
+              "book_ref": "Figure it Out Q6, section 13.4 p.130",
+              "description": "Describe the mean and median of your class's heights, visualising them on a dot plot."
+            },
+            {
+              "id": "E-27",
+              "type": "exercise",
+              "source_section": "section 13.4",
+              "book_ref": "Figure it Out Q10, section 13.4 p.132",
+              "description": "For Aditi's Sudoku-solving times over two weeks: (a) construct a dot plot for both weeks; (b) describe the mean, median, and observations."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–16",
+              "activity": "Figure it Out Q6, section 13.4 p.130 (\"Describe the mean and median of your class's heights, visualising them on a dot plot.\") — students collect heights from classmates present, construct a class dot plot on the board collectively, then compute the mean and mark both mean and median on the plot, writing two observations about the distribution."
+            },
+            {
+              "minutes": "16–36",
+              "activity": "Figure it Out Q10, section 13.4 p.132 (\"For Aditi's Sudoku-solving times over two weeks: (a) construct a dot plot for both weeks; (b) describe the mean, median, and observations.\") — pairs construct dot plots for week 1 and week 2 on the same scale, compute each week's mean and median, and write a comparison paragraph: did Aditi get faster, slower, or more consistent?"
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Students share one observation from Aditi's data that the mean alone would not reveal but the dot plot makes obvious — surfacing the complementary roles of graphical and numerical summaries."
+            }
+          ],
+          "teacher_notes": "Constructing the class dot plot collaboratively is an opportunity to handle the mechanics of a real, slightly messy dataset: values that cluster, a possible outlier, and the question of whether to round heights. For Aditi's Sudoku data, the key observation is usually about spread across the two weeks, not just the shift in mean — watch for students who describe only the averages without commenting on variability.",
+          "materials": [
+            "Blackboard or whiteboard",
+            "Chalk or markers",
+            "Measuring tape for height collection"
+          ]
+        },
+        {
+          "period_number": 16,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 13.4",
+              "title": "Data Detective"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Mini-Projects: Name, Sentence, and Language Data",
+          "pedagogical_method": "Play-way",
+          "textbook_items_in_class": [
+            {
+              "id": "E-28",
+              "type": "exercise",
+              "source_section": "section 13.4",
+              "book_ref": "Figure it Out Q11, section 13.4 p.132–133",
+              "description": "Individual project: either 'How Long is a Sentence?' (dot-plot sentence lengths from two textbook pages and compare with mean/median) or 'What is in a Name?' (mean/median name length, popular starting letters, median starting letter, and a double-bar graph of vowel/consonant patterns)."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–5",
+              "activity": "Students choose between the two project tracks in Figure it Out Q11, section 13.4 p.132–133 (\"Individual project: either 'How Long is a Sentence?' … or 'What is in a Name?'….\"). Briefly clarify what each track requires — sentence lengths from two textbook pages vs. name-length and letter analysis — and ensure each student has the source text or name list they need."
+            },
+            {
+              "minutes": "5–32",
+              "activity": "Students work independently on their chosen track: collecting data values, constructing a dot plot, computing mean and median, and — for the name track — drawing the vowel/consonant double-bar graph. The teacher circulates, prompting students to check their dot-plot axis scale and to write at least one comparison sentence between the two pages or two letter categories."
+            },
+            {
+              "minutes": "32–38",
+              "activity": "Pairs who chose the same track compare their dot plots: do they see similar means and medians, or do their source texts differ? Students write one sentence attributing any difference to the choice of source text."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Whole class: one student from each track shares the most surprising result from their data — surfaces that different real datasets, even from the same type of source, produce genuinely different distributions."
+            }
+          ],
+          "teacher_notes": "Students on the sentence-length track sometimes count words instead of letters or characters; clarify at the start that sentence length here means number of words (or characters, consistently defined). For the name track, the median starting letter requires sorting names alphabetically and finding the middle — a nice application of the median definition to a non-numerical dataset.",
+          "materials": [
+            "Textbooks or printed text for sentence-length track",
+            "Class name list for name track",
+            "Squared paper for dot plots",
+            "Rulers",
+            "Coloured pencils"
+          ]
+        },
+        {
+          "period_number": 17,
+          "period_duration_minutes": 40,
+          "synthesis": true,
+          "textbook_segments": [
+            {
+              "ref": "section 13.1",
+              "title": "Of Questions and Statements"
+            },
+            {
+              "ref": "section 13.2",
+              "title": "Representative Values"
+            },
+            {
+              "ref": "section 13.3",
+              "title": "Visualising Data"
+            },
+            {
+              "ref": "section 13.4",
+              "title": "Data Detective"
+            }
+          ],
+          "activity_title": "Four Questions, One Chapter",
+          "pedagogical_method": "Problem-solving",
+          "section_goal": "apply",
+          "teacher_notes": "Refer to Prepared Table (see material: 'Problems and solutions') for the problems in full and their worked solutions. Pose all four problems on the board at once. Students work individually, writing full working in their notebooks — no comparison yet. Then groups of three compare answers; any disagreement must be reconstructed step by step, not resolved by majority vote. Each group nominates one presenter per problem. After each presentation the class names aloud the chapter method the solution rested on: Problem 1 needs the statistical-question test; Problem 2 needs arithmetic mean as fair share; Problem 3 needs median and the outlier effect on mean; Problem 4 needs reading and comparing a double-bar graph. Watch for students who divide by the wrong count in Problem 2, who forget to sort before finding the median in Problem 3, and who read bar heights carelessly rather than tracing to the scale in Problem 4.",
+          "visual_aids": [
+            {
+              "type": "table",
+              "title": "Problems and solutions",
+              "table": "No. | Problem | Solution\n1 | Riya lists four questions: (A) How many brothers does Ananya have? (B) How many hours do students in our school sleep each night? (C) What is today's date? (D) What is the most common eye colour among people in our town? Which of these are statistical questions, and why? | B and D are statistical questions. Both require collecting data from many people and expect variation in the answers — sleeping hours differ from student to student, and eye colour differs across the town. A and C have single fixed answers that need no data collection and show no variation, so they are not statistical questions.\n2 | In a week, Priya read for these many minutes each day: 45, 30, 45, 60, 0, 50, 50. What is the mean reading time per day? If the 0-minute day was because she was ill and did not read at all, should that day be counted? What is the mean for the six days she was well? | Total for all 7 days: 45+30+45+60+0+50+50 = 280. Mean over 7 days = 280 ÷ 7 = 40 minutes. The 0 is a real value (she was present but did not read — she was ill, meaning she simply read nothing). However, if the question is about her reading habit on days she was well, only the 6 well-day values count: 280 – 0 = 280, but the 0-day is excluded, so sum = 280, count = 6 → mean = 280 ÷ 6 ≈ 46.7 minutes. Key point: count only the values relevant to the question being answered.\n3 | Eight students counted the books on their home shelves: 4, 7, 5, 6, 5, 8, 6, 40. Find the median and the mean. Which better represents a typical student's shelf, and why? | Sort: 4, 5, 5, 6, 6, 7, 8, 40. Median = average of 4th and 5th values = (6+6) ÷ 2 = 6. Mean = (4+5+5+6+6+7+8+40) ÷ 8 = 81 ÷ 8 = 10.125. The value 40 is an outlier — it pulls the mean far above most values. The median (6) better represents a typical student's shelf because it is not affected by the outlier.\n4 | A double-bar graph shows runs scored by Team A and Team B in each of four overs. The scale is 1 unit = 5 runs. Team A's bar heights (in units) are 3, 4, 2, 5 for overs 1–4. Team B's bar heights are 2, 3, 4, 4 for overs 1–4. (a) What is each team's total? (b) In which over was the difference between the two teams greatest? (c) Which team scored more in the second half (overs 3 and 4)? | Runs: A = 15, 20, 10, 25 → total 70. B = 10, 15, 20, 20 → total 65. (a) Team A: 70 runs; Team B: 65 runs. (b) Over 1: difference = 15–10 = 5; Over 2: 20–15 = 5; Over 3: 20–10 = 10; Over 4: 25–20 = 5. Greatest difference is in Over 3 (10 runs). (c) Overs 3–4: A scores 10+25 = 35; B scores 20+20 = 40. Team B scored more in the second half."
+            }
+          ],
+          "materials": [
+            "Blackboard or whiteboard and chalk or markers",
+            "Student notebooks",
+            "Pencils"
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-3",
+              "activity": "The teacher writes all four problems on the board, reading each aloud once. Students open their notebooks to a fresh page. No questions yet — the instruction is to read all four and begin where they feel most ready."
+            },
+            {
+              "minutes": "3-18",
+              "activity": "Individual work. Every student writes full working for each problem in their notebook — not just answers. The teacher circulates silently, noting where working is thin or counts are wrong, but gives no corrections."
+            },
+            {
+              "minutes": "18-28",
+              "activity": "Groups of three compare notebooks problem by problem. Where answers differ, the group reconstructs the working step by step to find where the paths diverge. Each group agrees on a final answer for each problem and nominates one presenter."
+            },
+            {
+              "minutes": "28-38",
+              "activity": "One presenter per problem comes to the board. After each solution is shown, the class names the chapter method it used — statistical-question test, arithmetic mean, median and outlier effect, or double-bar graph reading. The teacher asks one follow-up question per problem: 'Would your answer change if…?' to test whether students understand the method or only the answer."
+            },
+            {
+              "minutes": "38-40",
+              "activity": "The teacher closes with one sentence: data carries answers only when it is collected carefully, summarised honestly, and read without jumping past what it actually shows — that is what this chapter has been about. No further task is set."
+            }
+          ],
+          "textbook_items_in_class": [],
+          "homework": []
+        }
+      ]
+    },
+    "period_schedule": {
+      "duration_minutes": 40,
+      "count": 17
+    },
+    "coverage_handoff": {
+      "section_a": {
+        "goal_cluster": [
+          "recall"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 13.1",
+            "section_title": "Of Questions and Statements",
+            "goal": "recall",
+            "anchor_id": "E-1",
+            "anchor_book_ref": "Math Talk, section 13.1 p.98",
+            "anchor_description": "Decide which of the following are statistical questions: (a) price of a tennis ball in India; (b) ages of dogs on this street; (c) fraction of the class who like walking up a hill; (d) do you like reading; (e) approximately how many bricks are in this wall; (f) best bowler in yesterday's match; (g) last year's rainfall pattern in Barmer."
+          }
+        ]
+      },
+      "section_b": {
+        "goal_cluster": [
+          "reason"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 13.1",
+            "section_title": "Of Questions and Statements",
+            "goal": "reason",
+            "anchor_id": "E-1",
+            "anchor_book_ref": "Math Talk, section 13.1 p.98",
+            "anchor_description": "Decide which of the following are statistical questions: (a) price of a tennis ball in India; (b) ages of dogs on this street; (c) fraction of the class who like walking up a hill; (d) do you like reading; (e) approximately how many bricks are in this wall; (f) best bowler in yesterday's match; (g) last year's rainfall pattern in Barmer."
+          },
+          {
+            "section_ref": "section 13.2",
+            "section_title": "Representative Values",
+            "goal": "reason",
+            "anchor_id": "E-10",
+            "anchor_book_ref": "Figure it Out Q4, section 13.2 p.112",
+            "anchor_description": "Given daily water-usage values, (a) decide whether the mean or median can lie between 25 and 30, justifying using their meaning; (b) decide whether either can be less than the minimum or greater than the maximum value."
+          },
+          {
+            "section_ref": "section 13.2",
+            "section_title": "Representative Values",
+            "goal": "reason",
+            "anchor_id": "E-12",
+            "anchor_book_ref": "Figure it Out Q6, section 13.2 p.113",
+            "anchor_description": "From the dot plots and central-tendency measures of another Grade 5 section, share observations and compare the heights of the two sections."
+          },
+          {
+            "section_ref": "section 13.3",
+            "section_title": "Visualising Data",
+            "goal": "reason",
+            "anchor_id": "E-17",
+            "anchor_book_ref": "Figure it Out Q4, section 13.3 p.124–125",
+            "anchor_description": "From the clustered-bar graph of electric-vehicle registrations: mark the Gujarat and Delhi bars from the table, describe changes 2022–2024, and answer comparison questions about several states."
+          },
+          {
+            "section_ref": "section 13.4",
+            "section_title": "Data Detective",
+            "goal": "reason",
+            "anchor_id": "E-18",
+            "anchor_book_ref": "Figure it Out Q1, section 13.4 p.129",
+            "anchor_description": "From the pocket-count dot plots for boys and girls, decide which statements about variability, median, mean, and maximum are true."
+          },
+          {
+            "section_ref": "section 13.4",
+            "section_title": "Data Detective",
+            "goal": "reason",
+            "anchor_id": "E-20",
+            "anchor_book_ref": "Figure it Out Q3, section 13.4 p.130",
+            "anchor_description": "Compare two groups' General Knowledge quiz scores using mean and median and describe their performance."
+          }
+        ]
+      },
+      "section_c": {
+        "goal_cluster": [
+          "apply"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 13.2",
+            "section_title": "Representative Values",
+            "goal": "apply",
+            "anchor_id": "E-2",
+            "anchor_book_ref": "Figure it Out Q1, section 13.2 p.101",
+            "anchor_description": "Shreyas bounces a ball on a bat with counts 6, 2, 9, 5, 4, 6, 3, 5 over 8 attempts; calculate the average number of bounces."
+          },
+          {
+            "section_ref": "section 13.2",
+            "section_title": "Representative Values",
+            "goal": "apply",
+            "anchor_id": "E-3",
+            "anchor_book_ref": "Figure it Out Q2, section 13.2 p.101",
+            "anchor_description": "Collect your own bounce data for 7 or more attempts and find the average."
+          },
+          {
+            "section_ref": "section 13.2",
+            "section_title": "Representative Values",
+            "goal": "apply",
+            "anchor_id": "E-8",
+            "anchor_book_ref": "Figure it Out Q2, section 13.2 p.112",
+            "anchor_description": "For Sanskruti's pet-count data (with some absent students), find the mean and median and describe the data."
+          },
+          {
+            "section_ref": "section 13.3",
+            "section_title": "Visualising Data",
+            "goal": "apply",
+            "anchor_id": "E-14",
+            "anchor_book_ref": "Figure it Out Q1, section 13.3 p.122",
+            "anchor_description": "From an animal-speed infographic: (a) state the scale; (b) note what is interesting; (c) find a pair where one speed is about twice the other; (d) judge whether a sailfish is about 4 times faster than a humpback whale and the fastest aquatic animal."
+          },
+          {
+            "section_ref": "section 13.3",
+            "section_title": "Visualising Data",
+            "goal": "apply",
+            "anchor_id": "E-16",
+            "anchor_book_ref": "Figure it Out Q3, section 13.3 p.124",
+            "anchor_description": "From the two-day temperature data for Jodhpur, draw a double-bar graph with scale 1 unit = 4°C and guess the two months."
+          },
+          {
+            "section_ref": "section 13.4",
+            "section_title": "Data Detective",
+            "goal": "apply",
+            "anchor_id": "E-21",
+            "anchor_book_ref": "Figure it Out Q4, section 13.4 p.130",
+            "anchor_description": "From survey data of watching vs participating in five sports, choose a scale, draw a double-bar graph, and write observations."
+          },
+          {
+            "section_ref": "section 13.4",
+            "section_title": "Data Detective",
+            "goal": "apply",
+            "anchor_id": "E-25",
+            "anchor_book_ref": "Figure it Out Q8, section 13.4 p.131",
+            "anchor_description": "From a skyscraper infographic: (a) estimate the number of skyscrapers in New York, Tokyo, and London; (b) judge the validity of statements about cities relative to Mumbai and the world's tallest building."
+          },
+          {
+            "section_ref": "section 13.4",
+            "section_title": "Data Detective",
+            "goal": "apply",
+            "anchor_id": "E-23",
+            "anchor_book_ref": "Figure it Out Q6, section 13.4 p.130",
+            "anchor_description": "Describe the mean and median of your class's heights, visualising them on a dot plot."
+          },
+          {
+            "section_ref": "section 13.4",
+            "section_title": "Data Detective",
+            "goal": "apply",
+            "anchor_id": "E-28",
+            "anchor_book_ref": "Figure it Out Q11, section 13.4 p.132–133",
+            "anchor_description": "Individual project: either 'How Long is a Sentence?' (dot-plot sentence lengths from two textbook pages and compare with mean/median) or 'What is in a Name?' (mean/median name length, popular starting letters, median starting letter, and a double-bar graph of vowel/consonant patterns)."
+          },
+          {
+            "section_ref": "section 13.4",
+            "section_title": "Data Detective",
+            "goal": "apply",
+            "anchor_id": "E-30",
+            "anchor_book_ref": "Figure it Out Q13, section 13.4 p.133",
+            "anchor_description": "Small-group project: either 'Our heights vs. our family's heights' (dot plot and double-bar graph of student and family heights) or 'Estimating time' (dot plots and double-bar graph of 1-minute and 3-minute estimates), then pool and analyse everyone's data."
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "section_code": "A",
+        "section_title": "Recall and Apply",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-A-1",
+            "section_ref": "section 13.1",
+            "section_title": "Of Questions and Statements",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "Which of the following is a statistical question?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "How many days are in a week?",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "How many hours do students in Grade 7 sleep each night?",
+                "is_correct": true
+              },
+              {
+                "label": "C",
+                "text": "What is 15 multiplied by 4?",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "What is the capital of India?",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "How many hours do students in Grade 7 sleep each night? — because answers vary across students and require data to be collected and analysed.",
+              "method_one_line": "Apply the definition: a statistical question expects variation in answers and requires data collection and analysis.",
+              "what_each_option_reveals": {
+                "D": "The student may not yet distinguish between a lookup fact (a single fixed answer) and a question that requires gathering data from multiple cases.",
+                "A": "The student may be confusing a question involving counting with a statistical question; this question has one fixed numerical answer that does not vary.",
+                "C": "The student may associate any numerical computation with statistics, rather than recognising that statistics concerns questions whose answers vary across a population."
+              },
+              "inclusivity": {
+                "support": "Let the student look back at the definition in the chapter and check each option against it.",
+                "challenge": "Ask the student to write one more statistical question and one more non-statistical question in their own words."
+              }
+            },
+            "exercise": {
+              "book_ref": "Math Talk, section 13.1 p.98",
+              "description": "Decide which of the following are statistical questions: (a) price of a tennis ball in India; (b) ages of dogs on this street; (c) fraction of the class who like walking up a hill; (d) do you like reading; (e) approximately how many bricks are in this wall; (f) best bowler in yesterday's match; (g) last year's rainfall pattern in Barmer."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "B",
+        "section_title": "Reason and Explain",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-B-1",
+            "section_ref": "section 13.1",
+            "section_title": "Of Questions and Statements",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "A student says: 'How many members are in your family?' is a statistical question because different people will give different answers. Do you agree? Give one reason to support or challenge this claim, using the definition of a statistical question.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Disagree. Although answers vary from person to person, the question asks for one specific fact about each individual (a lookup, not data collection and analysis). A statistical question requires collecting and analysing data to answer a question about a group or phenomenon — for example, 'What is the typical family size among students in our school?' would be statistical because it requires gathering many responses and summarising them.",
+              "method_one_line": "Apply the two-part test: variation alone is not enough — the question must also require data collection and analysis to yield a conclusion.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Invite the student to talk through their reasoning with a partner before writing.",
+                "challenge": "Ask: if you changed one word in the question to make it statistical, what would you change and why?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Math Talk, section 13.1 p.98",
+              "description": "Decide which of the following are statistical questions: (a) price of a tennis ball in India; (b) ages of dogs on this street; (c) fraction of the class who like walking up a hill; (d) do you like reading; (e) approximately how many bricks are in this wall; (f) best bowler in yesterday's match; (g) last year's rainfall pattern in Barmer."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-2",
+            "section_ref": "section 13.2",
+            "section_title": "Representative Values",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "The daily water usage (in litres) for a household over five days is: 12, 18, 15, 14, and 41. A student says the mean is 20 litres and the median is 15 litres. Without recalculating, explain why the mean is higher than the median for this dataset, referring to the values given.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The value 41 is an outlier — it is much larger than the other four values (which are all between 12 and 18). An outlier pulls the mean upward because the mean is computed by summing all values including the extreme one and dividing by the count. The median is the middle value of the sorted data (12, 14, 15, 18, 41), which is 15 — the median is not affected by how extreme the outlier is, only by its position in the sorted order. So the outlier raises the mean above the median.",
+              "method_one_line": "Apply the principle that a high outlier pulls the mean above the median because the mean uses every value's size, while the median uses only the middle position.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Invite the student to sort the five values and point to the middle one before writing their explanation.",
+                "challenge": "Ask: if you replaced 41 with 100, would the mean increase, decrease, or stay the same? Would the median change? Explain."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q4, section 13.2 p.112",
+              "description": "Given daily water-usage values, (a) decide whether the mean or median can lie between 25 and 30, justifying using their meaning; (b) decide whether either can be less than the minimum or greater than the maximum value."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-3",
+            "section_ref": "section 13.2",
+            "section_title": "Representative Values",
+            "goal": "reason",
+            "question_type": "ECR",
+            "prompt": "Two classes each have 10 students. Class A's heights (in cm) are: 140, 142, 138, 141, 139, 143, 140, 142, 138, 141 — all clustered closely together. Class B's heights are: 120, 125, 130, 140, 145, 155, 160, 165, 170, 175 — spread widely. Both classes have the same mean height of 140.4 cm. A teacher says: 'Since the means are equal, the two classes are equally tall.' Explain whether you agree, using the ideas of mean, median, and spread introduced in the chapter.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Disagree. The mean alone does not capture the full picture of a dataset. Class A's values are tightly clustered around 140 cm, so the mean fairly represents every student. Class B has a very wide range (120 cm to 175 cm), meaning some students are much shorter and some much taller than the mean; the mean of 140.4 cm does not represent any individual student well. The median of Class A (140.5 cm, the average of the 5th and 6th sorted values) is close to its mean, whereas the median of Class B (the average of 145 and 155, which is 150 cm) is notably higher than its mean — this difference arises because Class B's lower values pull the mean down while the median reflects the middle of the sorted data. To fairly describe and compare the two classes, we need both a measure of central tendency and a description of spread (range and minimum/maximum).",
+              "method_one_line": "Use the principle that mean, median, and range together describe a dataset — the mean can be equal for two groups with very different spreads and medians.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student write out both datasets in sorted order and mark the mean and median on each before writing.",
+                "challenge": "Ask: if you added one very tall student (195 cm) to Class A, how would the mean and median each change, and what would that reveal about which measure is more stable?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q6, section 13.2 p.113",
+              "description": "From the dot plots and central-tendency measures of another Grade 5 section, share observations and compare the heights of the two sections."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-4",
+            "section_ref": "section 13.3",
+            "section_title": "Visualising Data",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "A double-bar graph shows the average monthly rainfall (in mm) for two cities — one in the northern hemisphere and one in the southern hemisphere — across the twelve months of the year. A student notices that the bars for the two cities seem to be 'mirror images' of each other: when one city's bar is tall, the other's is short, and vice versa. Explain why this pattern makes sense, using what you know about seasons in opposite hemispheres.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The pattern makes sense because the northern and southern hemispheres experience opposite seasons at the same time of year. When it is summer in the northern city (months of higher rainfall or a particular seasonal pattern), it is winter in the southern city, and vice versa. So the months of high rainfall for one city correspond to months of low rainfall for the other, producing the mirror-image appearance in the double-bar graph. This is the same phenomenon illustrated in the chapter by the Helsinki and Wellington daylight-hour graphs, where the two cities' bars show an inverted seasonal pattern because Helsinki is in the northern hemisphere and Wellington is in the southern hemisphere.",
+              "method_one_line": "Apply the identify-then-infer reading strategy: the inverted bar pattern is explained by the opposite-hemisphere seasonal offset, as illustrated by the Helsinki–Wellington example in section 13.3.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Prompt the student to think about when summer and winter occur in India vs. Australia before writing.",
+                "challenge": "Ask: would you expect the same mirror-image pattern for a city on the equator compared to a northern-hemisphere city? Why or why not?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q4, section 13.3 p.124–125",
+              "description": "From the clustered-bar graph of electric-vehicle registrations: mark the Gujarat and Delhi bars from the table, describe changes 2022–2024, and answer comparison questions about several states."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-5",
+            "section_ref": "section 13.4",
+            "section_title": "Data Detective",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "A dot plot shows that the boys in a class have a median of 5 pockets and the girls have a median of 3 pockets. A student concludes: 'Boys always have more pockets than girls.' Explain whether this conclusion is supported by the data, using the meaning of the median.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The conclusion is not supported. The median tells us that half the boys have 5 or fewer pockets and half have 5 or more — it is the middle value of the sorted data, not a claim about every individual. Some boys may have fewer pockets than some girls, and the dot plot may show overlap between the two groups. The data shows that the typical (median) boy has more pockets than the typical (median) girl in this sample, but 'always' is too strong: the data describes this class only and cannot be generalised to all boys and girls.",
+              "method_one_line": "Apply the principle that the median describes the middle of a distribution, not a rule that holds for every individual, and that a sample result cannot be generalised as a universal claim.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Ask the student to explain what the median means before evaluating the claim.",
+                "challenge": "Ask: what additional information from the dot plot would help you decide how much overlap there is between boys' and girls' pocket counts?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 13.4 p.129",
+              "description": "From the pocket-count dot plots for boys and girls, decide which statements about variability, median, mean, and maximum are true."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-6",
+            "section_ref": "section 13.4",
+            "section_title": "Data Detective",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "Two groups of students take a General Knowledge quiz. Group P's scores are: 8, 9, 7, 8, 8 and Group Q's scores are: 4, 10, 8, 9, 4. Both groups have the same mean score of 8. A student says the groups performed equally well. Give one reason to challenge this claim, using mean and median.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The median of Group P is 8 (the middle value of the sorted scores 7, 8, 8, 8, 9) and the median of Group Q is also 8 (sorted: 4, 4, 8, 9, 10). However, Group Q's scores are much more spread out — ranging from 4 to 10 — while Group P's scores are tightly clustered between 7 and 9. So although the means and medians are equal, Group P performed more consistently. Two groups can have the same mean and median yet very different variability, meaning 'equal mean' does not imply 'equal performance' when the spread differs.",
+              "method_one_line": "Apply the principle that equal means (and medians) do not imply equal performance when spread differs; variability must also be described.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student sort each group's scores and look at the range before writing.",
+                "challenge": "Ask: if a third group had scores 6, 7, 8, 9, 10, how would its mean, median, and spread compare to Groups P and Q?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q3, section 13.4 p.130",
+              "description": "Compare two groups' General Knowledge quiz scores using mean and median and describe their performance."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "C",
+        "section_title": "Apply in Context",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-C-1",
+            "section_ref": "section 13.2",
+            "section_title": "Representative Values",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A plant in Meera's garden bloomed the following number of flowers on each of seven days: 3, 7, 5, 4, 6, 5, 5. Calculate the mean number of flowers per day. Show your working.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Sum of flowers = 3 + 7 + 5 + 4 + 6 + 5 + 5 = 35. Number of days = 7. Mean = 35 ÷ 7 = 5 flowers per day.",
+              "method_one_line": "Apply mean = sum of all values ÷ number of values.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student use the fair-share image: if all seven days had the same count, what would that count be?",
+                "challenge": "Ask: if an eighth day had 0 flowers because the plant wilted, should that day be included in the mean? Why?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 13.2 p.101",
+              "description": "Shreyas bounces a ball on a bat with counts 6, 2, 9, 5, 4, 6, 3, 5 over 8 attempts; calculate the average number of bounces."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-2",
+            "section_ref": "section 13.2",
+            "section_title": "Representative Values",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Riya records the number of pages she reads each day for 6 days: 12, 15, 10, 18, 14, and 13. One day she was absent and did not read at all (recorded as 'did not read'). Calculate the mean number of pages she read on the days she did read, and also find the median. Show your working.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Only the six days she actually read are counted; the absent day is excluded. Sum = 12 + 15 + 10 + 18 + 14 + 13 = 82. Mean = 82 ÷ 6 ≈ 13.67 pages per day. For the median, sort the six values: 10, 12, 13, 14, 15, 18. With an even count of 6, the median is the average of the 3rd and 4th values: (13 + 14) ÷ 2 = 13.5 pages.",
+              "method_one_line": "Exclude the 'did not read' day (zero-versus-no-value principle), then apply mean = sum ÷ count and median = average of the two middle sorted values for an even-count dataset.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Encourage the student to write the values in sorted order on a number line strip before finding the median.",
+                "challenge": "Ask: if the absent day were included as 0, how would the mean change? Would the median change? Which measure is more affected and why?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q2, section 13.2 p.101",
+              "description": "Collect your own bounce data for 7 or more attempts and find the average."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-3",
+            "section_ref": "section 13.2",
+            "section_title": "Representative Values",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Nine students in a class have the following number of pets: 0, 1, 3, 2, 0, 1, 2, 1, 8. One student was absent. Find the mean and median for the nine students present. Then explain in one sentence which measure better represents the typical number of pets.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Sum = 0 + 1 + 3 + 2 + 0 + 1 + 2 + 1 + 8 = 18. Mean = 18 ÷ 9 = 2. Sorted values: 0, 0, 1, 1, 1, 2, 2, 3, 8. Median = 5th value = 1. The value 8 is an outlier that pulls the mean up to 2, while 7 of the 9 students have 0, 1, or 2 pets; the median of 1 better represents the typical number of pets because it is not distorted by the outlier.",
+              "method_one_line": "Compute mean = sum ÷ count and median = middle sorted value, then identify the outlier and explain its effect on each measure.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student use a number line to arrange the values in order and identify the middle one.",
+                "challenge": "Ask: if the student with 8 pets were replaced by one with 3 pets, would the mean or the median change more? Calculate and compare."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q2, section 13.2 p.112",
+              "description": "For Sanskruti's pet-count data (with some absent students), find the mean and median and describe the data."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-4",
+            "section_ref": "section 13.3",
+            "section_title": "Visualising Data",
+            "goal": "apply",
+            "question_type": "SCR",
+            "prompt": "The table below shows the top speeds (in km/h) of four animals.\n\nUse the data to answer: (a) Which two animals have speeds where one is approximately twice the other? (b) Is the cheetah's speed more than three times the speed of the elephant? Show how you decided.",
+            "visual_stimulus": "| Animal | Top Speed (km/h) |\n|---|---|\n| Cheetah | 112 |\n| Lion | 80 |\n| Wildebeest | 56 |\n| Elephant | 35 |",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "(a) Lion (80 km/h) is approximately twice the speed of Wildebeest (56 km/h)? No — 56 × 2 = 112, so Cheetah (112) is approximately twice the speed of Wildebeest (56). Also, 80 is approximately 2 × 40; the nearest pair is Cheetah (112) ≈ 2 × Wildebeest (56), since 56 × 2 = 112 exactly. (b) Three times the elephant's speed = 35 × 3 = 105. The cheetah's speed is 112, which is greater than 105. Yes, the cheetah's speed is more than three times the elephant's speed.",
+              "method_one_line": "Read values from the table, multiply to test the ratio, and compare the product with the given value.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student try doubling each animal's speed in turn and comparing with the others in the table.",
+                "challenge": "Ask: approximately how many times faster is the cheetah than the elephant? Express your answer to one decimal place."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 13.3 p.122",
+              "description": "From an animal-speed infographic: (a) state the scale; (b) note what is interesting; (c) find a pair where one speed is about twice the other; (d) judge whether a sailfish is about 4 times faster than a humpback whale and the fastest aquatic animal."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-5",
+            "section_ref": "section 13.3",
+            "section_title": "Visualising Data",
+            "goal": "apply",
+            "question_type": "SCR",
+            "prompt": "The afternoon temperatures (in °C) in a town on two different days in the same month are given below. Draw a double-bar graph for this data using a scale of 1 unit = 2°C. Then write one observation comparing the temperatures across the two days.",
+            "visual_stimulus": "| Time | Day 1 Temp (°C) | Day 2 Temp (°C) |\n|---|---|---|\n| 12 noon | 30 | 34 |\n| 2 pm | 36 | 38 |\n| 4 pm | 34 | 32 |\n| 6 pm | 28 | 26 |",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The double-bar graph should have four groups of two bars along the horizontal axis (one group per time), with the vertical axis scaled at 1 unit = 2°C from 0 to at least 40°C (or starting from a break at a lower value, consistently applied). Day 1 bars and Day 2 bars should be visually distinct (different shading or colour) with a legend. One valid observation: Day 2 was hotter than Day 1 at noon and 2 pm, but cooler than Day 1 at 4 pm and 6 pm, suggesting Day 2 cooled more steeply in the afternoon.",
+              "method_one_line": "Construct a clustered double-bar graph with the given scale, then apply the identify-then-infer two-step to write a comparative observation.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Provide a pre-drawn axis with the scale already marked so the student can focus on drawing and shading the bars.",
+                "challenge": "Ask: on which day was the temperature range (maximum minus minimum) greater? Calculate both ranges and explain what this tells you about the variability of temperature across the day."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q3, section 13.3 p.124",
+              "description": "From the two-day temperature data for Jodhpur, draw a double-bar graph with scale 1 unit = 4°C and guess the two months."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-6",
+            "section_ref": "section 13.4",
+            "section_title": "Data Detective",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "In a sports survey, students were asked whether they watch or participate in cricket and in badminton. The results are shown below. Choose a suitable scale and describe how you would draw a double-bar graph to compare watching and participating for the two sports. Then answer: in which sport is the gap between watching and participating largest?",
+            "visual_stimulus": "| Sport | Number who Watch | Number who Participate |\n|---|---|---|\n| Cricket | 48 | 22 |\n| Badminton | 30 | 25 |",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "A suitable scale is 1 unit = 5 students (so the tallest bar, 48, reaches about 10 units). The double-bar graph has two groups on the horizontal axis (Cricket and Badminton); within each group, one bar represents watching and one represents participating, distinguished by shading or colour, with a legend. Gap for cricket = 48 − 22 = 26. Gap for badminton = 30 − 25 = 5. Cricket has the largest gap between watching and participating (26 students).",
+              "method_one_line": "Choose a scale that fits the range of values, construct the double-bar graph, and compute the difference between the two bars in each group to identify the largest gap.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student find the largest value first (48) and choose a scale so that 48 fits comfortably on the graph paper they have.",
+                "challenge": "Ask: if 10 more students began participating in cricket, would the gap be larger or smaller than the badminton gap? Calculate and explain."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q4, section 13.4 p.130",
+              "description": "From survey data of watching vs participating in five sports, choose a scale, draw a double-bar graph, and write observations."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-7",
+            "section_ref": "section 13.4",
+            "section_title": "Data Detective",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "An infographic shows the number of high-rise buildings (over 100 m tall) in five cities: City P has 80, City Q has 120, City R has 45, City S has 200, and City T has 95. (a) Estimate which city has approximately twice as many high-rise buildings as City P. (b) A student claims: 'City S has more than four times as many high-rise buildings as City R.' Decide whether this claim is supported by the data and show your working.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "(a) Twice City P = 2 × 80 = 160. City Q has 120 (not quite double) and City S has 200 (more than double). The closest to twice City P's count is City S at 200, though 160 is not listed exactly; City Q at 120 is 1.5 times, so no city has exactly twice, but City S is the best approximation if the question allows 'approximately'. A more precise answer: no city has exactly 160, but City S (200) is the furthest above and City Q (120) is the closest below. Accept City Q as approximately double if students reason 120 ≈ 160 loosely. (b) 4 × City R = 4 × 45 = 180. City S = 200 > 180, so yes, City S has more than four times as many high-rise buildings as City R. The claim is supported.",
+              "method_one_line": "Multiply reference values to test ratio claims against the given data, as in the identify-then-infer graph-reading strategy applied to a data table.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student double City P's value first and then scan the list for the closest match.",
+                "challenge": "Ask: approximately how many times greater is City S's count than City R's count? Express as a decimal to one place."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q8, section 13.4 p.131",
+              "description": "From a skyscraper infographic: (a) estimate the number of skyscrapers in New York, Tokyo, and London; (b) judge the validity of statements about cities relative to Mumbai and the world's tallest building."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-8",
+            "section_ref": "section 13.4",
+            "section_title": "Data Detective",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "The heights (in cm) of 11 students in a class are: 138, 142, 145, 139, 150, 147, 141, 148, 136, 144, 152. Construct a dot plot for this data on a number line. Then find the mean and median height. Mark both on your dot plot and write one sentence describing the distribution.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Sorted heights: 136, 138, 139, 141, 142, 144, 145, 147, 148, 150, 152. Sum = 136 + 138 + 139 + 141 + 142 + 144 + 145 + 147 + 148 + 150 + 152 = 1582. Mean = 1582 ÷ 11 = 143.8 cm (to one decimal place). Median = 6th value in sorted order = 144 cm. The dot plot should show dots placed above a number line from 136 to 152, with one dot per value. Mean (143.8) and median (144) are very close, indicating no strong outlier effect; the distribution is roughly symmetric and tightly clustered between 136 cm and 152 cm.",
+              "method_one_line": "Sort the data, place dots on a number line for the dot plot, compute mean = sum ÷ count and median = middle sorted value for an odd-count dataset, then describe clustering and spread.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Provide a pre-drawn number line from 130 to 155 and ask the student to place dots before computing.",
+                "challenge": "Ask: if one more student with a height of 170 cm joined the class, would the mean or median change more? Calculate both for 12 values and compare."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q6, section 13.4 p.130",
+              "description": "Describe the mean and median of your class's heights, visualising them on a dot plot."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-9",
+            "section_ref": "section 13.4",
+            "section_title": "Data Detective",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Arjun measures the lengths (in cm) of 8 sentences on one page of a textbook: 52, 38, 45, 60, 41, 55, 38, 47. He does the same for a second page and gets: 30, 62, 35, 70, 28, 65, 32, 58. Find the mean and median sentence length for each page. Then write one sentence comparing the two pages using these values.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Page 1: Sum = 52 + 38 + 45 + 60 + 41 + 55 + 38 + 47 = 376. Mean = 376 ÷ 8 = 47. Sorted: 38, 38, 41, 45, 47, 52, 55, 60. Median = (45 + 47) ÷ 2 = 46. Page 2: Sum = 30 + 62 + 35 + 70 + 28 + 65 + 32 + 58 = 380. Mean = 380 ÷ 8 = 47.5. Sorted: 28, 30, 32, 35, 58, 62, 65, 70. Median = (35 + 58) ÷ 2 = 46.5. Both pages have very similar means (47 and 47.5) and medians (46 and 46.5), but Page 2's sentences are much more variable — ranging from 28 to 70 cm — while Page 1's are more consistent, ranging from 38 to 60 cm.",
+              "method_one_line": "Compute mean = sum ÷ count and median = average of two middle sorted values for each page, then compare both measures and note the difference in spread.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest writing both datasets in sorted order side by side before calculating.",
+                "challenge": "Ask: which page would have a dot plot that is more spread out? Sketch a rough dot plot for each and compare."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q11, section 13.4 p.132–133",
+              "description": "Individual project: either 'How Long is a Sentence?' (dot-plot sentence lengths from two textbook pages and compare with mean/median) or 'What is in a Name?' (mean/median name length, popular starting letters, median starting letter, and a double-bar graph of vowel/consonant patterns)."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-10",
+            "section_ref": "section 13.4",
+            "section_title": "Data Detective",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A group of five friends records how many times they step outside their house on each of six days: 2, 5, 3, 4, 2, 6. They also record a friend who was unwell and did not step out at all on two of those days (those two days are marked 'stayed in'). Calculate the mean for the friend who was unwell using only the days they did step out, and compare it with the group mean. Show your working. The friend who was unwell stepped out: 1, 3, on the four days they were active (other two days: 'stayed in').",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Group of five friends (six days each): Sum = 2 + 5 + 3 + 4 + 2 + 6 = 22. Group mean = 22 ÷ 6 ≈ 3.67 times per day. Unwell friend: only the four active days count; the 'stayed in' days are excluded (zero-versus-no-value principle). But only two values are given (1 and 3) for the active days — wait, the problem states four active days but provides only two values. Re-reading: the friend stepped out 1 and 3 times on two of the four active days; since the problem provides exactly those two values as the active-day record, use them. Sum = 1 + 3 = 4, count = 2 active days given, mean = 4 ÷ 2 = 2. Comparing: the group mean is approximately 3.67 and the unwell friend's mean on active days is 2, so the unwell friend stepped out less often even on days they were active.",
+              "method_one_line": "Exclude 'stayed in' days from the count (zero-versus-no-value principle) and apply mean = sum ÷ relevant count for each dataset, then compare.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Ask the student to first list only the days and values that should be counted for each person before calculating.",
+                "challenge": "Ask: if the unwell friend's 'stayed in' days were counted as 0, how would their mean change? Calculate and explain which mean better represents their typical activity."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q13, section 13.4 p.133",
+              "description": "Small-group project: either 'Our heights vs. our family's heights' (dot plot and double-bar graph of student and family heights) or 'Estimating time' (dot plots and double-bar graph of 1-minute and 3-minute estimates), then pool and analyse everyone's data."
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

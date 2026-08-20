@@ -42,6 +42,42 @@ from .compound_options import (
 )
 
 
+# ── the tick line's stylesheet, SHARED (2026-08-19) ──────────────────────────
+# A PLAIN string, not part of any f-string, so that `export_integrated_pdf` can splice
+# the same bytes into its own consolidated sheet.
+#
+# WHY IT IS A CONSTANT RATHER THAN LINES IN TWO FILES. The integrated exporter reuses
+# `_question_block` from here — so it emitted the tick-line MARKUP correctly the day
+# this landed — but it owns a hand-copied "union of the two exporters' classes"
+# stylesheet, which had no `.nl-*` in it. Result: the combined Lesson-plan + Assessment
+# PDF printed the ticks and labels unstyled and the axis not at all, while the
+# assessment-only PDF beside it was correct. That is the SECOND time this exact drift
+# has been found — `export_integrated_pdf`'s own comment records the first, when the
+# `.va-*` family went missing and integrated PDFs printed the prepared tables unstyled
+# (2026-08-19, hours earlier). Copying markup is cheap; copying a stylesheet is a
+# standing promise to remember. The `.stim-*` family is still duplicated and should
+# follow this pattern the next time either file is touched.
+NUMBER_LINE_CSS = """
+  /* ONE ROW, and that is the whole trick. Three earlier shapes each broke: cell
+     `border-bottom` + `border-collapse` printed no rule at all (xhtml2pdf's collapsed-
+     border support is partial), and a three-row table split across the page foot —
+     leaving a rule on one page and a stray "13" on the next — through BOTH
+     `page-break-inside: avoid` and `-pdf-keep-with-next`, neither of which it honours
+     on rows. xhtml2pdf does not split a single table ROW, so the tick, its axis segment
+     and its label all live in one cell: the row moves as a unit or not at all.
+     The axis is a nested one-cell table with a background fill (fills it renders
+     reliably, borders it does not); adjacent segments abut with zero spacing and
+     padding, so they read as one continuous line. */
+  .nl-tbl { border-collapse: collapse; width: 78%; margin: 6px 0 2px 0; }
+  .nl-cell { padding: 0; vertical-align: bottom; }
+  .nl-mark { text-align: center; font-size: 7pt; color: #2a2a2a; line-height: 8pt; }
+  .nl-seg { border-collapse: collapse; width: 100%; }
+  .nl-axis { background-color: #2a2a2a; font-size: 1pt; line-height: 1pt; padding: 0; }
+  .nl-lab { text-align: center; font-size: 7pt; color: #2a2a2a; padding-top: 2px; }
+  .nl-instr { font-size: 7.5pt; color: #2a2a2a; font-style: italic; margin: 3px 0 5px 0; }
+"""
+
+
 # ── palette (green assessment world) ────────────────────────────────────────
 PINE = "#164436"          # brand masthead
 G_ACCENT = "#0f6e56"      # kickers, codes, ticks
@@ -173,6 +209,57 @@ def _count_items(groups: List[Dict[str, Any]]) -> int:
     return sum(len(g.get("items", []) or []) for g in groups)
 
 
+# ── the tick line, DRAWN rather than described (2026-08-19) ────────────────
+# It used to degrade to `instruction (label · label · …)` on the reasoning in the old
+# docstring — "SVG and number-line, which xhtml2pdf can't rasterize". Half of that is
+# true and half of it was a category error the founder caught by opening the export:
+# maths III ch 4's tick lines were the picture the item asked for, and the PDF printed
+# a sentence instead.
+#
+# SVG genuinely cannot be rasterized here. A TICK LINE NEVER NEEDED SVG. It is an
+# ordered row of labelled positions on a rule, which is a TABLE — the one construct
+# this file already renders well, with explicit widths, three functions down. On screen
+# `ANumberLine` draws it as an SVG axis because in a browser that is the cheaper way;
+# the artefact underneath is the same typed spec (`{ticks:[{label}], instruction}`),
+# so the two renderers agree about the content and differ only in how they draw it,
+# which is exactly the split CLAUDE.md §4 asks for between screen and print.
+#
+# Two rows: the ticks (bottom-bordered, so the borders join into one continuous axis)
+# and the labels beneath, centred, even widths so the spacing is regular. A tick whose
+# label is empty is a BLANK the student fills — it keeps its position and prints no
+# text, which is the whole point of the placeholder form (`...` / `___`).
+def _number_line_html(nl: Dict[str, Any]) -> str:
+    """THE AXIS IS A FILLED ROW, NOT A BORDER (corrected 2026-08-19, on the founder's
+    read of the first output). The first version put `border-bottom` on the tick cells
+    and relied on `border-collapse: collapse` to join them into one rule. xhtml2pdf
+    rendered the ticks and dropped the border entirely — six bars floating over nothing.
+    Its CSS support for collapsed table borders is partial, and a feature that silently
+    does nothing is worse here than one that fails loudly.
+
+    A background fill is the primitive it does render reliably, so the axis is now its
+    own row: one cell spanning every column, 1pt tall, filled. Three rows — ticks, axis,
+    labels — and nothing depends on border behaviour at all."""
+    ticks = nl.get("ticks") or []
+    if not ticks:
+        return ""
+    colw = f"{100.0 / len(ticks):.4f}%"
+    cells = "".join(
+        f'<td class="nl-cell" width="{colw}">'
+        f'<div class="nl-mark">|</div>'
+        f'<table class="nl-seg" cellspacing="0" cellpadding="0">'
+        f'<tr><td class="nl-axis">&nbsp;</td></tr></table>'
+        # The entity must sit OUTSIDE _esc — inside it the escaper turned every blank
+        # tick into a literal "&nbsp;" on the page. A blank tick is a tick the student
+        # fills, so it holds its width and shows nothing.
+        f'<div class="nl-lab">{_esc(t.get("label")) or "&nbsp;"}</div>'
+        f'</td>'
+        for t in ticks)
+    instr = (f'<div class="nl-instr">{_esc(nl.get("instruction"))}</div>'
+             if nl.get("instruction") else "")
+    return (f'<table class="nl-tbl" cellspacing="0" cellpadding="0">'
+            f'<tr>{cells}</tr></table>{instr}')
+
+
 # ── typed stimulus / passage (svg / table / number_line / prose) ────────────
 
 def _stimulus_html(block: Optional[Dict[str, Any]]) -> str:
@@ -211,10 +298,7 @@ def _stimulus_html(block: Optional[Dict[str, Any]]) -> str:
                 if t.get("source_note") else "")
         return f'{cap}<table class="{tcls}">{head}{body}</table>{note}'
     if btype == "number_line" and block.get("number_line"):
-        nl = block["number_line"]
-        labels = " · ".join(str(t.get("label", "")) for t in nl.get("ticks", []) if t.get("label"))
-        instr = nl.get("instruction", "")
-        return f'<div class="stim-prose">{_esc(instr)}{(" (" + _esc(labels) + ")") if labels else ""}</div>'
+        return _number_line_html(block["number_line"])
     content = block.get("content")
     if content and btype != "svg":
         return f'<div class="stim-prose">{_esc(content)}</div>'
@@ -320,6 +404,11 @@ def render_assessment_pdf_html(
   .stim-tbl-src {{ font-size: 6.5pt; color: #55524d; font-style: italic; margin: 2px 0 6px 0; }}
   .stim-prose {{ font-size: 7.5pt; color: #2a2a2a; font-style: italic; margin: 5px 0; }}
   .stim-note {{ font-size: 7pt; color: #8a8a86; font-style: italic; margin: 5px 0; }}
+  /* THE TICK LINE. The axis is the tick row's BOTTOM BORDER — with `border-collapse`
+     the cells' borders join into one continuous rule, which is what makes this read as
+     a line rather than as a row of boxes. Labels sit under it in mono, matching the
+     marginal rail's register on screen (CLAUDE.md §4). */
+{NUMBER_LINE_CSS}
   .scaf {{ font-size: 7.5pt; color: #2a2a2a; margin: 4px 0 2px; }}
   .task-k {{ font-size: 6.5pt; font-weight: bold; letter-spacing: 0.5px; text-transform: uppercase; color: {G_ACCENT}; }}
   .task-ul {{ margin: 2px 0 0 14px; padding: 0; }}

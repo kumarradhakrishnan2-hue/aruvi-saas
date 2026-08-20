@@ -1,0 +1,46 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Number Play in Action: Four Problems, Every Method",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems on the board at once. Students work individually with full written working for the first stretch, then compare in groups of three — any disagreement must be reconstructed step by step, not just announced. One student per problem presents to the class; after each presentation, the class names the chapter method the solution rested on before the next problem is taken up. Problem 1 needs the parity rules and algebraic reasoning from section 5.1. Problem 2 needs the remainder-class and always/sometimes/never framework from section 5.1. Problem 3 needs the digit-sum divisibility rule for 9 and the alternating digit rule for 11, both derived in section 5.2. Problem 4 needs the units-digit bounding and systematic digit-trial strategy for cryptarithms from section 5.3. Watch for students who test examples instead of writing a general algebraic argument in Problems 1 and 2, and for students who apply only one divisibility condition instead of both in Problem 3.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | Take any three consecutive integers. Show, using algebra, that the sum of all six expressions you can form by placing '+' or '−' between the first and second, and '+' or '−' between the second and third, is always even. | Write the three consecutive integers as n, n+1, n+2. The six expressions are: n+(n+1)+(n+2)=3n+3; n+(n+1)−(n+2)=n−1; n−(n+1)+(n+2)=n+1; n−(n+1)−(n+2)=−n−3; −n+(n+1)+(n+2)... but only the four sign patterns on the two gaps matter, giving four expressions. These are (n)+(n+1)+(n+2)=3n+3, (n)+(n+1)−(n+2)=n−1, (n)−(n+1)+(n+2)=n+1, (n)−(n+1)−(n+2)=−n−3. Their sum: (3n+3)+(n−1)+(n+1)+(−n−3)=4n. Since 4n=2(2n), this sum is always even, regardless of n.\n2 | A number leaves remainder 5 when divided by 7, and a second number leaves remainder 4 when divided by 7. Without computing the numbers themselves, find the remainder when their sum is divided by 7, and the remainder when their difference is divided by 7. Then decide: is it always true that if a number is divisible by 7, all its multiples are also divisible by 7? Justify with algebra. | Write the first number as 7p+5 and the second as 7q+4. Sum: (7p+5)+(7q+4)=7(p+q)+9=7(p+q+1)+2, so remainder is 2. Difference: (7p+5)−(7q+4)=7(p−q)+1, so remainder is 1. For the second part: if a number is 7k, any multiple of it is 7k×m=7(km), which is divisible by 7. Always true.\n3 | A six-digit number has the form 2A3B04, where A and B are single digits. Find all pairs (A, B) such that the number is divisible by both 9 and 11. | Divisibility by 9: digit sum 2+A+3+B+0+4=9+A+B must be a multiple of 9, so A+B=0 or A+B=9 or A+B=18. Since A,B are digits (0–9) and A+B=0 only if A=B=0, and A+B=18 only if A=B=9: candidates are (A+B=0): (0,0); (A+B=9): (0,9),(1,8),(2,7),(3,6),(4,5),(5,4),(6,3),(7,2),(8,1),(9,0); (A+B=18): (9,9). Divisibility by 11: odd-position digits (positions 1,3,5 from right) are 4,B,A and even-position digits (positions 2,4,6) are 0,3,2. Alternating sum=(4+B+A)−(0+3+2)=A+B−1. This must be 0 or a multiple of 11: A+B−1=0 gives A+B=1 (no overlap with 9-condition); A+B−1=11 gives A+B=12 (no overlap); A+B−1=−11 gives A+B=−10 (impossible). So no pair satisfies both conditions simultaneously — the number 2A3B04 cannot be divisible by both 9 and 11 for any digits A,B.\n4 | Solve the cryptarithm AB × 9 = CBB, where A, B, C are distinct digits and A ≠ 0, C ≠ 0. | CBB is a 3-digit number with last two digits equal to B. AB × 9 = CBB means a 2-digit number times 9 gives a 3-digit number, so AB ≥ 12 (since 11×9=99, just 2 digits) and AB ≤ 11... more carefully: AB×9 ≤ 999, so AB ≤ 111, meaning AB ≤ 99 (it is 2-digit). Also AB×9 ≥ 100 so AB ≥ 12. The units digit of CBB is B, and units digit of AB×9 is units digit of B×9. So B×9 ends in B: test B=0: 0 works trivially but then CBB=C00 and AB=A0; A0×9=9A0 — need 9A0 to equal C00, i.e. 9A=C×10, not generally a digit. B=5: 5×9=45, ends in 5 ✓. Then AB ends in 5, so AB=A5. A5×9: try A=1: 15×9=135; CBB=135, so C=1,B=3,B=5 — contradiction (last two digits must both be B=5 but 135 has 3 and 5). Try checking: we need AB×9=CBB so last two digits of the product are BB. If B=5, product ends in 55: which multiples of 9 end in 55? A number ending in 55 divisible by 9: digit sum of _55 = _+10, need _+10 divisible by 9, so _=8: 855/9=95. So AB=95, product=855=CBB, meaning C=8,B=5,A=9 — but AB=95 means A=9,B=5, and CBB=855 means C=8,B=5. Check distinct: A=9,B=5,C=8 — all distinct, all non-zero ✓. Answer: A=9, B=5, C=8; that is 95×9=855."
+      }
+    ],
+    "materials": [
+      "Blackboard or whiteboard",
+      "Chalk or markers",
+      "Plain paper for individual working"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "Teacher writes all four problems on the board, reading each aloud once. Students read through all four before writing anything, so they can pace themselves and start with the problem that feels most accessible."
+      },
+      {
+        "minutes": "3-22",
+        "activity": "Silent individual work. Every student attempts every problem, writing full working — not just an answer. The teacher circulates without commenting on correctness, noting where students reach for examples rather than algebra, and where constraint-checking stalls."
+      },
+      {
+        "minutes": "22-31",
+        "activity": "Groups of three compare solutions. Where answers agree, members check that the working is also equivalent. Where answers disagree, the group reconstructs both workings line by line to locate the fork — no voting, no averaging, only reasoning."
+      },
+      {
+        "minutes": "31-43",
+        "activity": "One student presents each problem in turn. After each presentation the class, not the teacher, names the chapter method the solution used. If a group found a different valid approach it may offer it immediately after the first presentation. The teacher intervenes only to correct a named method or to press for the algebraic argument where only an example was given."
+      },
+      {
+        "minutes": "43-45",
+        "activity": "Teacher states one closing sentence: every problem yielded because place value, parity, remainders, and digit constraints are not separate tricks but faces of the same idea — that structure in how we write numbers reveals structure in how they divide. The chapter is complete."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

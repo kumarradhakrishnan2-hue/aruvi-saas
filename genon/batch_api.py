@@ -343,9 +343,20 @@ def cmd_collect(argv) -> int:
         subj, grade, ch, variant = read_cid(cid)
         kind = result.result.type
         if kind != "succeeded":
-            err = getattr(getattr(result.result, "error", None), "type", kind)
-            print(f"  {cid}: {kind.upper()} ({err}) — not billed; resubmit this one")
-            rows.append((cid, kind, 0.0, str(err)))
+            # SAY WHY (2026-08-20). This read `result.result.error.type`, which on the
+            # SDK's shape is the literal string "error" — the envelope's discriminator,
+            # not the reason. S8's W2 lost 18 of 74 requests and every one printed
+            # "ERRORED (error)", so nothing could tell a transient overload (resubmit and
+            # it works) from an invalid request (resubmit and it fails again). The real
+            # reason is one level in, at `.error.error.{type,message}`; walk down to it
+            # and keep the message, truncated.
+            e_obj = getattr(result.result, "error", None)
+            inner = getattr(e_obj, "error", None) or e_obj
+            e_type = getattr(inner, "type", None) or getattr(e_obj, "type", None) or kind
+            e_msg = (getattr(inner, "message", "") or "").strip()
+            detail = f"{e_type}: {e_msg}"[:160] if e_msg else str(e_type)
+            print(f"  {cid}: {kind.upper()} ({detail}) — not billed; resubmit this one")
+            rows.append((cid, kind, 0.0, detail))
             continue
         if variant == "resynth":
             # Batch-aware skip (2026-08-18): compare the installed re-author's ledger_ts
@@ -415,9 +426,14 @@ def cmd_collect(argv) -> int:
         if c_read or c_write:
             print(f"  cache    : {c_read:,} read (0.1x) · {c_write:,} written (1.25x) · "
                   f"{fresh:,} fresh")
+        # The two cache figures are threaded through to the ledger (2026-08-20). This
+        # script has always computed them correctly for its own pricing; `log_token_log`
+        # wrote a literal 0 into both columns, so two whole waves read as "the cache
+        # never engaged" while the collect output for the same requests printed real
+        # read/write counts to the terminal.
         status, problems = gc.finish_generation(
             job, full, it, ot, 0.0, model=m["model"], ts=ts, mode="batch",
-            cost_inr=cost)
+            cost_inr=cost, cache_write=c_write, cache_read=c_read)
         spend += cost
         rows.append((cid, status, round(cost, 2), "; ".join(problems)[:120]))
 

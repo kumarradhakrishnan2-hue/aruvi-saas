@@ -1,0 +1,1265 @@
+{
+  "filename": "ch_11_canonical.json",
+  "saved_at": "2026-08-19T17:39:58",
+  "plan_status": "canonical",
+  "chapter_number": 11,
+  "chapter_title": "Grandmother's Quilt",
+  "grade": "Grade V",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 40,
+      "count": 11
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 11 periods = 440 minutes\nTotal: 11 periods · 7h 20min",
+  "genon_canonical": {
+    "generated": "2026-08-19",
+    "schedule": "11x40",
+    "constitution": "LP v1.4 / assessment v1.4",
+    "source": "generate_canonical.py one mathematics v 11",
+    "ledger_ts": "20260819_133718_math_v_11_top",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-19T17:57:18",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 10,
+            "field": "teacher_notes",
+            "rule": "register/completion",
+            "removed": "built across the chapter",
+            "replaced_with": "",
+            "note": "completion claim struck; the insight it qualifies is the teaching point and stays | survives: …the insight that sharing more sides reduces perimeter consolidates the area-perimeter relationship.…"
+          }
+        ],
+        "ban_hits_before": 1,
+        "ban_hits_after": 0
+      }
+    ]
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S1"
+          ],
+          "section_titles": [
+            "Perimeter of shapes and rectangles"
+          ],
+          "activity_title": "Border Lengths: Discovering Perimeter Through the Quilt",
+          "tasks_in_class": [
+            {
+              "id": "T-1",
+              "intent": "reason",
+              "method": "Inquiry",
+              "section_ref": "S1",
+              "book_ref": "Opening context, p.142",
+              "description": "Tick the lace option (red 40 units / green 50 units / blue 25 units) that would cover the entire border of the quilt."
+            },
+            {
+              "id": "T-2",
+              "intent": "practice",
+              "method": "Problem-solving",
+              "section_ref": "S1",
+              "book_ref": "Let Us Do Q1, p.142",
+              "description": "Find the perimeter of the following shapes. All sides of the following shapes are equal. (pentagon with 4 cm side; bowtie figure with 5 cm side)"
+            },
+            {
+              "id": "T-3",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S1",
+              "book_ref": "Let Us Do Q2, p.142",
+              "description": "Draw two rectangles each having the following perimeters. (a) 26 cm (b) 18 cm"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "The teacher introduces the quilt-border story and poses Opening context, p.142 (\"Tick the lace option … cover the entire border….\"). Students reason aloud about which lace length matches the total boundary, connecting the idea of 'going all the way around' to the word perimeter."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Students work on Let Us Do Q1, p.142 (\"Find the perimeter of the following shapes….\"). They count sides, note that all sides are equal, and arrive at the shortcut of multiplying side length by the number of sides. Pairs compare their working."
+            },
+            {
+              "minutes": "22–40",
+              "activity": "Students attempt Let Us Do Q2, p.142 (\"Draw two rectangles each having the following perimeters….\"). They work on squared paper, choosing different length-breadth pairs that satisfy each perimeter, and share their drawings to see that more than one rectangle is possible."
+            }
+          ],
+          "teacher_notes": "Students often confuse perimeter with area at this first meeting — watch for those who count squares inside the shape rather than steps along the boundary. For Let Us Do Q2, prompt students who are stuck to start with one side length and reason about what the remaining sides must add up to. Encourage them to record two or three different valid rectangles to begin building the independence of area and perimeter.",
+          "materials": [
+            "Squared paper",
+            "Ruler",
+            "Pencil",
+            "Coloured pencils"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S2"
+          ],
+          "section_titles": [
+            "Area via tiling — covering regions with shapes"
+          ],
+          "activity_title": "Tiling Tables: Which Shapes Cover Without Gaps?",
+          "tasks_in_class": [
+            {
+              "id": "T-4",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S2",
+              "book_ref": "Tiling exploration, p.143",
+              "description": "Cover your table with triangles, circles, squares, and rectangles. Fill in blanks: which shapes cover without gaps, which leave gaps; count triangles / squares / rectangles covering each table; state the area in triangle / square / rectangle units."
+            },
+            {
+              "id": "T-6",
+              "intent": "explore",
+              "method": "Inquiry",
+              "section_ref": "S2",
+              "book_ref": "Table cover with objects, p.143",
+              "description": "Try to cover the top of your table without gaps and overlaps with the following objects of same size: (a) Notebooks (b) Lunch boxes (c) Pencil boxes (d) Maths textbooks. Which covered the region completely?"
+            },
+            {
+              "id": "T-5",
+              "intent": "practice",
+              "method": "Problem-solving",
+              "section_ref": "S2",
+              "book_ref": "Rug patch count, p.143",
+              "description": "Count how many square patches the grandmother used to make the rug shown in the picture."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "Groups use cut-out triangles, circles, squares, and rectangles (or folded paper shapes) to attempt Tiling exploration, p.143 (\"Cover your table with triangles, circles, squares, and rectangles….\"). They fill in the blanks about which shapes tile without gaps and record counts, arriving at the idea that area can be expressed in tile units."
+            },
+            {
+              "minutes": "15–28",
+              "activity": "Groups try Table cover with objects, p.143 (\"Try to cover the top of your table without gaps….\") using notebooks, lunch boxes, pencil boxes, and maths textbooks. A quick class discussion compares which objects tiled completely and why rectangular flat objects work."
+            },
+            {
+              "minutes": "28–40",
+              "activity": "Students count individually for Rug patch count, p.143 (\"Count how many square patches the grandmother used….\"). The teacher draws out the connection: the count of patches is the area of the rug in patch units, consolidating the definition of area as the region covered."
+            }
+          ],
+          "teacher_notes": "A common error is counting only the outer squares of the rug picture — circulate during the patch-count task and ask students to point to each square as they count. The tiling activity with circles typically produces gaps; make sure groups articulate why circles cannot tile before moving on. Additional practice: Rug patch count variations can be set as further counting tasks if time allows.",
+          "materials": [
+            "Pre-cut paper triangles, circles, squares, and rectangles",
+            "Notebooks, lunch boxes, pencil boxes, maths textbooks (students' own)",
+            "Pencil"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S3"
+          ],
+          "section_titles": [
+            "Comparing areas using grids and the unit square"
+          ],
+          "activity_title": "Unit Squares and Grids: Measuring Area by Counting",
+          "tasks_in_class": [
+            {
+              "id": "T-8",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S3",
+              "book_ref": "Trace and cut rectangles, p.144",
+              "description": "Trace rectangles A, B, C on to a paper and cut them to find out which one has the largest area."
+            },
+            {
+              "id": "T-7",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S3",
+              "book_ref": "Let Us Do (tiles), p.144",
+              "description": "Look at the different tiles on Preetha's desk and answer how many of the following shapes will cover the desk. (a) Green triangles (b) Red triangles (c) Blue squares"
+            },
+            {
+              "id": "T-9",
+              "intent": "reason",
+              "method": "Inquiry",
+              "section_ref": "S3",
+              "book_ref": "Let Us Do Q1, p.145",
+              "description": "Compare the areas of the two gardens given below on the square grid. Share your observations. Area of Garden A = ___ cm square; Area of Garden B = ___ cm square."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students trace rectangles A, B, C from Trace and cut rectangles, p.144 (\"Trace rectangles A, B, C on to a paper and cut them….\"), cut them out, and overlay them to rank by area. The teacher introduces the unit square — a square with a 1-unit side — as the standard tile, showing how placing the cut-outs on a grid makes comparison precise."
+            },
+            {
+              "minutes": "12–25",
+              "activity": "Students read the tile picture in Let Us Do (tiles), p.144 (\"Look at the different tiles on Preetha's desk….\") and reason about how many green triangles, red triangles, and blue squares cover the desk. Class discussion surfaces why the same desk yields different counts with different tiles, reinforcing that area in triangle units differs from area in square units."
+            },
+            {
+              "minutes": "25–40",
+              "activity": "Students count unit squares for Let Us Do Q1, p.145 (\"Compare the areas of the two gardens….\"), recording the area of each garden in cm squares and sharing observations about which is larger. The teacher consolidates: the square grid is a standard tool for measuring and comparing areas."
+            }
+          ],
+          "teacher_notes": "Students sometimes count only full squares and ignore the fact that the grids in this section are designed so that all tiles are whole units — reassure them that every square inside the boundary counts. When comparing tile counts in the Preetha's-desk task, push students to articulate why a larger tile gives a smaller count: this lays the ground for understanding that the unit affects the measure. Additional practice: Let Us Do Q2–Q4, pp.146–147, offer extended grid-and-leaf comparisons for students who finish early.",
+          "materials": [
+            "Squared paper",
+            "Scissors",
+            "Pencil",
+            "Ruler"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S3"
+          ],
+          "section_titles": [
+            "Comparing areas using grids and the unit square"
+          ],
+          "activity_title": "Palms and Leaves: Estimating Area on a Grid",
+          "tasks_in_class": [
+            {
+              "id": "T-10",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S3",
+              "book_ref": "Let Us Do Q2, p.146",
+              "description": "Trace your palm on the square grid and find the approximate area of your palm. Compare the area of your palm with your friend's palm. Who has a bigger palm?"
+            },
+            {
+              "id": "T-11",
+              "intent": "explore",
+              "method": "Inquiry",
+              "section_ref": "S3",
+              "book_ref": "Let Us Do Q3, p.146",
+              "description": "Collect leaves of different kinds. Put them on a square grid and find their area. (a) Name the leaf with the largest area. (b) Name the leaf with the smallest area."
+            },
+            {
+              "id": "T-12",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S3",
+              "book_ref": "Let Us Do Q4, p.147",
+              "description": "The following mats are made of square patches of equal size. How many square patches will be required to cover each mat? Would both mats require an equal or different number of patches? Trace and cut out a small square of the size given and find the area."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–14",
+              "activity": "Each student traces their palm on a square-grid sheet for Let Us Do Q2, p.146 (\"Trace your palm on the square grid….\"), counts full squares and half-squares to find an approximate area, and then compares their count with a partner's. The class discusses what 'approximate' means for irregular shapes."
+            },
+            {
+              "minutes": "14–27",
+              "activity": "Groups lay collected leaves of different kinds on square-grid paper for Let Us Do Q3, p.146 (\"Collect leaves of different kinds….\"), trace around each leaf, count squares, and rank leaves from largest to smallest area. Groups share their rankings."
+            },
+            {
+              "minutes": "27–40",
+              "activity": "Students examine the mat pictures in Let Us Do Q4, p.147 (\"The following mats are made of square patches….\"), trace and cut a small square of the stated size, and count patches for each mat to determine whether the two mats require equal or different numbers of patches. The teacher closes by linking this back to comparing areas via grid counting."
+            }
+          ],
+          "teacher_notes": "For palm and leaf tracing, students may disagree on how to count squares that are only partly inside the boundary — establish a class rule of counting half-squares as one (two halves = one whole) before the activity starts. Watch for students who count the border squares twice; a pointer-and-count routine helps. The leaf activity works best if students bring three or four different leaf sizes so comparisons are meaningful.",
+          "materials": [
+            "Square-grid paper (one sheet per student)",
+            "Pencil",
+            "Scissors",
+            "Collected leaves of different kinds",
+            "Ruler"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S4"
+          ],
+          "section_titles": [
+            "Area and perimeter relationship — same area, different perimeter"
+          ],
+          "activity_title": "Same Area, Different Border: Exploring Independence",
+          "tasks_in_class": [
+            {
+              "id": "T-13",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S4",
+              "book_ref": "Let Us Explore Q1, p.147",
+              "description": "Tick the shapes with the same area. Find the perimeters of these shapes. What do you notice? Discuss."
+            },
+            {
+              "id": "T-14",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S4",
+              "book_ref": "Let Us Explore Q2, p.148",
+              "description": "Tick the shapes with the same perimeter. Find the areas of these shapes. What do you notice? Discuss."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–20",
+              "activity": "Students work on Let Us Explore Q1, p.147 (\"Tick the shapes with the same area….\"), counting unit squares to find which shapes share an area, then measuring perimeters of the ticked shapes. Pairs record their perimeters in a small table and notice that equal areas come with different perimeters."
+            },
+            {
+              "minutes": "20–40",
+              "activity": "Students move to Let Us Explore Q2, p.148 (\"Tick the shapes with the same perimeter….\"), this time identifying shapes with equal perimeters and comparing their areas. A whole-class discussion draws out the key insight: equal areas do not guarantee equal perimeters, and equal perimeters do not guarantee equal areas."
+            }
+          ],
+          "teacher_notes": "Students who have been building area through grid counting — which earlier units developed — often assume that a bigger perimeter means a bigger area: use the Let Us Explore data to challenge this directly. A common error is measuring perimeter by counting squares instead of sides; prompt students to trace along the boundary one side-step at a time. The discussion at the end of each task is essential — do not cut it short.",
+          "materials": [
+            "Textbook open to pp.147–148",
+            "Pencil",
+            "Squared paper for recording"
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S4"
+          ],
+          "section_titles": [
+            "Area and perimeter relationship — same area, different perimeter"
+          ],
+          "activity_title": "Drawing New Shapes: Perimeters Vary, Areas Stay Fixed",
+          "tasks_in_class": [
+            {
+              "id": "T-15",
+              "intent": "reason",
+              "method": "Inquiry",
+              "section_ref": "S4",
+              "book_ref": "Let Us Do Q1, p.149",
+              "description": "Draw different shapes having the same area as the given shape. Write the perimeter of each shape. What do you notice? Discuss."
+            },
+            {
+              "id": "T-16",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S4",
+              "book_ref": "Let Us Do Q2, p.150",
+              "description": "Is the area of shape (a) less than the area of shape (b) given below? Discuss."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–24",
+              "activity": "Students use squared paper for Let Us Do Q1, p.149 (\"Draw different shapes having the same area as the given shape….\"), constructing at least three different shapes that match the given area, then computing and recording the perimeter of each. They discuss in pairs what they notice about the perimeter values."
+            },
+            {
+              "minutes": "24–40",
+              "activity": "Students examine Let Us Do Q2, p.150 (\"Is the area of shape (a) less than the area of shape (b)….\"), comparing a square and a triangle on the grid. Class discussion extends the area-perimeter independence insight to non-rectangular shapes, with students justifying their answer by counting unit squares."
+            }
+          ],
+          "teacher_notes": "Students often restrict themselves to rectangles when asked to 'draw shapes'; encourage L-shapes, staircase shapes, and other rectilinear figures on the grid to make the perimeter variation striking. For Let Us Do Q2, watch for students who judge area by the height of the figure rather than by the squares it covers; redirecting them to count squares resolves this. The area-and-perimeter independence established across this and the previous unit is the conceptual foundation the formula work that follows will build on.",
+          "materials": [
+            "Squared paper",
+            "Pencil",
+            "Ruler",
+            "Textbook open to pp.149–150"
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S5"
+          ],
+          "section_titles": [
+            "Area formula for rectangles and squares"
+          ],
+          "activity_title": "Rows and Columns: Deriving Length × Breadth",
+          "tasks_in_class": [
+            {
+              "id": "T-17",
+              "intent": "solve",
+              "method": "Inquiry",
+              "section_ref": "S5",
+              "book_ref": "Let Us Do Q1, p.151",
+              "description": "Find the area of your classroom floor in square meters. Take the help of your teacher to measure the length and breadth of the floor. What is the perimeter of the classroom floor?"
+            },
+            {
+              "id": "T-18",
+              "intent": "solve",
+              "method": "Problem-solving",
+              "section_ref": "S5",
+              "book_ref": "Let Us Do Q2, p.152",
+              "description": "Find the area and perimeter of the following shapes (a)–(e) shown on a 1 cm square grid."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–14",
+              "activity": "The teacher demonstrates with a small grid drawn on the board that 4 columns of 6 rows gives 24 squares, and that multiplying 4 × 6 gives the same result as counting — deriving Area = Length × Breadth. The extension to squares (Length × Length) and the rectangle perimeter formula (2 × Length + 2 × Breadth) are stated and noted."
+            },
+            {
+              "minutes": "14–26",
+              "activity": "The class measures the classroom floor together for Let Us Do Q1, p.151 (\"Find the area of your classroom floor in square meters….\"), with volunteers using a measuring tape for length and breadth. Students apply the formula to compute area and also compute the floor's perimeter."
+            },
+            {
+              "minutes": "26–40",
+              "activity": "Students work through Let Us Do Q2, p.152 (\"Find the area and perimeter of the following shapes (a)–(e)….\") on the grid, applying the formula to each rectangle and checking with the grid count for the first shape. They record both area and perimeter for each shape."
+            }
+          ],
+          "teacher_notes": "The crucial step is connecting the row-column multiplication to the grid counting students have already done — make this link explicit on the board before sending students to the floor measurement. A frequent error is confusing the perimeter formula with the area formula; keep both written on the board side by side during practice. Additional practice: Let Us Do Q3, p.153 (measuring real objects) can follow for fast finishers.",
+          "materials": [
+            "Measuring tape",
+            "Metre scale",
+            "Squared paper",
+            "Pencil",
+            "Ruler"
+          ]
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S5"
+          ],
+          "section_titles": [
+            "Area formula for rectangles and squares"
+          ],
+          "activity_title": "Applying the Formula: Real Objects and Word Problems",
+          "tasks_in_class": [
+            {
+              "id": "T-19",
+              "intent": "solve",
+              "method": "Problem-solving",
+              "section_ref": "S5",
+              "book_ref": "Let Us Do Q3, p.153",
+              "description": "Find the area and perimeter of the following objects. Use a scale or measuring tape to find the length and the breadth: (1) Cover of the Notebook (2) Newspaper (3) Blackboard (4) Ludo board (5–6 student choice)."
+            },
+            {
+              "id": "T-20",
+              "intent": "solve",
+              "method": "Problem-solving",
+              "section_ref": "S5",
+              "book_ref": "Let Us Do Q4, p.153",
+              "description": "Find the area of a rectangular field whose length is 42 m and breadth is 34 m."
+            },
+            {
+              "id": "T-21",
+              "intent": "solve",
+              "method": "Problem-solving",
+              "section_ref": "S5",
+              "book_ref": "Let Us Do Q5, p.153",
+              "description": "The area of a rectangular garden is 64 square m and its length is 16 m. What is its breadth?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–18",
+              "activity": "In pairs, students measure and record length and breadth of the notebook cover, newspaper, and blackboard for Let Us Do Q3, p.153 (\"Find the area and perimeter of the following objects….\"), then compute area and perimeter for each. Pairs then choose two further objects and repeat."
+            },
+            {
+              "minutes": "18–28",
+              "activity": "Students solve Let Us Do Q4, p.153 (\"Find the area of a rectangular field whose length is 42 m….\") independently, setting out the formula, substituting values, and computing. The teacher checks that students write the unit as square metres."
+            },
+            {
+              "minutes": "28–40",
+              "activity": "Students work on Let Us Do Q5, p.153 (\"The area of a rectangular garden is 64 square m….\"), reasoning backwards from area and length to find the missing breadth. A brief class share-out consolidates the idea that the formula can be used in either direction."
+            }
+          ],
+          "teacher_notes": "Students measuring physical objects sometimes reverse length and breadth — reassure them that the product is the same either way, so the area is unaffected, but the convention matters for perimeter. Watch for students who use the area formula to compute perimeter in Let Us Do Q5; keep both formulas visible. Additional practice: further measurement tasks can be drawn from Let Us Do Q3 student-choice items.",
+          "materials": [
+            "Ruler or measuring tape",
+            "Pencil",
+            "Notebook, newspaper, blackboard (classroom objects)",
+            "Ludo board if available"
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S5"
+          ],
+          "section_titles": [
+            "Area formula for rectangles and squares"
+          ],
+          "activity_title": "The L-Shape Challenge: Decomposing Composite Figures",
+          "tasks_in_class": [
+            {
+              "id": "T-22",
+              "intent": "solve",
+              "method": "Problem-solving",
+              "section_ref": "S5",
+              "book_ref": "Let Us Do Q6, p.153",
+              "description": "Find the area of the following figure with the dimensions as marked in the figure. (L-shaped figure: total width 32 cm, top strip height 6 cm, lower portion height 12 cm)"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "The teacher draws the L-shaped figure on the board and asks students how they might find its area. Students suggest approaches; the teacher guides the class to see that the L-shape can be cut into two rectangles, each measured with Length × Breadth, and the two areas added."
+            },
+            {
+              "minutes": "15–30",
+              "activity": "Students solve Let Us Do Q6, p.153 (\"Find the area of the following figure….\") independently, showing the decomposition, computing both rectangles' areas, and adding. They compare their cut lines with a partner's to see that different decompositions give the same total area."
+            },
+            {
+              "minutes": "30–40",
+              "activity": "A brief class discussion generalises: any figure that can be split into rectangles can be measured by adding partial areas. Students pose one new composite shape to a partner and estimate its area before computing, practising decomposition reasoning in an unhurried making activity."
+            }
+          ],
+          "teacher_notes": "The most common error here is misreading the dimensions: students often assign the total height (6 + 12 = 18 cm) to one rectangle and forget to subtract when computing the other. Encourage students to label each rectangle's dimensions explicitly before computing. Students who decompose the L differently (vertical cut vs horizontal cut) should be celebrated — same answer, different decomposition reinforces the additive property of area.",
+          "materials": [
+            "Textbook open to p.153",
+            "Pencil",
+            "Squared paper",
+            "Ruler"
+          ]
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S6"
+          ],
+          "section_titles": [
+            "Perimeter game with square tiles"
+          ],
+          "activity_title": "Tile and Roll: The Perimeter-24 Game",
+          "tasks_in_class": [
+            {
+              "id": "T-23",
+              "intent": "reason",
+              "method": "Play-way",
+              "section_ref": "S6",
+              "book_ref": "Let Us Play, p.154",
+              "description": "Take square tiles and a die. Roll the die, pick tiles equal to dots, arrange to make a shape, find the perimeter. Take turns adding tiles to the same figure till the perimeter becomes 24. The one who makes perimeter 24 wins."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "The teacher demonstrates Let Us Play, p.154 (\"Take square tiles and a die….\") with one student: roll, place tiles, and compute perimeter together. The class agrees on the rule for computing perimeter of an irregular tile shape — count exposed sides only."
+            },
+            {
+              "minutes": "8–32",
+              "activity": "Pairs play the game: each player rolls, picks tiles equal to dots, adds them to the shared figure, and announces the new perimeter. Students experiment with how placing tiles at corners or along edges changes the perimeter differently. Play continues until one player reaches perimeter 24."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "A class discussion unpacks strategic findings: when does adding a tile increase perimeter? When does it decrease? Students share a placement that reduced perimeter and one that increased it, articulating their reasoning about shared sides."
+            }
+          ],
+          "teacher_notes": "Students may forget to recount exposed sides after each tile addition; insist on a full recount rather than adjusting the previous count, especially at first. The strategic discussion at the end is as important as the game itself — the insight that sharing more sides reduces perimeter consolidates the area-perimeter relationship. Watch for pairs who race through turns without discussing placement; prompt them with 'could you place it somewhere to get closer to 24?'",
+          "materials": [
+            "Square tiles (at least 24 per pair)",
+            "A standard die per pair",
+            "Pencil and paper for recording perimeters"
+          ]
+        },
+        {
+          "period_number": 11,
+          "synthesis": true,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5",
+            "S6"
+          ],
+          "section_titles": [
+            "Perimeter of shapes and rectangles",
+            "Area via tiling — covering regions with shapes",
+            "Comparing areas using grids and the unit square",
+            "Area and perimeter relationship — same area, different perimeter",
+            "Area formula for rectangles and squares",
+            "Perimeter game with square tiles"
+          ],
+          "activity_title": "Quilt Showcase: Connecting Area, Perimeter, and Measurement",
+          "tasks_in_class": [
+            {
+              "id": "T-3",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S1",
+              "book_ref": "Let Us Do Q2, p.142",
+              "description": "Draw two rectangles each having the following perimeters. (a) 26 cm (b) 18 cm"
+            },
+            {
+              "id": "T-13",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S4",
+              "book_ref": "Let Us Explore Q1, p.147",
+              "description": "Tick the shapes with the same area. Find the perimeters of these shapes. What do you notice? Discuss."
+            },
+            {
+              "id": "T-22",
+              "intent": "solve",
+              "method": "Problem-solving",
+              "section_ref": "S5",
+              "book_ref": "Let Us Do Q6, p.153",
+              "description": "Find the area of the following figure with the dimensions as marked in the figure. (L-shaped figure: total width 32 cm, top strip height 6 cm, lower portion height 12 cm)"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students revisit Let Us Do Q2, p.142 (\"Draw two rectangles each having the following perimeters….\") on squared paper and this time also compute the area of each rectangle they draw, recording both measurements. They compare two of their rectangles: same perimeter, different area."
+            },
+            {
+              "minutes": "12–26",
+              "activity": "Students work on Let Us Explore Q1, p.147 (\"Tick the shapes with the same area. Find the perimeters of these shapes….\"), deliberately looking at examples from both the area-via-tiling work and the formula work. Class discussion draws together: area can be measured by grid counting or by Length × Breadth; perimeter can be the same or different for shapes with equal area."
+            },
+            {
+              "minutes": "26–40",
+              "activity": "Students return to Let Us Do Q6, p.153 (\"Find the area of the following figure….\"), this time also computing the perimeter of the L-shape by tracing its full boundary. A closing whole-class discussion connects every strand: tiling builds area, the formula speeds it up, and perimeter and area remain independent — the quilt border (perimeter) and the quilt surface (area) are different measurements of the same object."
+            }
+          ],
+          "teacher_notes": "This unit draws on the full arc of the chapter — from boundary-as-perimeter through tiling-as-area to the formula and the independence insight — so use student responses to surface any lingering confusions. A common residual error is applying the area formula to compute perimeter; the side-by-side computation of both for the L-shape is a good diagnostic. End by asking students to name one thing about area and one thing about perimeter that they are now sure of: this self-articulation consolidates the chapter.",
+          "materials": [
+            "Squared paper",
+            "Ruler",
+            "Pencil",
+            "Textbook open to pp.142–154"
+          ]
+        }
+      ]
+    },
+    "period_schedule": {
+      "duration_minutes": 40,
+      "count": 11
+    },
+    "coverage_handoff": {
+      "explore": {
+        "tasks": [
+          {
+            "task_id": "T-4",
+            "intent": "explore",
+            "section_ref": "S2",
+            "book_ref": "Tiling exploration, p.143",
+            "description": "Cover your table with triangles, circles, squares, and rectangles. Fill in blanks: which shapes cover without gaps, which leave gaps; count triangles / squares / rectangles covering each table; state the area in triangle / square / rectangle units."
+          },
+          {
+            "task_id": "T-8",
+            "intent": "explore",
+            "section_ref": "S3",
+            "book_ref": "Trace and cut rectangles, p.144",
+            "description": "Trace rectangles A, B, C on to a paper and cut them to find out which one has the largest area."
+          },
+          {
+            "task_id": "T-10",
+            "intent": "explore",
+            "section_ref": "S3",
+            "book_ref": "Let Us Do Q2, p.146",
+            "description": "Trace your palm on the square grid and find the approximate area of your palm. Compare the area of your palm with your friend's palm. Who has a bigger palm?"
+          }
+        ]
+      },
+      "reason": {
+        "tasks": [
+          {
+            "task_id": "T-1",
+            "intent": "reason",
+            "section_ref": "S1",
+            "book_ref": "Opening context, p.142",
+            "description": "Tick the lace option (red 40 units / green 50 units / blue 25 units) that would cover the entire border of the quilt."
+          },
+          {
+            "task_id": "T-3",
+            "intent": "reason",
+            "section_ref": "S1",
+            "book_ref": "Let Us Do Q2, p.142",
+            "description": "Draw two rectangles each having the following perimeters. (a) 26 cm (b) 18 cm"
+          },
+          {
+            "task_id": "T-9",
+            "intent": "reason",
+            "section_ref": "S3",
+            "book_ref": "Let Us Do Q1, p.145",
+            "description": "Compare the areas of the two gardens given below on the square grid. Share your observations. Area of Garden A = ___ cm square; Area of Garden B = ___ cm square."
+          },
+          {
+            "task_id": "T-13",
+            "intent": "reason",
+            "section_ref": "S4",
+            "book_ref": "Let Us Explore Q1, p.147",
+            "description": "Tick the shapes with the same area. Find the perimeters of these shapes. What do you notice? Discuss."
+          },
+          {
+            "task_id": "T-15",
+            "intent": "reason",
+            "section_ref": "S4",
+            "book_ref": "Let Us Do Q1, p.149",
+            "description": "Draw different shapes having the same area as the given shape. Write the perimeter of each shape. What do you notice? Discuss."
+          },
+          {
+            "task_id": "T-23",
+            "intent": "reason",
+            "section_ref": "S6",
+            "book_ref": "Let Us Play, p.154",
+            "description": "Take square tiles and a die. Roll the die, pick tiles equal to dots, arrange to make a shape, find the perimeter. Take turns adding tiles to the same figure till the perimeter becomes 24. The one who makes perimeter 24 wins."
+          }
+        ]
+      },
+      "practice": {
+        "tasks": [
+          {
+            "task_id": "T-2",
+            "intent": "practice",
+            "section_ref": "S1",
+            "book_ref": "Let Us Do Q1, p.142",
+            "description": "Find the perimeter of the following shapes. All sides of the following shapes are equal. (pentagon with 4 cm side; bowtie figure with 5 cm side)"
+          },
+          {
+            "task_id": "T-5",
+            "intent": "practice",
+            "section_ref": "S2",
+            "book_ref": "Rug patch count, p.143",
+            "description": "Count how many square patches the grandmother used to make the rug shown in the picture."
+          }
+        ]
+      },
+      "solve": {
+        "tasks": [
+          {
+            "task_id": "T-18",
+            "intent": "solve",
+            "section_ref": "S5",
+            "book_ref": "Let Us Do Q2, p.152",
+            "description": "Find the area and perimeter of the following shapes (a)–(e) shown on a 1 cm square grid."
+          },
+          {
+            "task_id": "T-20",
+            "intent": "solve",
+            "section_ref": "S5",
+            "book_ref": "Let Us Do Q4, p.153",
+            "description": "Find the area of a rectangular field whose length is 42 m and breadth is 34 m."
+          },
+          {
+            "task_id": "T-21",
+            "intent": "solve",
+            "section_ref": "S5",
+            "book_ref": "Let Us Do Q5, p.153",
+            "description": "The area of a rectangular garden is 64 square m and its length is 16 m. What is its breadth?"
+          },
+          {
+            "task_id": "T-22",
+            "intent": "solve",
+            "section_ref": "S5",
+            "book_ref": "Let Us Do Q6, p.153",
+            "description": "Find the area of the following figure with the dimensions as marked in the figure. (L-shaped figure: total width 32 cm, top strip height 6 cm, lower portion height 12 cm)"
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "section_code": "A",
+        "section_title": "Explore",
+        "items": [
+          {
+            "id": "Q-A-1",
+            "intent": "explore",
+            "section_ref": "S2",
+            "section_title": "Area via tiling — covering regions with shapes",
+            "question_type": "MCQ",
+            "prompt": "Sona wants to cover a flat table with tiles of the same size. She tries four different tile shapes. Which shape will cover the table completely without any gaps or overlaps?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "Circles",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "Ovals",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "Semicircles",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "Squares",
+                "is_correct": true
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Squares",
+              "method_one_line": "Identify which shape tiles a flat surface with no gaps or overlaps.",
+              "what_each_option_reveals": {
+                "A": "The student has not noticed that curved shapes leave gaps between tiles at their curved edges.",
+                "B": "The student is choosing a visually familiar shape but has not considered whether it tiles without gaps.",
+                "C": "The student may be thinking of semicircles fitting together but has not tested whether a flat surface is covered completely."
+              },
+              "inclusivity": "Support: let the student physically place cut-out shapes on a desk and observe; stretch: ask them to find one more shape that tiles without gaps."
+            },
+            "exercise": {
+              "book_ref": "Tiling exploration, p.143",
+              "description": "Cover your table with triangles, circles, squares, and rectangles. Fill in blanks: which shapes cover without gaps, which leave gaps; count triangles / squares / rectangles covering each table; state the area in triangle / square / rectangle units."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-2",
+            "intent": "explore",
+            "section_ref": "S3",
+            "section_title": "Comparing areas using grids and the unit square",
+            "question_type": "SCR",
+            "prompt": "Arjun traces his palm on a square grid. He counts 18 full squares completely inside the outline and 8 squares that are only half inside. What is the approximate area of his palm in unit squares? Show how you counted.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Approximately 22 unit squares (18 full squares + 8 half-squares counted as 4 whole squares = 18 + 4 = 22).",
+              "method_one_line": "Count full squares as 1 each and pair two half-squares to make 1 whole square.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Support: let the student trace their own palm and point to each square before counting; stretch: ask them to compare their palm area with a partner's and say by how many unit squares one is larger."
+            },
+            "exercise": {
+              "book_ref": "Let Us Do Q2, p.146",
+              "description": "Trace your palm on the square grid and find the approximate area of your palm. Compare the area of your palm with your friend's palm. Who has a bigger palm?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-3",
+            "intent": "explore",
+            "section_ref": "S3",
+            "section_title": "Comparing areas using grids and the unit square",
+            "question_type": "MCQ",
+            "prompt": "Priya places rectangles P, Q, and R on a square grid and counts the unit squares each covers. Rectangle P covers 12 unit squares, Rectangle Q covers 15 unit squares, and Rectangle R covers 12 unit squares. Which statement is correct?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "All three rectangles have the same area.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "Rectangle P has the largest area.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "Rectangle R has the smallest area.",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "Rectangles P and R have equal area, and both are smaller than Q.",
+                "is_correct": true
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Rectangles P and R have equal area (12 unit squares each), and both are smaller than Q (15 unit squares).",
+              "method_one_line": "Compare the unit-square counts directly: equal counts mean equal areas.",
+              "what_each_option_reveals": {
+                "B": "The student may be ordering by the label letter rather than by the count.",
+                "C": "The student has reversed the comparison, perhaps confusing 12 and 15.",
+                "A": "The student has not attended to the different counts and assumed all are the same."
+              },
+              "inclusivity": "Support: let the student write the three counts side by side and circle the largest; stretch: ask them to draw a fourth rectangle with an area between P and Q."
+            },
+            "exercise": {
+              "book_ref": "Trace and cut rectangles, p.144",
+              "description": "Trace rectangles A, B, C on to a paper and cut them to find out which one has the largest area."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "B",
+        "section_title": "Reason",
+        "items": [
+          {
+            "id": "Q-B-1",
+            "intent": "reason",
+            "section_ref": "S1",
+            "section_title": "Perimeter of shapes and rectangles",
+            "question_type": "MCQ",
+            "prompt": "A square quilt has a side of 8 units. Meera wants to stitch a lace border all the way around it. Which length of lace is exactly enough to go around the entire border?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "16 units",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "24 units",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "32 units",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "64 units",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "32 units (4 sides × 8 units = 32 units).",
+              "method_one_line": "Multiply the side length by the number of sides: 4 × 8 = 32.",
+              "what_each_option_reveals": {
+                "B": "The student multiplied by 3 instead of 4, perhaps counting only three visible sides.",
+                "D": "The student multiplied 8 × 8 = 64, confusing perimeter with area.",
+                "A": "The student added only two sides (8 + 8 = 16), forgetting the other two sides of the square."
+              },
+              "inclusivity": "Support: ask the student to trace all four sides with a finger and count them before multiplying; stretch: ask what length of lace would be needed if the side were 11 units."
+            },
+            "exercise": {
+              "book_ref": "Opening context, p.142",
+              "description": "Tick the lace option (red 40 units / green 50 units / blue 25 units) that would cover the entire border of the quilt."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-2",
+            "intent": "reason",
+            "section_ref": "S1",
+            "section_title": "Perimeter of shapes and rectangles",
+            "question_type": "SCR",
+            "prompt": "Draw two different rectangles on squared paper, each with a perimeter of 20 cm. Write the length and breadth you chose for each rectangle. Are the two rectangles the same shape?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Any two pairs (length, breadth) where 2 × length + 2 × breadth = 20, for example (6, 4) and (7, 3) or (8, 2) and (9, 1). The two rectangles will generally have different shapes.",
+              "method_one_line": "Choose a length, compute the required breadth using half of (20 − 2 × length), and verify the sum equals 20.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Support: give the student the first pair (6, 4) and ask them to find a second pair; stretch: ask how many whole-number pairs are possible and whether any two give rectangles of the same shape."
+            },
+            "exercise": {
+              "book_ref": "Let Us Do Q2, p.142",
+              "description": "Draw two rectangles each having the following perimeters. (a) 26 cm (b) 18 cm"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-3",
+            "intent": "reason",
+            "section_ref": "S3",
+            "section_title": "Comparing areas using grids and the unit square",
+            "question_type": "SCR",
+            "prompt": "Garden X covers 16 unit squares on a grid. Garden Y covers 11 unit squares on the same grid. Which garden has the larger area, and by how many unit squares is it larger?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Garden X has the larger area; it is larger by 5 unit squares (16 − 11 = 5).",
+              "method_one_line": "Compare counts directly and subtract the smaller from the larger.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Support: ask the student to write both numbers and circle the bigger one before subtracting; stretch: ask them to sketch a new garden Z with an area between X and Y."
+            },
+            "exercise": {
+              "book_ref": "Let Us Do Q1, p.145",
+              "description": "Compare the areas of the two gardens given below on the square grid. Share your observations. Area of Garden A = ___ cm square; Area of Garden B = ___ cm square."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-4",
+            "intent": "reason",
+            "section_ref": "S4",
+            "section_title": "Area and perimeter relationship — same area, different perimeter",
+            "question_type": "MCQ",
+            "prompt": "Four shapes on a grid each cover exactly 8 unit squares. Their perimeters are measured. What can you say about their perimeters?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "All four shapes must have the same perimeter because they have the same area.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "Shapes with the same area always have the same perimeter.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "The perimeters may be different even though the areas are equal.",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "The shape with the largest perimeter also has the largest area.",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "The perimeters may be different even though the areas are equal.",
+              "method_one_line": "Area (count of unit squares) and perimeter (count of exposed sides) are independent measurements.",
+              "what_each_option_reveals": {
+                "A": "The student believes area determines perimeter, the exact misconception the section addresses.",
+                "D": "The student is conflating perimeter size with area size, reversing the independence insight.",
+                "B": "The student is restating the same misconception in different words, that equal area forces equal perimeter."
+              },
+              "inclusivity": "Support: ask the student to draw two different shapes on grid paper that both cover 8 squares and measure each perimeter; stretch: ask them to find the arrangement of 8 unit squares that gives the smallest possible perimeter."
+            },
+            "exercise": {
+              "book_ref": "Let Us Explore Q1, p.147",
+              "description": "Tick the shapes with the same area. Find the perimeters of these shapes. What do you notice? Discuss."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-5",
+            "intent": "reason",
+            "section_ref": "S4",
+            "section_title": "Area and perimeter relationship — same area, different perimeter",
+            "question_type": "SCR",
+            "prompt": "On squared paper, draw three different shapes that each have an area of 6 unit squares. Measure and write the perimeter of each shape. What do you notice about the perimeters?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Three shapes each with 6 unit squares; perimeters will vary (e.g. a 1×6 rectangle has perimeter 14, a 2×3 rectangle has perimeter 10, an L-shape may have perimeter 12). The perimeters are different even though the areas are the same.",
+              "method_one_line": "Count exposed boundary sides for each shape to find the perimeter; notice the counts differ.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Support: provide the student with the 2×3 rectangle as the first example and ask them to draw one more; stretch: challenge them to find which arrangement of 6 squares gives the largest perimeter and which gives the smallest."
+            },
+            "exercise": {
+              "book_ref": "Let Us Do Q1, p.149",
+              "description": "Draw different shapes having the same area as the given shape. Write the perimeter of each shape. What do you notice? Discuss."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-6",
+            "intent": "reason",
+            "section_ref": "S6",
+            "section_title": "Perimeter game with square tiles",
+            "question_type": "SCR",
+            "prompt": "Ravi places 3 square tiles in a row to make a rectangle. The perimeter of this rectangle is 8 units. He then adds one more tile at one end to make a row of 4 tiles. What is the new perimeter? Did adding the tile increase or decrease the perimeter, and by how much?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "New perimeter = 10 units. Adding the tile increased the perimeter by 2 units (from 8 to 10).",
+              "method_one_line": "Count exposed sides of the new shape: a 1×4 row has 2 long sides of 4 and 2 short sides of 1, giving 4+4+1+1 = 10.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Support: ask the student to draw both shapes on squared paper and trace the boundary; stretch: ask what would happen to the perimeter if the extra tile were placed on the side of the 1×3 row instead of the end."
+            },
+            "exercise": {
+              "book_ref": "Let Us Play, p.154",
+              "description": "Take square tiles and a die. Roll the die, pick tiles equal to dots, arrange to make a shape, find the perimeter. Take turns adding tiles to the same figure till the perimeter becomes 24. The one who makes perimeter 24 wins."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "C",
+        "section_title": "Practise",
+        "items": [
+          {
+            "id": "Q-C-1",
+            "intent": "practice",
+            "section_ref": "S1",
+            "section_title": "Perimeter of shapes and rectangles",
+            "question_type": "MCQ",
+            "prompt": "A regular hexagon has all six sides equal. Each side is 3 cm long. What is its perimeter?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "9 cm",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "12 cm",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "18 cm",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "36 cm",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "18 cm (6 sides × 3 cm = 18 cm).",
+              "method_one_line": "Multiply the number of equal sides by the side length: 6 × 3 = 18.",
+              "what_each_option_reveals": {
+                "A": "The student multiplied 3 × 3 = 9, using only three sides instead of six.",
+                "B": "The student used 4 × 3 = 12, perhaps thinking of a quadrilateral instead of a hexagon.",
+                "D": "The student multiplied 3 × 12 = 36 or made a doubling error, suggesting confusion about the number of sides."
+              },
+              "inclusivity": "Support: ask the student to write '3 cm' six times and add; stretch: ask what the perimeter would be if each side were 5 cm."
+            },
+            "exercise": {
+              "book_ref": "Let Us Do Q1, p.142",
+              "description": "Find the perimeter of the following shapes. All sides of the following shapes are equal. (pentagon with 4 cm side; bowtie figure with 5 cm side)"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-2",
+            "intent": "practice",
+            "section_ref": "S2",
+            "section_title": "Area via tiling — covering regions with shapes",
+            "question_type": "NUM",
+            "prompt": "A rectangular rug is made entirely of square patches of equal size. The rug has 5 rows and 7 patches in each row. How many square patches make up the rug?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "35 square patches.",
+              "method_one_line": "Multiply the number of rows by the number of patches in each row: 5 × 7 = 35.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Support: ask the student to draw the rug as a grid and count every square; stretch: ask how many patches would be needed if the rug had one more row."
+            },
+            "exercise": {
+              "book_ref": "Rug patch count, p.143",
+              "description": "Count how many square patches the grandmother used to make the rug shown in the picture."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "D",
+        "section_title": "Solve",
+        "items": [
+          {
+            "id": "Q-D-1",
+            "intent": "solve",
+            "section_ref": "S5",
+            "section_title": "Area formula for rectangles and squares",
+            "question_type": "MCQ",
+            "prompt": "A rectangular classroom floor is 9 m long and 6 m wide. What is the area of the classroom floor?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "15 square m",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "30 square m",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "54 square m",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "108 square m",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "54 square m (9 × 6 = 54).",
+              "method_one_line": "Apply the formula Area = Length × Breadth: 9 × 6 = 54 square m.",
+              "what_each_option_reveals": {
+                "B": "The student computed the perimeter (2×9 + 2×6 = 30) instead of the area, confusing the two formulas.",
+                "A": "The student added length and breadth (9 + 6 = 15) rather than multiplying.",
+                "D": "The student doubled the correct answer, perhaps computing 9 × 6 × 2 = 108, suggesting confusion with the perimeter formula structure."
+              },
+              "inclusivity": "Support: let the student draw a 9×6 grid and count the squares in one row then multiply by rows; stretch: ask the student to also compute the perimeter of the classroom floor."
+            },
+            "exercise": {
+              "book_ref": "Let Us Do Q2, p.152",
+              "description": "Find the area and perimeter of the following shapes (a)–(e) shown on a 1 cm square grid."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-D-2",
+            "intent": "solve",
+            "section_ref": "S5",
+            "section_title": "Area formula for rectangles and squares",
+            "question_type": "NUM",
+            "prompt": "A rectangular field is 38 m long and 25 m wide. What is the area of the field in square metres?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "950 square m (38 × 25 = 950).",
+              "method_one_line": "Apply Area = Length × Breadth: 38 × 25 = 950 square m.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Support: suggest the student break 38 × 25 into (40 − 2) × 25 = 1000 − 50 = 950; stretch: ask the student to also compute the perimeter of the field."
+            },
+            "exercise": {
+              "book_ref": "Let Us Do Q4, p.153",
+              "description": "Find the area of a rectangular field whose length is 42 m and breadth is 34 m."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-D-3",
+            "intent": "solve",
+            "section_ref": "S5",
+            "section_title": "Area formula for rectangles and squares",
+            "question_type": "NUM",
+            "prompt": "The area of a rectangular playground is 72 square m and its length is 9 m. What is its breadth?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "8 m (72 ÷ 9 = 8).",
+              "method_one_line": "Use Area = Length × Breadth rearranged: Breadth = Area ÷ Length = 72 ÷ 9 = 8 m.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Support: let the student write 9 × ___ = 72 and use the multiplication table to find the missing number; stretch: ask the student to now compute the perimeter of the playground."
+            },
+            "exercise": {
+              "book_ref": "Let Us Do Q5, p.153",
+              "description": "The area of a rectangular garden is 64 square m and its length is 16 m. What is its breadth?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-D-4",
+            "intent": "solve",
+            "section_ref": "S5",
+            "section_title": "Area formula for rectangles and squares",
+            "question_type": "NUM",
+            "prompt": "An L-shaped figure is made up of two rectangles. The top rectangle is 20 cm wide and 5 cm tall. The bottom rectangle is 10 cm wide and 8 cm tall. What is the total area of the L-shaped figure?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "180 square cm. Top rectangle: 20 × 5 = 100 square cm. Bottom rectangle: 10 × 8 = 80 square cm. Total: 100 + 80 = 180 square cm.",
+              "method_one_line": "Decompose the L-shape into two rectangles, compute each area using Length × Breadth, then add.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Support: ask the student to draw the two rectangles separately and label the dimensions before computing; stretch: ask the student to compute the perimeter of the complete L-shaped figure."
+            },
+            "exercise": {
+              "book_ref": "Let Us Do Q6, p.153",
+              "description": "Find the area of the following figure with the dimensions as marked in the figure. (L-shaped figure: total width 32 cm, top strip height 6 cm, lower portion height 12 cm)"
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

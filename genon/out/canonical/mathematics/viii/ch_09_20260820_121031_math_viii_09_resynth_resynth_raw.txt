@@ -1,0 +1,45 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Four Problems, One Theorem: Putting the Chapter to Work",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems at once on the board; students work individually with full written working for the first 18 minutes, then compare in groups of three where any disagreement is reconstructed step by step. One student from each group presents one problem; after each presentation the class names the chapter method used. Problem 1 uses the isosceles-right-triangle formula c² = 2a² (section 2.3). Problem 2 uses a² + b² = c² to find a missing leg (section 2.4/2.7). Problem 3 uses the triple-scaling result — checking whether a given triple is a Baudhāyana triple and identifying its primitive (section 2.5). Problem 4 uses the diagonal-bisection property of a rhombus to form a right triangle, then applies a² + b² = c² (section 2.7). Watch for: Problem 1 — students squaring 2a instead of computing 2a²; Problem 2 — subtracting the wrong square (confusing leg² = c² − a²); Problem 3 — scaling a non-triple and mistakenly concluding it is primitive; Problem 4 — forgetting to halve each diagonal before applying the theorem.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | An isosceles right triangle has equal legs of length 10 cm. Find the length of its hypotenuse and state two consecutive integers between which it lies. | c² = 2a² = 2 × 100 = 200, so c = √200. Since 14² = 196 and 15² = 225, the hypotenuse lies between 14 and 15.\n2 | A right triangle has hypotenuse 26 cm and one leg 10 cm. Find the length of the other leg. | a² + b² = c²: b² = 26² − 10² = 676 − 100 = 576, so b = 24 cm.\n3 | Is (9, 40, 41) a Baudhāyana triple? If yes, state whether it is primitive or a scaled version of a primitive triple, and give the primitive. | Check: 9² + 40² = 81 + 1600 = 1681 = 41². Yes, it is a Baudhāyana triple. The GCD of 9, 40, 41 is 1 (9 = 3², 40 = 2³ × 5, 41 is prime — no common factor), so (9, 40, 41) is itself a primitive triple.\n4 | A rhombus has diagonals of length 18 cm and 80 cm. Find the length of one side of the rhombus. | The diagonals of a rhombus bisect each other at right angles, forming four right triangles each with legs 9 cm and 40 cm. Side² = 9² + 40² = 81 + 1600 = 1681, so each side = 41 cm."
+      }
+    ],
+    "materials": [
+      "Blackboard and chalk",
+      "Notebooks and pencils"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "All four problems are written on the board. The teacher reads each aloud once. Students are told to work every problem individually, showing full written working — no sharing yet."
+      },
+      {
+        "minutes": "3-21",
+        "activity": "Individual working time. Every student attempts all four problems in their notebook. The teacher circulates, saying nothing about answers, but prompting any student who has stopped writing to name what the problem is asking and what quantity they are computing first."
+      },
+      {
+        "minutes": "21-33",
+        "activity": "Students form groups of three and compare their working on each problem. Where answers differ, the group reconstructs both attempts line by line to locate the first step that diverges. The teacher moves between groups; if a whole group is stuck on the same error, a single directing question is offered — nothing more."
+      },
+      {
+        "minutes": "33-42",
+        "activity": "One student presents one problem at the board, showing only the steps that hold. After each presentation, the class is asked: which chapter method did this solution rest on? Students name it aloud. Any necessary correction is made by the class, not by the teacher."
+      },
+      {
+        "minutes": "42-45",
+        "activity": "The teacher states the chapter's one idea in a sentence: a right angle in a figure always connects its two shorter sides to the longer one by a² + b² = c², and every problem here yielded because that single relationship was enough. No further summary is given."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

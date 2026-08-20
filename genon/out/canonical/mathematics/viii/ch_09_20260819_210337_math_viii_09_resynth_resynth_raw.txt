@@ -1,0 +1,47 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Four Problems, One Theorem",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems on the board at once and give the class a full uninterrupted stretch to work individually with full written working — no answers yet. Then groups of three compare: where working disagrees, each member re-states their steps aloud until the disagreement is located and resolved. One student per group presents to the class; after each presentation the class names, in one phrase, the chapter method that unlocked the problem. Problem 1 needs the isosceles-right-triangle formula c² = 2a². Problem 2 needs Baudhāyana's theorem a² + b² = c² applied to find a missing leg. Problem 3 needs the Baudhāyana-triple generation rule and the primitive-vs-scaled distinction. Problem 4 needs the theorem applied to a context figure — a rhombus split by its diagonals into right triangles. Watch for students who square c instead of isolating a leg in Problem 2, and for those who verify a triple numerically without stating whether it is primitive or scaled in Problem 3.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | A square tile has side 9 cm. What is the length of its diagonal? Is the diagonal between 12 and 13 cm? | The diagonal is the hypotenuse of an isosceles right triangle with equal sides 9 cm. c² = 2 × 9² = 2 × 81 = 162, so c = √162. Check: 12² = 144, 13² = 169. Since 144 < 162 < 169, the diagonal lies between 12 and 13 cm.\n2 | A right triangle has hypotenuse 26 cm and one leg 10 cm. Find the other leg. | a² + b² = c²: 10² + b² = 26². So b² = 676 − 100 = 576, giving b = 24 cm.\n3 | Use the odd-square method to generate the Baudhāyana triple whose smallest odd perfect square is 49. State whether the triple is primitive or a scaled version of a smaller triple. | 2n − 1 = 49, so n = 25. The three sides are n − 1 = 24, √49 = 7, and n = 25, giving the triple (7, 24, 25). Check: 49 + 576 = 625 ✓. Since no integer greater than 1 divides all three of 7, 24, 25, the triple is primitive.\n4 | A rhombus has diagonals of length 16 cm and 12 cm. Find the length of one side of the rhombus. | The diagonals of a rhombus bisect each other at right angles, forming four right triangles. Each has legs 16 ÷ 2 = 8 cm and 12 ÷ 2 = 6 cm. Side² = 8² + 6² = 64 + 36 = 100, so side = 10 cm."
+      }
+    ],
+    "materials": [
+      "Blackboard or whiteboard",
+      "Chalk or markers",
+      "Notebooks",
+      "Pencils"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "The teacher writes all four problems on the board, reads each aloud clearly, and instructs the class to begin working individually — full written working for every problem, no calculators, no talking yet."
+      },
+      {
+        "minutes": "3-20",
+        "activity": "Individual work. Every student attempts all four problems in their notebook, writing each step. The teacher moves through the room, watching that working is written out and saying nothing about correctness."
+      },
+      {
+        "minutes": "20-30",
+        "activity": "Groups of three form and compare working. Where answers or steps disagree, each member re-states their reasoning one step at a time until the point of divergence is found and the group resolves it. No answer is treated as settled until all three members can reconstruct the steps."
+      },
+      {
+        "minutes": "30-42",
+        "activity": "One student per group presents one problem to the class — the teacher assigns problems so that each of the four is presented once. After each presentation the class names, in a short phrase, the chapter method the solution rested on. The teacher writes those four method-names on the board as they accumulate."
+      },
+      {
+        "minutes": "42-45",
+        "activity": "The teacher reads the four method-names aloud and asks: what single idea connects them? Students respond; the teacher closes with one sentence — because the square on the hypotenuse equals the sum of the squares on the other two sides, every right triangle in every shape became a calculation we could finish."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

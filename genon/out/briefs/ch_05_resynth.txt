@@ -1,342 +1,908 @@
-ARUVI — CLOSING SYNTHESIS RE-AUTHORING · SCIENCE · MIDDLE STAGE
+ARUVI — CLOSING SYNTHESIS RE-AUTHORING · MATHEMATICS · MIDDLE STAGE
 
 You are re-writing ONE unit: the closing whole-chapter synthesis of a chapter's fullest
-lesson plan. This unit is served in two situations, and it must be excellent in both:
+lesson plan. It is served in two situations and must be excellent in both:
 
 1. As the FINAL unit of the fullest plan — the class finishes the chapter with it.
 2. As ONE EXTRA 45-minute period appended to a SHORTER complete plan of the same
-   chapter, whose own final unit (given below) already consolidated the chapter
+   chapter, whose own final unit (given below) already drew the chapter together
    yesterday.
 
-THE UNIT YOU ARE WRITING closes the chapter through one fresh, concrete application: a
-scenario, artefact, dataset, place or design problem the chapter itself never uses. The
-class brings the chapter's concepts; the unit puts them to work in the new setting, and
-what the task shows IS the synthesis — the chapter drawn together by using it whole, not
-by summarising it.
+THE UNIT YOU ARE WRITING closes the chapter by putting its methods to work on a small set
+of problems the teacher poses. Solving them IS the synthesis: the chapter is drawn
+together by being used, not by being recited.
 
 PROPERTIES OF THE UNIT:
-- It opens directly onto its fresh setting: the first band presents the new material and
-  puts the first question to the class.
-- Every concept or skill it calls on appears in EVERY unit-title map given below — the
-  shorter plans differ in what they cover; write only to what all of them share.
-- Its vehicle (the kind of task: scenario cards, argument construction, data table,
-  concept map, design brief, error correction, narrative trace…) is different in kind
-  from every FINAL UNIT given below, and it uses none of the specific stories, quotes,
-  objects, questions or catchphrases those final units use.
-- Its closing band consolidates what THE TASK ITSELF showed, naming the chapter's central
-  ideas as the reason the task worked — earned closure, not ceremony.
-- All materials are in its own `materials` list: things any classroom has or the unit
-  itself makes.
-- Band narration never states a quantity of minutes or any calendar time — the band's
-  `minutes` field carries the clock.
+- It carries TWO TO FOUR problems, each reaching for a DIFFERENT major method of the
+  chapter, and together spanning its main strands. Each problem is stated in full, with
+  its numbers, inside the band that poses it — a teacher reads the band aloud and the
+  class can start.
+- The problems are the TEACHER'S OWN, written for this unit and posed on the board. The
+  mathematics in each is the chapter's, and nothing is invented or imported.
+- THE PROBLEMS AND THEIR SOLUTIONS LIVE IN ONE TABLE, in `visual_aids` — three columns,
+  `No. | Problem | Solution`, one row per problem. The Problem cell states the problem in
+  one or two plain sentences with its numbers. The Solution cell gives the answer and the
+  few steps that reach it, in plain words and figures — brief enough for a teacher to read
+  at a glance while the class works, and no longer than the problem it answers. This table
+  is the teacher's whole worked reference.
+- EACH PROBLEM IS WELL-POSED AND SELF-CONSISTENT. It states everything needed to solve it,
+  its data agree with each other and with the solution beside it, and it has one answer.
+  Where a count is named ("the four corner cells", "the six expressions you can form"),
+  that count is the number the problem's own conditions produce. Where a figure carries
+  measurements, they can all hold at once. Where a construction is described, the described
+  construction is the one the solution works on.
+- THE SOLUTION CELL IS THE SETTLED ANSWER. Work each problem out fully first; then write
+  only the route that reaches the answer and the answer itself. Trials that failed,
+  possibilities considered and rejected, re-checks and corrections belong to the working,
+  not to the page a teacher reads at the board. Every step written is a step that holds:
+  a justification names the fact it rests on, and never assumes what it is proving.
+- `teacher_notes` is SHORT — a few sentences at most. It says how the sitting is run and
+  what to watch for as students work; the mathematics is in the table, and is not repeated
+  here. Name, for each problem, only the chapter method it needs — the method its own
+  solution actually uses — and warn only about errors that problem can produce.
+- Its `textbook_items_in_class` and `homework` are both `[]`, and its band text names no
+  page, no exercise and no book item. The class works from the board.
+- Its shape gives every student a full attempt before any answer is public: the problems
+  are posed, worked individually with full working, compared in small groups where a
+  disagreement is reconstructed step by step, and then presented — and each presentation
+  is followed by the class NAMING the chapter method the solution rested on.
+- The closing band states the chapter's one idea in a sentence, as the reason the problems
+  yielded — earned closure, not ceremony.
+- It is ONE sitting and weighs the same as any other: 45 minutes, a handful of
+  bands, materials any classroom has. Depth here is the demand of the problems, never the
+  quantity of material.
+- Every method it calls on appears in EVERY unit-title map given below — the shorter plans
+  differ in what they reach, so write only to what all of them share, and treat the
+  SHORTEST map as binding.
+- Its vehicle differs in kind from every FINAL UNIT given below, and it reuses none of
+  their specific contexts, objects, puzzles or framing questions.
+- Band narration never states a quantity of minutes and never points beyond this sitting —
+  the band's `minutes` field carries the clock.
 
 OUTPUT — exactly this JSON object, nothing else:
 {
   "synthesis_unit": {
     "activity_title": "…",
-    "activity_description": "…",
-    "pedagogical_approach": "…",
-    "teacher_notes": "…",
+    "pedagogical_method": "one of: Discovery · Problem-solving · Play-way · Inductive ·
+      Deductive — the method this unit runs on",
+    "section_goal": "recall | reason | apply — the goal this unit works at",
+    "teacher_notes": "a few sentences: how the sitting runs, what to watch for, and the
+      chapter method each problem needs — NOT the solutions, which are in the table",
+    "visual_aids": [
+      {"type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | … | …\n2 | … | …"}
+    ],
     "materials": ["…"],
     "time_bands": [
       {"minutes": "0-N", "activity": "…"},
       …bands in sequence, integer boundaries, last band ends at 45…
     ],
+    "textbook_items_in_class": [],
     "homework": []
   }
 }
-No other keys — the platform carries the unit's number, stage and duration itself.
+No other keys — the platform carries the unit's number, duration, section coverage and
+synthesis marker itself.
 
 CHAPTER SUMMARY:
 
-Chapter 5: Exploring Forces
+{
+  "stage": "middle",
+  "subject": "mathematics",
+  "grade": "viii",
+  "chapter_number": 5,
+  "chapter_title": "Number Play",
+  "sections": [
+    { "ref": "section 5.1", "title": "Is This a Multiple Of?", "section_goal": ["reason", "apply"] },
+    { "ref": "section 5.2", "title": "Checking Divisibility Quickly", "section_goal": ["reason"] },
+    { "ref": "section 5.3", "title": "Digits in Disguise", "section_goal": ["apply"] }
+  ],
+  "prose_summary": "Section 5.1, 'Is This a Multiple Of?', reasons through a rich cluster of number-theory ideas centred on multiples, factors, parity, and remainders, then applies algebraic and visual arguments to prove them. The section opens with Anshu's exploration of sums of consecutive numbers—whether every natural number, or every even number, can be expressed as such a sum—and immediately invites students to investigate these conjectures by trying specific cases and extending them with negative numbers. A Math Talk prompt asks students to take four consecutive numbers, place all eight possible combinations of '+' and '−' signs between them, evaluate each expression, and observe that every result is even. Three distinct algebraic explanations are given to prove this parity invariance: one using sign-switching and the observation that each switch changes the value by an even amount (2 times the affected number); a second using the rule that a ± b always has the same parity regardless of the parities of a and b, so all expressions a ± b ± c ± d share parity; and a third referencing the token model from the chapter on Integers. Students are then challenged to extend the result from four numbers to any count of numbers. The subsection 'Breaking Even' applies parity rules to determine, without computation, which arithmetic and algebraic expressions always produce even numbers—introducing the key ideas that a product is even if any factor is even, and that expressions like 4m + 2q are always even because 2 divides them regardless of the values of m and q. The subsection 'Pairs to Make Fours' deepens this reasoning: even numbers split into two classes—multiples of 4 (remainder 0 when divided by 4) and non-multiples of 4 (remainder 2)—and students prove with algebra and visualisation that the sum of two multiples of 4 is always a multiple of 4, the sum of two non-multiples of 4 is also always a multiple of 4, while the sum of one of each type is never a multiple of 4. The subsection 'Always, Sometimes, or Never' extends this reasoning framework to a sequence of five numbered statements about factors, multiples, and divisibility by 8, 7, 12, and 6—each justified with algebra, visualisation, and examples, establishing general laws: if a divides M and a divides N, then a divides M + N and M − N; if A is divisible by k then all multiples of A are divisible by k; if A is divisible by k then A is divisible by all factors of k; if A is divisible by both k and m then A is divisible by their LCM. The subsection 'What Remains?' introduces the idea of numbers characterised by their remainder when divided by a given number, derives the algebraic expression 5k + 3 for numbers leaving remainder 3 on division by 5, and notes that 5k − 2 (for k ≥ 1) generates the same set. The section's Figure it Out (eight questions) requires students to use all these ideas—to find consecutive numbers summing to 34, to describe consecutive numbers algebraically, to classify seven divisibility statements as always/sometimes/never true with algebraic justification, to find numbers satisfying simultaneous remainder conditions, to solve a remainder riddle, to verify a claim about sums of numbers leaving remainder 2 on division by 6, to use remainder arithmetic for 661 and 4779 both algebraically and visually, and to find the smallest number leaving specified remainders when divided by 3, 4, and 5.",
 
-Section 5.1 — What Is a Force? introduces the concept of force through a simple student activity. Activity 5.1 asks students to move a large cardboard box in as many ways as they can, leading them to discover that every mode of movement — pushing, pulling, lifting, carrying — involves a push or pull. The section establishes the foundational definition: a push or pull applied on an object is called force in science.
+    "Section 5.2, 'Checking Divisibility Quickly', reasons through why standard divisibility shortcuts for 2, 4, 5, 8, and 10 work using place-value algebra, then develops and proves new shortcuts for divisibility by 9, 3, and 11. The section begins by writing any number in its general expanded form …1000d + 100c + 10b + a and observing that all place values except the units place are multiples of 10, which immediately explains the divisibility shortcuts for 10, 5, and 2; students are prompted to extend the same reasoning to 4 (last two digits) and 8 (last three digits). The shortcut for 9 is derived by noting that each place value is one more than a repunit multiple of 9: 1 = 9×0 + 1, 10 = 9×1 + 1, 100 = 99 + 1, 1000 = 999 + 1, and so on, so the remainder when any number is divided by 9 equals the sum of its digits, and iterating this digit-sum until a single digit is reached gives the digital root, which equals the remainder on division by 9. Students explore the rule for divisibility by 3 (digit sum divisible by 3) by examining remainders of powers of 10 on division by 3. The shortcut for 11 is derived from the alternating pattern: each odd-positioned place value is one more than a multiple of 11, and each even-positioned place value is one less—leading to the rule that the difference between the sum of digits in odd positions and the sum of digits in even positions must be 0 or a multiple of 11 for divisibility by 11. A worked example uses 320185 to demonstrate both the long and short versions of the rule. The section introduces the concept of digital roots, notes that Aryabhata II described this method in the Mahāsiddhānta (c. 950 CE), and connects it to remainder arithmetic. A divisibility table exercise (Figure it Out, p. 126) gives four questions on divisibility by 9, and the section closes with a Figure it Out (p. 131) of four questions on digital roots, including finding patterns in sequences generated by adding 11, computing the digital root of algebraic expressions, and conjecturing relationships between parity, digital roots, and remainders on division by 3 or 9.",
 
-Section 5.2 — What Can a Force Do to the Objects on Which It Is Applied? uses Activity 5.2, a structured analytical exercise in which students examine everyday force situations (a friend pulling a moving bicycle to stop it, hitting a ball with a bat, pressing an inflated balloon) and record what effect the force has in each case. Through this analysis, the section identifies the four possible effects of force: making an object at rest begin to move, changing the speed of a moving object, changing the direction of motion of an object, and bringing about a change in the shape of an object.
-
-Section 5.3 — Are Forces an Interaction Between Two or More Objects? establishes the interactional nature of force. The section asks students to count how many objects are involved in each force situation from Section 5.2, guiding them to infer that at least two objects must interact for a force to come into play. It formally defines force as a push or pull on an object resulting from that object's interaction with another object, and introduces the SI unit of force: newton (N), symbolised as N. A Step Further extension notes that when two objects interact each experiences a force from the other, and that these forces disappear the moment interaction ceases.
-
-Section 5.4 — What Are the Different Types of Forces? organises forces into two broad categories: contact forces and non-contact forces.
-
-Section 5.4.1 — Contact forces are those that require physical contact — direct (hand, body parts) or indirect (stick, rope) — between the objects involved. Muscular force is the first contact force introduced: it is the force produced by the contraction and elongation of muscles during any physical activity (walking, running, lifting, pushing). Animals, birds, fish, and insects also rely on muscular force for movement and survival; humans historically harnessed animal muscular force for tasks like ploughing and transport. A sidebar notes that muscular force also drives internal body functions such as digestion and circulation of blood through the heart. The second contact force is friction. Introduced through observations of objects slowing and stopping on their own, the section poses the question of what hidden force causes this. Activity 5.3 asks students to push an object across a surface and observe that it stops, while Activity 5.4 repeats the push on different surfaces (glass, cloth, wood, ceramic tile, sand) and observes that the stopping distance differs. These activities establish that friction is the contact force that acts between two surfaces in contact and always opposes the direction of motion. The mechanism of friction is explained: even apparently smooth surfaces have minute irregularities that interlock with each other. A Step Further note extends friction to objects moving through liquids and gases (air drag on aeroplanes, ships) and explains streamlining.
-
-Section 5.4.2 — Non-contact forces are those that act at a distance without physical contact. Magnetic force is introduced first: students already know from Grade 6 that magnets attract magnetic materials and that like poles repel while unlike poles attract. Activity 5.5 asks students to stack two ring magnets on a vertical stick with like poles facing each other, observe that the upper magnet floats, and feel the repulsive force when pushed down. The formal definition establishes that magnetic force is a non-contact force exerted by a magnet on another magnet or a magnetic material. Electrostatic force follows: Activity 5.6 has students rub a plastic scale or straw with polythene and bring it near small paper pieces without touching them — the paper is attracted. Activity 5.7 has students rub two balloons with a woollen cloth, observe that the two identically charged balloons repel each other, and then bring the woollen cloth near one balloon, observing attraction. The section explains that rubbing causes static charges to build up; similar charges repel and unlike charges attract. The formal definition is that electrostatic force is the force exerted by a charged body on another charged or uncharged body; it is a non-contact force. A Step Further connects moving charges to electric current. Gravitational force is the final non-contact force. Activity 5.8 prompts students to throw a ball upwards and observe that it always returns to the ground regardless of how hard it is thrown. The section defines gravitational force as the force with which the Earth attracts objects towards itself, also called force of gravity or gravity. Unlike magnetic and electrostatic force, gravitational force is always attractive, never repulsive. The section describes the vertical motion of objects under gravity — rising objects slow down, stop momentarily, reverse direction, and accelerate downward.
-
-Section 5.5 — Weight and Its Measurement distinguishes weight from mass. Weight is defined as the force with which the Earth pulls an object towards itself; it is measured in newtons. Activity 5.9 has students hang different objects (pencil box, tiffin box, small stone) from a spring one by one and observe that different objects stretch the spring by different amounts, demonstrating that the Earth pulls different objects with different forces. A Step Further box describes a spring balance — its hook, spring, and graduated scale in N — and explains how to read it. Activities 5.10 and 5.11 guide students to identify the range and the least count of a spring balance, and Activity 5.12 uses the spring balance to measure the weight of different objects. The section then distinguishes mass (the amount of matter in an object, measured in kg, constant everywhere) from weight (the gravitational force on an object, which varies with location and can be very different on other planets). A Step Further table shows that the same 1 kg object weighs 10 N on Earth, 1.6 N on the Moon, 3.8 N on Mars, 9 N on Venus, and 25.4 N on Jupiter.
-
-Section 5.6 — Floating and Sinking addresses the upward force exerted by liquids on submerged objects. Activity 5.13 has students push a sealed empty bottle into a bucket of water, feel the upward push, release the bottle, and observe it bounce back to the surface. This leads to the definition of upthrust or buoyant force as the force applied by a liquid on an object in the upward direction. The section explains that when an object is placed in a liquid, gravitational force acts downward on it while buoyant force acts upward; if gravitational force exceeds buoyant force the object sinks, if they are equal the object floats. The density of the liquid is mentioned as one factor that determines buoyant force. A Step Further introduces Archimedes' Principle: the upward force on an immersed object equals the weight of the liquid it displaces. A sidebar notes that pumice, a volcanic rock full of air pockets, floats on water because its density is less than that of water.
+    "Section 5.3, 'Digits in Disguise', applies divisibility and place-value reasoning to solve cryptarithms—arithmetic puzzles in which each letter represents a distinct non-zero-leading digit. The section opens with four addition cryptarithms of increasing complexity (A1 + 1B = B0; AB + 37 = 6A; ON + ON + ON = PO; QR + QR + QR = PRR) and then extends to multiplication cryptarithms: PQ × 8 = RS, GH × H = 9K (solved by identifying that the units digit of the product must equal H and that 16 × 6 = 96 fits), and BYE × 6 = RAY (where B = 1 since the product must stay three digits and Y must be even and less than 7). Six further multiplication cryptarithms are posed for students: UT × 3 = PUT, AB × 5 = BC, L2N × 2 = 2NP, XY × 4 = ZX, PP × QQ = PRP, and JK × 6 = KKK. The Figure it Out (sixteen questions) integrates all three sections: it includes a multi-part divisibility by 9 and digit-reversal problem, a two-remainder characterisation problem, analysis of when sums of multiples of 3 are multiples of 6, a digit-shuffle invariance result for multiples of 9, finding all digit pairs for 48a23b divisible by 18 and 3p7q8 divisible by 44, consecutive-number multiple problems, multiples of 36 in a range, consecutive even numbers in terms of a parameter, constructing a six-digit number divisible by 15 whose reversal is divisible by 6, examining a false conjecture about doubling multiples of 11, classifying four algebraic statements, a general three-number divisibility-by-3 exploration, a product-of-consecutive-integers investigation, two more complex cryptarithms (EF × E = GGG; WOW × 5 = MEOW), and a Venn diagram question on multiples of 4, 8, and 32.",
+  "enumerated_activities": [],
+  "enumerated_worked_examples": [
+    {
+      "id": "WE-1",
+      "source_section": "section 5.1",
+      "book_ref": "Explanation 1, section 5.1 p.114",
+      "description": "Algebraic proof that switching any '+' or '−' sign between four numbers changes the value by 2 times the affected number (an even amount), so all eight expressions formed from four numbers share the same parity."
+    },
+    {
+      "id": "WE-2",
+      "source_section": "section 5.1",
+      "book_ref": "Explanation 2, section 5.1 p.114",
+      "description": "Parity-rules proof that a ± b always has the same parity, extending to show all expressions a ± b ± c ± d share parity."
+    },
+    {
+      "id": "WE-3",
+      "source_section": "section 5.1",
+      "book_ref": "Example, section 5.1 p.116",
+      "description": "Two justifications that 4m + 2q is always even: (i) both 4m and 2q are individually even; (ii) factoring gives 2(2m + q), showing 2 is a factor. Contrasted with x² + 2, which is not always even."
+    },
+    {
+      "id": "WE-4",
+      "source_section": "section 5.1",
+      "book_ref": "Pairs to Make Fours table, section 5.1 p.117",
+      "description": "Algebraic and visualisation proof for three cases: 4p + 4q = 4(p+q) always multiple of 4; (4p+2) + (4q+2) = 4(p+q+1) always multiple of 4; 4p + (4q+2) = 4(p+q)+2 never a multiple of 4."
+    },
+    {
+      "id": "WE-5",
+      "source_section": "section 5.1",
+      "book_ref": "Always, Sometimes, or Never — statements 1–5, section 5.1 pp.118–120",
+      "description": "Five worked statements about divisibility (by 8, 7, 12, 6) classified as always/sometimes/never true with algebraic proofs, visualisations, and examples; establishes four general divisibility laws."
+    },
+    {
+      "id": "WE-6",
+      "source_section": "section 5.2",
+      "book_ref": "Divisibility by 10 — place-value algebra, section 5.2 p.123",
+      "description": "Derivation using the general form …1000d + 100c + 10b + a showing all place values except units are multiples of 10, proving the divisibility-by-10 rule; students extend this to 5, 2, 4, 8."
+    },
+    {
+      "id": "WE-7",
+      "source_section": "section 5.2",
+      "book_ref": "Shortcut for Divisibility by 9, section 5.2 pp.124–125",
+      "description": "Proof that the remainder when any number is divided by 9 equals the sum of its digits, using the decomposition 10^n = (10^n − 1) + 1 where 10^n − 1 is always a repunit multiple of 9. Worked example with 7309."
+    },
+    {
+      "id": "WE-8",
+      "source_section": "section 5.2",
+      "book_ref": "Shortcut for Divisibility by 11, section 5.2 pp.127–128",
+      "description": "Proof of the alternating digit-sum rule for divisibility by 11 using the pattern that 10^n is alternately 1 more or 1 less than a multiple of 11. Two equivalent methods shown; worked example with 320185."
+    },
+    {
+      "id": "WE-9",
+      "source_section": "section 5.3",
+      "book_ref": "Cryptarithm PQ × 8 = RS, section 5.3 p.131",
+      "description": "Worked solution showing that only PQ = 12 satisfies the constraint that a 2-digit number times 8 gives a 2-digit number with distinct digits."
+    },
+    {
+      "id": "WE-10",
+      "source_section": "section 5.3",
+      "book_ref": "Cryptarithm BYE × 6 = RAY, section 5.3 p.132",
+      "description": "Guided reasoning: B = 1 (product must stay 3-digit), Y must be even and less than 7; students deduce remaining digits."
+    }
+  ],
+  "enumerated_exercises": [
+    {
+      "id": "E-1",
+      "source_section": "section 5.1",
+      "book_ref": "Math Talk Q1, section 5.1 p.112",
+      "description": "Explore whether every natural number, every even number, and 0 (using negatives) can be written as a sum of consecutive numbers; discuss with class."
+    },
+    {
+      "id": "E-2",
+      "source_section": "section 5.1",
+      "book_ref": "Math Talk Q2, section 5.1 p.112",
+      "description": "Take four consecutive numbers; place '+' and '−' signs between them in all eight ways; list all possibilities."
+    },
+    {
+      "id": "E-3",
+      "source_section": "section 5.1",
+      "book_ref": "Math Talk Q3, section 5.1 p.113",
+      "description": "Evaluate each of the eight expressions formed from 3, 4, 5, 6; record results; repeat for another set of four consecutive numbers; share findings."
+    },
+    {
+      "id": "E-4",
+      "source_section": "section 5.1",
+      "book_ref": "Math Talk Q4, section 5.1 p.113",
+      "description": "Take any four consecutive numbers; place '+'/'-' signs in all eight ways; observe parities; repeat for another set."
+    },
+    {
+      "id": "E-5",
+      "source_section": "section 5.1",
+      "book_ref": "Math Talk Q5, section 5.1 p.114",
+      "description": "Is there a way to explain why all eight expressions from four numbers share parity? Hint: parity rules for sum/difference of two numbers."
+    },
+    {
+      "id": "E-6",
+      "source_section": "section 5.1",
+      "book_ref": "Math Talk Q6, section 5.1 p.114",
+      "description": "Replace any negative sign in a + b − c − d with positive; find the difference between the two numbers; conclude."
+    },
+    {
+      "id": "E-7",
+      "source_section": "section 5.1",
+      "book_ref": "Math Talk Q7, section 5.1 p.115",
+      "description": "Is the phenomenon of all expressions having the same parity limited to four numbers? Investigate."
+    },
+    {
+      "id": "E-8",
+      "source_section": "section 5.1",
+      "book_ref": "Breaking Even — arithmetic expressions, section 5.1 p.115",
+      "description": "Without computing, determine which of the eight arithmetic expressions (43+37; 672−348; 4×347×3; 708−477; 809+214; 119×303; 543−479; 513³) are even."
+    },
+    {
+      "id": "E-9",
+      "source_section": "section 5.1",
+      "book_ref": "Breaking Even — algebraic expressions, section 5.1 p.115",
+      "description": "Identify which algebraic expressions (2a+2b; 3g+5h; 4m+2n; 2u−4v; 13k−5k; 6m−3n; x²+2; b²+1; 4k×3j) always give an even number for any integer values; give examples and non-examples for each."
+    },
+    {
+      "id": "E-10",
+      "source_section": "section 5.1",
+      "book_ref": "Breaking Even — write algebraic expressions, section 5.1 p.116",
+      "description": "Write a few algebraic expressions that always give an even number."
+    },
+    {
+      "id": "E-11",
+      "source_section": "section 5.1",
+      "book_ref": "Pairs to Make Fours Q1, section 5.1 p.116",
+      "description": "Take a pair of even numbers, add them, check if divisible by 4; try different pairs; find when the sum is a multiple of 4 and when not; identify a general rule."
+    },
+    {
+      "id": "E-12",
+      "source_section": "section 5.1",
+      "book_ref": "Pairs to Make Fours Q2, section 5.1 p.117",
+      "description": "What happens when you add a multiple of 4 to an even non-multiple of 4? Write the corresponding explanation and examples for the third row of the table."
+    },
+    {
+      "id": "E-13",
+      "source_section": "section 5.1",
+      "book_ref": "Always, Sometimes, or Never — examine statements, section 5.1 p.118",
+      "description": "We know the sum of two multiples of 2 is a multiple of 2. Determine if statement 1 (if 8 divides two numbers separately it divides their sum) is also true with subtraction."
+    },
+    {
+      "id": "E-14",
+      "source_section": "section 5.1",
+      "book_ref": "Always, Sometimes, or Never Q2, section 5.1 p.119",
+      "description": "Examine statement 2: if a number is divisible by 8, then 8 also divides any two numbers that add up to it — is this always, sometimes, or never true?"
+    },
+    {
+      "id": "E-15",
+      "source_section": "section 5.1",
+      "book_ref": "Always, Sometimes, or Never Q3, section 5.1 p.119",
+      "description": "Examine statement 3: if a number is divisible by 7, all multiples of that number are divisible by 7 — always, sometimes, or never true?"
+    },
+    {
+      "id": "E-16",
+      "source_section": "section 5.1",
+      "book_ref": "Always, Sometimes, or Never Q4, section 5.1 p.120",
+      "description": "Examine statement 4: if a number is divisible by 12, it is also divisible by all factors of 12 — always, sometimes, or never true?"
+    },
+    {
+      "id": "E-17",
+      "source_section": "section 5.1",
+      "book_ref": "Always, Sometimes, or Never Q5, section 5.1 p.120",
+      "description": "Examine statement 5: if a number is divisible by 7, it is also divisible by any multiple of 7 — always, sometimes, or never true?"
+    },
+    {
+      "id": "E-18",
+      "source_section": "section 5.1",
+      "book_ref": "Always, Sometimes, or Never — extra statements, section 5.1 p.121",
+      "description": "Determine for statements 6–8: (6) if divisible by both 9 and 4, must be divisible by 36; (7) if divisible by both 6 and 4, must be divisible by 24; (8) odd + even gives a multiple of 6 — always, sometimes, or never true."
+    },
+    {
+      "id": "E-19",
+      "source_section": "section 5.1",
+      "book_ref": "What Remains? Q1, section 5.1 p.121",
+      "description": "Find a number that has a remainder of 3 when divided by 5; write more such numbers."
+    },
+    {
+      "id": "E-20",
+      "source_section": "section 5.1",
+      "book_ref": "What Remains? Q2, section 5.1 p.121",
+      "description": "Which algebraic expression(s) capture all numbers leaving remainder 3 when divided by 5: (i) 3k+5; (ii) 3k−5; (iii) 3k/5; (iv) 5k+3; (v) 5k−2; (vi) 5k−3?"
+    },
+    {
+      "id": "E-21",
+      "source_section": "section 5.1",
+      "book_ref": "What Remains? Q3, section 5.1 p.122",
+      "description": "Are there other expressions that generate numbers that are 3 more than a multiple of 5?"
+    },
+    {
+      "id": "E-22",
+      "source_section": "section 5.1",
+      "book_ref": "Figure it Out Q1, section 5.1 p.122",
+      "description": "The sum of four consecutive numbers is 34. What are these numbers?"
+    },
+    {
+      "id": "E-23",
+      "source_section": "section 5.1",
+      "book_ref": "Figure it Out Q2, section 5.1 p.122",
+      "description": "Suppose p is the greatest of five consecutive numbers. Describe the other four in terms of p."
+    },
+    {
+      "id": "E-24",
+      "source_section": "section 5.1",
+      "book_ref": "Figure it Out Q3, section 5.1 p.122",
+      "description": "For five statements, determine always/sometimes/never true with algebraic justification: (i) sum of two even numbers is a multiple of 3; (ii) not divisible by 18 implies not divisible by 9; (iii) if two numbers not divisible by 6, sum not divisible by 6; (iv) sum of multiple of 6 and multiple of 9 is multiple of 3; (v) sum of multiple of 6 and multiple of 3 is multiple of 9."
+    },
+    {
+      "id": "E-25",
+      "source_section": "section 5.1",
+      "book_ref": "Figure it Out Q4, section 5.1 p.122",
+      "description": "Find numbers leaving remainder 2 when divided by both 3 and 4. Write an algebraic expression for all such numbers."
+    },
+    {
+      "id": "E-26",
+      "source_section": "section 5.1",
+      "book_ref": "Figure it Out Q5, section 5.1 p.122",
+      "description": "Pebble riddle: number leaves remainder 1 when grouped by 3 or 5, is divisible by 7, and is less than 100. Find the number."
+    },
+    {
+      "id": "E-27",
+      "source_section": "section 5.1",
+      "book_ref": "Figure it Out Q6, section 5.1 p.122",
+      "description": "Tathagat claims that adding any three numbers that each leave remainder 2 when divided by 6 always gives a multiple of 6. Is this true?"
+    },
+    {
+      "id": "E-28",
+      "source_section": "section 5.1",
+      "book_ref": "Figure it Out Q7, section 5.1 p.123",
+      "description": "661 leaves remainder 3 and 4779 leaves remainder 5 when divided by 7. Without calculating, find the remainders when (i) 4779 + 661 and (ii) 4779 − 661 are divided by 7; show algebraically and visually."
+    },
+    {
+      "id": "E-29",
+      "source_section": "section 5.1",
+      "book_ref": "Figure it Out Q8, section 5.1 p.123",
+      "description": "Find the smallest number that leaves remainder 2 when divided by 3, remainder 3 when divided by 4, and remainder 4 when divided by 5. Explain why it is the smallest."
+    },
+    {
+      "id": "E-30",
+      "source_section": "section 5.2",
+      "book_ref": "Figure it Out Q1, section 5.2 p.123",
+      "description": "Explain using algebra why divisibility shortcuts for 5, 2, 4, and 8 work."
+    },
+    {
+      "id": "E-31",
+      "source_section": "section 5.2",
+      "book_ref": "Math Talk Q1, section 5.2 p.124",
+      "description": "Can any number made of only digits '0' and '9' (in any order) always be divisible by 9?"
+    },
+    {
+      "id": "E-32",
+      "source_section": "section 5.2",
+      "book_ref": "Math Talk Q2, section 5.2 p.124",
+      "description": "Is 10 divisible by 9? What is the remainder? Check other multiples of 10 (10, 20, 30, …) divided by 9; observe the pattern."
+    },
+    {
+      "id": "E-33",
+      "source_section": "section 5.2",
+      "book_ref": "Math Talk Q3, section 5.2 p.124",
+      "description": "Look at remainders when multiples of 100 are divided by 9; what do you notice?"
+    },
+    {
+      "id": "E-34",
+      "source_section": "section 5.2",
+      "book_ref": "Math Talk Q4, section 5.2 p.124",
+      "description": "Using the place-value remainder observation, find the remainder when 427 is divided by 9."
+    },
+    {
+      "id": "E-35",
+      "source_section": "section 5.2",
+      "book_ref": "Math Talk Q5, section 5.2 p.125",
+      "description": "Will the digit-sum method work with bigger numbers?"
+    },
+    {
+      "id": "E-36",
+      "source_section": "section 5.2",
+      "book_ref": "Math Talk Q6, section 5.2 p.125",
+      "description": "Examine which of four statements about divisibility by 9 and digit sums are correct: (i) divisible by 9 ⟹ digit sum divisible by 9; (ii) digit sum divisible by 9 ⟹ divisible by 9; (iii) not divisible by 9 ⟹ digit sum not divisible by 9; (iv) digit sum not divisible by 9 ⟹ not divisible by 9."
+    },
+    {
+      "id": "E-37",
+      "source_section": "section 5.2",
+      "book_ref": "Figure it Out Q1, section 5.2 p.126",
+      "description": "Find, without dividing, whether the following numbers are divisible by 9: (i) 123; (ii) 405; (iii) 8888; (iv) 93547; (v) 358095."
+    },
+    {
+      "id": "E-38",
+      "source_section": "section 5.2",
+      "book_ref": "Figure it Out Q2, section 5.2 p.126",
+      "description": "Find the smallest multiple of 9 with no odd digits."
+    },
+    {
+      "id": "E-39",
+      "source_section": "section 5.2",
+      "book_ref": "Figure it Out Q3, section 5.2 p.126",
+      "description": "Find the multiple of 9 closest to 6000."
+    },
+    {
+      "id": "E-40",
+      "source_section": "section 5.2",
+      "book_ref": "Figure it Out Q4, section 5.2 p.126",
+      "description": "How many multiples of 9 are there between 4300 and 4400?"
+    },
+    {
+      "id": "E-41",
+      "source_section": "section 5.2",
+      "book_ref": "Math Talk — divisibility by 3, section 5.2 p.126",
+      "description": "A number is divisible by 3 if the sum of its digits is divisible by 3. Explore remainders when powers of 10 are divided by 3 and explain why the method works."
+    },
+    {
+      "id": "E-42",
+      "source_section": "section 5.2",
+      "book_ref": "Math Talk Q1, section 5.2 p.127",
+      "description": "Using the alternating place-value pattern, determine whether 462 is divisible by 11."
+    },
+    {
+      "id": "E-43",
+      "source_section": "section 5.2",
+      "book_ref": "Math Talk Q2, section 5.2 p.127",
+      "description": "What is a general method or shortcut to check divisibility by 11?"
+    },
+    {
+      "id": "E-44",
+      "source_section": "section 5.2",
+      "book_ref": "Math Talk Q3, section 5.2 p.128",
+      "description": "If the difference between the two digit-sum groups is 11 or a multiple of 11, what does that say about the remainder when the number is divided by 11?"
+    },
+    {
+      "id": "E-45",
+      "source_section": "section 5.2",
+      "book_ref": "Divisibility by 11 — check six numbers, section 5.2 p.128",
+      "description": "Using the shortcut, determine whether (i) 158; (ii) 841; (iii) 481; (iv) 5529; (v) 90904; (vi) 857076 are divisible by 11; find remainder if not."
+    },
+    {
+      "id": "E-46",
+      "source_section": "section 5.2",
+      "book_ref": "Math Talk Q4, section 5.2 p.129",
+      "description": "Is the alternating-signs method (place '−' and '+' alternately before digits from units place, evaluate expression) similar to or different from the two-sum method for divisibility by 11?"
+    },
+    {
+      "id": "E-47",
+      "source_section": "section 5.2",
+      "book_ref": "Fill in the table, section 5.2 p.129",
+      "description": "Complete the divisibility table for ten numbers (128, 990, 1586, 275, 6686, 639210, 429714, 2856, 3060, 406839) against divisors 2, 3, 4, 5, 6, 8, 9, 10, 11."
+    },
+    {
+      "id": "E-48",
+      "source_section": "section 5.2",
+      "book_ref": "More on Divisibility Shortcuts Q1, section 5.2 p.129",
+      "description": "How can we find if a number is divisible by 6? Will checking divisibility by 2 and 3 work? Verify with 38, 225, 186, 64."
+    },
+    {
+      "id": "E-49",
+      "source_section": "section 5.2",
+      "book_ref": "More on Divisibility Shortcuts Q2, section 5.2 p.130",
+      "description": "How about checking divisibility by 24 — does checking factors 4 and 6 work? Why or why not? Explain using prime factorisation why checking 3 and 8 works instead."
+    },
+    {
+      "id": "E-50",
+      "source_section": "section 5.2",
+      "book_ref": "Digital Roots Q1, section 5.2 p.130",
+      "description": "What property does the digital root have? Recall how it connects to divisibility by 9."
+    },
+    {
+      "id": "E-51",
+      "source_section": "section 5.2",
+      "book_ref": "Digital Roots Q2, section 5.2 p.130",
+      "description": "Between 600 and 700, which numbers have digital root: (i) 5; (ii) 7; (iii) 3?"
+    },
+    {
+      "id": "E-52",
+      "source_section": "section 5.2",
+      "book_ref": "Digital Roots Q3, section 5.2 p.130",
+      "description": "Write the digital roots of any 12 consecutive numbers. What do you observe?"
+    },
+    {
+      "id": "E-53",
+      "source_section": "section 5.2",
+      "book_ref": "Digital Roots Q4, section 5.2 p.130",
+      "description": "Find the digital roots of some consecutive multiples of (i) 3; (ii) 4; (iii) 6."
+    },
+    {
+      "id": "E-54",
+      "source_section": "section 5.2",
+      "book_ref": "Digital Roots Q5, section 5.2 p.130",
+      "description": "What are the digital roots of numbers that are 1 more than a multiple of 6? What do you notice? Try to explain the pattern."
+    },
+    {
+      "id": "E-55",
+      "source_section": "section 5.2",
+      "book_ref": "Digital Roots Q6 (riddle), section 5.2 p.130",
+      "description": "Riddle: a number made of digits each of which is tiniest and odd, sharing no common factor with 1 other than 1, whose digit count, digit sum, and digital root all point to the largest odd single digit. What is it?"
+    },
+    {
+      "id": "E-56",
+      "source_section": "section 5.2",
+      "book_ref": "Figure it Out Q1, section 5.2 p.131",
+      "description": "The digital root of an 8-digit number is 5. What is the digital root of 10 more than that number?"
+    },
+    {
+      "id": "E-57",
+      "source_section": "section 5.2",
+      "book_ref": "Figure it Out Q2, section 5.2 p.131",
+      "description": "Write any number; generate a sequence by repeatedly adding 11; find the digital roots of this sequence; share observations."
+    },
+    {
+      "id": "E-58",
+      "source_section": "section 5.2",
+      "book_ref": "Figure it Out Q3, section 5.2 p.131",
+      "description": "What is the digital root of the number 9a + 36b + 13?"
+    },
+    {
+      "id": "E-59",
+      "source_section": "section 5.2",
+      "book_ref": "Figure it Out Q4, section 5.2 p.131",
+      "description": "Make conjectures about (i) the parity of a number and its digital root; (ii) the digital root of a number and the remainder when divided by 3 or 9."
+    },
+    {
+      "id": "E-60",
+      "source_section": "section 5.3",
+      "book_ref": "Cryptarithms Q1, section 5.3 p.131",
+      "description": "Solve addition cryptarithm (i): A1 + 1B = B0."
+    },
+    {
+      "id": "E-61",
+      "source_section": "section 5.3",
+      "book_ref": "Cryptarithms Q2, section 5.3 p.131",
+      "description": "Solve addition cryptarithm (ii): AB + 37 = 6A."
+    },
+    {
+      "id": "E-62",
+      "source_section": "section 5.3",
+      "book_ref": "Cryptarithms Q3, section 5.3 p.131",
+      "description": "Solve addition cryptarithm (iii): ON + ON + ON = PO."
+    },
+    {
+      "id": "E-63",
+      "source_section": "section 5.3",
+      "book_ref": "Cryptarithms Q4, section 5.3 p.131",
+      "description": "Solve addition cryptarithm (iv): QR + QR + QR = PRR."
+    },
+    {
+      "id": "E-64",
+      "source_section": "section 5.3",
+      "book_ref": "Cryptarithms Q5, section 5.3 p.131",
+      "description": "Solve multiplication cryptarithm (v): PQ × 8 = RS."
+    },
+    {
+      "id": "E-65",
+      "source_section": "section 5.3",
+      "book_ref": "Cryptarithms Q6, section 5.3 p.132",
+      "description": "Solve multiplication cryptarithm (vi): GH × H = 9K. Choose from the options given."
+    },
+    {
+      "id": "E-66",
+      "source_section": "section 5.3",
+      "book_ref": "Cryptarithms Q7, section 5.3 p.132",
+      "description": "What can you say about 'Y' in BYE × 6 = RAY? What digits are possible or not possible for Y?"
+    },
+    {
+      "id": "E-67",
+      "source_section": "section 5.3",
+      "book_ref": "Solve the following Q1, section 5.3 p.132",
+      "description": "Solve multiplication cryptarithm: UT × 3 = PUT."
+    },
+    {
+      "id": "E-68",
+      "source_section": "section 5.3",
+      "book_ref": "Solve the following Q2, section 5.3 p.132",
+      "description": "Solve multiplication cryptarithm: AB × 5 = BC."
+    },
+    {
+      "id": "E-69",
+      "source_section": "section 5.3",
+      "book_ref": "Solve the following Q3, section 5.3 p.132",
+      "description": "Solve multiplication cryptarithm: L2N × 2 = 2NP."
+    },
+    {
+      "id": "E-70",
+      "source_section": "section 5.3",
+      "book_ref": "Solve the following Q4, section 5.3 p.132",
+      "description": "Solve multiplication cryptarithm: XY × 4 = ZX."
+    },
+    {
+      "id": "E-71",
+      "source_section": "section 5.3",
+      "book_ref": "Solve the following Q5, section 5.3 p.132",
+      "description": "Solve multiplication cryptarithm: PP × QQ = PRP."
+    },
+    {
+      "id": "E-72",
+      "source_section": "section 5.3",
+      "book_ref": "Solve the following Q6, section 5.3 p.132",
+      "description": "Solve multiplication cryptarithm: JK × 6 = KKK."
+    },
+    {
+      "id": "E-73",
+      "source_section": "section 5.3",
+      "book_ref": "Figure it Out Q1, section 5.3 p.132",
+      "description": "If 31z5 is a multiple of 9 where z is a digit, find the value of z. Explain why there are two answers."
+    },
+    {
+      "id": "E-74",
+      "source_section": "section 5.3",
+      "book_ref": "Figure it Out Q2, section 5.3 p.132",
+      "description": "Snehal claims: a number leaving remainder 8 when divided by 12, plus a number that is 4 short of a multiple of 12, always gives a multiple of 8. Is this true?"
+    },
+    {
+      "id": "E-75",
+      "source_section": "section 5.3",
+      "book_ref": "Figure it Out Q3, section 5.3 p.132",
+      "description": "When is the sum of two multiples of 3 a multiple of 6, and when is it not? Explain all cases and generalise."
+    },
+    {
+      "id": "E-76",
+      "source_section": "section 5.3",
+      "book_ref": "Figure it Out Q4, section 5.3 p.132",
+      "description": "Sreelatha says a multiple of 9 remains divisible by 9 after digit reversal. (i) Examine if true for any multiple of 9. (ii) Are other digit shuffles also possible?"
+    },
+    {
+      "id": "E-77",
+      "source_section": "section 5.3",
+      "book_ref": "Figure it Out Q5, section 5.3 p.132",
+      "description": "If 48a23b is a multiple of 18, list all possible pairs (a, b)."
+    },
+    {
+      "id": "E-78",
+      "source_section": "section 5.3",
+      "book_ref": "Figure it Out Q6, section 5.3 p.133",
+      "description": "If 3p7q8 is divisible by 44, list all possible pairs (p, q)."
+    },
+    {
+      "id": "E-79",
+      "source_section": "section 5.3",
+      "book_ref": "Figure it Out Q7, section 5.3 p.133",
+      "description": "Find three consecutive numbers where the first is a multiple of 2, the second a multiple of 3, and the third a multiple of 4. Are there more? How often do they occur?"
+    },
+    {
+      "id": "E-80",
+      "source_section": "section 5.3",
+      "book_ref": "Figure it Out Q8, section 5.3 p.133",
+      "description": "Write five multiples of 36 between 45,000 and 47,000. Share your approach."
+    },
+    {
+      "id": "E-81",
+      "source_section": "section 5.3",
+      "book_ref": "Figure it Out Q9, section 5.3 p.133",
+      "description": "The middle number in a sequence of 5 consecutive even numbers is 5p. Express the other four in terms of p."
+    },
+    {
+      "id": "E-82",
+      "source_section": "section 5.3",
+      "book_ref": "Figure it Out Q10, section 5.3 p.133",
+      "description": "Write a 6-digit number divisible by 15 such that when its digits are reversed the result is divisible by 6."
+    },
+    {
+      "id": "E-83",
+      "source_section": "section 5.3",
+      "book_ref": "Figure it Out Q11, section 5.3 p.133",
+      "description": "Deepak claims some multiples of 11, when doubled, are still multiples of 11, but others are not. Examine his conjecture."
+    },
+    {
+      "id": "E-84",
+      "source_section": "section 5.3",
+      "book_ref": "Figure it Out Q12, section 5.3 p.133",
+      "description": "Determine always/sometimes/never for: (i) product of a multiple of 6 and a multiple of 3 is a multiple of 9; (ii) sum of three consecutive even numbers divisible by 6; (iii) if abcdef is a multiple of 6, then badcef is too; (iv) 8(7b−3) − 4(11b+1) is a multiple of 12."
+    },
+    {
+      "id": "E-85",
+      "source_section": "section 5.3",
+      "book_ref": "Figure it Out Q13, section 5.3 p.133",
+      "description": "Choose any 3 numbers. When is their sum divisible by 3? Explore all cases and generalise."
+    },
+    {
+      "id": "E-86",
+      "source_section": "section 5.3",
+      "book_ref": "Figure it Out Q14, section 5.3 p.133",
+      "description": "Is the product of two consecutive integers always a multiple of 2? Three consecutive? (multiple of 6?) Four consecutive? Five consecutive? Justify each."
+    },
+    {
+      "id": "E-87",
+      "source_section": "section 5.3",
+      "book_ref": "Figure it Out Q15, section 5.3 p.133",
+      "description": "Solve cryptarithms: (i) EF × E = GGG; (ii) WOW × 5 = MEOW."
+    },
+    {
+      "id": "E-88",
+      "source_section": "section 5.3",
+      "book_ref": "Figure it Out Q16, section 5.3 p.133",
+      "description": "Which Venn diagram (i)–(iv) correctly captures the relationship between multiples of 4, 8, and 32?"
+    }
+  ],
+  "conceptual_demand": 3,
+  "activity_count": 0,
+  "demo_count": 0,
+  "exec_load": 1
+}
 
 
 ======================================================================
 
-THE FULLEST PLAN (18 units). The unit you write REPLACES its final unit, closing this arc:
+THE FULLEST PLAN (12 units). The unit you write REPLACES its final unit, closing this arc:
 
-U1: Push, Pull, and Everything In Between
-U2: What Does a Force Actually Do?
-U3: Force as an Interaction — and the Newton
-U4: Muscles at Work — Mapping Muscular Force
-U5: The Hidden Force That Stops Things — Introducing Friction
-U6: Does Surface Type Change How Far Things Slide?
-U7: Floating Magnets — Observing Magnetic Force
-U8: Charged Bodies Attract and Repel — Electrostatic Force
-U9: Why Does Everything Fall Down? — Gravitational Force
-U10: Mapping All Forces — A Classification Consolidation
-U11: Different Objects, Different Pulls — Observing Weight
-U12: Reading the Spring Balance — Range, Least Count, and Measurement
-U13: Weight Is Not Mass — A Critical Distinction
-U14: The Upward Push of Water — Feeling Buoyant Force
-U15: Gravity vs Upthrust — Why Objects Float or Sink
-U16: Force Analysis of Unfamiliar Situations
-U17: Design a Test: Investigating One Force Relationship
+U1: Can Every Number Be a Sum of Consecutive Numbers?
+U2: Why Parity Never Changes: Three Algebraic Proofs
+U3: Breaking Even and Pairs to Make Fours
+U4: Always, Sometimes, or Never: Five Divisibility Statements
+U5: What Remains? Remainder Arithmetic and Figure it Out
+U6: Completing Section 5.1 and Place-Value Roots of Divisibility
+U7: Why the Digit Sum Rules Work: Proofs for 9 and 3
+U8: The Alternating Digit Rule: Proving Divisibility by 11
+U9: Digital Roots, Composite Shortcuts, and the Divisibility Table
+U10: Digital Root Puzzles and the First Cryptarithms
+U11: Multiplication Cryptarithms: Reasoning Digit by Digit
 U<final>: ← the unit you are writing
 
-THE SHORTER PLANS (4). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
+THE SHORTER PLANS (2). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
 
-
---- PLAN OF 16 UNITS — unit-title map ---
-U1: Push, Pull, and Everything In Between
-U2: What Did the Force Actually Change?
-U3: How Many Objects Does a Force Need?
-U4: Muscular Force in Action
-U5: The Invisible Stopper — Investigating Friction
-U6: Floating Magnets and Flying Paper — Non-contact Forces
-U7: The Force That Always Brings Things Down
-U8: Springs, Stretches, and the Pull of Gravity
-U9: Reading the Spring Balance
-U10: Mass, Weight, and Other Worlds
-U11: The Upward Push — Feeling Buoyant Force
-U12: Sink or Float — Predicting the Force Balance
-U13: Archimedes and the Displaced Liquid
-U14: Streamlining and Surface Texture — Friction in Fluids
-U15: Force Diagnosis — Analysing Complex Situations
-U16: Forces in the World — Evidence, Classification, Measurement
-
---- its FINAL unit, in full ---
-{
- "period_number": 16,
- "period_duration_minutes": 45,
- "progression_stage": 5,
- "stage_label": "Explain and apply force concepts to analyse unfamiliar physical situations",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "Forces in the World — Evidence, Classification, Measurement",
- "activity_description": "Students work through a set of integrated problems — each requiring them to identify the force at work, classify it, explain the physical cause of any motion or shape change, and where relevant apply the weight-measurement or buoyancy framework. They produce a consolidated force map connecting all types covered in the chapter.",
- "roles": [
-  {
-   "actor": "Teacher",
-   "role_description": "Presents the integrated problems, facilitates inter-group discussion when groups reach different conclusions, and draws out the connections between the classification, measurement, and buoyancy strands of the chapter."
-  },
-  {
-   "actor": "Students (Groups)",
-   "role_description": "Solve each integrated problem, justify answers using the chapter's framework, and co-construct a force map that organises all force types by contact/non-contact and links each to at least one chapter example."
-  }
- ],
- "time_bands": [
-  {
-   "minutes": "0-8",
-   "activity": "Teacher frames the task: 'In this unit we bring every part of the chapter together — classification, measurement, and buoyancy are all tools we use to explain the same physical world.'"
-  },
-  {
-   "minutes": "8-28",
-   "activity": "Groups work through the integrated problems, drawing on the force-diagnosis skill from the previous unit and the weight/buoyancy frameworks from earlier units; each group records full written justifications."
-  },
-  {
-   "minutes": "28-40",
-   "activity": "Groups co-construct a force map on paper — a branching diagram with 'Force' at the top, splitting into contact and non-contact, with sub-branches for each type and at least one example per type drawn from the chapter activities."
-  },
-  {
-   "minutes": "40-45",
-   "activity": "Groups briefly share their force maps; teacher highlights any missing connections and affirms that a complete force map captures the chapter's full content — classification, measurement of weight, and buoyancy as a force balance."
-  }
- ],
- "teacher_notes": "This is the chapter's closing unit and ties together the classification strand (contact versus non-contact, all subtypes), the measurement strand (weight in newtons using a spring balance), and the buoyancy strand (upthrust as a force opposing gravity); make these three threads explicit in the opening framing. The map-building task ensures that students produce an artefact within this unit itself — no prior unit's output is required, and groups begin with a blank sheet. Watch for force maps that omit friction or electrostatic force, as these are the types students most often forget when summarising; prompt with 'Which forces did we investigate by changing surfaces or by rubbing?'",
- "materials": [
-  "Blank paper for force maps",
-  "Pencils and coloured pens if available",
-  "Board with integrated problem statements"
- ],
- "homework": []
-}
-
---- PLAN OF 14 UNITS — unit-title map ---
-U1: The Box Experiment — Discovering Push and Pull
-U2: What Does a Force Actually Do? — Analysing Everyday Situations
-U3: How Many Objects? — Force as Interaction
-U4: Muscles at Work — Investigating Muscular Force
-U5: Surfaces and Stopping — Investigating Friction
-U6: Forces Without Touching — Magnetic and Electrostatic Force
-U7: Always Downward — Investigating Gravitational Force
-U8: Spring Stretch — Sensing Gravitational Pull on Different Objects
-U9: Reading the Spring Balance — Range, Least Count, and Measurement
-U10: Mass Is Not Weight — Distinguishing Two Different Quantities
-U11: The Bottle in the Bucket — Feeling Upthrust
-U12: Sink or Float? — Reasoning About Competing Forces
-U13: Archimedes' Principle — The Displaced Liquid Rule
-U14: Forces in Play — Classifying, Measuring, and Explaining Across the Chapter
-
---- its FINAL unit, in full ---
-{
- "period_number": 14,
- "period_duration_minutes": 45,
- "progression_stage": 4,
- "stage_label": "Explain floating and sinking through competing forces",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "Forces in Play — Classifying, Measuring, and Explaining Across the Chapter",
- "activity_description": "Students work through a rich scenario set in which each situation involves an unknown or unfamiliar force configuration. For each scenario they identify the forces acting, classify them by type, determine which is greater, and predict the outcome — integrating the classification system, the weight-measurement understanding, and the buoyancy framework into a single analytical act.",
- "roles": [
-  {
-   "actor": "Teacher",
-   "role_description": "Presents the scenario set, circulates to probe reasoning, and facilitates a final class discussion that draws connections across all force types studied."
-  },
-  {
-   "actor": "Students (Individual)",
-   "role_description": "Works through each scenario independently, writing a structured analysis that names forces, classifies them, compares their magnitudes, and states the predicted outcome with justification."
-  }
- ],
- "time_bands": [
-  {
-   "minutes": "0-8",
-   "activity": "Teacher presents the scenario set and explains the analysis structure students should apply to each: name forces, classify, compare, predict."
-  },
-  {
-   "minutes": "8-30",
-   "activity": "Students work individually through the scenarios, producing a structured written analysis for each."
-  },
-  {
-   "minutes": "30-40",
-   "activity": "Class discussion of two or three scenarios where student predictions diverged — teacher draws out the reasoning that resolves each disagreement."
-  },
-  {
-   "minutes": "40-45",
-   "activity": "Students write a two-sentence summary of what force analysis requires, as if explaining to a student who missed the whole chapter."
-  }
- ],
- "teacher_notes": "This closing unit asks students to work as force analysts — applying every tool the chapter has built. It builds on all previous units rather than any single one; remind students that their classification work, spring balance readings, and buoyancy explanations are all resources for the scenario analysis. Watch for students who correctly name forces but fail to compare their magnitudes when predicting outcomes — the prediction step is where the highest-order reasoning lives.",
- "materials": [
-  "Printed or board-written scenario set",
-  "Notebooks"
- ],
- "homework": []
-}
-
---- PLAN OF 12 UNITS — unit-title map ---
-U1: Push, Pull, and Everything In Between
-U2: Two Objects, One Force
-U3: Contact Forces: Muscle and Friction on Different Surfaces
-U4: Why Does Friction Vary? Surface Irregularities and Streamlining
-U5: Magnetic Force: Floating Magnets and Invisible Push
-U6: Electrostatic Force: Charged Straws and Repelling Balloons
-U7: Gravitational Force: Why Does the Ball Always Come Back?
-U8: Reading a Spring Balance: Range, Least Count, and First Measurements
-U9: Weight Versus Mass: What Changes, What Stays the Same
-U10: Upthrust: Feeling the Liquid Push Back
-U11: Archimedes' Principle and the Weight of Displaced Liquid
-U12: Forces at Work: Explaining Motion and Measurement Outcomes Across Contexts
-
---- its FINAL unit, in full ---
-{
- "period_number": 12,
- "period_duration_minutes": 45,
- "progression_stage": 4,
- "stage_label": "Explain floating and sinking through the balance of gravitational and buoyant forces, and reason across force types to explain motion and measurement outcomes",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "Forces at Work: Explaining Motion and Measurement Outcomes Across Contexts",
- "activity_description": "Students receive a set of unfamiliar everyday scenarios and must identify the force or forces at work in each, predict whether motion will start, stop, change direction, or produce shape change, and justify their prediction by citing the appropriate force type, its contact or non-contact nature, and where relevant the measured weight or buoyancy balance.",
- "roles": [
-  {
-   "actor": "Teacher",
-   "role_description": "Distributes the scenario cards, circulates to probe reasoning without supplying answers, and leads a final class discussion in which student explanations are shared and refined."
-  },
-  {
-   "actor": "Students (Groups)",
-   "role_description": "Read each scenario, identify the force type, classify it as contact or non-contact, predict and explain the effect on the object, and for the floating/sinking scenario apply the force-balance and Archimedes argument."
-  }
- ],
- "time_bands": [
-  {
-   "minutes": "0-8",
-   "activity": "Groups receive scenario cards and read each one; teacher asks a quick orientation question — 'For each scenario, what two objects are interacting?' — before independent work begins."
-  },
-  {
-   "minutes": "8-30",
-   "activity": "Groups work through all scenario cards: identifying force type, contact or non-contact classification, and predicting and explaining the motion or shape outcome for each."
-  },
-  {
-   "minutes": "30-42",
-   "activity": "Groups share explanations for two or three contrasting scenarios; class refines the reasoning, particularly for scenarios involving gravitational force and buoyancy together."
-  },
-  {
-   "minutes": "42-45",
-   "activity": "Students individually write a final one-sentence answer to: 'How does classifying a force as contact or non-contact help you predict what will happen to an object?' — collected as an exit artifact."
-  }
- ],
- "teacher_notes": "This closing unit asks students to apply everything built across the arc — force definition, effects, classification, friction, measurement, and buoyancy — to contexts they have not seen in exactly this form. Ensure at least one scenario requires students to reason about both gravitational force and buoyant force simultaneously, since that convergence is the chapter's highest-order demand. The individual exit sentence is a low-stakes but revealing formative artifact: a strong response will name the force type, an effect, and a reason; a weak one will name only the effect without cause.",
- "materials": [
-  "Scenario cards (teacher-prepared, grounded in chapter phenomena)",
-  "Notebooks"
- ],
- "homework": []
-}
 
 --- PLAN OF 10 UNITS — unit-title map ---
-U1: The Cardboard Box Challenge
-U2: What Does Force Actually Do?
-U3: How Many Objects Are in a Force?
-U4: Contact or Not? Muscular Force and Friction Surfaces
-U5: Forces at a Distance: Magnetic and Electrostatic
-U6: Gravity: The Always-Attractive Force
-U7: Spring Balance: Range, Least Count, and First Readings
-U8: Weight vs. Mass and the Float-or-Sink Decision
-U9: Archimedes, Upthrust, and Why Pumice Floats
-U10: Force in the World: Friction, Streamlining, and Integrated Reasoning
+U1: Consecutive Sums and the Parity of Eight Expressions
+U2: Proving Parity Invariance: Three Algebraic Explanations
+U3: Breaking Even, Pairs to Make Fours, and Remainder Classes
+U4: Always, Sometimes, or Never: Divisibility Laws and Remainder Classes
+U5: Figure It Out: Consecutive Numbers, Remainder Conditions, and Divisibility Puzzles
+U6: Place-Value Algebra: Deriving Divisibility Rules for 10, 5, 2, 4, 8, and 9
+U7: Divisibility by 3, 11, and Digital Roots: Proofs and Patterns
+U8: Introduction to Cryptarithms: Addition Puzzles and First Multiplication Cases
+U9: Multiplication Cryptarithms: Reasoning with Units Digits and Three-Digit Products
+U10: Figure It Out: Integrating Divisibility, Remainders, and Cryptarithms
 
 --- its FINAL unit, in full ---
 {
  "period_number": 10,
  "period_duration_minutes": 45,
- "progression_stage": 4,
- "stage_label": "Apply and Reason Across Forces",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "Force in the World: Friction, Streamlining, and Integrated Reasoning",
- "activity_description": "Students examine scenarios involving friction in liquids and gases — air drag on aeroplanes, water resistance on ships — and explain why streamlining reduces these effects. They then tackle a set of novel situations requiring them to simultaneously classify the forces involved, predict the effect, and justify using evidence from measurements and activities completed across all units.",
- "roles": [
+ "synthesis": false,
+ "textbook_segments": [
   {
-   "actor": "Teacher",
-   "role_description": "Introduces the streamlining extension of friction to fluids and facilitates the novel-scenario reasoning task, probing justifications for completeness."
-  },
-  {
-   "actor": "Students (Individual)",
-   "role_description": "Work through novel scenarios independently, classifying forces, predicting outcomes, and writing justifications that integrate force type, effect, and measurement evidence."
-  },
-  {
-   "actor": "Students (Groups)",
-   "role_description": "Share and critique each other's justifications, identifying any force classification or measurement reasoning that is incomplete."
+   "ref": "section 5.3",
+   "title": "Digits in Disguise"
   }
  ],
+ "section_goal": "apply",
+ "activity_title": "Figure It Out: Integrating Divisibility, Remainders, and Cryptarithms",
+ "pedagogical_method": "Problem-solving",
+ "textbook_items_in_class": [
+  {
+   "id": "E-73",
+   "type": "exercise",
+   "source_section": "section 5.3",
+   "book_ref": "Figure it Out Q1, section 5.3 p.132",
+   "description": "If 31z5 is a multiple of 9 where z is a digit, find the value of z. Explain why there are two answers."
+  },
+  {
+   "id": "E-77",
+   "type": "exercise",
+   "source_section": "section 5.3",
+   "book_ref": "Figure it Out Q5, section 5.3 p.132",
+   "description": "If 48a23b is a multiple of 18, list all possible pairs (a, b)."
+  },
+  {
+   "id": "E-84",
+   "type": "exercise",
+   "source_section": "section 5.3",
+   "book_ref": "Figure it Out Q12, section 5.3 p.133",
+   "description": "Determine always/sometimes/never for: (i) product of a multiple of 6 and a multiple of 3 is a multiple of 9; (ii) sum of three consecutive even numbers divisible by 6; (iii) if abcdef is a multiple of 6, then badcef is too; (iv) 8(7b−3) − 4(11b+1) is a multiple of 12."
+  },
+  {
+   "id": "E-87",
+   "type": "exercise",
+   "source_section": "section 5.3",
+   "book_ref": "Figure it Out Q15, section 5.3 p.133",
+   "description": "Solve cryptarithms: (i) EF × E = GGG; (ii) WOW × 5 = MEOW."
+  },
+  {
+   "id": "E-88",
+   "type": "exercise",
+   "source_section": "section 5.3",
+   "book_ref": "Figure it Out Q16, section 5.3 p.133",
+   "description": "Which Venn diagram (i)–(iv) correctly captures the relationship between multiples of 4, 8, and 32?"
+  }
+ ],
+ "homework": [],
  "time_bands": [
   {
-   "minutes": "0-12",
-   "activity": "Teacher extends friction to liquids and gases using the aeroplane and ship examples from the chapter; students discuss how streamlining reduces drag by minimising surface contact with the fluid."
+   "minutes": "0–10",
+   "activity": "Students solve Figure it Out Q1 (p.132) (\"if 31z5 is a multiple of 9 where z is a digit, find the value of z; explain why there are two answers....\"). The digit-sum rule reduces this to finding z such that 3 + 1 + z + 5 = 9 + z is divisible by 9, giving two candidate digit values — students verify both and explain the uniqueness question."
   },
   {
-   "minutes": "12-28",
-   "activity": "Students individually work through a set of novel force scenarios (a ship laden with cargo gradually sinking lower, a charged comb attracting water, a spring balance reading dropping when an object is submerged) — classifying the forces, predicting what happens, and writing one-sentence justifications."
+   "minutes": "10–22",
+   "activity": "Students work on Figure it Out Q5 (p.132) (\"if 48a23b is a multiple of 18, list all possible pairs (a, b)....\"). Divisibility by 18 requires divisibility by both 2 (units digit b even) and 9 (digit sum). Students systematically enumerate valid (a, b) pairs, using the digit-sum constraint to narrow b to even values and then a to what makes the total sum a multiple of 9."
   },
   {
-   "minutes": "28-38",
-   "activity": "Groups compare and critique each other's justifications, flagging responses that correctly name the force type, state its effect, and reference measurement or experimental evidence."
+   "minutes": "22–33",
+   "activity": "Pairs tackle Figure it Out Q12 (p.133) (\"determine always/sometimes/never: product of multiple of 6 and multiple of 3 is multiple of 9; sum of three consecutive even numbers divisible by 6; if abcdef multiple of 6, badcef too; 8(7b−3)−4(11b+1) is multiple of 12....\"). Each pair writes a one-line algebraic justification for their verdict on each statement. Class quickly shares verdicts; the teacher homes in on any item with disagreement."
   },
   {
-   "minutes": "38-45",
-   "activity": "Whole-class debrief: teacher draws out the two strands — force classification and weight measurement — and shows how every novel scenario required reasoning across both to reach a complete explanation."
+   "minutes": "33–45",
+   "activity": "Students attempt Figure it Out Q15 (p.133) (\"solve cryptarithms EF × E = GGG and WOW × 5 = MEOW....\") — these are the chapter's most demanding cryptarithms. For Q16 (p.133) (\"which Venn diagram correctly captures the relationship between multiples of 4, 8, and 32?....\"), students reason from divisibility laws: every multiple of 32 is a multiple of 8, every multiple of 8 is a multiple of 4, giving a nested chain. Students select the correct diagram and write one justifying sentence."
   }
  ],
- "teacher_notes": "This closing unit requires students to reason across the full chapter — classification from the middle stage and measurement from the measurement stage must both appear in their justifications. Watch for responses that correctly name the force but do not connect it to its measurable effect (e.g., naming gravity but not noting that spring balance reading falls when upthrust acts upward). The group critique phase is a strong diagnostic: if students cannot identify what is missing in a peer's justification, the integration has not yet occurred.",
+ "teacher_notes": "For Figure it Out Q5, students who apply the divisibility-by-9 rule correctly but forget the divisibility-by-2 constraint will find too many pairs — insist on checking both conditions before listing a pair. For Q15's second cryptarithm WOW × 5 = MEOW, the units-digit rule for multiples of 5 (result ends in 0 or 5) and the four-digit product constraint together narrow the search sharply; prompt students to start there rather than guessing W.",
  "materials": [
-  "Novel scenario task sheet (teacher-prepared with four to five scenarios)",
-  "Notebooks"
+  "Textbook open to pp.132–133",
+  "Paper for constraint-and-enumeration workings"
+ ]
+}
+
+--- PLAN OF 7 UNITS — unit-title map ---
+U1: Do All Eight Sign Arrangements Share the Same Parity?
+U2: Breaking Even, Pairs to Fours, and Divisibility Laws
+U3: Remainders, Algebraic Capture, and Figure it Out
+U4: Place-Value Algebra Behind Divisibility Rules
+U5: Divisibility by 3 and 11 — Deriving the Alternating Rule
+U6: Digital Roots and First Cryptarithms
+U7: Complex Cryptarithms and Chapter Figure it Out
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 7,
+ "period_duration_minutes": 45,
+ "synthesis": false,
+ "textbook_segments": [
+  {
+   "ref": "section 5.3",
+   "title": "Digits in Disguise"
+  }
  ],
- "homework": []
+ "section_goal": "apply",
+ "activity_title": "Complex Cryptarithms and Chapter Figure it Out",
+ "pedagogical_method": "Problem-solving",
+ "textbook_items_in_class": [
+  {
+   "id": "WE-10",
+   "type": "worked_example",
+   "source_section": "section 5.3",
+   "book_ref": "Cryptarithm BYE × 6 = RAY, section 5.3 p.132",
+   "description": "Guided reasoning: B = 1 (product must stay 3-digit), Y must be even and less than 7; students deduce remaining digits."
+  },
+  {
+   "id": "E-67",
+   "type": "exercise",
+   "source_section": "section 5.3",
+   "book_ref": "Solve the following Q1, section 5.3 p.132",
+   "description": "Solve multiplication cryptarithm: UT × 3 = PUT."
+  },
+  {
+   "id": "E-73",
+   "type": "exercise",
+   "source_section": "section 5.3",
+   "book_ref": "Figure it Out Q1, section 5.3 p.132",
+   "description": "If 31z5 is a multiple of 9 where z is a digit, find the value of z. Explain why there are two answers."
+  },
+  {
+   "id": "E-77",
+   "type": "exercise",
+   "source_section": "section 5.3",
+   "book_ref": "Figure it Out Q5, section 5.3 p.132",
+   "description": "If 48a23b is a multiple of 18, list all possible pairs (a, b)."
+  },
+  {
+   "id": "E-84",
+   "type": "exercise",
+   "source_section": "section 5.3",
+   "book_ref": "Figure it Out Q12, section 5.3 p.133",
+   "description": "Determine always/sometimes/never for: (i) product of a multiple of 6 and a multiple of 3 is a multiple of 9; (ii) sum of three consecutive even numbers divisible by 6; (iii) if abcdef is a multiple of 6, then badcef is too; (iv) 8(7b−3) − 4(11b+1) is a multiple of 12."
+  },
+  {
+   "id": "E-87",
+   "type": "exercise",
+   "source_section": "section 5.3",
+   "book_ref": "Figure it Out Q15, section 5.3 p.133",
+   "description": "Solve cryptarithms: (i) EF × E = GGG; (ii) WOW × 5 = MEOW."
+  }
+ ],
+ "homework": [],
+ "time_bands": [
+  {
+   "minutes": "0–12",
+   "activity": "Teacher presents Cryptarithm BYE × 6 = RAY (section 5.3 p.132) (\"Guided reasoning: B = 1 (product must stay 3-digit), Y must be even and less than 7; students deduce remaining digits\") as a worked model; students replicate the bounding-then-checking strategy step by step."
+  },
+  {
+   "minutes": "12–22",
+   "activity": "Pairs work through Solve the following Q1 (section 5.3 p.132) (\"Solve multiplication cryptarithm: UT × 3 = PUT\") using the same bounding approach modelled in the worked example, followed by Figure it Out Q1 (section 5.3 p.132) (\"If 31z5 is a multiple of 9 where z is a digit, find the value of z. Explain why there are two answers\") using the digit-sum divisibility rule for 9."
+  },
+  {
+   "minutes": "22–33",
+   "activity": "Students tackle Figure it Out Q5 (section 5.3 p.132) (\"If 48a23b is a multiple of 18, list all possible pairs (a, b)\") by combining divisibility-by-9 (digit-sum check) with divisibility-by-2 (units digit); pairs systematically list and verify candidate pairs."
+  },
+  {
+   "minutes": "33–45",
+   "activity": "Class works in groups on Figure it Out Q12 (section 5.3 p.133) (\"Determine always/sometimes/never for (i)–(iv)…\") and Figure it Out Q15 (section 5.3 p.133) (\"Solve cryptarithms: (i) EF × E = GGG; (ii) WOW × 5 = MEOW\"), with each group presenting one result and its justification to close the unit."
+  }
+ ],
+ "teacher_notes": "Divisibility rules for 9 and 2, derived in section 5.2, and the 'always, sometimes, or never' reasoning framework built in section 5.1 are the primary tools for all Figure it Out work in this unit. A common error in the six-digit divisibility problem (Figure it Out Q5) is checking only one of the two co-prime factor conditions (9 or 2) and missing the other; insist that students state both checks explicitly. For the harder cryptarithms in Figure it Out Q15, encourage students to identify the leading-digit constraint first — as modelled in the BYE × 6 = RAY example — before trying digit values.",
+ "materials": [
+  "Whiteboard and markers",
+  "Plain paper for systematic digit trials and algebraic working"
+ ]
 }
 
 ======================================================================

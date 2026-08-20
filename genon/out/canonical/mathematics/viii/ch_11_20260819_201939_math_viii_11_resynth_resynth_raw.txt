@@ -1,0 +1,39 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Four Problems, Two Themes: Putting the Chapter to Work",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "This unit poses four problems — two from the fractal strand, two from the visualisation strand — that together span the chapter's main methods. No textbook page is referenced; every problem is read from the board.\n\nProblem 1 (Sierpinski Carpet counting, section 4.1.1): Students derive how many holes exist at Step 3 of the Sierpinski Carpet, using the recurrence H_{n+1} = H_n + R_n and R_n = 8^n. At Step 0: R=1, H=0. Step 1: R=8, H=1. Step 2: R=64, H=1+8=9. Step 3: R=512, H=9+64=73. The method is recurrence-relation reasoning and the closed formula for remaining squares.\n\nProblem 2 (Koch Snowflake perimeter, section 4.1.3): Starting with an equilateral triangle of side 3 cm, students find the perimeter after two iterations of the snowflake construction. Step 0: 3 sides, perimeter = 9 cm. Each step multiplies sides by 4 and side-length by 1/3, so perimeter is multiplied by 4/3 each step. Step 1: perimeter = 9 × (4/3) = 12 cm. Step 2: perimeter = 12 × (4/3) = 16 cm. The method is iterative geometric growth reasoning (section 4.1.3).\n\nProblem 3 (Net and shortest surface path, sections 4.2.2 and 4.2.3): A closed cuboid measures 4 cm × 4 cm × 8 cm. An ant sits at the centre of one 4×4 face. A crumb sits at the centre of the opposite 4×4 face. Students must find the shortest path along the surface by unfolding. The natural unfolding that lays both 4×4 faces and the connecting 4×8 strip flat gives a straight-line path through the 4×8 strip: horizontal distance = 8 cm (the length of the strip), vertical displacement = 0 (both centres are centred), so the straight-line distance = 8 cm. Students should verify by also considering an unfolding that goes over a side face: the strip would then be 4 wide and the ant must travel 4 (across the face) + 8 (across the strip) + 4 (across the far face) = total horizontal 16, vertical 0 — clearly longer. So the answer is 8 cm. The method is net-unfolding and Baudhayana–Pythagoras reasoning for shortest surface paths (sections 4.2.2–4.2.3).\n\nProblem 4 (Three views of a composite solid, section 4.2.4 / 4.2.5): A solid is built by placing a small cube of side 2 cm on top of a larger cube of side 4 cm, centred on its top face. Students sketch and describe the front view, top view, and side view. Front view: a 4×4 square with a 2×2 square sitting centred on top — a stepped silhouette. Top view: a 4×4 square with a 2×2 square centred inside it (two concentric squares). Side view: same as front view by symmetry. The method is standard three-view projection (sections 4.2.4–4.2.5).\n\nGrouping: after individual work, groups of 3–4 compare solutions. Any disagreement must be reconstructed step by step — the group identifies at which line the working diverges and corrects it together. Each group presents one problem; after each presentation the class names aloud the chapter method used. The teacher circulates during individual work, notes which problems are generating disagreement, and prioritises those for presentation.\n\nThe closing band should draw out the chapter's one idea: iterating a simple rule at smaller and smaller scales, or projecting a three-dimensional object onto a flat plane, both show that a small, consistent local rule can generate rich and sometimes surprising global structure.",
+    "materials": [
+      "board or projected display for problem statements",
+      "plain paper or squared paper (one sheet per student)",
+      "pencils and rulers"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-4",
+        "activity": "The teacher writes all four problems on the board, one below the other, and reads each aloud. Students write down the problems on their paper. No discussion yet — every student begins working alone."
+      },
+      {
+        "minutes": "4-22",
+        "activity": "Individual work on all four problems. Every student writes full working — not just answers — for each problem. Problem 1: use the recurrence for holes and remaining squares in the Sierpinski Carpet to count how many holes exist at Step 3, starting from Step 0 (one whole square, no holes). Problem 2: an equilateral triangle of side 3 cm undergoes two iterations of the Koch Snowflake construction — find the perimeter after each iteration and after the second. Problem 3: a closed 4 cm × 4 cm × 8 cm cuboid has an ant at the centre of one square face and a crumb at the centre of the opposite square face — unfold the cuboid and find the shortest surface path from ant to crumb, showing the unfolding and the straight line. Problem 4: a 2 cm cube sits centred on top of a 4 cm cube — sketch the front view, top view, and side view of the combined solid, labelling any dimensions that matter. The teacher circulates without giving answers, noting where working is incomplete or stalled."
+      },
+      {
+        "minutes": "22-34",
+        "activity": "Groups of three or four compare their full working for all four problems. Where any two members got different answers or drew different shapes, the group places both sets of working side by side and identifies the exact step where they diverged, then decides together which is correct and why. Each group assigns one problem to a spokesperson."
+      },
+      {
+        "minutes": "34-43",
+        "activity": "Four groups present — one problem each — at the board, writing or drawing the key steps. After each presentation the teacher asks the class: 'What is the chapter method this solution used?' Students name it aloud — recurrence and closed formula; iterative geometric growth; net-unfolding with Baudhayana–Pythagoras; three-view projection. The teacher confirms or sharpens the name and, where a common error emerged in the room, pauses to show the correction on the board."
+      },
+      {
+        "minutes": "43-45",
+        "activity": "The teacher states the chapter's one idea aloud: whether you iterate a simple rule to build a fractal or unfold a solid to find a path or project it onto a plane to read its views, a small, consistent local rule always determines the global structure — and that is why each of these four very different problems yielded to the same habit of working systematically from the rule. Students close their notebooks."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

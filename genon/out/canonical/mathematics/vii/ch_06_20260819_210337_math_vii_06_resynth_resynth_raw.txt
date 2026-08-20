@@ -1,0 +1,47 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Number Play in Four Moves",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems at once on the board. Students work individually for the first fifteen minutes, writing every step of reasoning — not just answers. Then groups of three compare: any disagreement is reconstructed step by step until the group agrees on a single solution. Four groups present, one problem each; after each presentation the class names the chapter method used. Problem 1 calls on sequence-decoding and structural constraint reasoning (section 6.1). Problem 2 calls on parity of sums by the pair-arrangement argument (section 6.2). Problem 3 calls on the algebraic magic-square generalisation — magic sum equals three times the centre (section 6.3). Problem 4 calls on Virahāṅka recursion combined with digit-substitution elimination (sections 6.4 and 6.5). Watch for students who guess in Problem 4 rather than reasoning column by column; prompt them to decide the units column first.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | Five children stand in a line. The number each calls out — the count of taller children standing ahead of them — is: 0, 2, 1, 3, 2. Is this sequence possible? If yes, describe a valid height order; if no, explain why not. | The fourth child says 3, so exactly 3 of the first four children are taller than child 4 — leaving only child 4 themselves as the shortest among those four. But child 5 then says 2, meaning exactly 2 of children 1–4 are taller than child 5. That forces child 5 to be taller than two of children 1–4 yet shorter than the other two. This is consistent. One valid height assignment (tallest = 5, shortest = 1): child 1 = 4, child 2 = 2, child 3 = 3, child 4 = 1, child 5 = 5 — check: child 1 sees 0 taller ahead ✓; child 2 sees child 1 (4 > 2) = 1 taller, not 2 ✗. Corrected assignment: child 1 = 3, child 2 = 1, child 3 = 2, child 4 = 0 — sequence forces child 4 to have height less than exactly 3 of the 3 ahead, so child 4 is the shortest of the first four (height 1); try child 1 = 5, child 2 = 3, child 3 = 4, child 4 = 1, child 5 = 2: child 1 → 0 ✓; child 2 → 1 (only child 1 is taller) — gives 1, not 2 ✗. Valid assignment: child 1 = 4, child 2 = 2, child 3 = 5, child 4 = 1, child 5 = 3 — child 1: 0 taller ahead ✓; child 2: child 1 (4>2) = 1 taller, not 2 ✗. Valid assignment found by constraint: for position 4 to say 3, all three preceding children must be taller. Let heights 1–5 be h₁>h₄, h₂>h₄, h₃>h₄ (3 taller than h₄) and for position 5 saying 2, exactly 2 of h₁,h₂,h₃,h₄ exceed h₅. One solution: h₁=3, h₂=4, h₃=5, h₄=1, h₅=2. Check: pos 1 → 0 ✓; pos 2 → h₁=3<4, so 0 taller ahead — gives 0, not 2 ✗. Solution: h₁=5, h₂=4, h₃=3, h₄=1, h₅=2. Check: pos 1 → 0 ✓; pos 2 → 1 child ahead taller (h₁=5>4), so says 1, not 2 ✗. Solution: h₁=4, h₂=5, h₃=3, h₄=1, h₅=2. Check: pos 1 → 0 ✓; pos 2 → h₁=4<5, so 0 taller ahead — says 0, not 2 ✗. Solution: h₁=3, h₂=5, h₃=4, h₄=1, h₅=2. Check pos 1 → 0 ✓; pos 2 → h₁=3<5, says 0 ✗. Try h₁=2, h₂=5, h₃=4, h₄=1, h₅=3: pos 2 → h₁=2<5, says 0 ✗. The digit at position 2 is 2, so exactly 2 children ahead of child 2 are taller; only child 1 is ahead, so the maximum value child 2 can say is 1. The sequence 0,2,1,3,2 is therefore IMPOSSIBLE — child 2 has only one child ahead and cannot see 2 taller children. Answer: impossible; child 2 has only child 1 ahead, so can say at most 1, not 2.\n2 | Priya has a bag of marbles. She says: 'I have an odd number of red marbles, an odd number of blue marbles, and an odd number of green marbles, and altogether I have 36 marbles.' Can she be right? Explain. | Three odd numbers always sum to an odd number (odd + odd = even, even + odd = odd). So the total of three odd counts is always odd. But 36 is even. Priya cannot be right — it is impossible for three odd counts to sum to 36.\n3 | A 3×3 magic square has the number 20 at its centre. What is the magic sum? Write the values of any two entries that lie in the same row as the centre. | In any 3×3 magic square built from consecutive numbers, the magic sum equals three times the centre: 3 × 20 = 60. The centre row must also sum to 60. In the standard algebraic form the centre row entries are m−1, m, m+1, i.e. 19, 20, 21. The two entries beside the centre are 19 and 21. (Magic sum = 60; centre-row entries = 19, 20, 21.)\n4 | In the cryptarithm AB + AB = CBC, each letter stands for a different digit and no leading digit is 0. Find A, B, and C. | AB is a two-digit number, so AB + AB = 2×AB. The result CBC is a three-digit number with the same digit C in the hundreds and units places. 2×AB must lie between 100 and 999. Since AB is two-digit, AB is between 50 and 99 (so that 2×AB ≥ 100). The units digit of 2×AB must equal C, and the hundreds digit must also equal C. Hundreds digit of 2×AB: since AB ≤ 99, 2×AB ≤ 198, so C = 1. Units digit of 2×AB = C = 1, so 2×B ends in 1 — impossible for any single digit B (2×0=0, 2×1=2, …, 2×9=18; none end in 1). Therefore no solution exists with a simple carry-free units column; allow a carry: if 2B ≥ 10, units digit = 2B−10 and carry 1 to tens. We need 2B−10 = 1, so 2B = 11 — not an integer. Try C=1 with tens: tens digit of CBC is B. Tens column: 2A + carry from units = 10·1 + B (since hundreds digit is 1). With carry 1: 2A + 1 = 10 + B, so 2A − B = 9. Units: 2B − 10 = 1 gives no integer. Try C=1, units carry=1 giving 2B ending in 1 after carry — still impossible. Re-examine: units digit of 2×AB is the units digit of 2B (no carry into units from nothing). Need units(2B)=C=1: impossible. So C≠1 and 2×AB>199 is impossible since AB≤99. The cryptarithm AB+AB=CBC has no solution — the units digit of 2B can never be 1 (or any odd digit requiring 2B odd), since 2B is always even. The answer is: no solution exists; the units digit of 2×B is always even, but C appears as both the hundreds and units digit of CBC, so C would have to be even AND generate a three-digit number starting with the same even digit — checking C=2: 2×AB starts with 2, so AB is between 100–149 range but AB is only two digits; impossible. The cryptarithm has no valid solution."
+      }
+    ],
+    "materials": [
+      "Blackboard or whiteboard",
+      "Chalk or markers",
+      "Plain paper",
+      "Pencils"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "Teacher writes all four problems on the board and reads each aloud. Students copy them onto their paper. No discussion yet — the instruction is: work alone, write every step, and attempt every problem."
+      },
+      {
+        "minutes": "3-18",
+        "activity": "Individual silent work. Every student writes full working for each problem. Teacher circulates without answering mathematical questions — if a student is stuck, the only prompt is: 'What do you know for certain from the numbers given? Start there.'"
+      },
+      {
+        "minutes": "18-28",
+        "activity": "Groups of three form. Each group compares answers problem by problem. Where answers differ, the group reconstructs the disagreeing solution step by step until one argument is accepted or both are found to be in error. Every member must be able to explain the group's final answer."
+      },
+      {
+        "minutes": "28-38",
+        "activity": "One group presents each problem — four short presentations. After each, the teacher asks the class: 'Which method from this chapter did that solution rest on?' Students name it. The teacher confirms and writes the method name beside the problem on the board."
+      },
+      {
+        "minutes": "38-40",
+        "activity": "Teacher reads the closing sentence aloud and asks one student to repeat it in their own words: 'Numbers carry hidden structure — in their parity, their position, their sequence, and their digits — and that structure, once found, decides what is possible and what is not.'"
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

@@ -42,6 +42,7 @@ from .export_lesson_pdf import (
 )
 from .export_assessment_pdf import (
     G_ACCENT, G_HEAD, G_DARK, G_TINT, G_EDGE,
+    NUMBER_LINE_CSS,
     intro_paragraph, _question_block,
 )
 
@@ -259,6 +260,13 @@ def _css() -> str:
   .stim-tbl-cap {{ font-size: 7.5pt; color: #2a2a2a; font-weight: bold; margin: 6px 0 2px 0; }}
   .stim-tbl-src {{ font-size: 6.5pt; color: #55524d; font-style: italic; margin: 2px 0 6px 0; }}
   .stim-prose {{ font-size: 7.5pt; color: #2a2a2a; font-style: italic; margin: 5px 0; }}
+
+  /* THE TICK LINE — spliced from export_assessment_pdf.NUMBER_LINE_CSS, never retyped.
+     `_question_block` is imported from that module, so this file has always emitted the
+     tick-line markup; what it lacked was the styling, and the combined PDF printed the
+     ticks bare with no axis while the assessment-only PDF beside it was right. Sharing
+     the bytes is the only version of this fix that cannot drift again. */
+{NUMBER_LINE_CSS}
   .stim-note {{ font-size: 7pt; color: #8a8a86; font-style: italic; margin: 5px 0; }}
   .scaf {{ font-size: 7.5pt; color: #2a2a2a; margin: 4px 0 2px; }}
   .task-k {{ font-size: 6.5pt; font-weight: bold; letter-spacing: 0.5px; text-transform: uppercase; color: {G_ACCENT}; }}

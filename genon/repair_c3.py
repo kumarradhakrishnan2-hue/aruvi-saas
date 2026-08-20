@@ -88,7 +88,27 @@ def pass_strip_internal_ids(result, ctx):
                               "old": band["activity"], "new": cleaned})
                 band["activity"] = cleaned
 
+        # `homework` IS NOT A LIST OF STRINGS ON EVERY STAGE (fixed 2026-08-19). At
+        # mathematics·secondary — the stage this pass was written against — it is
+        # `["Exercise 4.2 Q3 (E-1)", …]`. At preparatory and middle it is a list of task
+        # DICTS ({id, intent, method, section_ref, book_ref, description}), so `sub()`
+        # raised TypeError on the first period of the first file, taking the whole run
+        # down before any pass could report. Found by running the corpus-wide stem-deixis
+        # pass, which is the first thing that ever called this tool on prep maths.
+        # The id-in-prose defect lives in `description` on that shape, so both are handled.
         for idx, item in enumerate(period.get("homework", [])):
+            if isinstance(item, dict):
+                text = item.get("description")
+                if not isinstance(text, str):
+                    continue
+                cleaned = ID_IN_PROSE.sub("", text)
+                if cleaned != text:
+                    edits.append({"unit": unit, "field": f"homework[{idx}].description",
+                                  "old": text, "new": cleaned})
+                    item["description"] = cleaned
+                continue
+            if not isinstance(item, str):
+                continue
             cleaned = ID_IN_PROSE.sub("", item)
             if cleaned != item:
                 edits.append({"unit": unit, "field": f"homework[{idx}]",
@@ -195,7 +215,184 @@ def pass_open_task_substitution(result, ctx):
     return edits
 
 
+def pass_stem_deixis(result, ctx):
+    """ARV-D-188 — a stem that points at a stimulus the item does not carry is repointed
+    at the textbook page the item's OWN `exercise` block already names.
+
+    THE DEFECT (2026-08-19, S8 · W1, founder-found by reading a served plan). mathematics
+    III ch 5 Q-A-1 reads *"On the dot grid below, draw a simple rangoli design…"* with
+    `visual_stimulus: ""`. There is no dot grid. Detector, its four conditions and its
+    subject scoping: `genon/stem_deixis.py`; the gate is C5 check 12.
+
+    WHY THIS IS GENERIC AND NOT DECLARED, which is the whole reason it can run corpus-wide.
+    The replacement is not written here — it is DERIVED from the item, in two steps that
+    both read fields the item already carries:
+      1. `exercise.book_ref` names the page ("Let us Do Q1, p.44");
+      2. that page IS where the referent lives — the NCERT dot grid for Q1 is printed on
+         p.44, which is why the item was anchored there in the first place.
+    So the edit rewrites the POINTER and nothing else: `below` → `on p.44`. No judgement,
+    no per-item language, no new content. Measured across the corpus, 38 of the 68 hits
+    carry a usable page in their own `book_ref`.
+
+    It is also what the constitutions already ask for. mathematics·middle Rule 9: *"the
+    prompt should reference the textbook directly (e.g. 'Refer to Fig. 5.6 in §5.3 of your
+    textbook')"*; english·preparatory Rule 9: *"The teacher has the book; the image lives
+    there."* Prep maths states the same default in Rule 7 (`""`, figure reached through the
+    `exercise` companion) — the model simply wrote the stem as though it had a figure.
+
+    SUBJECT-GATED TO MATHEMATICS, and the gate is the point (the lesson `pass_open_task_
+    substitution` records one line above). The detector only GATES on mathematics, for the
+    reasons in `stem_deixis._GATES`: english's `below` is largely poem and story content
+    and its referents live in spine-varying fields. An advisory finding must not be
+    repaired automatically — the shortlist is ruled on at C7 by a reader.
+
+    IT NEVER TOUCHES A T3 ITEM. Where no page is derivable the pass returns nothing and the
+    item stays exactly as it is, reported by check 12 for a human. Rewriting a pointer with
+    nowhere to point would replace a visible defect with an invisible one."""
+    # NOT `iter_items` — it yields from `questions` / `assessment_items` and on the
+    # goal-clustered stages (mathematics preparatory, middle) `assessment_items` is a list
+    # of GROUPS, each with its own `items` list. On maths III ch 5 it returns 4 objects for
+    # 30 items, and this pass silently found nothing on its first run. `stem_deixis._items`
+    # walks to anything whose `id` starts with "Q-", whatever the container. Worth noting
+    # that `pass_guide_shape` and `pass_open_task_substitution` share the blind spot.
+    from stem_deixis import _items as walk_items, classify, tier      # noqa: PLC0415
+    if ctx.get("subject") != "mathematics":
+        return []
+    edits = []
+    for pos, item in enumerate(walk_items(result), 1):
+        got = classify(item)
+        if not got:
+            continue
+        ex = item.get("exercise") or {}
+        hit = {"kind": got[0], "book_ref": ex.get("book_ref") or ""}
+        if tier(hit) != "T1":
+            continue                      # T2/T3 are not this pass's to touch
+        page = _PAGE_IN_BOOKREF.search(hit["book_ref"])
+        if not page:
+            continue
+        loc = _tidy_page(page.group(0))
+        field = "item_stem" if item.get("item_stem") is not None else "prompt"
+        old = item.get(field) or ""
+        new = _repoint(old, loc)
+        if new and new != old:
+            edits.append({"item": pos, "field": field, "old": old, "new": new})
+            item[field] = new
+    return edits
+
+
+# "p.44" · "p. 44" · "pp. 44" · "page 44" · "section 6.2"  → the locator to point at.
+_PAGE_IN_BOOKREF = re.compile(r"\b(?:pp?\.?\s*\d+|page\s+\d+|section\s+\d+\.\d+)", re.I)
+
+
+def _tidy_page(raw: str) -> str:
+    """'p.44' / 'p. 44' / 'page 44' -> 'on p.44'; 'section 6.2' -> 'in section 6.2'.
+
+    The PREPOSITION belongs to the locator, not to the template: one reads "on p.44" and
+    the other "in section 6.2", and a template carrying a hardcoded "on" produced "the
+    figure on section 6.2" on the first maths·middle file it touched."""
+    s = raw.strip()
+    if s.lower().startswith("section"):
+        return "in " + re.sub(r"\s+", " ", s.lower())
+    return "on p." + re.search(r"\d+", s).group(0)
+
+
+# The pointer forms actually observed, each rewritten to name the page instead. Ordered
+# longest-first so "the dot grid below" is not eaten by "below". Every replacement keeps
+# the sentence grammatical and changes only WHERE the child is told to look.
+_REPOINT = [
+    (re.compile(r"\bon the dot grid below\b", re.I), "on the dot grid {loc}"),
+    (re.compile(r"\bon the grid below\b", re.I), "on the grid {loc}"),
+    (re.compile(r"\blook at the dot grid below\b", re.I), "look at the dot grid {loc}"),
+    (re.compile(r"\bin the box(es)? below\b", re.I), "in the box {loc}"),
+    (re.compile(r"\bin the space below\b", re.I), "in the space {loc}"),
+    (re.compile(r"\bon the blank clock face below\b", re.I), "on the blank clock face {loc}"),
+    (re.compile(r"\bthe (\w+(?:\s\w+)?) shown below\b", re.I), r"the \1 {loc}"),
+    (re.compile(r"\bshown below\b", re.I), "shown {loc}"),
+    (re.compile(r"\bthe two tens frames below\b", re.I), "the two tens frames {loc}"),
+    # THREE words, not two (widened 2026-08-20, W2). "On the triangular dot paper below,
+    # a cube has been started for you" left the only unrepairable T1 item in the wave —
+    # the noun phrase is three words and the pattern allowed two, so a repair that had a
+    # perfectly good page to point at (p.8) simply did not fire.
+    (re.compile(r"\b(?:on|in) the ([\w-]+(?:\s[\w-]+){0,2}) below\b", re.I), r"on the \1 {loc}"),
+    (re.compile(r"\blook at the ([\w-]+(?:\s[\w-]+){0,2}) below\b", re.I), r"look at the \1 {loc}"),
+    (re.compile(r"\bthe ([\w-]+(?:\s[\w-]+){0,2}) below\b", re.I), r"the \1 {loc}"),
+    (re.compile(r"\bbelow is (a|an|the) ([\w-]+(?:\s[\w-]+)?)\b", re.I),
+     r"{loc} there is \1 \2"),
+]
+
+
+def _repoint(stem: str, loc: str) -> str:
+    """Rewrite the FIRST pointer in the stem to name `loc`. One edit per stem: a second
+    pointer in the same stem is a different sentence and is reported, not guessed at.
+
+    CASE IS RESTORED FROM THE TEXT BEING REPLACED, not from the template. The patterns are
+    case-insensitive so that one entry covers "On the dot grid below" and "on the dot grid
+    below", but `expand` emits the template's own casing — which turned a sentence-initial
+    "On the dot grid below, draw…" into "on the dot grid on p.44, draw…" on the first file
+    it touched. If the span replaced began with a capital, so does its replacement."""
+    for pat, rep in _REPOINT:
+        m = pat.search(stem)
+        if not m:
+            continue
+        new = m.expand(rep).format(loc=loc)
+        if m.group(0)[:1].isupper() and new[:1].islower():
+            new = new[0].upper() + new[1:]
+        return stem[:m.start()] + new + stem[m.end():]
+    return ""
+
+
+def pass_synthesis_points_at_its_table(result, ctx):
+    """ARV-D-187 — a re-authored closer whose teacher_notes never mention its own table.
+
+    THE DEFECT. The maths·middle resynth (2026-08-19) moved the problems and their worked
+    solutions OUT of teacher_notes and into a `visual_aids` table, so the Material tab
+    carries them. The brief describes that table at length and never says the notes must
+    POINT at it — and 36 of the 38 re-authored closers duly did not. A teacher reading the
+    notes sees the sitting described and the mathematics absent, with nothing telling her
+    where it went. Founder, 2026-08-20.
+
+    WHY IT IS GENERIC. Nothing here is per-chapter: the sentence is fixed, and the only
+    variable — the table's title — is read off the unit itself. That is this list's
+    contract ("derive the correct value from an AUTHORITATIVE SOURCE … take no per-chapter
+    input"), and it is why this is not 36 declared old→new pairs against 36 different
+    opening sentences.
+
+    It PREPENDS rather than splices, because where a sentence lands inside prose the model
+    wrote is a judgement, and a pass that takes no per-chapter input has no business making
+    one. First thing the teacher reads is where the problems are.
+
+    Idempotent by inspection of the note, not by a flag: a unit whose notes already reach
+    for the table in any of the observed forms is left alone. Science's polish pass settled
+    the pointer convention — "(see material: '…')" — and this follows it, with the
+    founder's own phrase carried in front.
+    """
+    edits = []
+    for period in result["lesson_plan"]["periods"]:
+        if period.get("synthesis") is not True:
+            continue
+        tables = [a for a in (period.get("visual_aids") or [])
+                  if isinstance(a, dict) and a.get("type") == "table" and a.get("title")]
+        if not tables:
+            continue
+        notes = period.get("teacher_notes") or ""
+        if re.search(r"see material|Prepared Table|prepared table|see the table|table below",
+                     notes):
+            continue
+        title = tables[0]["title"]
+        pointer = (f"Refer to Prepared Table (see material: '{title}') for the problems in "
+                   f"full and their worked solutions. ")
+        edits.append({"unit": period["period_number"], "field": "teacher_notes",
+                      "old": notes[:60] + ("…" if len(notes) > 60 else ""),
+                      "new": pointer[:60] + "…"})
+        period["teacher_notes"] = pointer + notes
+    return edits
+
+
 GENERIC_PASSES = [
+    ("ARV-D-187", "the re-authored closer's notes point at its own Material table",
+     pass_synthesis_points_at_its_table),
+    ("ARV-D-188", "stem repointed at the page its own exercise block names",
+     pass_stem_deixis),
     ("ARV-D-071", "method label verbatim from the Pedagogy document", pass_method_label),
     ("ARV-D-073", "internal WE-N / E-N ids out of teacher-facing text", pass_strip_internal_ids),
     ("ARV-D-077", "textbook descriptions verbatim from the summary", pass_verbatim_descriptions),
@@ -222,6 +419,355 @@ GENERIC_PASSES = [
 # wave-2 header documents. Same cure as repair_register v1.3: scope the set to the
 # subject·grade the run names, and a foreign filename can never be reached.
 DECLARED = {
+  # ── S8 · mathematics · preparatory · BATCH WAVE 1 (2026-08-19) ───────────────────────
+  # The two standards certification quarantined, each for one item, and both for the SAME
+  # check — the declared-type gate that landed at this stage's own C4 with assessment v1.4
+  # (ARV-D-113). This is that gate's first batch, and it is worth recording that the two
+  # hits resolve in OPPOSITE directions: one stimulus is not a tick line and never was,
+  # the other is a good tick line wearing labels that are too long. A single rule for
+  # "number_line failures" would have got one of them wrong.
+  # Both restored from backup/quarantine/ before these ran (runbook trap 1).
+  # APPLIED 2026-08-19 and moved behind a 3-tuple key, which the 2-tuple lookup never
+  # reaches — the same device the mathematics·ix W1/W2 sets use. Kept as the record.
+  # ARV-D-187 in particular CANNOT be re-asserted even in principle: STEP 6 arranged
+  # Q-C-2's options after it landed and remapped the reveals' dict keys with them
+  # (B/C/D as declared -> B/A/C on disk), so the declared `new` no longer matches the
+  # artefact. That is the normalizer doing its job, and it is why an applied authoring
+  # entry must be retired rather than left in the live set to refuse noisily.
+  ("mathematics", "iii", "APPLIED-20260819"): {
+    # ARV-D-185 · iii ch 4 Q-A-2 declares `number_line:` on a pair of TENS FRAMES:
+    # "[Frame 1: 8+4] | [Frame 2: 8−4]". Two cells against the ≥3 the contract needs —
+    # but the count is the symptom, not the defect. A tens frame is a 2×5 GRID, and
+    # Rule 7 forbids a tick line from being one ("the ticks are drawn as an ordered
+    # line, never as a grid"); inline SVG is prohibited at this stage, so no permitted
+    # format can carry the picture. Padding the strip to three cells would satisfy the
+    # regex and still be the wrong representation, which is the direction runbook trap 4
+    # exists to refuse. The tag goes, and the whole field with it — same reading as
+    # ARV-D-179 at middle.
+    #
+    # NOTHING MATERIAL IS LOST, and it is checkable rather than asserted. The two frames
+    # are not information the stimulus supplies; they are the layout the CHILD draws on,
+    # and the item's own `prompt` already says so in full: "Draw dots on the two tens
+    # frames below — one to show 8 + 4 and one to show 8 – 4. Then write the number
+    # sentence for each." The `exercise` companion carries the teacher's page ("Let us
+    # Do, p.30", 7 + 5 and 7 − 5 on the same frames). Rule 7's stated default — the
+    # figure is reached through the companion block — is exactly this item's case.
+    "ch_04_canonical.json": {
+        "ARV-D-185": [
+            {"item_where": {"id": "Q-A-2"},
+             "field": "visual_stimulus",
+             "old": "number_line: [Frame 1: 8+4] | [Frame 2: 8−4]",
+             "new": ""},
+        ],
+    },
+    # ★ ARV-D-187 · iii ch 5 Q-C-2 IS A SHELL, and this entry AUTHORS TEXT — read it
+    # before certifying. Declared MCQ, `verified: false`, and it asks nothing: prompt "",
+    # visual_stimulus "", options [], expected_answer "", method_one_line "",
+    # what_each_option_reveals {}, and an inclusivity field carrying the generator's own
+    # failure marker ("[Verification failed] Refer to the book task anchored to S5.").
+    # The one thing the model did fill is the `exercise` companion — "Let us Do Q1, p.55 ·
+    # Mark the square corners in these shapes" — so it knew what it meant to ask and
+    # stopped. This is the defect the S8 pre-flight flagged as the stage's only
+    # non-repairable one, and it has quarantined the pilot library on every certify run
+    # since 2026-08-13.
+    #
+    # AUTHORED UNDER THE ARV-D-180 PRECEDENT (founder ruling 2026-08-19, one day old and
+    # identical in shape): "generate an equivalent question" — equivalent to what the
+    # shell was anchored on — rather than re-buying a 14-period standard and the two
+    # compacts whose briefs are built from its registry. THE FOUNDER SHOULD READ THIS ITEM
+    # AT THE HUMAN GATE. It is the one place in the stage where text was written rather
+    # than repaired, and `verified` is deliberately left FALSE: this has not been through
+    # a verification pass and must not claim it has.
+    #
+    # THE QUESTION IS THE EXERCISE'S OWN TEST, MADE SELF-CONTAINED. "Mark the square
+    # corners in these shapes" needs the p.55 figures, and Rule 7 gives this stage no way
+    # to carry them (pipe-table and `number_line:` only, SVG prohibited) — so the item asks
+    # about the TESTING PROCEDURE the section teaches instead of about a particular shape,
+    # which is answerable from the stem alone and is the thing a child must know before the
+    # book task means anything. The notebook-corner test is the section's method, not an
+    # invention.
+    #
+    # THE THREE DISTRACTORS ARE THE THREE WAYS A CLASS III CHILD MISREADS THAT TEST, not
+    # filler: accepting a gap, accepting an overlap, and testing along a side instead of at
+    # the point where two sides meet. Each reveals a different repair, and each is stated
+    # that way in `what_each_option_reveals`.
+    #
+    # NOT ONE LETTER APPEARS IN THE GUIDE PROSE — ARV-D-180's rule, and the reason for it:
+    # STEP 6 arranges the options and remaps the reveals' dict KEYS with them, but it
+    # cannot rewrite prose, so guide text names the ANSWER ("a square corner"), never the
+    # label beside it. The reveals below are keyed to the options AS DECLARED HERE, option
+    # for option; get that agreement right and any arrangement preserves it.
+    #
+    # `visual_stimulus` stays "" — Rule 7's stated default, with the figure reached through
+    # the `exercise` companion, which is untouched. `intent`, `section_ref` and
+    # `section_title` are untouched.
+    "ch_05_canonical.json": {
+        "ARV-D-187": [
+            {"item_where": {"id": "Q-C-2"},
+             "field": "prompt",
+             "old": "",
+             "new": "Meena tests one corner of a shape by placing the corner of her "
+                    "notebook on it. The notebook corner fits exactly — no gap is left "
+                    "over, and nothing sticks out past the shape's sides. What has Meena "
+                    "found?"},
+            {"item_where": {"id": "Q-C-2"},
+             "field": "options",
+             "old": [],
+             "new": [{"label": "A", "text": "A square corner", "is_correct": True},
+                     {"label": "B", "text": "A corner smaller than a square corner",
+                      "is_correct": False},
+                     {"label": "C", "text": "A corner larger than a square corner",
+                      "is_correct": False},
+                     {"label": "D", "text": "A side, not a corner", "is_correct": False}]},
+            # The guide goes in as ONE object, not four dotted edits (ARV-D-180's lesson:
+            # `get_nested` reads plain keys and `name[i].leaf` only, so a dotted
+            # "teacher_guide.expected_answer" reads None and the edit refuses). It is also
+            # the right shape — the four fields are one authored act and land together or
+            # not at all. Unlike ARV-D-180, `inclusivity` is NOT carried through: what is
+            # there is the generator's failure marker, not the model's teaching.
+            {"item_where": {"id": "Q-C-2"},
+             "field": "teacher_guide",
+             "old": {"expected_answer": "", "method_one_line": "",
+                     "what_each_option_reveals": {},
+                     "inclusivity": "[Verification failed] Refer to the book task "
+                                    "anchored to S5."},
+             "new": {"expected_answer":
+                     "A square corner. The corner of a notebook is itself a square "
+                     "corner, so any corner it sits on exactly — nothing left over and "
+                     "nothing sticking out — is a square corner too. If a gap shows, the "
+                     "shape's corner is the smaller one; if the notebook edge crosses over "
+                     "a side, the shape's corner is the larger one.",
+                     "method_one_line":
+                     "Use the notebook corner as the tester: an exact fit means a square "
+                     "corner, a gap means smaller, an overlap means larger.",
+                     "what_each_option_reveals": {
+                         "B": "The child is accepting a gap as a fit. Ask them to look "
+                              "along the join for daylight between the notebook edge and "
+                              "the shape's side.",
+                         "C": "The child is accepting an overlap as a fit. Ask whether "
+                              "the notebook edge crosses over the shape's side or runs "
+                              "along it.",
+                         "D": "The child is testing along an edge instead of at the point "
+                              "where two edges meet. Point to that meeting point and ask "
+                              "them to test again there."},
+                     "inclusivity":
+                     "Support: give the child a cut-out square corner of card to test "
+                     "with, so a whole notebook is not in the way; stretch: ask the child "
+                     "to find one square corner and one corner that is not square on the "
+                     "same shape."}},
+        ],
+    },
+  },
+  # ── S8 · mathematics · preparatory · BATCH WAVE 2 (2026-08-20) ───────────────────────
+  # FIVE `number_line:` mis-tags, all caught by the declared-type gate before a human read
+  # anything, and all ONE defect wearing five faces: THE TICK LINE IS BEING USED AS A
+  # GENERAL-PURPOSE DIAGRAM SLOT. It is the only structured visual this stage is permitted
+  # (Rule 7: pipe table, `number_line:`, or nothing — inline SVG prohibited), so when the
+  # model wants a sorting grid, a set of nets, a part-whole bar or a ratio pairing, the tag
+  # is the nearest thing to hand. W1 saw the same pressure twice (ARV-D-185/186); at wave 2
+  # it is five of five. Worth carrying into any future diagram-primitive work: the demand
+  # is real and it is not for number lines.
+  #
+  # The remedy splits cleanly in two, and the split is the useful part:
+  #   * the content IS legitimately a pipe table -> strip the tag and keep the cells, so it
+  #     renders as the table it always was. A single row falls to PROSE (assessment v1.4),
+  #     so these are shaped as header + one data row.
+  #   * the content DUPLICATES the stem or the options -> drop the whole field. Rule 7's
+  #     stated default is "" with the figure reached through the `exercise` companion.
+  ("mathematics", "iii"): {
+    # ARV-D-190 · iii ch 11 p06 Q-B-6 is a two-column SORTING grid, not a line: "Lighter
+    # than 1 kg | ... | ... | Heavier than 1 kg | ...". The two real cells are category
+    # HEADINGS with blanks scattered between them, which is what a tick line's placeholder
+    # syntax looks like when it is asked to be a table. Re-shaped as the table it is —
+    # the two headings kept verbatim, the blanks becoming the row the child fills. The
+    # object list is in the stem already ("pencil, pillow, water bottle full of water,
+    # balloon"), so nothing is lost.
+    "ch_11_canonical_p06.json": {
+        "ARV-D-190": [
+            {"item_where": {"id": "Q-B-6"},
+             "field": "visual_stimulus",
+             "old": "number_line: Lighter than 1 kg | ... | ... | Heavier than 1 kg | ...",
+             "new": "Lighter than 1 kg | Heavier than 1 kg\n... | ..."},
+        ],
+    },
+  },
+  ("mathematics", "iv"): {
+    # ARV-D-191 · iv ch 1 p11 Q-B-5: the four "nets" in the strip are the four OPTIONS,
+    # written twice. The options are the fuller version too — "Net with 1 square in the
+    # centre surrounded by 4 rectangles" against the strip's "1 square + 4 rectangles
+    # (cross shape)" — so the strip is a lossy duplicate that would print above the very
+    # list it repeats. Field dropped.
+    "ch_01_canonical_p11.json": {
+        "ARV-D-191": [
+            {"item_where": {"id": "Q-B-5"},
+             "field": "visual_stimulus",
+             "old": "number_line: 1 square + 4 rectangles (cross shape) | 1 square + 2 "
+                    "rectangles (row) | 6 squares (row) | 5 rectangles (row)",
+             "new": ""},
+        ],
+    },
+    # ARV-D-192 · iv ch 5 p08 Q-B-7 is a PART-WHOLE BAR — four parts of one shape, three
+    # shaded — and that is a table, not a line. Kept as one, with the parts as the header
+    # and their shading as the row beneath, which is also how a child reads it. The
+    # question ("Ravi says 3/4 is shaded — is he right?") needs exactly this and nothing
+    # more.
+    "ch_05_canonical_p08.json": {
+        "ARV-D-192": [
+            {"item_where": {"id": "Q-B-7"},
+             "field": "visual_stimulus",
+             "old": "number_line: part 1 (shaded) | part 2 (shaded) | part 3 (shaded) | "
+                    "part 4 (unshaded)",
+             "new": "part 1 | part 2 | part 3 | part 4\nshaded | shaded | shaded | unshaded"},
+        ],
+    },
+    # ARV-D-193 · iv ch 11 p06 Q-C-1: coordinates and an axis position, both already stated
+    # in the stem in words ("dots at positions (0,0), (0,2), (2,2), and (2,0)"), and the
+    # four candidate completions are the options. The strip adds nothing and cannot be a
+    # tick line — "axis at x=2" is a caption, not a tick. Dropped.
+    "ch_11_canonical_p06.json": {
+        "ARV-D-193": [
+            {"item_where": {"id": "Q-C-1"},
+             "field": "visual_stimulus",
+             "old": "number_line: (0,0)–(0,2)–(2,2)–(2,0) | axis at x=2 | ... | ... | ... | ...",
+             "new": ""},
+        ],
+    },
+  },
+  ("mathematics", "v"): {
+    # ARV-D-194 · v ch 8 p11 Q-B-6 carries TWO tags in one field, on separate lines —
+    # "number_line: 6 people | 12 people" and "number_line: 900 g | ...". Neither is a
+    # line; together they are a RATIO TABLE, the two rows of a doubling relationship, which
+    # is exactly what the question asks the child to complete. Both tags stripped and the
+    # rows kept as they stand, so the table renders and the blank stays blank.
+    # ★ ARV-D-195 · v ch 9 p08 Q-B-4 IS A SHELL, and this entry AUTHORS TEXT — read it
+    # before certifying. Declared SCR, `verified: false`, prompt/answer/method all empty,
+    # and an `inclusivity` carrying the generator's failure marker. Second of the campaign
+    # after ARV-D-187, and the same treatment: the ARV-D-180 precedent (founder ruling
+    # 2026-08-19) authorises an EQUIVALENT question rather than re-buying a compact.
+    #
+    # THE ANCHOR IS ITS OWN `exercise` BLOCK — "Let Us Do Q4, p.122 · Place numbers 1-8 in
+    # boxes so all four operations are correct with no repetition" — and the section is
+    # "Patterns in division and place value". The book puzzle is a search task, which is a
+    # poor SCR (a child either finds an arrangement or does not, and the guide cannot
+    # judge partial work), so the item asks for the PATTERN the section is named for
+    # instead. That keeps intent "reason" honest: the child must state a relationship, not
+    # hunt for one arrangement.
+    #
+    # DELIBERATELY NOT A COPY OF THE STANDARD'S Q-B-4, which is built on the same book
+    # task ("Place the numbers 2, 3, 6 and 9 into the four boxes"). A teacher served the
+    # compact and later the standard would meet the same puzzle twice; the two plans
+    # should differ where they can.
+    #
+    # THE ARITHMETIC IS CHECKED, and stated here so a reader can check it too:
+    # 6,000÷6=1,000 · 6,000÷60=100 · 6,000÷600=10 · 6,000÷6,000=1. Every quotient is a
+    # whole number and the pattern closes exactly, which is what makes the "next line"
+    # answerable rather than a matter of taste. `verified` is left FALSE: this text has
+    # not been through a verification pass and must not claim it has.
+    "ch_09_canonical_p08.json": {
+        "ARV-D-195": [
+            # `old: None`, not `""` — the tool refuses an empty-string `old` because
+            # `str.replace("")` inserts between every character. None is the SET branch and
+            # still refuses on drift.
+            {"item_where": {"id": "Q-B-4"},
+             "field": "prompt",
+             "old": None,
+             "new": "Rani writes a pattern:\n6,000 ÷ 6 = 1,000\n6,000 ÷ 60 = 100\n"
+                    "6,000 ÷ 600 = 10\nWrite the next line of Rani's pattern. Then explain "
+                    "in one sentence what happens to the answer each time the divisor "
+                    "becomes ten times bigger."},
+            {"item_where": {"id": "Q-B-4"},
+             "field": "teacher_guide",
+             "old": {"expected_answer": "", "method_one_line": "",
+                     "what_each_option_reveals": {},
+                     "inclusivity": "[Verification failed] Refer to the book task "
+                                    "anchored to S2."},
+             "new": {"expected_answer":
+                     "The next line is 6,000 ÷ 6,000 = 1. Each time the divisor is "
+                     "multiplied by 10, the answer is divided by 10 — so the quotient "
+                     "goes 1,000, 100, 10, 1. A child may say this as 'the answer loses a "
+                     "zero each time', which is the same observation in place-value "
+                     "language and should be accepted; press once for WHY, so the "
+                     "reasoning is about the divisor growing rather than about zeros "
+                     "disappearing.",
+                     "method_one_line":
+                     "Read down the divisors: each is ten times the one above, so each "
+                     "answer is one tenth of the one above.",
+                     "what_each_option_reveals": {},
+                     "inclusivity":
+                     "Support: write the three quotients in a column (1,000 · 100 · 10) so "
+                     "the child sees the pattern in the answers before writing the fourth "
+                     "line; stretch: ask what the line AFTER that would be, and why 6,000 "
+                     "÷ 60,000 does not give a whole number."}},
+        ],
+    },
+    "ch_08_canonical_p11.json": {
+        "ARV-D-194": [
+            {"item_where": {"id": "Q-B-6"},
+             "field": "visual_stimulus",
+             "old": "number_line: 6 people | 12 people\nnumber_line: 900 g | ...",
+             "new": "6 people | 12 people\n900 g | ..."},
+        ],
+    },
+  },
+  ("mathematics", "v", "APPLIED-20260819"): {
+    # ARV-D-186 · v ch 3 Q-B-7 is the opposite case and must NOT be treated like the one
+    # above. "12 o'clock (top) | 3 o'clock (right) | 6 o'clock (bottom) | 9 o'clock
+    # (left)" is a genuine tick line — four ordered positions on a circle, which is
+    # precisely the picture the question needs — and it is the representation assessment
+    # v1.4 was amended to permit (the tick-line ruling: a cell is "a number, or a short
+    # word naming what sits at that tick"). It fails on ONE clause only: two cells run
+    # 17 and 18 characters against the ≤16 bound.
+    #
+    # So the repair shortens the LABELS and keeps the line. Each cell keeps both facts it
+    # carries — the clock number and the compass position — and drops only the repeated
+    # word "o'clock", which the item's own `prompt` states for the reader anyway ("an
+    # arrow pointing to the right (the 3 o'clock position)"). After: 8, 9, 10 and 8
+    # characters. The figure the teacher draws on the board is unchanged.
+    "ch_03_canonical.json": {
+        "ARV-D-186": [
+            {"item_where": {"id": "Q-B-7"},
+             "field": "visual_stimulus",
+             "old": "number_line: 12 o'clock (top) | 3 o'clock (right) | "
+                    "6 o'clock (bottom) | 9 o'clock (left)",
+             "new": "number_line: 12 (top) | 3 (right) | 6 (bottom) | 9 (left)"},
+        ],
+    },
+  },
+  ("english", "iii"): {
+    # ARV-D-189 · english III ch 2 p04 Q-WW-B-2 — the FIRST kind-1 item off C5 check 12's
+    # english advisory shortlist, found by the founder reading the list rather than by a
+    # gate. English does not gate (stem_deixis._GATES), so the shortlist is exactly this:
+    # a reader deciding which entries are real. This one is.
+    #
+    # "Choose any one action word from the list below." ORAL_PROMPT, `options: []`,
+    # `visual_stimulus: ""`, no word bank, no `exercise` block. The list is nowhere in the
+    # item, and its `source_context` says so in passing — "action words from a mixed list".
+    # A Class III child asked to choose from a list they cannot see cannot start.
+    #
+    # THE LIST EXISTS, and the chapter summary has it with its page: task A on **p.7** —
+    # "carrot, laugh, dance, leg, eat, cry, swim, potato, sleep, play, sun, dig, jump, run,
+    # book, face, write, cat, smile, push". So the repair is the T1 move (point at the page
+    # the referent is actually on), taken as a DECLARED edit rather than a generic one
+    # because english items carry no `exercise.book_ref` for the pass to derive it from.
+    # This is english·preparatory Rule 9's own doctrine: "The teacher has the book."
+    #
+    # Twenty words is also too many to inline into an oral prompt a teacher reads aloud,
+    # and the four distractors in that list (carrot, leg, potato, sun, book, face, cat) are
+    # the point of the exercise — the child must pick an action word OUT of a mixed set, so
+    # the set has to stay whole and stay where it is.
+    "ch_02_canonical_p04.json": {
+        "ARV-D-189": [
+            {"item_where": {"id": "Q-WW-B-2"},
+             "field": "item_stem",
+             "old": "Choose any one action word from the list below. Say it aloud clearly, "
+                    "then make up one sentence using that word to describe something you or "
+                    "a friend do every day.",
+             "new": "Choose any one action word from the mixed list on p.7. Say it aloud "
+                    "clearly, then make up one sentence using that word to describe "
+                    "something you or a friend do every day."},
+        ],
+    },
+  },
   # ── S7 · mathematics · middle · BATCH WAVE 2 (2026-08-19) ────────────────────────────
   # The two compacts certification quarantined, each for one item. Both restored from
   # backup/quarantine/ before these ran (runbook trap 1: a quarantined file skips every
@@ -259,8 +805,336 @@ DECLARED = {
              "new": ""},
         ],
     },
+    # ── F1 · mathematics · middle · CLOSING-SYNTHESIS REPAIR WAVE (2026-08-20) ─────────
+    # Brief: docs/f1_maths_repair_brief.md. The resynthed closers shipped mathematical
+    # defects certification cannot see (it never checks whether an answer is right):
+    # wrong answers, ill-posed problems, invalid routes, statement/solution disagreement,
+    # plus drafting scratch. Every problem in every touched table was RECOMPUTED from
+    # scratch before its edit was declared (brief §8); evidence is quoted per defect on
+    # the campaign register (data/testing/campaign_state.json, mathematics/middle · F1).
+    # The two §7 method-availability items — vii ch 11 P3 (needs HCF × LCM = product)
+    # and vii ch 14 P3's colouring method vs the shorter plan — are NOT repaired here:
+    # they are content decisions in ARV-D-181's family, flagged for the founder.
+    "ch_03_canonical.json": {
+        # ARV-D-213 · drafting scratch (brief §6): "the number 4-digit number 3,5,2,1"
+        # and "0468 = 0468, treated as 0468" — duplicated fragments, pure tightening.
+        "ARV-D-213": [
+            {"unit": 12, "field": 'visual_aids[0].table',
+             "old": 'Apply the Kaprekar process to the number 4-digit number 3,5,2,1 (i.e., 3521)',
+             "new": 'Apply the Kaprekar process to the 4-digit number 3521'},
+            {"unit": 12, "field": 'visual_aids[0].table',
+             "old": 'smallest = 0468 = 0468, treated as 0468 (pad to four digits)',
+             "new": 'smallest = 0468 (pad to four digits)'},
+        ],
+    },
+    "ch_06_canonical.json": {
+        # ARV-D-203 · brief §5.8 + §6: as stated, the two 5×4 pieces joined along their
+        # 4 cm edges simply rebuild the original 10×4 — nothing changes and the method is
+        # never exercised; the cell then answered a second, unasked configuration. The
+        # problem now poses THAT configuration (join along the 5 cm edges → 5×8, P=26 vs
+        # 28), so one question gets one answer and the perimeter genuinely changes.
+        "ARV-D-203": [
+            {"unit": 21, "field": 'visual_aids[0].table',
+             "old": 'The two pieces are placed side by side along their 4 cm edges to form one long rectangle. What is the perimeter of the new shape?',
+             "new": 'The two pieces are then joined along their 5 cm edges (one piece stacked against the other along the 5 cm side) to form a new rectangle. What is the perimeter of the new shape, and how does it compare with the perimeter of the original rectangle?'},
+            {"unit": 21, "field": 'visual_aids[0].table',
+             "old": 'The new shape is 10 cm × 4 cm — the same rectangle. Perimeter = 2 × (10 + 4) = 28 cm. Now the pieces are instead stacked along their 5 cm edges (one on top of the other along the 5 cm side), forming a 5 cm × 8 cm rectangle. Perimeter = 2 × (5 + 8) = 26 cm. The perimeter changes depending on which edges are joined: joining along the 4 cm edges gives 28 cm; joining along the 5 cm edges gives 26 cm.',
+             "new": "Joining the two 5 cm × 4 cm pieces along their 5 cm edges forms a 5 cm × 8 cm rectangle. Perimeter = 2 × (5 + 8) = 26 cm. The original 10 cm × 4 cm rectangle has perimeter 2 × (10 + 4) = 28 cm, so the new shape's perimeter is 2 cm less: the cut exposed two 4 cm edges, but the join then hid two 5 cm edges."},
+        ],
+    },
+    "ch_09_canonical.json": {
+        # ARV-D-202 · brief §5.7: "exactly 1 line of symmetry" does not follow from one
+        # passed and one failed fold (an equilateral triangle passes a vertical fold,
+        # fails the horizontal, and has THREE axes); the stem also had a horizontal fold
+        # mapping left onto right. The question now asks what the folds actually settle.
+        "ARV-D-202": [
+            {"unit": 24, "field": 'visual_aids[0].table',
+             "old": 'Then the same figure is folded along a horizontal line through its centre. The left half does NOT land on the right half. How many lines of symmetry does the figure have? Name the type of symmetry it has.',
+             "new": "Then the same figure is folded along a horizontal line through its centre. The top half does NOT land exactly on the bottom half. Which of the two fold lines is a line of symmetry? Can these two folds alone tell you the figure's total number of lines of symmetry?"},
+            {"unit": 24, "field": 'visual_aids[0].table',
+             "old": 'The vertical fold produces exact overlap, so the vertical line is a line of symmetry. The horizontal fold does not produce exact overlap, so the horizontal line is not a line of symmetry. The figure has exactly 1 line of symmetry and possesses reflection symmetry.',
+             "new": 'The vertical fold produces exact overlap, so the vertical line is a line of symmetry. The horizontal fold does not, so the horizontal line is not one. The figure therefore has reflection symmetry, with the vertical line as one line of symmetry — but the two folds alone cannot fix the total, because a figure may have further lines in other directions: an equilateral triangle passes a vertical fold, fails the horizontal one, and has three lines of symmetry.'},
+        ],
+    },
+  },
+  ("mathematics", "vii"): {
+    # ── F1 · CLOSING-SYNTHESIS REPAIR WAVE (2026-08-20) — see the vi key's header. ─────
+    "ch_03_canonical.json": {
+        # ARV-D-204 · brief §5.9 + §6: 36.089 placed among "those with tenths digit 8"
+        # (its tenths digit is 0), the ordering step 36.08 < 36.089 never given, "36.08_"
+        # shorthand and a dangling "— look further:"; stem said four students record "the
+        # same temperature" when only two readings are equal.
+        "ARV-D-204": [
+            {"unit": 9, "field": 'visual_aids[0].table',
+             "old": 'Four students record the same temperature: 36.8°, 36.08°, 36.80°, and 36.089°. Arrange them in increasing order and state which two are equal.',
+             "new": 'Four students read the same thermometer and write down: 36.8°, 36.08°, 36.80°, and 36.089°. Arrange the readings in increasing order and state which two are equal.'},
+            {"unit": 9, "field": 'visual_aids[0].table',
+             "old": 'Compare left to right. All have 36 as the whole-number part. Tenths: 36.08_ has 0 (smallest), the others have 8. Among those with tenths digit 8: hundredths of 36.8 = 36.80 = 0 (trailing zero), 36.089 has 0, 36.80 has 0 — look further: 36.089 has thousandths digit 9 > 0. So 36.80 = 36.8 (trailing zero does not change value). Order: 36.08 < 36.089 < 36.8 = 36.80. The two equal readings are 36.8 and 36.80.',
+             "new": 'Compare left to right. All have 36 as the whole-number part. Tenths: 36.08 and 36.089 have tenths digit 0; 36.8 and 36.80 have tenths digit 8, so both of the first pair are smaller. Between 36.08 and 36.089: they agree up to the hundredths digit, and 36.089 carries a thousandths digit 9 against 0, so 36.08 < 36.089. Finally 36.80 = 36.8 — a trailing zero does not change the value. Order: 36.08 < 36.089 < 36.8 = 36.80. The two equal readings are 36.8 and 36.80.'},
+        ],
+    },
+    "ch_07_canonical.json": {
+        # ARV-D-208 · brief §5.13: given AB = 8, BC = 6, CA = 5 the cell drew "base BC =
+        # 8 cm" and swung 5 from B and 6 from C — building AB = 5, AC = 6. With the
+        # correct triangle ∠C ≈ 92.9°, so the altitude foot falls beyond C (checked:
+        # foot at 75/12 = 6.25 > 6 from B), which is exactly what the notes warn about.
+        "ARV-D-208": [
+            {"unit": 12, "field": 'visual_aids[0].table',
+             "old": 'Construction: draw base BC = 8 cm. Swing an arc of radius 5 cm from B and an arc of radius 6 cm from C; mark A at their intersection. Join AB and CA. Altitude: align the ruler along BC; place the set square against the ruler and slide until its vertical edge reaches A; draw the perpendicular from A to meet BC (or its extension) at foot H. AH is the altitude.',
+             "new": 'Construction: draw base BC = 6 cm. Swing an arc of radius 8 cm from B (for AB = 8 cm) and an arc of radius 5 cm from C (for CA = 5 cm); mark A at their intersection. Join AB and CA. Altitude: align the ruler along BC; place the set square against the ruler and slide until its vertical edge reaches A. Here the foot of the perpendicular falls beyond C, so extend BC past C and draw the perpendicular from A to meet the extension at foot H. AH is the altitude.'},
+        ],
+    },
+    "ch_08_canonical.json": {
+        # ARV-D-205 · brief §5.10: "Since 4/7 < 1, the product is also less than 1" is a
+        # non-sequitur (8/5 × 4/5 > 1). The valid reason is 8 × 4 = 32 < 35 = 5 × 7.
+        "ARV-D-205": [
+            {"unit": 9, "field": 'visual_aids[0].table',
+             "old": 'Since 4/7 < 1, the product is also less than 1.',
+             "new": 'The product is less than 1 because the product of the numerators, 8 × 4 = 32, is less than the product of the denominators, 5 × 7 = 35.'},
+        ],
+    },
+    "ch_09_canonical.json": {
+        # ARV-D-206 · brief §5.11: with P↔S, Q↔T, R↔U, reordering the first triangle as
+        # Q,P,R forces △TSU; the offered "△QPR ≅ △TUS" asserts PQ = TU and PR = TS, both
+        # false. (△RQP ≅ △UTS was already correct and stays.)
+        "ARV-D-206": [
+            {"unit": 15, "field": 'visual_aids[0].table',
+             "old": 'One other correct statement (swap both names consistently): △QPR ≅ △TUS (or any permutation that preserves the same vertex-to-vertex matching, e.g. △RQP ≅ △UTS).',
+             "new": 'One other correct statement (reorder both names by the same matching P↔S, Q↔T, R↔U): △QPR ≅ △TSU (or any permutation that preserves the matching, e.g. △RQP ≅ △UTS).'},
+        ],
+        # ARV-D-218 · found (§8): the register bans stated minute-quantities in these
+        # units; "18 minutes" is pacing, not measured data.
+        "ARV-D-218": [
+            {"unit": 15, "field": 'teacher_notes',
+             "old": 'give students 18 minutes of silent individual work before any comparison',
+             "new": 'give students a sustained stretch of silent individual work before any comparison'},
+        ],
+    },
+    "ch_10_canonical.json": {
+        # ARV-D-200 · brief §5.5 + §6: +3/−2 over all 20 attempts gives score = 5c − 40,
+        # always a multiple of 5 — the stated 11 is unattainable (5c = 51); the cell knew,
+        # answered for 10 while the stem read 11, and shipped five abandoned trials plus a
+        # bracketed working note. Stem now says 10 and the solution is the clean route.
+        "ARV-D-200": [
+            {"unit": 12, "field": 'visual_aids[0].table',
+             "old": 'Priya attempts all 20 questions and scores 11.',
+             "new": 'Priya attempts all 20 questions and scores 10.'},
+            {"unit": 12, "field": 'visual_aids[0].table',
+             "old": 'Let c = correct answers. Wrong answers = 20 − c. Score: 3c + (−2)(20 − c) = 11. So 3c − 40 + 2c = 11, giving 5c = 51, c = 51 ÷ 5. Since that is not a whole number, try: let c correct and w wrong with c + w = 20. Score = 3c − 2w = 11 and w = 20 − c, so 3c − 2(20 − c) = 11 → 5c = 51. Re-check the problem: score 11, 20 questions. Try c = 9: 3(9) − 2(11) = 27 − 22 = 5. Try c = 13: 3(13) − 2(7) = 39 − 14 = 25. Try c = 11: 3(11) − 2(9) = 33 − 18 = 15. Try c = 10: 3(10) − 2(10) = 30 − 20 = 10. Try c = 7: 3(7) − 2(13) = 21 − 26 = −5. [Working note: score 11 with 20 questions requires 5c = 51, not a whole number. Adjust to score 10: 5c = 50, c = 10.] The problem uses score 10. Score = 3c − 2(20 − c) = 10 → 5c = 50 → c = 10. Priya answered 10 questions correctly (and 10 wrongly), scoring 3 × 10 + (−2) × 10 = 30 − 20 = 10. ✓',
+             "new": 'Let c = correct answers. Wrong answers = 20 − c. Score: 3c + (−2)(20 − c) = 10. So 3c − 40 + 2c = 10, giving 5c = 50 and c = 10. Priya answered 10 questions correctly (and 10 wrongly). Check: 3 × 10 + (−2) × 10 = 30 − 20 = 10. ✓'},
+        ],
+        # ARV-D-217 · found (§8): "Unlike-sign rule reversed" names the wrong rule for a
+        # sitting whose design has the class name the method aloud; it is the LIKE-sign
+        # rule. The arithmetic was already right.
+        "ARV-D-217": [
+            {"unit": 12, "field": 'visual_aids[0].table',
+             "old": 'Unlike-sign rule reversed: negative ÷ negative = positive.',
+             "new": 'Like signs give a positive quotient: negative ÷ negative = positive.'},
+        ],
+    },
+    "ch_12_canonical.json": {
+        # ARV-D-207 · brief §5.12: the remainder is 4 tenths regrouped to 40 HUNDREDTHS
+        # giving 5 hundredths — the cell said "40 tenths ÷ 8 = 5 tenths", which reads as
+        # quotient 6.3 against its own correct 5.85; the decimal point was also placed a
+        # step late.
+        "ARV-D-207": [
+            {"unit": 12, "field": 'visual_aids[0].table',
+             "old": 'Divide 46.8 by 8 using long division. 46 ÷ 8 = 5 remainder 6. Bring down 8: 68 ÷ 8 = 8 remainder 4. Place decimal point. Regroup: 40 tenths ÷ 8 = 5 tenths. So 46.8 ÷ 8 = 5.85 litres each.',
+             "new": 'Divide 46.8 by 8 using long division. Units: 46 ÷ 8 = 5, remainder 6. Place the decimal point in the quotient now, before the tenths digit is written. Bring down the 8: 68 tenths ÷ 8 = 8 tenths, remainder 4 tenths. Regroup: 4 tenths = 40 hundredths, and 40 hundredths ÷ 8 = 5 hundredths. So 46.8 ÷ 8 = 5.85 litres each.'},
+        ],
+    },
+    "ch_14_canonical.json": {
+        # ARV-D-196 · brief §5.1, WRONG ANSWER, fixed first: on a 4×4 board the four
+        # corners are NOT one colour ((1,1)/(4,4) vs (1,4)/(4,1)); removal leaves 6 and 6
+        # and a tiling EXISTS, so "cannot be tiled" was false. All-corners-same-colour
+        # holds only on odd×odd boards. The problem now removes TWO OPPOSITE corners —
+        # same colour, 6 vs 8, impossibility real — keeping the unit's colouring method
+        # and its conclusion. (The separate §7 method-availability question on this
+        # problem — the shorter plan teaches only total-count parity — stays with the
+        # founder; it is not papered over here.)
+        "ARV-D-196": [
+            {"unit": 17, "field": 'visual_aids[0].table',
+             "old": 'with the four corner unit squares removed, leaving 12 unit squares',
+             "new": 'with two opposite corner unit squares removed, leaving 14 unit squares'},
+            {"unit": 17, "field": 'visual_aids[0].table',
+             "old": 'Colour the region like a chessboard. In the full 4 × 4 grid the 16 squares alternate black and white, giving 8 of each. The four corner squares of a 4 × 4 grid are all the same colour — they sit at positions (1,1), (1,4), (4,1), (4,4), and in chessboard colouring these are all the same colour (say black, if (1,1) is black). Removing all four leaves 4 black and 8 white squares. Every 2 × 1 tile covers exactly one black and one white square, so any tiling would require equal numbers of each colour. Since 4 ≠ 8, the region cannot be tiled.',
+             "new": 'Colour the region like a chessboard. In the full 4 × 4 grid the 16 squares alternate black and white, giving 8 of each. Two opposite corner squares — (1,1) and (4,4) — carry the same colour (say black, if (1,1) is black). Removing both leaves 6 black and 8 white squares. Every 2 × 1 tile covers exactly one black and one white square, so any tiling would require equal numbers of each colour. Since 6 ≠ 8, the region cannot be tiled.'},
+        ],
+        # ARV-D-209 · brief §5.14 + §6: pairing 6 columns gives THREE 5×2 blocks, not
+        # six; the surrounding "in fact … but …" restart after a complete route goes too.
+        "ARV-D-209": [
+            {"unit": 17, "field": 'visual_aids[0].table',
+             "old": '(tile each pair of rows horizontally: five rows give two complete pairs plus one row of 6, which is tiled by three horizontal tiles along the remaining row — in fact since 6 is even, tile column by column: each column of 5 has odd squares, but grouping the 6 columns in pairs of adjacent columns gives six 5 × 2 blocks each tileable by five horizontal tiles, so the whole grid is tileable).',
+             "new": ': group the 6 columns into three pairs of adjacent columns, giving three 5 × 2 blocks, and tile each block with five horizontal tiles, one per row.'},
+        ],
+        # ARV-D-215 · found (§8): the bisection justification named triangles on a vertex
+        # O that appears nowhere in the construction (the vertex is T, the cut-points and
+        # arc crossing are unnamed). Restated on the points the cell actually builds.
+        "ARV-D-215": [
+            {"unit": 17, "field": 'visual_aids[0].table',
+             "old": 'Each bisection uses the congruence ∆OBC ≅ ∆OAC (SSS) to confirm the bisecting ray divides the angle exactly in half.',
+             "new": 'Each bisection uses SSS congruence: the two triangles formed by T, one arc cut-point on each arm, and the crossing point of the equal arcs have three pairs of equal sides (two pairs of equal radii and the common segment from T to the crossing point), confirming the bisecting ray divides the angle exactly in half.'},
+        ],
+        # ARV-D-219 · found (§8): register — stated minute-quantities in the notes.
+        "ARV-D-219": [
+            {"unit": 17, "field": 'teacher_notes',
+             "old": 'give the class twelve minutes of individual silent work with full working in their notebooks. Then allow five minutes in pairs or threes:',
+             "new": 'give the class a first stretch of individual silent work with full working in their notebooks. Then allow a shorter stretch in pairs or threes:'},
+        ],
+    },
+  },
+  # RETIRED TO AN APPLIED KEY 2026-08-20 (F1): the ch 11 closer was re-authored again
+  # after these two ran (the F1 read found the ant problem in its cube form, not the
+  # 3 cm × 12 cm cuboid these edits assume), so ARV-D-185's old/new no longer match
+  # disk — left live it would refuse on every F1 run — and ARV-D-186's old string
+  # REAPPEARS once ARV-D-216 below removes the duplicated pointer, so left live it
+  # would re-fire and reintroduce the duplicate. Kept as the record, unreachable by
+  # the 2-tuple lookup.
+  ("mathematics", "viii", "APPLIED-20260819"): {
+    # ── S7 · the ch 11 RESYNTH read (2026-08-19) ─────────────────────────────────
+    # The re-authored closing synthesis (ARV-D-181's fix, first chapter) was read in full
+    # at the human gate. Its four worked solutions are correct — 73 holes, 64 cm, 15 cm,
+    # and the cylinder's three views all check out, and the 8 cm shortest-path error the
+    # FIRST resynth carried is gone. Two faults remain, both in prose around correct
+    # mathematics, and both are declared here rather than re-bought.
+    "ch_11_canonical.json": {
+        # ARV-D-185 · the alternative unfolding is mis-costed. Over a 3 cm × 12 cm face
+        # the ant leaves its end face 2 cm from the fold (half of 4), crosses 12, and
+        # enters the far face 2 cm: 2 + 12 + 2 = 16. The note used the full 3 cm width
+        # twice (3 + 12 + 3 = 18). The VERDICT is untouched and was already right — 15 cm
+        # is the shortest path either way — but a teacher who follows the check gets a
+        # wrong number, and this is the one line in the unit a teacher would work through
+        # aloud at the board.
+        "ARV-D-185": [
+            {"unit": 17, "field": "visual_aids[0].table",
+             "old": "Checking the alternative unfolding over the top face: ant at (0, 1.5), "
+                    "crumb at (3 + 12 + 3, 1.5) = (18, 1.5), distance 18 cm.",
+             "new": "Checking the alternative unfolding over a 3 cm x 12 cm face: the ant "
+                    "leaves its end face 2 cm from the fold, crosses 12 cm, and enters the "
+                    "far face 2 cm, giving 2 + 12 + 2 = 16 cm."},
+        ],
+        # ARV-D-186 · the notes name the prepared table (founder, 2026-08-19). The
+        # solutions moved OUT of teacher_notes and into `visual_aids` so the Material tab
+        # carries them; without a pointer the notes read as though the working were
+        # missing. Science's polish pass settled the convention — "(see material: '…')" —
+        # and this follows it in the founder's own words.
+        "ARV-D-186": [
+            {"unit": 17, "field": "teacher_notes",
+             "old": "Pose all four problems on the board at once.",
+             "new": "Pose all four problems on the board at once; refer to Prepared Table "
+                    "(see material: 'Problems and solutions') for the full statements and "
+                    "worked solutions."},
+        ],
+    },
   },
   ("mathematics", "viii"): {
+    # ── F1 · CLOSING-SYNTHESIS REPAIR WAVE (2026-08-20) — see the vi key's header. ─────
+    "ch_05_canonical.json": {
+        # ARV-D-197 · brief §5.2, WRONG ANSWER: "No solution exists for AB × 7 = CBA" is
+        # false — 97 × 7 = 679. The enumeration excluded B = 7 as "repeated digit", but
+        # B = 7 forces A = 9 and repeats nothing. Recomputed algebraically:
+        # 7(10A+B) = 100C+10B+A ⇒ 3(23A−B) = 100C ⇒ C ∈ {3,6,9}; only C = 6 lands
+        # (23·9 = 207, B = 7). The old cell's tail — five abandoned cryptarithm searches
+        # and a fourth pipe column with a substitute KL × 9 = MLK — was §6's worst
+        # scratch and goes with it; the table is three columns again.
+        "ARV-D-197": [
+            {"unit": 12, "field": 'visual_aids[0].table',
+             "old": 'Units digit: B × 7 ends in A. Tens and hundreds: the product is a three-digit number whose hundreds digit is A and units digit is B, reversing the original tens-and-units. Try values of B whose units digit of 7B equals A, and check that A (the hundreds digit of CBA) matches the leading digit of AB. B = 4: 7 × 4 = 28, so A = 8; AB = 84; 84 × 7 = 588. Hundreds digit is 5, but A = 8 — no. B = 7: repeated digit — ruled out. B = 2: A = 4; AB = 42; 42 × 7 = 294. CBA should have C in hundreds, B = 2 in tens, A = 4 in units: 294 → C = 2, but B = 2 already — digits not distinct. B = 6: 7 × 6 = 42, A = 2; AB = 26; 26 × 7 = 182. CBA: units = 2 = A ✓, tens = 8 = B? B = 6 ≠ 8 — no. B = 8: A = 6 (since 7 × 8 = 56, units digit 6); AB = 68; 68 × 7 = 476. CBA: units = 6 = A ✓, tens = 7 = B? B = 8 ≠ 7 — no. B = 3: A = 1 (7 × 3 = 21); AB = 13; 13 × 7 = 91 — only two digits, not three. B = 5: A = 5 — repeated. B = 9: A = 3 (7 × 9 = 63); AB = 39; 39 × 7 = 273. CBA: units = 3 = A ✓, tens = 7 = B? B = 9 ≠ 7 — no. B = 1: A = 7 (7 × 1 = 7); AB = 71; 71 × 7 = 497. CBA: units = 7 = A ✓, tens = 9 = B? B = 1 ≠ 9 — no. No solution exists for AB × 7 = CBA with all digits distinct. (Use AB × 9 = CBA instead: B = 1, A = 9 — repeated; B = 8, A = 2 (9×8=72): AB = 28, 28×9 = 252 — C=2,B=5,A=2 repeated; B = 9 repeated. Use the cryptarithm MN × 4 = NM: units digit of 4N = M; N=3,M=2: 32×4=128 three digits; N=8,M=2: 4×8=32 units=2=M✓, 28×4=112 three digits; N=2,M=8: 28×4=112 nope. Use AB × 3 = CBA: B×3 units = A; B=5,A=5 repeated; B=7,A=1: AB=17,17×3=51 two digits; B=8,A=4: AB=48,48×3=144,CBA=144,C=1,B=4,A=4 repeated. Use the well-formed cryptarithm MN × 4 = NNM — not standard. Use KL × 9 = MLK: L×9 units=K; L=9 gives K=1(81): KL=19,19×9=171,MLK→M=1=K repeated; L=1,K=9: KL=91 but L=1 means units=9 and 91×9=819,MLK=819,M=8,L=1✓,K=9✓, all distinct. Solution: 91×9=819, so K=9,L=1,M=8.) | Use the cryptarithm KL × 9 = MLK. Units step: L × 9 must end in K. Try L = 1: 9 × 1 = 9, so K = 9. Then KL = 91. Check: 91 × 9 = 819. Write as MLK: M = 8, L = 1, K = 9. All three digits distinct and non-zero. ✓ Solution: K = 9, L = 1, M = 8.',
+             "new": 'Units digit: B × 7 must end in A. Write the whole product: 7 × (10A + B) = 100C + 10B + A, so 70A + 7B = 100C + 10B + A, which simplifies to 69A − 3B = 100C, i.e. 3(23A − B) = 100C. Since 3 divides the left side and 3 does not divide 100, C must be a multiple of 3: C = 3, 6, or 9. C = 3 needs 23A − B = 100: no digit A puts 23A in the range 100–109. C = 6 needs 23A − B = 200: A = 9 gives 23 × 9 = 207, so B = 7. C = 9 needs 23A − B = 300: no digit A reaches 300–309. So A = 9, B = 7. Check: AB = 97 and 97 × 7 = 679 = CBA with C = 6, B = 7, A = 9 — the units digit of 7 × 7 = 49 is 9 = A ✓, and the digits 9, 7, 6 are all distinct. Solution: A = 9, B = 7, C = 6.'},
+        ],
+        # ARV-D-201 · brief §5.6 + §6: 3A5B72 needs A+B ∈ {1,10} (by 9) and A+B ∈ {2,13}
+        # (by 11) — empty intersection, "find all pairs" had no answer. The cell's own
+        # editorial note proposed 3A5B18; that is now THE problem (A+B = 1: 305118 and
+        # 315018, both verified ÷99), and the note plus the fourth pipe column go.
+        "ARV-D-201": [
+            {"unit": 12, "field": 'visual_aids[0].table',
+             "old": 'form 3A5B72, where A and B',
+             "new": 'form 3A5B18, where A and B'},
+            {"unit": 12, "field": 'visual_aids[0].table',
+             "old": 'Divisibility by 9: digit sum = 3 + A + 5 + B + 7 + 2 = 17 + A + B must be divisible by 9, so A + B = 1 or A + B = 10 (since A, B are digits, A + B ≤ 18; next would be 19, impossible). Divisibility by 11: alternating sum (units upward) = 2 − 7 + B − 5 + A − 3 = A + B − 13 must be 0 or a multiple of 11, so A + B − 13 = 0 giving A + B = 13, or A + B − 13 = −11 giving A + B = 2, or A + B − 13 = 11 giving A + B = 24 (impossible). The two conditions together require A + B to satisfy both lists: {1, 10} ∩ {2, 13} = empty — no pair satisfies both simultaneously. (Teacher note: if the problem is to have a solution, replace 72 with 18: digit sum becomes 3 + A + 5 + B + 1 + 8 = 17 + A + B, same constraint; alternating sum = 8 − 1 + B − 5 + A − 3 = A + B − 1, must be 0 or ±11, giving A + B = 1 or A + B = 12. Intersection with {1, 10}: A + B = 1. With A + B = 1, single-digit pairs: (0,1) and (1,0). Both valid. Use the number 3A5B18 in class.) | Use the number 3A5B18. Digit sum = 3 + A + 5 + B + 1 + 8 = 17 + A + B divisible by 9 → A + B = 1 or A + B = 10. Alternating sum (from units) = 8 − 1 + B − 5 + A − 3 = A + B − 1 must be 0 or ±11 → A + B = 1 or A + B = 12. Intersection: A + B = 1. Digit pairs: (A, B) = (0, 1) giving 305118, and (A, B) = (1, 0) giving 315018. Both are divisible by 9 and by 11.',
+             "new": 'Divisibility by 9: digit sum = 3 + A + 5 + B + 1 + 8 = 17 + A + B must be divisible by 9, so A + B = 1 or A + B = 10 (the next multiple of 9 would need A + B = 19, impossible for digits). Divisibility by 11: alternating sum (units upward) = 8 − 1 + B − 5 + A − 3 = A + B − 1 must be 0 or a multiple of 11, so A + B = 1 or A + B = 12. Both conditions hold only for A + B = 1. Digit pairs: (A, B) = (0, 1) giving 305118, and (A, B) = (1, 0) giving 315018. Both are divisible by 9 and by 11.'},
+        ],
+        # ARV-D-214 · found (§8): the notes' Problem-4 watch-for referenced "the
+        # units-digit of KKK" — a cryptarithm the problem does not contain (a draft
+        # survivor). Repointed at the problem actually posed.
+        "ARV-D-214": [
+            {"unit": 12, "field": 'teacher_notes',
+             "old": 'in Problem 4, students not using the units-digit of KKK to pin K before trying other digits',
+             "new": 'in Problem 4, students not using the units-digit constraint (B × 7 must end in A) to narrow the search before trying digits'},
+        ],
+    },
+    "ch_07_canonical.json": {
+        # ARV-D-212 · brief §6: a wrong direct-proportion trial ("? = 960 ÷ 15 = 64")
+        # stated before being retracted, and a retraction that contradicts itself. The
+        # Rule of Three stays (it is the unit's named method) but runs through the fixed
+        # volume, which is the inverse-proportion route that actually holds.
+        "ARV-D-212": [
+            {"unit": 17, "field": 'visual_aids[0].table',
+             "old": 'Using the Rule of Three: 15 litres : 40 minutes :: 24 litres : ? minutes. Cross multiply: 15 × ? = 24 × 40, so ? = 960 ÷ 15 = 64 — but this applies only if more litres per minute means more time, which it does not. The direct proportion here is between litres per minute and the number of minutes to fill: more rate, fewer minutes, so the proportion is inverse. Correct route: time = total volume ÷ rate = 600 ÷ 24 = 25 minutes.',
+             "new": 'The rate and the time are in inverse proportion — more litres per minute means fewer minutes — so the Rule of Three runs through the fixed volume: 24 × ? = 15 × 40 = 600, giving ? = 600 ÷ 24 = 25 minutes.'},
+        ],
+    },
+    "ch_08_canonical.json": {
+        # ARV-D-198 · brief §5.3: the stem's "compared with the start of the first year"
+        # gives 100 + 8 − 15 = 93 (−7%), while the solution's 1.08 × 0.85 = 0.918 (−8.2%)
+        # needs the fall measured against the END of year 1. The stem drops the clause;
+        # solution and notes (which rightly brand percent-adding as the error) now agree.
+        "ARV-D-198": [
+            {"unit": 14, "field": 'visual_aids[0].table',
+             "old": 'fell by 15% in the second year compared with the start of the first year.',
+             "new": 'fell by 15% in the second year.'},
+        ],
+    },
+    "ch_10_canonical.json": {
+        # ARV-D-210 · brief §5.15: "every problem … was solved by the same idea: … a
+        # fixed ratio" is false for Problem 4 (inverse proportion — constant PRODUCT) and
+        # reverses the distinction the preceding sitting is built on.
+        "ARV-D-210": [
+            {"unit": 12, "field": 'time_bands[4].activity',
+             "old": 'was solved by the same idea: when two quantities share a fixed ratio, knowing one tells you the other. That single idea, used carefully, is all the chapter needed.',
+             "new": 'was solved by naming how its two quantities are tied: in direct proportion the ratio stays fixed, in inverse proportion the product does. Once the tie is named, knowing one quantity tells you the other — and that habit, used carefully, is all the chapter needed.'},
+        ],
+    },
+    "ch_11_canonical.json": {
+        # ARV-D-211 · brief §5.16: both endpoints were face centres, so the offset is
+        # zero and the cell's own line reads √(0 + 64) = 8 — a plain sum wearing the
+        # Baudhayana–Pythagoras theorem's name; the described four-face strip also is
+        # not the net the coordinates use. Endpoints moved to diagonally opposite cube
+        # corners (the classic): unfold two faces, √(4² + 8²) = √80 = 4√5 ≈ 8.9 cm, and
+        # the theorem is genuinely needed. Notes and bands already name exactly this
+        # method and stand unchanged.
+        "ARV-D-211": [
+            {"unit": 17, "field": 'visual_aids[0].table',
+             "old": 'An ant sits at the centre of one 4 cm × 4 cm face of a 4 cm × 4 cm × 4 cm cube (a standard cube). A grain of sugar sits at the centre of the opposite face.',
+             "new": 'An ant sits at a bottom corner of a 4 cm × 4 cm × 4 cm cube. A grain of sugar sits at the top corner of the cube farthest from the ant (the diagonally opposite corner).'},
+            {"unit": 17, "field": 'visual_aids[0].table',
+             "old": "Unfold the cube by laying the ant's face flat, then unrolling the four side faces in a strip, then the sugar's face at the far end. The ant is at (2, 2) on the first face; the sugar maps to (2, 10) after unfolding (2 + 4 + 4 = 10). The straight-line distance on the unfolded net = √((2−2)² + (10−2)²) = √(0 + 64) = 8 cm. Shortest surface path = 8 cm.",
+             "new": 'Unfold the front face and the top face of the cube into one flat 4 cm × 8 cm rectangle. The ant is at (0, 0); the sugar, at the far corner of the top face, maps to (4, 8). By the Baudhayana–Pythagoras theorem, the straight-line distance on the unfolded net = √(4² + 8²) = √80 = 4√5 ≈ 8.9 cm. Any unfolding across two faces gives the same figure, and the route along the edges (4 + 4 + 4 = 12 cm) is longer. Shortest surface path = 4√5 ≈ 8.9 cm.'},
+        ],
+        # ARV-D-216 · found (§8): the notes carried the Prepared-Table pointer TWICE —
+        # the ARV-D-186 declared insertion and the ARV-D-187 generic prepend landed
+        # together. The second (mid-notes) copy goes; the opening pointer stays.
+        "ARV-D-216": [
+            {"unit": 17, "field": 'teacher_notes',
+             "old": "Pose all four problems on the board at once; refer to Prepared Table (see material: 'Problems and solutions') for the full statements and worked solutions.",
+             "new": 'Pose all four problems on the board at once.'},
+        ],
+    },
+    "ch_12_canonical.json": {
+        # ARV-D-199 · brief §5.4: "City B has the higher mean" is not derivable from the
+        # three points given (14 Jan · 38 May · 16 Dec); the justification imported
+        # "May–September above 30 °C" from nowhere, and a plain monotone reading puts
+        # B's mean BELOW A's. The question now asks what the given points settle: range,
+        # and who is warmer in January and in May.
+        "ARV-D-199": [
+            {"unit": 16, "field": 'visual_aids[0].table',
+             "old": 'Which city has the higher mean annual temperature? Which has the higher temperature range? Justify both answers without computing exact means.',
+             "new": 'Which city has the higher temperature range? And which city is warmer in January, and which in May? Justify each answer from the shape of the lines, without computing.'},
+            {"unit": 16, "field": 'visual_aids[0].table',
+             "old": "Mean annual temperature: City A's values are clustered tightly around 26°C all year; City B's values are much higher in the summer months (May–September above 30°C) but lower in winter — a rough balance suggests City B's annual mean is higher than City A's 24–28°C band. City B has the higher mean. Range: City A's range = 28−24 = 4°C; City B's range = 38−14 = 24°C. City B has the higher range. (Inference from graph pattern; exact computation not required.)",
+             "new": "Range: City A's line stays inside a band from 24°C to 28°C, so its range is at most 28 − 24 = 4°C; City B's range = 38 − 14 = 24°C. City B has the far higher range. January: City B reads 14°C while City A never falls below 24°C, so City A is warmer. May: City B reads 38°C while City A never rises above 28°C, so City B is warmer. (All three answers come from comparing the positions of the lines; no means are computed.)"},
+        ],
+    },
     # ARV-D-180 · viii ch 12 p13 Q-C-10 is a SHELL. Declared MCQ, and it asks nothing:
     # prompt "", options [], expected_answer "", method_one_line "",
     # what_each_option_reveals {}. The one field the model did fill is the `exercise`
@@ -304,7 +1178,11 @@ DECLARED = {
         "ARV-D-180": [
             {"item_where": {"id": "Q-C-10"},
              "field": "prompt",
-             "old": "",
+             # `None`, not "" — see the empty-`old` guard in apply_declared. This entry is
+             # what found that hazard: declared as a replace, it re-fired on 2026-08-20 and
+             # exploded the prompt to 17,955 characters. As a SET it is idempotent, and it
+             # still refuses if anything but the expected value is on disk.
+             "old": None,
              "new": "Meera claims: 'The average of any two multiples of 5 is itself a "
                     "multiple of 5.' Which pair of numbers shows that her claim is "
                     "false?"},
@@ -778,6 +1656,22 @@ def apply_declared(result, table, filename):
             current = get_nested(container, entry["field"])
 
             if isinstance(entry["old"], str):
+                # AN EMPTY `old` IS A SET, NOT A REPLACE (2026-08-20). `"abc".replace("", x)`
+                # inserts x between every character, so a declaration meaning "this field is
+                # empty, fill it" corrupts the field the SECOND time it runs — the first time
+                # `current` is "" and the result looks perfect. ARV-D-180's authored MCQ
+                # prompt was declared that way and re-ran during an unrelated sweep: 133
+                # characters became 17,955, and only the tool's own backup saved it.
+                # Refuse rather than guess: the non-string branch below already does a safe
+                # set with a real drift check, and a declaration that wants one should use
+                # `"old": None`.
+                if entry["old"] == "":
+                    refusals.append(
+                        f"{filename} {label}.{entry['field']}: `old` is the empty string. "
+                        "That is a SET, not a replace — str.replace('') inserts between "
+                        "every character. Declare it as `\"old\": None` (the non-string "
+                        "branch sets the value and still refuses on drift).")
+                    continue
                 # Order matters: `new` is often a PREFIX of `old` (a shortened label), so the
                 # already-repaired test must run only after the old text is ruled out.
                 if entry["old"] in (current or ""):
@@ -792,7 +1686,15 @@ def apply_declared(result, table, filename):
             else:
                 if current == entry["new"]:
                     continue
-                if current != entry["old"]:
+                # `old: None` MEANS "this field is empty; fill it" (2026-08-20). The
+                # refusal above tells a declaration to use None for exactly this case, and
+                # then a strict `!=` rejected it — `'' != None` — so the advice could not
+                # be followed. A shell's empty field arrives as "" (ARV-D-187, ARV-D-195),
+                # as an absent key, or as [] / {} for the list and dict fields, and all
+                # four mean the same thing to a human writing the declaration. Drift is
+                # still refused: a field with real content in it does not match None.
+                empty_ok = entry["old"] is None and current in (None, "", [], {})
+                if not empty_ok and current != entry["old"]:
                     refusals.append(
                         f"{filename} {label}.{entry['field']}: expected {entry['old']!r}, "
                         f"found {current!r}")
@@ -827,6 +1729,13 @@ def main() -> int:
     # only where a gate flagged them. The generic passes stay available for the corpus
     # pre-warm, but a declared repair must be appliable without dragging them along.
     parser.add_argument("--declared-only", action="store_true")
+    # --pass ARV-D-nnn (2026-08-20): run ONE generic pass. `--declared-only` exists so a
+    # declared repair does not drag the generic suite along; this is the same argument in
+    # the other direction. S7's Material-tab pointer had to reach 35 chapters, and running
+    # the whole suite to deliver it would have applied ARV-D-073 and ARV-D-077 across a
+    # stage that has never been through them — unrelated edits, unannounced, on certified
+    # artefacts. A pass a founder asked for is not a licence for the ones they did not.
+    parser.add_argument("--pass", dest="one_pass", metavar="ARV-D-nnn")
     args = parser.parse_args()
 
     folder = PLANS / args.subject / args.grade
@@ -850,7 +1759,10 @@ def main() -> int:
         result = doc["result"]
         by_defect = {}
 
-        for defect, label, fn in ([] if args.declared_only else GENERIC_PASSES):
+        _generic = [] if args.declared_only else [
+            g for g in GENERIC_PASSES
+            if not args.one_pass or g[0] == args.one_pass]
+        for defect, label, fn in _generic:
             edits = fn(result, ctx)
             if edits:
                 by_defect.setdefault(defect, {"label": label, "edits": []})["edits"].extend(edits)

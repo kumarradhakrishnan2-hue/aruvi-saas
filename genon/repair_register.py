@@ -109,6 +109,436 @@ BACKUP = REPO / "backup" / "register_repair"
 # what the register asks for — the band already carries its own `minutes`, and the platform
 # rescales them.
 REPAIRS = {
+    # ── S8 · mathematics · PREPARATORY · BATCH WAVE 2 (the COMPACTS) — 2026-08-20 ─────
+    # 19 re-submitted after 18 of wave 2's 74 errored server-side (not billed; no payload
+    # pattern — see the tracker). 24 ban hits over the completed library: 11 completion ·
+    # 9 forward · 4 clock.
+    #
+    # <b>COMPLETION IS THE LARGEST FAMILY, AND THAT IS THE PREDICTION LANDING.</b> Wave 1
+    # ran 4 completion in 23; here it is 11 in 24. A compact carries FEWER sections than
+    # the standard it was cut from and then says "built across the chapter", which is
+    # false for a class that met only this plan — the exact reason ban 2 exists. S2·middle
+    # saw the same rise at wave 2; S7·middle did not, which is why it was worth measuring
+    # rather than assuming.
+    #
+    # ONE OF THE 24 IS NOT REPAIRED — a scanner false positive, fixed at the scanner
+    # (runbook trap 4), so this table holds 23. v ch 6 p11 U7: "Children who have used the
+    # area-model grid for 2-digit × 2-digit problems WILL EXTEND naturally to a
+    # three-column grid" names no later unit at all; it predicts what the children in
+    # front of the teacher do in THIS sitting. The `will (extend|pick up|take up)` pattern
+    # now requires the sentence to name a destination. See register_scan.py.
+    #
+    # Every edit below is a deletion or a rewording that names CONTENT instead of
+    # position, and each note's `survives:` half quotes what remains.
+    ("mathematics", "iii"): {
+        "ch_07_canonical_p11.json": [
+            (11, "band:3", " built throughout the chapter", "",
+             "register/completion",
+             "completion claim struck; the connection back to the tables is the teaching "
+             "point and stays | survives: …This connects the puzzle back to the "
+             "multiplication tables.…"),
+        ],
+        "ch_09_canonical_p11.json": [
+            (11, "teacher_notes", " developed across the chapter", "",
+             "register/completion",
+             "completion claim struck; the five named strands are content-named continuity "
+             "and are exactly what the register asks for | survives: …draws on the tile "
+             "model, number-line reasoning, Number Detective families, My Numbers "
+             "enumeration, and Bhutasankhya encoding.…"),
+        ],
+        "ch_10_canonical_p08.json": [
+            (8, "band:3", " built across the chapter", "",
+             "register/completion",
+             "completion claim struck; what the understanding IS survives and is the part "
+             "the teacher needs | survives: …the conceptual understanding about what makes "
+             "a unit reliable.…"),
+        ],
+        "ch_13_canonical_p08.json": [
+            (6, "teacher_notes",
+             " and is moved to the following unit where elapsed time is the central focus",
+             " and is held back for the work where elapsed time is the central focus",
+             "register/forward",
+             "REWORDED: the teacher keeps the REASON T-30 is not here (elapsed time is not "
+             "this sitting's focus) without the positional claim, which no served count "
+             "can guarantee | survives: …T-30 builds on the analog clock reading practised "
+             "during the reading-clock unit and is held back for the work where elapsed "
+             "time is the central focus.…"),
+        ],
+    },
+    ("mathematics", "iv"): {
+        "ch_01_canonical_p08.json": [
+            (8, "band:1", " built across the chapter", "",
+             "register/completion",
+             "completion claim struck; the check against faces-edges-corners knowledge "
+             "stands | survives: …check their counts against the faces-edges-corners "
+             "knowledge.…"),
+        ],
+        "ch_03_canonical_p06.json": [
+            (6, "band:3", " built across the chapter", "",
+             "register/completion",
+             "completion claim struck; the oral round and what it consolidates both stay | "
+             "survives: …A brisk, playful finish that consolidates the digit-based rule.…"),
+        ],
+        "ch_05_canonical_p08.json": [
+            (3, "teacher_notes", " and are taken up in the following unit", "",
+             "register/forward",
+             "forward reference struck; the two page references stay, so the teacher can "
+             "still reach them whenever she does | survives: …Let Us Discuss Q1-5, p.69 "
+             "(fraction kit) and the fill-in-the-blank comparisons on p.70 extend this "
+             "work.…"),
+        ],
+        "ch_06_canonical_p09.json": [
+            (9, "teacher_notes", " built throughout the chapter", "",
+             "register/completion",
+             "completion claim struck; the skill it names is the teaching point | "
+             "survives: …consolidates the unit-selection skill.…"),
+        ],
+        "ch_09_canonical_p13.json": [
+            (6, "teacher_notes",
+             "for this and the following unit's pattern investigations",
+             "for the pattern investigations",
+             "register/forward",
+             "REWORDED: the chart IS the reference tool and accuracy IS why it matters; "
+             "only the claim about which sittings use it goes | survives: …The completed "
+             "10x10 chart is the reference tool for the pattern investigations; accuracy "
+             "in filling it matters.…"),
+            (13, "teacher_notes", " developed across the chapter", "",
+             "register/completion",
+             "completion claim struck; the three patterns it draws together are named "
+             "immediately after and survive | survives: …draws together patterns - "
+             "ones-digit behaviour, doubling, and even/odd results.…"),
+        ],
+        "ch_13_canonical_p10.json": [
+            (8, "band:2", " as the remaining time permits", " as they can",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform "
+             "rescales them. The two page references and both methods survive | survives: "
+             "…attempt as many problems as they can, using the area model for "
+             "multiplication and repeated-subtraction table for division.…"),
+        ],
+    },
+    ("mathematics", "v"): {
+        "ch_02_canonical_p05.json": [
+            (5, "band:0", " built across the chapter", "",
+             "register/completion",
+             "completion claim struck; the three strategies are named in the same sentence "
+             "and stay | survives: …This recaps the three comparison tools without "
+             "reintroducing their content.…"),
+        ],
+        "ch_05_canonical_p10.json": [
+            (5, "teacher_notes",
+             " to the next class session that reaches the relationships section",
+             " when the relationships section is taken up",
+             "register/forward",
+             "REWORDED: the home task and the instruction to bring the tables both stand; "
+             "only the promise about WHICH sitting goes | survives: …students should bring "
+             "their recorded tables when the relationships section is taken up.…"),
+            (10, "band:0", " built across the chapter", "",
+             "register/completion",
+             "completion claim struck; both worked conversions survive | survives: …'3 km "
+             "200 m to metres' and '6 m 45 cm to cm' - as a mental exercise to activate "
+             "the conversion relationships.…"),
+            (10, "band:1", " for about eight minutes", "",
+             "register/clock",
+             "clock quantity struck; THE PEDAGOGY IS THE SEQUENCE - individual attempt, "
+             "then groups of three, then share the logic - and it is untouched | survives: "
+             "…Students attempt the puzzle individually; then form groups of three to "
+             "compare partial solutions.…"),
+        ],
+        "ch_06_canonical_p11.json": [
+            (5, "teacher_notes", " in the next unit", "",
+             "register/forward",
+             "forward reference struck; what the comparison prepares children to DO is the "
+             "teaching point | survives: …prepares children to use any of the three "
+             "written formats independently.…"),
+            (6, "teacher_notes",
+             " so the next unit can open with all three formats ready",
+             " so that all three formats are ready",
+             "register/forward",
+             "REWORDED: the home task and its purpose survive without the claim about what "
+             "opens next | survives: …John's grouped-row format is set for home so that "
+             "all three formats are ready.…"),
+            (6, "band:3", " in the remaining time", "",
+             "register/clock",
+             "clock quantity struck; the selection rule the teacher actually needs - as "
+             "many as they reach - survives | survives: …two word problems from Let Us Do "
+             "Q4 a-e, p.80 - the ones they can reach.…"),
+        ],
+        "ch_07_canonical_p09.json": [
+            (2, "teacher_notes",
+             " is saved for the next unit where students extend patterns,",
+             " is held back for the pattern-extension work,",
+             "register/forward",
+             "REWORDED: why T-10 is absent (this unit closes on the single-shape "
+             "investigation) is a real instruction and stays | survives: …T-10 "
+             "(multi-shape patterns on grid) is held back for the pattern-extension work, "
+             "so this unit closes on the single-shape investigation.…"),
+            (5, "teacher_notes", " in the section that follows", "",
+             "register/forward",
+             "forward reference struck; the vocabulary and where it comes from both stay | "
+             "survives: …The classification of kite vs. parallelogram that emerges from "
+             "T-21 prepares the vocabulary needed.…"),
+            (7, "band:1",
+             "In the remaining time, students think about and sketch",
+             "Students then think about and sketch",
+             "register/clock",
+             "clock quantity struck; the closing task is unchanged | survives: …Students "
+             "then think about and sketch a plan for how the overlapping-circles image on "
+             "the same page might be made.…"),
+        ],
+        "ch_10_canonical_p07.json": [
+            (7, "band:2", " built across the chapter", "",
+             "register/completion",
+             "completion claim struck; the vocabulary is listed immediately after and "
+             "survives | survives: …using the vocabulary - lines of symmetry, half-turn, "
+             "quarter-turn.…"),
+        ],
+        "ch_15_canonical_p05.json": [
+            (5, "teacher_notes",
+             " is grounded in the concepts built across this chapter's units and helps",
+             " helps",
+             "register/completion",
+             "REWORDED rather than cut: a bare deletion left 'grounded in the concepts and "
+             "helps', which is the completion claim's scaffolding without its content. The "
+             "three representations the reflection draws on are named in the same sentence "
+             "and are what matters | survives: …The closing reflection drawing on "
+             "frequency tables, pictographs, and bar graphs helps children articulate the "
+             "purpose of each representation.…"),
+        ],
+    },
+    # ── S8 · mathematics · PREPARATORY · BATCH WAVE 1 (the STANDARDS) — 2026-08-19 ────
+    # 42 standards bought (msgbatch_01FA92FK9MoXAVJiuKNdWQsJ, Rs 632.58 at Rs 15.06/run).
+    # 21 ban hits over 16 of 45 library files — 0.47/file, between S7·middle's wave-1 0.54
+    # and its wave-2 0.16, and an order below S2·middle's 2.3.
+    #
+    # DISTRIBUTION AS SCANNED: 14 forward · 4 completion · 2 clock · 1 meta-leak · zero
+    # calendar. TWO OF THE 21 ARE NOT REPAIRED HERE — they were scanner false positives and
+    # were fixed at the scanner (runbook trap 4), which is why this table holds 20 edits
+    # against a 21-hit census. Both are recorded in register_scan.py at the pattern they
+    # moved, and both come from the same root: THIS IS THE FIRST STAGE WHOSE SUBJECT MATTER
+    # IS THE THING THE REGISTER BANS TALKING ABOUT.
+    #
+    #   (a) CLOCK inside quotation marks. iii ch 13 is "Time Goes On" and v ch 3 is "Angles
+    #       as Turns", so their bands quote the lesson — "'What did you put for 5 minutes?
+    #       For 60?'", "'A minute hand starts at 12 and moves clockwise for 15 minutes'".
+    #       Ban 1 exists because proportional scaling falsifies a stated duration, and
+    #       nothing inside quotation marks is scaled. `clock` now takes the quoted-span
+    #       exemption `calendar` already had. Measured first: across the whole corpus only
+    #       four quoted clock hits exist, all four are maths·preparatory, all four are
+    #       content, and BOTH unquoted hits still fail — so the rule separates the two
+    #       populations exactly and no other stage moves.
+    #   (b) `from the next` with a calendar noun after it. iii ch 13 U2: "did they count
+    #       July 22 itself, or start from the next day?" — day-counting on a grid, which is
+    #       the chapter. The pattern is narrowed by lookahead; "from the next unit" still
+    #       bans (verified still firing on science·vi ch 10 p11, the only other corpus
+    #       occurrence).
+    #
+    # Everything below IS a real breach and every edit is a DELETION or a rewording that
+    # names content instead of position. Nothing material to delivering the lesson is
+    # removed: in each case the activity, the grouping, the page reference and the teaching
+    # point survive, and the `survives:` half of every note is the text that remains.
+    # APPLIED 2026-08-19 (wave 1) and retired behind a 3-tuple key, which the 2-tuple
+    # lookup never reaches. NOT optional housekeeping: wave 2 re-used the same three
+    # 2-tuple keys and Python kept the LAST definition, so the whole W2 set was
+    # silently shadowed and `--list` reported W1's already-applied edits as "declared
+    # text not found". That is the duplicate-dict-key failure this file's v1.3 header
+    # documents, hit a third time. An applied set must be renamed the day it lands.
+    ("mathematics", "iii", "APPLIED-W1-20260819"): {
+        "ch_01_canonical.json": [
+            (3, "teacher_notes",
+             ", setting up the reasoning tasks in the next unit",
+             "",
+             "register/forward",
+             "forward reference struck; the observation stands on its own ground | survives: "
+             "…helps the class begin to notice which numbers have shorter or longer names.…"),
+        ],
+        "ch_05_canonical.json": [
+            (11, "teacher_notes",
+             " built across the chapter",
+             "",
+             "register/completion",
+             "completion claim struck — false on any served count that stops short of this "
+             "unit | survives: …both engage the decomposition insight — that shapes can be "
+             "broken into smaller shapes and reassembled.…"),
+        ],
+        "ch_05_canonical_p08.json": [
+            (8, "teacher_notes",
+             " — that has been built across the chapter.",
+             ".",
+             "register/completion",
+             "completion claim struck; the vocabulary list it qualifies is untouched | "
+             "survives: …consolidate the full vocabulary of shapes — straight, curved, "
+             "triangle, rectangle, square, circle.…"),
+        ],
+        "ch_05_canonical_p11.json": [
+            (11, "teacher_notes",
+             " developed across the chapter",
+             "",
+             "register/completion",
+             "completion claim struck; the p08 hit's twin on the same chapter's other compact "
+             "| survives: …it draws on the full vocabulary of triangles, squares, and "
+             "rectangles.…"),
+        ],
+        "ch_07_canonical.json": [
+            (2, "band:0",
+             " without requiring prior homework",
+             "",
+             "register/meta-leak",
+             "planning machinery struck — whether homework was set is a fact about the "
+             "SERVE, not about the lesson, and a teacher reading her plan should not meet it "
+             "| survives: …asking students what the 5 and the 2 stand for — to set up the "
+             "scaling task.…"),
+            (6, "band:2",
+             " that continues into the next unit",
+             "",
+             "register/forward",
+             "forward reference struck; the question and the noticing both stand | survives: "
+             "…'What do you notice about the numbers you land on?' — opening the "
+             "pattern-spotting.…"),
+        ],
+        "ch_08_canonical.json": [
+            (6, "teacher_notes",
+             " before the next unit deepens grid-based exploration",
+             "",
+             "register/forward",
+             "forward reference struck; the opportunity it names is not conditional on what "
+             "comes after | survives: …Let us Do Q2 provides a clean opportunity to name "
+             "three-quarters explicitly.…"),
+        ],
+        "ch_11_canonical.json": [
+            (7, "band:1",
+             " for a few minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the platform "
+             "rescales them. THE PEDAGOGY IS THE SEQUENCE, NOT THE DURATION, and the "
+             "sequence survives intact | survives: …first individually in silence, then "
+             "discussing with a partner. Teacher circulates.…"),
+        ],
+        "ch_13_canonical.json": [
+            (2, "teacher_notes",
+             ", previewing the work on months ahead",
+             "",
+             "register/forward",
+             "forward reference struck; the mathematical observation it hangs off — that a "
+             "15-day count crosses the month boundary — is the teaching point and stays | "
+             "survives: …naturally raises the question of what comes after July.…"),
+        ],
+    },
+    # APPLIED 2026-08-19 (wave 1) and retired behind a 3-tuple key, which the 2-tuple
+    # lookup never reaches. NOT optional housekeeping: wave 2 re-used the same three
+    # 2-tuple keys and Python kept the LAST definition, so the whole W2 set was
+    # silently shadowed and `--list` reported W1's already-applied edits as "declared
+    # text not found". That is the duplicate-dict-key failure this file's v1.3 header
+    # documents, hit a third time. An applied set must be renamed the day it lands.
+    ("mathematics", "iv", "APPLIED-W1-20260819"): {
+        "ch_03_canonical.json": [
+            (7, "teacher_notes",
+             " they will formalise in the next unit",
+             "",
+             "register/forward",
+             "forward reference struck; the connection is named by content | survives: "
+             "…connects directly to the units-digit generalisation.…"),
+            (10, "band:0",
+             " that follows later",
+             "",
+             "register/forward",
+             "forward reference struck; the link the teacher draws is unchanged | survives: "
+             "…the link between counting in equal groups and the even-odd question.…"),
+        ],
+        "ch_04_canonical.json": [
+            (5, "teacher_notes",
+             " (taught in the next unit)",
+             "",
+             "register/forward",
+             "positional parenthesis struck; the task is already named, which is the "
+             "content-named continuity the register asks for | survives: …which the Let Us "
+             "Think task addresses directly; note examples that arise here.…"),
+        ],
+        "ch_09_canonical.json": [
+            (13, "teacher_notes",
+             " to the next section's 3-digit multiplication",
+             " to 3-digit multiplication",
+             "register/forward",
+             "REWORDED, not deleted: the bridge is real mathematics the teacher should draw "
+             "out and only the pointer forward goes. Named by content instead of position | "
+             "survives: …The connection between 10x3, 100x3 and the hundreds digit in the "
+             "product is the bridge to 3-digit multiplication.…"),
+        ],
+        "ch_11_canonical.json": [
+            (5, "band:3",
+             " in the next task of this section",
+             "",
+             "register/forward",
+             "forward reference struck; the bridge is named by content | survives: …Two "
+             "students explain. This bridges to the digit-symmetry exploration.…"),
+        ],
+        "ch_12_canonical.json": [
+            (1, "band:3",
+             "Briefly preview the remaining calendar tasks that will be explored in the "
+             "next unit of this section — ",
+             "Briefly name the remaining calendar tasks — ",
+             "register/forward",
+             "REWORDED: the LIST is the material and every item survives; only the promise "
+             "about when they will be taught goes | survives: …Briefly name the remaining "
+             "calendar tasks — the months, festival names, date format, and elapsed time — "
+             "to frame what the calendar grid can do.…"),
+        ],
+    },
+    # APPLIED 2026-08-19 (wave 1) and retired behind a 3-tuple key, which the 2-tuple
+    # lookup never reaches. NOT optional housekeeping: wave 2 re-used the same three
+    # 2-tuple keys and Python kept the LAST definition, so the whole W2 set was
+    # silently shadowed and `--list` reported W1's already-applied edits as "declared
+    # text not found". That is the duplicate-dict-key failure this file's v1.3 header
+    # documents, hit a third time. An applied set must be renamed the day it lands.
+    ("mathematics", "v", "APPLIED-W1-20260819"): {
+        "ch_07_canonical.json": [
+            (2, "teacher_notes",
+             ", introduced in the next unit,",
+             "",
+             "register/forward",
+             "forward reference struck; the counter-examples and why they matter both stay | "
+             "survives: …the pentagon and octagon counter-examples are the payoff of the "
+             "reasoning here.…"),
+            (8, "teacher_notes",
+             " is placed in the next unit to give",
+             " is held back to give",
+             "register/forward",
+             "REWORDED so the teacher keeps the REASON (the spatial tasks need room) without "
+             "the positional claim, which no served count can guarantee | survives: …The "
+             "shape-arrangement puzzle from p.102 (Tanu's 7 shapes) is equally rich and is "
+             "held back to give the spatial reasoning tasks space.…"),
+        ],
+        "ch_09_canonical.json": [
+            (7, "band:3",
+             "Teacher collects to inform the next unit's opening.",
+             "Teacher collects the slips.",
+             "register/forward",
+             "forward reference struck; the exit-slip activity and what the child writes are "
+             "untouched, and collecting them is the instruction that matters | survives: "
+             "…each child writes one sentence — 'The hardest part was ___ because ___.' "
+             "Teacher collects the slips.…"),
+        ],
+        "ch_10_canonical.json": [
+            (9, "band:1",
+             " for several minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes. The design challenge, "
+             "the independent sketching, the neighbour test and the class discussion all "
+             "stand | survives: …Students sketch independently, then share with a neighbour "
+             "who tests both properties using the fold-and-rotate method.…"),
+        ],
+        "ch_11_canonical.json": [
+            (10, "teacher_notes",
+             " built across the chapter",
+             "",
+             "register/completion",
+             "completion claim struck; the insight it qualifies is the teaching point and "
+             "stays | survives: …the insight that sharing more sides reduces perimeter "
+             "consolidates the area-perimeter relationship.…"),
+        ],
+    },
     # ── S2 · social_sciences · MIDDLE · BATCH WAVE 2 (the COMPACTS) — 2026-08-16 ──────
     # 80 compacts bought for Rs 1,422.83 (msgbatch_011ezdQUpviWiYgZmANzzDp4) plus a Rs 28.17
     # re-author of viii ch 15 p14. 134 ban hits over 59 of 143 installed files — 2.3/file,
@@ -2415,7 +2845,449 @@ REPAIRS = {
     #
     # Two edits land on one field (viii ch 14 p11 U11 carries "built across the chapter" AND
     # "practised throughout"; the scanner collapses overlapping matches and reported one).
+    # ── S7 · mathematics · MIDDLE · THE RESYNTH SWEEP (2026-08-20) ───────────────────
+    # 22 clock quantities, one per re-authored closing unit, all in `teacher_notes` and all
+    # the SAME SENTENCE: "Students work individually [with full written working] for the
+    # first fifteen minutes". The resynth brief states the ban for BANDS — "Band narration
+    # never states a quantity of minutes" — and says nothing about the notes, so the model
+    # obeyed it exactly where it was told to and nowhere else. Founder ruled 2026-08-20 not
+    # to amend the brief; the sweep is the cost of that, once.
+    #
+    # Every one is a pure deletion of the clause. The sentence reads correctly without it,
+    # the individual-work instruction survives whole, and the sitting's own band already
+    # declares the minutes — which is the entire reason the ban exists, since the platform
+    # rescales a band to whatever duration it is served at.
+    #
+    # A 23rd hit was NOT repaired: mathematics vii ch 13's problem table reads "Priya read
+    # for these many minutes each day: 45, 30, 45, 60, 0, 50, 50" — minutes as the DATA of
+    # a statistics problem, not the lesson's clock. Fixed at the scanner instead
+    # (register_scan.py: the clock pattern is now scoped away from `visual_aids`), per
+    # runbook trap 4. Striking it would have deleted the problem.
+    # ── S7 · mathematics · MIDDLE · THE SECOND RESYNTH SWEEP (2026-08-20) ────────────
+    # 28 clock quantities, the SAME sentence in the SAME field as the 22 swept hours
+    # earlier: "Students work individually … for the first fifteen minutes". Third wave,
+    # third appearance, because the resynth brief stated the ban for BAND NARRATION and
+    # the model obeyed it precisely there and nowhere else.
+    #
+    # THIS IS THE LAST TIME IT CAN HAPPEN. Founder ruled 2026-08-20 (reversing the earlier
+    # decision to leave the clause alone, on the evidence that it had by then cost more
+    # repair effort than every other defect on this stage combined): the brief now binds
+    # NO TEXT ANYWHERE IN THIS UNIT, and `resynth.validate_resynth` refuses a clock
+    # quantity in `time_bands` or `teacher_notes` at install. A unit carrying one no
+    # longer reaches disk, so a fourth sweep cannot be needed.
+    #
+    # Every edit is a pure deletion. The instruction to work individually survives whole;
+    # only the count goes, and the sitting's own band already declares the minutes.
+    #
+    # ONE FURTHER HIT WAS NOT REPAIRED and was fixed at the scanner instead: vi ch 9's
+    # problem table reads "each arm is 360 degrees / 6 = 60 degrees FROM THE NEXT" —
+    # adjacency between the arms of a radial figure, in the data of a rotational-symmetry
+    # problem. `register_scan.py` now scopes that forward pattern away from `visual_aids`,
+    # as the clock pattern already was, for the same reason: prepared content is about the
+    # mathematics, not about the lesson. Runbook trap 4.
     ("mathematics", "vi"): {
+        "ch_01_canonical.json": [
+            (8, "teacher_notes",
+             ' for 18 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students work individually with full written working. They then compare in group\u2026"),
+        ],
+        "ch_05_canonical.json": [
+            (25, "teacher_notes",
+             ' for fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students listing multiples instead of using LCM reasoning from common factors; P\u2026"),
+        ],
+        "ch_06_canonical.json": [
+            (21, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students work individually with full written working. Then pairs compare answers\u2026"),
+        ],
+        "ch_07_canonical.json": [
+            (17, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students forgetting to divide both numerator and denominator by the same factor,\u2026"),
+        ],
+        "ch_09_canonical.json": [
+            (24, "teacher_notes",
+             ' for the first 18 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students who accept a line that divides area equally without checking exact over\u2026"),
+        ],
+        "ch_10_canonical.json": [
+            (16, "teacher_notes",
+             ' for 15 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students must apply the additive-inverse idea, not just guess; warn against writ\u2026"),
+            (16, "teacher_notes",
+             ' for 8 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students must apply the additive-inverse idea, not just guess; warn against writ\u2026"),
+        ],
+    },
+    ("mathematics", "vii"): {
+        "ch_01_canonical.json": [
+            (11, "teacher_notes",
+             ' for 8 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students forgetting to count the digit-sum as the minimum clicks, or losing trac\u2026"),
+            (11, "teacher_notes",
+             ' for the first 15 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students forgetting to count the digit-sum as the minimum clicks, or losing trac\u2026"),
+        ],
+        "ch_02_canonical.json": [
+            (9, "teacher_notes",
+             ' for fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students work individually with full written working, then compare in groups of \u2026"),
+        ],
+        "ch_04_canonical.json": [
+            (9, "teacher_notes",
+             ' for 8 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students present (one per problem); after each presentation the class names the \u2026"),
+            (9, "teacher_notes",
+             ' for the first 15 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students present (one per problem); after each presentation the class names the \u2026"),
+        ],
+        "ch_05_canonical.json": [
+            (15, "teacher_notes",
+             ' for about fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students who add all four angles to 360° without using the pair relationships. P\u2026"),
+        ],
+        "ch_06_canonical.json": [
+            (9, "teacher_notes",
+             ' for 15 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students who list all combinations rather than using the recursive structure. Pr\u2026"),
+        ],
+        "ch_07_canonical.json": [
+            (12, "teacher_notes",
+             ' for the first 18 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students who test only one comparison in Problem 1 and stop; insist all three pa\u2026"),
+        ],
+        "ch_08_canonical.json": [
+            (9, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students multiplying the numerators before cancelling common factors (apavartana\u2026"),
+        ],
+        "ch_10_canonical.json": [
+            (12, "teacher_notes",
+             ' for the first 18 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students swapping the pair without checking in Problem 1; sign errors on the lef\u2026"),
+        ],
+        "ch_11_canonical.json": [
+            (12, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students taking the maximum occurrences of each prime rather than the minimum. P\u2026"),
+        ],
+        "ch_12_canonical.json": [
+            (12, "teacher_notes",
+             ' for the first 15 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students work individually in silence, showing every step. Then pairs compare wo\u2026"),
+        ],
+        "ch_13_canonical.json": [
+            (17, "teacher_notes",
+             ' for about fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students dividing by the wrong count in Problem 1 (a zero score still counts), c\u2026"),
+        ],
+        "ch_15_canonical.json": [
+            (12, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students must read the balance picture carefully and not assign the wrong side t\u2026"),
+        ],
+    },
+    ("mathematics", "viii"): {
+        "ch_07_canonical.json": [
+            (17, "teacher_notes",
+             ' for 15 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students in Problem 2 who invert the proportion; students in Problem 3 who divid\u2026"),
+        ],
+        "ch_08_canonical.json": [
+            (14, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students work individually with full written working — no answers shared yet. Th\u2026"),
+        ],
+        "ch_09_canonical.json": [
+            (14, "teacher_notes",
+             ' for the first 18 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students work individually with full written working, then compare in groups of \u2026"),
+        ],
+        "ch_12_canonical.json": [
+            (16, "teacher_notes",
+             ' for about 18 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students forgetting that balance means total left-distance equals total right-di\u2026"),
+            (16, "teacher_notes",
+             ' for about 8 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students forgetting that balance means total left-distance equals total right-di\u2026"),
+        ],
+        "ch_14_canonical.json": [
+            (14, "teacher_notes",
+             ' for 10 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students work individually with full written working for the first 18 minutes, t\u2026"),
+            (14, "teacher_notes",
+             ' for the first 18 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carries its own minutes and the "
+             "platform rescales them | survives: \u2026students work individually with full written working, then compare in small grou\u2026"),
+        ],
+    },
+    ("mathematics", "vi", "APPLIED-RESYNTH1-20260820"): {
+        "ch_02_canonical.json": [
+            (20, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually — full working on paper, no sharing yet. Then groups of three com \u2026"),
+        ],
+        "ch_03_canonical.json": [
+            (12, "teacher_notes",
+             ' for about fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually, showing full working. They then compare in groups of three: wher \u2026"),
+        ],
+        "ch_06_canonical.json": [
+            (21, "teacher_notes",
+             ' for about 15 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually with full written working, then compare in groups of three — any  \u2026"),
+        ],
+        "ch_08_canonical.json": [
+            (23, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually in silence — full working on paper, not just answers. Then groups \u2026"),
+        ],
+        "ch_09_canonical.json": [
+            (24, "teacher_notes",
+             ' for the first 18 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually, writing full working — not just answers. Then groups of three co \u2026"),
+        ],
+        "ch_10_canonical.json": [
+            (16, "teacher_notes",
+             ' for the first 18 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually with full written working — no answers shared yet. Then groups of \u2026"),
+        ],
+    },
+    ("mathematics", "vii", "APPLIED-RESYNTH1-20260820"): {
+        "ch_01_canonical.json": [
+            (11, "teacher_notes",
+             ' for the first twelve minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually — full written working, no shortcuts skipped. Then trios compare: \u2026"),
+        ],
+        "ch_03_canonical.json": [
+            (9, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually in silence, writing full working in their exercise books. Groups  \u2026"),
+        ],
+        "ch_05_canonical.json": [
+            (15, "teacher_notes",
+             ' for the first 18 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually, writing full working — not just answers. Then groups of three co \u2026"),
+        ],
+        "ch_06_canonical.json": [
+            (9, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually, writing every step of reasoning — not just answers. Then groups  \u2026"),
+        ],
+        "ch_07_canonical.json": [
+            (12, "teacher_notes",
+             ' for roughly fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually with full written working, then compare in groups of three — any  \u2026"),
+        ],
+        "ch_08_canonical.json": [
+            (9, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually — full working in their notebooks, no calculators. They then comp \u2026"),
+        ],
+        "ch_09_canonical.json": [
+            (15, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually — full written working, not just answers. Then groups of three co \u2026"),
+        ],
+        "ch_10_canonical.json": [
+            (12, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually — full written working, no shortcuts. They then compare in groups \u2026"),
+        ],
+        "ch_11_canonical.json": [
+            (12, "teacher_notes",
+             ' for 15 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually with full written working — no pair talk yet. Then groups of thre \u2026"),
+        ],
+        "ch_12_canonical.json": [
+            (12, "teacher_notes",
+             ' for the first 15 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually with full written working — no shortcuts. Then groups of three co \u2026"),
+        ],
+        "ch_13_canonical.json": [
+            (17, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually, writing full working in their notebooks — no comparison yet. The \u2026"),
+        ],
+        "ch_15_canonical.json": [
+            (12, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually, writing full working — no shortcuts announced aloud yet. Then gr \u2026"),
+        ],
+    },
+    ("mathematics", "viii", "APPLIED-RESYNTH1-20260820"): {
+        "ch_02_canonical.json": [
+            (12, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work entirely alone, writing every step in full. Small groups of three then compare \u2026"),
+        ],
+        "ch_06_canonical.json": [
+            (16, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Refer to Prepared Table (see material: 'Problems and solutions') for the problems in full an \u2026"),
+        ],
+        "ch_13_canonical.json": [
+            (6, "teacher_notes",
+             ' for about 15 minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually with full written working, then compare answers in groups of thre \u2026"),
+        ],
+        "ch_14_canonical.json": [
+            (14, "teacher_notes",
+             ' for the first fifteen minutes',
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares its "
+             "own minutes and the platform rescales them | survives: \u2026Students work individually with full written working — no discussion during this phase. Then \u2026"),
+        ],
+    },
+    ("mathematics", "vi", "APPLIED-W2-20260819"): {
         "ch_02_canonical_p12.json": [
             (9, "teacher_notes",
              " and is worth discussing at the start of the next unit",
@@ -2452,7 +3324,7 @@ REPAIRS = {
              "does not | survives: …7–(–7) and 7+(+7) give the same result.…"),
         ],
     },
-    ("mathematics", "vii"): {
+    ("mathematics", "vii", "APPLIED-W2-20260819"): {
         "ch_01_canonical_p09.json": [
             (1, "band:3",
              " and previews that numbers grow much further, which the next unit will explore",
@@ -2524,7 +3396,23 @@ REPAIRS = {
              "Students tabulate results and argue why 65.5° cannot be reached.…"),
         ],
     },
-    ("mathematics", "viii"): {
+    ("mathematics", "viii", "APPLIED-W2-20260819"): {
+        # ── the RESYNTHED ch 11 closer (2026-08-19) ──────────────────────────────
+        # The re-authored synthesis arrived with one register hit, and it is the family
+        # this stage swept to zero at W1 and met twice at W2: a clock quantity written
+        # into prose that the band's own `minutes` already carries. Declared like any
+        # other. Worth recording that the resynth brief states the ban ("Band narration
+        # never states a quantity of minutes") for BANDS, and the hit landed in
+        # teacher_notes — the register binds there too, and the brief does not say so.
+        "ch_11_canonical.json": [
+            (17, "teacher_notes",
+             " for the first fifteen minutes",
+             "",
+             "register/clock",
+             "clock quantity struck; the band carrying this work already declares 3-18 "
+             "and the platform rescales it | survives: \u2026Students work individually "
+             "with full written working \u2014 no group talk yet.\u2026"),
+        ],
         "ch_01_canonical_p05.json": [
             (5, "band:3",
              " covered across the chapter's five units",

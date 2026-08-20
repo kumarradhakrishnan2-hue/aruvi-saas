@@ -83,7 +83,20 @@ PATTERNS = [
     ("forward", True, re.compile(r"\b(develops|develop) (further|mechanistically)\b", re.I)),
     ("forward", True, re.compile(r"\bthread (to pick up|that .{0,40} develops)\b", re.I)),
     ("forward", True, re.compile(r"\bpreviewing\b|\bforeshadow\w*\b", re.I)),
-    ("forward", True, re.compile(r"\bfrom the next\b|\bthis unit from the next\b", re.I)),
+    # NARROWED 2026-08-19 (S8 · W1). The bare `from the next` was written for "picks up from
+    # the next unit" and has no way to see what noun follows it. mathematics III ch 13 "Time
+    # Goes On" U2 asks children to count days on a calendar grid: "Pairs discuss: did they
+    # count July 22 itself, or start from the next day?" — the chapter's own arithmetic, and
+    # the single most natural sentence a day-counting lesson can contain. The negative
+    # lookahead excludes the calendar/clock nouns a teaching stage about time will keep
+    # using; "from the next unit / lesson / class / session / section" still bans, and the
+    # explicit second alternative is untouched. Same direction as the "last term" and
+    # "half the class" rulings: when a phrase is a homonym, narrow the pattern rather than
+    # strike correct teaching to satisfy it (runbook trap 4).
+    ("forward", True, re.compile(
+        r"\bfrom the next\b(?!\s+(day|date|month|week|year|hour|minute|number|shape|"
+        r"page|row|column|square|tick|jump|step|group)\b)"
+        r"|\bthis unit from the next\b", re.I)),
     # ── added 2026-08-07 (S6·C7), AFTER a false start worth recording ──────────────────
     # The C7(c) subjective sweep turned up seven paraphrases the word list could not see, and
     # I first added all seven as BANS. Six were wrong, and the certified corpus said so
@@ -174,7 +187,18 @@ PATTERNS = [
     ("forward", True, re.compile(r"\bthat (will|would) follow\b|\bthat follows? later\b", re.I)),
     ("forward", True, re.compile(r"\bthe [\w'’-]+ (unit|lesson) will\b", re.I)),
     ("forward", True, re.compile(r"\bin upcoming (units|lessons|sections)\b|\bupcoming (unit|lesson)\b", re.I)),
+    # NARROWED 2026-08-20 (S8 · W2): the verb alone is not a forward reference. It was
+    # written for "the next unit will extend this" and fired on mathematics v ch 6 p11
+    # U7's "Children who have used the area-model grid for 2-digit × 2-digit problems
+    # WILL EXTEND naturally to a three-column grid" — a prediction about what the children
+    # in front of the teacher do in THIS sitting, naming no later unit at all. Ban 2 is
+    # about pointing somewhere the served plan may never reach; a sentence that points
+    # nowhere cannot do that. `_FORWARD_TARGET` below requires the same sentence to name
+    # a destination, so "Students will take up X in the next unit" still bans and this
+    # does not. Same direction as the `from the next day` and quoted-clock rulings: the
+    # pattern is narrowed rather than correct teaching struck (runbook trap 4).
     ("forward", True, re.compile(r"\bwill (extend|pick up|take up|carry (this|it) forward)\b", re.I)),
+
     # ── added 2026-08-03 (ARV-D-038, found at C8 by reading a served plan's LAST sitting) ──
     # "This bridges toward the climate change and Punjab floods sections that follow" is TRUE
     # in the canonical, where those sections do follow, and FALSE the moment a serve ends on
@@ -458,11 +482,35 @@ def _instructional(text, start, end):
     return bool(_ACTOR.search(text[s:m.end() if m else len(text)]))
 
 
+# Does the sentence containing the match NAME a later place? (2026-08-20 — see the
+# `will (extend|…)` pattern's note.) A destination is a forward word plus something a
+# plan is divided into; either alone is too loose ("later" of an era, "next" of a number).
+_FORWARD_TARGET = re.compile(
+    r"\b(?:next|following|later|upcoming|subsequent|coming)\s+"
+    r"(?:\w+\s+){0,2}(?:unit|units|lesson|lessons|session|sessions|class|classes|"
+    r"section|sections|sitting|sittings|period|periods|chapter)\b", re.I)
+
+
+def _names_a_destination(text, start, end):
+    """True if the sentence around [start,end) points at a named later place."""
+    s = 0
+    for m in _SENT_END.finditer(text, 0, start):
+        s = m.end()
+    m = _SENT_END.search(text, end)
+    return bool(_FORWARD_TARGET.search(text[s:m.end() if m else len(text)]))
+
+
 def _quoted_spans(text):
     """Character ranges inside quotation marks — specimen sentences, textbook prompts and
     the questions Rule 13 requires bands to state. A calendar word inside one is the
     chapter speaking, not the plan scheduling itself."""
     return [(m.start(1), m.end(1)) for m in _QUOTED.finditer(text)]
+
+
+# The one pattern the destination test governs, bound by identity so the gate in
+# scan_plan cannot drift onto a neighbour if the list is reordered.
+_WILL_VERB = next(pat for fam, ban, pat in PATTERNS
+                  if fam == "forward" and "will (extend" in pat.pattern)
 
 
 # FIELD-SCOPED PATTERNS (2026-08-12, S11 · C7). One pattern in the list above is precise in a
@@ -486,6 +534,34 @@ _FIELD_SCOPED = {
     next(pat for fam, ban, pat in PATTERNS if fam == 'planner-vocab'):
         ('activity_title', 'teacher_notes', 'teacher_facilitation_note', 'time_bands',
          'phases'),
+    # CLOCK QUANTITY (S7 · F1, 2026-08-20): the fields that narrate the LESSON, never
+    # `visual_aids`. The ban exists because a band's own `minutes` carries the clock and
+    # the platform rescales it, so a duration written into prose goes stale on every serve
+    # at another length. `visual_aids` is not prose about the lesson — it is PREPARED
+    # CONTENT the class works on, and since the maths·middle resynth it holds problem
+    # statements. mathematics vii ch 13's table reads "Priya read for these many minutes
+    # each day: 45, 30, 45, 60, 0, 50, 50" — minutes as the DATA of a statistics problem.
+    # Striking that would delete the problem to satisfy a regex, which is the wrong
+    # direction (runbook trap 4); the same shape will recur wherever time is the quantity
+    # being measured, and maths is full of it.
+    next(pat for fam, ban, pat in PATTERNS
+         if fam == 'clock' and pat.pattern == r'\bfor\b[^.;]{0,20}\bminutes\b'):
+        ('activity_title', 'teacher_notes', 'teacher_facilitation_note', 'time_bands',
+         'phases', 'homework'),
+    # "from the next" — SAME SCOPING, SAME REASON (S7 · F1, 2026-08-20). The pattern has a
+    # negative lookahead listing the nouns that make it innocent (day, row, square, step…),
+    # which is the right shape for lesson prose but cannot anticipate a subject's own
+    # vocabulary. mathematics vi ch 9's problem table reads "each arm is 360° ÷ 6 = 60°
+    # FROM THE NEXT" — geometric adjacency between arms of a radial figure, in the data of
+    # a rotational-symmetry problem. Extending the noun list one word at a time is a losing
+    # game (the next chapter will say "from the next vertex", "from the next term"); the
+    # honest cut is the same one the clock ban takes — `visual_aids` is prepared CONTENT,
+    # not narration about the lesson, so a forward-sounding phrase there is about the
+    # mathematics. The ban is untouched everywhere a unit talks about itself.
+    next(pat for fam, ban, pat in PATTERNS
+         if fam == 'forward' and r'\bthis unit from the next\b' in pat.pattern):
+        ('activity_title', 'teacher_notes', 'teacher_facilitation_note', 'time_bands',
+         'phases', 'homework'),
 }
 
 
@@ -537,7 +613,37 @@ def scan_plan(plan: dict):
                         # constitution.
                         # `completion` is exempt on the synthesis unit, which the brief
                         # licenses to assume the chapter's content has been taught.
-                        "ban": ban and not (family == "calendar" and in_quote)
+                        # CLOCK JOINS CALENDAR IN THE QUOTED EXEMPTION (2026-08-19, S8 · W1).
+                        # The quoted-span rule was written for calendar words and the same
+                        # argument holds for clock quantities, but it took the first stage
+                        # whose SUBJECT MATTER is time to make that visible. mathematics
+                        # preparatory teaches the clock: iii ch 13 is "Time Goes On", v ch 3
+                        # is "Angles as Turns", and their bands quote the lesson —
+                        # "'What did you put for 5 minutes? For 60?'", "'We put the minute
+                        # hand at 9 for 45 minutes past'", "'A minute hand starts at 12 and
+                        # moves clockwise for 15 minutes'". Every one of those is the chapter
+                        # speaking (a question on the board, a child's answer read back), not
+                        # the plan claiming how long a sitting runs — which is the ONLY thing
+                        # ban 1 exists to stop, because proportional scaling silently
+                        # falsifies it. Nothing inside quotation marks is rescaled.
+                        #
+                        # Measured before trusting it (runbook trap 4): across the 45-file
+                        # maths·preparatory library the rule separates the two populations
+                        # exactly — all three quoted hits are content, both unquoted hits
+                        # ("first individually in silence FOR A FEW MINUTES", "Students
+                        # sketch independently FOR SEVERAL MINUTES") are real pacing
+                        # breaches and still fail. The pre-existing `_instructional` test
+                        # cannot do this job alone: a quoted question is routinely followed
+                        # by "The class checks…", so an actor is named and the hit bans on
+                        # a sentence that is not about pacing at all. Advisory, never
+                        # suppressed — a genuine pacing claim someone puts in quotes stays
+                        # on the page for the human to rule on.
+                        "ban": ban
+                                   # the bare `will extend/pick up/take up` verb only
+                                   # bans when the sentence names where (2026-08-20)
+                                   and not (pat is _WILL_VERB
+                                            and not _names_a_destination(text, m.start(), m.end()))
+                                   and not (family in ("calendar", "clock") and in_quote)
                                    and not (family in ("forward", "completion") and _fwd_ok)
                                    # `completion` IS ban 2, so it takes the SAME stage
                                    # exemption as `forward`. science·middle drops ban 2

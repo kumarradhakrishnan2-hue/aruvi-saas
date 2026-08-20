@@ -1,274 +1,558 @@
-ARUVI — CLOSING SYNTHESIS RE-AUTHORING · SCIENCE · MIDDLE STAGE
+ARUVI — CLOSING SYNTHESIS RE-AUTHORING · MATHEMATICS · MIDDLE STAGE
 
 You are re-writing ONE unit: the closing whole-chapter synthesis of a chapter's fullest
-lesson plan. This unit is served in two situations, and it must be excellent in both:
+lesson plan. It is served in two situations and must be excellent in both:
 
 1. As the FINAL unit of the fullest plan — the class finishes the chapter with it.
 2. As ONE EXTRA 45-minute period appended to a SHORTER complete plan of the same
-   chapter, whose own final unit (given below) already consolidated the chapter
+   chapter, whose own final unit (given below) already drew the chapter together
    yesterday.
 
-THE UNIT YOU ARE WRITING closes the chapter through one fresh, concrete application: a
-scenario, artefact, dataset, place or design problem the chapter itself never uses. The
-class brings the chapter's concepts; the unit puts them to work in the new setting, and
-what the task shows IS the synthesis — the chapter drawn together by using it whole, not
-by summarising it.
+THE UNIT YOU ARE WRITING closes the chapter by putting its methods to work on a small set
+of problems the teacher poses. Solving them IS the synthesis: the chapter is drawn
+together by being used, not by being recited.
 
 PROPERTIES OF THE UNIT:
-- It opens directly onto its fresh setting: the first band presents the new material and
-  puts the first question to the class.
-- Every concept or skill it calls on appears in EVERY unit-title map given below — the
-  shorter plans differ in what they cover; write only to what all of them share.
-- Its vehicle (the kind of task: scenario cards, argument construction, data table,
-  concept map, design brief, error correction, narrative trace…) is different in kind
-  from every FINAL UNIT given below, and it uses none of the specific stories, quotes,
-  objects, questions or catchphrases those final units use.
-- Its closing band consolidates what THE TASK ITSELF showed, naming the chapter's central
-  ideas as the reason the task worked — earned closure, not ceremony.
-- All materials are in its own `materials` list: things any classroom has or the unit
-  itself makes.
-- Band narration never states a quantity of minutes or any calendar time — the band's
-  `minutes` field carries the clock.
+- It carries TWO TO FOUR problems, each reaching for a DIFFERENT major method of the
+  chapter, and together spanning its main strands. Each problem is stated in full, with
+  its numbers, inside the band that poses it — a teacher reads the band aloud and the
+  class can start.
+- The problems are the TEACHER'S OWN, written for this unit and posed on the board. The
+  mathematics in each is the chapter's, and nothing is invented or imported.
+- THE PROBLEMS AND THEIR SOLUTIONS LIVE IN ONE TABLE, in `visual_aids` — three columns,
+  `No. | Problem | Solution`, one row per problem. The Problem cell states the problem in
+  one or two plain sentences with its numbers. The Solution cell gives the answer and the
+  few steps that reach it, in plain words and figures — brief enough for a teacher to read
+  at a glance while the class works, and no longer than the problem it answers. This table
+  is the teacher's whole worked reference.
+- EACH PROBLEM IS WELL-POSED AND SELF-CONSISTENT. It states everything needed to solve it,
+  its data agree with each other and with the solution beside it, and it has one answer.
+  Where a count is named ("the four corner cells", "the six expressions you can form"),
+  that count is the number the problem's own conditions produce. Where a figure carries
+  measurements, they can all hold at once. Where a construction is described, the described
+  construction is the one the solution works on.
+- THE SOLUTION CELL IS THE SETTLED ANSWER. Work each problem out fully first; then write
+  only the route that reaches the answer and the answer itself. Trials that failed,
+  possibilities considered and rejected, re-checks and corrections belong to the working,
+  not to the page a teacher reads at the board. Every step written is a step that holds:
+  a justification names the fact it rests on, and never assumes what it is proving.
+- `teacher_notes` is SHORT — a few sentences at most. It says how the sitting is run and
+  what to watch for as students work; the mathematics is in the table, and is not repeated
+  here. Name, for each problem, only the chapter method it needs — the method its own
+  solution actually uses — and warn only about errors that problem can produce.
+- Its `textbook_items_in_class` and `homework` are both `[]`, and its band text names no
+  page, no exercise and no book item. The class works from the board.
+- Its shape gives every student a full attempt before any answer is public: the problems
+  are posed, worked individually with full working, compared in small groups where a
+  disagreement is reconstructed step by step, and then presented — and each presentation
+  is followed by the class NAMING the chapter method the solution rested on.
+- The closing band states the chapter's one idea in a sentence, as the reason the problems
+  yielded — earned closure, not ceremony.
+- It is ONE sitting and weighs the same as any other: 45 minutes, a handful of
+  bands, materials any classroom has. Depth here is the demand of the problems, never the
+  quantity of material.
+- Every method it calls on appears in EVERY unit-title map given below — the shorter plans
+  differ in what they reach, so write only to what all of them share, and treat the
+  SHORTEST map as binding.
+- Its vehicle differs in kind from every FINAL UNIT given below, and it reuses none of
+  their specific contexts, objects, puzzles or framing questions.
+- Band narration never states a quantity of minutes and never points beyond this sitting —
+  the band's `minutes` field carries the clock.
 
 OUTPUT — exactly this JSON object, nothing else:
 {
   "synthesis_unit": {
     "activity_title": "…",
-    "activity_description": "…",
-    "pedagogical_approach": "…",
-    "teacher_notes": "…",
+    "pedagogical_method": "one of: Discovery · Problem-solving · Play-way · Inductive ·
+      Deductive — the method this unit runs on",
+    "section_goal": "recall | reason | apply — the goal this unit works at",
+    "teacher_notes": "a few sentences: how the sitting runs, what to watch for, and the
+      chapter method each problem needs — NOT the solutions, which are in the table",
+    "visual_aids": [
+      {"type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | … | …\n2 | … | …"}
+    ],
     "materials": ["…"],
     "time_bands": [
       {"minutes": "0-N", "activity": "…"},
       …bands in sequence, integer boundaries, last band ends at 45…
     ],
+    "textbook_items_in_class": [],
     "homework": []
   }
 }
-No other keys — the platform carries the unit's number, stage and duration itself.
+No other keys — the platform carries the unit's number, duration, section coverage and
+synthesis marker itself.
 
 CHAPTER SUMMARY:
 
-Chapter 6: Pressure, Winds, Storms, and Cyclones
-
-6.1 Pressure
-
-This section introduces the concept of pressure as force per unit area, motivated by a relatable scenario of two children carrying bags with narrow and broad straps. The key term introduced is pressure, defined as Pressure = Force / Area. The section establishes that when the same force is distributed over a smaller area, the resulting pressure is higher — which is why narrow-strap bags feel more uncomfortable than broad-strap bags. The SI unit of pressure is newton per metre squared (N/m²), also called pascal (Pa). The section includes a student activity (Table 6.1) in which students compare driving an iron nail by its head versus its pointed end, and cutting an apple with the sharp versus the blunt edge of a knife, to observe how area affects pressure.
-
-The section then extends pressure to liquids, using the example of overhead water tanks placed at a height to supply good water pressure. Activity 6.1 involves two pipes of different diameters with balloons attached; when filled to the same water level, both balloons bulge equally, demonstrating that liquid pressure depends on the height of the water column, not on the volume or weight of water above. Activity 6.2 involves holes made near the bottom of a plastic bottle — when unsealed, water sprays outward in all directions, showing that liquids exert pressure not only at the bottom of a container but also on its sides and in all directions. A sidebar ("Ever heard of…") explains why dam bases are broader than their tops — to withstand the large horizontal water pressure near the bottom.
-
-6.2 Pressure Exerted by Air
-
-This section establishes that the atmosphere exerts pressure on all objects. Activity 6.3 involves an inverted paper plate covered first with a folded and then an unfolded chart paper sheet, lifted by a stick — more effort is needed with the unfolded (larger-area) sheet, demonstrating that air exerts a force that increases with area, which is the definition of atmospheric pressure. The section introduces the term atmospheric pressure — the pressure exerted by the air around us. Activity 6.4 uses a rubber sucker pressed on a smooth surface; it sticks because pressing pushes out the air inside, making the surrounding atmospheric pressure higher than the pressure inside the sucker, so it becomes difficult to pull off. The section quantifies atmospheric pressure by noting that the force exerted by the air column over an area of 15 cm × 15 cm is nearly equal to the weight of a 225 kg object (2250 N). It explains that humans are not crushed because the pressure inside the body equals the atmospheric pressure. A "step further" box notes that practical units for air pressure are millibar (mb) and hectopascal (hPa), both equal to 100 Pa.
-
-6.3 Formation of Wind
-
-This section establishes that winds form because air moves from regions of high pressure to regions of low pressure. Activity 6.5 connects an inflated balloon to an uninflated one via a straw; air moves from the inflated (higher pressure) balloon to the uninflated (lower pressure) one, and the flow stops when pressures equalise — demonstrating the directional movement of air driven by pressure differences. The section then connects this principle to sea breeze and land breeze: during the day, land heats faster than the sea, air above land rises and creates a low-pressure area, and cooler sea air flows in (sea breeze); at night, the sea is warmer, so the reverse occurs (land breeze). It also notes that a larger pressure difference produces higher wind speeds.
-
-6.4 High-Speed Winds Result in Lowering of Air Pressure
-
-This section introduces the inverse relationship between wind speed and air pressure. Activity 6.6 involves blowing air between two inflated balloons hanging from a stick; the balloons move towards each other, because the high-speed air between them creates a low-pressure zone while surrounding higher-pressure air pushes them inward — and blowing harder accelerates this effect. The section applies this principle to explain why roofs of houses may be blown off during storms: high-speed winds over a roof create low pressure above it, while pressure inside the house remains higher, generating an upward net force. The safety recommendation given is to keep doors and windows open during storms so wind can pass through the house, reducing this pressure difference and protecting the roof.
-
-6.5 Storms, Thunderstorms, and Lightning
-
-This section explains how storms, thunderstorms, and lightning form through a chain of atmospheric processes. When land is heated, warm moist air rises to form a low-pressure area; cooler surrounding air rushes in, gets heated, and rises in turn, creating a continuous wind circulation. As rising air expands and cools, water vapour condenses to form clouds; when droplets merge into heavy drops, they fall as rain, hail, or snow — and the resulting strong winds accompanying rain constitute a storm. Under certain conditions, rising warm air reaches heights cold enough to convert water droplets into ice particles. Strong upward and downward winds cause water droplets and ice particles to rub against each other, generating static electric charges within clouds — lighter positively charged ice particles rise to the upper cloud layers while heavier negatively charged water droplets occupy the lower layers. This charge separation eventually causes the ground beneath to become positively charged. When the charge build-up is large enough to break down air's insulating property, a sudden discharge — lightning — occurs within clouds, between clouds, or between clouds and the ground. The rapid heating and expansion of air by lightning produces the sound of thunder, and a storm with both lightning and thunder is called a thunderstorm. A "step further" box notes regional names for pre-monsoon thunderstorms in India (Kalboishakhi, Bordoisila, mango showers). The section closes with safety precautions during lightning: crouch low in open areas, avoid tall objects and metallic umbrellas, leave water bodies, and stay inside vehicles. A sidebar describes lightning conductors — metallic rods installed on buildings with a pointed end above the highest point and the other end buried in the ground — which provide a safe discharge path for electrical charges.
-
-6.6 Cyclone
-
-This section explains the formation, structure, and effects of cyclones. Cyclones form over warm ocean water: heating causes warm moist air to rise, water vapour condenses and releases latent heat back into the atmosphere, further warming the ascending air and deepening the low-pressure centre. Air from surrounding high-pressure regions rushes in, Earth's rotation causes the incoming air to spin, and the self-reinforcing cycle builds a very low-pressure area with high-speed revolving winds — forming a cyclone. The calm, lowest-pressure centre of a cyclone is called the eye of the cyclone; the surrounding region experiences intense winds and heavy rainfall. A cyclone intensifies over the ocean but weakens once it reaches land, as the source of moist air is cut off. The section describes the destructive effects of cyclones: storm surges of 3–12 metres flooding coastal areas, river flooding and landslides from heavy rainfall, contamination of drinking water by seawater, reduced soil fertility from salt deposition, blocked roads, and extended power outages. The section emphasises cyclone preparedness — monitoring IMD alerts and weather satellites, keeping emergency kits, and moving to designated cyclone shelters. The example of Cyclone Amphan (2020) with peak winds of 270 km/h is cited to illustrate the scale of cyclone destruction.
+{
+  "stage": "middle",
+  "subject": "mathematics",
+  "grade": "viii",
+  "chapter_number": 6,
+  "chapter_title": "We Distribute, Yet Things Multiply",
+  "sections": [
+    {
+      "ref": "section 6.1",
+      "title": "Some Properties of Multiplication",
+      "section_goal": ["recall", "apply"]
+    },
+    {
+      "ref": "section 6.2",
+      "title": "Special Cases of the Distributive Property",
+      "section_goal": ["reason"]
+    },
+    {
+      "ref": "section 6.3",
+      "title": "Mind the Mistake, Mend the Mistake",
+      "section_goal": ["apply"]
+    },
+    {
+      "ref": "section 6.4",
+      "title": "This Way or That Way, All Ways Lead to the Bay",
+      "section_goal": ["reason"]
+    }
+  ],
+  "prose_summary": "Section 6.1 defines the distributive property of multiplication over addition — a(b+c) = ab+ac — and applies it systematically to reason about how products change when the numbers being multiplied are incremented or decremented. The section opens with an exploratory prompt about what happens to 23×27 when each factor is increased by 1, using this concrete case to motivate the general identity. Using distributivity, the chapter establishes that increasing b by 1 in the product ab increases the product by a; increasing both a and b by 1 increases the product by a+b+1. This is formalised as Identity 1: (a+m)(b+n) = ab+mb+an+mn, visualised through an area diagram partitioning a rectangle into four sub-regions. The section then shows that the same single identity handles all combinations of increase and decrease by treating decrements as addition of negative quantities. Three worked examples illustrate the mechanics: Example 1 expands a monomial over a three-term expression (3a/2)(a−b+1/5), introducing like-term collection and exponent notation; Example 2 derives (a+b)(a+b) = a²+2ab+b², noting the pairing of like terms ba and ab; Example 3 extends this to (a+b)(a²+2ab+b²) = a³+3a²b+3ab²+b³, demonstrating multi-step like-term collection. The second subsection shows how distributivity enables fast mental multiplication: multiplying a number by 11 is equivalent to shifting the number one place left and adding — reducing to digit-by-digit adjacent sums. Brahmagupta's khaṇḍa-guṇanam (multiplication by parts, Brahmasphuṭasiddhānta Verse 12.56) is cited as the earliest explicit statement of distributivity. The subsection extends the same logic to multiplication by 101, 1001, 10001 and to products such as 9734×99, all handled through the identity (a+m)(b+n).\n\nSection 6.2 derives and proves three special cases of Identity 1, grouping them under the heading of special products. The section reasons from geometry first: a square of sidelength (a+b) is partitioned into two smaller squares and two equal rectangles, yielding the visual justification of (a+b)² = a²+2ab+b² (Identity 1A). The same geometric argument is applied to (60−5)² to show that removing two rectangles and restoring one small square gives (a−b)² = a²−2ab+b² (Identity 1B). The section proves algebraically that (a+b)(a−b) = a²−b² (Identity 1C) by expanding via distributivity and cancelling the like terms ab and −ab. Pattern 1 demonstrates that 2(a²+b²) = (a+b)²+(a−b)², derived by adding the expanded forms of 1A and 1B, connecting numerical observations (e.g. 2(5²+6²) = 11²+1²) to their algebraic explanation. Pattern 2 observes that differences of squares of equally-spaced numbers factor as a product of their sum and difference — verified by expanding (a+b)(a−b) — and notes Sridharacharya's method of computing a² as (a+b)(a−b)+b² for fast squaring. Both patterns are shown to hold for all integers and fractions.\n\nSection 6.3 applies all the algebraic rules learned so far to a diagnostic task: twelve simplified expressions are presented, some correct and some containing errors such as misapplied distributivity (e.g. −3p(−5p+2q) simplified as p−2q), incorrect squaring of binomials (e.g. (5m+6n)² stated as 25m²+36n²), confused multiplication and addition of like terms, and spurious factoring (e.g. y+2(y+2) rewritten as (y+2)²). Students must identify each error, explain the likely misconception, and write the correct expression. This section consolidates procedural fluency with all three identities and the basic distributive rule.\n\nSection 6.4 presents a growing visual pattern of circles arranged in stepped rectangular arrays and asks students to count circles at each step. Four distinct algebraic methods each yield a different-looking expression — (k+1)²−1, k²+2k, k(k+1)+k, k(k+2) — and the section reasons that all four are equivalent by expanding each to k²+2k, illustrating that multiple algebraic representations can describe the same quantity. The same multi-method approach is applied to a square-tile border pattern and two area problems involving rectangles and squares. In the area problems, Tadang's method (total square minus four rectangles), Yusuf's method (inner square directly), and Aditya's method (doubling a half-region) each produce a different expression that proves equivalent upon expansion using Identities 1A, 1B, or 1C. The final Figure it Out consolidates all three identities through computational practice (computing 46², 397×403, 91², 43×45), multi-step products, algebraic expression identification, calendar diagonal-product patterns, and verification of number-theoretic claims using remainder arithmetic and consecutive-number identities.",
+  "enumerated_activities": [],
+  "enumerated_worked_examples": [
+    {
+      "id": "WE-1",
+      "source_section": "section 6.1",
+      "book_ref": "Example 1, section 6.1 p.140",
+      "description": "Expand (3a/2)(a − b + 1/5) using distributivity over three terms; collect like terms using exponent notation."
+    },
+    {
+      "id": "WE-2",
+      "source_section": "section 6.1",
+      "book_ref": "Example 2, section 6.1 p.141",
+      "description": "Expand (a+b)(a+b) by treating (a+b) as a single factor; collect like terms ba and ab to derive a²+2ab+b²."
+    },
+    {
+      "id": "WE-3",
+      "source_section": "section 6.1",
+      "book_ref": "Example 3, section 6.1 p.141",
+      "description": "Expand (a+b)(a²+2ab+b²) using distributivity; collect like terms a²b+2a²b and ab²+2ab² to derive a³+3a²b+3ab²+b³."
+    }
+  ],
+  "enumerated_exercises": [
+    {
+      "id": "E-1",
+      "source_section": "section 6.1",
+      "book_ref": "Figure it Out Q1, section 6.1 p.142",
+      "description": "Observe the 10×10 multiplication grid; if the middle entry of a 3×3 frame is pq, write algebraic expressions for the other 8 entries using Identity 1."
+    },
+    {
+      "id": "E-2",
+      "source_section": "section 6.1",
+      "book_ref": "Figure it Out Q2, section 6.1 p.143",
+      "description": "Expand six products: (3+u)(v−3), (2/3)(15+6a), (10a+b)(10c+d), (3−x)(x−6), (−5a+b)(c+d), (5+z)(y+9)."
+    },
+    {
+      "id": "E-3",
+      "source_section": "section 6.1",
+      "book_ref": "Figure it Out Q3, section 6.1 p.143",
+      "description": "Find 3 pairs of numbers whose product is unchanged when one is increased by 2 and the other decreased by 4. (Math Talk)"
+    },
+    {
+      "id": "E-4",
+      "source_section": "section 6.1",
+      "book_ref": "Figure it Out Q4, section 6.1 p.143",
+      "description": "Expand (i) (a+ab−3b²)(4+b) and (ii) (4y+7)(y+11z−3) using distributivity over multi-term expressions."
+    },
+    {
+      "id": "E-5",
+      "source_section": "section 6.1",
+      "book_ref": "Figure it Out Q5, section 6.1 p.143",
+      "description": "Expand (a−b)(a+b), (a−b)(a²+ab+b²), and (a−b)(a³+a²b+ab²+b³); identify the pattern and predict the next identity."
+    },
+    {
+      "id": "E-6",
+      "source_section": "section 6.1",
+      "book_ref": "Math Talk, section 6.1 p.143",
+      "description": "Describe the general rule for multiplying any number by 11 in one line; evaluate 94×11, 495×11, 3279×11, 4791256×11."
+    },
+    {
+      "id": "E-7",
+      "source_section": "section 6.1",
+      "book_ref": "Figure it Out, section 6.1 p.144",
+      "description": "Use the ×101 rule to multiply 3874×101 in one line."
+    },
+    {
+      "id": "E-8",
+      "source_section": "section 6.1",
+      "book_ref": "Math Talk, section 6.1 p.144",
+      "description": "State the general rule for multiplying by 101; extend to 1001, 10001; evaluate 89×101, 949×101, 265831×1001, 1111×1001, 9734×99, 23478×999."
+    },
+    {
+      "id": "E-9",
+      "source_section": "section 6.2",
+      "book_ref": "Figure it Out, section 6.2 p.146",
+      "description": "Use Identity 1A to write expressions for (m+3)² and (6+p)²."
+    },
+    {
+      "id": "E-10",
+      "source_section": "section 6.2",
+      "book_ref": "Figure it Out, section 6.2 p.146",
+      "description": "Expand (6x+5)² using the distributive property; verify with Identity 1A."
+    },
+    {
+      "id": "E-11",
+      "source_section": "section 6.2",
+      "book_ref": "Figure it Out, section 6.2 p.146",
+      "description": "Expand (3j+2k)² using both Identity 1A and by applying the distributive property directly."
+    },
+    {
+      "id": "E-12",
+      "source_section": "section 6.2",
+      "book_ref": "Figure it Out, section 6.2 p.147",
+      "description": "Expand (b−6)², (−2a+3)², and (7y−3/4z)² using Identity 1B and by applying the distributive property."
+    },
+    {
+      "id": "E-13",
+      "source_section": "section 6.2",
+      "book_ref": "Figure it Out, section 6.2 p.148",
+      "description": "Use Identity 1C to calculate 98×102 and 45×55."
+    },
+    {
+      "id": "E-14",
+      "source_section": "section 6.2",
+      "book_ref": "Figure it Out Q1, section 6.2 p.149",
+      "description": "Which is greater: (a−b)² or (b−a)²? Justify."
+    },
+    {
+      "id": "E-15",
+      "source_section": "section 6.2",
+      "book_ref": "Figure it Out Q2, section 6.2 p.149",
+      "description": "Express 100 as the difference of two perfect squares."
+    },
+    {
+      "id": "E-16",
+      "source_section": "section 6.2",
+      "book_ref": "Figure it Out Q3, section 6.2 p.149",
+      "description": "Compute 406², 72², 145², 1097², and 124² using the identities learned so far."
+    },
+    {
+      "id": "E-17",
+      "source_section": "section 6.2",
+      "book_ref": "Figure it Out Q4, section 6.2 p.149",
+      "description": "Do Patterns 1 and 2 hold for negative integers and fractions? Justify with examples and algebraic reasoning."
+    },
+    {
+      "id": "E-18",
+      "source_section": "section 6.3",
+      "book_ref": "Figure it Out, section 6.3 p.150",
+      "description": "Examine 12 given algebraic simplifications; for each, determine if there is an error, identify the likely misconception, and write the correct expression."
+    },
+    {
+      "id": "E-19",
+      "source_section": "section 6.4",
+      "book_ref": "Math Talk, section 6.4 p.150",
+      "description": "Draw the next figure in the growing circle-array pattern; determine the number of circles in Step 10 and write an expression for Step k."
+    },
+    {
+      "id": "E-20",
+      "source_section": "section 6.4",
+      "book_ref": "Figure it Out, section 6.4 p.152",
+      "description": "Simplify each of the four methods' expressions ((k+1)²−1, k²+2k, k(k+1)+k, k(k+2)) and verify they all equal k²+2k."
+    },
+    {
+      "id": "E-21",
+      "source_section": "section 6.4",
+      "book_ref": "Math Talk, section 6.4 p.152",
+      "description": "Count tiles in the square-tile border pattern; write an algebraic expression for the number of tiles in Step n using more than one method."
+    },
+    {
+      "id": "E-22",
+      "source_section": "section 6.4",
+      "book_ref": "Figure it Out, section 6.4 p.153",
+      "description": "Verify that (m+n)²−4mn = (n−m)² by expanding both expressions (Tadang's and Yusuf's methods for interior shaded region)."
+    },
+    {
+      "id": "E-23",
+      "source_section": "section 6.4",
+      "book_ref": "Figure it Out, section 6.4 p.153",
+      "description": "Verify that x²−xy, x(x+2y)−3xy, and x(x−y) are equivalent expressions for the slanting-lines area; find the area when x=8, y=3."
+    },
+    {
+      "id": "E-24",
+      "source_section": "section 6.4",
+      "book_ref": "Math Talk, section 6.4 p.154",
+      "description": "Write an expression for the dashed region in the L-shaped figure using more than one method; substitute p=6, r=3.5, s=9."
+    },
+    {
+      "id": "E-25",
+      "source_section": "section 6.4",
+      "book_ref": "Figure it Out Q1, section 6.4 p.154",
+      "description": "Compute 46² using Identity 1A, 397×403 and 43×45 using Identity 1C, and 91² using Identity 1B."
+    },
+    {
+      "id": "E-26",
+      "source_section": "section 6.4",
+      "book_ref": "Figure it Out Q2, section 6.4 p.154",
+      "description": "Use a suitable identity or distributive property to find: (p−1)(p+11), (3a−9b)(3a+9b), −(2y+5)(3y+4), (6x+5y)², (2x−1/2)², (7p)×(3r)×(p+2)."
+    },
+    {
+      "id": "E-27",
+      "source_section": "section 6.4",
+      "book_ref": "Figure it Out Q3, section 6.4 p.155",
+      "description": "Identify the correct algebraic expression(s) for: (i) two more than a square number; (ii) sum of squares of two consecutive numbers."
+    },
+    {
+      "id": "E-28",
+      "source_section": "section 6.4",
+      "book_ref": "Figure it Out Q4, section 6.4 p.155",
+      "description": "Examine 2×2 calendar squares; show that the difference of diagonal products is always 7 by labelling entries as a, a+1, a+7, a+8 and expanding."
+    },
+    {
+      "id": "E-29",
+      "source_section": "section 6.4",
+      "book_ref": "Figure it Out Q5, section 6.4 p.155",
+      "description": "Verify which of four algebraic statements are true: (i) (k+1)(k+2)−(k+3) is always 2; (ii) (2q+1)(2q−3) is a multiple of 4; (iii) even squares are multiples of 4 and odd squares are 1 more than multiples of 8; (iv) (6n+2)²−(4n+3)² is 5 less than a square."
+    },
+    {
+      "id": "E-30",
+      "source_section": "section 6.4",
+      "book_ref": "Figure it Out Q6, section 6.4 p.155",
+      "description": "A number leaves remainder 3 when divided by 7, another leaves remainder 5. Find the remainders when their sum, difference, and product are divided by 7."
+    },
+    {
+      "id": "E-31",
+      "source_section": "section 6.4",
+      "book_ref": "Figure it Out Q7, section 6.4 p.155",
+      "description": "Choose three consecutive numbers, square the middle one, subtract the product of the other two; identify the pattern, write as an algebraic identity, and verify by expansion."
+    },
+    {
+      "id": "E-32",
+      "source_section": "section 6.4",
+      "book_ref": "Figure it Out Q8, section 6.4 p.156",
+      "description": "Write the algebraic expression for: add two numbers, then multiply by half their sum; prove the result equals half the square of their sum."
+    },
+    {
+      "id": "E-33",
+      "source_section": "section 6.4",
+      "book_ref": "Figure it Out Q9, section 6.4 p.156",
+      "description": "Without fully computing, determine which is larger: 14×26 or 16×24; and 25×75 or 26×74."
+    },
+    {
+      "id": "E-34",
+      "source_section": "section 6.4",
+      "book_ref": "Figure it Out Q10, section 6.4 p.156",
+      "description": "Write an expression for the area of the walking path surrounding two square green plots (each area g² sq ft) in a rectangular park with path width w ft."
+    },
+    {
+      "id": "E-35",
+      "source_section": "section 6.4",
+      "book_ref": "Figure it Out Q11, section 6.4 p.156",
+      "description": "For two tile patterns (L-shape and square array): draw Step 4, count basic units in Step 10, write an expression for Step y."
+    }
+  ],
+  "conceptual_demand": 3,
+  "activity_count": 0,
+  "demo_count": 3,
+  "exec_load": 1
+}
 
 
 ======================================================================
 
-THE FULLEST PLAN (12 units). The unit you write REPLACES its final unit, closing this arc:
+THE FULLEST PLAN (16 units). The unit you write REPLACES its final unit, closing this arc:
 
-U1: Strap, Nail, and Knife: Feeling Pressure
-U2: Liquid Pressure: Height, Direction, and the Dam's Secret
-U3: The Invisible Weight: Lifting Paper with Air
-U4: Quantifying the Atmosphere: Units, Magnitude, and Body Balance
-U5: Balloon to Balloon: Air Moves from High to Low Pressure
-U6: Pressure Difference and Wind Speed: How Hard Does the Breeze Blow?
-U7: Balloons Come Together: High-Speed Air, Low Pressure
-U8: Open the Windows? Reasoning Through Storm Safety
-U9: From Rising Air to Thunderclap: Building the Storm Chain
-U10: Lightning Safety: Evaluating Precautions Against the Chain
-U11: The Self-Reinforcing Storm: Why Cyclones Grow Over the Ocean
+U1: What Happens When We Nudge a Factor?
+U2: Expanding Products, Naming Every Part
+U3: Fast Multiplication: Digits Dancing with Distributivity
+U4: Applying Identity 1: Patterns, Pairs, Predictions
+U5: Squares from Squares: Seeing (a+b)² in a Diagram
+U6: Shrinking the Square: (a−b)² and the Difference of Squares
+U7: Patterns from Identities: When Algebra Explains Numbers
+U8: Error Hunt: Finding and Fixing Wrong Algebra
+U9: Counting Circles Four Ways: One Answer, Many Expressions
+U10: Border Tiles and Area Regions: Equivalent Expressions from Geometry
+U11: Aditya's Half-Region and the L-Shape: More Methods, Same Truth
+U12: Calendar Diagonals and Consecutive Numbers: Algebra as Proof
+U13: Number-Theoretic Claims: Using Identities to Verify Divisibility
+U14: Area Puzzles, Tile Patterns, and Identities at Work
+U15: All Paths Converge: A Consolidation Through Multi-Method Problems
 U<final>: ← the unit you are writing
 
-THE SHORTER PLANS (3). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
+THE SHORTER PLANS (2). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
 
+
+--- PLAN OF 13 UNITS — unit-title map ---
+U1: What Happens When We Nudge a Product?
+U2: Brahmagupta's Trick and the Rule of Eleven
+U3: Expanding Binomials: From Area to Algebra
+U4: Seeing the Square: Geometry Proves (a+b)²
+U5: Removing a Corner: Deriving (a−b)² and (a+b)(a−b)
+U6: Patterns from the Three Identities
+U7: Spot It, Name It, Fix It
+U8: Counting Circles Four Ways — Same Answer, Different Forms
+U9: Tile Borders and Area Methods: One Region, Many Expressions
+U10: L-Shape and Calendar: Reasoning with Equivalent Expressions
+U11: Consecutive Numbers, Remainders and Algebraic Proof
+U12: Walking Paths, Tile Patterns and Consolidation
+U13: Number-Theoretic Reasoning and Chapter Consolidation
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 13,
+ "period_duration_minutes": 45,
+ "synthesis": false,
+ "textbook_segments": [
+  {
+   "ref": "section 6.4",
+   "title": "This Way or That Way, All Ways Lead to the Bay"
+  }
+ ],
+ "section_goal": "reason",
+ "activity_title": "Number-Theoretic Reasoning and Chapter Consolidation",
+ "pedagogical_method": "Problem-solving",
+ "textbook_items_in_class": [
+  {
+   "id": "E-27",
+   "type": "exercise",
+   "source_section": "section 6.4",
+   "book_ref": "Figure it Out Q3, section 6.4 p.155",
+   "description": "Identify the correct algebraic expression(s) for: (i) two more than a square number; (ii) sum of squares of two consecutive numbers."
+  },
+  {
+   "id": "E-28",
+   "type": "exercise",
+   "source_section": "section 6.4",
+   "book_ref": "Figure it Out Q4, section 6.4 p.155",
+   "description": "Examine 2×2 calendar squares; show that the difference of diagonal products is always 7 by labelling entries as a, a+1, a+7, a+8 and expanding."
+  },
+  {
+   "id": "E-29",
+   "type": "exercise",
+   "source_section": "section 6.4",
+   "book_ref": "Figure it Out Q5, section 6.4 p.155",
+   "description": "Verify which of four algebraic statements are true: (i) (k+1)(k+2)−(k+3) is always 2; (ii) (2q+1)(2q−3) is a multiple of 4; (iii) even squares are multiples of 4 and odd squares are 1 more than multiples of 8; (iv) (6n+2)²−(4n+3)² is 5 less than a square."
+  },
+  {
+   "id": "E-33",
+   "type": "exercise",
+   "source_section": "section 6.4",
+   "book_ref": "Figure it Out Q9, section 6.4 p.156",
+   "description": "Without fully computing, determine which is larger: 14×26 or 16×24; and 25×75 or 26×74."
+  }
+ ],
+ "homework": [],
+ "time_bands": [
+  {
+   "minutes": "0–12",
+   "activity": "Students work on Figure it Out Q3, section 6.4 p.155 (\"Identify the correct algebraic expression(s) for: (i) two more than a square number; (ii) sum of squares of two consecutive numbers.\") individually. They list candidate expressions, test with a specific value, and then justify the correct form algebraically using expansion."
+  },
+  {
+   "minutes": "12–25",
+   "activity": "Revisit Figure it Out Q5, section 6.4 p.155 (\"Verify which of four algebraic statements are true....\") for statements not fully proved in the previous unit — in particular statement (iv): (6n+2)²−(4n+3)². Students expand both squares using Identity 1A or 1B, subtract, and determine whether the result is 5 less than a perfect square by completing the comparison."
+  },
+  {
+   "minutes": "25–38",
+   "activity": "Students attempt Figure it Out Q9, section 6.4 p.156 (\"Without fully computing, determine which is larger: 14×26 or 16×24; and 25×75 or 26×74.\") if not yet completed, then compose a written one-paragraph explanation of why the product closest to the square of the mean is always the largest. Pairs exchange and offer one improvement each."
+  },
+  {
+   "minutes": "38–45",
+   "activity": "Whole-class synthesis discussion: the teacher poses 'What is one algebraic identity this chapter gave you that you will remember, and why?' Students share briefly. Teacher maps responses onto the board alongside the three identities (1A, 1B, 1C) and Identity 1, closing with the chapter's key insight — that distributivity is a single principle whose special cases generate all the pattern-families explored."
+  }
+ ],
+ "teacher_notes": "Statement (iv) in Q5 is the hardest algebraic manipulation in the chapter — expand (6n+2)² = 36n²+24n+4 and (4n+3)² = 16n²+24n+9, subtract to get 20n²−5 = 5(4n²−1) = 5(2n−1)(2n+1); the result is indeed 5 less than the square (2n)²×5, which requires careful framing. Use Q3 to consolidate the idea that equivalent forms exist even for verbal descriptions of number types.",
+ "materials": [
+  "Notebooks",
+  "Blackboard or whiteboard"
+ ]
+}
 
 --- PLAN OF 10 UNITS — unit-title map ---
-U1: Narrow Strap, Broad Strap — Feeling Pressure
-U2: Water Column, Water Direction — Liquid Pressure Patterns
-U3: The Paper Sheet That Pushes Back — Atmospheric Pressure
-U4: From High to Low — The Direction Air Always Moves
-U5: Balloons That Defy Expectation — Speed Lowers Pressure
-U6: Storm Anatomy — From Rising Warm Air to Rain and Thunder
-U7: Charge in the Cloud — How Lightning Forms and Strikes
-U8: Safety in a Storm — Lightning Conductors and Precautions
-U9: The Self-Reinforcing Storm — How a Cyclone Builds and What It Does
-U10: Cyclone Preparedness — Reading Alerts and Planning Response
+U1: What Happens to the Product When Factors Change?
+U2: Multiply by Parts: Mental Tricks from Distributivity
+U3: Frames, Grids and Structured Exploration of Identity 1
+U4: Why Does Squaring a Sum Give Three Terms?
+U5: Difference of Squares and Fast Squaring Patterns
+U6: Spot It, Name It, Fix It: Error Analysis Clinic
+U7: Many Methods, One Answer: Circle Arrays and Tile Borders
+U8: Area Problems: Three Methods, One Shaded Region
+U9: Calendars, Consecutive Numbers and Number-Theory Patterns
+U10: Consolidating All Identities Through Rich Problems
 
 --- its FINAL unit, in full ---
 {
  "period_number": 10,
  "period_duration_minutes": 45,
- "progression_stage": 5,
- "stage_label": "Apply the pressure-difference framework to explain cyclone formation, structure, and effects",
- "pedagogical_approach": "Hands-on Science",
- "activity_title": "Cyclone Preparedness — Reading Alerts and Planning Response",
- "activity_description": "Students analyse a scenario describing a coastal community receiving an IMD cyclone alert with wind speed and storm surge data, and use the chapter's formation and effects knowledge to evaluate the severity of the threat, justify specific preparedness actions from the chapter's list, and explain why the cyclone will weaken once it makes landfall.",
- "roles": [
+ "synthesis": false,
+ "textbook_segments": [
   {
-   "actor": "Teacher",
-   "role_description": "Distributes the scenario and reads through it with students, then steps back to let groups work through the evaluation and justification tasks, intervening only when groups are missing the mechanistic link between landfall and weakening."
-  },
-  {
-   "actor": "Students (Groups)",
-   "role_description": "Evaluate the threat severity using wind speed and surge data, justify at least three preparedness actions with mechanism-based reasons, and write a two-sentence explanation of why the cyclone weakens over land."
+   "ref": "section 6.4",
+   "title": "This Way or That Way, All Ways Lead to the Bay"
   }
  ],
- "time_bands": [
+ "section_goal": "reason",
+ "activity_title": "Consolidating All Identities Through Rich Problems",
+ "pedagogical_method": "Problem-solving",
+ "textbook_items_in_class": [
   {
-   "minutes": "0-8",
-   "activity": "Teacher distributes the scenario and students read it, identifying the key data points — wind speed, storm surge height, coastal proximity — before any group work begins."
+   "id": "E-25",
+   "type": "exercise",
+   "source_section": "section 6.4",
+   "book_ref": "Figure it Out Q1, section 6.4 p.154",
+   "description": "Compute 46² using Identity 1A, 397×403 and 43×45 using Identity 1C, and 91² using Identity 1B."
   },
   {
-   "minutes": "8-28",
-   "activity": "Groups work through the three tasks: threat severity evaluation, preparedness justification (at least three actions from the chapter's list with mechanism-based reasons), and the landfall-weakening explanation."
+   "id": "E-26",
+   "type": "exercise",
+   "source_section": "section 6.4",
+   "book_ref": "Figure it Out Q2, section 6.4 p.154",
+   "description": "Use a suitable identity or distributive property to find: (p−1)(p+11), (3a−9b)(3a+9b), −(2y+5)(3y+4), (6x+5y)², (2x−1/2)², (7p)×(3r)×(p+2)."
   },
   {
-   "minutes": "28-40",
-   "activity": "Groups share their landfall-weakening explanations; class consolidates the correct mechanistic answer — moist oceanic air is cut off, the energy source for the self-reinforcing cycle is removed, and the low-pressure centre fills."
+   "id": "E-33",
+   "type": "exercise",
+   "source_section": "section 6.4",
+   "book_ref": "Figure it Out Q9, section 6.4 p.156",
+   "description": "Without fully computing, determine which is larger: 14×26 or 16×24; and 25×75 or 26×74."
   },
   {
-   "minutes": "40-45",
-   "activity": "Students individually write a two-sentence reflection: which single concept from the whole chapter best explains why cyclones are more destructive than ordinary thunderstorms, and why."
+   "id": "E-35",
+   "type": "exercise",
+   "source_section": "section 6.4",
+   "book_ref": "Figure it Out Q11, section 6.4 p.156",
+   "description": "For two tile patterns (L-shape and square array): draw Step 4, count basic units in Step 10, write an expression for Step y."
   }
- ],
- "teacher_notes": "This closing unit requires students to deploy the full pressure-difference framework — from the chapter's first section — in a novel applied scenario, which is the dissolution test's final operation. The previous unit built the formation mechanism; this unit asks students to reason forward from that mechanism to threat assessment and preparedness, and backward to explain weakening. Watch for groups who justify preparedness actions with rules alone ('go to a shelter because it is safe') rather than mechanisms ('move inland to avoid storm surge, which forms because the very low eye pressure allows ocean water to pile up'). The individual reflection at the close is a lightweight but revealing formative signal: a strong response will name the self-reinforcing pressure-difference feedback loop, not merely 'strong winds'.",
- "materials": [
-  "Printed cyclone scenario card (one per group)",
-  "Preparedness action list from chapter",
-  "Individual reflection slip (half A4 sheet)"
  ],
  "homework": [
-  "Find a news report about a real cyclone that affected India (Amphan is cited in your chapter). Write three sentences connecting one effect described in the report to a specific step in the cyclone formation mechanism you studied."
- ]
-}
-
---- PLAN OF 8 UNITS — unit-title map ---
-U1: Nail, Knife, and the Meaning of Pressure
-U2: Water Towers and Holes: Pressure in Liquids
-U3: The Air Pushes Back: Discovering Atmospheric Pressure
-U4: From Balloon to Breeze: Pressure Differences and Wind
-U5: High-Speed Air Lowers Pressure: The Balloon-Squeeze Experiment
-U6: From Warm Air Rising to Lightning: Building the Storm Chain
-U7: The Cyclone Engine: Mapping Formation, Intensity, and Destruction
-U8: Pressure All the Way: Applying the Arc to Unfamiliar Scenarios
-
---- its FINAL unit, in full ---
-{
- "period_number": 8,
- "period_duration_minutes": 45,
- "progression_stage": 5,
- "stage_label": "Explain cyclone formation as a self-reinforcing pressure-driven system and evaluate its effects",
- "pedagogical_approach": "Hands-on Science",
- "activity_title": "Pressure All the Way: Applying the Arc to Unfamiliar Scenarios",
- "activity_description": "Students receive four scenario cards — an unusual storm-roof event, a failed rubber sucker on a textured surface, a coastal community preparing for a cyclone, and an engineer designing a new dam — and apply pressure-difference reasoning to explain or evaluate each scenario, producing written justifications that draw on concepts from across the chapter.",
- "roles": [
   {
-   "actor": "Students (Groups)",
-   "role_description": "Work through two assigned scenario cards, producing a written explanation or recommendation that traces the causal pressure-difference reasoning for each."
-  },
-  {
-   "actor": "Teacher",
-   "role_description": "Distributes scenario cards, circulates to challenge groups to specify which pressure principle applies, and facilitates a cross-group share where each group hears all four scenarios."
+   "id": "E-32",
+   "type": "exercise",
+   "source_section": "section 6.4",
+   "book_ref": "Figure it Out Q8, section 6.4 p.156",
+   "description": "Write the algebraic expression for: add two numbers, then multiply by half their sum; prove the result equals half the square of their sum."
   }
  ],
  "time_bands": [
   {
-   "minutes": "0-6",
-   "activity": "The teacher frames this unit as a culminating application — all the pressure-difference principles built across the chapter are the toolkit; the scenarios test whether students can reach for the right one."
+   "minutes": "0–12",
+   "activity": "Students work through Figure it Out Q1, section 6.4 p.154 (\"Compute 46² using Identity 1A, 397×403 and 43×45 using Identity 1C, and 91² using Identity 1B.\"). Each student selects the matching identity, writes the factored form, and computes. Pairs cross-check their identity choice before computing."
   },
   {
-   "minutes": "6-28",
-   "activity": "Groups work on their two scenario cards, writing explanations that name the relevant pressure principle, state the direction of force or air movement, and connect to an observable outcome."
+   "minutes": "12–25",
+   "activity": "Students tackle Figure it Out Q2, section 6.4 p.154 (\"Use a suitable identity or distributive property to find: (p−1)(p+11), (3a−9b)(3a+9b)....\") individually, then mark their own work by swapping with a neighbour. For each product, they must name which identity or rule they used."
   },
   {
-   "minutes": "28-40",
-   "activity": "Each group presents one scenario to the class; the class assesses whether the explanation correctly identifies the pressure principle and whether the causal chain is complete."
+   "minutes": "25–36",
+   "activity": "Pose Figure it Out Q9, section 6.4 p.156 (\"Without fully computing, determine which is larger: 14×26 or 16×24....\") as a reasoning challenge — students must justify using Identity 1C and the fact that (a−b)(a+b) = a²−b² decreases as b increases. Then students draw Step 4 of the tile patterns in Figure it Out Q11, section 6.4 p.156 (\"For two tile patterns (L-shape and square array): draw Step 4....\") and write the expression for Step y."
   },
   {
-   "minutes": "40-45",
-   "activity": "Students individually write a two-sentence reflection on which scenario required the most complex reasoning and why, identifying the specific concepts that combined."
+   "minutes": "36–45",
+   "activity": "Closing reflection: each student writes two sentences — one identity they found most useful today and one type of problem where they had to choose between identities. Teacher collects these as a formative check on identity-selection fluency."
   }
  ],
- "teacher_notes": "This closing unit does not synthesise the chapter as a whole-chapter summary — instead it places students in the role of reasoners who must select and apply principles to contexts they have not explicitly encountered, which is the highest cognitive demand of the chapter. A common difficulty at this stage is that students can describe a concept but fail to identify which concept applies to a novel scenario — the scenario cards are designed to require that selection step explicitly. The cross-group share creates accountability and gives you a live map of which principles are still fragile across the class.",
+ "teacher_notes": "Choosing the right identity for a given product is the culminating skill of this chapter — students who can factorise 397×403 as (400−3)(400+3) and immediately apply Identity 1C have mastered the structural thinking the chapter builds. Watch for students who default to the distributive property even when a special identity gives a one-step shortcut; the Q9 comparison problem specifically rewards those who reason structurally. Figure it Out Q8 (prove the sum-half-sum formula) makes a suitable independent extension and is set as a take-away reinforcement task.",
  "materials": [
-  "Four scenario cards (printed)",
-  "Writing materials",
-  "Observation recording sheet for group responses"
- ],
- "homework": [
-  "Choose one weather event you have experienced (a strong wind, a sudden rain, a very hot day near the sea) and write a short explanation — in three to four sentences — tracing the pressure-difference mechanism that most likely caused it, using the vocabulary from this chapter.",
-  "Evaluate this claim: 'Opening windows during a storm is dangerous because more wind will enter.' State whether you agree or disagree and justify your answer using the pressure principle for roofs."
+  "Pencils and paper",
+  "Blackboard for recording identity choices"
  ]
-}
-
---- PLAN OF 7 UNITS — unit-title map ---
-U1: Narrow Strap, Sharp Edge — Feeling Pressure Change
-U2: Water Columns and the Direction of Liquid Pressure
-U3: The Weight of Air — Atmospheric Pressure in Action
-U4: From Balloon to Breeze — Pressure Differences Drive Air Movement
-U5: Rising Air, Charging Clouds — How Storms and Lightning Form
-U6: Cyclone Eye — Tracing the Self-Reinforcing Spiral
-U7: Pressure Detectives — Explaining Phenomena Across the Chapter
-
---- its FINAL unit, in full ---
-{
- "period_number": 7,
- "period_duration_minutes": 45,
- "progression_stage": 5,
- "stage_label": "Apply pressure-difference reasoning to explain and evaluate unfamiliar atmospheric phenomena",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "Pressure Detectives — Explaining Phenomena Across the Chapter",
- "activity_description": "Students receive a set of novel scenario cards — each describing an atmospheric or fluid situation not explicitly discussed in the chapter — and must identify the pressure-difference mechanism at work, predict what will happen, and justify their prediction using the pressure-difference framework built across all earlier units. Scenarios draw on the chapter's own principles applied to new contexts.",
- "roles": [
-  {
-   "actor": "Students (Groups)",
-   "role_description": "Analyse each scenario card, identify the relevant pressure variable (area, column height, wind speed, temperature gradient), predict the outcome, and write a justified explanation using the chapter's causal language."
-  },
-  {
-   "actor": "Teacher",
-   "role_description": "Facilitate group reasoning by asking probing questions when groups stall, and orchestrate a whole-class comparison of explanations for the most contested scenario."
-  }
- ],
- "time_bands": [
-  {
-   "minutes": "0-6",
-   "activity": "Teacher briefly recaps the full pressure-difference arc — from force per area to atmospheric pressure to wind formation to storms and cyclones — framing this unit as the moment to test whether students can apply the framework to situations they have not seen before."
-  },
-  {
-   "minutes": "6-28",
-   "activity": "Groups receive scenario cards (four scenarios per group): (1) a balloon animal flattens in the sun — which pressure variable explains it? (2) a diver at greater depth in the sea feels more pressure — why, given what was established about liquid-column height? (3) a tornado funnel narrows as it touches ground — what happens to wind speed and pressure inside? (4) an overhead water tank on the sixth floor supplies stronger flow than one on the second floor — explain using column height. Groups write a justified prediction for each scenario."
-  },
-  {
-   "minutes": "28-40",
-   "activity": "Groups share explanations for the tornado scenario (the most contested); class evaluates whether the reasoning is consistent with the speed-pressure inverse relationship from the chapter and whether each explanation uses causal language rather than just naming the outcome."
-  },
-  {
-   "minutes": "40-45",
-   "activity": "Individual written synthesis: in three sentences, trace how the single principle of pressure = force ÷ area connects the discomfort of a narrow bag strap in the opening unit to the formation of a cyclone in the final topic."
-  }
- ],
- "teacher_notes": "This closing unit asks students to transfer reasoning rather than recall facts, so resist the urge to confirm or deny group answers prematurely — let groups argue the tornado scenario before class discussion, as the productive disagreement itself demonstrates the kind of causal reasoning the chapter builds toward. Watch for explanations that name the right phenomenon (low pressure inside the funnel) without stating the causal mechanism (high wind speed produces low pressure); insist on the causal link in writing. The three-sentence individual synthesis at the close is the chapter's capstone: a student who can trace the pressure-per-unit-area principle from the bag strap all the way to a cyclone has achieved the chapter's central cognitive goal.",
- "materials": [
-  "Scenario cards (four per group, printed or written on card stock)",
-  "Notebook or response sheet for written justifications"
- ],
- "homework": []
 }
 
 ======================================================================

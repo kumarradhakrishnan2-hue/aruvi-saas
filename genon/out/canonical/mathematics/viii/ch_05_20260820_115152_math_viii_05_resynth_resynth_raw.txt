@@ -1,0 +1,45 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Number Play: Four Problems, Every Method",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems at once. Students work individually with full written working for the first stretch, then compare in groups of three — any disagreement is resolved by reconstructing the solution step by step, not by majority vote. One student per group presents one problem; after each presentation the class names the chapter method the solution rested on. Problem 1 needs remainder-class algebra (section 5.1: expressing numbers as 7k + r and reasoning about what r the sum carries). Problem 2 needs the digit-sum and alternating-digit-sum divisibility rules (section 5.2: place-value algebra for 9 and 11). Problem 3 needs the always/sometimes/never divisibility-law framework (section 5.1: if a divides M and a divides N then a divides M ± N, and the LCM law). Problem 4 needs cryptarithm reasoning — units-digit constraint then bounding (section 5.3). Watch for: in Problem 1, students writing the sum of two remainder expressions without reducing the combined remainder mod 7; in Problem 2, students applying the digit-sum rule to check divisibility by 11 instead of the alternating rule; in Problem 3, students confusing 'divisible by both 6 and 10' with 'divisible by 60' without checking that 6 and 10 share the factor 2; in Problem 4, students not using the units-digit of KKK to pin K before trying other digits.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | A number N leaves remainder 4 when divided by 7, and a number M leaves remainder 5 when divided by 7. Without dividing, find the remainder when (i) N + M and (ii) N × M are each divided by 7. | Write N = 7a + 4 and M = 7b + 5. (i) N + M = 7(a + b) + 9 = 7(a + b + 1) + 2, so the remainder is 2. (ii) N × M = (7a + 4)(7b + 5) = 49ab + 35a + 28b + 20 = 7(7ab + 5a + 4b + 2) + 6, so the remainder is 6.\n2 | A six-digit number has the form 3A5B72, where A and B are single digits. Find all pairs (A, B) such that the number is divisible by both 9 and 11. | Divisibility by 9: digit sum = 3 + A + 5 + B + 7 + 2 = 17 + A + B must be divisible by 9, so A + B = 1 or A + B = 10 (since A, B are digits, A + B ≤ 18; next would be 19, impossible). Divisibility by 11: alternating sum (units upward) = 2 − 7 + B − 5 + A − 3 = A + B − 13 must be 0 or a multiple of 11, so A + B − 13 = 0 giving A + B = 13, or A + B − 13 = −11 giving A + B = 2, or A + B − 13 = 11 giving A + B = 24 (impossible). The two conditions together require A + B to satisfy both lists: {1, 10} ∩ {2, 13} = empty — no pair satisfies both simultaneously. (Teacher note: if the problem is to have a solution, replace 72 with 18: digit sum becomes 3 + A + 5 + B + 1 + 8 = 17 + A + B, same constraint; alternating sum = 8 − 1 + B − 5 + A − 3 = A + B − 1, must be 0 or ±11, giving A + B = 1 or A + B = 12. Intersection with {1, 10}: A + B = 1. With A + B = 1, single-digit pairs: (0,1) and (1,0). Both valid. Use the number 3A5B18 in class.) | Use the number 3A5B18. Digit sum = 3 + A + 5 + B + 1 + 8 = 17 + A + B divisible by 9 → A + B = 1 or A + B = 10. Alternating sum (from units) = 8 − 1 + B − 5 + A − 3 = A + B − 1 must be 0 or ±11 → A + B = 1 or A + B = 12. Intersection: A + B = 1. Digit pairs: (A, B) = (0, 1) giving 305118, and (A, B) = (1, 0) giving 315018. Both are divisible by 9 and by 11.\n3 | Riya says: 'If a number is divisible by both 6 and 10, it must be divisible by 60.' Is this always, sometimes, or never true? Give an algebraic justification and a counterexample or proof. | Sometimes true. 6 = 2 × 3 and 10 = 2 × 5 share the factor 2, so LCM(6, 10) = 30, not 60. A number divisible by both 6 and 10 must be divisible by 30. Example: 30 is divisible by 6 (30 = 6 × 5) and by 10 (30 = 10 × 3), but 30 ÷ 60 is not a whole number, so 30 is not divisible by 60. Thus the statement is sometimes true (60 itself works) and sometimes false (30 does not). Algebraic route: write the number as 6a = 10b; the number is a multiple of LCM(6,10) = 30, so it has the form 30k. It equals 60k only when k is even, which need not hold.\n4 | Solve the cryptarithm AB × 7 = CBA, where each letter stands for a distinct digit and A ≠ 0. | Units digit: B × 7 ends in A. Tens and hundreds: the product is a three-digit number whose hundreds digit is A and units digit is B, reversing the original tens-and-units. Try values of B whose units digit of 7B equals A, and check that A (the hundreds digit of CBA) matches the leading digit of AB. B = 4: 7 × 4 = 28, so A = 8; AB = 84; 84 × 7 = 588. Hundreds digit is 5, but A = 8 — no. B = 7: repeated digit — ruled out. B = 2: A = 4; AB = 42; 42 × 7 = 294. CBA should have C in hundreds, B = 2 in tens, A = 4 in units: 294 → C = 2, but B = 2 already — digits not distinct. B = 6: 7 × 6 = 42, A = 2; AB = 26; 26 × 7 = 182. CBA: units = 2 = A ✓, tens = 8 = B? B = 6 ≠ 8 — no. B = 8: A = 6 (since 7 × 8 = 56, units digit 6); AB = 68; 68 × 7 = 476. CBA: units = 6 = A ✓, tens = 7 = B? B = 8 ≠ 7 — no. B = 3: A = 1 (7 × 3 = 21); AB = 13; 13 × 7 = 91 — only two digits, not three. B = 5: A = 5 — repeated. B = 9: A = 3 (7 × 9 = 63); AB = 39; 39 × 7 = 273. CBA: units = 3 = A ✓, tens = 7 = B? B = 9 ≠ 7 — no. B = 1: A = 7 (7 × 1 = 7); AB = 71; 71 × 7 = 497. CBA: units = 7 = A ✓, tens = 9 = B? B = 1 ≠ 9 — no. No solution exists for AB × 7 = CBA with all digits distinct. (Use AB × 9 = CBA instead: B = 1, A = 9 — repeated; B = 8, A = 2 (9×8=72): AB = 28, 28×9 = 252 — C=2,B=5,A=2 repeated; B = 9 repeated. Use the cryptarithm MN × 4 = NM: units digit of 4N = M; N=3,M=2: 32×4=128 three digits; N=8,M=2: 4×8=32 units=2=M✓, 28×4=112 three digits; N=2,M=8: 28×4=112 nope. Use AB × 3 = CBA: B×3 units = A; B=5,A=5 repeated; B=7,A=1: AB=17,17×3=51 two digits; B=8,A=4: AB=48,48×3=144,CBA=144,C=1,B=4,A=4 repeated. Use the well-formed cryptarithm MN × 4 = NNM — not standard. Use KL × 9 = MLK: L×9 units=K; L=9 gives K=1(81): KL=19,19×9=171,MLK→M=1=K repeated; L=1,K=9: KL=91 but L=1 means units=9 and 91×9=819,MLK=819,M=8,L=1✓,K=9✓, all distinct. Solution: 91×9=819, so K=9,L=1,M=8.) | Use the cryptarithm KL × 9 = MLK. Units step: L × 9 must end in K. Try L = 1: 9 × 1 = 9, so K = 9. Then KL = 91. Check: 91 × 9 = 819. Write as MLK: M = 8, L = 1, K = 9. All three digits distinct and non-zero. ✓ Solution: K = 9, L = 1, M = 8."
+      }
+    ],
+    "materials": [
+      "Blackboard or whiteboard",
+      "Plain paper for individual working"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "Teacher writes all four problems on the board, one below the other, and reads each aloud. Students read them over and ask only clarifying questions about what is being asked — no hints yet. Everyone picks up pen and begins."
+      },
+      {
+        "minutes": "3-20",
+        "activity": "Individual working time. Every student attempts all four problems in full, writing each step. The teacher circulates silently, noting which problems are stalling most groups, but does not intervene."
+      },
+      {
+        "minutes": "20-32",
+        "activity": "Groups of three compare solutions. Any answer that differs is reconstructed step by step from the first line — the group does not move on until the disagreement is resolved by reasoning. Groups that finish early are asked to write one sentence naming the chapter idea each problem used."
+      },
+      {
+        "minutes": "32-43",
+        "activity": "One student presents one problem to the class — teacher assigns problems to groups so all four are covered. After each presentation the class, not the presenter, names the chapter method the solution rested on. The teacher writes the method-name on the board beside the problem number."
+      },
+      {
+        "minutes": "43-45",
+        "activity": "Teacher reads the four method-names from the board and says: every problem in this chapter gave way the moment you found the right algebraic description of the number — that is the one idea the whole chapter rests on. No further summary."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

@@ -1,0 +1,46 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Five Ideas, Four Problems",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems at once on the board. Students work individually for the first stretch, writing full working. They then compare in groups of three: any disagreement is reconstructed step by step before the group agrees on an answer. One student per problem presents to the class; after each presentation the class names the chapter method the solution rested on — do not name it yourself first. Problem 1 needs Roman numeral grouping into landmark numbers (largest to smallest). Problem 2 needs Egyptian hieroglyphic encoding and the base-10 regrouping rule for addition. Problem 3 needs the greedy decomposition into powers of a base (base-5 here). Problem 4 needs the positional (place value) reading of a Mesopotamian-style numeral. Watch for students who add Roman symbols without checking landmark order, who forget to regroup ten strokes into one arc in the Egyptian sum, who treat 5¹ and 5⁰ as interchangeable in the base-5 decomposition, and who assign face value rather than positional value to the Mesopotamian groups.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | Write 2468 in Roman numerals. Show your grouping step by step. | 2468 = 1000+1000+100+100+100+100+50+10+5+1+1+1. Group from largest landmark: MM (2000) + CCCC (400) + L (50) + X (10) + V (5) + III (3) = MMCCCCLXVIII.\n2 | Add these two Egyptian hieroglyphic numbers: one has 3 hundred-symbols, 7 ten-symbols and 6 one-symbols; the other has 2 hundred-symbols, 5 ten-symbols and 8 one-symbols. Write the sum in Egyptian notation. | Ones: 6+8=14 → keep 4 ones, carry 1 ten. Tens: 7+5+1=13 → keep 3 tens, carry 1 hundred. Hundreds: 3+2+1=6 hundreds. Sum: 6 hundred-symbols, 3 ten-symbols, 4 one-symbols (representing 634).\n3 | Express 97 in a base-5 system whose landmark numbers are 1, 5, 25, 125. Show the greedy decomposition. | 97 ÷ 25 = 3 remainder 22. 22 ÷ 5 = 4 remainder 2. 2 ÷ 1 = 2. So 97 = 3×25 + 4×5 + 2×1. Written with base-5 symbols: three 25-symbols, four 5-symbols, two 1-symbols (digit form: 342 in base 5).\n4 | A Mesopotamian scribe writes a numeral in two positional groups: the left group shows 2×10+15 = 35, and the right group shows 1×10+10 = 20. The left group stands in the 60¹ place and the right in the 60⁰ place. What number is this? | Left group value: 35 × 60 = 2100. Right group value: 20 × 1 = 20. Total: 2100 + 20 = 2120."
+      }
+    ],
+    "materials": [
+      "Blackboard or whiteboard",
+      "Chalk or markers",
+      "Rough paper for each student"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "Write all four problems on the board without comment. Tell the class: work each one fully, showing every step. Silence while everyone reads and begins."
+      },
+      {
+        "minutes": "3-22",
+        "activity": "Individual working time. Students write complete solutions to all four problems on rough paper. No answers shared yet. Move around the room; if a student is stuck on a problem, ask which chapter system the problem is asking them to use — nothing more."
+      },
+      {
+        "minutes": "22-33",
+        "activity": "Groups of three compare answers. Where answers differ, the group works through the disagreement step by step on paper until they agree. Every member must be able to explain the agreed solution."
+      },
+      {
+        "minutes": "33-43",
+        "activity": "One student presents each problem's solution at the board, talking through every step. After each presentation, the class names the chapter method the solution used. The teacher writes the method name on the board beside the problem number once the class has named it."
+      },
+      {
+        "minutes": "43-45",
+        "activity": "The teacher reads the four method names now on the board and speaks one sentence: every number system in this chapter was an attempt to answer the same question — how do you write any number clearly, with as few symbols as possible, so that arithmetic stays manageable — and the Hindu system answered it completely because it brought all five ideas together at once."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

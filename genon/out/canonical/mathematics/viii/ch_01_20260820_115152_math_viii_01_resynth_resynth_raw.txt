@@ -1,0 +1,45 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Squares, Cubes, and Roots: Four Problems, One Chapter",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems at once on the board and give students 18 minutes of silent individual working. Then 8 minutes in groups of three: any disagreement is resolved by reconstructing every step, not by majority vote. Four students present — one per problem — and after each presentation the class names the chapter method used. Problem 1 needs the successive-subtraction-of-odd-numbers test for perfect squares. Problem 2 needs the odd-number-sum structure of perfect cubes (nth cube = sum of n consecutive odd numbers starting where the previous group ended). Problem 3 needs prime factorisation for both the square-root and the cube-root tests. Problem 4 needs the triangular-number–square-number relationship. Watch for: in Problem 1, students who subtract correctly but lose track of the count and mis-state whether the remainder is zero; in Problem 2, students who know the pattern but mis-identify the starting odd number for the group; in Problem 3, students who form correct prime-factor triplets for the cube but forget to re-check the square condition; in Problem 4, students who verify the sum numerically but cannot name which two triangular numbers are involved.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | Use successive subtraction of odd numbers to decide whether 169 is a perfect square. If it is, state its square root. | Subtract consecutive odd numbers from 169 in order: 169 − 1 = 168; 168 − 3 = 165; 165 − 5 = 160; 160 − 7 = 153; 153 − 9 = 144; 144 − 11 = 133; 133 − 13 = 120; 120 − 15 = 105; 105 − 17 = 88; 88 − 19 = 69; 69 − 21 = 48; 48 − 23 = 25; 25 − 25 = 0. The remainder reaches 0 after subtracting 13 odd numbers, so 169 = 13². Square root of 169 is 13.\n2 | The cubes of natural numbers are built from groups of consecutive odd numbers: 1³ = 1, 2³ = 3 + 5, 3³ = 7 + 9 + 11, and so on. Write down the group of consecutive odd numbers whose sum equals 4³, and verify the sum. | The groups use 1, 2, 3, … odd numbers in turn. The first three groups end at 11 (the 6th odd number). The 4th group therefore starts at the 7th odd number, which is 13, and contains 4 terms: 13, 15, 17, 19. Sum = 13 + 15 + 17 + 19 = 64 = 4³. ✓\n3 | Find the prime factorisation of 1764. Use it to find the square root of 1764, and then decide whether 1764 is also a perfect cube. | 1764 ÷ 2 = 882; 882 ÷ 2 = 441; 441 ÷ 3 = 147; 147 ÷ 3 = 49; 49 ÷ 7 = 7; 7 ÷ 7 = 1. So 1764 = 2² × 3² × 7². Every prime factor appears an even number of times, confirming 1764 is a perfect square. √1764 = 2 × 3 × 7 = 42. For the cube test: 2, 3, and 7 each appear exactly twice — not a multiple of 3 — so 1764 is not a perfect cube.\n4 | The 7th triangular number is 28 and the 8th triangular number is 36. Show that their sum is a perfect square and state which perfect square it is. | 28 + 36 = 64. Since 64 = 8², it is a perfect square. The relationship that the sum of two consecutive triangular numbers is always a perfect square gives 28 + 36 = 8²."
+      }
+    ],
+    "materials": [
+      "Board and chalk or markers",
+      "Notebooks and pencils"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "The teacher writes all four problems on the board, reads each aloud, and confirms that every number needed is visible. No method is named; students are told only that each problem belongs to this chapter and that full written working is expected."
+      },
+      {
+        "minutes": "3-21",
+        "activity": "Silent individual work. Every student attempts all four problems in their notebook, writing every step. The teacher circulates without giving answers — if a student is stuck, the teacher asks 'What does this chapter say about that kind of number?' and moves on."
+      },
+      {
+        "minutes": "21-29",
+        "activity": "Groups of three compare answers. Where answers agree, students check that the steps also agree. Where answers differ, both students reconstruct their working step by step until the error is located and corrected. No answer is simply accepted on trust."
+      },
+      {
+        "minutes": "29-42",
+        "activity": "One student presents each problem on the board — full working, not just the answer. After each presentation the class is asked: 'Name the chapter method this solution used.' The method is stated aloud by the class, the teacher writes it beside the problem, and any step that needs a correction is fixed publicly before moving to the next problem."
+      },
+      {
+        "minutes": "42-45",
+        "activity": "The teacher draws the chapter to a close in one sentence: every problem yielded because a square or cube is completely known once you know its prime factors and the structure of the odd numbers that build it — that single idea carried the whole chapter."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

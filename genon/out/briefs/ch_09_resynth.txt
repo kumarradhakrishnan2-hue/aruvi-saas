@@ -1,379 +1,479 @@
-ARUVI — CLOSING SYNTHESIS RE-AUTHORING · SCIENCE · MIDDLE STAGE
+ARUVI — CLOSING SYNTHESIS RE-AUTHORING · MATHEMATICS · MIDDLE STAGE
 
 You are re-writing ONE unit: the closing whole-chapter synthesis of a chapter's fullest
-lesson plan. This unit is served in two situations, and it must be excellent in both:
+lesson plan. It is served in two situations and must be excellent in both:
 
 1. As the FINAL unit of the fullest plan — the class finishes the chapter with it.
-2. As ONE EXTRA 40-minute period appended to a SHORTER complete plan of the same
-   chapter, whose own final unit (given below) already consolidated the chapter
+2. As ONE EXTRA 45-minute period appended to a SHORTER complete plan of the same
+   chapter, whose own final unit (given below) already drew the chapter together
    yesterday.
 
-THE UNIT YOU ARE WRITING closes the chapter through one fresh, concrete application: a
-scenario, artefact, dataset, place or design problem the chapter itself never uses. The
-class brings the chapter's concepts; the unit puts them to work in the new setting, and
-what the task shows IS the synthesis — the chapter drawn together by using it whole, not
-by summarising it.
+THE UNIT YOU ARE WRITING closes the chapter by putting its methods to work on a small set
+of problems the teacher poses. Solving them IS the synthesis: the chapter is drawn
+together by being used, not by being recited.
 
 PROPERTIES OF THE UNIT:
-- It opens directly onto its fresh setting: the first band presents the new material and
-  puts the first question to the class.
-- Every concept or skill it calls on appears in EVERY unit-title map given below — the
-  shorter plans differ in what they cover; write only to what all of them share.
-- The SHORTEST plan's map is the binding one: applied topics and late enrichment are cut
-  from it first, so each concrete demand in your task (a condition to cite, a feature to
-  identify, a mechanism to explain) is checked against that map before it is used.
-- Every mechanism, apparatus, circuit form or process your setting relies on is one the
-  chapter itself teaches — the setting is new, its physics is entirely the chapter's.
-- Its vehicle (the kind of task: scenario cards, argument construction, data table,
-  concept map, design brief, error correction, narrative trace…) is different in kind
-  from every FINAL UNIT given below, and it uses none of the specific stories, quotes,
-  objects, questions or catchphrases those final units use.
-- Its closing band consolidates what THE TASK ITSELF showed, naming the chapter's central
-  ideas as the reason the task worked — earned closure, not ceremony.
-- All materials are in its own `materials` list: things any classroom has or the unit
-  itself makes.
-- Band narration never states a quantity of minutes or any calendar time — the band's
-  `minutes` field carries the clock.
+- It carries TWO TO FOUR problems, each reaching for a DIFFERENT major method of the
+  chapter, and together spanning its main strands. Each problem is stated in full, with
+  its numbers, inside the band that poses it — a teacher reads the band aloud and the
+  class can start.
+- The problems are the TEACHER'S OWN, written for this unit and posed on the board. The
+  mathematics in each is the chapter's, and nothing is invented or imported.
+- THE PROBLEMS AND THEIR SOLUTIONS LIVE IN ONE TABLE, in `visual_aids` — three columns,
+  `No. | Problem | Solution`, one row per problem. The Problem cell states the problem in
+  one or two plain sentences with its numbers. The Solution cell gives the answer and the
+  few steps that reach it, in plain words and figures — brief enough for a teacher to read
+  at a glance while the class works, and no longer than the problem it answers. This table
+  is the teacher's whole worked reference.
+- EACH PROBLEM IS WELL-POSED AND SELF-CONSISTENT. It states everything needed to solve it,
+  its data agree with each other and with the solution beside it, and it has one answer.
+  Where a count is named ("the four corner cells", "the six expressions you can form"),
+  that count is the number the problem's own conditions produce. Where a figure carries
+  measurements, they can all hold at once. Where a construction is described, the described
+  construction is the one the solution works on.
+- THE SOLUTION CELL IS THE SETTLED ANSWER. Work each problem out fully first; then write
+  only the route that reaches the answer and the answer itself. Trials that failed,
+  possibilities considered and rejected, re-checks and corrections belong to the working,
+  not to the page a teacher reads at the board. Every step written is a step that holds:
+  a justification names the fact it rests on, and never assumes what it is proving.
+- `teacher_notes` is SHORT — a few sentences at most. It says how the sitting is run and
+  what to watch for as students work; the mathematics is in the table, and is not repeated
+  here. Name, for each problem, only the chapter method it needs — the method its own
+  solution actually uses — and warn only about errors that problem can produce.
+- Its `textbook_items_in_class` and `homework` are both `[]`, and its band text names no
+  page, no exercise and no book item. The class works from the board.
+- Its shape gives every student a full attempt before any answer is public: the problems
+  are posed, worked individually with full working, compared in small groups where a
+  disagreement is reconstructed step by step, and then presented — and each presentation
+  is followed by the class NAMING the chapter method the solution rested on.
+- The closing band states the chapter's one idea in a sentence, as the reason the problems
+  yielded — earned closure, not ceremony.
+- It is ONE sitting and weighs the same as any other: 45 minutes, a handful of
+  bands, materials any classroom has. Depth here is the demand of the problems, never the
+  quantity of material.
+- Every method it calls on appears in EVERY unit-title map given below — the shorter plans
+  differ in what they reach, so write only to what all of them share, and treat the
+  SHORTEST map as binding.
+- Its vehicle differs in kind from every FINAL UNIT given below, and it reuses none of
+  their specific contexts, objects, puzzles or framing questions.
+- Band narration never states a quantity of minutes and never points beyond this sitting —
+  the band's `minutes` field carries the clock.
 
 OUTPUT — exactly this JSON object, nothing else:
 {
   "synthesis_unit": {
     "activity_title": "…",
-    "activity_description": "…",
-    "pedagogical_approach": "…",
-    "teacher_notes": "…",
+    "pedagogical_method": "one of: Discovery · Problem-solving · Play-way · Inductive ·
+      Deductive — the method this unit runs on",
+    "section_goal": "recall | reason | apply — the goal this unit works at",
+    "teacher_notes": "a few sentences: how the sitting runs, what to watch for, and the
+      chapter method each problem needs — NOT the solutions, which are in the table",
+    "visual_aids": [
+      {"type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | … | …\n2 | … | …"}
+    ],
     "materials": ["…"],
     "time_bands": [
       {"minutes": "0-N", "activity": "…"},
-      …bands in sequence, integer boundaries, last band ends at 40…
+      …bands in sequence, integer boundaries, last band ends at 45…
     ],
+    "textbook_items_in_class": [],
     "homework": []
   }
 }
-No other keys — the platform carries the unit's number, stage and duration itself.
+No other keys — the platform carries the unit's number, duration, section coverage and
+synthesis marker itself.
 
 CHAPTER SUMMARY:
 
-9.1 Nutrition in Animals
+{
+  "stage": "middle",
+  "subject": "mathematics",
+  "grade": "viii",
+  "chapter_number": 9,
+  "chapter_title": "The Baudhāyana-Pythagoras Theorem",
+  "sections": [
+    { "ref": "section 2.1", "title": "Doubling a Square", "section_goal": ["reason"] },
+    { "ref": "section 2.2", "title": "Halving a Square", "section_goal": ["reason"] },
+    { "ref": "section 2.3", "title": "Hypotenuse of an Isosceles Right Triangle", "section_goal": ["reason", "apply"] },
+    { "ref": "section 2.4", "title": "Combining Two Different Squares", "section_goal": ["reason", "apply"] },
+    { "ref": "section 2.5", "title": "Right-Triangles Having Integer Sidelengths", "section_goal": ["reason"] },
+    { "ref": "section 2.6", "title": "A Long-Standing Open Problem", "section_goal": ["recall"] },
+    { "ref": "section 2.7", "title": "Further Applications of the Baudhāyana-Pythagoras Theorem", "section_goal": ["apply"] }
+  ],
+  "prose_summary": "Section 2.1 explains, through geometric reasoning rooted in Baudhāyana's Śulba-Sūtra (c. 800 BCE), why the diagonal of a square produces a square of double the area. The section opens with Baudhāyana's question of how to construct a square with double the area of a given square, then reasons that simply doubling the side length produces a square four times as large. By drawing horizontal and vertical lines through the tilted square constructed on the diagonal, students see that the original square is composed of two small triangles while the new square is composed of four congruent triangles — establishing the doubling relationship. A hands-on paper-cutting activity reinforces this: two identical squares are each cut along their diagonals into four triangular pieces, and four of the triangles are arranged around an intact square to produce a square with double the area. The sequence can be extended further to produce squares of areas 2, 4, and 8 times an original, each being the square on the diagonal of the previous.\n\nSection 2.2 reasons through the reverse construction — halving a square — by drawing a tilted square inside a larger one whose vertices are the midpoints of the larger square's sides. The section justifies geometrically, using east-west and north-south auxiliary lines, why the inner square has exactly half the area of the outer square. A paper-folding activity directs students to fold a square inward so that crease lines pass through the midpoints of the sides, producing quadrilateral PQRS, and then to prove using diagonal properties and triangle congruence that PQRS is indeed a square with half the area.\n\nSection 2.3 defines the hypotenuse as the side opposite the right angle in a right triangle, then reasons from the doubling result to determine the hypotenuse of an isosceles right triangle with legs of length 1. Since the diagonal of a unit square has a square of area 2 constructed on it, the hypotenuse c satisfies c² = 2, giving c = √2. The section then applies this to find hypotenuses of isosceles right triangles with general equal-side length a via the formula c² = 2a², illustrating with worked examples (a = 12 giving c = √288, between 16 and 17; and c = √72 giving a = 6). The section also investigates the decimal nature of √2 through successive bounding — establishing 1 < √2 < 2, then 1.4 < √2 < 1.5, then 1.41 < √2 < 1.42, then 1.414 < √2 < 1.415 — and then proves by considering the last digit of terminating decimals and by prime factorization arguments that √2 can neither be expressed as a terminating decimal nor as a fraction m/n with m, n positive integers.\n\nSection 2.4 reasons through Baudhāyana's general solution (Śulba-Sūtra Verse 1.12) to combining two different-sized squares into a single larger square: form a right-angled triangle whose perpendicular sides equal the sides of the two smaller squares; the square on the hypotenuse has area equal to the sum of the two. Following Baudhāyana's Verse 2.1, the section constructs this result concretely by joining two different squares (sides a and b), marking a rectangular portion, drawing its diagonal to get a right triangle with legs a and b, and then placing four congruent copies of this right triangle to form a tilted four-sided figure over the hypotenuse. The section reasons that all four sides of this figure are equal (since all triangles are congruent) and all angles are right angles (using angle complementarity), establishing it as a square. The area identity — area of square on hypotenuse = sum of areas of original two squares — then follows directly, yielding Baudhāyana's Theorem: a² + b² = c². A paper-cutting activity has students cut two different-sized squares into three pieces and rearrange them into a larger square. The section also applies the theorem to the classical 3-4-5 example.\n\nSection 2.5 reasons about right-triangles with integer sidelengths (Baudhāyana triples). It introduces primitive and non-primitive triples, establishes by algebraic proof that if (a, b, c) is a Baudhāyana triple then (ka, kb, kc) is also one for any positive integer k, and uses the identity (n−1)² + (2n−1) = n² to generate primitive triples whenever 2n−1 is a perfect square (e.g., n=5 gives (3,4,5); n=13 gives (5,12,13)). The section thus shows there are infinitely many Baudhāyana triples and that every non-primitive triple is a scaled version of a primitive one.\n\nSection 2.6 recalls the history of Fermat's Last Theorem — inspired by the existence of infinitely many Baudhāyana triples, Fermat conjectured in the 17th century that xⁿ + yⁿ = zⁿ has no solution in positive integers for n > 2. The section recounts Fermat's famous marginal note claiming a proof he never wrote down, the 300+ years of failed attempts by great mathematicians, and Andrew Wiles's proof in 1994 after setting himself the goal as a 10-year-old in 1963.\n\nSection 2.7 applies the Baudhāyana-Pythagoras Theorem to a range of geometric problems. It opens with a classic problem from Bhāskarāchārya's Līlāvatī — a lotus stem of total length x+1 with tip 1 unit above water, whose tip touches the water 3 units away when bent — and solves it by setting up a right triangle of sides 3, x, x+1, giving x = 4 units depth. The section then applies the theorem to: finding the diagonal of a square, finding missing sides of right triangles from given dimensions, finding the side of a rhombus from its diagonals, and exploring grid-dot squares of various integer areas.",
 
-Animals obtain energy from food by breaking down complex components such as carbohydrates, proteins, and fats into simpler, absorbable forms through a process called digestion. This breakdown takes place along a long continuous tube called the alimentary canal, which runs from the mouth to the anus. The simpler molecules produced through digestion are absorbed into the blood and transported to every cell in the body to fuel life processes.
+  "enumerated_activities": [
+    {
+      "id": "A-1",
+      "source_section": "section 2.1",
+      "book_ref": "Activity 1 (Doubling a Square Using Paper), p.35",
+      "description": "Cut two identical squares of paper; cut Square 1 along diagonals into 4 triangular pieces (labelled 1–4) and Square 2 into 4 pieces (5–8); arrange pieces 5, 6, 7, 8 around intact Square 1 to form a square with double the area."
+    },
+    {
+      "id": "A-2",
+      "source_section": "section 2.2",
+      "book_ref": "Activity 2 (Halving a Square Using Paper), p.36",
+      "description": "Cut out a square from paper; fold it inward such that crease lines pass through midpoints of the four sides to obtain quadrilateral PQRS, which is a square with half the area. Verify using diagonal properties and triangle congruence."
+    },
+    {
+      "id": "A-3",
+      "source_section": "section 2.4",
+      "book_ref": "Activity 3 (Combining Two Squares Using Paper), p.45",
+      "description": "Cut out and join two different-sized squares (sides a and b); make two cuts to produce three pieces; rearrange the three pieces into a larger square of side c (the hypotenuse of a right triangle with legs a and b). Then draw a right triangle using the two smaller squares and a square on the hypotenuse, and cover it with the pieces."
+    }
+  ],
 
-9.1.1 Digestion in human beings
+  "enumerated_worked_examples": [
+    {
+      "id": "WE-1",
+      "source_section": "section 2.3",
+      "book_ref": "Example 1, section 2.3, p.40",
+      "description": "Find the hypotenuse of an isosceles right triangle whose equal sides have length 12. Using c² = 2a² with a = 12 gives c = √288; since 16² = 256 and 17² = 289, the hypotenuse lies between 16 and 17."
+    },
+    {
+      "id": "WE-2",
+      "source_section": "section 2.3",
+      "book_ref": "Example 2, section 2.3, p.40",
+      "description": "If the hypotenuse of an isosceles right triangle is √72, find the other two sides. Using c² = 2a²: 72 = 2a², so a² = 36 and a = 6. Each equal side has length 6."
+    },
+    {
+      "id": "WE-3",
+      "source_section": "section 2.4",
+      "book_ref": "Worked example (Using Baudhāyana's Theorem), section 2.4, p.47",
+      "description": "Make a right-angled triangle with shorter sides 3 cm and 4 cm; apply a² + b² = c²: 9 + 16 = 25, so c = 5 cm. The hypotenuse is exactly 5 cm."
+    }
+  ],
 
-This subsection traces the step-by-step journey of food through the human alimentary canal, explaining how each organ contributes to the progressive breakdown and absorption of nutrients.
+  "enumerated_exercises": [
+    {
+      "id": "E-1",
+      "source_section": "section 2.3",
+      "book_ref": "Figure it Out Q1, section 2.3, p.39",
+      "description": "Two identical square papers are each cut diagonally into two triangles (4 pieces total labelled 1–4). Arrange these pieces to create a square with double the area of either original square. (Math Talk icon attached.)"
+    },
+    {
+      "id": "E-2",
+      "source_section": "section 2.3",
+      "book_ref": "Figure it Out Q2, section 2.3, p.39",
+      "description": "The length of the two equal sides of an isosceles right triangle is given. Find the length of the hypotenuse and find bounds with at least one digit after the decimal point. (i) 3, (ii) 4, (iii) 6, (iv) 8, (v) 9."
+    },
+    {
+      "id": "E-3",
+      "source_section": "section 2.3",
+      "book_ref": "Figure it Out Q3, section 2.3, p.40",
+      "description": "The hypotenuse of an isosceles right triangle is 10. Find its other two sidelengths. [Hint: Find the area of the square composed of two such right triangles.]"
+    },
+    {
+      "id": "E-4",
+      "source_section": "section 2.3",
+      "book_ref": "Try This, section 2.3, p.39",
+      "description": "Can √2 be expressed as a fraction m/n where m and n are counting numbers? Reason using prime factorization of square numbers."
+    },
+    {
+      "id": "E-5",
+      "source_section": "section 2.1",
+      "book_ref": "Math Talk, section 2.1, p.34",
+      "description": "Why should the extension of the vertical and horizontal sides of the original square pass through the vertices of the dotted (doubled) square? [Hint: From the diagonal property of a square, the line that bisects an angle passes through the opposite vertex. Argue why the vertical and horizontal sides of the original square bisect the two angles of the dotted square.]"
+    },
+    {
+      "id": "E-6",
+      "source_section": "section 2.4",
+      "book_ref": "Figure it Out Q1, section 2.4, p.47",
+      "description": "If a right-angled triangle has shorter sides of lengths 5 cm and 12 cm, what is the length of its hypotenuse? First draw and measure, then verify using Baudhāyana's Theorem."
+    },
+    {
+      "id": "E-7",
+      "source_section": "section 2.4",
+      "book_ref": "Figure it Out Q2, section 2.4, p.47",
+      "description": "If a right-angled triangle has a short side of 8 cm and hypotenuse of 17 cm, what is the length of the third side? Draw, measure, then verify using Baudhāyana's Theorem."
+    },
+    {
+      "id": "E-8",
+      "source_section": "section 2.4",
+      "book_ref": "Figure it Out Q3, section 2.4, p.47",
+      "description": "Using the constructions seen in the chapter, how would you construct a square whose area is triple the area of a given square? Five times the area of a given square? (Baudhāyana's Śulba-Sūtra, Verse 1.10)"
+    },
+    {
+      "id": "E-9",
+      "source_section": "section 2.4",
+      "book_ref": "Figure it Out Q4, section 2.4, p.47",
+      "description": "Let a, b, c denote the sides of a right triangle (c = hypotenuse). Find the missing sidelength: (i) a=5, b=7; (ii) a=8, b=12; (iii) a=9, c=15; (iv) a=7, b=12; (v) a=1.5, b=3.5."
+    },
+    {
+      "id": "E-10",
+      "source_section": "section 2.5",
+      "book_ref": "Math Talk, section 2.5, p.48",
+      "description": "List down all the Baudhāyana triples with numbers less than or equal to 20."
+    },
+    {
+      "id": "E-11",
+      "source_section": "section 2.5",
+      "book_ref": "Figure it Out Q1, section 2.5, p.50",
+      "description": "Find 5 more Baudhāyana triples using the odd-square method (i.e., find odd perfect squares, identify n, and use (n−1)² + (2n−1) = n²)."
+    },
+    {
+      "id": "E-12",
+      "source_section": "section 2.5",
+      "book_ref": "Figure it Out Q2, section 2.5, p.50",
+      "description": "Does the odd-square method yield non-primitive Baudhāyana triples? [Hint: Observe that one of the smaller sidelengths is one less than the hypotenuse among triples generated.]"
+    },
+    {
+      "id": "E-13",
+      "source_section": "section 2.5",
+      "book_ref": "Figure it Out Q3, section 2.5, p.50",
+      "description": "Are there primitive Baudhāyana triples that cannot be obtained through the odd-square method? If yes, give examples. (Math Talk)"
+    },
+    {
+      "id": "E-14",
+      "source_section": "section 2.7",
+      "book_ref": "Figure it Out Q1, section 2.7, p.52",
+      "description": "Find the diagonal of a square with sidelength 5 cm."
+    },
+    {
+      "id": "E-15",
+      "source_section": "section 2.7",
+      "book_ref": "Figure it Out Q2, section 2.7, p.52",
+      "description": "Find the missing sidelengths in the following right triangles (six diagrams with known values: sides 7 and 9; sides 4 and 10; sides 40 and 41; sides 10 and √200; sides 10 and √150; sides 27 and 45)."
+    },
+    {
+      "id": "E-16",
+      "source_section": "section 2.7",
+      "book_ref": "Figure it Out Q3, section 2.7, p.53",
+      "description": "Find the sidelength of a rhombus whose diagonals are of length 24 units and 70 units."
+    },
+    {
+      "id": "E-17",
+      "source_section": "section 2.7",
+      "book_ref": "Figure it Out Q4, section 2.7, p.53",
+      "description": "Is the hypotenuse the longest side of a right triangle? Justify your answer."
+    },
+    {
+      "id": "E-18",
+      "source_section": "section 2.7",
+      "book_ref": "Figure it Out Q5, section 2.7, p.53",
+      "description": "True or False — Every Baudhāyana triple is either a primitive triple or a scaled version of a primitive triple."
+    },
+    {
+      "id": "E-19",
+      "source_section": "section 2.7",
+      "book_ref": "Figure it Out Q6, section 2.7, p.53",
+      "description": "Give 5 examples of rectangles whose sidelengths and diagonals are all integers."
+    },
+    {
+      "id": "E-20",
+      "source_section": "section 2.7",
+      "book_ref": "Figure it Out Q7, section 2.7, p.53",
+      "description": "Construct a square whose area is equal to the difference of the areas of squares of sidelengths 5 units and 7 units."
+    },
+    {
+      "id": "E-21",
+      "source_section": "section 2.7",
+      "book_ref": "Figure it Out Q8, section 2.7, p.53",
+      "description": "(i) Using dots of a grid as vertices, create squares of area (a) 2, (b) 3, (c) 4, (d) 5 sq. units. (ii) Suppose the grid extends indefinitely — what are the possible integer-valued areas of squares you can create? (Math Talk + Try This)"
+    },
+    {
+      "id": "E-22",
+      "source_section": "section 2.7",
+      "book_ref": "Figure it Out Q9, section 2.7, p.54",
+      "description": "Find the area of an equilateral triangle with sidelength 6 units. [Hint: Show that an altitude bisects the opposite side; use this to find the height.] (Try This)"
+    }
+  ],
 
-Beginning with the mouth cavity
-
-Digestion begins in the mouth, where teeth perform mechanical digestion by crushing and grinding food into smaller pieces. Saliva, produced by salivary glands in the mouth, contains a digestive juice that chemically breaks down starch into simpler sugars — which is why starchy foods like chapati or rice taste sweeter when chewed for a long time. The chapter includes Activity 9.1, in which students test boiled rice for the presence of starch using iodine solution, comparing unchewed rice to rice that has been thoroughly chewed, to observe starch breakdown in the mouth.
-
-Food pipe (Oesophagus): A passage from the mouth to the stomach
-
-Once food is chewed, saliva moistens it into a soft ball and the tongue pushes it into the oesophagus, a long flexible muscular tube that connects the mouth cavity to the stomach. The walls of the oesophagus contract and relax in rhythmic wave-like movements that push the food downward; this motion continues throughout the entire length of the alimentary canal.
-
-Stomach
-
-In the stomach, the muscular walls contract and relax to churn the food and mix it thoroughly with a secretion containing digestive juice, acid, and mucus. The digestive juice breaks down proteins, the acid kills harmful bacteria that may have entered with the food, and the mucus protects the stomach's own lining from being damaged by the acid. Food remains in the stomach until it is reduced to a semi-liquid mass before passing to the next stage.
-
-Small Intestine
-
-The partially digested food moves into the small intestine, which is approximately 6 metres long and is the longest part of the alimentary canal. The small intestine receives digestive secretions from three sources: its own inner lining, the liver (which secretes bile to neutralise the acidic food mass and to help break down fats), and the pancreas (which secretes pancreatic juice to further break down carbohydrates, proteins, and fats). The inner lining of the small intestine carries thousands of tiny finger-like projections that greatly increase its surface area; through these projections, digested nutrients are absorbed into the blood vessels in the intestinal wall and transported to the rest of the body, a process the chapter calls absorption.
-
-Large intestine
-
-Undigested material that the small intestine cannot absorb passes into the large intestine, which is about 1.5 metres long and considerably wider than the small intestine. Here, water and some salts are absorbed from the remaining material, which gradually becomes solid waste called stool. The stool is stored in the rectum until it is expelled from the body through the anus, a process called egestion.
-
-9.1.2 Do all animals digest food the same way as humans do?
-
-Animals show considerable variation in their digestive adaptations depending on their diet and feeding habits. Grass-eating animals such as cows and buffaloes are called ruminants; they quickly swallow partially chewed grass, store it in a part of their stomach, and later return it to the mouth to chew it thoroughly before swallowing again — a process called rumination or chewing the cud. Birds do not have teeth and therefore cannot chew food; instead they have a muscular chamber called the gizzard in which food is broken down by powerful contractions of its walls, sometimes aided by small stones the birds swallow deliberately.
-
-9.2 Respiration in Animals
-
-The nutrients absorbed from food must be converted into usable energy inside the body's cells, and this conversion is achieved through respiration. The chapter draws a clear distinction between breathing and respiration: breathing is the physical act of moving air in and out of the lungs, whereas respiration is the chemical process by which oxygen reacts with glucose inside cells to release carbon dioxide, water, and energy.
-
-9.2.1 Respiration in humans
-
-How do we breathe?
-
-The human respiratory system consists of the nostrils, nasal passages, windpipe, and two lungs, working together to bring fresh air into the body and expel waste gases. Air inhaled through the nostrils passes through the nasal passages, where fine hairs and mucus filter out dust and dirt, before travelling down the windpipe into the lungs; inside the lungs the windpipe branches repeatedly into smaller passages that end in millions of tiny balloon-like sacs called alveoli. The chapter includes Activity 9.2, in which students construct a model using a plastic bottle and balloons to observe how changes in the volume of the chest cavity drive the movement of air in and out of the lungs, demonstrating the role of the diaphragm and rib muscles. During inhalation the ribs move upward and outward while the dome-shaped diaphragm moves downward, increasing the volume of the chest cavity so that air rushes in; during exhalation the ribs move down and inward and the diaphragm moves upward, compressing the cavity and pushing air out.
-
-What do we breathe out?
-
-Activity 9.3 demonstrates that exhaled air contains a higher concentration of carbon dioxide than inhaled air, confirmed when exhaled air causes lime water to turn milky while inhaled air does not. Inhaled air contains approximately 21% oxygen and 0.04% carbon dioxide, whereas exhaled air contains 16–17% oxygen and 4–5% carbon dioxide, showing that the body consumes oxygen and produces carbon dioxide during respiration.
-
-How does the exchange of gases happen?
-
-Gas exchange between air and blood takes place in the alveoli, which have extremely thin walls surrounded by a dense network of fine blood vessels. Blood arriving at the alveoli carries carbon dioxide collected from the body's cells; this carbon dioxide passes into the air inside the alveoli and is breathed out, while oxygen from freshly inhaled air passes in the opposite direction into the blood and is carried to all tissues of the body. The word equation given for this process is: Glucose + Oxygen → Carbon dioxide + Water + Energy.
-
-9.2.2 Do other animals breathe the same way as humans do?
-
-While many animals — including birds, mammals such as elephants and lions, and reptiles such as snakes — breathe through lungs, the precise structure of their lungs varies across groups. Aquatic animals such as fish breathe through gills, which are richly supplied with blood vessels that allow dissolved oxygen in the surrounding water to pass into the blood and carbon dioxide from the blood to pass out into the water. Frogs and other amphibians use gills for breathing as tadpoles, develop lungs for life on land as adults, and can also exchange gases through their moist skin when in water; earthworms, which have no specialised respiratory organs, exchange gases entirely through their moist skin surface.
+  "conceptual_demand": 3,
+  "activity_count": 3,
+  "demo_count": 0,
+  "exec_load": 1
+}
 
 
 ======================================================================
 
-THE FULLEST PLAN (17 units). The unit you write REPLACES its final unit, closing this arc:
+THE FULLEST PLAN (14 units). The unit you write REPLACES its final unit, closing this arc:
 
-U1: What does food do inside us?
-U2: Testing starch breakdown — the iodine test
-U3: Tracing the alimentary canal — organ by organ
-U4: What does each digestive secretion do?
-U5: Small intestine — why so long, why so folded?
-U6: Classifying animal digestive adaptations
-U7: How peristalsis moves food — a causal account
-U8: Why does the stomach not digest itself?
-U9: Building the chest cavity model — demonstrating breathing mechanics
-U10: Exhaled air contains more carbon dioxide — lime water evidence
-U11: Gas exchange at the alveoli — a causal mechanism
-U12: How do other animals breathe? — lungs, gills, and skin
-U13: Connecting digestion and respiration — nutrients as fuel
-U14: What happens when one process fails?
-U15: Why must digestion and respiration be continuous?
-U16: Predicting adaptive responses — linking structure to survival
+U1: Why the Diagonal Doubles the Square
+U2: The Midpoint Square and Its Hidden Area
+U3: From Diagonal to Hypotenuse: Defining c² = 2a²
+U4: Computing Hypotenuses and Bounding √2
+U5: Baudhāyana's Verse: Why a² + b² = c²
+U6: Applying the Theorem to Find Missing Sides
+U7: Generating Baudhāyana Triples: Pattern and Proof
+U8: Primitive vs. Non-Primitive: Reasoning About All Triples
+U9: Fermat's Last Theorem: A 300-Year Story
+U10: Lotuses and Diagonals: The Theorem at Work
+U11: Rhombuses, Rectangles, and Grid Squares
+U12: Grid Squares, Equilateral Triangles, and Integer Areas
+U13: Mixed Application Problems: Consolidating the Theorem
 U<final>: ← the unit you are writing
 
-THE SHORTER PLANS (4). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
+THE SHORTER PLANS (2). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
 
-
---- PLAN OF 15 UNITS — unit-title map ---
-U1: What does food do inside us?
-U2: Testing starch breakdown in the mouth
-U3: Tracing the path of food — a body map
-U4: Journey through the alimentary canal
-U5: Why is the small intestine so long?
-U6: Comparing digestive systems — ruminants and birds
-U7: Why does the stomach not digest itself?
-U8: Building the breathing model
-U9: What is in exhaled air? The lime water test
-U10: Gas exchange at the alveoli — tracing oxygen and carbon dioxide
-U11: How other animals breathe — gills, skin, and lungs compared
-U12: What happens when one process fails?
-U13: Breathing rate and body demand — a think-pair-share investigation
-U14: Animal adaptations — applying the mechanism to new cases
-U15: How do life processes work together to keep every cell alive?
-
---- its FINAL unit, in full ---
-{
- "period_number": 15,
- "period_duration_minutes": 40,
- "progression_stage": 4,
- "stage_label": "Apply causal reasoning across life processes to unfamiliar scenarios",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "How do life processes work together to keep every cell alive?",
- "activity_description": "Students construct a connected diagram showing how digestion and respiration together supply cells with energy — tracing nutrients from food through absorption, and oxygen from air through gas exchange, to a cell where the respiration equation operates. They annotate the diagram with causal links.",
- "roles": [
-  {
-   "actor": "Students (Individual)",
-   "role_description": "Constructs and annotates a connected diagram linking digestion output (absorbed nutrients) and respiration input (oxygen) to cellular energy production, using causal arrow annotations."
-  },
-  {
-   "actor": "Teacher",
-   "role_description": "Poses the organising question, circulates to prompt students whose diagrams show isolated processes rather than connected ones, and facilitates a closing whole-class gallery of three or four diagrams."
-  }
- ],
- "time_bands": [
-  {
-   "minutes": "0-6",
-   "activity": "Teacher poses the organising question: a muscle cell needs energy to contract — trace every step from food entering the mouth and air entering the nostrils to the moment that energy is released inside the cell, using arrows and causal labels."
-  },
-  {
-   "minutes": "6-26",
-   "activity": "Students individually draw a connected diagram starting from food (mouth → oesophagus → stomach → small intestine → absorbed into blood) and from air (nostrils → windpipe → alveoli → oxygen into blood) converging at a cell where glucose + oxygen → CO₂ + water + energy."
-  },
-  {
-   "minutes": "26-36",
-   "activity": "Students annotate three causal links in their diagram where a structural feature directly enables a process step — for example, villi increase surface area → more nutrients absorbed per unit of time."
-  },
-  {
-   "minutes": "36-40",
-   "activity": "Teacher facilitates a quick gallery of three or four diagrams on the board, pointing out how the chapter's two life-process accounts converge on the single claim that cells are kept alive by coordinated digestion and respiration."
-  }
- ],
- "teacher_notes": "This closing unit asks students to hold both life processes simultaneously and show how they converge on a single cellular outcome — which is the highest-order operation the chapter builds toward. A common weakness at this stage is drawing the two processes as parallel tracks without connecting arrows at the cell; redirect those students to add the convergence point explicitly. The gallery at the close gives the class a shared visual of what a complete, connected account looks like, and rewards students whose diagrams show the tightest causal integration.",
- "materials": [
-  "Blank A4 paper or large blank space in notebook",
-  "Pencils",
-  "Coloured pens (optional for arrows)"
- ],
- "homework": []
-}
-
---- PLAN OF 13 UNITS — unit-title map ---
-U1: Mapping the Alimentary Canal
-U2: Starch in the Mouth — Activity 9.1
-U3: From Stomach to Small Intestine — Structure and Role
-U4: Large Intestine, Rectum, and Anus — Completing the Map
-U5: Mechanical or Chemical? Sorting Digestive Events
-U6: Ruminants, Birds, and Earthworms — Adaptation Sort
-U7: Introducing Respiration — Sorting Breathing from Respiration
-U8: Building the Chest Model — Activity 9.2
-U9: Exhaled Air and Lime Water — Activity 9.3
-U10: Gas Exchange at the Alveoli — Cause and Direction
-U11: Gills, Skin, and Lungs — Causal Comparison
-U12: Connecting Digestion and Respiration — The Energy Chain
-U13: Life Processes Under a Microscope — Novel Animal Scenario
-
---- its FINAL unit, in full ---
-{
- "period_number": 13,
- "period_duration_minutes": 40,
- "progression_stage": 4,
- "stage_label": "Apply to Explain How Life Processes Collectively Sustain Animal Life",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "Life Processes Under a Microscope — Novel Animal Scenario",
- "activity_description": "Students receive a brief description of a novel animal with specific anatomical features and dietary habits, and apply their understanding of nutrition and respiration to explain how this animal's life processes would function and interact to sustain its life.",
- "roles": [
-  {
-   "actor": "Teacher",
-   "role_description": "Presents the novel animal scenario as a genuine reasoning challenge, emphasising that there is no single correct answer and that well-reasoned explanations drawing on evidence from both processes will be strongest."
-  },
-  {
-   "actor": "Students (Individual)",
-   "role_description": "Write an extended explanation covering how the animal digests its food, how it obtains oxygen, and how these two processes together keep it alive, referencing specific structures and mechanisms from the chapter."
-  }
- ],
- "time_bands": [
-  {
-   "minutes": "0-8",
-   "activity": "Teacher presents the novel animal scenario, reads it aloud with the class, and invites initial predictions before students begin writing."
-  },
-  {
-   "minutes": "8-26",
-   "activity": "Students write their extended explanation independently, covering digestion, respiration, and the connection between them for this specific animal."
-  },
-  {
-   "minutes": "26-36",
-   "activity": "Students exchange papers with a partner who reads and marks a tick beside each claim that is supported by a named structure or mechanism, and a question mark beside any unsupported claim."
-  },
-  {
-   "minutes": "36-40",
-   "activity": "Teacher draws the unit to a close by asking one or two students to share their strongest cross-process sentence, cementing the chapter's central integration."
-  }
- ],
- "teacher_notes": "This closing unit asks students to apply everything they have built across the chapter to a scenario that does not appear in the text, requiring genuine transfer rather than recall. The peer-marking step is intentionally brief and criterion-focused — named structures and mechanisms — so it functions as a self-audit rather than a formal assessment; students who find many question marks on their own paper identify their own gaps. Explanations that name absorption as the bridge between digestion and cellular respiration represent the chapter's highest cognitive achievement and are worth highlighting explicitly at the close.",
- "materials": [
-  "Novel animal scenario description card (one per student)",
-  "Pencils"
- ],
- "homework": []
-}
 
 --- PLAN OF 11 UNITS — unit-title map ---
-U1: Mapping the Alimentary Canal
-U2: Starch in the Mouth — Activity 9.1
-U3: Mechanical or Chemical? Sorting the Stomach and Small Intestine
-U4: Villi, Absorption, and the Journey to the Large Intestine
-U5: Building the Chest-Cavity Model — Activity 9.2
-U6: What Is in Exhaled Air? — Activity 9.3
-U7: Alveoli and the Gas Exchange Mechanism
-U8: How Do Other Animals Digest? Ruminants and Birds
-U9: Lungs, Gills, and Skin: Matching Respiratory Structures to Environments
-U10: Tracing a Glucose Molecule's Journey
-U11: What Breaks Down, What Sustains — Explaining Life Process Interdependence
+U1: Why Does the Diagonal Square Double the Area?
+U2: Finding the Half-Area Square Hidden Inside
+U3: From Diagonal to √2: Reasoning About the Hypotenuse
+U4: Computing Hypotenuses and Recovering Legs
+U5: Baudhāyana's Construction: Two Squares Become One
+U6: Applying a² + b² = c² to Find Missing Sides
+U7: Generating Baudhāyana Triples: Pattern and Proof
+U8: Limits of the Odd-Square Method: Are All Primitives Captured?
+U9: Fermat's Last Theorem: From Curiosity to a 300-Year Quest
+U10: Lotus Stems, Diagonals, and Rhombus Sides: Theorem in Action
+U11: Grid Squares, Integer Areas, and Rectangle Diagonals
 
 --- its FINAL unit, in full ---
 {
  "period_number": 11,
- "period_duration_minutes": 40,
- "progression_stage": 5,
- "stage_label": "Apply understanding to explain how life processes collectively sustain animal life",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "What Breaks Down, What Sustains — Explaining Life Process Interdependence",
- "activity_description": "Students analyse three failure scenarios — a blocked oesophagus, non-functioning alveoli, and a gizzard removed from a bird — and for each scenario explain which life process fails first, what downstream process cannot then proceed, and what effect this has on the animal's ability to sustain life.",
- "roles": [
+ "period_duration_minutes": 45,
+ "synthesis": false,
+ "textbook_segments": [
   {
-   "actor": "Teacher",
-   "role_description": "Presents the three scenarios as brief printed cards, asks students to work independently on the first before groups tackle the remaining two, and facilitates a closing discussion on the pattern: every failure in one process cascades into another."
-  },
-  {
-   "actor": "Students (Individual)",
-   "role_description": "Analyse the blocked-oesophagus scenario independently, identifying the failure chain, then join a group to complete the alveoli and gizzard scenarios and construct a one-sentence general claim about life process interdependence."
-  },
-  {
-   "actor": "Students (Groups)",
-   "role_description": "Complete the alveoli and gizzard scenarios collaboratively, then draft and refine the general interdependence claim before sharing it with the class."
+   "ref": "section 2.7",
+   "title": "Further Applications of the Baudhāyana-Pythagoras Theorem"
   }
  ],
+ "section_goal": "apply",
+ "activity_title": "Grid Squares, Integer Areas, and Rectangle Diagonals",
+ "pedagogical_method": "Discovery",
+ "textbook_items_in_class": [
+  {
+   "id": "E-18",
+   "type": "exercise",
+   "source_section": "section 2.7",
+   "book_ref": "Figure it Out Q5, section 2.7, p.53",
+   "description": "True or False — Every Baudhāyana triple is either a primitive triple or a scaled version of a primitive triple."
+  },
+  {
+   "id": "E-19",
+   "type": "exercise",
+   "source_section": "section 2.7",
+   "book_ref": "Figure it Out Q6, section 2.7, p.53",
+   "description": "Give 5 examples of rectangles whose sidelengths and diagonals are all integers."
+  },
+  {
+   "id": "E-20",
+   "type": "exercise",
+   "source_section": "section 2.7",
+   "book_ref": "Figure it Out Q7, section 2.7, p.53",
+   "description": "Construct a square whose area is equal to the difference of the areas of squares of sidelengths 5 units and 7 units."
+  },
+  {
+   "id": "E-21",
+   "type": "exercise",
+   "source_section": "section 2.7",
+   "book_ref": "Figure it Out Q8, section 2.7, p.53",
+   "description": "(i) Using dots of a grid as vertices, create squares of area (a) 2, (b) 3, (c) 4, (d) 5 sq. units. (ii) What are the possible integer-valued areas of squares you can create on an infinite grid?"
+  },
+  {
+   "id": "E-22",
+   "type": "exercise",
+   "source_section": "section 2.7",
+   "book_ref": "Figure it Out Q9, section 2.7, p.54",
+   "description": "Find the area of an equilateral triangle with sidelength 6 units."
+  }
+ ],
+ "homework": [],
  "time_bands": [
   {
-   "minutes": "0-6",
-   "activity": "Teacher introduces the three scenario cards and students read all three before working individually on the blocked-oesophagus scenario."
+   "minutes": "0–12",
+   "activity": "Students address Figure it Out Q5, section 2.7, p.53 (“True or False — Every Baudhāyana triple is either primitive or a scaled primitive”) as an opening reasoning task, writing a justification based on the algebraic scaling argument established in section 2.5. Then pose Figure it Out Q6, section 2.7, p.53 (“Give 5 examples of rectangles whose sidelengths and diagonals are all integers”): students immediately recognise Baudhāyana triples as the key and generate examples from the triples they have already found."
   },
   {
-   "minutes": "6-26",
-   "activity": "Groups tackle the non-functioning alveoli and gizzard scenarios, tracing the downstream failure chain and drafting the general interdependence claim."
+   "minutes": "12–30",
+   "activity": "Groups explore Figure it Out Q8, section 2.7, p.53 (“Create squares of area 2, 3, 4, 5 on a dot grid; what integer areas are possible?”) using dot-grid paper. Students draw tilted squares — sides along non-horizontal directions — and compute areas by applying a² + b² to the tilted side. Groups conjecture which integers can appear as areas; the class pools findings and attempts Figure it Out Q7, section 2.7, p.53 (“Construct a square with area equal to the difference of areas of squares of sides 5 and 7”) as an extension challenge."
   },
   {
-   "minutes": "26-40",
-   "activity": "Groups share their general claim; teacher facilitates a closing discussion drawing out that the chapter's two central processes — nutrition and respiration — are not independent but linked by a shared molecule (glucose) and a shared carrier (blood)."
+   "minutes": "30–45",
+   "activity": "Students work on Figure it Out Q9, section 2.7, p.54 (“Find the area of an equilateral triangle with sidelength 6 units — use the altitude to bisect the base and then find the height”). The teacher draws the altitude, marking the two right triangles of legs 3 and h and hypotenuse 6; students apply a² + b² = c² to find h = √27 = 3√3, then compute area = ½ × 6 × 3√3. The unit closes with students writing this final application in their own words as a record of the theorem's reach."
   }
  ],
- "teacher_notes": "Building on the glucose journey narrative from the previous unit, this closing unit asks students to reason in the reverse direction — from failure back to consequence — which is a higher-order operation than tracing a successful pathway. Watch for students who identify only the directly affected organ without naming the downstream life process that then fails; the gizzard scenario is particularly useful here because it requires students to connect a digestive adaptation in a non-human animal to a general principle. The strongest responses will invoke interdependence explicitly, naming at least two linked processes in their general claim.",
+ "teacher_notes": "The grid-square investigation in Figure it Out Q8, section 2.7, p.53 often surprises students — area 3 is achievable but not immediately obvious, as it requires a tilted square with legs 1 and √2, and area 6 requires legs 1 and √5. Confirm that a² + b² gives the area of any square drawn on a dot-grid with horizontal step a and vertical step b, which is the same theorem in a new costume. Figure it Out Q9, section 2.7, p.54 is rich for stronger students: challenge them to generalise to a sidelength of s and write the area formula.",
  "materials": [
-  "Failure scenario cards (three per group)",
-  "Response worksheets",
-  "Pens"
- ],
- "homework": []
+  "Dot-grid paper (at least 10×10)",
+  "Ruler",
+  "Calculators",
+  "Notebooks"
+ ]
 }
 
---- PLAN OF 9 UNITS — unit-title map ---
-U1: What does food do inside us?
-U2: Starch in the mouth — Activity 9.1
-U3: Journey through the alimentary canal
-U4: Comparing digestive strategies across animals
-U5: Modelling the breathing chest — Activity 9.2
-U6: What is in exhaled air? — Activity 9.3
-U7: Why does the body need both digestion and respiration?
-U8: Respiratory diversity — from gills to skin
-U9: What happens when a life process fails?
+--- PLAN OF 8 UNITS — unit-title map ---
+U1: Why Does the Diagonal Square Double the Area?
+U2: Folding Inward to Find the Half-Area Square
+U3: From Area Doubling to √2: Naming the Hypotenuse
+U4: Computing and Bounding Hypotenuses in Practice
+U5: Baudhāyana's General Proof: Two Squares into One
+U6: Applying a² + b² = c² and Hunting Integer Triples
+U7: Generating Triples, Primitive vs. Scaled, and Fermat's Challenge
+U8: Lotus Stems, Rhombuses, and Grid Squares: The Theorem in Action
 
 --- its FINAL unit, in full ---
 {
- "period_number": 9,
- "period_duration_minutes": 40,
- "progression_stage": 5,
- "stage_label": "Apply causal reasoning to explain how life processes sustain animal life",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "What happens when a life process fails?",
- "activity_description": "Students analyse three scenario cards describing disruptions to digestion or respiration in different animals and explain, using causal reasoning, how each disruption cascades through connected life processes to threaten the animal's survival, applying their understanding of the full chapter to novel cases.",
- "roles": [
+ "period_number": 8,
+ "period_duration_minutes": 45,
+ "synthesis": false,
+ "textbook_segments": [
   {
-   "actor": "Teacher",
-   "role_description": "Distributes scenario cards and frames the task as applying the chapter's causal framework to novel problems, circulating to ensure students identify which life process is disrupted and trace the downstream consequence."
-  },
-  {
-   "actor": "Students (Groups)",
-   "role_description": "Analyse each scenario, identify the disrupted life process, trace the causal chain of consequences, and write a justified explanation of why the disruption threatens the animal's survival."
-  },
-  {
-   "actor": "Students (Individual)",
-   "role_description": "Write a final synthesis sentence connecting both major life processes covered in the chapter to the shared goal of sustaining animal life."
+   "ref": "section 2.7",
+   "title": "Further Applications of the Baudhāyana-Pythagoras Theorem"
   }
  ],
+ "section_goal": "apply",
+ "activity_title": "Lotus Stems, Rhombuses, and Grid Squares: The Theorem in Action",
+ "pedagogical_method": "Problem-solving",
+ "textbook_items_in_class": [
+  {
+   "id": "E-14",
+   "type": "exercise",
+   "source_section": "section 2.7",
+   "book_ref": "Figure it Out Q1, section 2.7, p.52",
+   "description": "Find the diagonal of a square with sidelength 5 cm."
+  },
+  {
+   "id": "E-15",
+   "type": "exercise",
+   "source_section": "section 2.7",
+   "book_ref": "Figure it Out Q2, section 2.7, p.52",
+   "description": "Find the missing sidelengths in the following right triangles (six diagrams with known values: sides 7 and 9; sides 4 and 10; sides 40 and 41; sides 10 and √200; sides 10 and √150; sides 27 and 45)."
+  },
+  {
+   "id": "E-16",
+   "type": "exercise",
+   "source_section": "section 2.7",
+   "book_ref": "Figure it Out Q3, section 2.7, p.53",
+   "description": "Find the sidelength of a rhombus whose diagonals are of length 24 units and 70 units."
+  },
+  {
+   "id": "E-21",
+   "type": "exercise",
+   "source_section": "section 2.7",
+   "book_ref": "Figure it Out Q8, section 2.7, p.53",
+   "description": "(i) Using dots of a grid as vertices, create squares of area (a) 2, (b) 3, (c) 4, (d) 5 sq. units. (ii) Suppose the grid extends indefinitely — what are the possible integer-valued areas of squares you can create?"
+  }
+ ],
+ "homework": [],
  "time_bands": [
   {
-   "minutes": "0-6",
-   "activity": "Teacher distributes scenario cards — one describing a blocked small intestine, one describing collapsed alveoli, one describing a fish removed from water — and asks groups to read all three before beginning."
+   "minutes": "0–12",
+   "activity": "Open with Bhāskarāchārya's Līlāvatī lotus problem: a stem of length x+1 with tip 1 unit above water, touching the water surface 3 units away when bent. Set up the right triangle (legs 3 and x, hypotenuse x+1) and solve: 9 + x² = (x+1)², giving x = 4 units depth. Students verify by substitution. Then solve Figure it Out Q1, section 2.7, p.52 (\"Find the diagonal of a square with sidelength 5 cm.\")."
   },
   {
-   "minutes": "6-26",
-   "activity": "Groups analyse each scenario by identifying the disrupted process, writing a causal chain of consequences, and producing one sentence explaining why survival is threatened."
+   "minutes": "12–28",
+   "activity": "Students work through Figure it Out Q2, section 2.7, p.52 (\"Find the missing sidelengths in the following right triangles (six diagrams with known values: sides 7 and 9; sides 4 and 10; sides 40 and 41; sides 10 and √200; sides 10 and √150; sides 27 and 45).\") in pairs, attending to which side is the hypotenuse in each diagram. Then take up Figure it Out Q3, section 2.7, p.53 (\"Find the sidelength of a rhombus whose diagonals are of length 24 units and 70 units.\"), using the property that a rhombus's diagonals bisect each other at right angles to form four right triangles."
   },
   {
-   "minutes": "26-34",
-   "activity": "Each student individually writes one synthesis sentence that names both nutrition and respiration and connects them to a single shared outcome — the sustaining of animal life."
-  },
-  {
-   "minutes": "34-40",
-   "activity": "Three groups share their analysis of one scenario each; class evaluates whether each explanation identifies a specific disrupted process and traces a consequence rather than merely restating the scenario."
+   "minutes": "28–45",
+   "activity": "Students explore Figure it Out Q8, section 2.7, p.53 (\"Using dots of a grid as vertices, create squares of area (a) 2, (b) 3, (c) 4, (d) 5 sq. units....\") on dot-grid paper: drawing tilted squares on the grid whose areas are computed via the theorem. The open question — which integer areas are achievable? — is posed as a Math Talk discussion, connecting back to the chapter's geometric theme of squares built on right-triangle sides."
   }
  ],
- "teacher_notes": "This closing unit asks students to transfer the causal reasoning developed across the chapter to three novel scenarios, which is the chapter's highest cognitive demand and the operation named in the chapter's dissolution test. The fish-removed-from-water scenario is the most challenging because it requires students to connect the environmental dependency of gill function to the broader consequence of no gas exchange — watch for groups who simply say 'the fish can't breathe' without explaining the mechanism. The individual synthesis sentence is a useful exit-level signal: a strong sentence names both processes and their functional relationship, whereas a weak one names them without connecting them to any shared outcome.",
+ "teacher_notes": "The rhombus question (Q3) frequently trips students who do not recall that the diagonals of a rhombus bisect each other perpendicularly — prompt with a quick diagram if needed, since this is a properties-of-quadrilaterals result the class will have met before. The grid-square exploration in Q8 is open-ended by design; expect a range of areas and celebrate the pattern (sums of two squares) as a beautiful payoff of the chapter's geometric thread.",
  "materials": [
-  "Scenario cards (three per group, prepared in advance)",
-  "Student notebooks"
- ],
- "homework": []
+  "Dot-grid paper",
+  "Ruler",
+  "Pencil",
+  "Compass (optional, for rhombus construction)"
+ ]
 }
 
 ======================================================================

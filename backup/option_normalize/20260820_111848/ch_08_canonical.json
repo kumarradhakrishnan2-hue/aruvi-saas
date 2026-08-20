@@ -1,0 +1,1552 @@
+{
+ "filename": "ch_08_canonical.json",
+ "saved_at": "2026-08-19T11:14:02",
+ "plan_status": "canonical",
+ "chapter_number": 8,
+ "chapter_title": "Fractions in Disguise",
+ "grade": "Grade VIII",
+ "subject": "Mathematics",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 45,
+   "count": 14
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 45 minutes × 14 periods = 630 minutes\nTotal: 14 periods · 10h 30min",
+ "genon_canonical": {
+  "generated": "2026-08-19",
+  "schedule": "14x45",
+  "constitution": "LP v3.9 / assessment v3.5",
+  "source": "generate_canonical.py one mathematics viii 8",
+  "ledger_ts": "20260818_205348_math_viii_08_top",
+  "validation": "clean",
+  "repairs": [
+   {
+    "at": "2026-08-19T12:58:43",
+    "tool": "genon/repair_register.py v1.5",
+    "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+    "edits": [
+     {
+      "unit": 9,
+      "field": "band:3",
+      "rule": "register/forward",
+      "removed": "The result (a small loss or exact break-even depending on base) motivates the next unit's exploration of compounded percentage changes.",
+      "replaced_with": "",
+      "note": "forward reference — whole trailing sentence struck rather than patched, because its only work was to motivate a later unit | survives: …'If you sell at a 20% profit and then offer a 20% discount on the marked price, do you still profit?' Students estimate first, then compute.…"
+     },
+     {
+      "unit": 11,
+      "field": "band:3",
+      "rule": "register/forward",
+      "removed": ", motivating the generalisation to come in the following unit",
+      "replaced_with": "",
+      "note": "forward reference — the prediction task is complete without it | survives: …what might happen over 10 or 20 years? Students write a one-sentence prediction.…"
+     }
+    ],
+    "ban_hits_before": 2,
+    "ban_hits_after": 0
+   },
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-20T11:02:17",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-187": {
+      "note": "the re-authored closer's notes point at its own Material table",
+      "edits": [
+       {
+        "unit": 14,
+        "field": "teacher_notes",
+        "old": "Pose all four problems together on the board at the start; s…",
+        "new": "Refer to Prepared Table (see material: 'Problems and solutio…"
+       }
+      ]
+     }
+    }
+   }
+  ],
+  "synthesis_reauthor": {
+   "spec": "ARV-D-181 · F1 2026-08-19 (the double-closer collision)",
+   "at": "2026-08-20T10:47:33",
+   "ledger_ts": "20260819_210337_math_viii_08_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_08_canonical_p11.json": "2026-08-19T13:38:19",
+    "ch_08_canonical_p08.json": "2026-08-19T13:38:19"
+   },
+   "replaced_in": "backup/resynth/mathematics_viii_ch08_20260819_210337_math_viii_08_resynth.json"
+  }
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 1.1",
+       "title": "Fractions as Percentages"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "What Does 'Per Hundred' Really Mean?",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-1",
+       "type": "worked_example",
+       "source_section": "section 1.1",
+       "book_ref": "Example 1, section 1.1 p.1",
+       "description": "Surya mixes red and yellow paint; red makes up 3/4 of the mixture. Convert 3/4 to a percentage using equivalent fractions and two algebraic methods. Answer: 75%."
+      },
+      {
+       "id": "WE-2",
+       "type": "worked_example",
+       "source_section": "section 1.1",
+       "book_ref": "Example 2, section 1.1 p.2",
+       "description": "Surya saves 2/5 of prize money for a canvas. Express 2/5 as a percentage using three methods (equivalent fraction, cross-multiplication, bar model). Answer: 40%."
+      },
+      {
+       "id": "E-2",
+       "type": "exercise",
+       "source_section": "section 1.1",
+       "book_ref": "Figure it Out Q2, section 1.1 p.3",
+       "description": "Nandini has 25 marbles, 15 white. What percentage are white? Choose from given options (MCQ)."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Open with the Latin origin of 'per centum' and the core definition: a percentage is a fraction whose denominator is 100. Invite students to suggest everyday situations where 'out of a hundred' appears — exam scores, sale signs, nutrition labels — building a shared vocabulary before any calculation begins."
+      },
+      {
+       "minutes": "10–25",
+       "activity": "Walk through Example 1, section 1.1 p.1 (\"Surya mixes red and yellow paint; red makes up 3/4 of the mixture....\") using the bar model on the board. Show the equivalent-fraction route (3/4 = 75/100) alongside the cross-multiplication route so students see both paths lead to 75%. Repeat the same dual-method treatment with Example 2, section 1.1 p.2 (\"Surya saves 2/5 of prize money for a canvas....\"), asking students to predict the answer before each step."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Students work individually on Figure it Out Q2, section 1.1 p.3 (\"Nandini has 25 marbles, 15 white. What percentage are white?...\"). Circulate to note which method each student chooses — equivalent fraction or cross-multiplication. Invite two students with different approaches to share their working, making the equivalence of methods visible to the class."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Consolidate by writing the FDP trio on the board: fraction ↔ decimal ↔ percentage. Pose a quick mental challenge: convert 4/10 to a decimal and then to a percentage, confirming 0.4 = 40%. Students write one fraction of their own and convert it, ready to discuss in the next phase of learning."
+      }
+     ],
+     "teacher_notes": "The bar model is the anchor here: students who see the 100-part strip understand the definition visually before applying any algorithm. Watch for students who invert the fraction when setting up cross-multiplication, writing 4/3 = 100/x instead of 3/4 = x/100 — a common slip worth surfacing gently. For self-study, Example 3, section 1.1 p.3 (\"Express 24% as a fraction....\") extends the conversion in the reverse direction and is worth reading independently.",
+     "materials": [
+      "Whiteboard and markers",
+      "Squared paper or plain A4 for bar-model sketches"
+     ]
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 1.1",
+       "title": "Fractions as Percentages"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Fraction-to-Percentage: Practice and Pattern Spotting",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-1",
+       "type": "exercise",
+       "source_section": "section 1.1",
+       "book_ref": "Figure it Out Q1, section 1.1 p.3",
+       "description": "Express six fractions as percentages: 3/5, 7/14, 9/20, 72/150, 1/3, 5/11."
+      },
+      {
+       "id": "E-3",
+       "type": "exercise",
+       "source_section": "section 1.1",
+       "book_ref": "Figure it Out Q3, section 1.1 p.3",
+       "description": "15 of 80 students come to school by walking. What percentage come by walking?"
+      },
+      {
+       "id": "E-5",
+       "type": "exercise",
+       "source_section": "section 1.1",
+       "book_ref": "Figure it Out Q5, section 1.1 p.4",
+       "description": "Insert >, <, or = without calculating: (i) 50% __ 5%; (ii) 5/10 __ 50%; (iii) 3/11 __ 61%; (iv) 30% __ 1/3."
+      }
+     ],
+     "homework": [
+      {
+       "id": "E-4",
+       "type": "exercise",
+       "source_section": "section 1.1",
+       "book_ref": "Figure it Out Q4, section 1.1 p.3",
+       "description": "Match four runners (A, B, C, D) shown at different positions on a race track to their approximate percentage completion from a given set (55%, 20%, 38%, 72%, 84%, 93%)."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "Ground the unit by recalling the two conversion methods — equivalent-fraction scaling and cross-multiplication — using the relationship that any fraction a/b equals (a/b × 100)%. Write a single worked step on the board for 3/5, then hand the work to students."
+      },
+      {
+       "minutes": "8–22",
+       "activity": "Students work in pairs on Figure it Out Q1, section 1.1 p.3 (\"Express six fractions as percentages: 3/5, 7/14, 9/20, 72/150, 1/3, 5/11....\"). Encourage estimation first — is the fraction closer to 0, 1/2, or 1? — before computing. Point out that 1/3 and 5/11 produce non-terminating decimals, linking to the earlier observation that base-100 does not always yield a tidy answer."
+      },
+      {
+       "minutes": "22–33",
+       "activity": "Move to Figure it Out Q3, section 1.1 p.3 (\"15 of 80 students come to school by walking....\") as a contextual problem: students form the fraction 15/80 and convert. Then challenge them with Figure it Out Q5, section 1.1 p.4 (\"Insert >, <, or = without calculating....\") — stress that the goal is reasoning, not arithmetic: e.g., 5/10 = 1/2 = 50%, so column (ii) needs no pen."
+      },
+      {
+       "minutes": "33–45",
+       "activity": "Class discussion: which comparisons in Q5 can be decided by inspection and which need calculation? Record on the board a short 'toolkit' of benchmark percentages — 10%, 25%, 33.3%, 50%, 75%, 100% — that make comparisons instant. Students copy the toolkit and add one benchmark of their own choosing."
+      }
+     ],
+     "teacher_notes": "Having established that percentages are fractions scaled to a denominator of 100, this unit builds fluency and estimation alongside accuracy. A frequent error is forming the fraction upside down in word problems — 80/15 rather than 15/80 — so a brief check on 'part over whole' framing is worthwhile before students work independently. Figure it Out Q4, section 1.1 p.3 (\"Match four runners to their approximate percentage completion....\") makes good homework, linking estimation to a visual track diagram.",
+     "materials": [
+      "Whiteboard and markers",
+      "Exercise books"
+     ]
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 1.2",
+       "title": "Percentage of Some Quantity"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Finding a Percentage of a Quantity: Multiple Routes",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-4",
+       "type": "worked_example",
+       "source_section": "section 1.2",
+       "book_ref": "Example 1, section 1.2 p.5",
+       "description": "Madhu eats 120 g of 25%-sugar biscuits (30 g sugar); Madhav eats 95 g of 35%-sugar biscuits (33.25 g sugar). Multiple methods: ratio, proportional equation, unit-rate. Concludes Madhav consumed more sugar."
+      },
+      {
+       "id": "WE-7",
+       "type": "worked_example",
+       "source_section": "section 1.2",
+       "book_ref": "Example 3, section 1.2 p.8",
+       "description": "Zubin needs 80% of 75 marks to get an A grade. Three methods: fraction multiplication (4/5 × 75 = 60), decimal multiplication (0.8 × 75 = 60), proportional reasoning with bar model. Answer: 60 marks."
+      },
+      {
+       "id": "E-6",
+       "type": "exercise",
+       "source_section": "section 1.2",
+       "book_ref": "Figure it Out Q1, section 1.2 p.12",
+       "description": "Find missing numbers using percentage bar models: (i) 20% of ? = 12 (given 100% shown); (ii) ? is 60% of 75; (iii) ? is 140% of ?, with two unknowns and bar models provided."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Pose a question without numbers: 'If you know a percentage and the whole, how do you find the part?' Collect student suggestions and write three candidate methods on the board — fraction multiplication, decimal multiplication, bar-model scaling. Tell students this unit will test all three on real data."
+      },
+      {
+       "minutes": "10–25",
+       "activity": "Unpack Example 1, section 1.2 p.5 (\"Madhu eats 120 g of 25%-sugar biscuits; Madhav eats 95 g of 35%-sugar biscuits....\") together, deliberately pausing after each method before revealing the answer to let students predict. Repeat with Example 3, section 1.2 p.8 (\"Zubin needs 80% of 75 marks to get an A grade....\"), asking students to choose their preferred method and explain why to a partner."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Students explore Figure it Out Q1, section 1.2 p.12 (\"Find missing numbers using percentage bar models: 20% of ? = 12....\") in pairs, drawing the bar model for at least one part. Part (iii) introduces 140%, which can exceed the whole — a productive surprise worth pausing on as a class."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Students record their preferred method for 'find y% of a value' in their own words, using numbers from today's examples to illustrate. A student volunteer reads their version; the class checks it against the three methods on the board, voting on completeness."
+      }
+     ],
+     "teacher_notes": "Students often apply y% of a value as y ÷ value rather than (y/100) × value — circulate during the biscuit example to catch this. The bar model in Q1 part (iii) naturally surfaces percentages above 100, which connects forward to Kishanlal's sales data later in the section. For students who finish early, Example 2, section 1.2 p.7 (\"Free-hand computation table....\") offers mental-arithmetic extension.",
+     "materials": [
+      "Whiteboard and markers",
+      "Squared paper for bar models"
+     ]
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 1.2",
+       "title": "Percentage of Some Quantity"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Mental Percentages and the FDP Trio",
+     "pedagogical_method": "Play-way",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-5",
+       "type": "worked_example",
+       "source_section": "section 1.2",
+       "book_ref": "Example 2, section 1.2 p.7",
+       "description": "Free-hand computation table: find 25%, 10%, 20%, 5% of values 100, 200, 50, 80, 10, 35, 287 without pen and paper, exploiting the relationships between percentages (e.g., 20% = 2 × 10%)."
+      },
+      {
+       "id": "WE-6",
+       "type": "worked_example",
+       "source_section": "section 1.2",
+       "book_ref": "Example 2, section 1.2 p.8",
+       "description": "The FDP trio: show that 50% = 1/2 = 0.5, so multiplying a value by 0.5 gives 50% of it. Similarly for 10%. Students complete a table converting percents to fractions and decimals for 50%, 100%, 25%, 75%, 10%, 1%, 5%, 43%."
+      },
+      {
+       "id": "A-1",
+       "type": "activity",
+       "source_section": "section 1.2",
+       "book_ref": "Activity: How Close Can You Get?, p.8",
+       "description": "Students work in pairs, each choosing a number; both independently estimate the percentage equivalent of the fraction a/b (a < b) formed by the two numbers and announce answers within 5 seconds. The closer estimate wins. Played for 10 rounds to build proportional number sense."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Display the free-hand computation table from Example 2, section 1.2 p.7 (\"find 25%, 10%, 20%, 5% of values 100, 200, 50, 80, 10, 35, 287 without pen and paper....\"). Work three cells aloud as a class, deriving 20% as double of 10%, and 5% as half of 10%. Students race to fill the remaining cells mentally, hands up when done — no writing."
+      },
+      {
+       "minutes": "12–22",
+       "activity": "Build the FDP table from Example 2, section 1.2 p.8 (\"show that 50% = 1/2 = 0.5....\") column by column: fraction first, then decimal, then back to percentage. Students complete the 43% row individually — it is intentionally irregular, requiring the general rule (43% = 43/100 = 0.43) rather than a memorised equivalent."
+      },
+      {
+       "minutes": "22–40",
+       "activity": "Run Activity: How Close Can You Get?, p.8 (\"Students work in pairs, each choosing a number; both independently estimate the percentage equivalent of the fraction a/b formed by the two numbers....\") for a quick ten rounds. After each round, the pair briefly states which benchmark (25%, 50%, 75%) they used to anchor their estimate. The teacher circulates, listening for the reasoning strategies students develop spontaneously."
+      },
+      {
+       "minutes": "40–45",
+       "activity": "Whole-class debrief: which fractions were easy to estimate (near benchmarks) and which were hard (primes in the denominator)? Record two student-generated strategies on the board as a shared resource."
+      }
+     ],
+     "teacher_notes": "The activity is the cognitive heart of this unit: students develop proportional number sense that no algorithm can build alone. Watch for pairs who simply compute a/b on their fingers rather than estimating — the five-second rule is the constraint that forces intuition. The FDP table in Example 2, section 1.2 p.8 is worth keeping on display throughout, as decimal multipliers (0.1, 0.25, 0.5) reappear in the interest and depreciation units later in the chapter.",
+     "materials": [
+      "Whiteboard and markers",
+      "Exercise books for FDP table",
+      "No calculators"
+     ]
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 1.2",
+       "title": "Percentage of Some Quantity"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Ratios, Percentages Greater Than 100, and Reverse Problems",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-8",
+       "type": "worked_example",
+       "source_section": "section 1.2",
+       "book_ref": "Example 4, section 1.2 p.9",
+       "description": "Millet kanji: millet-to-water ratio is 2:7, so millet is 2/9 of mixture. Estimate first, then compute 2/9 × 100 = 22.22%. For 500 ml of mixture, millet = 5 × 22.22 = 111.1 ml."
+      },
+      {
+       "id": "WE-10",
+       "type": "worked_example",
+       "source_section": "section 1.2",
+       "book_ref": "Example 6, section 1.2 p.10",
+       "description": "Kishanlal's daily sales vs. ₹5000 target: Day 1 ₹2000 = 40%, Day 2 ₹3500 = 70%, Day 3 ₹5000 = 100%, Day 4 ₹6000 = 120%. Introduces percentages greater than 100. Students compute Days 5–8."
+      },
+      {
+       "id": "WE-9",
+       "type": "worked_example",
+       "source_section": "section 1.2",
+       "book_ref": "Example 5, section 1.2 p.10",
+       "description": "A cyclist has covered 40% (92 km) of the Delhi-to-Agra route. Find remaining distance using four methods: proportional equation (d = 230, remainder = 138 km), ratio method, percentage scaling (40% → 20% → 60%), and algebraic setup."
+      }
+     ],
+     "homework": [
+      {
+       "id": "E-14",
+       "type": "exercise",
+       "source_section": "section 1.2",
+       "book_ref": "Figure it Out Q9, section 1.2 p.13",
+       "description": "Workers pick coffee berries in 20% of a plantation in 18 days. How long to cover the whole plantation at the same rate? Why must we assume constant rate?"
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Open with the millet kanji scenario from Example 4, section 1.2 p.9 (\"millet-to-water ratio is 2:7, so millet is 2/9 of mixture....\"). Ask students to estimate the percentage of millet before any calculation: is it closer to 10%, 25%, or 50%? After estimates are collected, compute together — the ratio must first become a fraction of the whole (2/9, not 2/7)."
+      },
+      {
+       "minutes": "12–26",
+       "activity": "Introduce Example 6, section 1.2 p.10 (\"Kishanlal's daily sales vs. ₹5000 target: Day 1 ₹2000 = 40%....\"). Students complete Days 5–8 independently using the same proportional approach, deliberately including at least one day exceeding ₹5000 so they produce a percentage above 100. Discuss: what does 120% actually mean in context?"
+      },
+      {
+       "minutes": "26–40",
+       "activity": "Work through Example 5, section 1.2 p.10 (\"A cyclist has covered 40% (92 km) of the Delhi-to-Agra route....\") as a reverse problem — the percentage and the part are known; the whole is unknown. Demonstrate all four methods in abbreviated form, then ask students to choose one method and apply it to a fresh reverse problem posed orally: '30% of a journey is 45 km; find the full distance.'"
+      },
+      {
+       "minutes": "40–45",
+       "activity": "Students write in one sentence the key insight for reverse percentage problems — what changes relative to forward problems. A pair reads their sentence aloud for class comment."
+      }
+     ],
+     "teacher_notes": "The shift from 'find the part' to 'find the whole' is cognitively the steepest step in this section; students who conflate the two directions will show it most clearly in the cyclist example. Also watch for the ratio-to-fraction conversion error: students may write 2/7 (millet over water) rather than 2/9 (millet over total). Figure it Out Q9, section 1.2 p.13 (\"Workers pick coffee berries in 20% of a plantation in 18 days....\") extends the reverse idea to a rate context and works well as homework.",
+     "materials": [
+      "Whiteboard and markers",
+      "Exercise books"
+     ]
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 1.2",
+       "title": "Percentage of Some Quantity"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Estimation, Comparison, and Posing Percentage Problems",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-9",
+       "type": "exercise",
+       "source_section": "section 1.2",
+       "book_ref": "Figure it Out Q4, section 1.2 p.13",
+       "description": "Insert >, <, = without computing (verify after estimating): (i) 50% of 510 vs. 50% of 515; (ii) 37% of 148 vs. 73% of 148; (iii) 29% of 43 vs. 92% of 110; (iv) 30% of 40 vs. 40% of 50; (v) 45% of 200 vs. 10% of 490; (vi) 30% of 80 vs. 24% of 64."
+      },
+      {
+       "id": "E-10",
+       "type": "exercise",
+       "source_section": "section 1.2",
+       "book_ref": "Figure it Out Q5, section 1.2 p.13",
+       "description": "Fill in the blanks using scaling relationships: (i) given 30% of k = 70, find 60%, 90%, 120% of k; (ii) given 100% of m = 215, find 10%, 1%, 6%; (iii) given 90% of n = 270, find 9%, 18%, 100%; (iv) make 2 more questions for peers."
+      },
+      {
+       "id": "E-13",
+       "type": "exercise",
+       "source_section": "section 1.2",
+       "book_ref": "Figure it Out Q8, section 1.2 p.13",
+       "description": "Math Talk: Mariam's bull ate (n−1) of n units of fodder each day for days 1 through 99. Represent each day's eaten fodder as a percentage of what was given. What pattern emerges? (Class-wide task.)"
+      }
+     ],
+     "homework": [
+      {
+       "id": "E-15",
+       "type": "exercise",
+       "source_section": "section 1.2",
+       "book_ref": "Figure it Out Q10, section 1.2 p.13",
+       "description": "Badminton training: warm-up:play:cool-down = 10%:80%:10% of 90 minutes. Find the duration of each activity."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Students work individually on Figure it Out Q4, section 1.2 p.13 (\"Insert >, <, = without computing: 50% of 510 vs. 50% of 515....\"). Emphasise the 'no computing' constraint: reasoning must precede any arithmetic. After individual work, pairs compare answers and must justify any disagreement verbally before checking numerically."
+      },
+      {
+       "minutes": "15–30",
+       "activity": "Move to Figure it Out Q5, section 1.2 p.13 (\"Fill in the blanks using scaling relationships: given 30% of k = 70, find 60%, 90%, 120% of k....\"). Students notice that 60% = 2 × 30%, so 60% of k = 140 without finding k. Part (iv) — posing two similar questions for peers — is done in pairs and exchanged across the room for solving."
+      },
+      {
+       "minutes": "30–42",
+       "activity": "Run Figure it Out Q8, section 1.2 p.13 (\"Math Talk: Mariam's bull ate (n−1) of n units of fodder each day for days 1 through 99....\") as a whole-class discussion. Students compute the percentage for days 1, 2, 3, 10, 50, 99 in a table and articulate the pattern: the percentage is always (n−1)/n × 100. Ask: what happens as n grows very large?"
+      },
+      {
+       "minutes": "42–45",
+       "activity": "Brief closure: students write a one-line generalisation of what today's scaling patterns reveal about proportional reasoning. The teacher reads two aloud and annotates them on the board."
+      }
+     ],
+     "teacher_notes": "Q4 is a rich diagnostic: students who compute instead of reason reveal that estimation habit has not yet taken hold. The scaling insight in Q5 — that multiples of a known percentage can be found without finding the base value — is a conceptual lever worth spending time on. Figure it Out Q10, section 1.2 p.13 (\"Badminton training: warm-up:play:cool-down = 10%:80%:10% of 90 minutes....\") is a clean homework item that applies the same proportional logic in a new context.",
+     "materials": [
+      "Whiteboard and markers",
+      "Exercise books"
+     ]
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 1.2",
+       "title": "Percentage of Some Quantity"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Consolidating Percentage of a Quantity: Extended Practice",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-7",
+       "type": "exercise",
+       "source_section": "section 1.2",
+       "book_ref": "Figure it Out Q2, section 1.2 p.12",
+       "description": "Find the value and draw bar models for: (i) 25% of 160; (ii) 16% of 250; (iii) 62% of 360; (iv) 140% of 40; (v) 1% of 1 hour; (vi) 7% of 10 kg."
+      },
+      {
+       "id": "E-11",
+       "type": "exercise",
+       "source_section": "section 1.2",
+       "book_ref": "Figure it Out Q6, section 1.2 p.13",
+       "description": "Fill in the blanks: (i) 3 is __% of 300; (ii) __ is 40% of 4; (iii) 40 is 80% of __."
+      },
+      {
+       "id": "E-17",
+       "type": "exercise",
+       "source_section": "section 1.2",
+       "book_ref": "Figure it Out Q12, section 1.2 p.13",
+       "description": "Halwa recipe for 4 people: Rava 40%, Sugar 40%, Ghee 20%. (i) Proportions remain the same for 8 people? (ii) If total weight is 2 kg, find weight of each ingredient."
+      }
+     ],
+     "homework": [
+      {
+       "id": "E-16",
+       "type": "exercise",
+       "source_section": "section 1.2",
+       "book_ref": "Figure it Out Q11, section 1.2 p.13",
+       "description": "An estimated 90% of the world's population lives in the Northern Hemisphere. Find the approximate number using current worldwide population."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Students begin Figure it Out Q2, section 1.2 p.12 (\"Find the value and draw bar models for: 25% of 160; 16% of 250; 62% of 360; 140% of 40....\") in their books, drawing bar models for at least two parts. Part (iv) — 140% of 40 — demands a bar that extends beyond the original strip, which is worth pausing on together."
+      },
+      {
+       "minutes": "15–27",
+       "activity": "Pairs tackle Figure it Out Q6, section 1.2 p.13 (\"Fill in the blanks: 3 is __% of 300; __ is 40% of 4; 40 is 80% of __....\"). Each blank represents a different unknown — the percentage, the part, and the whole — giving structured exposure to all three problem types within a single compact exercise."
+      },
+      {
+       "minutes": "27–40",
+       "activity": "Groups of three work on Figure it Out Q12, section 1.2 p.13 (\"Halwa recipe for 4 people: Rava 40%, Sugar 40%, Ghee 20%....\"). The key realisation is that scaling the number of servings does not change the proportions, only the absolute weights. Groups write their answer as a brief explanation as well as a calculation."
+      },
+      {
+       "minutes": "40–45",
+       "activity": "Whole-class share of Q12 explanations. Highlight the insight that percentage composition is scale-invariant — a concept that recurs in mixture problems throughout science and daily life. Students note this generalisation in their exercise books."
+      }
+     ],
+     "teacher_notes": "This unit consolidates three distinct problem types — find the part, find the percentage, find the whole — before the class moves into real-world applications. The halwa recipe is productive precisely because it is familiar: students who cook at home already know that proportions survive scaling, and naming that intuition mathematically is the goal. A common slip in Q6 part (iii) is to compute 80 − 40 = 40 rather than solving 40 = 0.8 × whole; the bar model catches this if students draw it.",
+     "materials": [
+      "Whiteboard and markers",
+      "Squared paper for bar models",
+      "Exercise books"
+     ]
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 1.3",
+       "title": "Using Percentages"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Comparing Proportions and Percentage Change",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-12",
+       "type": "worked_example",
+       "source_section": "section 1.3",
+       "book_ref": "Example 1, section 1.3 p.14",
+       "description": "Eesha: English score 42/50 = 84%, Science score 70/80 = 87.5%. Resolves apparent ambiguity about which is better by converting both to percentages. Science score is higher."
+      },
+      {
+       "id": "WE-14",
+       "type": "worked_example",
+       "source_section": "section 1.3",
+       "book_ref": "Example 3, section 1.3 p.15",
+       "description": "'Population in 1991 is 165% of 1961' and 'increased by 65% from 1961 to 1991' — both mean q = 1.65p. Algebra confirms equivalence of 'is P% of' and 'increased by (P−100)%' statements."
+      },
+      {
+       "id": "E-22",
+       "type": "exercise",
+       "source_section": "section 1.3",
+       "book_ref": "Figure it Out Q5, section 1.3 p.19",
+       "description": "Petrol price was ₹60 in 2015 and ₹100 in 2025. Find percentage increase. Choose from MCQ options."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Present two pairs of raw scores on the board — 42 out of 50 and 70 out of 80 — and ask students which is the larger achievement. Collect a show of hands, then reveal Example 1, section 1.3 p.14 (\"Eesha: English score 42/50 = 84%, Science score 70/80 = 87.5%....\"). The conversion to percentage resolves the ambiguity cleanly; discuss why a common denominator of 100 makes comparisons transparent."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Work through Example 3, section 1.3 p.15 (\"'Population in 1991 is 165% of 1961' and 'increased by 65% from 1961 to 1991'....\"). Students write both sentences as algebra (q = 1.65p), then verify that the two phrasings are equivalent. Ask: if a quantity is 250% of another, by what percentage has it increased? Students generalise: 'is P% of' means 'increased by (P − 100)%'."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Students work individually on Figure it Out Q5, section 1.3 p.19 (\"Petrol price was ₹60 in 2015 and ₹100 in 2025. Find percentage increase....\"). Before selecting from the MCQ options, students write out the percentage increase formula: (increase ÷ original) × 100. Compare answers in pairs and identify which incorrect option corresponds to computing increase over new price rather than original."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Introduce the language of percentage decrease with a brief oral example: a theatre's footfall drops from 800 to 500. Students compute the percentage decrease, then state the result both as a decrease figure and as the equivalent 'footfall is now ___% of original' statement — building fluency with both phrasings."
+      }
+     ],
+     "teacher_notes": "The most common error in percentage change is dividing by the new value rather than the original; Example 3 from section 1.3 is particularly useful for showing this algebraically. Students who struggled with percentages above 100 in section 1.2 will find the population example a natural bridge. Example 2, section 1.3 p.15 (\"Know Your Contents: badam drink mix ingredient proportions....\") is a good self-study item for students who want more comparison practice.",
+     "materials": [
+      "Whiteboard and markers",
+      "Exercise books"
+     ]
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 1.3",
+       "title": "Using Percentages"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Profit, Loss, and the Sweater Chain",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-15",
+       "type": "worked_example",
+       "source_section": "section 1.3",
+       "book_ref": "Example 4, section 1.3 p.17",
+       "description": "Kishanlal buys a sweater at ₹300, marks it at ₹480, sells at ₹430. Profit = ₹130 on CP of ₹300 → percentage profit = 130/300 × 100 = 43.3%. Students also find wholesaler and manufacturer profit percentages."
+      },
+      {
+       "id": "WE-16",
+       "type": "worked_example",
+       "source_section": "section 1.3",
+       "book_ref": "Example 5, section 1.3 p.17",
+       "description": "Raghu buys rice at ₹35/kg, sells 10 kg for ₹300 (CP = ₹350). Loss = ₹50. Percentage loss = 50/350 × 100 = 14.28%."
+      },
+      {
+       "id": "WE-17",
+       "type": "worked_example",
+       "source_section": "section 1.3",
+       "book_ref": "Example 6, section 1.3 p.17",
+       "description": "Shyamala sells a damaged vase at 18% loss on CP of ₹2650. Two methods: SP = 82% of 2650 = ₹2173; or loss amount = 18/100 × 2650 = 477, SP = 2650 − 477 = ₹2173."
+      }
+     ],
+     "homework": [
+      {
+       "id": "E-18",
+       "type": "exercise",
+       "source_section": "section 1.3",
+       "book_ref": "Figure it Out Q1, section 1.3 p.19",
+       "description": "Shopkeeper buys a geometry box for ₹75 and sells for ₹110. Find profit margin with respect to cost."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Establish the vocabulary: cost price (CP), marked price (MP), selling price (SP), profit, loss, discount. Draw the price chain on the board — manufacturer → wholesaler → retailer → customer — and ask students where each term sits. This structural overview grounds the subsequent examples."
+      },
+      {
+       "minutes": "10–25",
+       "activity": "Walk through Example 4, section 1.3 p.17 (\"Kishanlal buys a sweater at ₹300, marks it at ₹480, sells at ₹430....\"). Pause at each price to ask: what fraction of the CP is this? Students compute the retailer's percentage profit, then independently find the wholesaler's and manufacturer's percentage profits using the same chain."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Students work in pairs on Example 5, section 1.3 p.17 (\"Raghu buys rice at ₹35/kg, sells 10 kg for ₹300....\") and Example 6, section 1.3 p.17 (\"Shyamala sells a damaged vase at 18% loss on CP of ₹2650....\"). For the vase, students must apply both methods — subtract-loss and multiply-by-complement — and confirm the answers match."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Class challenge: 'If you sell at a 20% profit and then offer a 20% discount on the marked price, do you still profit?' Students estimate first, then compute."
+      }
+     ],
+     "teacher_notes": "Percentage profit is always computed on cost price in this chapter, not on selling price — a frequent source of confusion, especially when students see the word 'margin'. Shyamala's vase is the example to dwell on: the two-method confirmation (82% × CP vs. CP − loss) builds the habit of checking commercial percentage answers. Figure it Out Q1, section 1.3 p.19 (\"Shopkeeper buys a geometry box for ₹75 and sells for ₹110....\") is a clean homework application.",
+     "materials": [
+      "Whiteboard and markers",
+      "Exercise books"
+     ]
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 1.3",
+       "title": "Using Percentages"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Discount, GST, and Reverse Percentage Problems",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-21",
+       "type": "exercise",
+       "source_section": "section 1.3",
+       "book_ref": "Figure it Out Q4, section 1.3 p.19",
+       "description": "A clothing shop offers 25% discount on shirts originally priced at ₹300. How much does Anwar pay?"
+      },
+      {
+       "id": "E-23",
+       "type": "exercise",
+       "source_section": "section 1.3",
+       "book_ref": "Figure it Out Q3, section 1.3 p.19",
+       "description": "Samson bought a car for ₹4,40,000 after a 15% discount. Find the original (pre-discount) price."
+      },
+      {
+       "id": "E-41",
+       "type": "exercise",
+       "source_section": "section 1.3",
+       "book_ref": "Figure it Out Q3, section 1.3 p.28",
+       "description": "Mobile phone costs ₹8,250 with 18% GST. Which expression(s) give the final price including GST? (MCQ with seven options.)"
+      }
+     ],
+     "homework": [
+      {
+       "id": "E-26",
+       "type": "exercise",
+       "source_section": "section 1.3",
+       "book_ref": "Figure it Out Q6, section 1.3 p.19",
+       "description": "A number increased by 20% becomes 90. Find the original number."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Pose the discount scenario from Figure it Out Q4, section 1.3 p.19 (\"A clothing shop offers 25% discount on shirts originally priced at ₹300. How much does Anwar pay?...\"). Students solve individually — two routes: subtract 25% of 300, or multiply by 75%. Discuss why 75% of MP is equivalent and more efficient."
+      },
+      {
+       "minutes": "10–25",
+       "activity": "Introduce the reverse discount scenario from Figure it Out Q3, section 1.3 p.19 (\"Samson bought a car for ₹4,40,000 after a 15% discount. Find the original price....\"). Ask: what fraction of the original price does Samson pay? (85%) Set up the equation 0.85 × original = 4,40,000 and solve. This mirrors the reverse percentage logic from section 1.2."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Work through Figure it Out Q3, section 1.3 p.28 (\"Mobile phone costs ₹8,250 with 18% GST. Which expression(s) give the final price including GST?...\"). Students evaluate each of the seven options, marking each true or false with a brief justification — developing critical reading of mathematical expressions."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Brief consolidation: students construct a 'price map' for an item of their choice — starting from a CP they invent, adding a profit margin, applying a discount, then adding GST. Compare results across pairs; discuss what the final consumer actually pays relative to the original CP."
+      }
+     ],
+     "teacher_notes": "Reverse discount problems require the same logic as reverse percentage problems from section 1.2 — the known quantity is the result, not the base — so naming that connection explicitly helps students who struggled earlier. The GST exercise is intentionally an MCQ so students must evaluate expressions rather than produce one: this is a different and harder skill. Figure it Out Q6, section 1.3 p.19 (\"A number increased by 20% becomes 90....\") is the classic reverse-increase problem and works well as homework.",
+     "materials": [
+      "Whiteboard and markers",
+      "Exercise books"
+     ]
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 1.3",
+       "title": "Using Percentages"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Simple Interest and the Birth of Compounding",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-18",
+       "type": "worked_example",
+       "source_section": "section 1.3",
+       "book_ref": "Example 7, section 1.3 p.21",
+       "description": "₹6000 deposited at 10% p.a. for 3 years. Option 1 (no compounding): interest returned each year, total = ₹7800. Option 2 (compounding): interest added back each year, total = ₹7986. Side-by-side tables build intuition."
+      },
+      {
+       "id": "WE-19",
+       "type": "worked_example",
+       "source_section": "section 1.3",
+       "book_ref": "Example 8, section 1.3 p.22",
+       "description": "What % of the deposited amount is returned under each option? Without compounding: 7800/6000 × 100 = 130% (30% gain). With compounding: 7986/6000 × 100 = 133.1% (33.1% gain). Compounding expressed as 6000 × 1.1³."
+      },
+      {
+       "id": "E-30",
+       "type": "exercise",
+       "source_section": "section 1.3",
+       "book_ref": "Figure it Out Q1, section 1.3 p.22",
+       "description": "Bank of Yahapur: 10% p.a. Compare the return on ₹20,000 for 2 years with and without annual compounding."
+      }
+     ],
+     "homework": [
+      {
+       "id": "E-31",
+       "type": "exercise",
+       "source_section": "section 1.3",
+       "book_ref": "Figure it Out Q2, section 1.3 p.22",
+       "description": "Bank of Wahapur: 5% p.a. Compare the return on ₹20,000 for 4 years with and without annual compounding."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Ask students: if you deposit money in a bank and earn 10% interest each year, but the bank pays that interest out to you in cash immediately, how much do you have at the end of each year? Build the non-compounding table from Example 7, section 1.3 p.21 (\"₹6000 at 10% p.a. for 3 years; Option 1: interest returned each year, total = ₹7800....\") row by row with student input."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Now ask: what if the bank keeps the interest and adds it to your deposit? Build Option 2 alongside Option 1 in parallel columns so the divergence is visible year by year. Reveal that ₹7986 > ₹7800, and discuss why — the key insight is that interest earns interest. Introduce 1.1³ = 1.331 as a shortcut from Example 8, section 1.3 p.22 (\"compounding expressed as 6000 × 1.1³....\")."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Students independently complete Figure it Out Q1, section 1.3 p.22 (\"Bank of Yahapur: 10% p.a.; compare return on ₹20,000 for 2 years with and without compounding....\"), building both tables and finding the final amounts. After calculation, they express each total as a percentage of the deposit, connecting to Example 8."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Pair discussion: after only 2 years the difference between compounded and non-compounded is modest; what might happen over 10 or 20 years? Students write a one-sentence prediction."
+      }
+     ],
+     "teacher_notes": "The parallel-column table in Example 7 is essential: students who see both options growing side by side grasp the compounding advantage intuitively before any formula appears. The common error is to multiply the original principal by 1.1 each time without updating the base — resulting in a flat 10% each year — which is precisely Option 1, not Option 2. Figure it Out Q2, section 1.3 p.22 (\"Bank of Wahapur: 5% p.a., 4 years....\") provides a longer horizon for homework, where the compounding gap grows more visibly.",
+     "materials": [
+      "Whiteboard and markers",
+      "Exercise books",
+      "Squared paper for parallel tables"
+     ]
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 1.3",
+       "title": "Using Percentages"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Generalising Compounding: Depreciation and the Multiplicative Pattern",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-20",
+       "type": "worked_example",
+       "source_section": "section 1.3",
+       "book_ref": "Example 9, section 1.3 p.23",
+       "description": "Generalises to principal p, rate r, time t. Without compounding: total = p(1 + rt). With compounding: total = p(1 + r)^t. Derivation shown step by step for both options."
+      },
+      {
+       "id": "WE-21",
+       "type": "worked_example",
+       "source_section": "section 1.3",
+       "book_ref": "Example 10, section 1.3 p.24",
+       "description": "TV bought at ₹21,000; depreciates 5% after 1 year. Two equivalent methods: reduce by 5% (21000 − 1050 = ₹19,950) or multiply by 95% (0.95 × 21000 = ₹19,950)."
+      },
+      {
+       "id": "WE-22",
+       "type": "worked_example",
+       "source_section": "section 1.3",
+       "book_ref": "Example 11, section 1.3 p.24",
+       "description": "Village population decreasing by 10% per decade from 1250. After 3 decades: 1250 × 0.9³ ≈ 911. Side-by-side: multiplicative vs. iterative subtraction approach. Rounds to ~910."
+      }
+     ],
+     "homework": [
+      {
+       "id": "E-37",
+       "type": "exercise",
+       "source_section": "section 1.3",
+       "book_ref": "Figure it Out Q8, section 1.3 p.24",
+       "description": "A city's population rises 3% every year. Current population is 1.5 crore. Find expected population after 3 years."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Derive both general formulas from Example 9, section 1.3 p.23 (\"principal p, rate r, time t; without compounding: p(1 + rt); with compounding: p(1 + r)^t....\") step by step on the board, connecting each algebraic line back to the numerical tables built with ₹6000. Students copy the derivation, annotating each line with what it represents."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Show that compounding works in reverse — depreciation — using Example 10, section 1.3 p.24 (\"TV bought at ₹21,000; depreciates 5% after 1 year....\"). Students compute 0.95 × 21,000 and confirm it equals 21,000 − 1,050. Ask: what formula describes the TV's value after t years of 5% annual depreciation?"
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Work through Example 11, section 1.3 p.24 (\"Village population decreasing by 10% per decade from 1250; after 3 decades: 1250 × 0.9³....\") building the side-by-side iterative and multiplicative tables. Students verify that 0.9³ = 0.729 and 1250 × 0.729 ≈ 911. Generalise: any repeated percentage change — growth or decay — follows p × (multiplier)^t."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Students write the unified compounding/depreciation template in their own words: 'To find the value after t periods at rate r, start with p and multiply by (1 ± r) repeatedly.' They apply it to a short self-posed scenario — choosing a starting value, a rate, and a number of periods — and compute the result."
+      }
+     ],
+     "teacher_notes": "The structural parallel between compounding (multiply by 1 + r each period) and depreciation (multiply by 1 − r each period) is the key abstraction of this unit; once students see them as the same multiplicative pattern, the formula p(1 + r)^t feels natural rather than arbitrary. A recurring error is applying the rate to the original principal every time, yielding p(1 + rt) — which is the simple-interest formula, not the compound formula. Figure it Out Q8, section 1.3 p.24 (\"A city's population rises 3% every year....\") is a growth scenario for homework that mirrors the decay in Example 11.",
+     "materials": [
+      "Whiteboard and markers",
+      "Exercise books",
+      "Squared paper for side-by-side tables"
+     ]
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 1.3",
+       "title": "Using Percentages"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Compound Discounts, the Surbhi Paradox, and Tricky Percentages",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-23",
+       "type": "worked_example",
+       "source_section": "section 1.3",
+       "book_ref": "Example 12, section 1.3 p.26",
+       "description": "Cakely offers 30% + 20% sequential discount vs. Cakify's flat 50%. On ₹200 cake: Cakely → ₹140 → ₹112 (44% total reduction); Cakify → ₹100 (50% reduction). Compounding of discounts means 30% + 20% < 50%."
+      },
+      {
+       "id": "WE-24",
+       "type": "worked_example",
+       "source_section": "section 1.3",
+       "book_ref": "Example 13, section 1.3 p.27",
+       "description": "Surbhi marks goods at 50% profit margin (1.5x), then offers 50% discount (0.75x). Results in 25% loss, not break-even. Derives the correct discount for break-even: 33.33%. Bar model illustrates the three price levels."
+      },
+      {
+       "id": "E-43",
+       "type": "exercise",
+       "source_section": "section 1.3",
+       "book_ref": "Figure it Out Q5, section 1.3 p.28",
+       "description": "Shopkeeper sets price with 35% profit margin, then offers 30% discount on selling price. Does he make a profit or a loss? Give reasons."
+      }
+     ],
+     "homework": [
+      {
+       "id": "E-48",
+       "type": "exercise",
+       "source_section": "section 1.3",
+       "book_ref": "Figure it Out Q10, section 1.3 p.29",
+       "description": "Bus fares increased 3% last year and 4% this year. Find overall percentage price increase over 2 years."
+      }
+     ],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Present the Cakely vs. Cakify dilemma from Example 12, section 1.3 p.26 (\"Cakely offers 30% + 20% sequential discount vs. Cakify's flat 50%....\"). Before computing, ask students to vote: are the two deals equivalent? After the vote, compute the sequential discount step by step — ₹200 → ₹140 → ₹112 — and compare with Cakify's ₹100. The compound discount is 44%, not 50%."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Introduce the Surbhi scenario from Example 13, section 1.3 p.27 (\"Surbhi marks goods at 50% profit margin, then offers 50% discount....\"). Students predict the outcome before computing. Work through 1.5x → 0.75x = 0.75 of CP, establishing the 25% loss. Then reverse-engineer: for what discount rate does 1.5x × (1 − d) = x? Derive d = 1/3 = 33.33%."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Students tackle Figure it Out Q5, section 1.3 p.28 (\"Shopkeeper sets price with 35% profit margin, then offers 30% discount on selling price....\") in pairs, using the multiplicative approach: 1.35x × 0.70 = 0.945x — a 5.5% loss. They write their reasoning, not just the answer, to practise mathematical argumentation."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Class discussion: what is the general condition for a shopkeeper to break even after a markup of m% and a discount of d%? Students express it as (1 + m)(1 − d) = 1 and note that d must be smaller than m for any profit. This algebraic insight closes the section's 'tricky percentages' strand."
+      }
+     ],
+     "teacher_notes": "The central misconception this unit targets is additive thinking about multiplicative operations — '30% + 20% = 50%' — which students find genuinely surprising to disprove. The bar model in Example 13 is worth reproducing carefully: it shows CP, MP, and SP as three distinct lengths, making the loss visible without any arithmetic. Figure it Out Q10, section 1.3 p.29 (\"Bus fares increased 3% last year and 4% this year....\") applies the same compound-change logic to a familiar context and works well as homework.",
+     "materials": [
+      "Whiteboard and markers",
+      "Exercise books",
+      "Bar-model sketches on board"
+     ]
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 45,
+     "synthesis": true,
+     "textbook_segments": [
+      {
+       "ref": "section 1.1",
+       "title": "Fractions as Percentages"
+      },
+      {
+       "ref": "section 1.2",
+       "title": "Percentage of Some Quantity"
+      },
+      {
+       "ref": "section 1.3",
+       "title": "Using Percentages"
+      }
+     ],
+     "activity_title": "Percentages at Work: A Chapter in Four Problems",
+     "pedagogical_method": "Problem-solving",
+     "section_goal": "apply",
+     "teacher_notes": "Refer to Prepared Table (see material: 'Problems and solutions') for the problems in full and their worked solutions. Pose all four problems together on the board at the start; students work individually with full written working for the first phase, then compare in groups of three and reconstruct any disagreement step by step. Each presentation ends with the class naming aloud the chapter method the solution rested on. Problem 1 needs fraction-to-percentage conversion (equivalent fractions or cross-multiplication). Problem 2 needs percentage of a quantity combined with ratio-to-fraction conversion. Problem 3 needs profit-and-loss reasoning (selling price as a percentage of cost price). Problem 4 needs the multiplicative structure of compound percentage change. Watch for students who add sequential percentages rather than multiplying scale factors in Problem 4, and for students who compute profit on selling price rather than cost price in Problem 3.",
+     "visual_aids": [
+      {
+       "type": "table",
+       "title": "Problems and solutions",
+       "table": "No. | Problem | Solution\n1 | A school garden has 48 plants. Of these, 18 are flowering plants. Express the fraction of flowering plants as a percentage. Then express 35% as a fraction in its simplest form. | 18/48 = 3/8. To convert: 3/8 × 100 = 37.5%. For the reverse: 35% = 35/100 = 7/20.\n2 | A trail mix is made in the ratio nuts : seeds : dried fruit = 3 : 2 : 5. What percentage of the mix is seeds? If a bag contains 400 g of this mix, how many grams of nuts does it contain? | Total parts = 10. Seeds = 2/10 = 1/5 = 20%. Nuts = 3/10 of 400 g = 3/10 × 400 = 120 g.\n3 | A bookseller buys a set of books for ₹840 and sells it for ₹1,050. Find the profit percentage. A second set is sold at a 15% loss on a cost price of ₹960. Find its selling price. | Profit = 1050 − 840 = ₹210. Profit % = 210/840 × 100 = 25%. For the second set: SP = 85% of 960 = 85/100 × 960 = ₹816.\n4 | A town's population was 25,000. It grew by 4% in the first year and then by 5% in the second year. What is the population after two years? Is this the same as a single 9% increase on 25,000? Show the difference. | After year 1: 25,000 × 1.04 = 26,000. After year 2: 26,000 × 1.05 = 27,300. Single 9% rise: 25,000 × 1.09 = 27,250. The compound result (27,300) exceeds the simple addition (27,250) by 50 — sequential percentages multiply their scale factors, they do not add."
+      }
+     ],
+     "materials": [
+      "Blackboard and chalk",
+      "Notebooks",
+      "Scrap paper"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-2",
+       "activity": "Write all four problems on the board in full. Tell the class: work every problem on your own with complete written steps. No answer is shared until the group phase begins."
+      },
+      {
+       "minutes": "2-18",
+       "activity": "Individual working time. Every student attempts all four problems in their notebooks, showing each step. The room is quiet. Move through rows and observe without correcting — note which problems produce the most hesitation or error."
+      },
+      {
+       "minutes": "18-28",
+       "activity": "Students form groups of three and compare their working problem by problem. Where answers differ, the group reconstructs the solution step by step from the definition — no answer is simply accepted; every disagreement is resolved by going back to the method. Groups that agree quickly discuss: which step was the one that could most easily go wrong, and why?"
+      },
+      {
+       "minutes": "28-42",
+       "activity": "Four students present one problem each at the board, showing full working. After each presentation the class names aloud the chapter method it rested on — fraction-to-percentage conversion, percentage of a quantity from a ratio, profit-and-loss with cost price as the base, and multiplicative compounding of successive changes. After Problem 4, hold the comparison 27,300 vs. 27,250 on the board long enough for every student to see and register the gap."
+      },
+      {
+       "minutes": "42-45",
+       "activity": "Close the chapter. Ask the class: what one idea made every one of these four problems solvable? Take two or three responses, then state it once: a percentage is a fraction with denominator 100, and every calculation in this chapter — conversion, proportion, profit, interest, growth — is just that fraction applied carefully to a quantity. The chapter is done."
+      }
+     ],
+     "textbook_items_in_class": [],
+     "homework": []
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 45,
+   "count": 14,
+   "total_minutes": 630
+  },
+  "coverage_handoff": {
+   "section_a": {
+    "goal_cluster": [
+     "recall"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 1.1",
+      "section_title": "Fractions as Percentages",
+      "goal": "recall",
+      "anchor_id": "E-2",
+      "anchor_book_ref": "Figure it Out Q2, section 1.1 p.3",
+      "anchor_description": "Nandini has 25 marbles, 15 white. What percentage are white? Choose from given options (MCQ)."
+     }
+    ]
+   },
+   "section_b": {
+    "goal_cluster": [
+     "reason"
+    ],
+    "goals": []
+   },
+   "section_c": {
+    "goal_cluster": [
+     "apply"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 1.1",
+      "section_title": "Fractions as Percentages",
+      "goal": "apply",
+      "anchor_id": "E-1",
+      "anchor_book_ref": "Figure it Out Q1, section 1.1 p.3",
+      "anchor_description": "Express six fractions as percentages: 3/5, 7/14, 9/20, 72/150, 1/3, 5/11."
+     },
+     {
+      "section_ref": "section 1.2",
+      "section_title": "Percentage of Some Quantity",
+      "goal": "apply",
+      "anchor_id": "E-6",
+      "anchor_book_ref": "Figure it Out Q1, section 1.2 p.12",
+      "anchor_description": "Find missing numbers using percentage bar models: (i) 20% of ? = 12 (given 100% shown); (ii) ? is 60% of 75; (iii) ? is 140% of ?, with two unknowns and bar models provided."
+     },
+     {
+      "section_ref": "section 1.2",
+      "section_title": "Percentage of Some Quantity",
+      "goal": "apply",
+      "anchor_id": "A-1",
+      "anchor_book_ref": "Activity: How Close Can You Get?, p.8",
+      "anchor_description": "Students work in pairs, each choosing a number; both independently estimate the percentage equivalent of the fraction a/b (a < b) formed by the two numbers and announce answers within 5 seconds. The closer estimate wins. Played for 10 rounds to build proportional number sense."
+     },
+     {
+      "section_ref": "section 1.2",
+      "section_title": "Percentage of Some Quantity",
+      "goal": "apply",
+      "anchor_id": "WE-8",
+      "anchor_book_ref": "Example 4, section 1.2 p.9",
+      "anchor_description": "Millet kanji: millet-to-water ratio is 2:7, so millet is 2/9 of mixture. Estimate first, then compute 2/9 × 100 = 22.22%. For 500 ml of mixture, millet = 5 × 22.22 = 111.1 ml."
+     },
+     {
+      "section_ref": "section 1.2",
+      "section_title": "Percentage of Some Quantity",
+      "goal": "apply",
+      "anchor_id": "E-9",
+      "anchor_book_ref": "Figure it Out Q4, section 1.2 p.13",
+      "anchor_description": "Insert >, <, = without computing (verify after estimating): (i) 50% of 510 vs. 50% of 515; (ii) 37% of 148 vs. 73% of 148; (iii) 29% of 43 vs. 92% of 110; (iv) 30% of 40 vs. 40% of 50; (v) 45% of 200 vs. 10% of 490; (vi) 30% of 80 vs. 24% of 64."
+     },
+     {
+      "section_ref": "section 1.2",
+      "section_title": "Percentage of Some Quantity",
+      "goal": "apply",
+      "anchor_id": "E-7",
+      "anchor_book_ref": "Figure it Out Q2, section 1.2 p.12",
+      "anchor_description": "Find the value and draw bar models for: (i) 25% of 160; (ii) 16% of 250; (iii) 62% of 360; (iv) 140% of 40; (v) 1% of 1 hour; (vi) 7% of 10 kg."
+     },
+     {
+      "section_ref": "section 1.3",
+      "section_title": "Using Percentages",
+      "goal": "apply",
+      "anchor_id": "E-22",
+      "anchor_book_ref": "Figure it Out Q5, section 1.3 p.19",
+      "anchor_description": "Petrol price was ₹60 in 2015 and ₹100 in 2025. Find percentage increase. Choose from MCQ options."
+     },
+     {
+      "section_ref": "section 1.3",
+      "section_title": "Using Percentages",
+      "goal": "apply",
+      "anchor_id": "WE-15",
+      "anchor_book_ref": "Example 4, section 1.3 p.17",
+      "anchor_description": "Kishanlal buys a sweater at ₹300, marks it at ₹480, sells at ₹430. Profit = ₹130 on CP of ₹300 → percentage profit = 130/300 × 100 = 43.3%. Students also find wholesaler and manufacturer profit percentages."
+     },
+     {
+      "section_ref": "section 1.3",
+      "section_title": "Using Percentages",
+      "goal": "apply",
+      "anchor_id": "E-21",
+      "anchor_book_ref": "Figure it Out Q4, section 1.3 p.19",
+      "anchor_description": "A clothing shop offers 25% discount on shirts originally priced at ₹300. How much does Anwar pay?"
+     },
+     {
+      "section_ref": "section 1.3",
+      "section_title": "Using Percentages",
+      "goal": "apply",
+      "anchor_id": "E-30",
+      "anchor_book_ref": "Figure it Out Q1, section 1.3 p.22",
+      "anchor_description": "Bank of Yahapur: 10% p.a. Compare the return on ₹20,000 for 2 years with and without annual compounding."
+     },
+     {
+      "section_ref": "section 1.3",
+      "section_title": "Using Percentages",
+      "goal": "apply",
+      "anchor_id": "WE-20",
+      "anchor_book_ref": "Example 9, section 1.3 p.23",
+      "anchor_description": "Generalises to principal p, rate r, time t. Without compounding: total = p(1 + rt). With compounding: total = p(1 + r)^t. Derivation shown step by step for both options."
+     },
+     {
+      "section_ref": "section 1.3",
+      "section_title": "Using Percentages",
+      "goal": "apply",
+      "anchor_id": "WE-23",
+      "anchor_book_ref": "Example 12, section 1.3 p.26",
+      "anchor_description": "Cakely offers 30% + 20% sequential discount vs. Cakify's flat 50%. On ₹200 cake: Cakely → ₹140 → ₹112 (44% total reduction); Cakify → ₹100 (50% reduction). Compounding of discounts means 30% + 20% < 50%."
+     },
+     {
+      "section_ref": "section 1.3",
+      "section_title": "Using Percentages",
+      "goal": "apply",
+      "anchor_id": "E-45",
+      "anchor_book_ref": "Figure it Out Q7, section 1.3 p.28",
+      "anchor_description": "Explore: 5% of 40 = 40% of 5; 25% of 12 = 12% of 25; 15% of 60 = 60% of 15. Generalise: is x% of y always equal to y% of x? Justify algebraically."
+     }
+    ]
+   }
+  },
+  "assessment_items": [
+   {
+    "section_code": "A",
+    "section_title": "Recall and Apply",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-A-1",
+      "section_ref": "section 1.1",
+      "section_title": "Fractions as Percentages",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "Which of the following correctly defines a percentage?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "A fraction converted to its simplest form.",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "A fraction whose numerator is always greater than its denominator.",
+        "is_correct": false
+       },
+       {
+        "label": "C",
+        "text": "A ratio that compares a quantity to 100, expressed as a fraction with denominator 100.",
+        "is_correct": true
+       },
+       {
+        "label": "D",
+        "text": "Any decimal number multiplied by 10.",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "A percentage is a ratio that compares a quantity to 100, expressed as a fraction with denominator 100. For example, 75% means 75/100.",
+       "method_one_line": "Recall the definition: per cent means per hundred, so a percentage is a fraction with denominator 100.",
+       "what_each_option_reveals": {
+        "B": "The student may be confusing percentages with improper fractions, not recognising that a percentage can be less than 100 (i.e., a proper fraction scaled to base 100).",
+        "D": "The student may be conflating decimal notation with percentage notation, suggesting confusion between decimal place value and the per-hundred scale.",
+        "A": "The student associates percentage with simplification, missing the defining feature that the denominator is specifically 100."
+       },
+       "inclusivity": {
+        "support": "Look back at the definition in section 1.1 where 'per centum' is explained alongside the bar model.",
+        "challenge": "Write two other ways to express the same definition — one using Latin etymology and one using an equation."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q2, section 1.1 p.3",
+       "description": "Nandini has 25 marbles, 15 white. What percentage are white? Choose from given options (MCQ)."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "B",
+    "section_title": "Reason and Explain",
+    "note": "no goals routed to this section in the chapter",
+    "items": []
+   },
+   {
+    "section_code": "C",
+    "section_title": "Apply in Context",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-C-1",
+      "section_ref": "section 1.1",
+      "section_title": "Fractions as Percentages",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A basket contains 45 fruits, of which 27 are mangoes. Express the fraction of mangoes as a percentage. Show your working using the equivalent-fraction method.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "27/45 = 3/5. To express as a percentage: 3/5 = 3 × 20 / (5 × 20) = 60/100 = 60%.",
+       "method_one_line": "Simplify the fraction 27/45 to 3/5, then scale numerator and denominator by 20 to reach a denominator of 100, giving 60%.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw a bar divided into 5 equal parts; shade 3 parts and check how many of 100 equal parts that represents.",
+        "challenge": "Now express the same percentage using cross-multiplication as a second method and verify both methods agree."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 1.1 p.3",
+       "description": "Express six fractions as percentages: 3/5, 7/14, 9/20, 72/150, 1/3, 5/11."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-2",
+      "section_ref": "section 1.2",
+      "section_title": "Percentage of Some Quantity",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A box of trail mix weighs 240 g. The label states that nuts make up 35% of the mix. Find the weight of nuts in the box. Show your method clearly.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Weight of nuts = 35% of 240 g = (35/100) × 240 = 0.35 × 240 = 84 g.",
+       "method_one_line": "Apply y% of a value = (y/100) × value: 35/100 × 240 = 84 g.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw a bar model labelled 240 g at 100%; mark where 35% falls and read off the corresponding weight.",
+        "challenge": "If nuts increase to 40% but the total weight stays 240 g, by how many grams do the nuts increase? Do not recompute from scratch — use the scaling relationship between 35% and 40%."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 1.2 p.12",
+       "description": "Find missing numbers using percentage bar models: (i) 20% of ? = 12 (given 100% shown); (ii) ? is 60% of 75; (iii) ? is 140% of ?, with two unknowns and bar models provided."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-3",
+      "section_ref": "section 1.2",
+      "section_title": "Percentage of Some Quantity",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Riya and Dev each pick a whole number less than their partner's number. Riya picks 7 and Dev picks 20. Estimate the percentage that 7 is of 20 — without computing — using the nearest benchmark (25%, 50%, 75%). Then compute the exact percentage and state how far your estimate was from the exact answer.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Benchmark reasoning: 5/20 = 25% and 10/20 = 50%, so 7/20 lies between 25% and 50%, closer to 25% (since 7 is closer to 5 than to 10). A reasonable estimate is 35%. Exact value: 7/20 × 100 = 35%. The estimate of 35% matches exactly (or if a student uses 25% as their benchmark, the error is 10 percentage points).",
+       "method_one_line": "Use benchmark fractions (5/20 = 25%, 10/20 = 50%) to bracket 7/20, then compute exactly as 7 ÷ 20 × 100 = 35%.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Place 7 and 20 on a number line scaled to 100; find where 7 sits as a fraction of 20 by locating 7 out of 20 equal divisions.",
+        "challenge": "Repeat with 13 and 20: estimate, compute, and explain which benchmark you used and why."
+       }
+      },
+      "exercise": {
+       "book_ref": "Activity: How Close Can You Get?, p.8",
+       "description": "Students work in pairs, each choosing a number; both independently estimate the percentage equivalent of the fraction a/b (a < b) formed by the two numbers and announce answers within 5 seconds. The closer estimate wins. Played for 10 rounds to build proportional number sense."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-4",
+      "section_ref": "section 1.2",
+      "section_title": "Percentage of Some Quantity",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A fruit drink is made by mixing juice and water in the ratio 3 : 5. What percentage of the drink is juice? If a 400 ml bottle of this drink is prepared, how many millilitres of juice does it contain?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Total parts = 3 + 5 = 8. Juice fraction = 3/8. Percentage of juice = 3/8 × 100 = 37.5%. Volume of juice in 400 ml = 37.5% of 400 = 0.375 × 400 = 150 ml.",
+       "method_one_line": "Convert the ratio to a fraction of the whole (3/8), compute as a percentage (37.5%), then apply to 400 ml to find 150 ml.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw eight equal boxes to represent the 8 parts; shade 3 for juice; count what fraction of the whole is shaded before computing.",
+        "challenge": "How much water is in the 400 ml bottle, expressed both as a volume and as a percentage? Verify that juice% + water% = 100%."
+       }
+      },
+      "exercise": {
+       "book_ref": "Example 4, section 1.2 p.9",
+       "description": "Millet kanji: millet-to-water ratio is 2:7, so millet is 2/9 of mixture. Estimate first, then compute 2/9 × 100 = 22.22%. For 500 ml of mixture, millet = 5 × 22.22 = 111.1 ml."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-5",
+      "section_ref": "section 1.2",
+      "section_title": "Percentage of Some Quantity",
+      "goal": "apply",
+      "question_type": "MCQ",
+      "prompt": "Without computing, which comparison is correct?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "40% of 90 < 90% of 40",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "40% of 90 = 90% of 40",
+        "is_correct": true
+       },
+       {
+        "label": "C",
+        "text": "40% of 90 > 90% of 40",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "The comparison cannot be determined without calculating.",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "40% of 90 = (40/100) × 90 = 36; 90% of 40 = (90/100) × 40 = 36. They are equal. In general, x% of y = y% of x because both equal xy/100.",
+       "method_one_line": "Use the symmetry property x% of y = (xy)/100 = y% of x, so the two expressions are always equal.",
+       "what_each_option_reveals": {
+        "C": "The student may believe that the larger percentage always yields the larger result, ignoring the different base quantities.",
+        "A": "The student may believe that the larger base always dominates, ignoring the inverse relationship with the percentage.",
+        "D": "The student has not applied or noticed the symmetry property of percentages and defaults to calculation as the only route."
+       },
+       "inclusivity": {
+        "support": "Try the same comparison with simpler numbers first: is 10% of 20 the same as 20% of 10? Calculate both and then look for the pattern.",
+        "challenge": "Write the algebraic proof that x% of y always equals y% of x using the definition of percentage as a fraction over 100."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q4, section 1.2 p.13",
+       "description": "Insert >, <, = without computing (verify after estimating): (i) 50% of 510 vs. 50% of 515; (ii) 37% of 148 vs. 73% of 148; (iii) 29% of 43 vs. 92% of 110; (iv) 30% of 40 vs. 40% of 50; (v) 45% of 200 vs. 10% of 490; (vi) 30% of 80 vs. 24% of 64."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-6",
+      "section_ref": "section 1.2",
+      "section_title": "Percentage of Some Quantity",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A school timetable allocates 40% of the day to core subjects, 40% to activities, and 20% to free time. If the school day is 360 minutes long, find the duration (in minutes) for each part. Also find 140% of 360 minutes and explain what that value would mean in this context.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Core subjects: 40% of 360 = 144 minutes. Activities: 40% of 360 = 144 minutes. Free time: 20% of 360 = 72 minutes. Check: 144 + 144 + 72 = 360. 140% of 360 = 504 minutes. This would mean a school day 1.4 times the current length — 144 minutes more than the current day, which exceeds 24 hours if scaled further, so 140% here signals a value beyond the single-day context.",
+       "method_one_line": "Apply (y/100) × 360 for each percentage, then compute 1.4 × 360 = 504 to demonstrate a percentage exceeding 100.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw a bar representing 360 minutes divided into 10 equal strips of 36 minutes each; count the strips for each percentage.",
+        "challenge": "If free time were cut to 10% and the saved time split equally between core subjects and activities, find the new duration of each part — without recomputing from scratch."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q2, section 1.2 p.12",
+       "description": "Find the value and draw bar models for: (i) 25% of 160; (ii) 16% of 250; (iii) 62% of 360; (iv) 140% of 40; (v) 1% of 1 hour; (vi) 7% of 10 kg."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-7",
+      "section_ref": "section 1.3",
+      "section_title": "Using Percentages",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A fruit vendor's revenue in April was ₹8,000 and in May was ₹11,200. Find the percentage increase in revenue from April to May.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Increase = ₹11,200 − ₹8,000 = ₹3,200. Percentage increase = (3200/8000) × 100 = 40%.",
+       "method_one_line": "Divide the absolute increase by the original value and multiply by 100: (3200 ÷ 8000) × 100 = 40%.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "First find what fraction of April's revenue the increase is: 3200/8000; then convert that fraction to a percentage.",
+        "challenge": "If revenue drops by 40% in June from the May level, find June's revenue and compare it with April's — does a 40% increase followed by a 40% decrease return to the original?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q5, section 1.3 p.19",
+       "description": "Petrol price was ₹60 in 2015 and ₹100 in 2025. Find percentage increase. Choose from MCQ options."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-8",
+      "section_ref": "section 1.3",
+      "section_title": "Using Percentages",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A retailer buys a jacket at ₹500 and sells it at ₹680. Find the percentage profit on the cost price.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Profit = ₹680 − ₹500 = ₹180. Percentage profit = (180/500) × 100 = 36%.",
+       "method_one_line": "Compute profit as SP − CP, then apply (profit/CP) × 100 to express it as a percentage of cost price.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Write the profit as a fraction of the cost price first — 180/500 — then convert that fraction to a percentage using the equivalent-fraction method.",
+        "challenge": "If the retailer wants exactly 40% profit, what selling price should she set? Verify by computing profit on your answer."
+       }
+      },
+      "exercise": {
+       "book_ref": "Example 4, section 1.3 p.17",
+       "description": "Kishanlal buys a sweater at ₹300, marks it at ₹480, sells at ₹430. Profit = ₹130 on CP of ₹300 → percentage profit = 130/300 × 100 = 43.3%. Students also find wholesaler and manufacturer profit percentages."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-9",
+      "section_ref": "section 1.3",
+      "section_title": "Using Percentages",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A bookshop offers a 20% discount on a book originally priced at ₹450. Find the selling price. Then find the original price of a different book that sold for ₹360 after a 10% discount.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Part 1: Discount = 20% of 450 = 90. Selling price = 450 − 90 = ₹360. Alternatively, SP = 80% of 450 = 0.8 × 450 = ₹360. Part 2: After 10% discount, buyer pays 90% of original. So 0.9 × original = 360, giving original = 360 ÷ 0.9 = ₹400.",
+       "method_one_line": "For forward discount, multiply by the complement percentage; for reverse discount, divide the sale price by the complement percentage.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "For Part 2, draw a bar where the full bar is the original price and 90% of it equals ₹360; find what 1% equals and then 100%.",
+        "challenge": "What single percentage discount on the original ₹450 book would give the same final price as a 10% discount followed by another 10% discount?"
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q4, section 1.3 p.19",
+       "description": "A clothing shop offers 25% discount on shirts originally priced at ₹300. How much does Anwar pay?"
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-10",
+      "section_ref": "section 1.3",
+      "section_title": "Using Percentages",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Priya deposits ₹15,000 in a bank at 8% per annum. Compare the total amount she receives after 2 years (a) without compounding, and (b) with annual compounding. Show full working for both.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "(a) Without compounding: interest each year = 8% of 15000 = 1200. Total after 2 years = 15000 + 2 × 1200 = 15000 + 2400 = ₹17,400. Using the formula: p(1 + rt) = 15000(1 + 0.08 × 2) = 15000 × 1.16 = ₹17,400. (b) With annual compounding: after Year 1 = 15000 × 1.08 = 16200. After Year 2 = 16200 × 1.08 = 17496. Using the formula: p(1 + r)^t = 15000 × 1.08² = 15000 × 1.1664 = ₹17,496.",
+       "method_one_line": "Apply p(1 + rt) for simple interest and p(1 + r)^t for compound interest, with p = 15000, r = 0.08, t = 2.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Build a two-row table: row 1 for Year 1 (starting amount → interest → ending amount) and row 2 for Year 2; fill it for both options side by side.",
+        "challenge": "By how many rupees does compounding exceed simple interest after 2 years, and how would that difference change after 5 years? Predict before computing."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 1.3 p.22",
+       "description": "Bank of Yahapur: 10% p.a. Compare the return on ₹20,000 for 2 years with and without annual compounding."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-11",
+      "section_ref": "section 1.3",
+      "section_title": "Using Percentages",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A laptop costs ₹60,000 and depreciates at 10% per year. Using the compound depreciation formula, find its value after 3 years. Also express the final value as a percentage of the original price.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Depreciation multiplier = 1 − 0.10 = 0.9 per year. Value after 3 years = 60000 × 0.9³ = 60000 × 0.729 = ₹43,740. Percentage of original = (43740/60000) × 100 = 72.9%.",
+       "method_one_line": "Apply the compound depreciation formula p × (1 − r)^t = 60000 × 0.9³ = 43740, then express as a percentage of the original.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Build a three-row table: starting value, then subtract 10% each year to get the next year's value; compare the iterative result with the formula's answer.",
+        "challenge": "After how many complete years does the laptop's value first fall below 50% of its original price? Set up the inequality 0.9^t < 0.5 and test integer values of t."
+       }
+      },
+      "exercise": {
+       "book_ref": "Example 9, section 1.3 p.23",
+       "description": "Generalises to principal p, rate r, time t. Without compounding: total = p(1 + rt). With compounding: total = p(1 + r)^t. Derivation shown step by step for both options."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-12",
+      "section_ref": "section 1.3",
+      "section_title": "Using Percentages",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A shop marks up its cost price by 40% to set the selling price, then offers a sequential discount of 20% followed by a further 10%. Find the effective overall percentage change relative to the cost price — is it a profit or a loss, and by how much?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Let CP = x. Marked price = 1.4x. After 20% discount: 1.4x × 0.8 = 1.12x. After further 10% discount: 1.12x × 0.9 = 1.008x. Since 1.008x > x, there is a profit. Profit percentage = (1.008x − x)/x × 100 = 0.8%.",
+       "method_one_line": "Chain the three multipliers: 1.4 × 0.8 × 0.9 = 1.008, giving a 0.8% profit on cost price.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Use a specific value such as CP = ₹100 and compute each price step numerically before generalising.",
+        "challenge": "What single flat discount on the marked price (1.4x) would leave the shopkeeper at exactly break-even? Set up and solve the equation."
+       }
+      },
+      "exercise": {
+       "book_ref": "Example 12, section 1.3 p.26",
+       "description": "Cakely offers 30% + 20% sequential discount vs. Cakify's flat 50%. On ₹200 cake: Cakely → ₹140 → ₹112 (44% total reduction); Cakify → ₹100 (50% reduction). Compounding of discounts means 30% + 20% < 50%."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-13",
+      "section_ref": "section 1.3",
+      "section_title": "Using Percentages",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A class has 80 students, of whom 60% are girls. 25% of the girls play chess. How many girls in the class play chess?",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Number of girls = 60% of 80 = 0.6 × 80 = 48. Girls who play chess = 25% of 48 = 0.25 × 48 = 12.",
+       "method_one_line": "Apply percentage-of-a-quantity twice sequentially: first find 60% of 80, then find 25% of that result.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Draw a bar for 80 students; shade 60% to show girls (48); then draw a second bar for 48 and shade 25% to find the chess players.",
+        "challenge": "What percentage of the total class of 80 students plays chess? Express your answer and verify it equals 25% of 60% = 15%."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q7, section 1.3 p.28",
+       "description": "Explore: 5% of 40 = 40% of 5; 25% of 12 = 12% of 25; 15% of 60 = 60% of 15. Generalise: is x% of y always equal to y% of x? Justify algebraically."
+      },
+      "verified": true
+     }
+    ]
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

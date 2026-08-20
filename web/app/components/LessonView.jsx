@@ -263,6 +263,23 @@ function PhaseBookmark({ phaseCount, phase, onMove }) {
 function LessonPanel({ u, bookmark = null }) {
   const phases = (u.phases || []).filter((ph) => ph.text || ph.label);
   const notes = u.teacher_notes?.length ? u.teacher_notes.join(" ") : null;
+  // THE MATERIAL POINTER IS BOLD (founder, 2026-08-20). A re-authored closing unit keeps
+  // its problems and worked solutions in the Material tab, and its notes open by saying
+  // so — "Refer to Prepared Table (see material: '…')". Set in the same weight as the
+  // prose around it, that sentence reads as more prose and the teacher does not go and
+  // look. It is the one place in a note that is an INSTRUCTION about where to find
+  // something, so it is the one place that earns emphasis.
+  //
+  // Matched, not marked up. teacher_notes is plain text everywhere else in the corpus and
+  // giving one field a markdown parser would be a precedent the design system has to keep
+  // — every other note would then have to be checked for stray asterisks. The sentence is
+  // written by `repair_c3.pass_synthesis_points_at_its_table`, which PREPENDS a fixed
+  // shape, so a leading-anchored match is exact rather than a guess; anything else falls
+  // through and renders as it always did.
+  const POINTER = /^(Refer to Prepared Table[^.]*\.)\s*/;
+  const [, notesLead, notesRest] = notes
+    ? (notes.match(POINTER) || [null, null, null]).concat(notes.replace(POINTER, ""))
+    : [null, null, null];
   return (
     <>
       {/* Teacher notes — a colleague's margin note, living WHERE IT'S READ: the top of
@@ -275,7 +292,11 @@ function LessonPanel({ u, bookmark = null }) {
             <span className="kicker">Teacher notes</span>
             <span className="uv-tnotes-teaser">{notes}</span>
           </summary>
-          <p>{notes}</p>
+          <p>
+            {notesLead ? <strong className="uv-tnotes-ref">{notesLead}</strong> : null}
+            {notesLead ? " " : null}
+            {notesLead ? notesRest : notes}
+          </p>
         </details>
       ) : null}
       {/* Phases — the hero; durations in the marginal rail, one aligned column.

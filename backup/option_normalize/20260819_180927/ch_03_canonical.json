@@ -1,0 +1,1100 @@
+{
+  "filename": "ch_03_canonical.json",
+  "saved_at": "2026-08-19T17:39:58",
+  "plan_status": "canonical",
+  "chapter_number": 3,
+  "chapter_title": "Patterns Around Us",
+  "grade": "Grade IV",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 40,
+      "count": 10
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 10 periods = 400 minutes\nTotal: 10 periods · 6h 40min",
+  "genon_canonical": {
+    "generated": "2026-08-19",
+    "schedule": "10x40",
+    "constitution": "LP v1.4 / assessment v1.4",
+    "source": "generate_canonical.py one mathematics iv 3",
+    "ledger_ts": "20260819_133718_math_iv_03_top",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-19T17:57:18",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 7,
+            "field": "teacher_notes",
+            "rule": "register/forward",
+            "removed": "they will formalise in the next unit",
+            "replaced_with": "",
+            "note": "forward reference struck; the connection is named by content | survives: …connects directly to the units-digit generalisation.…"
+          },
+          {
+            "unit": 10,
+            "field": "band:0",
+            "rule": "register/forward",
+            "removed": "that follows later",
+            "replaced_with": "",
+            "note": "forward reference struck; the link the teacher draws is unchanged | survives: …the link between counting in equal groups and the even-odd question.…"
+          }
+        ],
+        "ban_hits_before": 2,
+        "ban_hits_after": 0
+      }
+    ]
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S1"
+          ],
+          "section_titles": [
+            "Let Us Count"
+          ],
+          "activity_title": "Counting Coconut Trees and Cups in Arrays",
+          "tasks_in_class": [
+            {
+              "id": "T-1",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S1",
+              "book_ref": "Let Us Count, p.34",
+              "description": "Count the coconut trees in Gundappa's land from the top-view grid. Write the number. How do you know?"
+            },
+            {
+              "id": "T-3",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S1",
+              "book_ref": "Let Us Count, p.34",
+              "description": "Count the number of cups Muniamma has made and write the number."
+            },
+            {
+              "id": "T-2",
+              "intent": "solve",
+              "method": "Problem-solving",
+              "section_ref": "S1",
+              "book_ref": "Let Us Count, p.34",
+              "description": "Gundappa plucked 5 coconuts from each tree. How many coconuts has he plucked?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Children look at the top-view grid in Let Us Count (p.34) and count the coconut trees, first pointing to each tree and then regrouping by rows. Pairs share how they counted and compare totals."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Children count the stacked cups in Let Us Count (p.34) (\"Count the number of cups Muniamma has made....\") by identifying a repeated column or row group. Each child writes the total and explains their grouping strategy aloud to a partner."
+            },
+            {
+              "minutes": "22–40",
+              "activity": "Children work on Let Us Count (p.34) (\"Gundappa plucked 5 coconuts from each tree....\"), writing a number sentence that reflects skip-counting or repeated addition of 5s across the rows of the grid. Class discussion draws out how the grid structure helped."
+            }
+          ],
+          "teacher_notes": "Children who counted one-by-one for the tree grid benefit from being shown how to trace rows with a finger and count the row count separately. A common error is double-counting corner elements when moving between rows; invite children to describe the shape of one row before multiplying. Additional practice: Let Us Count, p.34 — laddoo and peda tray tasks T-4 and T-5 can be used for further grouping practice at the teacher's discretion.",
+          "materials": [
+            "Textbook open to p.34",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S1",
+            "S2"
+          ],
+          "section_titles": [
+            "Let Us Count",
+            "Patterns with Money"
+          ],
+          "activity_title": "Laddoo Trays and Coins in Patterns",
+          "tasks_in_class": [
+            {
+              "id": "T-4",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S1",
+              "book_ref": "Let Us Count, p.34",
+              "description": "How many coconut laddoos are there in the trays?"
+            },
+            {
+              "id": "T-6",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S2",
+              "book_ref": "Patterns with Money, p.35",
+              "description": "Look at Shirley's coin arrangement (circular pattern). How much money is it?"
+            },
+            {
+              "id": "T-8",
+              "intent": "reason",
+              "method": "Inquiry",
+              "section_ref": "S2",
+              "book_ref": "Patterns with Money, p.35",
+              "description": "How did you count them? Discuss in class."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Children count laddoos arranged in trays using Let Us Count (p.34) (\"How many coconut laddoos are there in the trays?\"), identifying how trays form equal groups. They write repeated-addition sentences matching the tray structure."
+            },
+            {
+              "minutes": "12–26",
+              "activity": "Children examine Shirley's coin arrangement in Patterns with Money (p.35) (\"Look at Shirley's coin arrangement (circular pattern)....\"), counting the total amount. They record the denomination of each coin and add systematically."
+            },
+            {
+              "minutes": "26–40",
+              "activity": "Class discussion around Patterns with Money (p.35) (\"How did you count them?\") — children articulate their strategies: skip-counting by denomination, grouping same coins first, or adding left to right. The teacher charts the different methods on the board without declaring one correct."
+            }
+          ],
+          "teacher_notes": "Children often count each coin singly rather than grouping by denomination; the discussion is the pivotal moment to surface skip-counting by 2s, 5s, and 10s as faster strategies. A common error with Shirley's circular arrangement is losing track of position — suggest marking the starting coin with a pencil dot. The milk-peda task (Let Us Count, p.34, T-5) may be used as additional practice if time allows.",
+          "materials": [
+            "Textbook open to pp.34–35",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S2"
+          ],
+          "section_titles": [
+            "Patterns with Money"
+          ],
+          "activity_title": "Arranging Play Money and Shiv's Grid",
+          "tasks_in_class": [
+            {
+              "id": "T-7",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S2",
+              "book_ref": "Patterns with Money, p.35",
+              "description": "Look at Shiv's notes-and-coins grid arrangement. How much money is it?"
+            },
+            {
+              "id": "T-9",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S2",
+              "book_ref": "Patterns with Money, p.35",
+              "description": "Arrange play money of amounts 1, 2, 5, and 10 to show ₹36, ₹125, and ₹183. Ask your peers to tell how much it is."
+            },
+            {
+              "id": "T-10",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S2",
+              "book_ref": "Two Ways, p.35",
+              "description": "Shirley and Shiv arranged coins in groups. Write the number of coins in the blank triangles for each arrangement."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Children look at Shiv's notes-and-coins grid in Patterns with Money (p.35) (\"Look at Shiv's notes-and-coins grid arrangement....\") and count by reading each row, recording totals row by row before summing."
+            },
+            {
+              "minutes": "10–28",
+              "activity": "Groups of three use play-money sets to build ₹36, ₹125, and ₹183 as directed by Patterns with Money (p.35) (\"Arrange play money of amounts 1, 2, 5, and 10....\"). Each group places their arrangement on the desk and a neighbouring group counts aloud to verify the total."
+            },
+            {
+              "minutes": "28–40",
+              "activity": "Children complete the blank triangles in Two Ways (p.35) (\"Write the number of coins in the blank triangles for each arrangement\"), comparing how Shirley groups coins in threes and fives while Shiv groups in fours. A brief pair-share explores what each arrangement tells about the total."
+            }
+          ],
+          "teacher_notes": "Children building ₹125 commonly reach for ten ₹10 notes and then stop short by ₹25 — prompt them to consider what denomination pairs sum to ₹25 using the fewest coins. A frequent error in reading Shiv's grid is adding a row twice when it wraps visually; suggest circling each row after counting it. The Two Ways activity connects directly to the pairing model that the even-and-odd section builds on.",
+          "materials": [
+            "Textbook open to p.35",
+            "Play-money sets (₹1, ₹2, ₹5, ₹10 coins and notes)",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S3"
+          ],
+          "section_titles": [
+            "Even and Odd Numbers"
+          ],
+          "activity_title": "Pairing Coins to Discover Even and Odd",
+          "tasks_in_class": [
+            {
+              "id": "T-11",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S3",
+              "book_ref": "Two Ways / Even and Odd, p.36",
+              "description": "Describe Shiv's arrangement and write his numbers."
+            },
+            {
+              "id": "T-12",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S3",
+              "book_ref": "Two Ways / Even and Odd, p.36",
+              "description": "Describe Shirley's arrangement and write her numbers."
+            },
+            {
+              "id": "T-13",
+              "intent": "practice",
+              "method": "Problem-solving",
+              "section_ref": "S3",
+              "book_ref": "Even and Odd, p.36",
+              "description": "Identify numbers between 1 and 20 as even or odd. You may draw the pairing arrangement."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–14",
+              "activity": "Each child takes a small handful of counters or coins (8–12) and pairs them into twos. They record the count and notice whether a coin is left unpaired. Two Ways / Even and Odd (p.36) (\"Describe Shiv's arrangement and write his numbers\") is completed: children write Shiv's counts (all pairs, none left over) and label them."
+            },
+            {
+              "minutes": "14–24",
+              "activity": "Children complete Two Ways / Even and Odd (p.36) (\"Describe Shirley's arrangement and write her numbers\"), recording Shirley's counts where one coin always remains. Class discussion names the two types: numbers that pair perfectly and numbers that leave one over."
+            },
+            {
+              "minutes": "24–40",
+              "activity": "Children work through Even and Odd (p.36) (\"Identify numbers between 1 and 20 as even or odd....\"), drawing paired circles for each number or using the pairing model as a check. They record a list of even numbers and a list of odd numbers and share with a partner."
+            }
+          ],
+          "teacher_notes": "The pairing act is the conceptual anchor — children who skip it and only look at the last digit may classify correctly but cannot yet explain why; keep the physical pairing prominent for this unit. A common error is calling 1 even because it looks like a single pair; pairing one object shows nothing is left over only when counting to 2, so direct children to pair, not to judge by sight alone. The discovery that Shiv's numbers form one sequence and Shirley's another prepares children for the times-2 investigation in the next task.",
+          "materials": [
+            "Textbook open to p.36",
+            "Small counters or coins (12 per child)",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S3"
+          ],
+          "section_titles": [
+            "Even and Odd Numbers"
+          ],
+          "activity_title": "Times-2 Numbers and the Even Pattern",
+          "tasks_in_class": [
+            {
+              "id": "T-14",
+              "intent": "reason",
+              "method": "Inquiry",
+              "section_ref": "S3",
+              "book_ref": "Even and Odd, p.36",
+              "description": "Do you think all numbers in the times-2 table are even?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Children write the first ten multiples of 2 (2, 4, 6, … 20) and pair each using counters or a quick drawn model from Even and Odd (p.36). They confirm whether each multiple pairs perfectly."
+            },
+            {
+              "minutes": "12–28",
+              "activity": "Small groups extend the investigation in Even and Odd (p.36) (\"Do you think all numbers in the times-2 table are even?\") to multiples beyond 20 — each group takes a different stretch (22–40, 42–60, 62–80) and checks by pairing or by looking at the units digit. Groups record findings on a shared strip of paper."
+            },
+            {
+              "minutes": "28–40",
+              "activity": "Groups report back and the class assembles a full class conjecture: every multiple of 2 is even. The teacher poses the follow-up: \"Can an odd number ever appear in the times-2 table?\" — children discuss in pairs and justify with at least one example or counter-example attempt."
+            }
+          ],
+          "teacher_notes": "Children sometimes confuse 'all even numbers are multiples of 2' with 'all multiples of 2 are even' — the inquiry structure here addresses the second direction explicitly; let the groups' evidence build the claim rather than stating it. A common error is listing 0 as an odd number; if it arises, treat 0 × 2 = 0 as an interesting boundary case rather than a correction moment. The pairing model children used to classify numbers 1–20 provides the concrete foundation for this investigation.",
+          "materials": [
+            "Textbook open to p.36",
+            "Counters (15 per child)",
+            "Strip of paper per group",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S4"
+          ],
+          "section_titles": [
+            "Crayons Arrangement and Patterns"
+          ],
+          "activity_title": "Crayons Chart and Classifying Numbers",
+          "tasks_in_class": [
+            {
+              "id": "T-16",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S4",
+              "book_ref": "Crayons Arrangement, p.37",
+              "description": "Explore your textbook and find out what Shirley has seen. Draw a square on the even page numbers. Put a circle on the odd page numbers."
+            },
+            {
+              "id": "T-15",
+              "intent": "practice",
+              "method": "Problem-solving",
+              "section_ref": "S4",
+              "book_ref": "Crayons Arrangement, p.37",
+              "description": "Circle the odd numbers and put a square around each even number from the given set (5, 8, 36, 69, 22, 51, 30, 38, 37, 52, 43). Use the crayons arrangement if needed."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–14",
+              "activity": "Children flip through several pages of their textbook as directed by Crayons Arrangement (p.37) (\"Explore your textbook and find out what Shirley has seen....\"), drawing a square on even-numbered pages and a circle on odd-numbered pages. They pause and describe the alternating pattern they see to a partner."
+            },
+            {
+              "minutes": "14–40",
+              "activity": "Children turn to the crayons-arrangement chart (1–50) and classify the given set of numbers in Crayons Arrangement (p.37) (\"Circle the odd numbers and put a square around each even number....\") — odd: 5, 69, 51, 37, 43; even: 8, 36, 22, 30, 38, 52. They use the chart as a reference and then attempt a few without it, checking the units digit against the chart."
+            }
+          ],
+          "teacher_notes": "Children who memorised the pairing model may find the units-digit shortcut intuitive here; let them articulate why only certain units digits appear in the even column of the crayons chart. A common error is classifying 30 as odd because 3 is odd — redirect attention to the units digit (0) using the chart. The crayons arrangement visualises the same even-odd pairing sequence that coin-pairing built concretely.",
+          "materials": [
+            "Textbook open to p.37",
+            "Pencils (two colours if available)"
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S4"
+          ],
+          "section_titles": [
+            "Crayons Arrangement and Patterns"
+          ],
+          "activity_title": "Neighbours of Even and Odd Numbers",
+          "tasks_in_class": [
+            {
+              "id": "T-17",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S4",
+              "book_ref": "Even and Odd, p.38",
+              "description": "Shirley notices numbers before and after an odd number are even. Shiv wonders if numbers before and after an even number are odd. Check and discuss."
+            },
+            {
+              "id": "T-18",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S4",
+              "book_ref": "Even and Odd, p.38",
+              "description": "Choose any 10 consecutive numbers. Write whether they are even or odd below each number. What do you notice? Discuss."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–18",
+              "activity": "Children check Shirley's claim and Shiv's wonder from Even and Odd (p.38) (\"Shirley notices numbers before and after an odd number are even....\") by picking five different odd numbers and five different even numbers from the crayons chart, writing the numbers immediately before and after each, and labelling them. Pairs compare and describe the pattern they find."
+            },
+            {
+              "minutes": "18–40",
+              "activity": "Each child chooses any run of 10 consecutive numbers (different from their partner's) as directed in Even and Odd (p.38) (\"Choose any 10 consecutive numbers....\"), writes E or O below each, and identifies the alternating pattern. A class share-out pools several different starting points to confirm the pattern holds across the number line."
+            }
+          ],
+          "teacher_notes": "Encourage children to choose starting points beyond 20 so the pattern is not being read from a memorised list; starting at 47 or 83 is more revealing than starting at 1. A common error is writing the neighbour of an even number as even rather than odd — the consecutive-number sequence itself is the corrective. The alternating structure children observe here connects directly to the units-digit generalisation.",
+          "materials": [
+            "Textbook open to p.38",
+            "Crayons arrangement chart (p.37) as reference",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S4"
+          ],
+          "section_titles": [
+            "Crayons Arrangement and Patterns"
+          ],
+          "activity_title": "Digit Rules and Making Even Numbers",
+          "tasks_in_class": [
+            {
+              "id": "T-19",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S4",
+              "book_ref": "Even and Odd, p.38",
+              "description": "Identify which of the following numbers are even and which are odd. Explain your reasoning: 30, 78, 300, 415, 46, 67, 154, 99."
+            },
+            {
+              "id": "T-20",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S4",
+              "book_ref": "Even and Odd, p.38",
+              "description": "Make two 2-digit numbers using digits 1 and 6 without repetition; identify as even or odd. Then choose any two digits and make 2-digit even numbers."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–20",
+              "activity": "Children classify the eight numbers in Even and Odd (p.38) (\"Identify which of the following numbers are even and which are odd....\") — 30, 78, 300, 415, 46, 67, 154, 99 — writing their classification and one sentence of reasoning for each. Class discussion highlights that 300 is even despite having 3 in the hundreds place, focusing attention on the units digit."
+            },
+            {
+              "minutes": "20–40",
+              "activity": "Children form the two numbers 16 and 61 from digits 1 and 6 as directed in Even and Odd (p.38) (\"Make two 2-digit numbers using digits 1 and 6 without repetition....\"), label each as even or odd, and explain why. They then choose their own pair of digits and construct as many 2-digit even numbers as possible, recording each with its units digit circled."
+            }
+          ],
+          "teacher_notes": "The jump to 300 is the critical moment — children who relied on the last-digit rule for two-digit numbers are now asked to apply it to a three-digit number; prompt them to say the units digit aloud before classifying. A common error is treating 415 as even because 4 appears in it; the units digit 5 is what matters. The digit-construction task builds the units-digit generalisation from examples upward rather than stating it as a rule first.",
+          "materials": [
+            "Textbook open to p.38",
+            "Pencils",
+            "Digit cards (0–9) — one set per pair, optional"
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S4"
+          ],
+          "section_titles": [
+            "Crayons Arrangement and Patterns"
+          ],
+          "activity_title": "Counting Even and Odd Numbers to 100",
+          "tasks_in_class": [
+            {
+              "id": "T-21",
+              "intent": "reason",
+              "method": "Inquiry",
+              "section_ref": "S4",
+              "book_ref": "Even and Odd, p.38",
+              "description": "Are there more even or odd numbers between 1 and 100?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–14",
+              "activity": "Children make a prediction — more even, more odd, or equal — and record it before counting. Small groups divide the range (1–25, 26–50, 51–75, 76–100) and each group lists even and odd numbers in their range, tallying both columns."
+            },
+            {
+              "minutes": "14–30",
+              "activity": "Groups combine tallies to answer Even and Odd (p.38) (\"Are there more even or odd numbers between 1 and 100?\"). The class compares their combined count against their predictions and discusses why the two totals come out as they do, linking back to the alternating pattern they found in consecutive numbers."
+            },
+            {
+              "minutes": "30–40",
+              "activity": "A whole-class consolidation: the teacher draws a number line from 1 to 10 on the board, children label each tick E or O, and the class articulates the generalisation — even and odd numbers alternate and there are equal counts in any even-length stretch starting at 1."
+            }
+          ],
+          "teacher_notes": "Children's predictions often favour 'more even' because even numbers feel more frequent; the count itself is the surprise and should be allowed to land before explaining. A common error is not counting 100 or not counting 1 — remind groups their range is inclusive at both ends. The investigation consolidates the alternating-pattern insight from the neighbours task and the digit-based classification from the previous unit.",
+          "materials": [
+            "Textbook open to p.38",
+            "Tally sheets or grid paper",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 40,
+          "synthesis": true,
+          "section_refs": [
+            "S1",
+            "S2",
+            "S3",
+            "S4"
+          ],
+          "section_titles": [
+            "Let Us Count",
+            "Patterns with Money",
+            "Even and Odd Numbers",
+            "Crayons Arrangement and Patterns"
+          ],
+          "activity_title": "From Arrays to Patterns — A Whole-Chapter Journey",
+          "tasks_in_class": [
+            {
+              "id": "T-2",
+              "intent": "solve",
+              "method": "Problem-solving",
+              "section_ref": "S1",
+              "book_ref": "Let Us Count, p.34",
+              "description": "Gundappa plucked 5 coconuts from each tree. How many coconuts has he plucked?"
+            },
+            {
+              "id": "T-10",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S2",
+              "book_ref": "Two Ways, p.35",
+              "description": "Shirley and Shiv arranged coins in groups. Write the number of coins in the blank triangles for each arrangement."
+            },
+            {
+              "id": "T-14",
+              "intent": "reason",
+              "method": "Inquiry",
+              "section_ref": "S3",
+              "book_ref": "Even and Odd, p.36",
+              "description": "Do you think all numbers in the times-2 table are even?"
+            },
+            {
+              "id": "T-19",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S4",
+              "book_ref": "Even and Odd, p.38",
+              "description": "Identify which of the following numbers are even and which are odd. Explain your reasoning: 30, 78, 300, 415, 46, 67, 154, 99."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Children revisit Let Us Count (p.34) (\"Gundappa plucked 5 coconuts from each tree....\"), now writing the total as both a repeated-addition sentence and a multiplication sentence. The teacher draws the link between counting in equal groups and the even-odd question."
+            },
+            {
+              "minutes": "8–18",
+              "activity": "Children return to Two Ways (p.35) (\"Write the number of coins in the blank triangles for each arrangement\") and describe in one sentence how Shiv's grouping always produces a number that pairs perfectly. They connect this to the coins-in-pairs model for even numbers."
+            },
+            {
+              "minutes": "18–28",
+              "activity": "Pairs revisit the times-2 conjecture from Even and Odd (p.36) (\"Do you think all numbers in the times-2 table are even?\") and write a two-sentence justification using the pairing model as evidence. The justification is shared and compared across pairs."
+            },
+            {
+              "minutes": "28–40",
+              "activity": "Children classify the eight numbers in Even and Odd (p.38) (\"Identify which of the following numbers are even and which are odd....\") fresh from memory — without the crayons chart — and write the units-digit rule in their own words. A whole-class round-up names the thread: grouping → arrangement → even-odd pattern → digit-based rule."
+            }
+          ],
+          "teacher_notes": "This unit draws together the chapter's core thread: concrete grouping of arrays and money led to the pairing model, which revealed even and odd structure, which the crayons arrangement extended to a digit-based classification rule. A common error to watch for in the classification task is applying the units-digit rule mechanically for small numbers but reverting to the pairing model inconsistently for larger ones — ask children to state the rule before applying it. Encourage children to notice that every answer in the times-2 table is a number Shiv's arrangement could produce.",
+          "materials": [
+            "Textbook open to pp.34–38",
+            "Counters (optional, for children who need the pairing model)",
+            "Pencils"
+          ]
+        }
+      ]
+    },
+    "period_schedule": {
+      "duration_minutes": 40,
+      "count": 10
+    },
+    "coverage_handoff": {
+      "explore": {
+        "tasks": [
+          {
+            "task_id": "T-1",
+            "intent": "explore",
+            "section_ref": "S1",
+            "book_ref": "Let Us Count, p.34",
+            "description": "Count the coconut trees in Gundappa's land from the top-view grid. Write the number. How do you know?"
+          },
+          {
+            "task_id": "T-6",
+            "intent": "explore",
+            "section_ref": "S2",
+            "book_ref": "Patterns with Money, p.35",
+            "description": "Look at Shirley's coin arrangement (circular pattern). How much money is it?"
+          },
+          {
+            "task_id": "T-16",
+            "intent": "explore",
+            "section_ref": "S4",
+            "book_ref": "Crayons Arrangement, p.37",
+            "description": "Explore your textbook and find out what Shirley has seen. Draw a square on the even page numbers. Put a circle on the odd page numbers."
+          }
+        ]
+      },
+      "reason": {
+        "tasks": [
+          {
+            "task_id": "T-8",
+            "intent": "reason",
+            "section_ref": "S2",
+            "book_ref": "Patterns with Money, p.35",
+            "description": "How did you count them? Discuss in class."
+          },
+          {
+            "task_id": "T-10",
+            "intent": "reason",
+            "section_ref": "S2",
+            "book_ref": "Two Ways, p.35",
+            "description": "Shirley and Shiv arranged coins in groups. Write the number of coins in the blank triangles for each arrangement."
+          },
+          {
+            "task_id": "T-14",
+            "intent": "reason",
+            "section_ref": "S3",
+            "book_ref": "Even and Odd, p.36",
+            "description": "Do you think all numbers in the times-2 table are even?"
+          },
+          {
+            "task_id": "T-17",
+            "intent": "reason",
+            "section_ref": "S4",
+            "book_ref": "Even and Odd, p.38",
+            "description": "Shirley notices numbers before and after an odd number are even. Shiv wonders if numbers before and after an even number are odd. Check and discuss."
+          },
+          {
+            "task_id": "T-19",
+            "intent": "reason",
+            "section_ref": "S4",
+            "book_ref": "Even and Odd, p.38",
+            "description": "Identify which of the following numbers are even and which are odd. Explain your reasoning: 30, 78, 300, 415, 46, 67, 154, 99."
+          },
+          {
+            "task_id": "T-21",
+            "intent": "reason",
+            "section_ref": "S4",
+            "book_ref": "Even and Odd, p.38",
+            "description": "Are there more even or odd numbers between 1 and 100?"
+          }
+        ]
+      },
+      "practice": {
+        "tasks": [
+          {
+            "task_id": "T-13",
+            "intent": "practice",
+            "section_ref": "S3",
+            "book_ref": "Even and Odd, p.36",
+            "description": "Identify numbers between 1 and 20 as even or odd. You may draw the pairing arrangement."
+          },
+          {
+            "task_id": "T-15",
+            "intent": "practice",
+            "section_ref": "S4",
+            "book_ref": "Crayons Arrangement, p.37",
+            "description": "Circle the odd numbers and put a square around each even number from the given set (5, 8, 36, 69, 22, 51, 30, 38, 37, 52, 43). Use the crayons arrangement if needed."
+          }
+        ]
+      },
+      "solve": {
+        "tasks": [
+          {
+            "task_id": "T-2",
+            "intent": "solve",
+            "section_ref": "S1",
+            "book_ref": "Let Us Count, p.34",
+            "description": "Gundappa plucked 5 coconuts from each tree. How many coconuts has he plucked?"
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "section_code": "A",
+        "section_title": "Explore",
+        "items": [
+          {
+            "id": "Q-A-1",
+            "intent": "explore",
+            "section_ref": "S1",
+            "section_title": "Let Us Count",
+            "question_type": "SCR",
+            "prompt": "Mangoes are arranged in a rectangular tray. There are 4 rows and each row has 6 mangoes. Draw the arrangement in your notebook and write how many mangoes there are in total.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "24 mangoes. The drawing shows 4 rows of 6 circles (or any symbol for mangoes). The child writes 24.",
+              "method_one_line": "Count by rows: 6 + 6 + 6 + 6 = 24, or count 4 groups of 6.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: let the child point to each row and count aloud. Stretch: ask how the count would change if one row had only 5."
+            },
+            "exercise": {
+              "book_ref": "Let Us Count, p.34",
+              "description": "Count the coconut trees in Gundappa's land from the top-view grid. Write the number. How do you know?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-2",
+            "intent": "explore",
+            "section_ref": "S2",
+            "section_title": "Patterns with Money",
+            "question_type": "SCR",
+            "prompt": "A child places coins in a line: ₹2, ₹2, ₹5, ₹2, ₹2, ₹5. Draw the arrangement in your notebook and write the total amount.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Total is ₹18. The drawing shows the six coins in the given order.",
+              "method_one_line": "Group same-denomination coins: two groups of ₹2+₹2 = ₹4 each, and two ₹5 coins = ₹10; then 4+4+10 = 18.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: let the child use play coins and touch each as they add. Stretch: ask how much more is needed to make ₹25."
+            },
+            "exercise": {
+              "book_ref": "Patterns with Money, p.35",
+              "description": "Look at Shirley's coin arrangement (circular pattern). How much money is it?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-3",
+            "intent": "explore",
+            "section_ref": "S4",
+            "section_title": "Crayons Arrangement and Patterns",
+            "question_type": "MCQ",
+            "prompt": "A book is open. The left page number is 24. What kind of number is the right page number (25)?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "Even",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "It could be either even or odd",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "It is not a counting number",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "Odd",
+                "is_correct": true
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "25 is odd.",
+              "method_one_line": "Page numbers on facing pages are consecutive; the number after an even number is always odd.",
+              "what_each_option_reveals": {
+                "A": "The child may not yet grasp that consecutive page numbers alternate; they may think both sides share the same even-or-odd status.",
+                "B": "The child has not yet discovered the alternating page-number pattern Shirley observes in the textbook.",
+                "C": "The child may be confusing the concept of odd number with something outside the counting sequence."
+              },
+              "inclusivity": "Struggling: have the child open to any two-page spread and read the numbers aloud, then label each. Stretch: predict the page number three pages forward and identify it as even or odd."
+            },
+            "exercise": {
+              "book_ref": "Crayons Arrangement, p.37",
+              "description": "Explore your textbook and find out what Shirley has seen. Draw a square on the even page numbers. Put a circle on the odd page numbers."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "B",
+        "section_title": "Reason",
+        "items": [
+          {
+            "id": "Q-B-1",
+            "intent": "reason",
+            "section_ref": "S2",
+            "section_title": "Patterns with Money",
+            "question_type": "SCR",
+            "prompt": "Priya counts ₹30 using only ₹5 coins. Raju counts the same ₹30 using only ₹10 notes. Both use their coins/notes in a straight row. Whose row is longer? How do you know?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Priya's row is longer. She needs 6 coins (6 × ₹5 = ₹30) while Raju needs only 3 notes (3 × ₹10 = ₹30).",
+              "method_one_line": "Divide ₹30 by the denomination of each: 30 ÷ 5 = 6 for Priya; 30 ÷ 10 = 3 for Raju.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: suggest skip-counting by 5s up to 30 and counting the steps. Stretch: ask what happens if Raju switches to ₹2 coins."
+            },
+            "exercise": {
+              "book_ref": "Patterns with Money, p.35",
+              "description": "How did you count them? Discuss in class."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-2",
+            "intent": "reason",
+            "section_ref": "S2",
+            "section_title": "Patterns with Money",
+            "question_type": "SCR",
+            "prompt": "Arjun has 12 coins. He arranges them in groups of 4. Meera takes the same 12 coins and arranges them in groups of 3. Write the number of groups each child has. What do you notice about the total number of coins?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Arjun has 3 groups of 4. Meera has 4 groups of 3. Both totals equal 12 — the arrangement changes but the total stays the same.",
+              "method_one_line": "Multiply groups by group size: 3 × 4 = 12 and 4 × 3 = 12.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: let the child use counters to physically make the two arrangements before writing. Stretch: ask how many groups Meera would have if she arranged the same 12 coins in groups of 2."
+            },
+            "exercise": {
+              "book_ref": "Two Ways, p.35",
+              "description": "Shirley and Shiv arranged coins in groups. Write the number of coins in the blank triangles for each arrangement."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-3",
+            "intent": "reason",
+            "section_ref": "S3",
+            "section_title": "Even and Odd Numbers",
+            "question_type": "MCQ",
+            "prompt": "A child says: \"Every number in the 2-times table is even.\" Is this correct?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "No, because 2 itself is the only even number in the table",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "No, because some multiples of 2 end in odd digits",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "Yes, because every multiple of 2 pairs perfectly with no coin left over",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "Yes, but only for the first 5 multiples",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Yes — every multiple of 2 pairs perfectly with no coin left over, so every multiple of 2 is even.",
+              "method_one_line": "Pair the objects in each multiple of 2; 2 × any whole number always produces a number divisible into pairs with nothing remaining.",
+              "what_each_option_reveals": {
+                "A": "The child may conflate even with just the number 2 rather than understanding even as a property of all multiples of 2.",
+                "B": "The child may be applying the units-digit rule without understanding it: multiples of 2 end in 0, 2, 4, 6, or 8 — all even digits.",
+                "D": "The child may believe the even property breaks down for larger multiples, showing the generalisation has not yet been secured."
+              },
+              "inclusivity": "Struggling: have the child pair counters for 2, 4, 6, 8, 10 and check. Stretch: ask whether 100 is in the 2-times table and how they know."
+            },
+            "exercise": {
+              "book_ref": "Even and Odd, p.36",
+              "description": "Do you think all numbers in the times-2 table are even?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-4",
+            "intent": "reason",
+            "section_ref": "S4",
+            "section_title": "Crayons Arrangement and Patterns",
+            "question_type": "SCR",
+            "prompt": "The number 37 is odd. Without counting, write whether 36 and 38 are even or odd. Explain how you know.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "36 is even and 38 is even. The numbers immediately before and after an odd number are always even, because numbers alternate even-odd-even-odd along the number line.",
+              "method_one_line": "Apply the alternating neighbour pattern: the numbers on both sides of any odd number are even.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: suggest writing 35, 36, 37, 38, 39 in a row and labelling each E or O. Stretch: ask what the numbers two steps away from 37 are and what type they are."
+            },
+            "exercise": {
+              "book_ref": "Even and Odd, p.38",
+              "description": "Shirley notices numbers before and after an odd number are even. Shiv wonders if numbers before and after an even number are odd. Check and discuss."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-5",
+            "intent": "reason",
+            "section_ref": "S4",
+            "section_title": "Crayons Arrangement and Patterns",
+            "question_type": "MCQ",
+            "prompt": "Which of the following numbers is even? Choose the correct answer and explain why.",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "67",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "99",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "300",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "415",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "300 is even because its units digit is 0, which is an even digit.",
+              "method_one_line": "Look at the units digit only: 0 is even; 5, 7, and 9 are odd.",
+              "what_each_option_reveals": {
+                "D": "The child may see the digit 4 inside 415 and judge by a non-units digit, missing the units-digit rule.",
+                "A": "The child may be guessing without applying the units-digit rule, or may be confused by two-digit odd numbers.",
+                "B": "The child may not have extended the units-digit rule to numbers with repeated odd digits."
+              },
+              "inclusivity": "Struggling: have the child underline only the units digit of each option before deciding. Stretch: ask the child to write a 4-digit even number and justify it."
+            },
+            "exercise": {
+              "book_ref": "Even and Odd, p.38",
+              "description": "Identify which of the following numbers are even and which are odd. Explain your reasoning: 30, 78, 300, 415, 46, 67, 154, 99."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-6",
+            "intent": "reason",
+            "section_ref": "S4",
+            "section_title": "Crayons Arrangement and Patterns",
+            "question_type": "SCR",
+            "prompt": "Write any 8 consecutive numbers starting from 51. Below each number write E for even or O for odd. What pattern do you see? Write one sentence describing it.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "51(O), 52(E), 53(O), 54(E), 55(O), 56(E), 57(O), 58(E). The pattern is: even and odd numbers alternate — no two even or two odd numbers appear next to each other.",
+              "method_one_line": "Check the units digit of each consecutive number; they cycle through odd and even digits in turn.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: suggest writing only the units digit of each number first (1,2,3,4,5,6,7,8) and labelling those. Stretch: ask whether the pattern would be different if the run started at 100."
+            },
+            "exercise": {
+              "book_ref": "Even and Odd, p.38",
+              "description": "Are there more even or odd numbers between 1 and 100?"
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "C",
+        "section_title": "Practise",
+        "items": [
+          {
+            "id": "Q-C-1",
+            "intent": "practice",
+            "section_ref": "S3",
+            "section_title": "Even and Odd Numbers",
+            "question_type": "MCQ",
+            "prompt": "Which number below is odd?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "14",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "17",
+                "is_correct": true
+              },
+              {
+                "label": "C",
+                "text": "18",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "20",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "17 is odd.",
+              "method_one_line": "Pair 17 objects into twos — one object is left over, so 17 is odd.",
+              "what_each_option_reveals": {
+                "A": "The child may be classifying by the tens digit (1 is odd) rather than applying the pairing model to the whole number.",
+                "C": "The child may be confusing 'has an 8' with odd; the pairing model or units digit check would correct this.",
+                "D": "The child may be choosing the largest number, showing a size-based misconception about even and odd."
+              },
+              "inclusivity": "Struggling: have the child draw 17 dots and circle them in pairs; one will be left over. Stretch: ask the child to name the next odd number after 17."
+            },
+            "exercise": {
+              "book_ref": "Even and Odd, p.36",
+              "description": "Identify numbers between 1 and 20 as even or odd. You may draw the pairing arrangement."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-2",
+            "intent": "practice",
+            "section_ref": "S4",
+            "section_title": "Crayons Arrangement and Patterns",
+            "question_type": "MCQ",
+            "prompt": "Look at the numbers below. Which one is even?",
+            "visual_stimulus": "number_line: 43 | 51 | ... | 69 | 72",
+            "options": [
+              {
+                "label": "A",
+                "text": "43",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "51",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "69",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "72",
+                "is_correct": true
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "72 is even because its units digit is 2.",
+              "method_one_line": "Check units digits: 3 (odd), 1 (odd), 9 (odd), 2 (even) — only 72 has an even units digit.",
+              "what_each_option_reveals": {
+                "A": "The child may be choosing the smallest number, applying size rather than even-odd classification.",
+                "B": "The child may be choosing a number with a recognisable pattern (51 = 5+1) without applying the units-digit rule.",
+                "C": "The child may be attracted to 69 because 6 is even, missing that the units digit 9 determines the classification."
+              },
+              "inclusivity": "Struggling: have the child underline the units digit of each number and compare it against the even column of the crayons chart. Stretch: ask the child to change one digit of 43 to make it even."
+            },
+            "exercise": {
+              "book_ref": "Crayons Arrangement, p.37",
+              "description": "Circle the odd numbers and put a square around each even number from the given set (5, 8, 36, 69, 22, 51, 30, 38, 37, 52, 43). Use the crayons arrangement if needed."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "D",
+        "section_title": "Solve",
+        "items": [
+          {
+            "id": "Q-D-1",
+            "intent": "solve",
+            "section_ref": "S1",
+            "section_title": "Let Us Count",
+            "question_type": "NUM",
+            "prompt": "A farmer plants banana saplings in 6 rows. Each row has 8 saplings. He then gives 4 saplings to his neighbour. How many saplings does the farmer have left?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "44 saplings. First find the total: 6 rows × 8 saplings = 48. Then subtract: 48 − 4 = 44.",
+              "method_one_line": "Count by equal groups to get 48, then subtract 4 to find the remaining count.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Struggling: draw the 6 rows of 8 dots on paper and cross out 4. Stretch: ask how many rows of 8 he could plant with the remaining 44 saplings and how many would be left over."
+            },
+            "exercise": {
+              "book_ref": "Let Us Count, p.34",
+              "description": "Gundappa plucked 5 coconuts from each tree. How many coconuts has he plucked?"
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

@@ -1,0 +1,46 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Prime Time at Work: Four Problems, Four Methods",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems at once by writing them on the board. Students work alone for fifteen minutes with full written working, then compare in groups of three, reconstructing any disagreement step by step. Each group nominates one presenter per problem; after each presentation the class calls out the chapter method used. Watch for: Problem 1 — students listing multiples instead of using LCM reasoning from common factors; Problem 2 — confusing 'prime' with 'odd' when sieving; Problem 3 — stopping at a partial factorisation and missing a shared prime (the error Anshu made in section 5.4); Problem 4 — testing single digits instead of the last two digits for divisibility by 4. The closing band is the teacher's cue, not a student task.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | Jumpy plays Jump Jackpot with treasures on 48 and 80. List every jump size greater than 1 that lands on both numbers. Then state the largest such jump size. | Factors of 48: 1, 2, 3, 4, 6, 8, 12, 16, 24, 48. Factors of 80: 1, 2, 4, 5, 8, 10, 16, 20, 40, 80. Common factors greater than 1: 2, 4, 8, 16. Every common factor is a factor of 16 (the greatest common factor). Largest jump size: 16.\n2 | In an Idli-Vada game the rule numbers are two primes, both less than 20, and the first 'idli-vada' is called at 77. What are the two rule numbers? | 'Idli-vada' is called at the LCM of the two numbers. Because both numbers are prime their LCM is their product (two distinct primes share no common factor, so they are co-prime). So the product of the two primes is 77. 77 = 7 × 11; both 7 and 11 are prime and less than 20. The two rule numbers are 7 and 11.\n3 | Are 98 and 135 co-prime? Use prime factorisation to decide, and state your conclusion. | 98 = 2 × 49 = 2 × 7 × 7. 135 = 5 × 27 = 5 × 3 × 3 × 3. Prime factors of 98: {2, 7}. Prime factors of 135: {3, 5}. The two sets share no prime, so the only common factor is 1. 98 and 135 are co-prime.\n4 | A four-digit number has the form 73__  (the digits 7 and 3 are fixed in the thousands and hundreds places; the last two digits are unknown). Find all choices of the last two digits — from 00 to 99 — that make the full number divisible by 4. How many such choices are there? | Divisibility by 4 depends only on the last two digits. A two-digit number from 00 to 99 is divisible by 4 when it is a multiple of 4 in that range. Multiples of 4 from 00 to 99: 00, 04, 08, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96. That is 25 multiples (from 4×0 to 4×24). There are 25 valid choices."
+      }
+    ],
+    "materials": [
+      "Blackboard or whiteboard",
+      "Chalk or markers",
+      "Notebooks and pencils"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "Teacher writes all four problems on the board exactly as stated. Students read them silently and ask only clarifying questions about wording — no hints about method."
+      },
+      {
+        "minutes": "3-18",
+        "activity": "Silent individual work. Every student writes full working for each problem in their notebook. The room is quiet; the teacher circulates and notes where students are stuck or making errors, but says nothing yet."
+      },
+      {
+        "minutes": "18-28",
+        "activity": "Groups of three compare answers. Where two students disagree, they rebuild the solution from the first step together — no answer is accepted without its working. Groups reach a common position on each problem."
+      },
+      {
+        "minutes": "28-38",
+        "activity": "Four brief presentations, one per problem, by nominated students at the board. After each, the class calls out the chapter method the solution rested on: common factors, co-prime pairs and LCM, prime factorisation, or last-digit divisibility rule. The teacher confirms or corrects the named method, spending most time on any step the group reconstructed with difficulty."
+      },
+      {
+        "minutes": "38-40",
+        "activity": "Closing: the teacher states aloud — 'Every one of these problems yielded because every whole number breaks into primes in exactly one way, and that single fact connects factors, multiples, co-primality and divisibility.' No further summary is needed; the solutions on the board are the summary."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

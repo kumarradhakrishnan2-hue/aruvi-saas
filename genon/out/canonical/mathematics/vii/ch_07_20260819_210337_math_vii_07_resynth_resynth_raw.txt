@@ -1,0 +1,49 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Three Lines, Four Methods: A Chapter in Four Problems",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems at once by writing them on the board. Students work individually with full written working for roughly fifteen minutes, then compare in groups of three — any disagreement must be reconstructed step by step, not just announced. One student per problem presents to the class; after each presentation, the class names the chapter method the solution rested on before moving to the next. Problem 1 needs the triangle-inequality check (sum of shorter two sides compared against the longest). Problem 2 needs the two-arc intersection construction from given side lengths. Problem 3 needs the angle-sum property (∠A + ∠B + ∠C = 180°) and the exterior-angle result. Problem 4 needs the altitude construction (set-square-and-ruler or paper-fold reasoning) together with triangle classification by sides and angles. Watch for students who check only one inequality in Problem 1 rather than all three; who omit the base step in Problem 2; who subtract from 180° without justifying the angle-sum property in Problem 3; and who draw an altitude to the wrong side in Problem 4.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | Riya has three sticks of length 9 cm, 5 cm, and 15 cm. Can she form a triangle? Also check: 7 cm, 11 cm, 16 cm. | 9 + 5 = 14 < 15 — the two shorter sticks together are shorter than the longest, so 9, 5, 15 cannot form a triangle. For 7, 11, 16: 7 + 11 = 18 > 16; 7 + 16 = 23 > 11; 11 + 16 = 27 > 7 — all three inequalities hold, so 7, 11, 16 can form a triangle.\n2 | Construct triangle PQR with PQ = 8 cm, QR = 5 cm, PR = 6 cm. | Draw base PQ = 8 cm. From P swing an arc of radius 6 cm; from Q swing an arc of radius 5 cm. Mark R at their intersection. Join PR and QR. The construction succeeds because 5 + 6 = 11 > 8, confirming the triangle inequality holds.\n3 | In triangle ABC, ∠A = 48° and ∠B = 75°. Find ∠C. Then find the exterior angle at C (the angle formed by side BC and the extension of side AC beyond C). | Angle sum: ∠C = 180° − 48° − 75° = 57°. Exterior angle at C = ∠A + ∠B = 48° + 75° = 123°. Check: 57° + 123° = 180° ✓ (angles on a straight line).\n4 | Construct triangle XYZ with XY = 7 cm, YZ = 7 cm, XZ = 5 cm. Name its type by sides and by angles (measure angles to decide). Then construct the altitude from X to YZ. | Draw base YZ = 7 cm. From Y arc 7 cm, from Z arc 5 cm; X is their intersection. XY = YZ = 7 cm and XZ = 5 cm, so the triangle is isosceles by sides. On measuring: ∠Y = ∠Z ≈ 69°, ∠X ≈ 42° — all angles acute, so it is acute-angled by angles. For the altitude: align the ruler along YZ, place the set square against it, slide until the vertical edge passes through X, and draw the perpendicular from X to YZ; label the foot H."
+      }
+    ],
+    "materials": [
+      "compass",
+      "ruler",
+      "protractor",
+      "set square",
+      "pencil",
+      "blank paper"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-2",
+        "activity": "The teacher writes all four problems on the board and reads each aloud. Students copy the problems and begin working individually — no discussion yet."
+      },
+      {
+        "minutes": "2-17",
+        "activity": "Individual work: every student attempts all four problems in full, showing every step. Students who finish early check each problem by a second route — e.g., re-checking all three inequalities in Problem 1, or measuring the constructed sides in Problem 2."
+      },
+      {
+        "minutes": "17-27",
+        "activity": "Groups of three compare answers. Any disagreement is reconstructed step by step from the beginning rather than resolved by majority vote. The teacher circulates and listens, noting which steps split opinion."
+      },
+      {
+        "minutes": "27-38",
+        "activity": "One student presents each problem at the board — brief, step-by-step. After each presentation the class names, in one phrase, the chapter method the solution rested on. The teacher writes the method name beside the problem number as it is named."
+      },
+      {
+        "minutes": "38-40",
+        "activity": "The teacher reads the four method names now on the board and says: every problem yielded because a triangle is completely determined — in existence, in shape, and in height — the moment you know which lengths and angles can meet. That is the chapter's one idea."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

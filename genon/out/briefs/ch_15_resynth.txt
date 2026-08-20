@@ -1,0 +1,343 @@
+ARUVI — CLOSING SYNTHESIS RE-AUTHORING · MATHEMATICS · MIDDLE STAGE
+
+You are re-writing ONE unit: the closing whole-chapter synthesis of a chapter's fullest
+lesson plan. It is served in two situations and must be excellent in both:
+
+1. As the FINAL unit of the fullest plan — the class finishes the chapter with it.
+2. As ONE EXTRA 40-minute period appended to a SHORTER complete plan of the same
+   chapter, whose own final unit (given below) already drew the chapter together
+   yesterday.
+
+THE UNIT YOU ARE WRITING closes the chapter by putting its methods to work on a small set
+of problems the teacher poses. Solving them IS the synthesis: the chapter is drawn
+together by being used, not by being recited.
+
+PROPERTIES OF THE UNIT:
+- It carries TWO TO FOUR problems, each reaching for a DIFFERENT major method of the
+  chapter, and together spanning its main strands. Each problem is stated in full, with
+  its numbers, inside the band that poses it — a teacher reads the band aloud and the
+  class can start.
+- The problems are the TEACHER'S OWN, written for this unit and posed on the board. The
+  mathematics in each is the chapter's, and nothing is invented or imported.
+- THE PROBLEMS AND THEIR SOLUTIONS LIVE IN ONE TABLE, in `visual_aids` — three columns,
+  `No. | Problem | Solution`, one row per problem. The Problem cell states the problem in
+  one or two plain sentences with its numbers. The Solution cell gives the answer and the
+  few steps that reach it, in plain words and figures — brief enough for a teacher to read
+  at a glance while the class works, and no longer than the problem it answers. This table
+  is the teacher's whole worked reference.
+- EACH PROBLEM IS WELL-POSED AND SELF-CONSISTENT. It states everything needed to solve it,
+  its data agree with each other and with the solution beside it, and it has one answer.
+  Where a count is named ("the four corner cells", "the six expressions you can form"),
+  that count is the number the problem's own conditions produce. Where a figure carries
+  measurements, they can all hold at once. Where a construction is described, the described
+  construction is the one the solution works on.
+- THE SOLUTION CELL IS THE SETTLED ANSWER. Work each problem out fully first; then write
+  only the route that reaches the answer and the answer itself. Trials that failed,
+  possibilities considered and rejected, re-checks and corrections belong to the working,
+  not to the page a teacher reads at the board. Every step written is a step that holds:
+  a justification names the fact it rests on, and never assumes what it is proving.
+- `teacher_notes` is SHORT — a few sentences at most. It says how the sitting is run and
+  what to watch for as students work; the mathematics is in the table, and is not repeated
+  here. Name, for each problem, only the chapter method it needs — the method its own
+  solution actually uses — and warn only about errors that problem can produce.
+- Its `textbook_items_in_class` and `homework` are both `[]`, and its band text names no
+  page, no exercise and no book item. The class works from the board.
+- Its shape gives every student a full attempt before any answer is public: the problems
+  are posed, worked individually with full working, compared in small groups where a
+  disagreement is reconstructed step by step, and then presented — and each presentation
+  is followed by the class NAMING the chapter method the solution rested on.
+- The closing band states the chapter's one idea in a sentence, as the reason the problems
+  yielded — earned closure, not ceremony.
+- It is ONE sitting and weighs the same as any other: 40 minutes, a handful of
+  bands, materials any classroom has. Depth here is the demand of the problems, never the
+  quantity of material.
+- Every method it calls on appears in EVERY unit-title map given below — the shorter plans
+  differ in what they reach, so write only to what all of them share, and treat the
+  SHORTEST map as binding.
+- Its vehicle differs in kind from every FINAL UNIT given below, and it reuses none of
+  their specific contexts, objects, puzzles or framing questions.
+- Band narration never states a quantity of minutes and never points beyond this sitting —
+  the band's `minutes` field carries the clock.
+
+OUTPUT — exactly this JSON object, nothing else:
+{
+  "synthesis_unit": {
+    "activity_title": "…",
+    "pedagogical_method": "one of: Discovery · Problem-solving · Play-way · Inductive ·
+      Deductive — the method this unit runs on",
+    "section_goal": "recall | reason | apply — the goal this unit works at",
+    "teacher_notes": "a few sentences: how the sitting runs, what to watch for, and the
+      chapter method each problem needs — NOT the solutions, which are in the table",
+    "visual_aids": [
+      {"type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | … | …\n2 | … | …"}
+    ],
+    "materials": ["…"],
+    "time_bands": [
+      {"minutes": "0-N", "activity": "…"},
+      …bands in sequence, integer boundaries, last band ends at 40…
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+No other keys — the platform carries the unit's number, duration, section coverage and
+synthesis marker itself.
+
+CHAPTER SUMMARY:
+
+{
+  "stage": "middle",
+  "subject": "mathematics",
+  "grade": "vii",
+  "chapter_number": 15,
+  "chapter_title": "Finding the Unknown",
+  "sections": [
+    { "ref": "section 15.1", "title": "Find the Unknowns", "section_goal": ["apply", "recall"] },
+    { "ref": "section 15.2", "title": "Solving Equations Systematically", "section_goal": ["apply", "reason"] },
+    { "ref": "section 15.3", "title": "Mind the Mistake, Mend the Mistake", "section_goal": ["reason", "apply"] },
+    { "ref": "section 15.4", "title": "A Pinch of History", "section_goal": ["recall", "apply"] }
+  ],
+  "prose_summary": "Section 15.1 applies balance reasoning to find unknowns and then introduces the language of equations. It opens with a series of weighing-scale pictures whose two plates balance, asking students to find unknown weights, and gives the key idea through a hint: removing equal weights from both plates keeps the scale balanced. It then turns to a matchstick sequence whose position n uses 2n + 1 sticks, so finding which arrangement uses 99 sticks means solving 2n + 1 = 99. This motivates the definition of an equation as a statement of equality between two algebraic expressions written with an equal sign between them, with the Left Hand Side (LHS) and Right Hand Side (RHS), and solving meaning finding the letter-number value for which the LHS equals the RHS. Several examples of equations (3x + 4 = 7, 20 = y − 3, a/3 = 50, 2z + 4 = 5z − 14) are given. Students revisit the balance pictures — denoting an unknown weight by a letter — to frame equations such as 2e = 6 and 4 + 2y = 16, solve them, check the solutions against the weights they found earlier, and are asked to frame and solve five equations of their own.\n\nSection 15.2 applies systematic methods to solve equations and reasons about why they work. It first shows the trial-and-error method (substituting values until LHS = RHS), works it through for 2n + 1 = 99 to reach n = 49, and notes its inefficiency, then establishes that performing the same operation on both sides of an equation preserves equality — the algebraic version of the balance property. Through arithmetic Examples 1–4 it uses inverse operations (subtracting a term, dividing by a factor, adding an additive inverse, dividing by a fractional factor) to isolate an expression, then solves 5x − 4 = 7, 11y + (−5) = 61, and 6y + 7 = 4y + 21, checking solutions by substitution and bringing unknown terms to one side. It distils the shortcut rules of transposition — a term added or subtracted on one side, when removed, appears as its additive inverse on the other side (so 2y + 7 = 21 becomes 2y = 21 − 7); a factor removed from a product means the other side is divided by it (2y = 14 becomes y = 14 ÷ 2); and a divisor removed means the other side is multiplied by it (u/15 = 6 becomes u = 6 × 15). It then forms and solves equations for real problems: Ranjana's square-tile pattern (3k + 1 = 100), Madhubanti's party budget (solved several ways by different children), Jahnavi and Sunita's equal savings after 7 months, 28(x + 4) + 300 = 1000 solved by several routes, Riyaz's think-of-a-number trick, and Ramesh and Suresh's marbles (reducing two unknowns to one). A 'Generating Equations' part reverses the process, asking students to write equations with a given solution and to build chains of equivalent equations by performing the same operation on both sides, and Example 13 asks for a real-life situation modelling 100x + 75 = 250. Its Figure it Out sets solve varied equations, frame equations with a given solution or no solution, and pose digit, brick, and fraction puzzles.\n\nSection 15.3 reasons critically about worked solutions. It presents nine equations, each already solved with the steps shown, and asks students to decide whether each step is correct, describe any mistake (such as moving a term without changing its sign or dropping a coefficient), correct it, and solve the equation properly — turning the balance and transposition rules into a tool for critical error analysis rather than mere procedure-following.\n\nSection 15.4 recalls the history of algebra and applies an ancient formula. It explains that forming and solving equations was called bījagaṇita (bīja meaning seed) in ancient India, traces Brahmagupta's Brāhmasphuṭasiddhānta (628 CE) as one of the earliest works of algebra, the transmission of Indian ideas to Al-Khwarizmi (c. 825 CE, whose al-jabr gives us the word algebra), and the ancient Indian notation using symbols such as yā, kā, and rū for unknowns and knowns. It notes David Mumford's remark that 'Brahmagupta is the key person in the creation of algebra as we know it'. Bhāskarāchārya's horse-and-debt problem (Example 16) is modelled and solved, and Brahmagupta's general formula x = (D − B)/(A − C) for equations of the form Ax + B = Cx + D — a method first proposed by Aryabhata and outlined by Brahmagupta — is stated and applied, and the section closes by noting that algebra lets us generalise patterns and justify claims. Its extensive Figure it Out set covers fill-in-the-blank equations, wage, taxi-fare, restaurant, angle, and grill problems, the Bakhśhāli Manuscript (300 CE) distribution problem, stick-pattern sequences, a solve-your-path maze, and a heads-and-feet puzzle about children and donkeys.",
+  "enumerated_activities": [],
+  "enumerated_worked_examples": [
+    { "id": "WE-1", "source_section": "section 15.2", "book_ref": "Example 1, section 15.2 p.169", "description": "Given 14593 − 1459 + 145 − 14 + 88 = 13353, find 14593 − 1459 + 145 − 14 by subtracting 88 from both sides (addition and subtraction as inverse operations): the value is 13265." },
+    { "id": "WE-2", "source_section": "section 15.2", "book_ref": "Example 2, section 15.2 p.169", "description": "Given 23 × 41 × 11 × 8 × 7 = 5,80,888, find 23 × 41 × 11 × 8 by dividing 5,80,888 by 7 (multiplication and division as inverse operations)." },
+    { "id": "WE-3", "source_section": "section 15.2", "book_ref": "Example 3, section 15.2 p.169", "description": "Given 12345 − 5432 + 135 − 24 − (−67) = 7091, find 12345 − 5432 + 135 − 24 by adding (−67) to both sides to remove the −(−67) term: the value is 7024." },
+    { "id": "WE-4", "source_section": "section 15.2", "book_ref": "Example 4, section 15.2 p.170", "description": "Given (35/113 × 24 × 14 × 8/9) = 94080/1017, find (35/113 × 24 × 14) by dividing both sides by 8/9 (multiplying by 9/8): the value is 11760/113." },
+    { "id": "WE-5", "source_section": "section 15.2", "book_ref": "Example 5, section 15.2 p.171", "description": "Solve 11y + (−5) = 61 by subtracting (−5) from both sides to get 11y = 66, then dividing by 11: y = 6." },
+    { "id": "WE-6", "source_section": "section 15.2", "book_ref": "Example 6, section 15.2 p.171", "description": "Solve 6y + 7 = 4y + 21 by subtracting 4y from both sides to get 2y + 7 = 21, then 2y = 14 and y = 7." },
+    { "id": "WE-7", "source_section": "section 15.2", "book_ref": "Example 7, section 15.2 p.174", "description": "Ranjana's square-tile sequence uses 3k + 1 tiles at Step k (shown by two counting methods); to make 100 tiles, solve 3k + 1 = 100 for k." },
+    { "id": "WE-8", "source_section": "section 15.2", "book_ref": "Example 8, section 15.2 p.175", "description": "Madhubanti's party: snacks cost ₹25 per plate plus ₹50 delivery, budget ₹500, 5 family members. Solved several ways (25p + 50 = 500; 25(f + 5) = 450): 18 plates, so 13 friends can be invited." },
+    { "id": "WE-9", "source_section": "section 15.2", "book_ref": "Example 9, section 15.2 p.176", "description": "Jahnavi (₹4000 + ₹650/month) and Sunita (₹5050 + ₹500/month) have equal savings when 4000 + 650m = 5050 + 500m, giving 150m = 1050 and m = 7 months." },
+    { "id": "WE-10", "source_section": "section 15.2", "book_ref": "Example 10, section 15.2 p.177", "description": "Solve 28(x + 4) + 300 = 1000 by several routes (subtract 300 then divide by 28; divide throughout by 4; or expand): x = 21." },
+    { "id": "WE-11", "source_section": "section 15.2", "book_ref": "Example 11, section 15.2 p.178", "description": "Riyaz's number trick (think of x, subtract 3, multiply by 4, add 8) gives 4x − 4; with final answer 24, solve 4x − 4 = 24 to find the starting number x = 7." },
+    { "id": "WE-12", "source_section": "section 15.2", "book_ref": "Example 12, section 15.2 p.179", "description": "Ramesh and Suresh have 60 marbles, Ramesh 30 more than Suresh; letting Suresh have y and Ramesh y + 30 gives y + (y + 30) = 60, i.e. 2y + 30 = 60, to find both unknowns." },
+    { "id": "WE-13", "source_section": "section 15.2", "book_ref": "Example 13, section 15.2 p.180", "description": "Give a real-life situation modelled by 100x + 75 = 250 — for example, 100 units at cost x per unit plus a fixed ₹75 delivery charge totalling ₹250." },
+    { "id": "WE-14", "source_section": "section 15.4", "book_ref": "Example 16, section 15.4 p.183", "description": "Bhāskarāchārya's Bījgaṇita (1150 CE) problem: one man has ₹300 and 6 horses, another has 10 horses and a ₹100 debt, and they are equally rich; solving 300 + 6x = 10x − 100 gives the price of one horse x = ₹100." }
+  ],
+  "enumerated_exercises": [
+    { "id": "E-1", "source_section": "section 15.2", "book_ref": "Figure it Out Q1, section 15.2 p.171", "description": "Solve and check: (a) 3x − 10 = 35; (b) 5s = 3s; (c) 3u − 7 = 2u + 3; (d) 4(m + 6) − 8 = 2m − 4; (e) u/15 = 6." },
+    { "id": "E-2", "source_section": "section 15.2", "book_ref": "Figure it Out Q2, section 15.2 p.171", "description": "Frame an equation that has no solution." },
+    { "id": "E-3", "source_section": "section 15.2", "book_ref": "Figure it Out Q1, section 15.2 p.180", "description": "Write 5 equations whose solution is x = −2." },
+    { "id": "E-4", "source_section": "section 15.2", "book_ref": "Figure it Out Q2, section 15.2 p.180", "description": "Find each unknown: (a) 2y = 60; (b) −8 = 5x − 3; (c) −53w = −15; (d) 13 − z = 8; (e) k + 8 = 12 − k; (f) 7m = m − 3; (g) 3n = 10 + n." },
+    { "id": "E-5", "source_section": "section 15.2", "book_ref": "Figure it Out Q3, section 15.2 p.180", "description": "A 3-digit number's hundreds digit is 3 less than its tens digit, its tens digit is 3 less than its units digit, and the digits sum to 15; find the number." },
+    { "id": "E-6", "source_section": "section 15.2", "book_ref": "Figure it Out Q4, section 15.2 p.180", "description": "The weight of a brick is 1 kg more than half its weight; find the weight of the brick." },
+    { "id": "E-7", "source_section": "section 15.2", "book_ref": "Figure it Out Q5, section 15.2 p.180", "description": "One quarter of a number increased by 9 gives the same number; find the number." },
+    { "id": "E-8", "source_section": "section 15.2", "book_ref": "Figure it Out Q6, section 15.2 p.180", "description": "Given 4k + 1 = 13, find (a) 8k + 2; (b) 4k; (c) k; (d) 4k − 1; (e) −k − 2." },
+    { "id": "E-9", "source_section": "section 15.3", "book_ref": "section 15.3 p.181–182", "description": "For nine given worked solutions (e.g. 4x + 6 = 10, 7 − 8z = 5, 2v − 4 = 6, 5z + 2 = 3z − 4, 15w − 4w = 26, 3x + 1 = −12, 4(4q + 2) = 50, −2(3 − 4x) = 14, 3(7y + 4) = 9 + 5y), decide whether the steps are correct, describe any mistake, correct it, and solve the equation." },
+    { "id": "E-10", "source_section": "section 15.4", "book_ref": "Figure it Out Q1, section 15.4 p.185", "description": "Fill in the blanks with integers: (a) 5 × __ − 8 = 37; (b) 37 − (33 − __) = 35; (c) −3 × (−11 + __) = 45." },
+    { "id": "E-11", "source_section": "section 15.4", "book_ref": "Figure it Out Q2, section 15.4 p.185", "description": "Ranju earns ₹750 a day, paid in an equal number of ₹50 and ₹100 notes; find how many notes of each she has." },
+    { "id": "E-12", "source_section": "section 15.4", "book_ref": "Figure it Out Q3, section 15.4 p.185", "description": "Each black blob hides an equal number of blue dots; if there are 25 dots in total, write an equation and find how many dots one blob covers." },
+    { "id": "E-13", "source_section": "section 15.4", "book_ref": "Figure it Out Q4, section 15.4 p.185–186", "description": "For the given input-operation-output machines (parts a and b), find the inputs that produce the stated outputs." },
+    { "id": "E-14", "source_section": "section 15.4", "book_ref": "Figure it Out Q5, section 15.4 p.186", "description": "Find the inputs to the given machines from their outputs." },
+    { "id": "E-15", "source_section": "section 15.4", "book_ref": "Figure it Out Q6, section 15.4 p.186", "description": "A taxi charges ₹800 fixed per day plus ₹20 per kilometre; if the total is ₹2200, find the kilometres travelled." },
+    { "id": "E-16", "source_section": "section 15.4", "book_ref": "Figure it Out Q7, section 15.4 p.187", "description": "The sum of two numbers is 76 and one is three times the other; find the numbers." },
+    { "id": "E-17", "source_section": "section 15.4", "book_ref": "Figure it Out Q8, section 15.4 p.187", "description": "From the window-grill diagram (34 cm span with 3 cm and 2 cm markings), find the gap between two rods in the grill." },
+    { "id": "E-18", "source_section": "section 15.4", "book_ref": "Figure it Out Q9, section 15.4 p.187", "description": "A fruit juice costs ₹15 less than a chocolate milkshake; if 4 juices and 7 milkshakes cost ₹600, find the cost of each." },
+    { "id": "E-19", "source_section": "section 15.4", "book_ref": "Figure it Out Q10, section 15.4 p.187", "description": "Given 28p − 36 = 98, find the values of 14p − 19 and 28p − 38." },
+    { "id": "E-20", "source_section": "section 15.4", "book_ref": "Figure it Out Q11, section 15.4 p.187", "description": "Identify and correct any mistakes in the given solution steps of (a) 6x + 9 = 66; (b) 14y + 24 = 36; (c) 4x − 5 = 9x + 8." },
+    { "id": "E-21", "source_section": "section 15.4", "book_ref": "Figure it Out Q12, section 15.4 p.187", "description": "Find the measures of the angles of the two given triangles (with angles expressed as y and y + 15, and x, x − 10, x + 10)." },
+    { "id": "E-22", "source_section": "section 15.4", "book_ref": "Figure it Out Q13, section 15.4 p.188", "description": "Write 4 equations whose solution is u = 6." },
+    { "id": "E-23", "source_section": "section 15.4", "book_ref": "Figure it Out Q14, section 15.4 p.188", "description": "Bakhśhāli Manuscript (300 CE) problem: the second person gets twice the first, the third thrice the second, the fourth four times the third, and the total distributed is 132; find the first person's amount." },
+    { "id": "E-24", "source_section": "section 15.4", "book_ref": "Figure it Out Q15, section 15.4 p.188", "description": "The height of a giraffe is two and a half metres more than half its height; find how tall the giraffe is." },
+    { "id": "E-25", "source_section": "section 15.4", "book_ref": "Figure it Out Q16, section 15.4 p.188", "description": "For two stick-arrangement sequences, find (a) squares at position 11; (b) sticks at position 11; (c) whether 85 sticks is achievable and at which position; (d) whether 150 sticks is achievable and at which position." },
+    { "id": "E-26", "source_section": "section 15.4", "book_ref": "Figure it Out Q17, section 15.4 p.188", "description": "A number increased by 36 equals ten times itself; find the number." },
+    { "id": "E-27", "source_section": "section 15.4", "book_ref": "Figure it Out Q18, section 15.4 p.188", "description": "Solve: (a) 5(r + 2) = 10; (b) −3(u + 2) = 2(u − 1); (c) 2(7 − 2n) = −6; (d) 2(x − 4) = −16; (e) 6(x − 1) = 2(x − 1) − 4; (f) 3 − 7s = 7 − 3s; (g) 2x + 1 = 6 − (2x − 3); (h) 10 − 5x = 3(x − 4) − 2(x − 7)." },
+    { "id": "E-28", "source_section": "section 15.4", "book_ref": "Figure it Out Q19, section 15.4 p.188–189", "description": "Solve the equations in the maze grid to find and colour a path from Start to End, showing the work for each step." },
+    { "id": "E-29", "source_section": "section 15.4", "book_ref": "Figure it Out Q20, section 15.4 p.189", "description": "Children and donkeys on a beach together have 28 heads and 80 feet; find how many donkeys and how many children there are." }
+  ],
+  "conceptual_demand": 2,
+  "activity_count": 2,
+  "demo_count": 0,
+  "exec_load": 1
+}
+
+
+======================================================================
+
+THE FULLEST PLAN (12 units). The unit you write REPLACES its final unit, closing this arc:
+
+U1: Balance the Scale, Find the Weight
+U2: Naming Equations: LHS, RHS, and What They Mean
+U3: Same Operation on Both Sides: Inverse Operations in Action
+U4: Isolating the Unknown: Solving Linear Equations Step by Step
+U5: Transposition: The Shortcut Rule and Why It Works
+U6: Real Situations, Real Equations: Word Problems as Algebra
+U7: Generating Equations: Working Backwards from a Solution
+U8: Extended Practice: Varied Equations and Puzzles
+U9: Error Detective: Spotting and Correcting Faulty Equation Steps
+U10: Algebra's Roots: Brahmagupta, Al-Khwarizmi, and Ancient Notation
+U11: Brahmagupta's Formula and a Rich Figure-It-Out Set
+U<final>: ← the unit you are writing
+
+THE SHORTER PLANS (2). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
+
+
+--- PLAN OF 10 UNITS — unit-title map ---
+U1: Balance the Scale, Name the Unknown
+U2: Naming What We Know: Equations and Their Language
+U3: Inverse Operations and the Systematic Method
+U4: Transposition: The Shortcut and Its Logic
+U5: Word Problems as Equations: Modelling Real Situations
+U6: Generating Equations: Working in Reverse
+U7: Spot the Error, Justify the Correction
+U8: Apply and Extend: Complex Equations with Brackets
+U9: Roots of Algebra: India, Brahmagupta, and Ancient Notation
+U10: Equations in Context: Wages, Distances, Angles, and Heads-and-Feet
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 10,
+ "period_duration_minutes": 40,
+ "synthesis": false,
+ "textbook_segments": [
+  {
+   "ref": "section 15.4",
+   "title": "A Pinch of History"
+  }
+ ],
+ "section_goal": "apply",
+ "activity_title": "Equations in Context: Wages, Distances, Angles, and Heads-and-Feet",
+ "pedagogical_method": "Problem-solving",
+ "textbook_items_in_class": [
+  {
+   "id": "E-15",
+   "type": "exercise",
+   "source_section": "section 15.4",
+   "book_ref": "Figure it Out Q6, section 15.4 p.186",
+   "description": "A taxi charges ₹800 fixed per day plus ₹20 per kilometre; if the total is ₹2200, find the kilometres travelled."
+  },
+  {
+   "id": "E-21",
+   "type": "exercise",
+   "source_section": "section 15.4",
+   "book_ref": "Figure it Out Q12, section 15.4 p.187",
+   "description": "Find the measures of the angles of the two given triangles (with angles expressed as y and y + 15, and x, x − 10, x + 10)."
+  },
+  {
+   "id": "E-27",
+   "type": "exercise",
+   "source_section": "section 15.4",
+   "book_ref": "Figure it Out Q18, section 15.4 p.188",
+   "description": "Solve: (a) 5(r + 2) = 10; (b) −3(u + 2) = 2(u − 1); (c) 2(7 − 2n) = −6; (d) 2(x − 4) = −16; (e) 6(x − 1) = 2(x − 1) − 4; (f) 3 − 7s = 7 − 3s; (g) 2x + 1 = 6 − (2x − 3); (h) 10 − 5x = 3(x − 4) − 2(x − 7)."
+  },
+  {
+   "id": "E-29",
+   "type": "exercise",
+   "source_section": "section 15.4",
+   "book_ref": "Figure it Out Q20, section 15.4 p.189",
+   "description": "Children and donkeys on a beach together have 28 heads and 80 feet; find how many donkeys and how many children there are."
+  }
+ ],
+ "homework": [],
+ "time_bands": [
+  {
+   "minutes": "0–12",
+   "activity": "Students work in pairs on Figure it Out Q6, section 15.4 p.186 (“A taxi charges ₹800 fixed per day plus ₹20 per kilometre; if the total is ₹2200....”) and Figure it Out Q12, section 15.4 p.187 (“Find the measures of the angles of the two given triangles....”) — framing the equation, solving, and checking each answer by substituting back."
+  },
+  {
+   "minutes": "12–26",
+   "activity": "Groups of three tackle Figure it Out Q18, section 15.4 p.188 (“Solve: (a) 5(r + 2) = 10; (b) −3(u + 2) = 2(u − 1)....”) — each student takes two or three parts, solves, and the group cross-checks by substitution before recording agreed answers."
+  },
+  {
+   "minutes": "26–38",
+   "activity": "Class tackles Figure it Out Q20, section 15.4 p.189 (“Children and donkeys on a beach together have 28 heads and 80 feet....”) together: students write a variable for one unknown, express the other in terms of it, form the equation from the feet constraint, solve, and verify using the heads constraint as a check."
+  },
+  {
+   "minutes": "38–40",
+   "activity": "Whole-class close: students each name one type of real-world problem they can now model as an equation that they could not have modelled before this chapter. The algebra-as-generalisation idea from section 15.4 is re-stated in student language — equations let us say ‘for any such situation’ rather than guessing case by case."
+  }
+ ],
+ "teacher_notes": "The heads-and-feet puzzle is a classic two-unknowns problem reduced to one variable — the key step is expressing the number of children as 28 minus the number of donkeys. Students who form two separate equations and try to solve them simultaneously have exceeded the chapter's scope; guide them back to expressing one unknown in terms of the other. Figure it Out Q18 part (h) requires careful expansion of two brackets on the right side and is a good self-study pointer for confident students.",
+ "materials": [
+  "Textbook (section 15.4 Figure it Out Q6, Q12, Q18, Q20)",
+  "Notebook",
+  "Board"
+ ]
+}
+
+--- PLAN OF 7 UNITS — unit-title map ---
+U1: Balancing Scales to Frame Equations
+U2: From Balance Intuition to Systematic Rules
+U3: Solving Equations by Inverse Operations
+U4: Forming Equations from Word Problems
+U5: Generating Equations and Spotting Errors
+U6: Error Analysis and the Origins of Algebra
+U7: Equations in Context: Puzzles, Patterns, Real Problems
+
+--- its FINAL unit, in full ---
+{
+ "period_number": 7,
+ "period_duration_minutes": 40,
+ "synthesis": false,
+ "textbook_segments": [
+  {
+   "ref": "section 15.4",
+   "title": "A Pinch of History"
+  }
+ ],
+ "section_goal": "apply",
+ "activity_title": "Equations in Context: Puzzles, Patterns, Real Problems",
+ "pedagogical_method": "Problem-solving",
+ "textbook_items_in_class": [
+  {
+   "id": "E-15",
+   "type": "exercise",
+   "source_section": "section 15.4",
+   "book_ref": "Figure it Out Q6, section 15.4 p.186",
+   "description": "A taxi charges ₹800 fixed per day plus ₹20 per kilometre; if the total is ₹2200, find the kilometres travelled."
+  },
+  {
+   "id": "E-27",
+   "type": "exercise",
+   "source_section": "section 15.4",
+   "book_ref": "Figure it Out Q18, section 15.4 p.188",
+   "description": "Solve: (a) 5(r + 2) = 10; (b) −3(u + 2) = 2(u − 1); (c) 2(7 − 2n) = −6; (d) 2(x − 4) = −16; (e) 6(x − 1) = 2(x − 1) − 4; (f) 3 − 7s = 7 − 3s; (g) 2x + 1 = 6 − (2x − 3); (h) 10 − 5x = 3(x − 4) − 2(x − 7)."
+  },
+  {
+   "id": "E-29",
+   "type": "exercise",
+   "source_section": "section 15.4",
+   "book_ref": "Figure it Out Q20, section 15.4 p.189",
+   "description": "Children and donkeys on a beach together have 28 heads and 80 feet; find how many donkeys and how many children there are."
+  }
+ ],
+ "homework": [
+  {
+   "id": "E-25",
+   "type": "exercise",
+   "source_section": "section 15.4",
+   "book_ref": "Figure it Out Q16, section 15.4 p.188",
+   "description": "For two stick-arrangement sequences, find (a) squares at position 11; (b) sticks at position 11; (c) whether 85 sticks is achievable and at which position; (d) whether 150 sticks is achievable and at which position."
+  }
+ ],
+ "time_bands": [
+  {
+   "minutes": "0–10",
+   "activity": "Figure it Out Q6, section 15.4 p.186 (\"A taxi charges ₹800 fixed per day plus ₹20 per kilometre; if the total is ₹2200, find the kilometres travelled....\") is framed by students as an equation before solving — the focus is on identifying the unknown, the fixed cost, and the variable cost, then applying transposition."
+  },
+  {
+   "minutes": "10–24",
+   "activity": "Figure it Out Q18, section 15.4 p.188 (\"Solve: (a) 5(r + 2) = 10; (b) −3(u + 2) = 2(u − 1)....\") is worked in small groups, with each group responsible for two parts; groups compare methods — expand first or divide first — and choose the shorter route, justifying their preference."
+  },
+  {
+   "minutes": "24–36",
+   "activity": "Figure it Out Q20, section 15.4 p.189 (\"Children and donkeys on a beach together have 28 heads and 80 feet....\") is solved by reducing the two conditions (total heads, total feet) to a single equation in one unknown, then finding both quantities and verifying against both original conditions."
+  },
+  {
+   "minutes": "36–40",
+   "activity": "Students reflect in writing: choose one problem from today's work and write two sentences explaining what the equation's variable represented and why expressing one quantity in terms of the other was the key move."
+  }
+ ],
+ "teacher_notes": "The heads-and-feet puzzle is a classic two-constraint problem; students who have worked through Ramesh-and-Suresh's marbles using the balance and transposition rules established earlier in the chapter are well-placed to reduce both constraints to one equation. For students who finish quickly, Figure it Out Q23, section 15.4 p.188 (\"Write 4 equations whose solution is u = 6\") and the Bakhśhāli Manuscript problem at Figure it Out Q14, section 15.4 p.188 offer extension challenges within the same chapter.",
+ "materials": [
+  "Textbook",
+  "Notebooks"
+ ]
+}
+
+======================================================================
+
+Write the synthesis unit now, as the single JSON object specified.

@@ -67,6 +67,36 @@ def _is_source_note(row: List[str]) -> bool:
     return any(t.startswith(p) for p in _SOURCE_NOTE_OPENERS)
 
 
+def typed_visual_aids(raw):
+    """Normalize `visual_aids` to what the renderers consume.
+
+    LIFTED OUT OF `subjects/science/subject.py` 2026-08-19, unchanged, when maths·middle
+    became the second stage to carry typed aids (its re-authored synthesis puts the
+    problem/solution table here rather than swelling teacher_notes). It sat in the science
+    plugin because science was the only caller; a second caller makes it a normalizer, and
+    copying it into the maths plugin would be the drift this module exists to prevent —
+    two splitters that must agree exactly.
+
+    Legacy shape is a plain STRING (a textbook-figure reference) — passed through
+    unchanged. Typed shape is a LIST of {type: table|prose, title, table|text}; table
+    payloads are split HERE through `parse_table`, the single splitter every renderer
+    shares, so no consumer ever re-splits the raw pipe string.
+    """
+    if not isinstance(raw, list):
+        return raw or ""
+    out = []
+    for va in raw:
+        if not isinstance(va, dict):
+            continue
+        if va.get("type") == "table" and va.get("table"):
+            out.append({"type": "table", "title": va.get("title", ""),
+                        "table": parse_table(va["table"])})
+        elif va.get("type") == "prose" and va.get("text"):
+            out.append({"type": "prose", "title": va.get("title", ""),
+                        "text": va["text"]})
+    return out
+
+
 def parse_table(raw: str) -> dict:
     """Split pipe-delimited table text into
     {'header': [...], 'rows': [[...]], 'caption': str, 'source_note': str}.

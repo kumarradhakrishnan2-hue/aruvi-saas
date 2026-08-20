@@ -1,0 +1,46 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Four Problems, One Theorem: Closing the Chapter",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems on the board at once. Students work individually with full working in their notebooks for about fifteen minutes, then compare in groups of three — any disagreement is resolved by reconstructing each step, not by voting. Each group then presents one problem; after each presentation the class names aloud the chapter method the solution rested on. Problem 1 needs the isosceles-right-triangle formula c² = 2a². Problem 2 needs the Baudhāyana-Pythagoras Theorem a² + b² = c² applied to a rhombus, using the fact that the diagonals bisect each other at right angles. Problem 3 needs the odd-square method (n−1)² + (2n−1) = n² for generating Baudhāyana triples and the scaling rule. Problem 4 needs a² + b² = c² set up as a word-problem equation and solved algebraically. Watch for: Problem 1 — students squaring 2a² instead of computing c² = 2 × 7² = 98; Problem 2 — students using the full diagonal instead of half; Problem 3 — students confusing n with the triple's smallest member; Problem 4 — students placing the known segment as a leg rather than recognising which side is the hypotenuse.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | An isosceles right triangle has each equal side of length 7 cm. Find the length of its hypotenuse. Between which two consecutive whole numbers does it lie? | c² = 2a² = 2 × 49 = 98, so c = √98. Since 9² = 81 and 10² = 100, √98 lies between 9 and 10.\n2 | A rhombus has diagonals of length 16 cm and 30 cm. Find the length of one side of the rhombus. | The diagonals bisect each other at right angles, forming right triangles with legs 8 cm and 15 cm. Side² = 8² + 15² = 64 + 225 = 289, so side = 17 cm.\n3 | Use the identity (n−1)² + (2n−1) = n² to find the Baudhāyana triple that has 2n−1 = 49. Then write down the triple obtained by scaling it by 2. | 2n−1 = 49 gives n = 25. The triple is (n−1, 2n−1, n) = wait — re-derive: (n−1)² + (2n−1) = n² means the legs are (n−1) and some value, and the hypotenuse is n only when 2n−1 is a perfect square used as the odd leg. With n = 25: legs are 24 and 7 (since 7² = 49 = 2n−1 gives n = 25, and the other leg is n−1 = 24, hypotenuse = 25). Check: 7² + 24² = 49 + 576 = 625 = 25². Primitive triple: (7, 24, 25). Scaled by 2: (14, 48, 50). | \n4 | A vertical pole breaks and its top touches the ground 8 m from the base. The broken-off part has length 10 m. How tall was the pole before it broke? | The broken-off part is the hypotenuse (10 m); the distance on the ground is one leg (8 m). The standing part: h² = 10² − 8² = 100 − 64 = 36, so h = 6 m. Total height = 6 + 10 = 16 m."
+      }
+    ],
+    "materials": [
+      "Blackboard and chalk",
+      "Notebooks",
+      "Pencils"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "All four problems are written on the board. The teacher reads each aloud once. Students are told: work all four individually, in full, showing every step. No discussion yet."
+      },
+      {
+        "minutes": "3-18",
+        "activity": "Individual work. Every student writes full solutions to all four problems. The teacher moves through the room observing without correcting — note which problems produce hesitation and which errors recur, to guide the group stage."
+      },
+      {
+        "minutes": "18-30",
+        "activity": "Groups of three compare answers. Where two members disagree, the group reconstructs that solution step by step from the beginning until the disagreement is located and resolved. The teacher joins groups that are stuck rather than telling them the answer."
+      },
+      {
+        "minutes": "30-42",
+        "activity": "Four groups present, one problem each, at the board. After each presentation the class names — in one phrase — the chapter method the solution used: 'isosceles right triangle, c² = 2a²'; 'rhombus diagonals and a² + b² = c²'; 'odd-square triple and scaling'; 'Baudhāyana-Pythagoras set up as an equation'. Corrections are made during the presentation, not after."
+      },
+      {
+        "minutes": "42-45",
+        "activity": "The teacher states aloud, and students write in their notebooks, the chapter's one idea: every right triangle carries a square on each side, and the square on the hypotenuse equals the other two combined — and that single fact answered every problem here."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

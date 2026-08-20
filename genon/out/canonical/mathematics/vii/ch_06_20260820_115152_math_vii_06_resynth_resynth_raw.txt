@@ -1,0 +1,46 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Number Play at Work: Four Problems, Four Methods",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems on the board at once. Students work individually for 15 minutes with full written working, then compare in groups of three — any disagreement is resolved step by step, not by majority vote. Each presentation ends with the class naming the chapter method used. Problem 1 needs parity reasoning (odd count of odd numbers). Problem 2 needs the magic-square constraint that the centre of a 3 × 3 consecutive-number magic square must be the middle value of the set, and the magic sum is three times that centre. Problem 3 needs the Virahāṅka recurrence — watch for students who list all combinations rather than using the recursive structure. Problem 4 needs column-by-column digit elimination — the common error is assigning the same digit to two different letters; insist the uniqueness check is written down.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | Priya picks five odd numbers. She claims they add up to 48. Is that possible? Explain why or why not. | No. The sum of an odd count of odd numbers is always odd. Each odd number leaves one unpaired unit; five such singles give five unpaired units, which is still odd. 48 is even, so it cannot be the sum of five odd numbers.\n2 | A magic square is made from the nine consecutive whole numbers 11, 12, 13, 14, 15, 16, 17, 18, 19. What is its magic sum? What number must sit in the centre cell? | The nine numbers add to 135, so the three rows account for 135. Each row has the same sum, giving magic sum = 135 ÷ 3 = 45. The centre of a 3 × 3 consecutive-number magic square is always the middle (5th) value of the set; the 5th number in order is 15, so 15 sits in the centre.\n3 | In how many ways can 7 beats be filled using short syllables (1 beat) and long syllables (2 beats)? Use the Virahāṅka recurrence — do not list all combinations. | Let V(n) = number of ways for n beats. V(1) = 1, V(2) = 2. For n ≥ 3: a rhythm either starts with a short syllable (leaving n − 1 beats, V(n − 1) ways) or a long syllable (leaving n − 2 beats, V(n − 2) ways), so V(n) = V(n − 1) + V(n − 2). V(3) = 3, V(4) = 5, V(5) = 8, V(6) = 13, V(7) = 21. Answer: 21 ways.\n4 | In the cryptarithm AB + BA = CBC, each letter stands for a different digit and no leading digit is 0. Find A, B, and C. | Units column: B + A gives a units digit of C, with a carry of either 0 or 1. Tens column: A + B + carry gives units digit B and a new carry that becomes C (hundreds digit). Since the sum of two 2-digit numbers is at most 99 + 99 = 198, C = 1. Tens column: A + B + carry = 10·1 + B, so A + carry = 10, meaning A = 9 and carry from units = 1. Units column: B + 9 ≥ 10 (carry = 1 confirmed) and units digit of B + 9 is C = 1, so B + 9 = 11, giving B = 2. Check: 92 + 29 = 121 = CBC with C = 1, B = 2. All three digits distinct and no leading zero. Answer: A = 9, B = 2, C = 1."
+      }
+    ],
+    "materials": [
+      "Plain paper or notebooks",
+      "Pencils or pens",
+      "Board and chalk or markers"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "Write all four problems on the board. Tell the class: work individually, show every step, no discussion yet."
+      },
+      {
+        "minutes": "3-18",
+        "activity": "Students work individually in silence, writing full working for each problem they attempt. The teacher circulates without confirming or correcting — redirect with a question if a student is stuck: 'What does the chapter say about a sum of an odd count of odd numbers?' or 'What does the recurrence need from the two terms before it?'"
+      },
+      {
+        "minutes": "18-28",
+        "activity": "Groups of three compare answers. Any disagreement is resolved by reconstructing the steps together from the beginning, not by deferring to whoever is most confident. Groups that finish early try to find a second valid solution or confirm uniqueness for the cryptarithm."
+      },
+      {
+        "minutes": "28-38",
+        "activity": "One student presents each problem to the class — one per problem, in order. After each presentation, the class names the chapter method the solution used: 'parity of odd-count odd sums', 'magic-square centre and sum constraints', 'Virahāṅka recurrence', 'column-by-column digit elimination'. The teacher writes the method name on the board beside the solution."
+      },
+      {
+        "minutes": "38-40",
+        "activity": "Closing: the four method names remain on the board. The teacher says — and the class repeats as one sentence: 'In Number Play, every question about what is possible is answered by a rule, and every rule has a reason.'"
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

@@ -1,0 +1,2472 @@
+{
+  "filename": "ch_09_canonical.json",
+  "saved_at": "2026-08-19T11:14:02",
+  "plan_status": "canonical",
+  "chapter_number": 9,
+  "chapter_title": "Symmetry",
+  "grade": "Grade VI",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 40,
+      "count": 24
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 24 periods = 960 minutes\nTotal: 24 periods · 16h 0min",
+  "genon_canonical": {
+    "generated": "2026-08-19",
+    "schedule": "24x40",
+    "constitution": "LP v3.9 / assessment v3.5",
+    "source": "generate_canonical.py one mathematics vi 9",
+    "ledger_ts": "20260818_205348_math_vi_09_top",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-19T12:58:42",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 22,
+            "field": "teacher_notes",
+            "rule": "register/completion",
+            "removed": "established throughout the chapter",
+            "replaced_with": "",
+            "note": "completion claim — untrue in any compact that does not carry every section it assumes | survives: …a clear sense of which figures have only one type of symmetry, both types, or neither, grounded in the definitions.…"
+          }
+        ],
+        "ban_hits_before": 1,
+        "ban_hits_after": 0
+      },
+      {
+        "tool": "genon/repair_c3.py v1.0",
+        "at": "2026-08-20T11:02:16",
+        "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+        "defects": {
+          "ARV-D-187": {
+            "note": "the re-authored closer's notes point at its own Material table",
+            "edits": [
+              {
+                "unit": 24,
+                "field": "teacher_notes",
+                "old": "Pose all four problems on the board at once. Students work i…",
+                "new": "Refer to Prepared Table (see material: 'Problems and solutio…"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "at": "2026-08-20T11:18:23",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 24,
+            "field": "teacher_notes",
+            "rule": "register/clock",
+            "removed": "for the first 18 minutes",
+            "replaced_with": "",
+            "note": "clock quantity struck; the band carrying this work already declares its own minutes and the platform rescales them | survives: …Students work individually, writing full working — not just answers. Then groups of three co …"
+          }
+        ],
+        "ban_hits_before": 1,
+        "ban_hits_after": 0
+      }
+    ],
+    "synthesis_reauthor": {
+      "spec": "ARV-D-181 · F1 2026-08-19 (the double-closer collision)",
+      "at": "2026-08-20T10:47:33",
+      "ledger_ts": "20260819_210337_math_vi_09_resynth",
+      "model": "claude-sonnet-4-6",
+      "compacts_read": {
+        "ch_09_canonical_p19.json": "2026-08-19T13:38:19",
+        "ch_09_canonical_p14.json": "2026-08-19T13:38:18"
+      },
+      "replaced_in": "backup/resynth/mathematics_vi_ch09_20260819_210337_math_vi_09_resynth.json"
+    }
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.1",
+              "title": "Line of Symmetry"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Folding to Find: What Is a Line of Symmetry?",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "section 9.1",
+              "book_ref": "Figure it Out Q1, section 9.1 p.219",
+              "description": "Do you see any line of symmetry in the opening figures (flower, butterfly, rangoli, pinwheel)? What about the picture of the cloud?"
+            },
+            {
+              "id": "E-2",
+              "type": "exercise",
+              "source_section": "section 9.1",
+              "book_ref": "Figure it Out Q2, section 9.1 p.219",
+              "description": "For each of five given polygon figures, identify the line(s) of symmetry if any exist."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Open with Figure it Out Q1 (section 9.1 p.219) (\"do you see any line of symmetry in the opening figures....\"). Students observe flowers, butterflies, rangoli, and pinwheels and share which figures look the same on both sides, surfacing informal understanding of balance and repetition."
+            },
+            {
+              "minutes": "8–20",
+              "activity": "Introduce the folding test: teacher demonstrates folding a triangle along a dotted line so both halves overlap exactly — these halves are called mirror halves — and contrasts this with a four-piece puzzle figure that does not overlap when folded. Students state, in their own words, what a line of symmetry means based on this evidence."
+            },
+            {
+              "minutes": "20–32",
+              "activity": "Students work on Figure it Out Q2 (section 9.1 p.219) (\"for each of five given polygon figures, identify the line(s) of symmetry....\"). Each student folds or imagines folding each polygon and records which figures pass the overlap test and where the fold line lies."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Pairs share their answers; class compiles a short list of figures that have a line of symmetry and figures that do not, articulating the formal definition — a line of symmetry cuts a figure into two parts that exactly overlap when folded along that line."
+            }
+          ],
+          "teacher_notes": "Watch for students who mark any vertical line through a figure as a line of symmetry without checking whether folding produces exact overlap — a common error. Encourage students to physically fold or trace-and-flip their drawings rather than relying on visual estimation alone.",
+          "materials": [
+            "Plain paper for folding",
+            "Pencils",
+            "Textbook open to section 9.1 p.219"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.1 — Figures with more than one line of symmetry",
+              "title": "Figures with more than one line of symmetry"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "How Many Folds? Discovering Multiple Lines of Symmetry",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "A-1",
+              "type": "activity",
+              "source_section": "section 9.1",
+              "book_ref": "Activity: Folding a square — finding all lines of symmetry, section 9.1 p.220",
+              "description": "Students take a square piece of paper and fold it four times (vertically, horizontally, along each diagonal) to discover that a square has four lines of symmetry."
+            },
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "section 9.1 — Figures with more than one line of symmetry",
+              "book_ref": "Figure it Out, section 9.1 p.221",
+              "description": "Is there any other way to fold the square so that the two halves overlap? How many lines of symmetry does the square shape have?"
+            },
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "section 9.1 — Figures with more than one line of symmetry",
+              "book_ref": "Figure it Out, section 9.1 p.221",
+              "description": "Is the diagonal of a rectangle (that is not a square) a line of symmetry? Fold a rectangular piece of paper along its diagonal to check whether the two parts overlap."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–5",
+              "activity": "Students recall that a line of symmetry divides a figure into two mirror halves that overlap exactly. Teacher poses: can a single figure have more than one such line?"
+            },
+            {
+              "minutes": "5–20",
+              "activity": "Students carry out Activity: Folding a square — finding all lines of symmetry (section 9.1 p.220) (\"students take a square piece of paper and fold it four times....\"). Each fold — vertical, horizontal, and both diagonals — is tested for exact overlap, and the four fold lines are marked on a sketch."
+            },
+            {
+              "minutes": "20–28",
+              "activity": "Students answer Figure it Out (section 9.1 p.221) (\"is there any other way to fold the square so that the two halves overlap?....\"). Pairs discuss whether any further fold could be a line of symmetry and conclude that the square has exactly four."
+            },
+            {
+              "minutes": "28–40",
+              "activity": "Students fold a non-square rectangle along its diagonal and work on Figure it Out (section 9.1 p.221) (\"is the diagonal of a rectangle that is not a square a line of symmetry?....\"). They observe that the diagonal fold does not produce overlapping halves and articulate why the rectangle's diagonal fails the symmetry test."
+            }
+          ],
+          "teacher_notes": "A frequent error is assuming that any fold that divides a figure in half is a line of symmetry — the diagonal-rectangle investigation directly targets this. After the folding, ask students to explain in words why the overlap fails, linking the result to the formal definition established with the triangle.",
+          "materials": [
+            "Square paper sheets",
+            "Non-square rectangular paper sheets",
+            "Pencils",
+            "Rulers"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.1 — Figures with more than one line of symmetry",
+              "title": "Figures with more than one line of symmetry"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Reasoning About Multiple Axes of Symmetry",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "section 9.1 — Figures with more than one line of symmetry",
+              "book_ref": "Figure it Out, section 9.1 p.221",
+              "description": "Is there any other way to fold the square so that the two halves overlap? How many lines of symmetry does the square shape have?"
+            },
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "section 9.1 — Figures with more than one line of symmetry",
+              "book_ref": "Figure it Out, section 9.1 p.221",
+              "description": "Is the diagonal of a rectangle (that is not a square) a line of symmetry? Fold a rectangular piece of paper along its diagonal to check whether the two parts overlap."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Starting from the established definition — a line of symmetry produces exact overlap on folding — the teacher presents several figures: an equilateral triangle, a regular hexagon, and a non-regular quadrilateral. Students predict how many lines of symmetry each figure has and justify their prediction before any folding."
+            },
+            {
+              "minutes": "8–22",
+              "activity": "Students revisit Figure it Out (section 9.1 p.221) (\"is there any other way to fold the square so that the two halves overlap?....\") and Figure it Out (section 9.1 p.221) (\"is the diagonal of a rectangle that is not a square a line of symmetry?....\"), now writing a reason — not just an observation — for each answer. For the rectangle, they argue from the mismatch of side lengths."
+            },
+            {
+              "minutes": "22–34",
+              "activity": "Small groups examine the labelled square (corners A, B, C, D) discussed in the text: folding along the vertical line of symmetry maps corner B onto A and C onto D. Groups trace what happens to each corner under each of the four folds and record their reasoning — connecting reflection symmetry to the formal idea that each point on one side maps to a matching point on the other."
+            },
+            {
+              "minutes": "34–40",
+              "activity": "Class discussion: students share one reasoning chain — e.g., why the rectangle's diagonal cannot be a line of symmetry — and identify the general principle that equal side lengths and equal angle measures are what allow a fold to produce exact overlap."
+            }
+          ],
+          "teacher_notes": "Having established through folding that a square has four lines of symmetry and a non-square rectangle has two, students are now reasoning about why rather than just observing what — watch that justifications refer to the fold-and-overlap definition, not to visual appearance. A corner-labelling diagram on the board helps students track where each point moves under reflection.",
+          "materials": [
+            "Pencils",
+            "Rulers",
+            "Square and rectangular paper for reference",
+            "Textbook open to section 9.1 p.221"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.1 — Generating shapes having lines of symmetry",
+              "title": "Generating shapes having lines of symmetry"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Ink Blots and Paper Cuts: Making Symmetric Shapes",
+          "pedagogical_method": "Play-way",
+          "textbook_items_in_class": [
+            {
+              "id": "A-2",
+              "type": "activity",
+              "source_section": "section 9.1 — Generating shapes having lines of symmetry",
+              "book_ref": "Activity: Ink Blot Devils, section 9.1 p.222",
+              "description": "Students fold paper in half, spill ink on one half, press halves together, and open to observe the symmetric figure formed, identifying the fold as the line of symmetry."
+            },
+            {
+              "id": "A-3",
+              "type": "activity",
+              "source_section": "section 9.1 — Generating shapes having lines of symmetry",
+              "book_ref": "Activity: Paper Folding and Cutting, section 9.1 p.223",
+              "description": "Students fold paper and cut along dotted lines to generate symmetric shapes; a more intricate variant uses multiple folds to create decorative cut-out patterns with identifiable lines of symmetry."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–5",
+              "activity": "Teacher connects to the definition of line of symmetry established through folding: if a fold line produces exact overlap, the figure has a line of symmetry at that fold. Today students will use this principle in reverse — deliberately constructing figures that are symmetric."
+            },
+            {
+              "minutes": "5–18",
+              "activity": "Students perform Activity: Ink Blot Devils (section 9.1 p.222) (\"students fold paper in half, spill ink on one half, press halves together....\"). Each student folds a sheet, applies ink or paint, presses, opens, and identifies the fold line as the line of symmetry of the resulting shape."
+            },
+            {
+              "minutes": "18–35",
+              "activity": "Students perform Activity: Paper Folding and Cutting (section 9.1 p.223) (\"students fold paper and cut along dotted lines to generate symmetric shapes....\"). They first try a single fold and one cut, then attempt a multiple-fold variant to produce a decorative pattern. For each result they draw the line(s) of symmetry on the opened sheet."
+            },
+            {
+              "minutes": "35–40",
+              "activity": "Each student holds up their cut-out and states aloud how many lines of symmetry it has and where each line lies, using the fold-and-overlap definition to justify their count."
+            }
+          ],
+          "teacher_notes": "Students sometimes believe that any decorative cut-out is automatically symmetric — encourage them to check by folding back along the claimed line and testing overlap. Ink blot shapes may appear symmetric but have slight asymmetry at edges; this is a productive discussion point about precision.",
+          "materials": [
+            "Plain paper (multiple sheets per student)",
+            "Washable ink or paint, brushes",
+            "Scissors",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.1 — Generating shapes having lines of symmetry",
+              "title": "Generating shapes having lines of symmetry"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Punching Holes: Predicting Symmetric Patterns",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "A-4",
+              "type": "activity",
+              "source_section": "section 9.1 — Generating shapes having lines of symmetry",
+              "book_ref": "Activity: Punching Game, section 9.1 p.223",
+              "description": "Students punch holes at different locations of a folded square sheet to create symmetric patterns, using the fold as the line of symmetry."
+            },
+            {
+              "id": "E-5",
+              "type": "exercise",
+              "source_section": "section 9.1 — Generating shapes having lines of symmetry",
+              "book_ref": "Figure it Out Q1, section 9.1 p.224",
+              "description": "In each of four figures, a hole was punched in a folded square sheet and then unfolded. Identify the fold line. For figure (d), created by a single punch, determine how the paper was folded."
+            },
+            {
+              "id": "E-6",
+              "type": "exercise",
+              "source_section": "section 9.1 — Generating shapes having lines of symmetry",
+              "book_ref": "Figure it Out Q2, section 9.1 p.224",
+              "description": "Given the line(s) of symmetry, find the location of the other hole(s) in each of five figures."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Students perform Activity: Punching Game (section 9.1 p.223) (\"students punch holes at different locations of a folded square sheet to create symmetric patterns....\"). Each student folds a square sheet once, punches a hole at a chosen location, unfolds, and observes the symmetric pair of holes."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Students work on Figure it Out Q1 (section 9.1 p.224) (\"in each of four figures, a hole was punched in a folded square sheet and then unfolded....\"). For each given hole pattern, they identify where the fold line must have been, reasoning from the symmetry of the hole positions."
+            },
+            {
+              "minutes": "22–36",
+              "activity": "Students work on Figure it Out Q2 (section 9.1 p.224) (\"given the line(s) of symmetry, find the location of the other hole(s)....\"). Given a hole and a stated line of symmetry, students locate the mirror-image hole by applying the definition of reflection across that line."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Whole-class check: teacher selects two contrasting cases from Q2 — one with a vertical fold line and one with a diagonal — and students explain how they determined the reflected hole's position."
+            }
+          ],
+          "teacher_notes": "Students frequently confuse reflecting a point across a diagonal line with reflecting across a horizontal or vertical line; the Punching Game makes the error visible immediately when the unfolded sheet is held up. For Q2's diagonal cases, encourage students to fold the paper along the stated line of symmetry and physically mark the hole's mirror position.",
+          "materials": [
+            "Square paper sheets",
+            "A hole punch (or a sharp pencil tip)",
+            "Pencils",
+            "Textbook open to section 9.1 p.224"
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.1 — Generating shapes having lines of symmetry",
+              "title": "Generating shapes having lines of symmetry"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Predict, Cut, and Check: Paper Shapes and Holes",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-7",
+              "type": "exercise",
+              "source_section": "section 9.1 — Generating shapes having lines of symmetry",
+              "book_ref": "Figure it Out Q3, section 9.1 p.224",
+              "description": "Paper cutting questions using vertical and horizontal fold notation; interpret representations of folded paper and associated cuts."
+            },
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "section 9.1 — Generating shapes having lines of symmetry",
+              "book_ref": "Figure it Out Q4, section 9.1 p.225",
+              "description": "After each of four cuts on folded paper, predict the shape of the hole when the paper is opened; make cutouts to verify predictions — sub-parts (a), (b), (c), (d)."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Teacher demonstrates reading a folded-paper diagram: vertical fold notation and horizontal fold notation are explained, then a single cut is shown. Students identify what the opened shape will look like before any paper is cut."
+            },
+            {
+              "minutes": "8–20",
+              "activity": "Students work on Figure it Out Q3 (section 9.1 p.224) (\"paper cutting questions using vertical and horizontal fold notation; interpret representations of folded paper....\"). For each diagram, they interpret the fold and cut, then sketch the opened shape."
+            },
+            {
+              "minutes": "20–38",
+              "activity": "Students work on Figure it Out Q4 (section 9.1 p.225) (\"after each of four cuts on folded paper, predict the shape of the hole when the paper is opened....\"). For each sub-part, students first write their prediction, then fold and cut actual paper to verify — recording whether the prediction matched the outcome."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Brief share: one student explains a case where prediction and result differed and identifies the reasoning error, reinforcing the connection between fold direction and the final symmetric shape."
+            }
+          ],
+          "teacher_notes": "Students often underestimate how a corner cut on a double-folded sheet produces four identical pieces — emphasise tracking the number of layers before cutting. Encouraging written predictions before cutting develops the habit of reasoning about symmetry before resorting to trial-and-error.",
+          "materials": [
+            "Plain paper (multiple sheets per student)",
+            "Scissors",
+            "Pencils",
+            "Textbook open to section 9.1 p.224–225"
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.1 — Generating shapes having lines of symmetry",
+              "title": "Generating shapes having lines of symmetry"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Single Cut, Many Shapes: From Folds to Symmetric Holes",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "section 9.1 — Generating shapes having lines of symmetry",
+              "book_ref": "Figure it Out Q5, section 9.1 p.226",
+              "description": "Determine how to obtain each of two shapes (both with a square hole in the centre) using folds and a single straight cut — sub-parts (a) aligned-square hole and (b) diamond-orientation square hole."
+            },
+            {
+              "id": "E-10",
+              "type": "exercise",
+              "source_section": "section 9.1 — Generating shapes having lines of symmetry",
+              "book_ref": "Figure it Out Q6, section 9.1 p.226",
+              "description": "How many lines of symmetry do these shapes have? (a) two figures — a 4-pointed star (square) and an 8-pointed star; (b) a triangle with equal sides and equal angles; (c) a hexagon with equal sides and equal angles."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "Students work on Figure it Out Q5 (section 9.1 p.226) (\"determine how to obtain each of two shapes — both with a square hole — using folds and a single straight cut....\"). For each sub-part, students plan the fold sequence and cut angle in writing, then make the cutout to verify."
+            },
+            {
+              "minutes": "15–32",
+              "activity": "Students work on Figure it Out Q6 (section 9.1 p.226) (\"how many lines of symmetry do these shapes have?....\"). They count lines of symmetry for a 4-pointed star, an 8-pointed star, an equilateral triangle, and a regular hexagon, recording each count with a drawn line."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Class compiles results from Q6 into a shared table: shape name and number of lines of symmetry. Students are prompted to notice whether a pattern connects the number of sides (or points) to the number of symmetry lines for the regular shapes."
+            }
+          ],
+          "teacher_notes": "Students often struggle with the diamond-orientation hole in Q5(b) because they do not see that a 45° fold before cutting produces the rotated square; prompt them to think about what orientation the fold layers create rather than what the final hole looks like. The table built in the closing band plants the seed for the regular-polygon generalisation developed more fully in section 9.2.",
+          "materials": [
+            "Plain paper (multiple sheets per student)",
+            "Scissors",
+            "Pencils",
+            "Rulers",
+            "Textbook open to section 9.1 p.226"
+          ]
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.1 — Generating shapes having lines of symmetry",
+              "title": "Generating shapes having lines of symmetry"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Completing and Creating: Symmetry on Grids",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-11",
+              "type": "exercise",
+              "source_section": "section 9.1 — Generating shapes having lines of symmetry",
+              "book_ref": "Figure it Out Q7, section 9.1 p.227",
+              "description": "Trace each of eight figures (arrangements of rhombus shapes and polygons on grids) and draw the lines of symmetry, if any."
+            },
+            {
+              "id": "E-12",
+              "type": "exercise",
+              "source_section": "section 9.1 — Generating shapes having lines of symmetry",
+              "book_ref": "Figure it Out Q8, section 9.1 p.228",
+              "description": "Find the lines of symmetry for the given kolam (traditional Indian dot pattern)."
+            },
+            {
+              "id": "E-13",
+              "type": "exercise",
+              "source_section": "section 9.1 — Generating shapes having lines of symmetry",
+              "book_ref": "Figure it Out Q9, section 9.1 p.228",
+              "description": "Draw: (a) a triangle with exactly one line of symmetry; (b) a triangle with exactly three lines of symmetry; (c) a triangle with no line of symmetry. Is it possible to draw a triangle with exactly two lines of symmetry?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students trace figures from Figure it Out Q7 (section 9.1 p.227) (\"trace each of eight figures — arrangements of rhombus shapes and polygons on grids....\") and draw all lines of symmetry. For figures with no line of symmetry, they write a one-sentence reason why no fold produces exact overlap."
+            },
+            {
+              "minutes": "12–22",
+              "activity": "Students work on Figure it Out Q8 (section 9.1 p.228) (\"find the lines of symmetry for the given kolam....\"). They trace the kolam pattern and systematically check candidate fold lines — horizontal, vertical, diagonal — against the overlap definition."
+            },
+            {
+              "minutes": "22–38",
+              "activity": "Students work on Figure it Out Q9 (section 9.1 p.228) (\"draw: a triangle with exactly one line of symmetry; a triangle with exactly three lines of symmetry; a triangle with no line of symmetry....\"). After drawing each, they fold or trace to verify the count. They also address the question of whether exactly two lines are possible."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Quick pair-share: can a triangle have exactly two lines of symmetry? Students exchange reasoning with a partner and the class agrees on an answer."
+            }
+          ],
+          "teacher_notes": "The kolam in Q8 often has more lines of symmetry than students initially spot — encourage a systematic check of at least four candidate lines before concluding. The Q9 question about exactly two lines of symmetry in a triangle is a genuine reasoning task: students should argue from the constraint that if two sides are equal a third must follow, not simply draw and check.",
+          "materials": [
+            "Tracing paper or thin plain paper",
+            "Pencils",
+            "Rulers",
+            "Textbook open to section 9.1 p.227–228"
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.1 — Generating shapes having lines of symmetry",
+              "title": "Generating shapes having lines of symmetry"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Curved Figures, Completing Halves, and the Symmetry Census",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-14",
+              "type": "exercise",
+              "source_section": "section 9.1 — Generating shapes having lines of symmetry",
+              "book_ref": "Figure it Out Q10, section 9.1 p.228",
+              "description": "Draw figures containing at least one curved boundary with exactly: (a) one line of symmetry; (b) two lines of symmetry; (c) four lines of symmetry."
+            },
+            {
+              "id": "E-15",
+              "type": "exercise",
+              "source_section": "section 9.1 — Generating shapes having lines of symmetry",
+              "book_ref": "Figure it Out Q11, section 9.1 p.228",
+              "description": "Copy six partial figures on squared paper and complete each so that the given blue line is a line of symmetry — sub-parts (a) through (f), with a hint to rotate the book for (c) and (f)."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–14",
+              "activity": "Students work on Figure it Out Q10 (section 9.1 p.228) (\"draw figures containing at least one curved boundary with exactly one, two, or four lines of symmetry....\"). For each sub-part they first sketch a candidate, then check by folding or tracing to confirm the exact count of symmetry lines."
+            },
+            {
+              "minutes": "14–36",
+              "activity": "Students copy partial figures onto squared paper and work on Figure it Out Q11 (section 9.1 p.228) (\"copy six partial figures on squared paper and complete each so that the given blue line is a line of symmetry....\"). For each partial figure, they reflect each existing point across the given line to locate the completing points, then join them."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Students inspect their completed figures and count the total lines of symmetry for each — asking whether completing the figure to satisfy one line of symmetry sometimes introduces additional lines as a bonus."
+            }
+          ],
+          "teacher_notes": "When completing partial figures on squared paper, students often reflect horizontally or vertically but make errors with diagonal symmetry lines — for sub-parts (c) and (f), prompt them to rotate the page as the textbook suggests. In Q10, a common error is drawing a figure with more symmetry lines than required; encourage students to actively break extra symmetry.",
+          "materials": [
+            "Squared paper",
+            "Pencils",
+            "Rulers",
+            "Textbook open to section 9.1 p.228"
+          ]
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.1 — Generating shapes having lines of symmetry",
+              "title": "Generating shapes having lines of symmetry"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Two-Line Symmetry and Dot-Grid Extensions",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-16",
+              "type": "exercise",
+              "source_section": "section 9.1 — Generating shapes having lines of symmetry",
+              "book_ref": "Figure it Out Q12, section 9.1 p.229",
+              "description": "Copy six partial drawings on squared paper and complete each so that the resulting figure has both blue lines as lines of symmetry — sub-parts (a) through (f)."
+            },
+            {
+              "id": "E-17",
+              "type": "exercise",
+              "source_section": "section 9.1 — Generating shapes having lines of symmetry",
+              "book_ref": "Figure it Out Q13, section 9.1 p.230",
+              "description": "Copy six figures on a dot grid and for each draw two more line segments to make a shape that has a line of symmetry."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–22",
+              "activity": "Students copy partial drawings and work on Figure it Out Q12 (section 9.1 p.229) (\"copy six partial drawings on squared paper and complete each so that the resulting figure has both blue lines as lines of symmetry....\"). For each figure, they must satisfy two symmetry lines simultaneously — reflecting across the first line, then checking that the result also satisfies the second."
+            },
+            {
+              "minutes": "22–38",
+              "activity": "Students copy dot-grid figures and work on Figure it Out Q13 (section 9.1 p.230) (\"copy six figures on a dot grid and for each draw two more line segments to make a shape that has a line of symmetry....\"). For each given partial figure, students choose two segments that complete it symmetrically and draw the resulting line of symmetry."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Students select one Q13 figure and explain to a partner how they chose the two added segments and where the line of symmetry lies, using the fold-and-overlap definition as the justification."
+            }
+          ],
+          "teacher_notes": "In Q12, satisfying two simultaneous lines of symmetry is significantly harder than one — students may complete the first reflection correctly but then find the second line violated; encourage them to check both lines after every addition rather than completing the whole figure and checking at the end. The dot grid in Q13 helpfully constrains candidate segments; watch that students are adding exactly two segments, not more.",
+          "materials": [
+            "Squared paper",
+            "Dot-grid paper",
+            "Pencils",
+            "Rulers",
+            "Textbook open to section 9.1 p.229–230"
+          ]
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.2",
+              "title": "Rotational Symmetry"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "The Windmill Spins: Introducing Rotational Symmetry",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-18",
+              "type": "exercise",
+              "source_section": "section 9.2",
+              "book_ref": "Figure it Out Q1, section 9.2 p.235",
+              "description": "Find the angles of symmetry for three given figures about the marked centre point — sub-parts (a), (b), (c)."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Teacher presents the paper windmill — a figure with no line of symmetry — and rotates a cutout or diagram by 90° about its centre, showing that the figure looks exactly the same. The terms centre of rotation, angle of rotational symmetry, and angle of symmetry are introduced. Students note that 90°, 180°, 270°, and 360° all return the windmill to an identical appearance."
+            },
+            {
+              "minutes": "12–22",
+              "activity": "Teacher demonstrates a labelled square, tracking corner positions after each 90° rotation to show that the square also has four angles of symmetry. Students observe how labelling corners reveals what changes even when the overall figure looks unchanged."
+            },
+            {
+              "minutes": "22–38",
+              "activity": "Students begin Figure it Out Q1 (section 9.2 p.235) (\"find the angles of symmetry for three given figures about the marked centre point....\"). For each figure they trace the shape, rotate the tracing, and record each angle at which the tracing matches the original — listing all angles of symmetry."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Students state the definition of angle of rotational symmetry in their own words and confirm that 360° is always included in the list for any figure."
+            }
+          ],
+          "teacher_notes": "Students often assume that a figure with rotational symmetry must also have reflection symmetry — the windmill is the canonical counterexample, and it is worth dwelling on it before moving to the square. Watch for students listing only the smallest angle of symmetry; prompt them to find all angles by continuing to rotate past the first match.",
+          "materials": [
+            "Paper windmill cutout or diagram",
+            "Tracing paper",
+            "Pencils",
+            "Protractors",
+            "Textbook open to section 9.2 p.235"
+          ]
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.2",
+              "title": "Rotational Symmetry"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Listing Angles: Which Figures Rotate Into Themselves?",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-19",
+              "type": "exercise",
+              "source_section": "section 9.2",
+              "book_ref": "Figure it Out Q2, section 9.2 p.235",
+              "description": "Which of seven given figures have more than one angle of symmetry?"
+            },
+            {
+              "id": "E-20",
+              "type": "exercise",
+              "source_section": "section 9.2",
+              "book_ref": "Figure it Out Q3, section 9.2 p.236",
+              "description": "Give the order of rotational symmetry for each of six figures (including an arrow, X-shape, star, tumbling figure, plus-shape, and pentagon)."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–5",
+              "activity": "Building on the established definition — an angle of symmetry is any angle through which the figure looks exactly the same — teacher introduces the order of rotational symmetry: the count of distinct angles of symmetry a figure has (including 360°)."
+            },
+            {
+              "minutes": "5–20",
+              "activity": "Students work on Figure it Out Q2 (section 9.2 p.235) (\"which of seven given figures have more than one angle of symmetry?....\"). For each figure they use tracing paper to test multiple rotation angles and classify the figure as having exactly one angle (360° only) or more."
+            },
+            {
+              "minutes": "20–36",
+              "activity": "Students work on Figure it Out Q3 (section 9.2 p.236) (\"give the order of rotational symmetry for each of six figures....\"). For each figure — arrow, X-shape, star, tumbling figure, plus-shape, pentagon — they list all angles of symmetry and count them to state the order."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Class discussion: students compare orders across the six figures and articulate a pattern — a figure with order n has angles that are multiples of 360°/n."
+            }
+          ],
+          "teacher_notes": "Students sometimes include angles beyond 360° in their list — reinforce that the range is 0° (exclusive) to 360° (inclusive). The arrow and tumbling figure in Q3 are often incorrectly given order 2; trace-and-rotate verification resolves this.",
+          "materials": [
+            "Tracing paper",
+            "Pencils",
+            "Protractors",
+            "Textbook open to section 9.2 p.235–236"
+          ]
+        },
+        {
+          "period_number": 13,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.2",
+              "title": "Rotational Symmetry"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Radial Arms and the 360°/n Rule",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-1",
+              "type": "worked_example",
+              "source_section": "section 9.2",
+              "book_ref": "Example, section 9.2 p.232",
+              "description": "Find the angles of symmetry of a parallelogram-strip shape. A 180° rotation is demonstrated not to overlap with the original (asymmetry of the parallelogram); the figure returns to itself only after 360°, so it does not have rotational symmetry."
+            },
+            {
+              "id": "A-5",
+              "type": "activity",
+              "source_section": "section 9.2",
+              "book_ref": "Activity: Paper cutout rotation — three-arm radial figure, section 9.2 p.233",
+              "description": "Students trace and cut out a three-arm radial figure, then rotate the cutout over the original figure to determine its angles of rotation and verify observations about rotational symmetry."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Class reads and discusses Example (section 9.2 p.232) (\"find the angles of symmetry of a parallelogram-strip shape....\"). Students follow the reasoning that a 180° rotation produces a differently oriented parallelogram — not an identical image — and that only 360° works, so the figure lacks rotational symmetry."
+            },
+            {
+              "minutes": "10–25",
+              "activity": "Students perform Activity: Paper cutout rotation — three-arm radial figure (section 9.2 p.233) (\"students trace and cut out a three-arm radial figure, then rotate the cutout over the original figure....\"). For arms spaced 120° apart, students discover angles of symmetry 120°, 240°, 360° and confirm the pattern."
+            },
+            {
+              "minutes": "25–37",
+              "activity": "Students examine radial figures with 4 arms (90° spacing) and 5 arms (72° spacing), listing angles of symmetry in each case. They then attempt to generalise: for n equal radial arms, the smallest angle of symmetry is 360°/n and all angles of symmetry are multiples of this value."
+            },
+            {
+              "minutes": "37–40",
+              "activity": "Students write the generalisation in their own words and test it on the windmill (4 arms, 90° spacing) as a verification — does 360°/4 = 90° match what they found in the earlier exploration?"
+            }
+          ],
+          "teacher_notes": "Having explored the parallelogram's lack of rotational symmetry alongside figures that do have it, students are now ready to generalise — watch that they state the 360°/n rule as applying only to figures with n equally spaced radial arms, not to all n-sided figures. The verification against the windmill is important: students should be able to confirm the formula rather than just memorise it.",
+          "materials": [
+            "Tracing paper",
+            "Scissors",
+            "Pencils",
+            "Protractors",
+            "Textbook open to section 9.2 p.232–233"
+          ]
+        },
+        {
+          "period_number": 14,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.2",
+              "title": "Rotational Symmetry"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "True or False: Reasoning About Angles of Symmetry",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-18",
+              "type": "exercise",
+              "source_section": "section 9.2",
+              "book_ref": "Figure it Out Q1, section 9.2 p.235",
+              "description": "Find the angles of symmetry for three given figures about the marked centre point — sub-parts (a), (b), (c)."
+            },
+            {
+              "id": "E-19",
+              "type": "exercise",
+              "source_section": "section 9.2",
+              "book_ref": "Figure it Out Q2, section 9.2 p.235",
+              "description": "Which of seven given figures have more than one angle of symmetry?"
+            },
+            {
+              "id": "E-20",
+              "type": "exercise",
+              "source_section": "section 9.2",
+              "book_ref": "Figure it Out Q3, section 9.2 p.236",
+              "description": "Give the order of rotational symmetry for each of six figures (including an arrow, X-shape, star, tumbling figure, plus-shape, and pentagon)."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Teacher poses two True/False statements from the section: (1) 360° is always an angle of symmetry for any figure; (2) the smallest whole-number angle of symmetry of a figure must be a factor of 360. Students vote silently, then prepare a written justification."
+            },
+            {
+              "minutes": "8–22",
+              "activity": "Students present their justifications in pairs, using the 360°/n generalisation as their deductive chain. Teacher highlights correct proofs and identifies gaps — e.g., students who argue from examples only rather than from the general rule."
+            },
+            {
+              "minutes": "22–35",
+              "activity": "Students revisit Figure it Out Q1–Q3 (section 9.2 p.235–236) to apply the deductive chain: for each figure with known order, they verify that every stated angle of symmetry is indeed a multiple of the smallest, and that the smallest is a factor of 360."
+            },
+            {
+              "minutes": "35–40",
+              "activity": "Students consider the case of 7 equal radial arms: 360°/7 ≈ 51 3/7°, not a whole number. They reason about why no whole-number angle of symmetry exists for 7 arms and what this reveals about the factor condition."
+            }
+          ],
+          "teacher_notes": "The factor-of-360 condition is the key deductive result of section 9.2 and students often state it correctly for integer cases without seeing why non-integer smallest angles fail — the 7-arm case makes the reasoning concrete. Encourage students to argue from the generalisation, not from individual figures.",
+          "materials": [
+            "Pencils",
+            "Protractors",
+            "Textbook open to section 9.2 p.235–236"
+          ]
+        },
+        {
+          "period_number": 15,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.2 — Symmetries of a circle",
+              "title": "Symmetries of a circle"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "The Circle: Every Angle, Every Diameter",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-21",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q1, section 9.2 p.238",
+              "description": "Colour the sectors of a 12-sector circle so that the figure has (i) 3 angles of symmetry, (ii) 4 angles of symmetry; (iii) determine all possible numbers of angles of symmetry obtainable by colouring sectors."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Teacher presents the circle's unique properties: every rotation about the centre returns the circle to itself, so every angle is an angle of symmetry; and every diameter is a line of reflection symmetry. Real-world examples — ceiling fans at different speeds, a wheel, a flower with many petals — illustrate these properties. Students state the two key facts in their own words."
+            },
+            {
+              "minutes": "12–30",
+              "activity": "Students work on Figure it Out Q1 (section 9.2 p.238) (\"colour the sectors of a 12-sector circle so that the figure has 3 angles of symmetry, 4 angles of symmetry; determine all possible numbers....\"). For parts (i) and (ii), they plan a colouring that achieves the required angles, using the 360°/n rule. For part (iii), they list which divisors of 12 are achievable."
+            },
+            {
+              "minutes": "30–38",
+              "activity": "Students share their colouring strategies for Q1(iii) — which divisors of 12 yield valid colourings and which do not — and explain why the 12-sector constraint limits achievable symmetry counts."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Students compare the circle (infinitely many angles of symmetry, infinitely many lines of symmetry) to the regular polygon results they have seen, articulating why the circle is the most symmetric planar figure."
+            }
+          ],
+          "teacher_notes": "Students may initially assume that any colouring of 12 sectors can produce any desired number of angles of symmetry — Q1(iii) productively challenges this by requiring them to identify which divisors of 12 are achievable. Watch for the common error of confusing the number of sectors with the number of angles of symmetry.",
+          "materials": [
+            "Coloured pencils or markers",
+            "Printed or drawn 12-sector circle templates",
+            "Pencils",
+            "Textbook open to section 9.2 p.238"
+          ]
+        },
+        {
+          "period_number": 16,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.2 — Symmetries of a circle",
+              "title": "Symmetries of a circle"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Both Symmetries Together: Drawing Figures That Have Them",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-22",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q2, section 9.2 p.238",
+              "description": "Draw two figures (other than a circle and a square) that have both reflection symmetry and rotational symmetry."
+            },
+            {
+              "id": "E-23",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q3, section 9.2 p.238",
+              "description": "Draw rough sketches of: (a) a triangle with ≥2 lines and ≥2 angles of symmetry; (b) a triangle with exactly 1 line of symmetry and no rotational symmetry; (c) a quadrilateral with rotational symmetry but no reflection symmetry; (d) a quadrilateral with reflection symmetry but no rotational symmetry."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–5",
+              "activity": "Teacher briefly reviews the two symmetry types defined in the chapter — reflection symmetry (line of symmetry, fold-and-overlap) and rotational symmetry (angle of symmetry, rotate-and-match) — and notes that a figure can possess one, both, or neither."
+            },
+            {
+              "minutes": "5–18",
+              "activity": "Students work on Figure it Out Q2 (section 9.2 p.238) (\"draw two figures — other than a circle and a square — that have both reflection symmetry and rotational symmetry....\"). They sketch candidates, then verify each for both types before committing."
+            },
+            {
+              "minutes": "18–38",
+              "activity": "Students work on Figure it Out Q3 (section 9.2 p.238) (\"draw rough sketches of: a triangle with ≥2 lines and ≥2 angles of symmetry; a triangle with exactly 1 line of symmetry and no rotational symmetry; a quadrilateral with rotational symmetry but no reflection symmetry; a quadrilateral with reflection symmetry but no rotational symmetry....\"). For each sub-part they check their sketch against both symmetry definitions."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Students share one surprising result — e.g., that a rhombus has reflection symmetry but not rotational symmetry (beyond 180°) — and explain it using the definitions."
+            }
+          ],
+          "teacher_notes": "Q3(c) — a quadrilateral with rotational but no reflection symmetry — is the hardest sub-part; students should think of a parallelogram (order-2 rotation, no reflection line). Q3(b) targets the isosceles triangle and Q3(d) a kite or isosceles trapezium — if students draw a triangle for Q3(d), redirect them to the quadrilateral constraint.",
+          "materials": [
+            "Plain paper",
+            "Pencils",
+            "Rulers",
+            "Textbook open to section 9.2 p.238"
+          ]
+        },
+        {
+          "period_number": 17,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.2 — Symmetries of a circle",
+              "title": "Symmetries of a circle"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Reasoning with the Smallest Angle: Factor Problems",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-24",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q4, section 9.2 p.238",
+              "description": "In a figure, 60° is the smallest angle of symmetry. What are the other angles of symmetry?"
+            },
+            {
+              "id": "E-25",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q5, section 9.2 p.238",
+              "description": "In a figure, 60° is an angle of symmetry and the figure has two angles of symmetry less than 60°. What is its smallest angle of symmetry?"
+            },
+            {
+              "id": "E-26",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q6, section 9.2 p.238",
+              "description": "Can a figure have rotational symmetry whose smallest angle of symmetry is: (a) 45°? (b) 17°?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students apply the deductive chain from the 360°/n generalisation to Figure it Out Q4 (section 9.2 p.238) (\"in a figure, 60° is the smallest angle of symmetry — what are the other angles....\"). They list all multiples of 60° up to and including 360°: 60°, 120°, 180°, 240°, 300°, 360°."
+            },
+            {
+              "minutes": "12–24",
+              "activity": "Students work on Figure it Out Q5 (section 9.2 p.238) (\"in a figure, 60° is an angle of symmetry and the figure has two angles of symmetry less than 60°....\"). They reason: if two angles smaller than 60° exist, 60° must be a multiple of the smallest, narrowing the smallest to 20° or 30°; they determine which value is consistent with 60° being in the list."
+            },
+            {
+              "minutes": "24–36",
+              "activity": "Students work on Figure it Out Q6 (section 9.2 p.238) (\"can a figure have rotational symmetry whose smallest angle of symmetry is 45°? 17°?....\"). They apply the factor-of-360 condition: 45 divides 360 exactly (360/45 = 8), so yes; 17 does not divide 360 exactly, so no."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Students write a general test sentence: a whole-number angle θ can be the smallest angle of rotational symmetry if and only if 360 is divisible by θ. They verify with one further example of their own choosing."
+            }
+          ],
+          "teacher_notes": "Q5 is the most demanding of the three: students must work backward from a known angle to constrain the smallest — watch for students who guess 20° without checking that both 20° and 40° are then angles of symmetry (two values less than 60°). The factor-of-360 test in Q6 should be stated as a criterion, not merely checked case by case.",
+          "materials": [
+            "Pencils",
+            "Textbook open to section 9.2 p.238"
+          ]
+        },
+        {
+          "period_number": 18,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.2 — Symmetries of a circle",
+              "title": "Symmetries of a circle"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Parliament Building and Real-World Symmetry",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-27",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q7, section 9.2 p.239",
+              "description": "Parliament Building in Delhi: (a) Does its outer boundary have reflection symmetry — how many lines? (b) Does it have rotational symmetry about its centre — find the angles."
+            },
+            {
+              "id": "A-6",
+              "type": "activity",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Activity: Playing with Tiles, section 9.2 p.239",
+              "description": "Students use colour tiles to complete a figure with exactly 2 lines of symmetry, then use 16 tiles to create figures with exactly 1 or 2 lines of symmetry, and make creative symmetric designs."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "Students examine the Parliament Building diagram and work on Figure it Out Q7 (section 9.2 p.239) (\"Parliament Building in Delhi: does its outer boundary have reflection symmetry — how many lines? Does it have rotational symmetry — find the angles?....\"). They identify the circular outer boundary's symmetry lines (as diameters) and determine angles of rotational symmetry."
+            },
+            {
+              "minutes": "15–38",
+              "activity": "Students perform Activity: Playing with Tiles (section 9.2 p.239) (\"students use colour tiles to complete a figure with exactly 2 lines of symmetry, then use 16 tiles to create figures with exactly 1 or 2 lines of symmetry....\"). They first complete a given partial tile arrangement, then use 16 tiles freely to produce at least one figure with exactly 1 line of symmetry and one with exactly 2 lines."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Students display their two tile figures and state — for each — where the line(s) of symmetry lie and whether any rotational symmetry is also present."
+            }
+          ],
+          "teacher_notes": "The Parliament Building's circular outer boundary has infinitely many lines of symmetry and infinitely many angles of rotational symmetry — students should state this clearly rather than listing a few. In the tiles activity, watch that students count lines of symmetry by testing fold directions across the tile arrangement, not by visual impression.",
+          "materials": [
+            "Colour tiles or coloured square cut-outs (16 per student)",
+            "Plain paper for tile arrangement",
+            "Pencils",
+            "Textbook open to section 9.2 p.239"
+          ]
+        },
+        {
+          "period_number": 19,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.2 — Symmetries of a circle",
+              "title": "Symmetries of a circle"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Regular Polygons: Counting Lines and Angles of Symmetry",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-28",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q8, section 9.2 p.239",
+              "description": "How many lines of symmetry do the Regular Polygons (from Chapter 1, Table 3) have? What number sequence do you get?"
+            },
+            {
+              "id": "E-29",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q9, section 9.2 p.239",
+              "description": "How many angles of symmetry do the Regular Polygons (from Chapter 1, Table 3) have? What number sequence do you get?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Teacher sets up a systematic investigation: students will work through the regular polygons in order of increasing sides and record their symmetry counts in a table. The two questions to answer for each polygon are: how many lines of symmetry? and how many angles of rotational symmetry?"
+            },
+            {
+              "minutes": "8–22",
+              "activity": "Students work on Figure it Out Q8 (section 9.2 p.239) (\"how many lines of symmetry do the regular polygons have? What number sequence do you get?....\"). They draw or trace each regular polygon, mark all lines of symmetry, and record the count in a growing table."
+            },
+            {
+              "minutes": "22–36",
+              "activity": "Students work on Figure it Out Q9 (section 9.2 p.239) (\"how many angles of symmetry do the regular polygons have? What number sequence do you get?....\"). For each polygon, they apply the 360°/n formula to list all angles and count them, adding this column to their table."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Students read across both columns of the table and state what they notice: for a regular n-gon, the number of lines of symmetry equals the number of angles of rotational symmetry equals n, producing the sequence 3, 4, 5, 6, …"
+            }
+          ],
+          "teacher_notes": "Students often count lines of symmetry correctly for triangles and squares but miscount for pentagons and hexagons — for these, it helps to distinguish lines through vertices from lines through edge midpoints. The matching of line-count and angle-count in both columns is the key inductive result; ensure students write it as a general statement, not just as a table.",
+          "materials": [
+            "Pencils",
+            "Rulers",
+            "Tracing paper (optional)",
+            "Textbook open to section 9.2 p.239 and Chapter 1 Table 3"
+          ]
+        },
+        {
+          "period_number": 20,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.2 — Symmetries of a circle",
+              "title": "Symmetries of a circle"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Koch Snowflake and the Ashoka Chakra: Symmetry in Special Figures",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-30",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q10, section 9.2 p.239",
+              "description": "How many lines of symmetry and angles of symmetry do the shapes in the Koch Snowflake sequence (Chapter 1, Table 3) have?"
+            },
+            {
+              "id": "E-31",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q11, section 9.2 p.239",
+              "description": "How many lines of symmetry and angles of symmetry does the Ashoka Chakra have?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–5",
+              "activity": "Teacher briefly shows the Koch Snowflake sequence from Chapter 1 Table 3 and the Ashoka Chakra, asking students to predict — before analysing — how many lines of symmetry and angles of rotational symmetry each has, noting their predictions."
+            },
+            {
+              "minutes": "5–22",
+              "activity": "Students work on Figure it Out Q10 (section 9.2 p.239) (\"how many lines of symmetry and angles of symmetry do the shapes in the Koch Snowflake sequence have?....\"). They examine the initial equilateral triangle and successive iterations, arguing that each stage inherits the triangle's 3-fold symmetry: 3 lines and 3 angles (120°, 240°, 360°)."
+            },
+            {
+              "minutes": "22–36",
+              "activity": "Students work on Figure it Out Q11 (section 9.2 p.239) (\"how many lines of symmetry and angles of symmetry does the Ashoka Chakra have?....\"). They count the spokes (24), apply 360°/24 = 15° as the smallest angle, list all 24 angles of symmetry, and identify the 24 lines of symmetry through the spoke tips."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Students compare predictions with actual results for both figures, noting which predictions were accurate and which required correction, and stating what feature of each figure determines its symmetry counts."
+            }
+          ],
+          "teacher_notes": "The Koch Snowflake is visually complex but each iteration preserves the equilateral triangle's 3-fold symmetry — students who count from the figure's edges rather than reasoning from its construction will struggle; prompt them to count radial arms or the order of the underlying triangle. For the Ashoka Chakra, students may miscount spokes; encourage them to count carefully from the image.",
+          "materials": [
+            "Pencils",
+            "Textbook open to section 9.2 p.239 and Chapter 1 Table 3",
+            "Coloured pencils (optional, for marking symmetry lines)"
+          ]
+        },
+        {
+          "period_number": 21,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.2 — Symmetries of a circle",
+              "title": "Symmetries of a circle"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Applying Both Symmetry Types to a Wide Range of Figures",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-22",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q2, section 9.2 p.238",
+              "description": "Draw two figures (other than a circle and a square) that have both reflection symmetry and rotational symmetry."
+            },
+            {
+              "id": "E-23",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q3, section 9.2 p.238",
+              "description": "Draw rough sketches of: (a) a triangle with ≥2 lines and ≥2 angles of symmetry; (b) a triangle with exactly 1 line of symmetry and no rotational symmetry; (c) a quadrilateral with rotational symmetry but no reflection symmetry; (d) a quadrilateral with reflection symmetry but no rotational symmetry."
+            },
+            {
+              "id": "E-24",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q4, section 9.2 p.238",
+              "description": "In a figure, 60° is the smallest angle of symmetry. What are the other angles of symmetry?"
+            },
+            {
+              "id": "E-25",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q5, section 9.2 p.238",
+              "description": "In a figure, 60° is an angle of symmetry and the figure has two angles of symmetry less than 60°. What is its smallest angle of symmetry?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–14",
+              "activity": "Students revisit Figure it Out Q2 and Q3 (section 9.2 p.238) with fresh attention to figures they found difficult in an earlier sitting — for Q3, they focus particularly on the quadrilateral sub-parts, checking each figure against both symmetry definitions and correcting any earlier errors."
+            },
+            {
+              "minutes": "14–28",
+              "activity": "Students revisit Figure it Out Q4 (section 9.2 p.238) and Q5 (section 9.2 p.238), verifying their earlier answers by an alternate route: for Q4, multiply 60° by each integer from 1 to 6; for Q5, find all factors of 60° that are also factors of 360° and select the one consistent with exactly two values below 60°."
+            },
+            {
+              "minutes": "28–38",
+              "activity": "Students pair up and each poses a new angle-of-symmetry problem of the Q4/Q5 type for their partner: they choose a smallest angle (a factor of 360), state it, and ask the partner to list all angles of symmetry. Partners verify each other's answers."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Class shares one student-posed problem; teacher uses it to confirm the factor-of-360 criterion and the listing rule as the unified framework for both reflection and rotational symmetry in the chapter."
+            }
+          ],
+          "teacher_notes": "This unit consolidates the full span of section 9.2's Symmetries of a Circle content, so it is important that students can articulate both symmetry types clearly before the final synthesis. The partner-posing activity reveals whether students have genuinely internalised the factor-of-360 criterion or are applying it mechanically.",
+          "materials": [
+            "Pencils",
+            "Plain paper",
+            "Textbook open to section 9.2 p.238"
+          ]
+        },
+        {
+          "period_number": 22,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.2 — Symmetries of a circle",
+              "title": "Symmetries of a circle"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Consolidating Rotational Symmetry: From Figures to Generalisations",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-26",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q6, section 9.2 p.238",
+              "description": "Can a figure have rotational symmetry whose smallest angle of symmetry is: (a) 45°? (b) 17°?"
+            },
+            {
+              "id": "E-27",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q7, section 9.2 p.239",
+              "description": "Parliament Building in Delhi: (a) Does its outer boundary have reflection symmetry — how many lines? (b) Does it have rotational symmetry about its centre — find the angles."
+            },
+            {
+              "id": "E-28",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q8, section 9.2 p.239",
+              "description": "How many lines of symmetry do the Regular Polygons (from Chapter 1, Table 3) have? What number sequence do you get?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students revisit Figure it Out Q6 (section 9.2 p.238) (\"can a figure have rotational symmetry whose smallest angle of symmetry is 45°? 17°?....\"), now writing a full written justification for each answer using the factor-of-360 criterion rather than a simple yes/no."
+            },
+            {
+              "minutes": "12–24",
+              "activity": "Students revisit Figure it Out Q7 (section 9.2 p.239) (\"Parliament Building in Delhi: does its outer boundary have reflection symmetry? Does it have rotational symmetry?....\") and Figure it Out Q8 (section 9.2 p.239) (\"how many lines of symmetry do the regular polygons have?....\"), connecting the Parliament Building's circular boundary to the general result that a circle has infinitely many of each."
+            },
+            {
+              "minutes": "24–38",
+              "activity": "Students create a personal summary table: for each figure type studied in the chapter (equilateral triangle, square, non-square rectangle, regular pentagon, regular hexagon, circle, parallelogram, windmill, Ashoka Chakra), they record the number of lines of symmetry and the number of angles of rotational symmetry."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Students identify the one figure in their table that has rotational but no reflection symmetry (the windmill / parallelogram) and explain why this is possible — closing the chapter's central contrast between the two symmetry types."
+            }
+          ],
+          "teacher_notes": "The personal summary table is a consolidation tool for this unit alone — it begins and ends within these minutes. Students should leave this unit with a clear sense of which figures have only one type of symmetry, both types, or neither, grounded in the definitions.",
+          "materials": [
+            "Pencils",
+            "Rulers",
+            "Plain paper for the summary table",
+            "Textbook open to section 9.2 p.238–239"
+          ]
+        },
+        {
+          "period_number": 23,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 9.2 — Symmetries of a circle",
+              "title": "Symmetries of a circle"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Extended Practice: Angles, Polygons, and Creative Designs",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-29",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q9, section 9.2 p.239",
+              "description": "How many angles of symmetry do the Regular Polygons (from Chapter 1, Table 3) have? What number sequence do you get?"
+            },
+            {
+              "id": "E-30",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q10, section 9.2 p.239",
+              "description": "How many lines of symmetry and angles of symmetry do the shapes in the Koch Snowflake sequence (Chapter 1, Table 3) have?"
+            },
+            {
+              "id": "E-31",
+              "type": "exercise",
+              "source_section": "section 9.2 — Symmetries of a circle",
+              "book_ref": "Figure it Out Q11, section 9.2 p.239",
+              "description": "How many lines of symmetry and angles of symmetry does the Ashoka Chakra have?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students work on Figure it Out Q9 (section 9.2 p.239) (\"how many angles of symmetry do the regular polygons have? What number sequence do you get?....\"), completing the angles column in their polygon table and stating the sequence 3, 4, 5, 6, … alongside the matching lines-of-symmetry sequence."
+            },
+            {
+              "minutes": "12–26",
+              "activity": "Students revisit Figure it Out Q10 (section 9.2 p.239) (\"how many lines of symmetry and angles of symmetry do the Koch Snowflake shapes have?....\"), consolidating their reasoning that each iteration preserves the equilateral triangle's 3-fold symmetry regardless of the fractal complexity added at each step."
+            },
+            {
+              "minutes": "26–38",
+              "activity": "Students complete Figure it Out Q11 (section 9.2 p.239) (\"how many lines of symmetry and angles of symmetry does the Ashoka Chakra have?....\"), writing the full list of all 24 angles of symmetry (15°, 30°, 45°, …, 360°) and confirming the smallest angle by the 360°/24 formula."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Students state, in one sentence each, the answer to Q9, Q10, and Q11 — consolidating the three key results of this section before the chapter synthesis."
+            }
+          ],
+          "teacher_notes": "Students who worked through Q10 in unit 20 may find this revisit straightforward — prompt deeper engagement by asking them to explain why the fractal additions at each Koch step cannot break the 3-fold symmetry. For Q11, writing all 24 angles explicitly reinforces that the formula 360°/n generates all angles of symmetry as a list of multiples.",
+          "materials": [
+            "Pencils",
+            "Textbook open to section 9.2 p.239 and Chapter 1 Table 3"
+          ]
+        },
+        {
+          "period_number": 24,
+          "period_duration_minutes": 40,
+          "synthesis": true,
+          "textbook_segments": [
+            {
+              "ref": "section 9.1",
+              "title": "Line of Symmetry"
+            },
+            {
+              "ref": "section 9.1 — Figures with more than one line of symmetry",
+              "title": "Figures with more than one line of symmetry"
+            },
+            {
+              "ref": "section 9.1 — Generating shapes having lines of symmetry",
+              "title": "Generating shapes having lines of symmetry"
+            },
+            {
+              "ref": "section 9.2",
+              "title": "Rotational Symmetry"
+            },
+            {
+              "ref": "section 9.2 — Symmetries of a circle",
+              "title": "Symmetries of a circle"
+            }
+          ],
+          "activity_title": "Four Problems, Two Symmetries: Putting the Chapter to Work",
+          "pedagogical_method": "Problem-solving",
+          "section_goal": "apply",
+          "teacher_notes": "Refer to Prepared Table (see material: 'Problems and solutions') for the problems in full and their worked solutions. Pose all four problems on the board at once. Students work individually, writing full working — not just answers. Then groups of three compare: any disagreement is reconstructed step by step before the group moves on. Four volunteers present one problem each; after each presentation the class names the chapter method used. Problem 1 needs the fold-and-overlap definition of line of symmetry to count lines for a given regular polygon. Problem 2 needs the 360°/n rule for rotational symmetry. Problem 3 needs the factor-of-360 test to judge whether a claimed smallest angle is possible. Problem 4 needs both symmetry types applied together to a described figure. Watch for students who confuse the number of lines of symmetry with the number of sides, and for students who test divisibility of 360 by trial rather than reasoning.",
+          "visual_aids": [
+            {
+              "type": "table",
+              "title": "Problems and solutions",
+              "table": "No. | Problem | Solution\n1 | A regular hexagon has 6 equal sides and 6 equal angles. How many lines of symmetry does it have? Draw a rough sketch and mark all the lines. | 6 lines of symmetry. Three lines each join a pair of opposite vertices (through corners); three lines each join the midpoints of a pair of opposite sides (through edges). A regular polygon with n sides has exactly n lines of symmetry, so for n = 6 the answer is 6.\n2 | A paper star has 5 identical arms spaced equally around its centre. List all its angles of rotational symmetry. | Smallest angle = 360° ÷ 5 = 72°. All angles of symmetry are multiples of 72° up to 360°: 72°, 144°, 216°, 288°, 360°. There are 5 angles in all.\n3 | A student claims a figure has rotational symmetry and that its smallest angle of symmetry is 50°. Is this possible? What about 40°? Give a reason for each answer. | 50°: Not possible. For 50° to be the smallest angle, 360° ÷ 50° = 7.2, which is not a whole number, so 50° cannot be an angle of symmetry at all. 40°: Possible. 360° ÷ 40° = 9, a whole number, so 40° is a valid smallest angle of symmetry (the figure would have 9 equally spaced arms).\n4 | Describe a single figure that has exactly 2 lines of symmetry and exactly 2 angles of symmetry (other than a rectangle). Name it, state the 2 lines of symmetry and the 2 angles of symmetry. | A non-square rhombus. Its 2 lines of symmetry are its two diagonals. Its 2 angles of rotational symmetry are 180° and 360° (smallest angle = 360° ÷ 2 = 180°). A non-square rectangle also works, but the problem excludes it; a rhombus is a clean alternative. Both lines pass through the centre; both angles are multiples of 180°."
+            }
+          ],
+          "materials": [
+            "Blackboard or whiteboard",
+            "Chalk or board markers",
+            "Plain paper and pencils for students",
+            "Rulers"
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-3",
+              "activity": "Teacher writes all four problems on the board, reading each aloud once. Students copy the problems and begin individual work. No hints are given during this phase."
+            },
+            {
+              "minutes": "3-21",
+              "activity": "Students work individually on all four problems, writing complete working for each. Teacher circulates silently, noting where errors cluster, but does not intervene — the group phase will surface and resolve disagreements."
+            },
+            {
+              "minutes": "21-31",
+              "activity": "Groups of three form. Each group goes through all four problems: where answers agree they move on; where they disagree, the differing students reconstruct their working step by step until the group reaches a shared answer. Teacher listens in on groups and notes any disagreement on Problem 3 or Problem 4 that is worth raising in the whole-class presentation."
+            },
+            {
+              "minutes": "31-38",
+              "activity": "Four volunteers present one problem each at the board — working, not just the answer. After each presentation the class names the chapter method the solution rested on (line of symmetry counting; the 360°/n rule; the factor-of-360 test; combining both symmetry types). The teacher redirects any remaining disagreement from the group phase at this point."
+            },
+            {
+              "minutes": "38-40",
+              "activity": "Teacher poses the closing question aloud: 'Why did all four problems yield?' A student or the teacher states the chapter's one idea: a figure has symmetry when a transformation — a fold or a rotation — maps it exactly onto itself, and every method in this chapter is a consequence of that single idea."
+            }
+          ],
+          "textbook_items_in_class": [],
+          "homework": []
+        }
+      ]
+    },
+    "period_schedule": {
+      "duration_minutes": 40,
+      "period_count": 24,
+      "total_minutes": 960
+    },
+    "coverage_handoff": {
+      "section_a": {
+        "goal_cluster": [
+          "recall"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 9.1",
+            "section_title": "Line of Symmetry",
+            "goal": "recall",
+            "anchor_id": "E-1",
+            "anchor_book_ref": "Figure it Out Q1, section 9.1 p.219",
+            "anchor_description": "Do you see any line of symmetry in the opening figures (flower, butterfly, rangoli, pinwheel)? What about the picture of the cloud?"
+          },
+          {
+            "section_ref": "section 9.1 — Figures with more than one line of symmetry",
+            "section_title": "Figures with more than one line of symmetry",
+            "goal": "recall",
+            "anchor_id": "E-3",
+            "anchor_book_ref": "Figure it Out, section 9.1 p.221",
+            "anchor_description": "Is there any other way to fold the square so that the two halves overlap? How many lines of symmetry does the square shape have?"
+          },
+          {
+            "section_ref": "section 9.2",
+            "section_title": "Rotational Symmetry",
+            "goal": "recall",
+            "anchor_id": "E-18",
+            "anchor_book_ref": "Figure it Out Q1, section 9.2 p.235",
+            "anchor_description": "Find the angles of symmetry for three given figures about the marked centre point — sub-parts (a), (b), (c)."
+          },
+          {
+            "section_ref": "section 9.2",
+            "section_title": "Rotational Symmetry",
+            "goal": "recall",
+            "anchor_id": "E-19",
+            "anchor_book_ref": "Figure it Out Q2, section 9.2 p.235",
+            "anchor_description": "Which of seven given figures have more than one angle of symmetry?"
+          },
+          {
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "anchor_id": "E-21",
+            "anchor_book_ref": "Figure it Out Q1, section 9.2 p.238",
+            "anchor_description": "Colour the sectors of a 12-sector circle so that the figure has (i) 3 angles of symmetry, (ii) 4 angles of symmetry; (iii) determine all possible numbers of angles of symmetry obtainable by colouring sectors."
+          },
+          {
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "anchor_id": "E-22",
+            "anchor_book_ref": "Figure it Out Q2, section 9.2 p.238",
+            "anchor_description": "Draw two figures (other than a circle and a square) that have both reflection symmetry and rotational symmetry."
+          },
+          {
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "anchor_id": "E-24",
+            "anchor_book_ref": "Figure it Out Q4, section 9.2 p.238",
+            "anchor_description": "In a figure, 60° is the smallest angle of symmetry. What are the other angles of symmetry?"
+          },
+          {
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "anchor_id": "E-27",
+            "anchor_book_ref": "Figure it Out Q7, section 9.2 p.239",
+            "anchor_description": "Parliament Building in Delhi: (a) Does its outer boundary have reflection symmetry — how many lines? (b) Does it have rotational symmetry about its centre — find the angles."
+          },
+          {
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "anchor_id": "E-28",
+            "anchor_book_ref": "Figure it Out Q8, section 9.2 p.239",
+            "anchor_description": "How many lines of symmetry do the Regular Polygons (from Chapter 1, Table 3) have? What number sequence do you get?"
+          },
+          {
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "anchor_id": "E-29",
+            "anchor_book_ref": "Figure it Out Q9, section 9.2 p.239",
+            "anchor_description": "How many angles of symmetry do the Regular Polygons (from Chapter 1, Table 3) have? What number sequence do you get?"
+          },
+          {
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "anchor_id": "E-30",
+            "anchor_book_ref": "Figure it Out Q10, section 9.2 p.239",
+            "anchor_description": "How many lines of symmetry and angles of symmetry do the shapes in the Koch Snowflake sequence (Chapter 1, Table 3) have?"
+          },
+          {
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "anchor_id": "E-31",
+            "anchor_book_ref": "Figure it Out Q11, section 9.2 p.239",
+            "anchor_description": "How many lines of symmetry and angles of symmetry does the Ashoka Chakra have?"
+          },
+          {
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "anchor_id": "E-26",
+            "anchor_book_ref": "Figure it Out Q6, section 9.2 p.238",
+            "anchor_description": "Can a figure have rotational symmetry whose smallest angle of symmetry is: (a) 45°? (b) 17°?"
+          }
+        ]
+      },
+      "section_b": {
+        "goal_cluster": [
+          "reason"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 9.1 — Figures with more than one line of symmetry",
+            "section_title": "Figures with more than one line of symmetry",
+            "goal": "reason",
+            "anchor_id": "E-4",
+            "anchor_book_ref": "Figure it Out, section 9.1 p.221",
+            "anchor_description": "Is the diagonal of a rectangle (that is not a square) a line of symmetry? Fold a rectangular piece of paper along its diagonal to check whether the two parts overlap."
+          },
+          {
+            "section_ref": "section 9.2",
+            "section_title": "Rotational Symmetry",
+            "goal": "reason",
+            "anchor_id": "WE-1",
+            "anchor_book_ref": "Example, section 9.2 p.232",
+            "anchor_description": "Find the angles of symmetry of a parallelogram-strip shape. A 180° rotation is demonstrated not to overlap with the original (asymmetry of the parallelogram); the figure returns to itself only after 360°, so it does not have rotational symmetry."
+          }
+        ]
+      },
+      "section_c": {
+        "goal_cluster": [
+          "apply"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 9.1 — Generating shapes having lines of symmetry",
+            "section_title": "Generating shapes having lines of symmetry",
+            "goal": "apply",
+            "anchor_id": "A-2",
+            "anchor_book_ref": "Activity: Ink Blot Devils, section 9.1 p.222",
+            "anchor_description": "Students fold paper in half, spill ink on one half, press halves together, and open to observe the symmetric figure formed, identifying the fold as the line of symmetry."
+          },
+          {
+            "section_ref": "section 9.1 — Generating shapes having lines of symmetry",
+            "section_title": "Generating shapes having lines of symmetry",
+            "goal": "apply",
+            "anchor_id": "E-5",
+            "anchor_book_ref": "Figure it Out Q1, section 9.1 p.224",
+            "anchor_description": "In each of four figures, a hole was punched in a folded square sheet and then unfolded. Identify the fold line. For figure (d), created by a single punch, determine how the paper was folded."
+          },
+          {
+            "section_ref": "section 9.1 — Generating shapes having lines of symmetry",
+            "section_title": "Generating shapes having lines of symmetry",
+            "goal": "apply",
+            "anchor_id": "E-7",
+            "anchor_book_ref": "Figure it Out Q3, section 9.1 p.224",
+            "anchor_description": "Paper cutting questions using vertical and horizontal fold notation; interpret representations of folded paper and associated cuts."
+          },
+          {
+            "section_ref": "section 9.1 — Generating shapes having lines of symmetry",
+            "section_title": "Generating shapes having lines of symmetry",
+            "goal": "apply",
+            "anchor_id": "E-9",
+            "anchor_book_ref": "Figure it Out Q5, section 9.1 p.226",
+            "anchor_description": "Determine how to obtain each of two shapes (both with a square hole in the centre) using folds and a single straight cut — sub-parts (a) aligned-square hole and (b) diamond-orientation square hole."
+          },
+          {
+            "section_ref": "section 9.1 — Generating shapes having lines of symmetry",
+            "section_title": "Generating shapes having lines of symmetry",
+            "goal": "apply",
+            "anchor_id": "E-11",
+            "anchor_book_ref": "Figure it Out Q7, section 9.1 p.227",
+            "anchor_description": "Trace each of eight figures (arrangements of rhombus shapes and polygons on grids) and draw the lines of symmetry, if any."
+          },
+          {
+            "section_ref": "section 9.1 — Generating shapes having lines of symmetry",
+            "section_title": "Generating shapes having lines of symmetry",
+            "goal": "apply",
+            "anchor_id": "E-14",
+            "anchor_book_ref": "Figure it Out Q10, section 9.1 p.228",
+            "anchor_description": "Draw figures containing at least one curved boundary with exactly: (a) one line of symmetry; (b) two lines of symmetry; (c) four lines of symmetry."
+          },
+          {
+            "section_ref": "section 9.1 — Generating shapes having lines of symmetry",
+            "section_title": "Generating shapes having lines of symmetry",
+            "goal": "apply",
+            "anchor_id": "E-16",
+            "anchor_book_ref": "Figure it Out Q12, section 9.1 p.229",
+            "anchor_description": "Copy six partial drawings on squared paper and complete each so that the resulting figure has both blue lines as lines of symmetry — sub-parts (a) through (f)."
+          },
+          {
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "apply",
+            "anchor_id": "E-23",
+            "anchor_book_ref": "Figure it Out Q3, section 9.2 p.238",
+            "anchor_description": "Draw rough sketches of: (a) a triangle with ≥2 lines and ≥2 angles of symmetry; (b) a triangle with exactly 1 line of symmetry and no rotational symmetry; (c) a quadrilateral with rotational symmetry but no reflection symmetry; (d) a quadrilateral with reflection symmetry but no rotational symmetry."
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "section_code": "A",
+        "section_title": "Recall and Apply",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-A-1",
+            "section_ref": "section 9.1",
+            "section_title": "Line of Symmetry",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "A line of symmetry divides a figure into two parts. Which of the following best describes what must be true of those two parts?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "They must be congruent triangles.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "They must be equal in area but need not have the same shape.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "They must be mirror images but need not overlap when folded.",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "They must overlap exactly when the figure is folded along that line.",
+                "is_correct": true
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "They must overlap exactly when the figure is folded along that line.",
+              "method_one_line": "Apply the fold-and-overlap definition: a line of symmetry is a line along which the figure can be folded so that both halves coincide exactly.",
+              "what_each_option_reveals": {
+                "B": "The student conflates equal area with symmetry, not recognising that shape and orientation must also match.",
+                "C": "The student partially understands reflection but misses that the overlap test — not just visual mirror-image appearance — is the defining criterion.",
+                "A": "The student over-restricts the definition to triangular figures, confusing a specific example with the general rule."
+              },
+              "inclusivity": {
+                "support": "Let the student fold a square and a non-square rectangle along different lines to see which folds produce exact overlap.",
+                "challenge": "Ask the student to give one example of two equal-area shapes that are mirror images but whose fold does not produce exact overlap."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 9.1 p.219",
+              "description": "Do you see any line of symmetry in the opening figures (flower, butterfly, rangoli, pinwheel)? What about the picture of the cloud?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-2",
+            "section_ref": "section 9.1 — Figures with more than one line of symmetry",
+            "section_title": "Figures with more than one line of symmetry",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "How many lines of symmetry does a square have?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "1",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "2",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "4",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "8",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "4. A square has four lines of symmetry: the vertical midline, the horizontal midline, and the two diagonals.",
+              "method_one_line": "Fold the square along each candidate line (vertical, horizontal, both diagonals) and confirm all four produce exact overlap.",
+              "what_each_option_reveals": {
+                "A": "The student recognises only the most obvious vertical fold line and does not test other directions.",
+                "B": "The student finds the two midlines (vertical and horizontal) but overlooks the diagonal folds.",
+                "D": "The student over-counts, perhaps confusing the number of sides with the number of symmetry lines or including half-lines."
+              },
+              "inclusivity": {
+                "support": "Have the student physically fold a square piece of paper in four ways and check which folds make the halves overlap.",
+                "challenge": "Ask the student to explain in their own words why a non-square rectangle has only 2 lines of symmetry and not 4."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out, section 9.1 p.221",
+              "description": "Is there any other way to fold the square so that the two halves overlap? How many lines of symmetry does the square shape have?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-3",
+            "section_ref": "section 9.2",
+            "section_title": "Rotational Symmetry",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "A figure is rotated about a fixed centre point. At which rotation is it guaranteed that the figure will look exactly the same as the original, regardless of what shape the figure is?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "90°",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "180°",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "270°",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "360°",
+                "is_correct": true
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "360°. A complete rotation always returns every point to its original position, so 360° is an angle of symmetry for every figure.",
+              "method_one_line": "Apply the definition: 360° is always an angle of rotational symmetry because a full rotation returns the figure to its exact original position.",
+              "what_each_option_reveals": {
+                "A": "The student is thinking of the windmill's smallest angle of symmetry and generalising incorrectly to all figures.",
+                "B": "The student may be thinking of the parallelogram or a figure with order-2 symmetry, treating a common case as a universal rule.",
+                "C": "The student has guessed a rotation that works for some figures but is not guaranteed for all."
+              },
+              "inclusivity": {
+                "support": "Have the student rotate a tracing of a non-symmetric shape (e.g., the letter F) and ask at which angle it first looks the same.",
+                "challenge": "Ask the student to name two figures whose smallest angle of symmetry is not 360° and state what those smallest angles are."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 9.2 p.235",
+              "description": "Find the angles of symmetry for three given figures about the marked centre point — sub-parts (a), (b), (c)."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-4",
+            "section_ref": "section 9.2",
+            "section_title": "Rotational Symmetry",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "A windmill shape looks exactly the same after rotations of 90°, 180°, 270°, and 360° about its centre. What is the order of rotational symmetry of the windmill?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "1",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "2",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "4",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "90",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "4. The windmill has four angles of symmetry (90°, 180°, 270°, 360°), so its order of rotational symmetry is 4.",
+              "method_one_line": "Count the number of distinct angles of symmetry in the given list; the order equals that count.",
+              "what_each_option_reveals": {
+                "A": "The student thinks a figure with rotational symmetry other than only 360° still has order 1, confusing order with the smallest angle.",
+                "B": "The student may be counting only 180° and 360° as angles of symmetry, missing the 90° and 270° values.",
+                "D": "The student has confused the smallest angle of symmetry (90°) with the order of rotational symmetry."
+              },
+              "inclusivity": {
+                "support": "Ask the student to list all angles at which the windmill looks the same and then count the list entries.",
+                "challenge": "Ask the student what the order of rotational symmetry of a regular hexagon is and how the 360°/n formula gives this directly."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q2, section 9.2 p.235",
+              "description": "Which of seven given figures have more than one angle of symmetry?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-5",
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "A circle is rotated about its centre. For which of the following rotation angles does the circle NOT look exactly the same as it did before the rotation?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "137°",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "30°",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "45°",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "The circle looks the same after every rotation about its centre.",
+                "is_correct": true
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "The circle looks exactly the same after every rotation about its centre — every angle is an angle of symmetry for the circle.",
+              "method_one_line": "Apply the property established in section 9.2: the circle has every angle as an angle of rotational symmetry because rotating it by any amount about the centre maps it onto itself.",
+              "what_each_option_reveals": {
+                "B": "The student does not recognise that 30° is also an angle of symmetry; they may think only familiar angles apply.",
+                "C": "The student does not recognise that 45° is also an angle of symmetry; they may think only divisors of 90° apply.",
+                "A": "The student does not recognise that 137° is also an angle of symmetry; they may believe only 'round' angles work."
+              },
+              "inclusivity": {
+                "support": "Have the student trace a circle onto paper, rotate the tracing by any angle, and place it back over the original to see it matches every time.",
+                "challenge": "Ask the student to explain why no other closed curve — other than the circle — has this property of every angle being an angle of symmetry."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 9.2 p.238",
+              "description": "Colour the sectors of a 12-sector circle so that the figure has (i) 3 angles of symmetry, (ii) 4 angles of symmetry; (iii) determine all possible numbers of angles of symmetry obtainable by colouring sectors."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-6",
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "Which of the following statements about a circle is correct?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "A circle has exactly 2 lines of symmetry.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "A circle has exactly 4 lines of symmetry.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "A circle has no rotational symmetry.",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "Every diameter of a circle is a line of symmetry.",
+                "is_correct": true
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Every diameter of a circle is a line of symmetry. Since there are infinitely many diameters, the circle has infinitely many lines of symmetry.",
+              "method_one_line": "Apply the symmetry properties of the circle: folding along any diameter produces two semicircles that overlap exactly.",
+              "what_each_option_reveals": {
+                "A": "The student is likely mapping a non-square rectangle's properties onto the circle.",
+                "B": "The student may be mapping the square's four lines of symmetry onto the circle.",
+                "C": "The student incorrectly denies the circle's rotational symmetry, perhaps because 'every angle' seems too many to count."
+              },
+              "inclusivity": {
+                "support": "Have the student fold a circular paper cut-out along several different diameters and observe that each fold produces exact overlap.",
+                "challenge": "Ask the student to explain why the circle's line-of-symmetry count and angle-of-symmetry count are both described as infinite."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q2, section 9.2 p.238",
+              "description": "Draw two figures (other than a circle and a square) that have both reflection symmetry and rotational symmetry."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-7",
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "question_type": "SCR",
+            "prompt": "A figure has 60° as its smallest angle of rotational symmetry. List all its angles of rotational symmetry up to and including 360°.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The angles of rotational symmetry are 60°, 120°, 180°, 240°, 300°, and 360°.",
+              "method_one_line": "All angles of symmetry are multiples of the smallest angle of symmetry; list 60° × 1, 60° × 2, … up to 60° × 6 = 360°.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Let the student look back at how multiples of the smallest angle were listed for the windmill and the equilateral triangle in the chapter.",
+                "challenge": "Ask the student to state how many angles of symmetry a figure has if its smallest angle is 60°, then generalise the count for any smallest angle that divides 360°."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q4, section 9.2 p.238",
+              "description": "In a figure, 60° is the smallest angle of symmetry. What are the other angles of symmetry?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-8",
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "The outer boundary of a building has the shape of a circle. Which of the following is true about its lines of symmetry?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "It has exactly 3 lines of symmetry.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "It has exactly 8 lines of symmetry.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "It has infinitely many lines of symmetry, each passing through the centre.",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "It has no lines of symmetry because a building boundary is not a mathematical circle.",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "It has infinitely many lines of symmetry, each passing through the centre — every diameter of the circle is a line of symmetry.",
+              "method_one_line": "Apply the property of the circle: every diameter is a line of reflection symmetry, and since there are infinitely many diameters, there are infinitely many lines of symmetry.",
+              "what_each_option_reveals": {
+                "A": "The student may be thinking of the equilateral triangle's 3 lines and misapplying it to a circular shape.",
+                "B": "The student may be thinking of the octagon's 8 lines and misapplying it to a circular shape.",
+                "D": "The student confuses the idealised mathematical shape with its real-world approximation; the question asks about the circular boundary as a mathematical figure."
+              },
+              "inclusivity": {
+                "support": "Have the student draw a circle and fold it along three different diameters, confirming each produces overlap — then ask whether any diameter fails.",
+                "challenge": "Ask the student to connect the Parliament Building's circular boundary result to the general statement about all circles."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q7, section 9.2 p.239",
+              "description": "Parliament Building in Delhi: (a) Does its outer boundary have reflection symmetry — how many lines? (b) Does it have rotational symmetry about its centre — find the angles."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-9",
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "question_type": "SCR",
+            "prompt": "A regular pentagon has 5 equal sides and 5 equal angles. How many lines of symmetry does it have, and how many angles of rotational symmetry does it have? State both answers and explain briefly how you know.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "A regular pentagon has 5 lines of symmetry and 5 angles of rotational symmetry (72°, 144°, 216°, 288°, and 360°). For a regular n-gon, the number of lines of symmetry equals n, and the angles of symmetry are multiples of 360°/n — here 360°/5 = 72°.",
+              "method_one_line": "Apply the regular-polygon rule: a regular n-gon has n lines of symmetry and n angles of rotational symmetry, the smallest being 360°/n.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Have the student look at the table of regular-polygon results built for Q8 and Q9 and read off the row for n = 5.",
+                "challenge": "Ask the student to extend their answer: how many lines and angles of symmetry does a regular 12-gon have, and what is its smallest angle of symmetry?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q8, section 9.2 p.239",
+              "description": "How many lines of symmetry do the Regular Polygons (from Chapter 1, Table 3) have? What number sequence do you get?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-10",
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "An equilateral triangle is the starting shape of the Koch Snowflake sequence. How many angles of rotational symmetry does the equilateral triangle have, and does each iteration of the Koch Snowflake preserve this number?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "The equilateral triangle has 3 angles of symmetry; each Koch iteration also has 3.",
+                "is_correct": true
+              },
+              {
+                "label": "B",
+                "text": "The equilateral triangle has 3 angles of symmetry; later Koch iterations lose this symmetry.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "The equilateral triangle has 4 angles of symmetry because it is a type of star.",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "The equilateral triangle has 6 angles of symmetry; Koch iterations reduce this to 3.",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "The equilateral triangle has 3 angles of rotational symmetry (120°, 240°, 360°), and every iteration of the Koch Snowflake sequence also has exactly 3 — because each iteration adds bumps symmetrically on every edge, preserving the 3-fold symmetry of the original triangle.",
+              "method_one_line": "Apply the 360°/n formula for the equilateral triangle (n = 3, smallest angle = 120°) and reason that symmetric edge modifications preserve the underlying symmetry order.",
+              "what_each_option_reveals": {
+                "B": "The student incorrectly assumes that adding geometric complexity necessarily reduces symmetry.",
+                "D": "The student confuses the number of lines of symmetry with the number of angles of symmetry, double-counting.",
+                "C": "The student misidentifies the equilateral triangle as a star shape and applies incorrect reasoning."
+              },
+              "inclusivity": {
+                "support": "Have the student rotate a tracing of the Koch Snowflake's second iteration by 120° and 240° to observe that it matches the original each time.",
+                "challenge": "Ask the student to explain why the symmetry count does not change even as infinitely many bumps are added in later Koch iterations."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q10, section 9.2 p.239",
+              "description": "How many lines of symmetry and angles of symmetry do the shapes in the Koch Snowflake sequence (Chapter 1, Table 3) have?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-11",
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "question_type": "SCR",
+            "prompt": "The Ashoka Chakra has 24 equally spaced spokes radiating from the centre. What is the smallest angle of rotational symmetry of the Ashoka Chakra? How many angles of rotational symmetry does it have in total?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The smallest angle of rotational symmetry is 360° ÷ 24 = 15°. The total number of angles of rotational symmetry is 24 (the multiples of 15° from 15° up to 360°).",
+              "method_one_line": "Apply the 360°/n formula with n = 24 to find the smallest angle, then count all multiples of that angle up to 360°.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Have the student use the 360°/n formula with n = 24 and then list the first few multiples of 15° to see the pattern.",
+                "challenge": "Ask the student to also state all 24 angles of symmetry as a complete list and identify which of them are also angles of symmetry for a regular hexagon."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q11, section 9.2 p.239",
+              "description": "How many lines of symmetry and angles of symmetry does the Ashoka Chakra have?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-12",
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "Which of the following angles can be the smallest angle of rotational symmetry of a figure?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "7°",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "17°",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "45°",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "50°",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "45°. The smallest angle of rotational symmetry must be a whole-number factor of 360°. 360° ÷ 45° = 8, which is a whole number. The others: 360/17, 360/50, and 360/7 are not whole numbers.",
+              "method_one_line": "Apply the factor-of-360 criterion: a whole-number angle θ can be the smallest angle of symmetry if and only if 360 ÷ θ is a whole number.",
+              "what_each_option_reveals": {
+                "B": "The student does not apply the factor test; 360/17 is not a whole number.",
+                "D": "The student does not apply the factor test; 360/50 = 7.2, not a whole number.",
+                "A": "The student does not apply the factor test; 360/7 is not a whole number."
+              },
+              "inclusivity": {
+                "support": "Have the student divide 360 by each option and check whether the result is a whole number.",
+                "challenge": "Ask the student to list all whole-number angles between 1° and 90° that can be a smallest angle of symmetry."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q6, section 9.2 p.238",
+              "description": "Can a figure have rotational symmetry whose smallest angle of symmetry is: (a) 45°? (b) 17°?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-13",
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "recall",
+            "question_type": "SCR",
+            "prompt": "How many angles of rotational symmetry do the regular polygons have? Write the sequence for the regular triangle, square, pentagon, hexagon, and heptagon (7 sides).",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Regular triangle: 3, regular square: 4, regular pentagon: 5, regular hexagon: 6, regular heptagon: 7. The sequence is 3, 4, 5, 6, 7 — for a regular n-gon, the number of angles of rotational symmetry is n.",
+              "method_one_line": "For a regular n-gon, apply the 360°/n formula: there are n distinct multiples of 360°/n from 360°/n up to 360°, giving n angles of symmetry.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Have the student use the table of regular-polygon results (Q8 and Q9) to read off the angle count for each polygon.",
+                "challenge": "Ask the student to state the smallest angle of symmetry for each polygon in the sequence and identify the pattern in those smallest angles."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q9, section 9.2 p.239",
+              "description": "How many angles of symmetry do the Regular Polygons (from Chapter 1, Table 3) have? What number sequence do you get?"
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "B",
+        "section_title": "Reason and Explain",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-B-1",
+            "section_ref": "section 9.1 — Figures with more than one line of symmetry",
+            "section_title": "Figures with more than one line of symmetry",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "Explain why the diagonal of a rectangle that is not a square cannot be a line of symmetry. Use the definition of a line of symmetry in your answer.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "When a non-square rectangle is folded along its diagonal, the two triangular halves do not overlap exactly: the longer sides fall on the shorter sides, so corresponding points do not coincide. Since folding along the diagonal does not produce exact overlap of both halves, the diagonal is not a line of symmetry.",
+              "method_one_line": "Apply the fold-and-overlap definition: a non-square rectangle's diagonal fold maps a longer side onto a shorter side, so the halves cannot coincide.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Encourage the student to fold a rectangular sheet along the diagonal, observe what happens to the corners, and describe the mismatch before writing the explanation.",
+                "challenge": "Ask the student: if the rectangle were made into a square by trimming, at what point would the diagonal become a line of symmetry, and why?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out, section 9.1 p.221",
+              "description": "Is the diagonal of a rectangle (that is not a square) a line of symmetry? Fold a rectangular piece of paper along its diagonal to check whether the two parts overlap."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-2",
+            "section_ref": "section 9.2",
+            "section_title": "Rotational Symmetry",
+            "goal": "reason",
+            "question_type": "ECR",
+            "prompt": "A shape is made of two identical parallelogram strips placed side by side so that together they form a larger parallelogram shape. Explain, using the definition of rotational symmetry, whether this combined shape has rotational symmetry. In your answer, state what happens when the shape is rotated by 180° about its centre.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "A parallelogram — including one formed by combining two parallelogram strips — does not have rotational symmetry in the chapter's sense (only 360° returns it to itself). When rotated 180° about its centre, the longer sides of the parallelogram slant in the opposite direction, so the rotated shape does not coincide with the original. Because the 180° rotation changes the orientation of the slanted sides, the only angle of symmetry is 360°. A figure with only 360° as its angle of symmetry does not have rotational symmetry.",
+              "method_one_line": "Apply the definition: a rotation is an angle of symmetry only if the figure looks exactly the same afterward; a 180° rotation of a parallelogram produces an image with the slant in the opposite direction, which does not match.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Ask the student to trace the combined shape, rotate the tracing 180°, and describe whether it matches the original before writing.",
+                "challenge": "Ask the student: what modification to the combined parallelogram shape would give it rotational symmetry, and what would the new smallest angle of symmetry be?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Example, section 9.2 p.232",
+              "description": "Find the angles of symmetry of a parallelogram-strip shape. A 180° rotation is demonstrated not to overlap with the original (asymmetry of the parallelogram); the figure returns to itself only after 360°, so it does not have rotational symmetry."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "C",
+        "section_title": "Apply in Context",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-C-1",
+            "section_ref": "section 9.1 — Generating shapes having lines of symmetry",
+            "section_title": "Generating shapes having lines of symmetry",
+            "goal": "apply",
+            "question_type": "SCR",
+            "prompt": "Priya folds a square piece of paper in half vertically and places an ink blot on the right half. She presses the two halves together and opens the paper. Describe the line of symmetry of the resulting ink-blot shape and explain why that line is a line of symmetry.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The resulting ink-blot shape has a vertical line of symmetry running along the fold line — the crease where the paper was folded. It is a line of symmetry because folding the paper along that crease maps the ink mark on the right half exactly onto the mirror copy printed on the left half, so both halves overlap exactly when folded along the vertical crease.",
+              "method_one_line": "Apply the fold-and-overlap definition: the vertical fold crease is the line of symmetry because folding along it maps each point of the mark to its mirror image produced by pressing.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Have the student physically fold and press a piece of paper with a mark, then fold the result along the crease to confirm the overlap before writing.",
+                "challenge": "Ask the student: if Priya made two folds — vertical then horizontal — before applying ink and pressing, how many lines of symmetry would the result have and where would they lie?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Activity: Ink Blot Devils, section 9.1 p.222",
+              "description": "Students fold paper in half, spill ink on one half, press halves together, and open to observe the symmetric figure formed, identifying the fold as the line of symmetry."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-2",
+            "section_ref": "section 9.1 — Generating shapes having lines of symmetry",
+            "section_title": "Generating shapes having lines of symmetry",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A square sheet of paper is folded once horizontally (top half folds onto bottom half). A hole is punched through both layers at a point that is 3 cm from the left edge and 2 cm below the fold line. When the paper is unfolded, how many holes are there, and what are their distances from the fold line?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "There are 2 holes. One hole is 2 cm below the fold line (the punched hole on the bottom half). The other hole is 2 cm above the fold line (the mirror hole created on the top half), because folding maps a point 2 cm below the fold onto a point 2 cm above the fold. Both holes are 3 cm from the left edge.",
+              "method_one_line": "Apply the reflection principle: folding reflects a point at distance d below the fold line to a point at distance d above the fold line; punching through both layers creates one hole on each side at the same distance from the fold.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Have the student fold a piece of paper and physically punch a hole, then unfold and measure both holes' distances from the fold crease.",
+                "challenge": "Ask the student: if the paper had been folded twice — first horizontally then vertically — and a single punch were made, how many holes would appear when unfolded and where would they be?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 9.1 p.224",
+              "description": "In each of four figures, a hole was punched in a folded square sheet and then unfolded. Identify the fold line. For figure (d), created by a single punch, determine how the paper was folded."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-3",
+            "section_ref": "section 9.1 — Generating shapes having lines of symmetry",
+            "section_title": "Generating shapes having lines of symmetry",
+            "goal": "apply",
+            "question_type": "SCR",
+            "prompt": "A square sheet of paper is folded along its vertical midline. A triangular piece is cut from the folded edge. When the paper is opened, describe the shape of the hole and state how many lines of symmetry it has.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Cutting a triangle from the folded edge creates a hole that is a rhombus (or kite, depending on the cut angle) when the paper is opened, because the cut appears symmetrically on both layers. The hole has at least one line of symmetry — the vertical fold line — because folding along it maps the left half of the hole onto the right half exactly.",
+              "method_one_line": "Apply the folding principle: any cut made through both layers of a single vertical fold is reflected across the fold line, producing a hole that is symmetric about that line.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Have the student fold and cut paper, open it, and trace the hole before answering — then fold the traced hole along the crease to confirm symmetry.",
+                "challenge": "Ask the student to predict what shape of hole results if the triangle is cut from the non-folded edge instead of the folded edge, and whether it still has the same line of symmetry."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q3, section 9.1 p.224",
+              "description": "Paper cutting questions using vertical and horizontal fold notation; interpret representations of folded paper and associated cuts."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-4",
+            "section_ref": "section 9.1 — Generating shapes having lines of symmetry",
+            "section_title": "Generating shapes having lines of symmetry",
+            "goal": "apply",
+            "question_type": "SCR",
+            "prompt": "A square piece of paper is folded twice: first along the vertical midline, then along the horizontal midline. A small square piece is cut from the corner where both fold lines meet. How many square holes appear when the paper is fully unfolded, and where are they located?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "One hole appears — at the centre of the original square — because both fold lines meet at the centre of the sheet. When the paper is folded twice, the corner where both fold lines intersect corresponds to the very centre of the full sheet. Cutting from that corner removes a small square from all four layers simultaneously, and when unfolded, a single hole appears at the centre.",
+              "method_one_line": "Track the corner produced by both folds: the intersection of the vertical and horizontal midlines is the centre of the original sheet, so a cut at that corner removes paper from all four layers, producing one hole at the centre.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Have the student fold paper twice and mark the corner where both folds meet, then cut and unfold to verify before answering.",
+                "challenge": "Ask the student: if the small square were cut from the outer corner (away from both fold lines) instead, how many holes would appear and where?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q5, section 9.1 p.226",
+              "description": "Determine how to obtain each of two shapes (both with a square hole in the centre) using folds and a single straight cut — sub-parts (a) aligned-square hole and (b) diamond-orientation square hole."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-5",
+            "section_ref": "section 9.1 — Generating shapes having lines of symmetry",
+            "section_title": "Generating shapes having lines of symmetry",
+            "goal": "apply",
+            "question_type": "SCR",
+            "prompt": "Look at a shape made of four identical rhombuses arranged so that they share a common centre point and each rhombus points in a different direction. Does this shape have any lines of symmetry? Explain your reasoning.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The shape depends on the exact orientation of the rhombuses. If the four rhombuses are arranged with equal 90° gaps between them and each is a mirror image of the one opposite, the arrangement has lines of symmetry at 0°, 90° (vertical and horizontal) and possibly the diagonals — up to 4 lines. The student should apply the fold-and-overlap test for each candidate line. A symmetrically arranged four-rhombus figure typically has 4 lines of symmetry.",
+              "method_one_line": "Apply the fold-and-overlap definition to each candidate line through the centre: a line is a line of symmetry only if folding maps every rhombus onto an identical rhombus on the other side.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Have the student trace the four-rhombus figure and fold along different lines to check overlap physically.",
+                "challenge": "Ask the student to modify the arrangement so that the shape has exactly 2 lines of symmetry instead of 4, and explain what change achieves this."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q7, section 9.1 p.227",
+              "description": "Trace each of eight figures (arrangements of rhombus shapes and polygons on grids) and draw the lines of symmetry, if any."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-6",
+            "section_ref": "section 9.1 — Generating shapes having lines of symmetry",
+            "section_title": "Generating shapes having lines of symmetry",
+            "goal": "apply",
+            "question_type": "SCR",
+            "prompt": "Draw a closed figure that contains at least one curved side and has exactly two lines of symmetry. Describe where the two lines of symmetry lie in your figure.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "A valid example is a shape like a horizontal oval (ellipse): one line of symmetry runs horizontally through the centre (left-right mirror) and one runs vertically through the centre (top-bottom mirror). Each line divides the figure into two halves that overlap exactly when folded along it. The figure must have no additional lines of symmetry.",
+              "method_one_line": "Apply the fold-and-overlap definition for each symmetry line; the student must verify that only two directions produce exact overlap.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Have the student start with a rectangle (which has two lines of symmetry) and then round its corners to produce a curved figure with the same two lines.",
+                "challenge": "Ask the student to draw a different example — not an oval — that also has exactly two lines of symmetry and at least one curved side, and verify both lines."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q10, section 9.1 p.228",
+              "description": "Draw figures containing at least one curved boundary with exactly: (a) one line of symmetry; (b) two lines of symmetry; (c) four lines of symmetry."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-7",
+            "section_ref": "section 9.1 — Generating shapes having lines of symmetry",
+            "section_title": "Generating shapes having lines of symmetry",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "On squared paper, a partial figure has its left half drawn. The vertical midline is given as the line of symmetry. One corner of the left half is at the point 3 squares to the left of the midline and 4 squares above the baseline. Where must the corresponding corner of the right half lie? State its position relative to the midline and the baseline.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The corresponding corner must lie 3 squares to the right of the midline and 4 squares above the baseline. Reflecting across the vertical midline maps a point at distance 3 to the left to a point at distance 3 to the right; the vertical distance (4 squares above the baseline) is unchanged.",
+              "method_one_line": "Apply reflection across a vertical line: the horizontal distance from the line is preserved in magnitude but switches side; the vertical distance remains the same.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Have the student fold the squared paper along the midline and mark the dot, then unfold to see where it lands on the right side.",
+                "challenge": "Ask the student: if the line of symmetry were diagonal (at 45°) instead of vertical, where would the same corner be reflected to? Describe the new position."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q12, section 9.1 p.229",
+              "description": "Copy six partial drawings on squared paper and complete each so that the resulting figure has both blue lines as lines of symmetry — sub-parts (a) through (f)."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-8",
+            "section_ref": "section 9.2 — Symmetries of a circle",
+            "section_title": "Symmetries of a circle",
+            "goal": "apply",
+            "question_type": "SCR",
+            "prompt": "A designer creates a logo using a regular octagon (8 equal sides and 8 equal angles). State how many lines of symmetry the logo has and list all its angles of rotational symmetry. Then explain whether the logo has more lines of symmetry than a regular hexagon.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "A regular octagon has 8 lines of symmetry and 8 angles of rotational symmetry: 45°, 90°, 135°, 180°, 225°, 270°, 315°, and 360°. A regular hexagon has 6 lines of symmetry, so the octagon has more lines of symmetry than the hexagon (8 > 6).",
+              "method_one_line": "Apply the regular-polygon rules: a regular n-gon has n lines of symmetry and n angles of symmetry, the smallest being 360°/n; here n = 8 gives smallest angle 45°.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Have the student use the completed regular-polygon table (Q8 and Q9) to look up the hexagon's values, then apply the same formula for n = 8.",
+                "challenge": "Ask the student to find the smallest regular polygon that has more angles of symmetry than a regular octagon and state its smallest angle of symmetry."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q3, section 9.2 p.238",
+              "description": "Draw rough sketches of: (a) a triangle with ≥2 lines and ≥2 angles of symmetry; (b) a triangle with exactly 1 line of symmetry and no rotational symmetry; (c) a quadrilateral with rotational symmetry but no reflection symmetry; (d) a quadrilateral with reflection symmetry but no rotational symmetry."
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

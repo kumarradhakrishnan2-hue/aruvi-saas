@@ -1,0 +1,46 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Prime Time in Action: Four Problems, Four Methods",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems on the board at once. Students work individually for the first stretch, writing full working — no shortcuts, no skipping steps. Then groups of three compare: any disagreement is reconstructed line by line until the group agrees. Each group then presents one problem to the class; after each presentation, the class names aloud the chapter method the solution rested on. Problem 1 calls on common multiples and the LCM idea from the Idli-Vada work. Problem 2 calls on identifying primes and composites, including the definition that 1 is neither. Problem 3 calls on prime factorisation to test co-primality and divisibility. Problem 4 calls on the last-digit and last-two-digit divisibility tests for 2, 5, 4, and 8. Watch for students who confuse 'co-prime' with 'prime' in Problem 3, and for students who test divisibility by 4 using only the units digit rather than the last two digits in Problem 4.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | Two bells ring together at the start. Bell A rings every 6 minutes; Bell B rings every 8 minutes. After the start, at what times in the first 60 minutes do both bells ring together? How many such times are there? | Multiples of 6 up to 60: 6, 12, 18, 24, 30, 36, 42, 48, 54, 60. Multiples of 8 up to 60: 8, 16, 24, 32, 40, 48, 56. Common multiples: 24, 48. Both bells ring together again at the 24th minute and the 48th minute — 2 times in the first 60 minutes. (The LCM of 6 and 8 is 24, so common multiples are 24, 48, 72, … — only 24 and 48 fall within 60.)\n2 | Write all whole numbers from 1 to 20. Mark each as prime, composite, or neither. How many primes are there? What is the only even prime? | 1 → neither. Primes (exactly two factors): 2, 3, 5, 7, 11, 13, 17, 19 — that is 8 primes. Composites (more than two factors): 4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20. The only even prime is 2 (every other even number has 2 as an extra factor, giving it more than two factors).\n3 | Are 84 and 275 co-prime? Is 84 divisible by 28? Use prime factorisation for both answers. | Prime factorise: 84 = 2 × 2 × 3 × 7; 275 = 5 × 5 × 11. The prime factors of 84 are {2, 3, 7}; those of 275 are {5, 11}. No prime is shared, so 84 and 275 are co-prime. For divisibility: 28 = 2 × 2 × 7. Check whether 28's factorisation sits inside 84's: 84 has two 2s ✓ and one 7 ✓. Yes — 84 ÷ 28 = 3, so 84 is divisible by 28.\n4 | A number N ends in the digits …360. Is N divisible by 2? By 5? By 4? By 8? Give the rule and the verdict for each. | By 2: units digit is 0 (even) → yes, divisible by 2. By 5: units digit is 0 → yes, divisible by 5. By 4: last two digits are 60; 60 ÷ 4 = 15 exactly → yes, divisible by 4. By 8: last three digits are 360; 360 ÷ 8 = 45 exactly → yes, divisible by 8. All four tests pass."
+      }
+    ],
+    "materials": [
+      "Blackboard or whiteboard",
+      "Chalk or markers",
+      "Notebooks and pens"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "The teacher writes all four problems on the board and reads each aloud. Students copy the problems into their notebooks. No discussion of method yet — the class simply takes in what is being asked."
+      },
+      {
+        "minutes": "3-18",
+        "activity": "Individual work. Every student attempts all four problems in their notebook with full working shown. The teacher circulates without confirming or correcting answers, asking only 'What did you do next?' or 'Can you show me the step before that?' to keep thinking visible on the page."
+      },
+      {
+        "minutes": "18-28",
+        "activity": "Small groups of three compare working problem by problem. Where answers differ, the group goes back to the first line where working diverges and reconstructs from there. Groups do not move to the next problem until they have a shared solution with shared reasoning for the current one."
+      },
+      {
+        "minutes": "28-38",
+        "activity": "Each of four groups presents one problem solution at the board — one group per problem. The presenter writes or reads the key steps; the class listens. After each presentation, the teacher asks the class: 'Which chapter method did this solution rest on?' The class names it aloud before the next presenter begins."
+      },
+      {
+        "minutes": "38-40",
+        "activity": "The teacher states the chapter's one idea: every whole number is built from primes, and that single fact is why common multiples, co-primality, divisibility and prime classification all work the way they do. The class has just shown it — the problems yield because the structure of numbers yields."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

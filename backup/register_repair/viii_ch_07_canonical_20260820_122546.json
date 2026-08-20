@@ -1,0 +1,1721 @@
+{
+ "filename": "ch_07_canonical.json",
+ "saved_at": "2026-08-19T11:14:02",
+ "plan_status": "canonical",
+ "chapter_number": 7,
+ "chapter_title": "Proportional Reasoning-1",
+ "grade": "Grade VIII",
+ "subject": "Mathematics",
+ "period_rows_snapshot": [
+  {
+   "id": 0,
+   "duration": 45,
+   "count": 17
+  }
+ ],
+ "period_schedule_display": "Period schedule:\n  Row 1: 45 minutes × 17 periods = 765 minutes\nTotal: 17 periods · 12h 45min",
+ "genon_canonical": {
+  "generated": "2026-08-19",
+  "schedule": "17x45",
+  "constitution": "LP v3.9 / assessment v3.5",
+  "source": "generate_canonical.py one mathematics viii 7",
+  "ledger_ts": "20260818_205348_math_viii_07_top",
+  "validation": "clean",
+  "repairs": [
+   {
+    "at": "2026-08-19T12:58:43",
+    "tool": "genon/repair_register.py v1.5",
+    "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+    "edits": [
+     {
+      "unit": 12,
+      "field": "teacher_notes",
+      "rule": "register/forward",
+      "removed": "and is the subject of the next unit",
+      "replaced_with": "",
+      "note": "forward reference — the worked example stands as this unit's extension | survives: …Example 12 in section 7.5 p.174 extends the reasoning to multi-step contexts.…"
+     }
+    ],
+    "ban_hits_before": 1,
+    "ban_hits_after": 0
+   },
+   {
+    "tool": "genon/repair_c3.py v1.0",
+    "at": "2026-08-20T11:02:17",
+    "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+    "defects": {
+     "ARV-D-187": {
+      "note": "the re-authored closer's notes point at its own Material table",
+      "edits": [
+       {
+        "unit": 17,
+        "field": "teacher_notes",
+        "old": "Pose all four problems at once on the board and give student…",
+        "new": "Refer to Prepared Table (see material: 'Problems and solutio…"
+       }
+      ]
+     }
+    }
+   }
+  ],
+  "synthesis_reauthor": {
+   "spec": "ARV-D-181 · F1 2026-08-19 (the double-closer collision)",
+   "at": "2026-08-20T12:03:58",
+   "ledger_ts": "20260820_115152_math_viii_07_resynth",
+   "model": "claude-sonnet-4-6",
+   "compacts_read": {
+    "ch_07_canonical_p14.json": "2026-08-19T13:38:18",
+    "ch_07_canonical_p10.json": "2026-08-19T13:38:19"
+   },
+   "replaced_in": "backup/resynth/mathematics_viii_ch07_20260820_115152_math_viii_07_resynth.json"
+  }
+ },
+ "result": {
+  "lesson_plan": {
+   "periods": [
+    {
+     "period_number": 1,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 7.1",
+       "title": "Observing Similarity in Change"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Which Tiger Images Look Right? Spotting Proportional Change",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "Display or sketch five tiger image outlines labelled A–E on the board, with their width and height dimensions as given in section 7.1. Students observe which images look natural and which appear stretched or squashed, sharing initial impressions aloud."
+      },
+      {
+       "minutes": "10–25",
+       "activity": "Students record the width and height of each image and compute the difference (height − width) and the ratio (width ÷ height) in their notebooks. They group images into 'looks correct' and 'looks wrong' columns, then compare groups with a partner to look for a pattern in which quantity — difference or ratio — stays the same across similar-looking images."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Class discussion: students share findings. The teacher guides students to articulate that images A, C, and D share the same multiplicative relationship between dimensions while B and E do not, and that subtracting a constant from both dimensions does not preserve shape — the core idea of section 7.1."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Students write a one-sentence summary in their own words: 'Two images are similar when their width and height change by ___.' A few volunteers read aloud; the class refines the sentence together."
+      }
+     ],
+     "teacher_notes": "Building from the concrete observation that some tiger images look 'right' and others look 'wrong' is the entry point for multiplicative reasoning. Watch for students who say 'the difference stays the same' — this additive error is exactly the misconception section 7.1 addresses, and surfacing it here is productive, not a detour. The worked examples in section 7.4 extend this multiplicative idea formally, so a clean articulation here pays forward throughout the chapter.",
+     "materials": [
+      "Board or projector to display five image outlines with labelled dimensions",
+      "Ruler for students",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 2,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 7.1",
+       "title": "Observing Similarity in Change"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Why Does Additive Change Distort? Building the Argument",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "The teacher poses two side-by-side cases on the board: a 60×40 rectangle and two 'resized' versions — one produced by multiplying both sides by 1.5 (giving 90×60), and one produced by adding 30 to both sides (giving 90×70). Students predict which looks like the same shape before measuring."
+      },
+      {
+       "minutes": "10–28",
+       "activity": "Students compute the width-to-height ratio for each rectangle: 60:40, 90:60, and 90:70. They write out the reasoning in full: does 60:40 equal 90:60? Does 60:40 equal 90:70? They use division to check, then frame the argument — 'when you multiply both parts by the same factor the ratio stays the same; when you add the same number to both parts, the ratio changes' — in their own words, then compare with a partner."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Pairs share their arguments. The teacher invites one pair to demonstrate algebraically: if width:height = w:h, then (w+k):(h+k) is not equal to w:h unless h = w. Students verify with the numbers from the tiger images — why does adding the same amount to B's dimensions not restore similarity?"
+      },
+      {
+       "minutes": "40–45",
+       "activity": "Students write a brief justification: 'Adding the same number to both dimensions changes the ratio because…' Two or three students read their justification aloud for peer response."
+      }
+     ],
+     "teacher_notes": "Having established through measurement that similarity requires a common multiplicative factor, this unit asks students to construct the logical argument for why addition fails — moving from observation to reasoning. A common error is to write (w+k)/(h+k) = w/h and cross-multiply without noticing the resulting constraint; push students to check their algebra with actual numbers. Example 6 in section 7.4, where adding the same number to both terms of an age ratio changes it, is a useful self-study pointer: Example 6, section 7.4 p.164 (\"Neelima's age ratio: shows that adding the same number to both ratio terms changes the ratio…\").",
+     "materials": [
+      "Board",
+      "Notebooks",
+      "Ruler"
+     ]
+    },
+    {
+     "period_number": 3,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 7.2",
+       "title": "Ratios"
+      }
+     ],
+     "section_goal": "recall",
+     "activity_title": "Naming the Relationship: What Is a Ratio?",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "The teacher writes 60:40 on the board and asks: 'What does this mean in words?' Students attempt their own definitions. After sharing, the class settles on the formal reading from section 7.2: 'For every 60 units of width there are 40 units of height.' Several everyday examples are read out — two cups flour to one cup sugar, three boys to four girls — and students write each as a ratio using the colon notation."
+      },
+      {
+       "minutes": "12–28",
+       "activity": "Students compare the ratios of images A, C, and D from section 7.2: 60:40, 90:60, 120:80. They divide both terms of each ratio by the first image's values and confirm that C and D are produced by multiplying both terms of A's ratio by the same factor. The teacher introduces the double-colon notation a:b::c:d and asks students to write 60:40::90:60 and check it holds."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Quick class drill: the teacher calls out pairs of quantities (e.g., 15 girls and 10 boys; 8 red tiles and 12 blue tiles) and students write the ratio, identify the two quantities, and read it aloud using 'for every … there are …' Students then invent one ratio from their classroom context and share."
+      },
+      {
+       "minutes": "40–45",
+       "activity": "Students copy and complete a summary box: 'The ratio a:b means ___, and a:b::c:d means ___.' The teacher checks a few at random and clarifies order matters — 60:40 is not the same as 40:60."
+      }
+     ],
+     "teacher_notes": "Section 7.2 introduces the ratio as a formal object, so the emphasis here is on precise language and notation rather than procedure. Watch for students who write ratios as fractions and then cancel them without noting that order matters — 60:40 and 40:60 describe different relationships. The double-colon notation a:b::c:d is used throughout the Trairasika subsection of section 7.4, so familiarity with it here is foundational.",
+     "materials": [
+      "Board",
+      "Notebooks",
+      "Images A–E dimension reference (from section 7.1 work)"
+     ]
+    },
+    {
+     "period_number": 4,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 7.3",
+       "title": "Ratios in their Simplest Form"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Simplest Form: The HCF Test for Proportionality",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-1",
+       "type": "exercise",
+       "source_section": "section 7.3",
+       "book_ref": "Figure it Out Q1, section 7.3 p.165",
+       "description": "Circle the true proportion statements among six given ratios (e.g. 4:7::12:21, 8:3::24:6, etc.)."
+      },
+      {
+       "id": "E-2",
+       "type": "exercise",
+       "source_section": "section 7.3",
+       "book_ref": "Figure it Out Q2, section 7.3 p.165",
+       "description": "Write three ratios proportional to 4:9."
+      },
+      {
+       "id": "E-3",
+       "type": "exercise",
+       "source_section": "section 7.3",
+       "book_ref": "Figure it Out Q3, section 7.3 p.165",
+       "description": "Fill in missing numbers for ratios proportional to 18:24 (3:_, 12:_, 20:_, 27:_)."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "The teacher works through the simplification of 60:40 and 120:80 from the tiger images: find HCF, divide both terms, confirm both reduce to 3:2. Then simplify image B's ratio 60:30 → 2:1 and image E's 60:60 → 1:1. Students see that images with matching simplest forms are proportional and those with different simplest forms are not — the algorithmic check."
+      },
+      {
+       "minutes": "12–28",
+       "activity": "Students work on Figure it Out Q1, section 7.3 p.165 (\"circle the true proportion statements among six given ratios…\") individually, showing full HCF working for each pair. Partners then compare answers and resolve any discrepancy by redoing the HCF."
+      },
+      {
+       "minutes": "28–38",
+       "activity": "Students attempt Figure it Out Q2, section 7.3 p.165 (\"write three ratios proportional to 4:9\") and Figure it Out Q3, section 7.3 p.165 (\"fill in missing numbers for ratios proportional to 18:24…\"). The teacher circulates and probes: 'How did you find your factor?' and 'Is there more than one correct answer for Q2?'"
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Class debrief: one student shows Q3 on the board step by step. The teacher consolidates the rule from section 7.3: two ratios are in proportion when and only when their simplest forms are identical."
+      }
+     ],
+     "teacher_notes": "A frequent error at this stage is students finding a common multiple instead of the HCF, or dividing only one term of the ratio. Insisting on written HCF working before cancellation catches this early. Figure it Out Q4 and Q5 in section 7.3 p.166 — measuring and drawing proportional rectangles — are strong self-study items for students who want a visual reinforcement: Figure it Out Q4, section 7.3 p.166 (\"identify which among rectangles A–E are similar to each other by measuring dimensions and comparing ratios\").",
+     "materials": [
+      "Board",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 5,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 7.3",
+       "title": "Ratios in their Simplest Form"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Ratios in Real Objects: Bricks, Bodies, and Rectangles",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "E-4",
+       "type": "exercise",
+       "source_section": "section 7.3",
+       "book_ref": "Figure it Out Q4, section 7.3 p.166",
+       "description": "Identify which among rectangles A–E are similar to each other by measuring dimensions and comparing ratios."
+      },
+      {
+       "id": "E-5",
+       "type": "exercise",
+       "source_section": "section 7.3",
+       "book_ref": "Figure it Out Q5, section 7.3 p.166",
+       "description": "Draw a smaller and a bigger rectangle with the same width:height ratio as a given rectangle; compare with classmates and discuss."
+      },
+      {
+       "id": "E-6",
+       "type": "exercise",
+       "source_section": "section 7.3",
+       "book_ref": "Figure it Out Q6, section 7.3 p.166",
+       "description": "Find the ratio of grey bricks to coloured bricks in two brick wall patterns (a) and (b), simplified to lowest terms."
+      },
+      {
+       "id": "E-7",
+       "type": "exercise",
+       "source_section": "section 7.3",
+       "book_ref": "Figure it Out Q7, section 7.3 p.167",
+       "description": "Measure a friend's body (head, torso, arms, legs), write head:torso, torso:arms, torso:legs ratios, and draw a figure with proportional measurements; discuss realism."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Students open the textbook to Figure it Out Q4, section 7.3 p.166 (\"identify which among rectangles A–E are similar to each other…\") and measure each rectangle with a ruler, recording width and height. They simplify each ratio and group similar rectangles — discovery through measurement rather than given numbers."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Students complete Figure it Out Q5, section 7.3 p.166 (\"draw a smaller and a bigger rectangle with the same width:height ratio…\"), then briefly compare their drawings with a neighbour and discuss whether different scale factors produce the same simplified ratio."
+      },
+      {
+       "minutes": "25–37",
+       "activity": "Students work on Figure it Out Q6, section 7.3 p.166 (\"find the ratio of grey bricks to coloured bricks in two brick wall patterns…\"), counting and simplifying. Then pairs begin Figure it Out Q7, section 7.3 p.167 (\"measure a friend's body: head, torso, arms, legs; write ratios; draw a figure with proportional measurements…\"), measuring and recording three ratios."
+      },
+      {
+       "minutes": "37–45",
+       "activity": "Class discussion on Q7: do the body ratios look realistic in the drawings? Students articulate why proportional scaling matters and share one surprising finding from their measurements."
+      }
+     ],
+     "teacher_notes": "This unit uses measurement and drawing to consolidate the simplest-form algorithm in concrete, varied contexts. A common difficulty in Q7 is students measuring in mixed units (cm and mm) and not converting — circulate early to check unit consistency. The body-proportion discussion connects naturally to the Art-Mathematics integration noted in the pedagogy document, enriching the mathematical work without leaving the chapter's scope.",
+     "materials": [
+      "Ruler (each student)",
+      "Textbook open to section 7.3 p.166–167",
+      "Notebooks",
+      "Pencil and eraser"
+     ]
+    },
+    {
+     "period_number": 6,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 7.4",
+       "title": "Problem Solving with Proportional Reasoning"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Checking Proportionality: From Lemonade to Cement Walls",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-1",
+       "type": "worked_example",
+       "source_section": "section 7.4",
+       "book_ref": "Example 1, section 7.4 p.162",
+       "description": "Check whether ratios 3:4 and 72:96 are proportional by reducing both to simplest form using HCF."
+      },
+      {
+       "id": "WE-2",
+       "type": "worked_example",
+       "source_section": "section 7.4",
+       "book_ref": "Example 2, section 7.4 p.162",
+       "description": "Kesang's lemonade problem: scale sugar proportionally from 6 glasses / 10 spoons to 18 glasses by finding the multiplicative factor."
+      },
+      {
+       "id": "WE-3",
+       "type": "worked_example",
+       "source_section": "section 7.4",
+       "book_ref": "Example 3, section 7.4 p.163",
+       "description": "Nitin and Hari building a compound wall: compare length-to-cement ratios (60:3 and 40:2) to determine the walls are equally strong."
+      },
+      {
+       "id": "WE-6",
+       "type": "worked_example",
+       "source_section": "section 7.4",
+       "book_ref": "Example 6, section 7.4 p.164",
+       "description": "Neelima's age ratio: shows that adding the same number to both ratio terms changes the ratio — 3:30 (simplest 1:10) becomes 12:39 (simplest 4:13)."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "The teacher walks through Example 1, section 7.4 p.162 (\"check whether ratios 3:4 and 72:96 are proportional by reducing both to simplest form using HCF\"), making the reasoning explicit: find HCF of each pair, divide, compare. Students then attempt a parallel check (e.g., 5:8 and 35:56) on their own before the answer is confirmed."
+      },
+      {
+       "minutes": "12–25",
+       "activity": "Students read and solve Example 2, section 7.4 p.162 (\"Kesang's lemonade problem: scale sugar proportionally from 6 glasses/10 spoons to 18 glasses…\") in pairs. The teacher asks: 'What is the multiplicative factor? How do you know the new quantity is proportional and not just more?' Partners write a one-sentence justification."
+      },
+      {
+       "minutes": "25–38",
+       "activity": "Students analyse Example 3, section 7.4 p.163 (\"Nitin and Hari building a compound wall: compare length-to-cement ratios 60:3 and 40:2…\") and Example 6, section 7.4 p.164 (\"Neelima's age ratio: adding the same number to both ratio terms changes the ratio…\"). For Example 6, students must explain in writing why the ratio changes, using the algebraic idea from unit 2 of this plan."
+      },
+      {
+       "minutes": "38–45",
+       "activity": "Class debrief: a student presents the justification for Example 3. The teacher draws out the key reasoning principle — comparing ratios requires simplifying or finding the common factor, not subtracting — and links to the section 7.4 goal of developing problem-solving fluency with proportional reasoning."
+      }
+     ],
+     "teacher_notes": "Having established that proportionality is multiplicative, this unit applies that reasoning in varied contexts for the first time. Watch for students who check proportionality by subtracting terms rather than dividing — a direct echo of the additive error from section 7.1. Example 7, section 7.4 p.164 (\"fill in missing terms for ratios proportional to 14:21, including fractional factors\") is a useful self-study extension for students who finish early.",
+     "materials": [
+      "Board",
+      "Textbook open to section 7.4 p.162–164",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 7,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 7.4",
+       "title": "Problem Solving with Proportional Reasoning"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Classroom Ratios and Missing Terms: Open-Ended Proportional Thinking",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-4",
+       "type": "worked_example",
+       "source_section": "section 7.4",
+       "book_ref": "Example 4, section 7.4 p.163",
+       "description": "Open-ended: students compute the teacher-to-student ratio in their own school and compare it to the example school's ratio of 5:170."
+      },
+      {
+       "id": "WE-5",
+       "type": "worked_example",
+       "source_section": "section 7.4",
+       "book_ref": "Example 5, section 7.4 p.163",
+       "description": "Students measure classroom blackboard dimensions, compute the width:height ratio, and draw a proportionally scaled rectangle in their notebooks."
+      },
+      {
+       "id": "WE-7",
+       "type": "worked_example",
+       "source_section": "section 7.4",
+       "book_ref": "Example 7, section 7.4 p.164",
+       "description": "Fill in missing terms for ratios proportional to 14:21: find 28:42, 6:9, and 2:3 using multiplicative factors including fractions."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Students carry out Example 4, section 7.4 p.163 (\"compute the teacher-to-student ratio in their own school…\"): they use the known teacher and student counts of their school (provided by the teacher or estimated from school data on the board), simplify, and compare to 5:170. They reason aloud whether the ratios are proportional and what a proportional ratio would mean for their school's staffing."
+      },
+      {
+       "minutes": "15–28",
+       "activity": "Students measure the classroom blackboard for Example 5, section 7.4 p.163 (\"measure blackboard dimensions, compute width:height ratio, draw a proportionally scaled rectangle…\"), simplify the ratio, and draw the scaled rectangle. Pairs compare their rectangles and check that the ratios match."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Students work through Example 7, section 7.4 p.164 (\"fill in missing terms for ratios proportional to 14:21: find 28:42, 6:9, and 2:3 using multiplicative factors including fractions\"), paying attention to the fractional multiplier case. The teacher circulates and asks: 'What factor did you multiply by? Is that factor a whole number — does it have to be?'"
+      },
+      {
+       "minutes": "40–45",
+       "activity": "Students write one sentence summarising the discovery: 'The multiplicative factor linking proportional ratios can be ___.' A few responses are shared and consolidated: the factor can be any positive number, including a fraction."
+      }
+     ],
+     "teacher_notes": "The open-ended nature of Examples 4 and 5 invites students to reason with real data rather than textbook numbers, which can surface productive disagreements about rounding and estimation. Watch for students who insist that only whole-number factors are valid — Example 7's fractional factor is the direct corrective. Encourage students to articulate their reasoning in full sentences, as the Math Talk strand throughout section 7.4 demands.",
+     "materials": [
+      "Ruler or tape measure for blackboard",
+      "Board with school teacher/student count",
+      "Textbook open to section 7.4 p.163–164",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 8,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 7.4",
+       "title": "Problem Solving with Proportional Reasoning"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "The Rule of Three: Aryabhata's Framework and Its Algebraic Proof",
+     "pedagogical_method": "Deductive",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-8",
+       "type": "worked_example",
+       "source_section": "section 7.4",
+       "book_ref": "Example 8, section 7.4 p.167",
+       "description": "Mid-day meal rice problem (Trairasika): reduce rice proportionally from 15 kg for 120 students to the quantity needed for 80 students using the Rule of Three."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "The teacher introduces the Trairasika subsection of section 7.4: Aryabhata's pramana:phala::ichchha:ichchhaphala framework. Students read the Sanskrit terms aloud and map them to the structure: known quantity, known result, desired quantity, desired result. The teacher shows the algebraic derivation — from a:b::c:d, cross-multiplying gives ad = bc, so d = bc/a — step by step on the board, with students writing each step."
+      },
+      {
+       "minutes": "15–30",
+       "activity": "Students apply the Rule of Three to Example 8, section 7.4 p.167 (\"mid-day meal rice problem: reduce 15 kg for 120 students to quantity needed for 80 students using the Rule of Three\"), first identifying the three known quantities and labelling them as pramana, phala, and ichchha, then solving for ichchhaphala using cross multiplication. They verify by checking the ratio 15:120 equals their answer:80."
+      },
+      {
+       "minutes": "30–42",
+       "activity": "Class discussion: why does the Rule of Three work? Students reconstruct the algebraic argument in their own words: 'If the ratio is the same on both sides, then ad = bc.' The teacher flags the non-example from section 7.4 — Puneeth's speed-time problem — and asks students to reason why faster speed means less time, not more: this is an inverse relationship, and the Rule of Three as stated does not directly apply."
+      },
+      {
+       "minutes": "42–45",
+       "activity": "Exit check: each student writes the cross-multiplication rule in symbolic form (a:b::c:d → ad = bc) and one sentence explaining when it cannot be used directly."
+      }
+     ],
+     "teacher_notes": "The derivation of cross multiplication from the proportionality definition is the logical heart of section 7.4, and students who follow this step have the algebraic foundation for all subsequent applied problems. A frequent error is applying the Rule of Three to inversely proportional situations — the Puneeth example is the textbook's own warning, and spending a few minutes on it here prevents systematic misapplication. Example 9, section 7.4 p.169 (\"car travel problem: 90 km in 150 minutes; find distance in 240 minutes using cross multiplication\") is a natural self-study follow-up.",
+     "materials": [
+      "Board",
+      "Textbook open to section 7.4 Trairasika subsection and p.167",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 9,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 7.4",
+       "title": "Problem Solving with Proportional Reasoning"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Cross Multiplication in Action: Distance, Time, and Tea Prices",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-9",
+       "type": "worked_example",
+       "source_section": "section 7.4",
+       "book_ref": "Example 9, section 7.4 p.169",
+       "description": "Car travel problem: 90 km in 150 minutes; find distance in 240 minutes using cross multiplication, emphasising unit consistency (hours converted to minutes)."
+      },
+      {
+       "id": "WE-10",
+       "type": "worked_example",
+       "source_section": "section 7.4",
+       "book_ref": "Example 10, section 7.4 p.169",
+       "description": "Tea price comparison: Himachal (200g for ₹200) vs Meghalaya (1 kg for ₹800); convert units, simplify ratios (1:1 vs 5:4), and determine which is more expensive per kg."
+      },
+      {
+       "id": "E-8",
+       "type": "exercise",
+       "source_section": "section 7.4",
+       "book_ref": "Figure it Out Q1, section 7.4 p.170",
+       "description": "Earth travels 940 million km in a year; find distance in one week using proportional reasoning."
+      },
+      {
+       "id": "E-9",
+       "type": "exercise",
+       "source_section": "section 7.4",
+       "book_ref": "Figure it Out Q2, section 7.4 p.170",
+       "description": "Mason builds a house with outer and inner walls; 1450 bricks per 10 ft; find total bricks needed for the full wall layout (total 108 ft)."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Students work through Example 9, section 7.4 p.169 (\"car travel problem: 90 km in 150 minutes; find distance in 240 minutes using cross multiplication…\") independently, setting up the proportion, checking units are consistent (both in minutes), and solving via cross multiplication. The teacher then confirms the answer and emphasises: check units before writing the proportion."
+      },
+      {
+       "minutes": "15–28",
+       "activity": "Students tackle Example 10, section 7.4 p.169 (\"tea price comparison: Himachal 200g for ₹200 vs Meghalaya 1 kg for ₹800; convert units, simplify ratios…\") in pairs. Each pair must convert both to a common unit (per kg), form the ratios, simplify, and state which source is more expensive — and why simplifying matters for the comparison."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Students attempt Figure it Out Q1, section 7.4 p.170 (\"Earth travels 940 million km in a year; find distance in one week…\") and Figure it Out Q2, section 7.4 p.170 (\"mason: 1450 bricks per 10 ft; find total bricks for 108 ft…\"). For Q1, students must identify the proportion and convert years to weeks before applying cross multiplication."
+      },
+      {
+       "minutes": "40–45",
+       "activity": "Class debrief: one student presents the unit-conversion step for Q1. The teacher underlines the recurring lesson from section 7.4: always confirm that both sides of a proportion use the same units before cross-multiplying."
+      }
+     ],
+     "teacher_notes": "Unit consistency is the main practical challenge in applied proportional problems, and Examples 9 and 10 both require a conversion step before the proportion can be formed — making them ideal for building the habit. Watch for students who set up proportions without converting (e.g., mixing grams and kilograms), producing absurd answers they then accept uncritically. Activity 1 and Activity 2 in section 7.4 are designed for real-world data collection and work best as extended tasks; they appear in the next two units where time allows fuller engagement.",
+     "materials": [
+      "Board",
+      "Textbook open to section 7.4 p.169–170",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 10,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 7.4",
+       "title": "Problem Solving with Proportional Reasoning"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Scaling a Recipe: Real-World Rule of Three",
+     "pedagogical_method": "Play-way",
+     "textbook_items_in_class": [
+      {
+       "id": "A-1",
+       "type": "activity",
+       "source_section": "section 7.4",
+       "book_ref": "Activity 1, p.170",
+       "description": "Students find all ingredients and quantities for a favourite dish for their family, then scale the quantities proportionally to serve 15 guests — a real-life application of the Rule of Three."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "The teacher introduces Activity 1, p.170 (\"find all ingredients and quantities for a favourite dish for their family, then scale the quantities proportionally to serve 15 guests…\"). Students choose a dish, list three to five ingredients with quantities for their family's serving size (e.g., 4 people), and write the target: 15 guests."
+      },
+      {
+       "minutes": "8–28",
+       "activity": "Students set up a proportion for each ingredient using the Rule of Three framework from the Trairasika subsection: family size is the pramana, ingredient quantity is the phala, 15 is the ichchha, and they solve for the ichchhaphala. Each student records the full proportion and the scaled quantity for every ingredient."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Small groups of three compare their scaled recipes. They check: is each scaled quantity proportional to the original? They identify any ingredient where the scaling seems impractical (e.g., a fraction of an egg) and discuss how a cook would handle it — connecting mathematical precision to real-world judgement."
+      },
+      {
+       "minutes": "40–45",
+       "activity": "Each student writes a one-paragraph summary: 'To scale my recipe, I used the Rule of Three. The proportion I set up was ___, and scaling was (straightforward / tricky) because ___.' Two or three students share."
+      }
+     ],
+     "teacher_notes": "Activity 1 is designed to make the Rule of Three feel personally meaningful through a culinary context that students own. Watch for students who simply multiply all quantities by the same whole number without setting up a formal proportion — prompt them to write the proportion explicitly before computing, reinforcing the pramana:phala::ichchha:ichchhaphala structure. If a student's dish has an unusual number of servings (e.g., feeds 2 or feeds 8), the proportional scaling requires a fractional multiplier, which is a rich extension opportunity.",
+     "materials": [
+      "Notebooks",
+      "Board with the Trairasika framework for reference"
+     ]
+    },
+    {
+     "period_number": 11,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 7.4",
+       "title": "Problem Solving with Proportional Reasoning"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Is Price Proportional to Volume? A Market Investigation",
+     "pedagogical_method": "Discovery",
+     "textbook_items_in_class": [
+      {
+       "id": "A-2",
+       "type": "activity",
+       "source_section": "section 7.4",
+       "book_ref": "Activity 2, p.171",
+       "description": "Students visit a market, collect prices for different sizes of the same shampoo (sachet, small, medium, large), and investigate whether price is proportional to volume. They discuss ecological and commercial implications of the findings."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–10",
+       "activity": "The teacher presents Activity 2, p.171 (\"collect prices for different sizes of the same shampoo; investigate whether price is proportional to volume; discuss ecological and commercial implications…\"). Since a market visit is not feasible within the sitting, students use price and volume data for four hypothetical shampoo sizes written on the board (e.g., sachet 10 mL ₹2; small 100 mL ₹18; medium 200 mL ₹32; large 500 mL ₹75). Students copy the table."
+      },
+      {
+       "minutes": "10–28",
+       "activity": "Students compute the price-per-mL ratio for each size, simplify where possible, and determine whether any pair of sizes is in proportion. They record their findings in a table with columns: size, price, volume, price:volume ratio, simplest form."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Small groups discuss: 'If price were perfectly proportional to volume, what would the large size cost?' They compute the proportional price and compare it to the given price. Groups then discuss the ecological and commercial implications — is a larger pack always better value? Is buying a bigger pack always the environmentally sustainable choice?"
+      },
+      {
+       "minutes": "40–45",
+       "activity": "Each group shares one finding. The teacher consolidates: proportionality is a mathematical ideal; real pricing often departs from it for commercial and logistical reasons, which is itself a mathematically interesting observation."
+      }
+     ],
+     "teacher_notes": "Activity 2 is one of the chapter's richest contextual problems because the answer — that price is usually not proportional to volume — is mathematically and commercially instructive. Watch for students who compute ratios correctly but then conclude 'all ratios are the same' after only partial checking; insist on checking all four pairs. The ecological discussion is genuinely interdisciplinary and worth a few minutes — it connects C-6.1 reasoning to everyday consumer decisions without leaving the chapter's scope.",
+     "materials": [
+      "Board with four shampoo size-price-volume data rows",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 12,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 7.5",
+       "title": "Sharing, but Not Equally!"
+      }
+     ],
+     "section_goal": "reason",
+     "activity_title": "Sharing 12 Counters: Building Intuition for Ratio Partitioning",
+     "pedagogical_method": "Inductive",
+     "textbook_items_in_class": [
+      {
+       "id": "A-3",
+       "type": "activity",
+       "source_section": "section 7.5",
+       "book_ref": "Activity 3, p.172",
+       "description": "Pairs of students share 12 physical counters in different ways, first equally (ratio 1:1) then in non-equal ratios (5:7, 3:1, 4:3), building concrete intuition for partitioning a whole in a given ratio before the algebraic formula is introduced."
+      },
+      {
+       "id": "WE-11",
+       "type": "worked_example",
+       "source_section": "section 7.5",
+       "book_ref": "Example 11, section 7.5 p.174",
+       "description": "Prashanti and Bhuvan's food cart: divide ₹4,000 profit in the ratio 75,000:25,000 (simplest 3:1), yielding ₹3,000 and ₹1,000 shares."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–18",
+       "activity": "Pairs carry out Activity 3, p.172 (\"share 12 physical counters first equally, then in ratios 5:7, 3:1, 4:3, building concrete intuition before the formula…\"): each pair uses 12 small objects (coins, stones, or paper clips) and shares them in each ratio by dealing iteratively. They record how many each person gets and notice that the total must always be 12."
+      },
+      {
+       "minutes": "18–30",
+       "activity": "Class discussion: the teacher asks, 'When you shared in ratio 3:1, how many groups of 4 did you make?' Students articulate: the whole is divided into (3+1) = 4 equal parts; one person gets 3 parts, the other gets 1. This is the conceptual leap before the formula. The teacher writes the general form on the board: to divide x in ratio m:n, parts are m·x/(m+n) and n·x/(m+n)."
+      },
+      {
+       "minutes": "30–42",
+       "activity": "Students apply the formula to Example 11, section 7.5 p.174 (\"Prashanti and Bhuvan's food cart: divide ₹4,000 profit in the ratio 75,000:25,000…\"), first simplifying the investment ratio to 3:1, then computing each share. They verify: 3,000 + 1,000 = 4,000 ✓."
+      },
+      {
+       "minutes": "42–45",
+       "activity": "Students state in writing why the formula works: 'The ratio m:n means there are m+n equal parts in total, so each part is ___.' One student reads their explanation and the class responds."
+      }
+     ],
+     "teacher_notes": "The counter activity is essential: it grounds the abstract formula in a concrete action students can see and touch. Watch for students who deal in the wrong proportion — giving three counters to the '1' person and one to the '3' person — which reveals a conceptual confusion about which label belongs to which person. Example 12 in section 7.5 p.174 (\"mixture alteration: adding cement to change the ratio from 3:1 to 5:2\") extends the reasoning to multi-step contexts.",
+     "materials": [
+      "12 small counters per pair (coins, paper clips, or stones)",
+      "Board",
+      "Textbook open to section 7.5 p.172 and p.174",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 13,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 7.5",
+       "title": "Sharing, but Not Equally!"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Altering Mixtures and Partitioning Amounts: Multi-Step Ratio Problems",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "WE-12",
+       "type": "worked_example",
+       "source_section": "section 7.5",
+       "book_ref": "Example 12, section 7.5 p.174",
+       "description": "Mixture alteration: 40 kg of sand:cement in ratio 3:1; find how much cement to add so the new ratio becomes 5:2. Multi-step: find existing cement (10 kg), compute required cement (12 kg), add 2 kg."
+      },
+      {
+       "id": "E-10",
+       "type": "exercise",
+       "source_section": "section 7.5",
+       "book_ref": "Figure it Out Q1, section 7.5 p.175",
+       "description": "Divide ₹4,500 into two parts in the ratio 2:3."
+      },
+      {
+       "id": "E-11",
+       "type": "exercise",
+       "source_section": "section 7.5",
+       "book_ref": "Figure it Out Q2, section 7.5 p.175",
+       "description": "Acid and water mixed in ratio 1:5; find quantities of each in 240 mL solution."
+      },
+      {
+       "id": "E-12",
+       "type": "exercise",
+       "source_section": "section 7.5",
+       "book_ref": "Figure it Out Q3, section 7.5 p.175",
+       "description": "Blue and yellow mixed 3:5 to make 40 mL green paint; find amounts of each colour; then find new ratio after adding 20 mL yellow."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "The teacher walks through Example 12, section 7.5 p.174 (\"mixture alteration: 40 kg sand:cement in ratio 3:1; find cement to add so new ratio becomes 5:2…\") step by step: (1) find existing cement using the partition formula — 40 × 1/(3+1) = 10 kg; (2) sand stays fixed at 30 kg; (3) for a new ratio of 5:2 with 30 kg sand, cement needed = 30 × 2/5 = 12 kg; (4) add 12 − 10 = 2 kg. Students write each step."
+      },
+      {
+       "minutes": "15–30",
+       "activity": "Students solve Figure it Out Q1, section 7.5 p.175 (\"divide ₹4,500 into two parts in the ratio 2:3\") and Figure it Out Q2, section 7.5 p.175 (\"acid and water in ratio 1:5; find quantities in 240 mL…\") independently, showing full working."
+      },
+      {
+       "minutes": "30–42",
+       "activity": "Students tackle Figure it Out Q3, section 7.5 p.175 (\"blue and yellow mixed 3:5 to make 40 mL green paint; find amounts; then find new ratio after adding 20 mL yellow\") — this is a two-part problem requiring the partition formula first, then a new ratio computation. Partners compare answers at the end of the allocated time."
+      },
+      {
+       "minutes": "42–45",
+       "activity": "One student presents Q3 part two on the board. The class checks: is the new ratio correct? What was the key step — converting the added quantity into the new total before computing the ratio?"
+      }
+     ],
+     "teacher_notes": "Example 12 is the chapter's most demanding multi-step problem and should be worked through slowly, with the sand quantity held fixed made explicit at each stage. A common error in Q3 part two is forgetting to add the 20 mL to the total and recomputing the ratio with the old denominator — encourage students to restate the total before forming the new ratio. Figure it Out Q4 and Q5 in section 7.5 p.175 are good self-study items for students who complete Q1–Q3 quickly.",
+     "materials": [
+      "Board",
+      "Textbook open to section 7.5 p.174–175",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 14,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 7.5",
+       "title": "Sharing, but Not Equally!"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Idlis, Paint, and Ratios: Consolidating Partition Problems",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-13",
+       "type": "exercise",
+       "source_section": "section 7.5",
+       "book_ref": "Figure it Out Q4, section 7.5 p.175",
+       "description": "Rice and urad dal in ratio 2:1 for idlis; find cups of each needed for 6 cups total mixture."
+      },
+      {
+       "id": "E-14",
+       "type": "exercise",
+       "source_section": "section 7.5",
+       "book_ref": "Figure it Out Q5, section 7.5 p.175",
+       "description": "Orange paint made with red:yellow = 3:5; a full bucket of yellow is added; find new ratio of red to yellow."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–15",
+       "activity": "Students solve Figure it Out Q4, section 7.5 p.175 (\"rice and urad dal in ratio 2:1 for idlis; find cups of each needed for 6 cups total mixture\") individually, using the partition formula. They verify by checking the two parts sum to 6."
+      },
+      {
+       "minutes": "15–32",
+       "activity": "Students work on Figure it Out Q5, section 7.5 p.175 (\"orange paint with red:yellow = 3:5; a full bucket of yellow added; find new ratio…\"). This requires knowing the size of 'a full bucket' relative to the original mixture — students must read the problem carefully to extract or assume the bucket size, then compute the new totals and the new ratio."
+      },
+      {
+       "minutes": "32–42",
+       "activity": "Pairs compare their approaches to Q5 and identify any step where the two approaches diverge. The teacher facilitates a discussion: 'What did you take as the size of the original mixture? Does the answer change if the mixture is twice as large?' This reveals whether the ratio result is scale-invariant."
+      },
+      {
+       "minutes": "42–45",
+       "activity": "Students write a one-sentence generalisation: 'When more of one component is added to a mixture, the ratio changes in a way that depends on ___.' Two or three students share; the class evaluates correctness."
+      }
+     ],
+     "teacher_notes": "Figure it Out Q5 is deliberately open-ended on the bucket size, which is a valuable ambiguity — students who assume different bucket sizes may get different numerical answers but the same ratio, or genuinely different ratios, depending on interpretation. Rather than resolving the ambiguity for students, let them discover whether the ratio is scale-invariant and argue from their working. This is the kind of mathematical conversation the chapter's Math Talk strand is designed to produce.",
+     "materials": [
+      "Textbook open to section 7.5 p.175",
+      "Notebooks",
+      "Board"
+     ]
+    },
+    {
+     "period_number": 15,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 7.6",
+       "title": "Unit Conversions"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Converting Units Before Proportions: Length, Area, and Volume",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-15",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out Q1, section 7.6 p.176",
+       "description": "Anagh mixes 600 mL orange juice and 900 mL apple juice; write the ratio in simplest form."
+      },
+      {
+       "id": "E-16",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out Q2, section 7.6 p.176",
+       "description": "3 buses carried 162 students last year; find how many buses are needed for 204 students this year and whether they will be full."
+      },
+      {
+       "id": "E-17",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out Q3, section 7.6 p.176",
+       "description": "Compare population density of Delhi (30 million, 1484 sq.km) and Mumbai (20 million, 550 sq.km) to determine which is more crowded."
+      },
+      {
+       "id": "E-18",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out Q4, section 7.6 p.176",
+       "description": "A crane of height 155 cm has neck:body in ratio 4:6; find neck length for the student's own height using the same ratio."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–8",
+       "activity": "The teacher introduces section 7.6 by displaying the unit conversion reference table from the textbook on the board: length (metres to feet), area (sq.m, acres, hectares), volume (mL, cc, litres), temperature (°C to °F). Students copy the key conversions they do not already know."
+      },
+      {
+       "minutes": "8–22",
+       "activity": "Students solve Figure it Out Q1, section 7.6 p.176 (\"Anagh mixes 600 mL orange juice and 900 mL apple juice; write ratio in simplest form\") and Figure it Out Q2, section 7.6 p.176 (\"3 buses for 162 students; find buses needed for 204 students; are they full?\"). Q2 requires a proportion and a check on whether the result is a whole number."
+      },
+      {
+       "minutes": "22–36",
+       "activity": "Students tackle Figure it Out Q3, section 7.6 p.176 (\"compare population density of Delhi and Mumbai…\") — computing people per sq.km for each city and comparing — and Figure it Out Q4, section 7.6 p.176 (\"crane neck:body = 4:6; find neck length for student's own height using the same ratio\"), where each student uses their own measured height."
+      },
+      {
+       "minutes": "36–45",
+       "activity": "Pairs share Q4 results: do students with different heights get the same ratio but different absolute lengths? Class confirms: the ratio is fixed, but the neck length scales with height. The teacher consolidates the section 7.6 theme — unit conversion is a prerequisite step, not the proportional reasoning itself."
+      }
+     ],
+     "teacher_notes": "Section 7.6 is explicitly a reference and application section, not a conceptual one, so the emphasis is on fluent setup of proportions after converting units. Watch for students who skip the conversion and compute a ratio across incompatible units — Q3 is particularly prone to this if students mix millions of people with raw sq.km numbers. Q4's personalisation (using each student's own height) naturally differentiates the problem and makes the ratio feel real.",
+     "materials": [
+      "Board with unit conversion table from section 7.6",
+      "Ruler for self-measurement",
+      "Textbook open to section 7.6 p.176",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 16,
+     "period_duration_minutes": 45,
+     "textbook_segments": [
+      {
+       "ref": "section 7.6",
+       "title": "Unit Conversions"
+      }
+     ],
+     "section_goal": "apply",
+     "activity_title": "Ancient Problems and Modern Contexts: Lilavati to Land Costs",
+     "pedagogical_method": "Problem-solving",
+     "textbook_items_in_class": [
+      {
+       "id": "E-19",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out Q5, section 7.6 p.176",
+       "description": "Ancient Lilavati problem: if 2½ palas of saffron costs 3/7 niskas, how much can be bought for 9 niskas?"
+      },
+      {
+       "id": "E-20",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out Q6, section 7.6 p.177",
+       "description": "Harmain is 1 year old, brother is 5; find when the ratio of their ages will be 1:2."
+      },
+      {
+       "id": "E-21",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out Q7, section 7.6 p.177",
+       "description": "Mass of equal volumes of gold and water in ratio 37:2; if 1 litre water = 1 kg, find mass of 1 litre gold."
+      },
+      {
+       "id": "E-22",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out Q8, section 7.6 p.177",
+       "description": "Farmer applies 10 tonnes manure per acre; plot is 200 ft × 500 ft; find manure needed using unit conversion (1 acre = 43,560 sq ft)."
+      },
+      {
+       "id": "E-23",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out Q9, section 7.6 p.177",
+       "description": "Tap fills 500 mL mug in 15 seconds; find time to fill a 10-litre bucket."
+      },
+      {
+       "id": "E-24",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out Q10, section 7.6 p.177",
+       "description": "1 acre of land costs ₹15,00,000; find cost of 2,400 sq ft of the same land."
+      },
+      {
+       "id": "E-25",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out Q11, section 7.6 p.177",
+       "description": "Tractor ploughs 4 times faster than oxen; oxen take 6 hours/acre; find total time for oxen and tractor to plough 20-acre field."
+      },
+      {
+       "id": "E-26",
+       "type": "exercise",
+       "source_section": "section 7.6",
+       "book_ref": "Figure it Out Q12, section 7.6 p.177",
+       "description": "₹10 coin is copper:nickel alloy in ratio 3:1, mass 7.74 g; find cost of each metal given copper = ₹906/kg and nickel = ₹1,341/kg."
+      }
+     ],
+     "homework": [],
+     "time_bands": [
+      {
+       "minutes": "0–12",
+       "activity": "Students solve Figure it Out Q5, section 7.6 p.176 (\"Lilavati problem: 2½ palas of saffron costs 3/7 niskas; find quantity for 9 niskas…\") and Q6, section 7.6 p.177 (\"Harmain aged 1, brother aged 5; find when their age ratio is 1:2…\"). Q5 requires fractional arithmetic within the Rule of Three; Q6 requires setting up an equation: (1+t):(5+t) = 1:2."
+      },
+      {
+       "minutes": "12–28",
+       "activity": "Students work through Q8, section 7.6 p.177 (\"farmer: 10 tonnes manure per acre; 200 ft × 500 ft plot; find manure needed…\") — converting sq.ft to acres using the given conversion factor — and Q9, section 7.6 p.177 (\"tap: 500 mL in 15 seconds; time to fill 10-litre bucket…\"), converting litres to mL before the proportion. Q10 (\"1 acre costs ₹15,00,000; find cost of 2,400 sq ft…\") follows the same unit-conversion structure."
+      },
+      {
+       "minutes": "28–40",
+       "activity": "Students attempt Q12, section 7.6 p.177 (\"₹10 coin: copper:nickel = 3:1, mass 7.74 g; find cost of each metal…\"): partition the mass using the ratio formula, then multiply each part by the cost per kg after converting grams to kilograms. Q11 (\"tractor vs oxen; 20-acre field…\") is attempted by students who finish early."
+      },
+      {
+       "minutes": "40–45",
+       "activity": "Class shares answers to Q8 and Q12. The teacher highlights the two-step structure present in both: convert units, then apply proportional reasoning. Q21 and Q25 (gold/water density and tractor/oxen) are noted as extension challenges."
+      }
+     ],
+     "teacher_notes": "Q5's fractional pramana (2½ palas) is a natural opportunity to revisit fraction operations within the proportional framework — students who struggle here are likely confusing the cross-multiplication step with fraction division. Q12 combines the partition formula from section 7.5 with the unit-conversion skills of section 7.6 in a single problem, making it the chapter's most integrative exercise before the synthesis unit. Watch for students who forget to convert grams to kilograms before applying the per-kg price.",
+     "materials": [
+      "Board with unit conversion table",
+      "Textbook open to section 7.6 p.176–177",
+      "Notebooks"
+     ]
+    },
+    {
+     "period_number": 17,
+     "period_duration_minutes": 45,
+     "synthesis": true,
+     "textbook_segments": [
+      {
+       "ref": "section 7.1",
+       "title": "Observing Similarity in Change"
+      },
+      {
+       "ref": "section 7.2",
+       "title": "Ratios"
+      },
+      {
+       "ref": "section 7.3",
+       "title": "Ratios in their Simplest Form"
+      },
+      {
+       "ref": "section 7.4",
+       "title": "Problem Solving with Proportional Reasoning"
+      },
+      {
+       "ref": "section 7.5",
+       "title": "Sharing, but Not Equally!"
+      },
+      {
+       "ref": "section 7.6",
+       "title": "Unit Conversions"
+      }
+     ],
+     "activity_title": "Four Problems, One Idea: Proportional Reasoning at Work",
+     "pedagogical_method": "Problem-solving",
+     "section_goal": "apply",
+     "teacher_notes": "Pose all four problems on the board at once. Students work individually for 15 minutes — full written working, not just answers. They then form groups of three and compare: any disagreement is resolved by reconstructing steps, not by voting. One volunteer per problem presents to the class; after each presentation the class names the chapter method the solution used. Problem 1 needs ratio simplification (HCF). Problem 2 needs the Rule of Three / cross multiplication. Problem 3 needs the sharing formula (m·x/(m+n)). Problem 4 needs a proportion set up after a unit conversion. Watch for: students in Problem 2 who invert the proportion; students in Problem 3 who divide by 2 instead of by the sum of parts; students in Problem 4 who skip the conversion step and proportion straight from hectares to square metres.",
+     "visual_aids": [
+      {
+       "type": "table",
+       "title": "Problems and solutions",
+       "table": "No. | Problem | Solution\n1 | A school garden has a length of 54 m and a width of 36 m. A second garden has a length of 45 m and a width of 30 m. Are the two gardens similar in shape — that is, are their length-to-width ratios in proportion? | Ratio of first garden: 54:36. HCF of 54 and 36 is 18. Simplest form: 3:2. Ratio of second garden: 45:30. HCF of 45 and 30 is 15. Simplest form: 3:2. Both ratios reduce to 3:2, so they are in proportion and the gardens are similar in shape.\n2 | A water tank fills completely in 40 minutes when a tap delivers 15 litres per minute. The tap is replaced by a faster tap that delivers 24 litres per minute. How many minutes will the faster tap take to fill the same tank? | Total capacity of tank = 15 × 40 = 600 litres. Faster tap: 600 ÷ 24 = 25 minutes. Using the Rule of Three: 15 litres : 40 minutes :: 24 litres : ? minutes. Cross multiply: 15 × ? = 24 × 40, so ? = 960 ÷ 15 = 64 — but this applies only if more litres per minute means more time, which it does not. The direct proportion here is between litres per minute and the number of minutes to fill: more rate, fewer minutes, so the proportion is inverse. Correct route: time = total volume ÷ rate = 600 ÷ 24 = 25 minutes.\n3 | Three friends — Arjun, Bhavna, and Chetan — invest ₹12,000, ₹8,000, and ₹4,000 respectively to start a stall. At the end of the month they share a profit of ₹9,600 in the ratio of their investments. How much does each person receive? | Investment ratio: 12,000 : 8,000 : 4,000. Divide each by HCF 4,000: simplest ratio is 3 : 2 : 1. Total parts = 3 + 2 + 1 = 6. Arjun's share = (3/6) × 9,600 = 4,800. Bhavna's share = (2/6) × 9,600 = 3,200. Chetan's share = (1/6) × 9,600 = 1,600. Check: 4,800 + 3,200 + 1,600 = 9,600. ✓\n4 | A rectangular field measures 300 m by 200 m. A farmer needs to apply fertiliser at the rate of 8 kg per 100 square metres. How many kilograms of fertiliser does the farmer need for the entire field? | Area of field = 300 × 200 = 60,000 sq m. Rate: 8 kg per 100 sq m. Using the Rule of Three: 100 sq m : 8 kg :: 60,000 sq m : ? kg. Cross multiply: ? = (8 × 60,000) ÷ 100 = 480,000 ÷ 100 = 4,800 kg. The farmer needs 4,800 kg of fertiliser."
+      }
+     ],
+     "materials": [
+      "Chalk and blackboard",
+      "Notebooks and pencils"
+     ],
+     "time_bands": [
+      {
+       "minutes": "0-3",
+       "activity": "Teacher writes all four problems on the board without comment. Students read through them and note which ones they recognise a method for. No working begins yet — this is a reading-and-planning moment."
+      },
+      {
+       "minutes": "3-18",
+       "activity": "Silent individual work. Every student attempts all four problems with full written working in their notebook — not just answers. Teacher circulates without giving hints, noting which problems produce the most hesitation."
+      },
+      {
+       "minutes": "18-28",
+       "activity": "Groups of three compare their working problem by problem. Where answers differ, the group reconstructs both solution paths step by step to find the point of divergence and agrees on which is correct and why."
+      },
+      {
+       "minutes": "28-41",
+       "activity": "One volunteer per problem presents their solution at the board, writing only the steps that hold. After each presentation the class names aloud the chapter method the solution used: (1) ratio simplification, (2) Rule of Three with care about direct versus inverse, (3) sharing formula, (4) proportion after area calculation. Teacher confirms or corrects, keeping discussion brief and method-focused."
+      },
+      {
+       "minutes": "41-45",
+       "activity": "Closing. Teacher asks: 'What did every one of these problems ask us to do, at its heart?' Students offer one-sentence answers. Teacher draws together their responses in a single sentence: every problem in this chapter asked whether two quantities change by the same multiplicative factor — and every method in the chapter is a way of checking or using that fact."
+      }
+     ],
+     "textbook_items_in_class": [],
+     "homework": []
+    }
+   ]
+  },
+  "period_schedule": {
+   "duration_minutes": 45,
+   "period_count": 17,
+   "total_minutes": 765
+  },
+  "coverage_handoff": {
+   "section_a": {
+    "goal_cluster": [
+     "recall"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 7.1",
+      "section_title": "Observing Similarity in Change",
+      "goal": "recall",
+      "anchor_id": "",
+      "anchor_book_ref": "",
+      "anchor_description": ""
+     },
+     {
+      "section_ref": "section 7.2",
+      "section_title": "Ratios",
+      "goal": "recall",
+      "anchor_id": "",
+      "anchor_book_ref": "",
+      "anchor_description": ""
+     }
+    ]
+   },
+   "section_b": {
+    "goal_cluster": [
+     "reason"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 7.1",
+      "section_title": "Observing Similarity in Change",
+      "goal": "reason",
+      "anchor_id": "",
+      "anchor_book_ref": "",
+      "anchor_description": ""
+     },
+     {
+      "section_ref": "section 7.4",
+      "section_title": "Problem Solving with Proportional Reasoning",
+      "goal": "reason",
+      "anchor_id": "WE-1",
+      "anchor_book_ref": "Example 1, section 7.4 p.162",
+      "anchor_description": "Check whether ratios 3:4 and 72:96 are proportional by reducing both to simplest form using HCF."
+     },
+     {
+      "section_ref": "section 7.4",
+      "section_title": "Problem Solving with Proportional Reasoning",
+      "goal": "reason",
+      "anchor_id": "WE-4",
+      "anchor_book_ref": "Example 4, section 7.4 p.163",
+      "anchor_description": "Open-ended: students compute the teacher-to-student ratio in their own school and compare it to the example school's ratio of 5:170."
+     },
+     {
+      "section_ref": "section 7.4",
+      "section_title": "Problem Solving with Proportional Reasoning",
+      "goal": "reason",
+      "anchor_id": "WE-8",
+      "anchor_book_ref": "Example 8, section 7.4 p.167",
+      "anchor_description": "Mid-day meal rice problem (Trairasika): reduce rice proportionally from 15 kg for 120 students to the quantity needed for 80 students using the Rule of Three."
+     },
+     {
+      "section_ref": "section 7.5",
+      "section_title": "Sharing, but Not Equally!",
+      "goal": "reason",
+      "anchor_id": "A-3",
+      "anchor_book_ref": "Activity 3, p.172",
+      "anchor_description": "Pairs of students share 12 physical counters in different ways, first equally (ratio 1:1) then in non-equal ratios (5:7, 3:1, 4:3), building concrete intuition for partitioning a whole in a given ratio before the algebraic formula is introduced."
+     }
+    ]
+   },
+   "section_c": {
+    "goal_cluster": [
+     "apply"
+    ],
+    "goals": [
+     {
+      "section_ref": "section 7.3",
+      "section_title": "Ratios in their Simplest Form",
+      "goal": "apply",
+      "anchor_id": "E-1",
+      "anchor_book_ref": "Figure it Out Q1, section 7.3 p.165",
+      "anchor_description": "Circle the true proportion statements among six given ratios (e.g. 4:7::12:21, 8:3::24:6, etc.)."
+     },
+     {
+      "section_ref": "section 7.3",
+      "section_title": "Ratios in their Simplest Form",
+      "goal": "apply",
+      "anchor_id": "E-4",
+      "anchor_book_ref": "Figure it Out Q4, section 7.3 p.166",
+      "anchor_description": "Identify which among rectangles A–E are similar to each other by measuring dimensions and comparing ratios."
+     },
+     {
+      "section_ref": "section 7.4",
+      "section_title": "Problem Solving with Proportional Reasoning",
+      "goal": "apply",
+      "anchor_id": "WE-9",
+      "anchor_book_ref": "Example 9, section 7.4 p.169",
+      "anchor_description": "Car travel problem: 90 km in 150 minutes; find distance in 240 minutes using cross multiplication, emphasising unit consistency (hours converted to minutes)."
+     },
+     {
+      "section_ref": "section 7.4",
+      "section_title": "Problem Solving with Proportional Reasoning",
+      "goal": "apply",
+      "anchor_id": "A-1",
+      "anchor_book_ref": "Activity 1, p.170",
+      "anchor_description": "Students find all ingredients and quantities for a favourite dish for their family, then scale the quantities proportionally to serve 15 guests — a real-life application of the Rule of Three."
+     },
+     {
+      "section_ref": "section 7.4",
+      "section_title": "Problem Solving with Proportional Reasoning",
+      "goal": "apply",
+      "anchor_id": "A-2",
+      "anchor_book_ref": "Activity 2, p.171",
+      "anchor_description": "Students visit a market, collect prices for different sizes of the same shampoo (sachet, small, medium, large), and investigate whether price is proportional to volume. They discuss ecological and commercial implications of the findings."
+     },
+     {
+      "section_ref": "section 7.5",
+      "section_title": "Sharing, but Not Equally!",
+      "goal": "apply",
+      "anchor_id": "WE-12",
+      "anchor_book_ref": "Example 12, section 7.5 p.174",
+      "anchor_description": "Mixture alteration: 40 kg of sand:cement in ratio 3:1; find how much cement to add so the new ratio becomes 5:2. Multi-step: find existing cement (10 kg), compute required cement (12 kg), add 2 kg."
+     },
+     {
+      "section_ref": "section 7.5",
+      "section_title": "Sharing, but Not Equally!",
+      "goal": "apply",
+      "anchor_id": "E-13",
+      "anchor_book_ref": "Figure it Out Q4, section 7.5 p.175",
+      "anchor_description": "Rice and urad dal in ratio 2:1 for idlis; find cups of each needed for 6 cups total mixture."
+     },
+     {
+      "section_ref": "section 7.6",
+      "section_title": "Unit Conversions",
+      "goal": "apply",
+      "anchor_id": "E-15",
+      "anchor_book_ref": "Figure it Out Q1, section 7.6 p.176",
+      "anchor_description": "Anagh mixes 600 mL orange juice and 900 mL apple juice; write the ratio in simplest form."
+     },
+     {
+      "section_ref": "section 7.6",
+      "section_title": "Unit Conversions",
+      "goal": "apply",
+      "anchor_id": "E-19",
+      "anchor_book_ref": "Figure it Out Q5, section 7.6 p.176",
+      "anchor_description": "Ancient Lilavati problem: if 2½ palas of saffron costs 3/7 niskas, how much can be bought for 9 niskas?"
+     },
+     {
+      "section_ref": "section 7.6",
+      "section_title": "Unit Conversions",
+      "goal": "apply",
+      "anchor_id": "E-26",
+      "anchor_book_ref": "Figure it Out Q12, section 7.6 p.177",
+      "anchor_description": "₹10 coin is copper:nickel alloy in ratio 3:1, mass 7.74 g; find cost of each metal given copper = ₹906/kg and nickel = ₹1,341/kg."
+     }
+    ]
+   }
+  },
+  "assessment_items": [
+   {
+    "section_code": "A",
+    "section_title": "Recall and Apply",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-A-1",
+      "section_ref": "section 7.1",
+      "section_title": "Observing Similarity in Change",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "A rectangular image has a width of 80 cm and a height of 60 cm. Which of the following describes what happens when 20 cm is subtracted from both the width and the height?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "It is impossible to tell whether the ratio changes without knowing the colour of the image.",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "The new image does not have the same width-to-height ratio as the original because the ratio changes when a constant is added to or subtracted from both terms.",
+        "is_correct": true
+       },
+       {
+        "label": "C",
+        "text": "The new image has the same width-to-height ratio as the original because the same amount was removed from both sides.",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "The new image is larger than the original because both sides were changed.",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "Option B. The original ratio is 80:60 = 4:3. After subtracting 20 from each, the ratio is 60:40 = 3:2. Since 4:3 ≠ 3:2, the ratio changes; subtracting the same constant from both terms of a ratio does not preserve it.",
+       "method_one_line": "Compute the ratio before and after the subtraction and compare simplest forms.",
+       "what_each_option_reveals": {
+        "C": "The student believes that equal changes to both terms preserve the ratio — the additive misconception that section 7.1 is designed to dislodge.",
+        "D": "The student has confused a change in dimensions with a change in overall size rather than reasoning about the ratio.",
+        "A": "The student does not recognise that ratio comparison requires only numerical values, not additional attributes."
+       },
+       "inclusivity": {
+        "support": "Let the student write out both ratios as fractions and simplify each before comparing.",
+        "challenge": "Ask the student to find a value of k such that subtracting k from both 80 and 60 would give a ratio of 2:1, and explain why this requires solving an equation rather than just subtracting."
+       }
+      },
+      "exercise": {
+       "book_ref": "",
+       "description": ""
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-A-2",
+      "section_ref": "section 7.2",
+      "section_title": "Ratios",
+      "goal": "recall",
+      "question_type": "MCQ",
+      "prompt": "A bag contains 18 red beads and 12 blue beads. Which of the following correctly reads the ratio of red beads to blue beads using the language introduced in section 7.2?",
+      "visual_stimulus": "",
+      "options": [
+       {
+        "label": "A",
+        "text": "For every 12 red beads there are 18 blue beads.",
+        "is_correct": false
+       },
+       {
+        "label": "B",
+        "text": "For every 18 red beads there are 12 blue beads.",
+        "is_correct": true
+       },
+       {
+        "label": "C",
+        "text": "The ratio of red to blue is 12:18, which simplifies to 3:2.",
+        "is_correct": false
+       },
+       {
+        "label": "D",
+        "text": "The ratio of red to blue is 18:12, which is the same as the ratio of blue to red.",
+        "is_correct": false
+       }
+      ],
+      "teacher_guide": {
+       "expected_answer": "Option B. The ratio of red beads to blue beads is 18:12, read as 'for every 18 red beads there are 12 blue beads.' The order of the ratio follows the order of the quantities named in the question.",
+       "method_one_line": "Apply the definition from section 7.2: the ratio a:b is read as 'for every a units of the first quantity there are b units of the second.'",
+       "what_each_option_reveals": {
+        "A": "The student reversed the order of the ratio, placing blue first despite the question asking for red to blue.",
+        "C": "The student reversed the order of the ratio and additionally simplified it, compounding the order error.",
+        "D": "The student correctly wrote the ratio but then claimed it equals its reverse, showing a misconception that a:b and b:a are interchangeable."
+       },
+       "inclusivity": {
+        "support": "Encourage the student to underline 'red to blue' in the question and write the quantities in that order before forming the ratio.",
+        "challenge": "Ask the student to write three different real-world sentences that correctly use the ratio 18:12 with different quantities (e.g., metres, rupees, people)."
+       }
+      },
+      "exercise": {
+       "book_ref": "",
+       "description": ""
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "B",
+    "section_title": "Reason and Explain",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-B-1",
+      "section_ref": "section 7.1",
+      "section_title": "Observing Similarity in Change",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "A photograph is 15 cm wide and 10 cm tall. Zara says that if she adds 5 cm to both the width and the height, the new photograph will look exactly like the original — just bigger. Is Zara correct? Justify your answer using ratios.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Zara is not correct. The original ratio of width to height is 15:10, which simplifies to 3:2. After adding 5 cm, the ratio is 20:15, which simplifies to 4:3. Since 3:2 ≠ 4:3, the new photograph has different proportions and will look distorted, not like a scaled version of the original. For a photograph to look the same, both dimensions must be multiplied by the same factor, not increased by the same constant.",
+       "method_one_line": "Compute and simplify both ratios, then compare to show they are unequal, concluding that additive change does not preserve proportionality.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Prompt the student to compute 15:10 and 20:15 separately, simplify each, and then compare the two simplest forms before writing the justification.",
+        "challenge": "Ask the student: if Zara instead multiplied both dimensions by 1.5, what would the new ratio be, and why does multiplication preserve the ratio while addition does not?"
+       }
+      },
+      "exercise": {
+       "book_ref": "",
+       "description": ""
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-2",
+      "section_ref": "section 7.4",
+      "section_title": "Problem Solving with Proportional Reasoning",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "A teacher says: 'The ratios 5:8 and 40:64 are in proportion because 40 = 5 × 8 and 64 = 8 × 8.' Is the teacher's reasoning correct? Explain why or why not, and state the correct method for checking proportionality.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "The teacher's conclusion is correct — 5:8 and 40:64 are in proportion — but the reasoning is flawed. Multiplying 5 by 8 to get 40 and 8 by 8 to get 64 uses two different multipliers (8 for the first term, 8 for the second), which happens to work here but does not explain proportionality correctly. The correct method is to check that both terms of one ratio are obtained by multiplying both terms of the other ratio by the same single factor. Here, 5 × 8 = 40 and 8 × 8 = 64, so both are multiplied by 8 — the same factor — making the ratios proportional. Alternatively, both reduce to 5:8 in simplest form, confirming proportionality.",
+       "method_one_line": "Proportionality requires a single common multiplicative factor (or equivalently, identical simplest forms); the teacher's explanation accidentally used the right numbers but gave the wrong reasoning.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Ask the student to find the HCF of 40 and 64, reduce both ratios to simplest form, and then decide whether the simplest forms match.",
+        "challenge": "Ask the student to construct a pair of ratios where the teacher's method (multiplying each term by a different number) gives a false positive — two ratios that pass the teacher's check but are not proportional."
+       }
+      },
+      "exercise": {
+       "book_ref": "Example 1, section 7.4 p.162",
+       "description": "Check whether ratios 3:4 and 72:96 are proportional by reducing both to simplest form using HCF."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-3",
+      "section_ref": "section 7.4",
+      "section_title": "Problem Solving with Proportional Reasoning",
+      "goal": "reason",
+      "question_type": "ECR",
+      "prompt": "A school has 8 teachers and 240 students. A neighbouring school has 5 teachers and 170 students. A student argues that both schools have the same teacher-to-student ratio. Evaluate this claim by computing and simplifying both ratios, and explain what the ratios tell us about teacher workload in each school.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "School 1: 8:240 simplifies (HCF = 8) to 1:30. School 2: 5:170 simplifies (HCF = 5) to 1:34. The ratios are not equal — 1:30 ≠ 1:34 — so the claim is false. The ratio 1:30 means each teacher serves 30 students, while 1:34 means each teacher serves 34 students. School 2 teachers have a heavier workload because the teacher-to-student ratio, in its simplest form, assigns more students to each teacher.",
+       "method_one_line": "Simplify each ratio using HCF, compare the simplest forms, and interpret the ratio as students per teacher.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Suggest writing each ratio as a fraction and dividing the numerator and denominator by the HCF before comparing.",
+        "challenge": "Ask the student to find how many additional teachers School 2 would need to match School 1's teacher-to-student ratio, showing full proportional working."
+       }
+      },
+      "exercise": {
+       "book_ref": "Example 4, section 7.4 p.163",
+       "description": "Open-ended: students compute the teacher-to-student ratio in their own school and compare it to the example school's ratio of 5:170."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-4",
+      "section_ref": "section 7.4",
+      "section_title": "Problem Solving with Proportional Reasoning",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "In Aryabhata's Rule of Three, the proportion is written as pramana : phala :: ichchha : ichchhaphala, and the cross-multiplication result is pramana × ichchhaphala = phala × ichchha. Starting from the proportion a:b::c:d (where a is the pramana, b is the phala, c is the ichchha, and d is the ichchhaphala), show algebraically why ad = bc, and state one situation in which this rule cannot be applied directly.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "From the proportion a:b::c:d, we have a/b = c/d (both ratios are equal). Multiplying both sides by bd gives: (a/b) × bd = (c/d) × bd, which simplifies to ad = bc. This is the cross-multiplication result. One situation where the Rule of Three cannot be applied directly is an inversely proportional relationship — for example, if speed increases, time for the same journey decreases. Applying the Rule of Three directly would yield the wrong answer because the relationship is not a:b::c:d but rather a:b::d:c.",
+       "method_one_line": "Start from a/b = c/d, multiply both sides by bd, and simplify to obtain ad = bc; then name inverse proportion as a non-example.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Encourage the student to write a/b = c/d first, then ask 'what can I multiply both sides by to clear the denominators?'",
+        "challenge": "Ask the student to write the correct proportion for an inversely proportional situation (e.g., speed and time) and derive the formula for the unknown quantity."
+       }
+      },
+      "exercise": {
+       "book_ref": "Example 8, section 7.4 p.167",
+       "description": "Mid-day meal rice problem (Trairasika): reduce rice proportionally from 15 kg for 120 students to the quantity needed for 80 students using the Rule of Three."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-B-5",
+      "section_ref": "section 7.5",
+      "section_title": "Sharing, but Not Equally!",
+      "goal": "reason",
+      "question_type": "SCR",
+      "prompt": "Meera says: 'To divide 24 counters in the ratio 3:1, I give 3 to the first person and 1 to the second, and keep repeating until all counters are gone.' Explain why Meera's method works, using the concept of equal-sized groups introduced in section 7.5.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Meera's method works because dealing 3 counters then 1 counter forms groups of 3+1 = 4 counters per round. With 24 counters, there are 24 ÷ 4 = 6 complete rounds. Person 1 receives 3 × 6 = 18 counters and person 2 receives 1 × 6 = 6 counters. This matches the partition formula: 24 × 3/(3+1) = 18 and 24 × 1/(3+1) = 6. The method works because each round distributes counters in the required ratio, and repeating it maintains that ratio throughout.",
+       "method_one_line": "Interpret each dealing round as one group of (m+n) counters, count the number of complete rounds, and verify against the partition formula.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Suggest the student draw 24 circles, circle them in groups of 4, shade 3 in each group for person 1 and 1 for person 2, then count each person's total.",
+        "challenge": "Ask the student to explain what would happen if the total number of counters were not divisible by (m+n), and how the remainder could be handled fairly."
+       }
+      },
+      "exercise": {
+       "book_ref": "Activity 3, p.172",
+       "description": "Pairs of students share 12 physical counters in different ways, first equally (ratio 1:1) then in non-equal ratios (5:7, 3:1, 4:3), building concrete intuition for partitioning a whole in a given ratio before the algebraic formula is introduced."
+      },
+      "verified": true
+     }
+    ]
+   },
+   {
+    "section_code": "C",
+    "section_title": "Apply in Context",
+    "note": "",
+    "items": [
+     {
+      "id": "Q-C-1",
+      "section_ref": "section 7.3",
+      "section_title": "Ratios in their Simplest Form",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Determine which of the following pairs of ratios are in proportion: (a) 15:20 and 45:60; (b) 28:35 and 12:16. Show your HCF working for each ratio and state whether the pair is in proportion.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "(a) HCF(15,20) = 5, so 15:20 = 3:4. HCF(45,60) = 15, so 45:60 = 3:4. Both simplify to 3:4, so the pair IS in proportion. (b) HCF(28,35) = 7, so 28:35 = 4:5. HCF(12,16) = 4, so 12:16 = 3:4. Since 4:5 ≠ 3:4, the pair is NOT in proportion.",
+       "method_one_line": "Find the HCF of each ratio, divide both terms, and compare the resulting simplest forms.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Provide a factor tree scaffold so the student can find HCFs step by step before dividing the ratio terms.",
+        "challenge": "Ask the student to find a third ratio in proportion with 15:20 that has both terms greater than 100, explaining the multiplicative factor used."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 7.3 p.165",
+       "description": "Circle the true proportion statements among six given ratios (e.g. 4:7::12:21, 8:3::24:6, etc.)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-2",
+      "section_ref": "section 7.3",
+      "section_title": "Ratios in their Simplest Form",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Rectangle P measures 24 cm wide and 16 cm tall. Rectangle Q measures 18 cm wide and 12 cm tall. Rectangle R measures 30 cm wide and 18 cm tall. Which rectangles, if any, are similar to each other? Show full HCF working for each rectangle's width:height ratio.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "P: HCF(24,16) = 8, so 24:16 = 3:2. Q: HCF(18,12) = 6, so 18:12 = 3:2. R: HCF(30,18) = 6, so 30:18 = 5:3. Rectangles P and Q both simplify to 3:2 and are therefore similar to each other. Rectangle R simplifies to 5:3, which is different, so R is not similar to P or Q.",
+       "method_one_line": "Simplify each rectangle's width:height ratio to its lowest terms using HCF and compare the simplest forms.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Let the student use a multiplication table to identify common factors before selecting the HCF.",
+        "challenge": "Ask the student to find a fourth rectangle with area 200 cm² that is similar to rectangles P and Q, showing how the area constraint and the ratio constraint together determine the dimensions."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q4, section 7.3 p.166",
+       "description": "Identify which among rectangles A–E are similar to each other by measuring dimensions and comparing ratios."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-3",
+      "section_ref": "section 7.4",
+      "section_title": "Problem Solving with Proportional Reasoning",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A car covers 120 km in 160 minutes at a constant speed. Using cross multiplication, find how far the car travels in 220 minutes. Show your proportion setup, the cross-multiplication step, and the final answer with units.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Set up the proportion: 120 km : 160 min :: d km : 220 min. Cross multiplication gives 120 × 220 = 160 × d, so 26400 = 160d, so d = 26400 ÷ 160 = 165 km. The car travels 165 km in 220 minutes. Verification: 120/160 = 0.75 km/min; 165/220 = 0.75 km/min ✓.",
+       "method_one_line": "Write the proportion with distance and time in matching positions, cross-multiply, and solve for the unknown distance.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Remind the student to label the proportion clearly — distance on top, time on bottom on both sides — before cross-multiplying.",
+        "challenge": "Ask the student to find the car's speed in km/h and use it as an alternative verification route."
+       }
+      },
+      "exercise": {
+       "book_ref": "Example 9, section 7.4 p.169",
+       "description": "Car travel problem: 90 km in 150 minutes; find distance in 240 minutes using cross multiplication, emphasising unit consistency (hours converted to minutes)."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-4",
+      "section_ref": "section 7.4",
+      "section_title": "Problem Solving with Proportional Reasoning",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A recipe for 4 people requires 300 g of flour, 2 eggs, and 150 mL of milk. Using the Rule of Three, find the quantity of each ingredient needed to make the same recipe for 10 people. Show the proportion and cross-multiplication working for each ingredient.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "For each ingredient, the proportion is: (quantity for 4) : 4 :: (quantity for 10) : 10. Flour: 300:4::x:10 → x = 300×10÷4 = 750 g. Eggs: 2:4::x:10 → x = 2×10÷4 = 5 eggs. Milk: 150:4::x:10 → x = 150×10÷4 = 375 mL. Verification (flour): 750/10 = 75 g per person = 300/4 ✓.",
+       "method_one_line": "Apply the Trairasika (Rule of Three) proportion pramana:phala::ichchha:ichchhaphala and solve via cross multiplication for each ingredient.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Encourage the student to set up the proportion for flour first, confirm the answer, and then use the same template for eggs and milk.",
+        "challenge": "Ask the student to scale the same recipe for 7 people and discuss what to do with a fractional egg answer in a practical cooking context."
+       }
+      },
+      "exercise": {
+       "book_ref": "Activity 1, p.170",
+       "description": "Students find all ingredients and quantities for a favourite dish for their family, then scale the quantities proportionally to serve 15 guests — a real-life application of the Rule of Three."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-5",
+      "section_ref": "section 7.4",
+      "section_title": "Problem Solving with Proportional Reasoning",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "Brand X sells 250 g of groundnut oil for ₹60. Brand Y sells 1 kg of the same oil for ₹220. Convert both to the same unit, form the price-to-quantity ratios, and determine which brand is more expensive per gram. Show full working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Convert Brand Y to grams: 1 kg = 1000 g, so ₹220 for 1000 g. Brand X ratio (price:mass): 60:250. Brand Y ratio: 220:1000. Simplify Brand X: HCF(60,250) = 10, so 6:25. Simplify Brand Y: HCF(220,1000) = 20, so 11:50. Compare price per gram: Brand X = 6/25 = 0.24 ₹/g; Brand Y = 11/50 = 0.22 ₹/g. Brand X is more expensive per gram. Verification: ₹60/250 = ₹0.24/g; ₹220/1000 = ₹0.22/g ✓.",
+       "method_one_line": "Convert both quantities to the same unit, compute the price-per-gram ratio for each, and compare.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Prompt the student to write both prices in ₹/gram (dividing price by mass in grams) before forming a ratio, to make the comparison direct.",
+        "challenge": "Ask the student to find the price at which Brand Y would become more expensive per gram than Brand X, keeping Brand Y's mass at 1 kg."
+       }
+      },
+      "exercise": {
+       "book_ref": "Activity 2, p.171",
+       "description": "Students visit a market, collect prices for different sizes of the same shampoo (sachet, small, medium, large), and investigate whether price is proportional to volume. They discuss ecological and commercial implications of the findings."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-6",
+      "section_ref": "section 7.5",
+      "section_title": "Sharing, but Not Equally!",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A container holds 56 kg of a sand and gravel mixture in the ratio 3:4. How many kilograms of each material are in the container? Show working using the partition formula from section 7.5.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Total parts = 3 + 4 = 7. Each part = 56 ÷ 7 = 8 kg. Sand = 3 × 8 = 24 kg. Gravel = 4 × 8 = 32 kg. Verification: 24 + 32 = 56 ✓ and 24:32 = 3:4 (divide both by 8) ✓.",
+       "method_one_line": "Apply the partition formula: each share = (ratio term ÷ sum of ratio terms) × total.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Encourage the student to draw 7 equal boxes labelled 3 for sand and 4 for gravel, find the value of one box first, then multiply.",
+        "challenge": "Ask the student to find how much gravel must be added so that the new ratio becomes 3:5, while keeping the amount of sand fixed at 24 kg."
+       }
+      },
+      "exercise": {
+       "book_ref": "Example 12, section 7.5 p.174",
+       "description": "Mixture alteration: 40 kg of sand:cement in ratio 3:1; find how much cement to add so the new ratio becomes 5:2. Multi-step: find existing cement (10 kg), compute required cement (12 kg), add 2 kg."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-7",
+      "section_ref": "section 7.5",
+      "section_title": "Sharing, but Not Equally!",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A 48-litre paint batch is made by mixing white and colour in the ratio 5:3. The painter adds 8 more litres of white paint. What is the new ratio of white to colour in the batch? Show all steps.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Original total = 48 litres, ratio 5:3, total parts = 8. White = 5 × (48/8) = 5 × 6 = 30 litres. Colour = 3 × 6 = 18 litres. After adding 8 litres of white: new white = 30 + 8 = 38 litres. Colour unchanged = 18 litres. New ratio = 38:18. HCF(38,18) = 2, so simplest form = 19:9. Verification: 38/18 = 19/9 ✓.",
+       "method_one_line": "Use the partition formula to find the original quantities, update the changed component, then form and simplify the new ratio.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Ask the student to find the original white and colour amounts first (using the formula), write them down, then add 8 to white and rewrite the new ratio before simplifying.",
+        "challenge": "Ask the student to find how much colour paint would need to be added instead to achieve a final ratio of 5:4, starting from the original 48-litre batch."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q4, section 7.5 p.175",
+       "description": "Rice and urad dal in ratio 2:1 for idlis; find cups of each needed for 6 cups total mixture."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-8",
+      "section_ref": "section 7.6",
+      "section_title": "Unit Conversions",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A tap fills a 500 mL bottle in 12 seconds. Using proportional reasoning, find how many minutes it will take the same tap to fill a 15-litre tank. Show unit conversion and proportion setup.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Convert 15 litres to mL: 15 × 1000 = 15,000 mL. Set up proportion: 500 mL : 12 s :: 15,000 mL : t s. Cross multiply: 500 × t = 12 × 15,000 = 180,000. t = 180,000 ÷ 500 = 360 seconds = 360 ÷ 60 = 6 minutes. Verification: 15,000/500 = 30; 30 × 12 = 360 s = 6 min ✓.",
+       "method_one_line": "Convert litres to mL, set up the proportion with matching units on both sides, cross-multiply, and convert seconds to minutes.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Remind the student to convert 15 litres to mL before writing the proportion, so both sides use the same volume unit.",
+        "challenge": "Ask the student to find what capacity tank the same tap would fill in exactly 8 minutes, working the proportion in reverse."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q1, section 7.6 p.176",
+       "description": "Anagh mixes 600 mL orange juice and 900 mL apple juice; write the ratio in simplest form."
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-9",
+      "section_ref": "section 7.6",
+      "section_title": "Unit Conversions",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "If 3 palas of rice cost 5 niskas, how many palas of rice can be bought for 12 niskas? Use the Rule of Three framework (pramana : phala :: ichchha : ichchhaphala) and show cross-multiplication working.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Pramana = 3 palas, phala = 5 niskas, ichchha = 12 niskas, ichchhaphala = ? palas. Wait — the proportion must compare like quantities: 3 palas for 5 niskas means 3:5 :: x:12. Cross multiply: 3 × 12 = 5 × x, so 36 = 5x, so x = 36/5 = 7.2 palas. Verification: 3/5 = 0.6 palas per niska; 0.6 × 12 = 7.2 palas ✓.",
+       "method_one_line": "Set up the Trairasika proportion with palas on top and niskas on bottom on both sides, then cross-multiply and solve.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Encourage the student to write the proportion as a fraction equation (3/5 = x/12) first, then cross-multiply.",
+        "challenge": "Ask the student to set up and solve the same problem using mixed-number quantities (e.g., 2½ palas costing 3/7 niskas, as in the Lilavati problem), showing fraction arithmetic within the cross-multiplication."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q5, section 7.6 p.176",
+       "description": "Ancient Lilavati problem: if 2½ palas of saffron costs 3/7 niskas, how much can be bought for 9 niskas?"
+      },
+      "verified": true
+     },
+     {
+      "id": "Q-C-10",
+      "section_ref": "section 7.6",
+      "section_title": "Unit Conversions",
+      "goal": "apply",
+      "question_type": "NUM",
+      "prompt": "A ₹10 coin is made of a copper-nickel alloy in the ratio 3:1 and has a mass of 8 g. Given that copper costs ₹900 per kg and nickel costs ₹1,350 per kg, find the total cost of the metals in one coin. Show the partition, unit conversion, and cost calculation steps.",
+      "visual_stimulus": "",
+      "options": [],
+      "teacher_guide": {
+       "expected_answer": "Total parts = 3 + 1 = 4. Each part = 8 ÷ 4 = 2 g. Copper mass = 3 × 2 = 6 g. Nickel mass = 1 × 2 = 2 g. Convert to kg: copper = 6/1000 = 0.006 kg; nickel = 2/1000 = 0.002 kg. Cost of copper = 0.006 × 900 = ₹5.40. Cost of nickel = 0.002 × 1,350 = ₹2.70. Total cost = 5.40 + 2.70 = ₹8.10. Verification: 6 × (900/1000) = 5.40 ✓; 2 × (1350/1000) = 2.70 ✓.",
+       "method_one_line": "Partition the total mass by the ratio, convert each part from grams to kilograms, and multiply by the respective metal cost per kilogram.",
+       "what_each_option_reveals": {},
+       "inclusivity": {
+        "support": "Prompt the student to first find how many grams of each metal are in the coin, then note that 1 kg = 1000 g before computing the cost.",
+        "challenge": "Ask the student to find what percentage of the coin's total metal cost is copper, and whether the coin's face value (₹10) is above or below the metal cost."
+       }
+      },
+      "exercise": {
+       "book_ref": "Figure it Out Q12, section 7.6 p.177",
+       "description": "₹10 coin is copper:nickel alloy in ratio 3:1, mass 7.74 g; find cost of each metal given copper = ₹906/kg and nickel = ₹1,341/kg."
+      },
+      "verified": true
+     }
+    ]
+   }
+  ],
+  "competency_gap_note": "",
+  "section_coverage_note": null
+ }
+}

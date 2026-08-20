@@ -123,6 +123,58 @@ MAX_REPAIR_SPAN = 400            # a naked pair wider than this is not a quote g
                                  # broken structure would present. Founder ruling 2026-08-19.
 
 
+def _trailing_comma_fix(text: str, e: json.JSONDecodeError):
+    """The THIRD known glitch (2026-08-19, S8 W1): a TRAILING COMMA before a closer.
+
+    mathematics·v ch 6 "The Dairy Farm" arrived complete (94 KB) with exactly ONE
+    defect in the whole file — `"inclusivity": "…",\\n          },` — a comma where
+    JSON permits none. It cost the artefact outright: neither existing family sees it,
+    so the quote heuristic thrashed 413 "repairs" past it and turned a structural
+    newline into an in-string one, and `_structural_escape` then stopped at the same
+    comma reporting "expecting property name". ₹15 for a correct plan nobody could read.
+
+    Same guarantees as the other two families. Exactly ONE character is REMOVED, at the
+    position a string-aware walk proves is a comma followed only by whitespace and then
+    `}` or `]`. A comma in that position cannot be content — JSON has no construct where
+    it is legal — so the repair is provably content-neutral in the strongest sense
+    available: the parser rejected the file precisely because that character means
+    nothing there. Anything else returns None and the caller falls through unchanged.
+
+    WHY IT IS TRIED WITH `_bracket_fix` AND BEFORE THE QUOTE LOOP. The failure mode is
+    the bracket typo's, not the quote glitch's: the parser stops at a position the quote
+    heuristic will happily "repair" by wrapping real structure in escapes, so running it
+    second means running it on a corrupted string. Both cheap checks go first, for the
+    same reason, and neither can fire on a file the other would fix.
+
+    Returns (repaired_text, note) or None.
+    """
+    pos = e.pos
+    if pos >= len(text) or text[pos] not in "}]":
+        return None
+    # Walk BACK over whitespace to the character before the closer the parser choked on.
+    i = pos - 1
+    while i >= 0 and text[i] in " \t\r\n":
+        i -= 1
+    if i < 0 or text[i] != ",":
+        return None
+    # String-aware walk of everything before that comma: it must not be inside a string.
+    in_str, esc = False, False
+    for ch in text[:i]:
+        if in_str:
+            if esc:
+                esc = False
+            elif ch == "\\":
+                esc = True
+            elif ch == '"':
+                in_str = False
+        elif ch == '"':
+            in_str = True
+    if in_str:
+        return None
+    return (text[:i] + text[i + 1:],
+            f"trailing comma removed before {text[pos]!r} at char {i}")
+
+
 def _bracket_fix(text: str, e: json.JSONDecodeError):
     """The SECOND known glitch (2026-08-17, S6 W2): a wrong CLOSER, one character.
 
@@ -214,6 +266,11 @@ def parse_with_repair(full: str) -> tuple[dict | None, list[str], list[str]]:
             # would wrap real structure in escapes and corrupt rather than rescue
             # (2026-08-17; see _bracket_fix).
             fix = _bracket_fix(text, e)
+            if fix is None:
+                # Third family, same reasoning: a one-character structural typo the
+                # quote heuristic would corrupt rather than fix (2026-08-19; see
+                # _trailing_comma_fix).
+                fix = _trailing_comma_fix(text, e)
             if fix is not None:
                 text, note = fix
                 repairs.append(note)
@@ -536,7 +593,26 @@ _TOKEN_LOG_HEADER = ("timestamp,call_type,subject,grade,chapter_number,chapter_t
                      "cache_write_input_tokens,cache_read_input_tokens")
 
 
-def log_token_log(call_type, subject, grade, ch, title, it, ot, cost_inr) -> None:
+def log_token_log(call_type, subject, grade, ch, title, it, ot, cost_inr,
+                  cache_write: int = 0, cache_read: int = 0) -> None:
+    """★ THE TWO CACHE COLUMNS WERE HARD-CODED TO 0 (fixed 2026-08-20).
+
+    The header has carried `cache_write_input_tokens,cache_read_input_tokens` since the
+    log was started, and this writer emitted a literal `0, 0` into both on every row —
+    so the columns were a constant, not a measurement, and nothing upstream knew.
+
+    It cost two waves of wrong analysis. S8's W1 and W2 were both read as "the cache
+    never engaged" (98 runs, both columns 0 in the ledger) and recorded that way in the
+    tracker, and it was flagged as the campaign's largest unclaimed saving. The collect
+    output for mathematics v ch 1 p07 settled it: `cache: 7,880 read (0.1x) · 4,430
+    written (1.25x) · 4,939 fresh` printed to the terminal for the very request whose
+    ledger row says 0 and 0. The cache was working the whole time.
+
+    Worth keeping as a general lesson: a column that is always zero looks exactly like a
+    feature that never fires, and the pricing maths downstream is right either way, so
+    nothing else in the pipeline could contradict it. `batch_api` already computes both
+    values correctly for its own cost arithmetic (`it_billed = fresh + 1.25*c_write +
+    0.1*c_read`) — they simply never reached here."""
     try:
         TOKEN_LOG.parent.mkdir(parents=True, exist_ok=True)
         if not TOKEN_LOG.exists():
@@ -544,7 +620,8 @@ def log_token_log(call_type, subject, grade, ch, title, it, ot, cost_inr) -> Non
         with TOKEN_LOG.open("a", newline="", encoding="utf-8") as f:
             csv.writer(f).writerow([
                 datetime.now().isoformat(timespec="seconds"), call_type, subject, grade,
-                ch, title, it, ot, it + ot, round(cost_inr, 4), 0, 0,
+                ch, title, it, ot, it + ot, round(cost_inr, 4),
+                int(cache_write or 0), int(cache_read or 0),
             ])
     except Exception:
         pass
@@ -632,7 +709,8 @@ def prepare_job(subject_folder: str, grade_folder: str, ch: int, *, periods=None
 def finish_generation(job: dict, full: str, it: int, ot: int, elapsed: float, *,
                       model: str, ts: str, mode: str = "one", tag: str = "",
                       no_install: bool = False, price_mult: float = 1.0,
-                      cost_inr: float | None = None) -> tuple[str, list[str]]:
+                      cost_inr: float | None = None,
+                      cache_write: int = 0, cache_read: int = 0) -> tuple[str, list[str]]:
     """Everything after the model answers: raw file, parse+repair, validate, install,
     ledger, token log. `price_mult` is 0.5 on the Message Batches path — the ONE thing
     that legitimately differs between the two callers."""
@@ -672,7 +750,8 @@ def finish_generation(job: dict, full: str, it: int, ot: int, elapsed: float, *,
         print(f"  ⚠ {p}")
 
     log_token_log("variant_generation" if job["variant"] else "canonical_generation",
-                  subject_folder, grade_folder, ch, job["title"], it, ot, cost_inr)
+                  subject_folder, grade_folder, ch, job["title"], it, ot, cost_inr,
+                  cache_write=cache_write, cache_read=cache_read)
     log_ledger({
         "ts": ts, "mode": mode, "tag": tag, "model": model,
         "variant": job["variant"] or "",

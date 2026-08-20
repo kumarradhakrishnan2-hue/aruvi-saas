@@ -25,7 +25,7 @@ from ...genon.carriers import is_synthesis as _is_synth   # the token OR the boo
 from . import anchor_resolver as _anchor_resolver         # ARV-D-181 — one join, two paths
 from ...normalize import (
     as_list, band_lines, classify_stimulus, normalize_options, phases_from, text_lines, group_label_from_unit,
-    SYNTHESIS_DISPLAY,
+    typed_visual_aids, SYNTHESIS_DISPLAY,
 )
 from ...ports import Prompt
 from ...view_model import (
@@ -289,7 +289,11 @@ class MathematicsSubject:
                 meta={"section_goal": p.get("section_goal", ""),
                       "pedagogical_method": p.get("pedagogical_method", ""),
                       "materials": p.get("materials", ""),
-                      "visual_aids": p.get("visual_aids", ""),
+                      # TYPED since 2026-08-19: the re-authored closing synthesis carries
+                      # its problem/solution table here rather than in teacher_notes, so
+                      # the Material tab shows it as a table and the exports print it as
+                      # one. Same normalizer science uses — tables are split ONCE, here.
+                      "visual_aids": typed_visual_aids(p.get("visual_aids")),
                       # Prep has NO section axis (all periods collapse to a single "Lesson"
                       # group), so the renderer's Overview "Section" row would otherwise read
                       # "Lesson" for every unit. Carry the period's OWN anchored section — the

@@ -1,0 +1,45 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Patterns at Work: A Chapter Synthesis",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all three problems at once on the board; students work individually for 18 minutes with full written working. They then compare in groups of three — any disagreement is resolved step by step, not by voting. One student per group presents a solution; after each presentation, the class names the chapter method used. Problem 1 needs the gnomon/odd-numbers method: summing the first n odd numbers by recognising the L-shaped partition of an n×n square. Watch for students who add term by term rather than using the square insight. Problem 2 needs the cross-sequence relation method: recognising that two consecutive triangular numbers add to a square. A common error is treating T₅ + T₆ as T₁₁ — insist on computing each triangular number separately. Problem 3 needs the shape-sequence method: reading a number sequence out of a growing shape by counting a structural feature at each stage. Watch for off-by-one errors in the edge count and for students who multiply rather than reason stage by stage.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | The first n odd numbers always sum to n². Use this to find the sum 1 + 3 + 5 + 7 + 9 + 11 + 13 + 15 + 17 + 19, and then find the sum 1 + 3 + 5 + … + 39. | The first sum has 10 terms (odd numbers from 1 to 19), so it equals 10² = 100. The second sum runs from 1 to 39; the nth odd number is 2n − 1, so 2n − 1 = 39 gives n = 20. The sum equals 20² = 400.\n2 | The triangular numbers are 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, … Adding any two consecutive triangular numbers gives a square number. Verify this for the 5th and 6th triangular numbers, and state which square you get. | The 5th triangular number is T₅ = 15 and the 6th is T₆ = 21. Their sum is 15 + 21 = 36 = 6². The result is the 36th square — equivalently, the square of 6, because adding the nth and (n+1)th triangular numbers always gives (n+1)²: here 5² + 5 + 6 = 36 = 6². (Pictorially, a triangle of 15 dots and a triangle of 21 dots fit together into a 6 × 6 square grid.)\n3 | A complete graph is drawn at each stage: stage 1 has 2 nodes, stage 2 has 3 nodes, stage 3 has 4 nodes, and so on, with every node connected to every other node by a line. Count the number of lines at stages 1, 2, 3, 4, and 5. Write the sequence of line-counts and name it. | At stage k the graph has k + 1 nodes. Each new node connects to all previous ones, adding k new lines to the count from stage k − 1. Stage 1 (2 nodes): 1 line. Stage 2 (3 nodes): 1 + 2 = 3 lines. Stage 3 (4 nodes): 3 + 3 = 6 lines. Stage 4 (5 nodes): 6 + 4 = 10 lines. Stage 5 (6 nodes): 10 + 5 = 15 lines. The sequence 1, 3, 6, 10, 15 is the triangular numbers."
+      }
+    ],
+    "materials": [
+      "Blackboard or whiteboard and chalk or markers",
+      "Notebook and pencil"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "The teacher writes all three problems on the board and reads each aloud. No hints are given. Students open their notebooks to a fresh page and begin working individually."
+      },
+      {
+        "minutes": "3-21",
+        "activity": "Individual working time. Every student writes full working for each problem — not just answers. The room is quiet. The teacher circulates, confirming that students are writing steps, and prompts any student who is stuck with 'Draw a picture' or 'Write the first few terms' — nothing more."
+      },
+      {
+        "minutes": "21-31",
+        "activity": "Students form groups of three and compare their working. Where answers differ, the group reconstructs both solution paths step by step to find where they diverge and which is correct. Groups that finish early are asked to check whether they can give a pictorial reason for any of their answers."
+      },
+      {
+        "minutes": "31-38",
+        "activity": "One volunteer per group presents one problem at the board, reading the steps aloud. After each presentation the teacher asks the class: 'Which chapter method did this solution use?' — students name it (odd-numbers-sum-to-squares; consecutive-triangular-numbers-make-a-square; shape-sequence-encodes-a-number-sequence). Brief corrections are made if needed; the group that solved it differently explains the discrepancy."
+      },
+      {
+        "minutes": "38-40",
+        "activity": "Closing statement from the teacher: 'Every problem today yielded because there was a pattern underneath — a pattern we could see, name, and trust. That is the one idea this chapter has been building: mathematics is the search for patterns and for the reasons they hold.' No further task is set."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

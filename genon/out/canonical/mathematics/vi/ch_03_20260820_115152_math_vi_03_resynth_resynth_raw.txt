@@ -1,0 +1,46 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Four Problems, One Chapter",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems at once by reading each band aloud and writing the problems on the board. Students work individually with full written working for the first stretch, then compare in groups of three — any disagreement is reconstructed step by step before a presenter takes it to the class. After each presentation the class names the chapter method the solution rested on; write those method names on the board as they accumulate. Problem 1 needs supercell reasoning (a cell is a supercell only if it exceeds every adjacent neighbour; the largest number is always a supercell). Problem 2 needs digit-sum construction (build the number to hit a target digit sum, then check the size constraint). Problem 3 needs the Kaprekar process (form largest and smallest rearrangements, subtract, repeat). Problem 4 needs estimation reasoning (judge a claimed count against a rate-and-time calculation). Watch for: in Problem 1, students who check only one neighbour; in Problem 2, students who confuse digit sum with the number itself; in Problem 3, students who forget to pad a four-digit result with a leading zero before rearranging; in Problem 4, students who treat the estimate as exact rather than as a justified comparison.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | A single row has five cells holding the numbers 41, 78, 65, 78, 52 from left to right. Which cells are supercells? The number 78 appears twice — can both copies be supercells? | Check each cell against its immediate neighbours. Cell 1 (41): right neighbour 78 > 41, so not a supercell. Cell 2 (78): left neighbour 41 < 78 and right neighbour 65 < 78, so it IS a supercell. Cell 3 (65): neighbours 78 and 78 are both greater, so not a supercell. Cell 4 (78): left neighbour 65 < 78 and right neighbour 52 < 78, so it IS a supercell. Cell 5 (52): left neighbour 78 > 52, so not a supercell. Both copies of 78 are supercells because each exceeds all of its own adjacent neighbours — the definition requires a cell to beat its own neighbours, not every cell in the row. Two supercells: positions 2 and 4.\n2 | Write the largest possible 4-digit number whose digit sum is 13. Then write the smallest 5-digit number whose digit sum is also 13. | Largest 4-digit number with digit sum 13: place the largest possible digit in the thousands place and fill the rest. Use digits 9, 4, 0, 0 → 9400. Check: 9+4+0+0 = 13. No rearrangement of four digits summing to 13 gives a larger number (9+3+1+0=13 gives 9310 < 9400; 9+2+2+0=13 gives 9220 < 9400). Answer: 9400. Smallest 5-digit number with digit sum 13: use digits 1, 0, 0, 3, 9 in ascending order of significance → ten-thousands digit as small as possible while keeping the number five digits: 10039. Check: 1+0+0+3+9 = 13. Answer: 10039.\n3 | Apply the Kaprekar process to the number 4-digit number 3,5,2,1 (i.e., 3521) for two rounds. What number do you get after the second round? | Round 1: largest arrangement of digits 3,5,2,1 = 5321; smallest = 1235. Subtract: 5321 − 1235 = 4086. Round 2: digits of 4086 are 4,0,8,6. Largest = 8640; smallest = 0468 = 0468, treated as 0468 (pad to four digits). Subtract: 8640 − 0468 = 8172. After two rounds the result is 8172. (Continuing from 8172 will eventually reach 6174 in further rounds.)\n4 | Priya says she has blinked about 50,000 times today. A person blinks roughly 15 times per minute. Is Priya's claim reasonable if she has been awake for 14 hours today? | Estimate total blinks: 15 blinks/minute × 60 minutes/hour × 14 hours = 15 × 840 = 12,600 blinks. Priya's claim of 50,000 is nearly four times this estimate. The claim is not reasonable — a reasonable estimate for 14 waking hours is about 12,000 to 13,000 blinks."
+      }
+    ],
+    "materials": [
+      "Chalkboard or whiteboard",
+      "Chalk or markers",
+      "Rough paper for working"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "Teacher reads all four problems aloud from the board, one at a time, pausing briefly after each. Students may ask only for a word to be re-read, not for a method hint. The class confirms it has understood what each problem is asking before individual work begins."
+      },
+      {
+        "minutes": "3-18",
+        "activity": "Students work individually, writing out full working for all four problems. Teacher circulates without confirming or correcting answers, asking only 'what does the definition say?' or 'what did you get at this step?' to keep students in their own reasoning."
+      },
+      {
+        "minutes": "18-27",
+        "activity": "Groups of three compare their working. Any disagreement on a step is reconstructed — the student who got a different answer re-works that step aloud while the others follow. Groups settle on a single agreed solution for each problem before the next phase."
+      },
+      {
+        "minutes": "27-38",
+        "activity": "One student presents the group's solution for each problem in turn. After each presentation the class names the chapter method the solution used. Teacher writes the method names on the board: Supercell rule / Digit-sum construction / Kaprekar process / Estimation reasoning. Disagreements between groups are resolved by returning to the definition or the calculation, not by vote."
+      },
+      {
+        "minutes": "38-40",
+        "activity": "Teacher reads the closing sentence aloud and invites one student to say it back in their own words: numbers have structure — patterns in digits, positions, and processes — and that structure is what made every problem in this chapter solvable."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

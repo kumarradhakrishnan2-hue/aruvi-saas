@@ -1,285 +1,523 @@
-ARUVI — CLOSING SYNTHESIS RE-AUTHORING · SCIENCE · MIDDLE STAGE
+ARUVI — CLOSING SYNTHESIS RE-AUTHORING · MATHEMATICS · MIDDLE STAGE
 
 You are re-writing ONE unit: the closing whole-chapter synthesis of a chapter's fullest
-lesson plan. This unit is served in two situations, and it must be excellent in both:
+lesson plan. It is served in two situations and must be excellent in both:
 
 1. As the FINAL unit of the fullest plan — the class finishes the chapter with it.
 2. As ONE EXTRA 45-minute period appended to a SHORTER complete plan of the same
-   chapter, whose own final unit (given below) already consolidated the chapter
+   chapter, whose own final unit (given below) already drew the chapter together
    yesterday.
 
-THE UNIT YOU ARE WRITING closes the chapter through one fresh, concrete application: a
-scenario, artefact, dataset, place or design problem the chapter itself never uses. The
-class brings the chapter's concepts; the unit puts them to work in the new setting, and
-what the task shows IS the synthesis — the chapter drawn together by using it whole, not
-by summarising it.
+THE UNIT YOU ARE WRITING closes the chapter by putting its methods to work on a small set
+of problems the teacher poses. Solving them IS the synthesis: the chapter is drawn
+together by being used, not by being recited.
 
 PROPERTIES OF THE UNIT:
-- It opens directly onto its fresh setting: the first band presents the new material and
-  puts the first question to the class.
-- Every concept or skill it calls on appears in EVERY unit-title map given below — the
-  shorter plans differ in what they cover; write only to what all of them share.
-- Its vehicle (the kind of task: scenario cards, argument construction, data table,
-  concept map, design brief, error correction, narrative trace…) is different in kind
-  from every FINAL UNIT given below, and it uses none of the specific stories, quotes,
-  objects, questions or catchphrases those final units use.
-- Its closing band consolidates what THE TASK ITSELF showed, naming the chapter's central
-  ideas as the reason the task worked — earned closure, not ceremony.
-- All materials are in its own `materials` list: things any classroom has or the unit
-  itself makes.
-- Band narration never states a quantity of minutes or any calendar time — the band's
-  `minutes` field carries the clock.
+- It carries TWO TO FOUR problems, each reaching for a DIFFERENT major method of the
+  chapter, and together spanning its main strands. Each problem is stated in full, with
+  its numbers, inside the band that poses it — a teacher reads the band aloud and the
+  class can start.
+- The problems are the TEACHER'S OWN, written for this unit and posed on the board. The
+  mathematics in each is the chapter's, and nothing is invented or imported.
+- THE PROBLEMS AND THEIR SOLUTIONS LIVE IN ONE TABLE, in `visual_aids` — three columns,
+  `No. | Problem | Solution`, one row per problem. The Problem cell states the problem in
+  one or two plain sentences with its numbers. The Solution cell gives the answer and the
+  few steps that reach it, in plain words and figures — brief enough for a teacher to read
+  at a glance while the class works, and no longer than the problem it answers. This table
+  is the teacher's whole worked reference.
+- EACH PROBLEM IS WELL-POSED AND SELF-CONSISTENT. It states everything needed to solve it,
+  its data agree with each other and with the solution beside it, and it has one answer.
+  Where a count is named ("the four corner cells", "the six expressions you can form"),
+  that count is the number the problem's own conditions produce. Where a figure carries
+  measurements, they can all hold at once. Where a construction is described, the described
+  construction is the one the solution works on.
+- THE SOLUTION CELL IS THE SETTLED ANSWER. Work each problem out fully first; then write
+  only the route that reaches the answer and the answer itself. Trials that failed,
+  possibilities considered and rejected, re-checks and corrections belong to the working,
+  not to the page a teacher reads at the board. Every step written is a step that holds:
+  a justification names the fact it rests on, and never assumes what it is proving.
+- `teacher_notes` is SHORT — a few sentences at most. It says how the sitting is run and
+  what to watch for as students work; the mathematics is in the table, and is not repeated
+  here. Name, for each problem, only the chapter method it needs — the method its own
+  solution actually uses — and warn only about errors that problem can produce.
+- Its `textbook_items_in_class` and `homework` are both `[]`, and its band text names no
+  page, no exercise and no book item. The class works from the board.
+- Its shape gives every student a full attempt before any answer is public: the problems
+  are posed, worked individually with full working, compared in small groups where a
+  disagreement is reconstructed step by step, and then presented — and each presentation
+  is followed by the class NAMING the chapter method the solution rested on.
+- The closing band states the chapter's one idea in a sentence, as the reason the problems
+  yielded — earned closure, not ceremony.
+- It is ONE sitting and weighs the same as any other: 45 minutes, a handful of
+  bands, materials any classroom has. Depth here is the demand of the problems, never the
+  quantity of material.
+- Every method it calls on appears in EVERY unit-title map given below — the shorter plans
+  differ in what they reach, so write only to what all of them share, and treat the
+  SHORTEST map as binding.
+- Its vehicle differs in kind from every FINAL UNIT given below, and it reuses none of
+  their specific contexts, objects, puzzles or framing questions.
+- Band narration never states a quantity of minutes and never points beyond this sitting —
+  the band's `minutes` field carries the clock.
 
 OUTPUT — exactly this JSON object, nothing else:
 {
   "synthesis_unit": {
     "activity_title": "…",
-    "activity_description": "…",
-    "pedagogical_approach": "…",
-    "teacher_notes": "…",
+    "pedagogical_method": "one of: Discovery · Problem-solving · Play-way · Inductive ·
+      Deductive — the method this unit runs on",
+    "section_goal": "recall | reason | apply — the goal this unit works at",
+    "teacher_notes": "a few sentences: how the sitting runs, what to watch for, and the
+      chapter method each problem needs — NOT the solutions, which are in the table",
+    "visual_aids": [
+      {"type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | … | …\n2 | … | …"}
+    ],
     "materials": ["…"],
     "time_bands": [
       {"minutes": "0-N", "activity": "…"},
       …bands in sequence, integer boundaries, last band ends at 45…
     ],
+    "textbook_items_in_class": [],
     "homework": []
   }
 }
-No other keys — the platform carries the unit's number, stage and duration itself.
+No other keys — the platform carries the unit's number, duration, section coverage and
+synthesis marker itself.
 
 CHAPTER SUMMARY:
 
-Chapter 10: Light: Mirrors and Lenses
-
-Chapter 10 introduces students to curved mirrors (concave and convex) and lenses (convex and concave), building on prior learning about plane mirrors and straight-line travel of light from Grade 7. The chapter is structured as a progression from mirror types and their image characteristics, through the laws of reflection, to the parallel world of lenses, with real-world applications woven throughout.
-
-10.1 What Are Spherical Mirrors?
-
-This section introduces spherical mirrors as a type of curved mirror whose reflecting surface forms part of a hollow glass sphere. The section opens with a student activity using a shiny metallic spoon as an improvised curved mirror to observe the difference between images formed by its inward-curving (inner) and outward-curving (outer) surfaces. The inner surface produces an inverted image while the outer surface produces an erect but smaller image. The chapter defines a concave mirror as one whose reflecting surface curves inwards and a convex mirror as one whose reflecting surface curves outwards, providing schematic representations for each. A "step further" box clarifies that spherical mirrors are manufactured by grinding a flat glass surface into a curve and applying a reflective coating, not by slicing a hollow sphere. Activity 10.2 asks students to distinguish between concave and convex mirrors by viewing them from the side to identify the direction of curvature.
-
-10.2 What Are the Characteristics of Images Formed by Spherical Mirrors?
-
-This section examines how image characteristics change with the distance of the object from a concave or convex mirror. Activity 10.3 guides students to place a small object in front of both mirror types at a short distance, then gradually move it farther away while observing changes in image size and orientation. For a concave mirror, the image is erect and enlarged when the object is close, but becomes inverted and progressively smaller as the object moves away. For a convex mirror, the image is always erect and diminished regardless of object distance, though the size decreases slightly as the object moves farther. The section distinguishes this behaviour from a plane mirror, which always produces an erect image of the same size, and notes that lateral inversion is seen in all three mirror types. Real-world uses of concave mirrors covered include torch reflectors, car and scooter headlights, and the dentist's mirror (which produces an enlarged view when held close). Real-world uses of convex mirrors include vehicle side-view mirrors (which provide a wider field of view and erect image of traffic behind), road safety mirrors at intersections, and surveillance mirrors in large stores. A "step further" box notes that modern reflecting telescopes use a large concave mirror as the primary mirror.
-
-10.3 What Are the Laws of Reflection?
-
-This section revisits the reflection activity from Grade 7 and extends it to formally establish the two laws of reflection. Activity 10.4 uses a plane mirror, a comb-and-torch setup to produce a narrow beam of light, and a white paper sheet to trace incident and reflected beams at multiple angles. Students draw the normal at the point of incidence and measure the angle of incidence and angle of reflection for several trials, discovering that these angles are always equal — this is the first law of reflection. Activity 10.5 extends this by using a sheet of chart paper with part bent at the edge of the table; the reflected beam disappears when the paper is bent, demonstrating that the incident ray, normal, and reflected ray all lie in the same plane — this is the second law. The section states that both laws are valid for all mirror types, plane and spherical. Activity 10.6 uses multiple parallel beams (multiple comb slits) to show that parallel beams reflecting off a plane mirror remain parallel, off a concave mirror they converge, and off a convex mirror they diverge. Activity 10.7 exploits concave mirror convergence by focusing sunlight onto paper to demonstrate that the concentrated light generates enough heat to ignite the paper; a "Safety First" warning is included. A "step further" box introduces solar concentrators as devices that use mirrors or lenses to concentrate sunlight for generating steam, electricity, and industrial heat, including solar furnaces that can melt steel.
-
-10.4 What Is a Lens?
-
-This section transitions from reflective to refractive optics, introducing lenses as pieces of transparent material with curved surfaces that refract rather than reflect light. Activity 10.8 demonstrates the lens effect using a water drop on an oiled glass strip: the curved outer surface of the water drop causes letters placed beneath it to appear enlarged, just as a magnifying glass does. The section defines a convex lens as one thicker at the middle than the edges (a converging lens) and a concave lens as one thicker at the edges than the middle (a diverging lens). Activity 10.9 explores image characteristics through both lens types: a convex lens produces an erect and enlarged image when the object is close but an inverted image when the object is farther away; a concave lens always produces an erect and diminished image. Activity 10.10 uses parallel beams through a flat glass plate, a convex lens, and a concave lens in sequence to confirm that the flat plate leaves the beam unchanged, the convex lens converges it, and the concave lens diverges it. Activity 10.11 repeats the paper-burning demonstration from Activity 10.7 using a convex lens in place of the concave mirror, confirming that a convex lens can also concentrate sunlight sufficiently to ignite paper. The section closes with everyday applications of lenses: eyeglasses for vision correction, cameras, telescopes, microscopes, and the flexible convex lens in the human eye. The end-of-chapter "Keep the curiosity alive" section includes exercises requiring angle calculations, matching images to mirror types, matching images to lens types, assertion-reason questions about convex mirrors, and a practical magnifying glass activity.
+{
+  "stage": "middle",
+  "subject": "mathematics",
+  "grade": "viii",
+  "chapter_number": 10,
+  "chapter_title": "Proportional Reasoning–2",
+  "sections": [
+    { "ref": "section 3.1", "title": "Proportionality—A Quick Recap", "section_goal": ["recall"] },
+    { "ref": "section 3.2", "title": "Ratios in Maps", "section_goal": ["apply"] },
+    { "ref": "section 3.3", "title": "Ratios with More than 2 Terms", "section_goal": ["recall"] },
+    { "ref": "section 3.4", "title": "Dividing a Whole in a Given Ratio", "section_goal": ["apply"] },
+    { "ref": "section 3.5", "title": "A Slice of the Pie", "section_goal": ["apply"] },
+    { "ref": "section 3.6", "title": "Inverse Proportions", "section_goal": ["reason", "apply"] }
+  ],
+  "prose_summary": "Section 3.1 recalls and identifies the core principle of proportional relationships: two ratios a:b and c:d are proportional if the cross-products are equal (a×d = b×c), or equivalently a/c = b/d. The idli batter example (Viswanath 6:3 vs Puneet 4:2) grounds the definition in a real-world cooking scenario and confirms both mixtures maintain the same 2:1 ratio, making the proportional relationship concrete before formal notation is introduced.\n\nSection 3.2 applies proportional reasoning to map scales. It defines the Representative Fraction (RF) as the ratio of map distance to actual ground distance, using RF 1:60,00,000 as the working example (1 cm on map equals 60 km on ground). Students use a ruler on a printed map of South India to measure distances between city pairs (Bengaluru–Chennai, Mangaluru–Chennai) and convert using the RF. A teacher-guided Map Making Activity directs students to sketch their own classroom to scale (1:50), placing furniture and fixtures at proportionally correct positions using appropriate symbols.\n\nSection 3.3 extends ratio notation beyond two terms and defines multi-term proportionality. Using a four-ingredient spice mix (coriander:chillies:dal:fenugreek :: 8:4:2:1), it shows how all terms scale by the same factor when quantities change proportionally. The general rule a/p = b/q = c/r = d/s formalises the relationship. Two worked examples apply multi-term ratios to mixing paint shades (Red:Blue:White :: 2:3:5, find red and blue for a given volume of white) and cement concrete (cement:sand:gravel :: 1:1.5:3, find total bags for 3 bags of cement).\n\nSection 3.4 solves for individual components when a whole quantity is divided in a given multi-term ratio. It extends the two-term division algorithm — divide the whole by the sum of ratio terms, then multiply each term — to three or more terms, stating the general formula: each part equals x × (its ratio term) / (sum of all ratio terms). Three worked examples cover finding component quantities in 110 units of concrete (ratio 1:1.5:3), finding ml of each paint colour for 50 ml of purple (ratio 2:3:5), and constructing a triangle whose angles are in ratio 1:3:5 (using the angle-sum constraint of 180°).\n\nSection 3.5 applies ratio-based division to pie chart construction. Starting from a grade-distribution table (A:B:C:D:E :: 12:10:8:6:4), it reduces the ratio to simplest form (6:5:4:3:2) using the HCF, then divides 360° proportionally to obtain sector angles (108°, 90°, 72°, 54°, 36°). A step-by-step construction procedure guides students to draw a circle, mark a radius, and measure successive angles with a protractor to complete and colour the pie chart. The section connects data visualisation directly back to the proportional division framework established in section 3.4.\n\nSection 3.6 defines inverse proportions and applies the relationship to a range of word problems. It begins by contrasting inverse with direct proportion: using a speed-time table (walk 5 km/h / 18h, bicycle 15/6, motorcycle 30/3, car 60/1.5), it shows that when one quantity increases by factor n, the other decreases by the same factor n, so their product xy = k (constant distance of 90 km). The formal rule x₁y₁ = x₂y₂ is derived and then applied across six worked examples — workers-and-days road laying, pump-and-hours tank filling, food provisions for expanding school population, and combined work rates (Ram 1hr + Shyam 1.5hr cutting vegetables together, yielding 3/5 hr). The final example introduces unit-work-rate reasoning as a bridge between inverse and direct proportionality, requiring students to identify which relationship governs each sub-step.",
+  "enumerated_activities": [
+    {
+      "id": "A-1",
+      "source_section": "section 3.2",
+      "book_ref": "Map Making Activity, p.57",
+      "description": "Students make a sketch of their classroom at scale 1:50, marking locations of teacher's desk, blackboard, fans, lights, and other objects using appropriate symbols."
+    }
+  ],
+  "enumerated_worked_examples": [
+    {
+      "id": "WE-1",
+      "source_section": "section 3.3",
+      "book_ref": "Example 1, section 3.3 p.58",
+      "description": "Purple paint mixed in ratio Red:Blue:White :: 2:3:5; given 10 litres of white, find litres of red and blue."
+    },
+    {
+      "id": "WE-2",
+      "source_section": "section 3.3",
+      "book_ref": "Example 2, section 3.3 p.58",
+      "description": "Cement concrete ratio 1:1.5:3; given 3 bags of cement, find total bags of concrete mixture."
+    },
+    {
+      "id": "WE-3",
+      "source_section": "section 3.4",
+      "book_ref": "Example 3, section 3.4 p.59",
+      "description": "110 units of concrete needed in ratio 1:1.5:3; find units of cement, sand, and gravel."
+    },
+    {
+      "id": "WE-4",
+      "source_section": "section 3.4",
+      "book_ref": "Example 4, section 3.4 p.59",
+      "description": "50 ml of purple paint in ratio 2:3:5; find ml of red, blue, and white paint."
+    },
+    {
+      "id": "WE-5",
+      "source_section": "section 3.4",
+      "book_ref": "Example 5, section 3.4 p.60",
+      "description": "Construct a triangle with angles in ratio 1:3:5; compute each angle using angle-sum = 180°."
+    },
+    {
+      "id": "WE-6",
+      "source_section": "section 3.6",
+      "book_ref": "Example 1, section 3.6 p.63",
+      "description": "5 workers move 4500 bricks in a day; find number of workers needed to move 18000 bricks in a day (direct proportion / rule of three)."
+    },
+    {
+      "id": "WE-7",
+      "source_section": "section 3.6",
+      "book_ref": "Example 2, section 3.6 p.63",
+      "description": "Motorcycle at 30 km/h takes 3 hours Lucknow–Kanpur; introduces speed-time table to show inverse relationship, leading to the xy=k definition."
+    },
+    {
+      "id": "WE-8",
+      "source_section": "section 3.6",
+      "book_ref": "Example 3, section 3.6 p.65",
+      "description": "20 workers complete road in 4 days; find days needed for 10 workers using x₁y₁ = x₂y₂."
+    },
+    {
+      "id": "WE-9",
+      "source_section": "section 3.6",
+      "book_ref": "Example 4, section 3.6 p.66",
+      "description": "2 pumps fill tank in 18 hours; find time for 4 pumps using inverse proportion."
+    },
+    {
+      "id": "WE-10",
+      "source_section": "section 3.6",
+      "book_ref": "Example 5, section 3.6 p.66",
+      "description": "Food provisions for 80 students for 15 days; 20 more students join — find how many days provisions last."
+    },
+    {
+      "id": "WE-11",
+      "source_section": "section 3.6",
+      "book_ref": "Example 6, section 3.6 p.66",
+      "description": "Ram cuts vegetables in 1 hour, Shyam in 1.5 hours; find combined time using unit-work rates and direct proportion."
+    }
+  ],
+  "enumerated_exercises": [
+    {
+      "id": "E-1",
+      "source_section": "section 3.4",
+      "book_ref": "Figure it Out Q1, section 3.4 p.60",
+      "description": "Cricket practice session 150 min in ratio warm-up:batting:bowling:fielding :: 3:4:3:5; find time for each activity."
+    },
+    {
+      "id": "E-2",
+      "source_section": "section 3.4",
+      "book_ref": "Figure it Out Q2, section 3.4 p.60",
+      "description": "Library books Odiya:Hindi:English :: 3:2:1; given 288 Odiya books, find Hindi and English counts."
+    },
+    {
+      "id": "E-3",
+      "source_section": "section 3.4",
+      "book_ref": "Figure it Out Q3, section 3.4 p.60",
+      "description": "100 coins in ratio ₹10:₹5:₹2:₹1 :: 4:3:2:1; find total monetary value."
+    },
+    {
+      "id": "E-4",
+      "source_section": "section 3.4",
+      "book_ref": "Figure it Out Q4, section 3.4 p.60",
+      "description": "Construct triangle with sidelengths in ratio 3:4:5; discuss whether all such triangles are congruent (Math Talk)."
+    },
+    {
+      "id": "E-5",
+      "source_section": "section 3.4",
+      "book_ref": "Figure it Out Q5, section 3.4 p.60",
+      "description": "Can a triangle be constructed with sidelengths in ratio 1:3:5? Justify why or why not."
+    },
+    {
+      "id": "E-6",
+      "source_section": "section 3.5",
+      "book_ref": "Figure it Out Q1, section 3.5 p.62",
+      "description": "360 people vote on favourite season (90 summer, 120 rainy, rest winter); draw pie chart."
+    },
+    {
+      "id": "E-7",
+      "source_section": "section 3.5",
+      "book_ref": "Figure it Out Q2, section 3.5 p.62",
+      "description": "Draw pie chart from TV channel preference data: Entertainment 50%, Sports 25%, News 15%, Information 10%."
+    },
+    {
+      "id": "E-8",
+      "source_section": "section 3.5",
+      "book_ref": "Figure it Out Q3, section 3.5 p.62",
+      "description": "Survey classmates on favourite subject; record data in table across 7 subjects and construct pie chart."
+    },
+    {
+      "id": "E-9",
+      "source_section": "section 3.6",
+      "book_ref": "Figure it Out Q1, section 3.6 p.65",
+      "description": "Identify which of three x-y tables shows inverse proportion by checking whether xy is constant. (Three sub-tables: (i) not inverse, (ii) direct proportion, (iii) inverse proportion.)"
+    },
+    {
+      "id": "E-10",
+      "source_section": "section 3.6",
+      "book_ref": "Figure it Out Q2, section 3.6 p.65",
+      "description": "Fill empty cells in an inverse proportion table (x: 16, 12, ?, 36; y: 9, ?, 48, ?)."
+    },
+    {
+      "id": "E-11",
+      "source_section": "section 3.6",
+      "book_ref": "Figure it Out Q1, section 3.6 p.67",
+      "description": "Classify six real-world quantity pairs as inverse proportion or not (taps-time, painters-days, distance-petrol, cyclist speed-time, cloth length-price, pages-reading time)."
+    },
+    {
+      "id": "E-12",
+      "source_section": "section 3.6",
+      "book_ref": "Figure it Out Q2, section 3.6 p.67",
+      "description": "24 pencils cost ₹120; find cost of 20 pencils."
+    },
+    {
+      "id": "E-13",
+      "source_section": "section 3.6",
+      "book_ref": "Figure it Out Q3, section 3.6 p.67",
+      "description": "Tank water sufficient for 20 families for 6 days; 10 more families move in — find how long water lasts; state assumptions (Math Talk)."
+    },
+    {
+      "id": "E-14",
+      "source_section": "section 3.6",
+      "book_ref": "Figure it Out Q4, section 3.6 p.67",
+      "description": "Read pie charts showing sleep proportions for 8 living beings; select appropriate hours from a given list (15, 2.5, 20, 8, 3.5, 13, 10.5, 18)."
+    },
+    {
+      "id": "E-15",
+      "source_section": "section 3.6",
+      "book_ref": "Figure it Out Q5, section 3.6 p.68",
+      "description": "Analyse pie chart of children's school transport modes (Walk 90°, Bus 120°, Cycle 60°, Two-wheeler 60°, Car 30°); answer four sub-questions including finding number of children if 18 travel by car."
+    },
+    {
+      "id": "E-16",
+      "source_section": "section 3.6",
+      "book_ref": "Figure it Out Q6, section 3.6 p.68",
+      "description": "3 workers paint fence in 4 days; one more worker joins — find days to finish; state assumptions."
+    },
+    {
+      "id": "E-17",
+      "source_section": "section 3.6",
+      "book_ref": "Figure it Out Q7, section 3.6 p.68",
+      "description": "6 hours to fill 2 same-size tanks with a pump; find time to fill 5 such tanks with the same pump."
+    },
+    {
+      "id": "E-18",
+      "source_section": "section 3.6",
+      "book_ref": "Figure it Out Q8, section 3.6 p.68",
+      "description": "25 rows × 12 chairs per row; rearrange with 20 chairs per row — find new number of rows."
+    },
+    {
+      "id": "E-19",
+      "source_section": "section 3.6",
+      "book_ref": "Figure it Out Q9, section 3.6 p.68",
+      "description": "8 periods × 45 minutes; find period duration if school has 9 periods (total school hours unchanged)."
+    },
+    {
+      "id": "E-20",
+      "source_section": "section 3.6",
+      "book_ref": "Figure it Out Q10, section 3.6 p.68",
+      "description": "Small pump fills tank in 3 hours, large pump in 2 hours; find time if both work together."
+    },
+    {
+      "id": "E-21",
+      "source_section": "section 3.6",
+      "book_ref": "Figure it Out Q11, section 3.6 p.68",
+      "description": "42 machines produce toys in 63 days; find machines needed to produce same number in 54 days."
+    },
+    {
+      "id": "E-22",
+      "source_section": "section 3.6",
+      "book_ref": "Figure it Out Q12, section 3.6 p.68",
+      "description": "Car at 60 km/h reaches destination in 2 hours; find time at 80 km/h."
+    }
+  ],
+  "conceptual_demand": 2,
+  "activity_count": 1,
+  "demo_count": 0,
+  "exec_load": 1
+}
 
 
 ======================================================================
 
-THE FULLEST PLAN (15 units). The unit you write REPLACES its final unit, closing this arc:
+THE FULLEST PLAN (12 units). The unit you write REPLACES its final unit, closing this arc:
 
-U1: The Spoon Mirror: Inward and Outward Curves
-U2: Identifying Curvature: Which Way Does It Curve?
-U3: Moving Closer, Moving Away: Image Changes in a Concave Mirror
-U4: Always Erect, Always Smaller: The Convex Mirror
-U5: Mapping Image Behaviour: A Three-Mirror Comparison
-U6: Tracing Beams: Discovering the Equality of Angles
-U7: The Bent Paper Test: Coplanarity of Incident and Reflected Rays
-U8: Parallel Beams and Three Mirrors: Converge, Diverge, or Stay Parallel?
-U9: A Water-Drop Lens: Discovering Refraction at a Curved Surface
-U10: Close Up and Far Away: Image Characteristics Through Both Lens Types
-U11: Parallel Beams Through Glass: Flat Plate, Convex, and Concave Lens
-U12: Burning Paper with Mirror and Lens: Applying Convergence
-U13: Angle Calculations and Assertion-Reason: Applying the Laws
-U14: Match the Image: Predicting Mirror and Lens Type from Description
+U1: Cross-Products and the Proportionality Test
+U2: Measuring Cities with a Representative Fraction
+U3: From Spice Mixes to the General Multi-Term Rule
+U4: Splitting Totals: The Division Algorithm in Action
+U5: Triangles and Coins: Ratio Division Beyond Measurement
+U6: From Grade Ratios to Pie Chart Sectors
+U7: Gathering and Charting Real Data
+U8: When One Goes Up, the Other Comes Down
+U9: Workers, Pumps and Provisions: Inverse Proportion at Work
+U10: Solving Inverse Proportion Problems Across Contexts
+U11: Combined Rates, Rows and Speeds: Extended Inverse Problems
 U<final>: ← the unit you are writing
 
-THE SHORTER PLANS (3). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
+THE SHORTER PLANS (2). Your unit may also be served right after any of their final units, all given here in full — write to what every title map shares, in a vehicle none of these final units uses.
 
 
---- PLAN OF 13 UNITS — unit-title map ---
-U1: The Spoon Mirror: First Encounter with Curved Surfaces
-U2: Curvature from the Side: Classifying Mirrors by Profile
-U3: Moving Away: How Distance Changes the Concave Mirror Image
-U4: Always Erect, Always Small: The Convex Mirror Investigation
-U5: Matching Images to Mirrors: Consolidation and Application
-U6: Tracing the Beam: Discovering the First Law of Reflection
-U7: The Bent Paper Test: Establishing the Second Law
-U8: Parallel Beams, Three Fates: Convergence, Divergence, and Parallel Passage
-U9: Igniting Paper with Sunlight: Concave Mirror as a Concentrator
-U10: A Drop of Water as a Lens: Discovering Refraction at a Curved Surface
-U11: Near and Far Through Lenses: Mapping Image Character by Distance
-U12: Parallel Beams Through Glass: Confirming Convergence and Divergence
-U13: Optical Reasoning Challenge: Predict, Explain, and Justify
+--- PLAN OF 10 UNITS — unit-title map ---
+U1: Reviving the Language of Ratios and Proportions
+U2: Reading the World at Scale — Map Distances and Classroom Plans
+U3: Spice Mixes and Paint Shades — Ratios Beyond Two Terms
+U4: Sharing the Whole — Algorithms for Multi-Term Division
+U5: Triangles by Ratio — Angles, Sides, and the Edge of Possibility
+U6: From Ratios to Sectors — Building a Pie Chart Step by Step
+U7: When More Means Less — Discovering the Inverse Relationship
+U8: Workers, Pumps, and Provisions — Applying Inverse Proportion
+U9: Combined Rates and Problem Variety — Mastering Inverse Proportion
+U10: Proportional Reasoning in Context — Extended Practice and Pie Chart Connections
 
 --- its FINAL unit, in full ---
 {
- "period_number": 13,
+ "period_number": 10,
  "period_duration_minutes": 45,
- "progression_stage": 5,
- "stage_label": "Explain and predict image formation by applying laws of reflection and converging/diverging behaviour across mirror and lens types",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "Optical Reasoning Challenge: Predict, Explain, and Justify",
- "activity_description": "Students receive a set of unfamiliar optical scenarios — an object placed at a specified distance from a named mirror or lens type — and must predict the image character, explain the mechanism using the laws of reflection or the converging/diverging principle, and justify real-world device choices by selecting and arguing for a particular optical element. They also work through the chapter's angle-calculation exercise.",
- "roles": [
+ "synthesis": false,
+ "textbook_segments": [
   {
-   "actor": "Students (Individual)",
-   "role_description": "Independently predict, explain, and justify answers to each scenario in writing, applying the laws and principles from across the chapter."
-  },
-  {
-   "actor": "Teacher",
-   "role_description": "Circulates during individual work, selects two or three contrasting responses for class discussion, and conducts the chapter's angle-calculation exercise as a whole-class review."
+   "ref": "section 3.6",
+   "title": "Inverse Proportions"
   }
  ],
+ "section_goal": "apply",
+ "activity_title": "Proportional Reasoning in Context — Extended Practice and Pie Chart Connections",
+ "pedagogical_method": "Problem-solving",
+ "textbook_items_in_class": [
+  {
+   "id": "E-13",
+   "type": "exercise",
+   "source_section": "section 3.6",
+   "book_ref": "Figure it Out Q3, section 3.6 p.67",
+   "description": "Tank water sufficient for 20 families for 6 days; 10 more families move in — find how long water lasts; state assumptions (Math Talk)."
+  },
+  {
+   "id": "E-14",
+   "type": "exercise",
+   "source_section": "section 3.6",
+   "book_ref": "Figure it Out Q4, section 3.6 p.67",
+   "description": "Read pie charts showing sleep proportions for 8 living beings; select appropriate hours from a given list (15, 2.5, 20, 8, 3.5, 13, 10.5, 18)."
+  },
+  {
+   "id": "E-15",
+   "type": "exercise",
+   "source_section": "section 3.6",
+   "book_ref": "Figure it Out Q5, section 3.6 p.68",
+   "description": "Analyse pie chart of children's school transport modes (Walk 90°, Bus 120°, Cycle 60°, Two-wheeler 60°, Car 30°); answer four sub-questions including finding number of children if 18 travel by car."
+  },
+  {
+   "id": "E-22",
+   "type": "exercise",
+   "source_section": "section 3.6",
+   "book_ref": "Figure it Out Q12, section 3.6 p.68",
+   "description": "Car at 60 km/h reaches destination in 2 hours; find time at 80 km/h."
+  }
+ ],
+ "homework": [],
  "time_bands": [
   {
-   "minutes": "0-5",
-   "activity": "Teacher presents the challenge framing: students will now apply everything from the chapter to novel scenarios rather than repeat familiar observations."
+   "minutes": "0–12",
+   "activity": "Figure it Out Q3, section 3.6 p.67 (\"Tank water sufficient for 20 families for 6 days; 10 more families move in — find how long water lasts; state assumptions....\"). Students solve and then list their assumptions explicitly in writing — a Math Talk that models real-world modelling habits."
   },
   {
-   "minutes": "5-28",
-   "activity": "Students individually work through four prediction-and-explanation scenarios: two involving mirrors (one concave at specified distance, one convex) and two involving lenses (one convex at close range, one concave), writing full causal justifications."
+   "minutes": "12–28",
+   "activity": "Figure it Out Q4, section 3.6 p.67 (\"Read pie charts showing sleep proportions for 8 living beings; select appropriate hours from a given list....\") and Figure it Out Q5, section 3.6 p.68 (\"Analyse pie chart of children's school transport modes....\"). Students read and interpret the pie charts, converting sector angles back to frequencies using the total-frequency anchor provided in Q5 (Car 30° → 18 children → total = 216)."
   },
   {
-   "minutes": "28-38",
-   "activity": "Whole-class discussion of two or three selected responses; teacher uses contrasting answers to highlight where causal reasoning is incomplete and models a complete justification."
+   "minutes": "28–38",
+   "activity": "Figure it Out Q12, section 3.6 p.68 (\"Car at 60 km/h reaches destination in 2 hours; find time at 80 km/h....\"). Students solve, identify the constant k = distance, and reflect on why increasing speed decreases time. The teacher invites students to pose a variant: 'What speed would halve the travel time?'"
   },
   {
-   "minutes": "38-45",
-   "activity": "Class works through the chapter's angle-calculation exercise items together, applying the first law of reflection to compute unknown angles and checking answers against the equality principle."
+   "minutes": "38–45",
+   "activity": "Whole-unit reflection: students write two sentences — one identifying a situation from everyday life where inverse proportion applies and one where direct proportion applies. Pairs share and the teacher collects selected responses to gauge depth of understanding."
   }
  ],
- "teacher_notes": "This closing unit is the place where the chapter's full progression — from observation through classification and law verification to causal application — is exercised together. The prediction-and-explanation format exposes students who have memorised image types without internalising the mechanism; a student who can classify images but not explain why the concave mirror produces an inverted image at distance has not yet reached the chapter's cognitive target. The angle-calculation exercise is a natural close because it requires the first law to be used as a tool, not merely stated.",
+ "teacher_notes": "The pie-chart questions (Q4, Q5) weave back to the construction work in section 3.5, reinforcing that reading a chart is the inverse of building one — both use the same proportional relationship between sector angle and frequency. In Q5, students who forget to find the total before answering sub-questions will get inconsistent answers; prompt them to find total children (360° ÷ 30° × 18 = 216) as the first move. Figure it Out Q12 is a clean speed-time closure that restates the xy = k structure in its simplest form.",
  "materials": [
-  "Printed scenario sheets with four novel optical problems",
-  "Chapter textbook (for angle-calculation exercise)",
-  "Pencils and notebooks"
- ],
- "homework": [
-  "Select one optical instrument mentioned in the chapter — telescope, dentist's mirror, vehicle side-view mirror, or eyeglasses — and write a paragraph explaining which mirror or lens type it uses, what image character is needed, and why the converging or diverging behaviour of that optical element makes it suitable for that instrument."
+  "Whiteboard and markers",
+  "Exercise books",
+  "Calculator",
+  "Textbook (for pie chart diagrams in Q4 and Q5)"
  ]
 }
 
---- PLAN OF 11 UNITS — unit-title map ---
-U1: Spoon as a Mirror: Discovering Two Curved Surfaces
-U2: Moving the Object, Watching the Image Change
-U3: Matching Real Uses to Mirror Properties
-U4: Tracing Beams and Measuring Angles: First Law of Reflection
-U5: The Bending Paper Test: Second Law and Coplanar Rays
-U6: Convergence in Action: Focusing Sunlight with a Concave Mirror
-U7: A Water-Drop Lens: Discovering Refraction Through a Curved Surface
-U8: Varying Distance Through a Lens: How Image Changes
-U9: Parallel Beams Through Lenses and Sunlight Convergence
-U10: Predicting Images Before Looking: Applying the Rules
-U11: Choosing the Right Optical Device for the Right Job
+--- PLAN OF 7 UNITS — unit-title map ---
+U1: Cross-Products, Cooking Ratios, and Map Scales
+U2: Spice Mix to Paint: Multi-Term Ratio Rules
+U3: Dividing Totals: Concrete, Paint, and Triangle Angles
+U4: From Ratio to Sector: Building a Pie Chart Step by Step
+U5: Constant Product, Contrasting Patterns: Building the xy = k Rule
+U6: Workers, Pumps, Provisions: Applying x₁y₁ = x₂y₂
+U7: Extended Inverse Problems: Chairs, Tanks, Machines, and Combined Work
 
 --- its FINAL unit, in full ---
 {
- "period_number": 11,
+ "period_number": 7,
  "period_duration_minutes": 45,
- "progression_stage": 5,
- "stage_label": "Explain and predict image formation by applying convergence/divergence principles",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "Choosing the Right Optical Device for the Right Job",
- "activity_description": "Students are given descriptions of practical situations requiring a specific optical outcome — a dentist needing an enlarged view, an engineer designing a vehicle rear-view mirror, an optician correcting short-sightedness — and must identify the appropriate curved mirror or lens, state the required image property, and explain the choice in terms of converging or diverging behaviour.",
- "roles": [
+ "synthesis": false,
+ "textbook_segments": [
   {
-   "actor": "Students (Individual)",
-   "role_description": "Each student independently completes a device-selection card for each scenario, naming the optical device, stating the image property it produces, and providing a causal explanation using converging or diverging vocabulary."
+   "ref": "section 3.6",
+   "title": "Inverse Proportions"
+  }
+ ],
+ "section_goal": "apply",
+ "activity_title": "Extended Inverse Problems: Chairs, Tanks, Machines, and Combined Work",
+ "pedagogical_method": "Problem-solving",
+ "textbook_items_in_class": [
+  {
+   "id": "E-18",
+   "type": "exercise",
+   "source_section": "section 3.6",
+   "book_ref": "Figure it Out Q8, section 3.6 p.68",
+   "description": "25 rows × 12 chairs per row; rearrange with 20 chairs per row — find new number of rows."
   },
   {
-   "actor": "Students (Groups)",
-   "role_description": "Groups compare individual cards, discuss contested selections, and produce a jointly agreed card where members disagreed, citing the law or beam-behaviour principle that resolves the disagreement."
+   "id": "E-19",
+   "type": "exercise",
+   "source_section": "section 3.6",
+   "book_ref": "Figure it Out Q9, section 3.6 p.68",
+   "description": "8 periods × 45 minutes; find period duration if school has 9 periods (total school hours unchanged)."
   },
   {
-   "actor": "Teacher",
-   "role_description": "Selects one or two contested cases for whole-class discussion at the close, asking students to articulate their causal reasoning explicitly rather than accepting correct answers without justification."
+   "id": "E-20",
+   "type": "exercise",
+   "source_section": "section 3.6",
+   "book_ref": "Figure it Out Q10, section 3.6 p.68",
+   "description": "Small pump fills tank in 3 hours, large pump in 2 hours; find time if both work together."
+  },
+  {
+   "id": "E-21",
+   "type": "exercise",
+   "source_section": "section 3.6",
+   "book_ref": "Figure it Out Q11, section 3.6 p.68",
+   "description": "42 machines produce toys in 63 days; find machines needed to produce same number in 54 days."
+  },
+  {
+   "id": "WE-11",
+   "type": "worked_example",
+   "source_section": "section 3.6",
+   "book_ref": "Example 6, section 3.6 p.66",
+   "description": "Ram cuts vegetables in 1 hour, Shyam in 1.5 hours; find combined time using unit-work rates and direct proportion."
+  }
+ ],
+ "homework": [
+  {
+   "id": "E-22",
+   "type": "exercise",
+   "source_section": "section 3.6",
+   "book_ref": "Figure it Out Q12, section 3.6 p.68",
+   "description": "Car at 60 km/h reaches destination in 2 hours; find time at 80 km/h."
   }
  ],
  "time_bands": [
   {
-   "minutes": "0-5",
-   "activity": "The teacher briefly connects this unit to the previous unit's prediction work: the same principles used to predict image properties now guide the choice of optical device for a specific practical need."
+   "minutes": "0–15",
+   "activity": "Students work in pairs on Figure it Out Q8, section 3.6 p.68 (\"25 rows × 12 chairs per row; rearrange with 20 chairs per row — find new number of rows.\") and Figure it Out Q9, section 3.6 p.68 (\"8 periods × 45 minutes; find period duration if school has 9 periods....\"). After solving, pairs explain to each other why the constant product (total chairs; total minutes) defines the inverse relationship in each case."
   },
   {
-   "minutes": "5-22",
-   "activity": "Students individually complete device-selection cards for all scenarios, writing the optical device name, the image property it produces, and a causal explanation for each."
+   "minutes": "15–28",
+   "activity": "Introduce unit-work-rate reasoning via Example 6, section 3.6 p.66 (\"Ram cuts vegetables in 1 hour, Shyam in 1.5 hours; find combined time using unit-work rates and direct proportion.\"). Students compute each person's fraction of work done per unit time, add the rates, and use the combined rate to find the total time — recognising this as a bridge between inverse and direct proportionality."
   },
   {
-   "minutes": "22-35",
-   "activity": "Groups compare and discuss contested selections, citing beam-behaviour or law-of-reflection evidence to resolve disagreements, and produce jointly agreed explanations."
+   "minutes": "28–38",
+   "activity": "Students independently attempt Figure it Out Q10, section 3.6 p.68 (\"Small pump fills tank in 3 hours, large pump in 2 hours; find time if both work together.\") using the unit-work-rate method just established, then check by verifying the combined rate makes intuitive sense (answer should be less than 2 hours)."
   },
   {
-   "minutes": "35-45",
-   "activity": "Whole-class discussion on one or two contested cases; the teacher closes by asking students to state in one sentence the shared principle that connects all converging devices and all diverging devices across the chapter."
+   "minutes": "38–43",
+   "activity": "Figure it Out Q11, section 3.6 p.68 (\"42 machines produce toys in 63 days; find machines needed to produce same number in 54 days.\") as a quick application of x₁y₁ = x₂y₂. Students set up and solve, noting the direction of change as a self-check."
+  },
+  {
+   "minutes": "43–45",
+   "activity": "Students reflect: name one real-world pair they encountered today that uses inverse proportion and write the constant product for it. Figure it Out Q12, section 3.6 p.68 (\"Car at 60 km/h reaches destination in 2 hours; find time at 80 km/h.\") is set for home practice."
   }
  ],
- "teacher_notes": "This unit builds directly on the prediction structure of the previous unit, extending from 'what image does this device produce?' to 'which device do I choose to get the image I need?' — a genuine inversion of the reasoning direction that tests deeper command of the convergence and divergence principle. Watch for students who select correctly but justify by analogy ('the dentist uses a concave mirror because we saw it in unit three') rather than by causal reasoning about image properties and object distance; press for the mechanism, not the memory. The closing sentence — the shared principle connecting all converging devices — is a strong signal that students can generalise across mirrors and lenses, which is the chapter's highest cognitive target.",
+ "teacher_notes": "The unit-work-rate method in Example 6 (section 3.6 p.66) is the most conceptually demanding step in this unit — students often try to average the two times rather than add rates. Emphasise that fractions of work per unit time add (direct proportion), while numbers of workers and time taken multiply to a constant (inverse proportion). Figure it Out Q12 (section 3.6 p.68) is a straightforward speed-time inverse problem that consolidates the chapter's closing theme.",
  "materials": [
-  "Device-selection scenario cards",
-  "Class summary board with mirror and lens rules from earlier units",
-  "Student notebooks"
- ],
- "homework": [
-  "For each optical device listed (concave mirror, convex mirror, convex lens, concave lens), write one real-world application not discussed in class and explain in one sentence why that device's converging or diverging behaviour makes it the right choice for that application."
- ]
-}
-
---- PLAN OF 9 UNITS — unit-title map ---
-U1: Spoon as a Mirror: Meeting Concave and Convex Surfaces
-U2: Moving Closer, Moving Away: How Distance Changes the Image
-U3: Tracing Beams: Discovering the Laws of Reflection
-U4: Parallel Beams and Curved Mirrors: Converging, Diverging, Staying Parallel
-U5: Sunlight to a Point: The Concave Mirror as a Concentrator
-U6: Water Drop to Glass Lens: Meeting Convex and Concave Lenses
-U7: Lens Images at Varying Distances: Patterns in Convergence and Divergence
-U8: Sunlight Through a Convex Lens and Parallel Beams Through Lenses: Confirming Convergence and Divergence
-U9: Matching Mirror or Lens to Task: Predicting Which Optical Surface Does the Job
-
---- its FINAL unit, in full ---
-{
- "period_number": 9,
- "period_duration_minutes": 45,
- "progression_stage": 4,
- "stage_label": "Apply converging and diverging behaviour to explain and predict optical outcomes",
- "pedagogical_approach": "Inquiry approach",
- "activity_title": "Matching Mirror or Lens to Task: Predicting Which Optical Surface Does the Job",
- "activity_description": "Students are given a set of real-world optical tasks — torch reflector, vehicle side-view mirror, magnifying glass, spectacles for distant vision — and must predict which type of curved mirror or lens (concave mirror, convex mirror, convex lens, or concave lens) each requires, justifying each prediction using the image characteristics and beam behaviour established across the chapter.",
- "roles": [
-  {
-   "actor": "Students (Individual)",
-   "role_description": "Independently write a prediction and justification for each optical task, citing the relevant image characteristic (erect/inverted, enlarged/diminished, wider field) and the relevant beam behaviour (converging or diverging)."
-  },
-  {
-   "actor": "Students (Groups)",
-   "role_description": "Compare individual predictions within the group, discuss disagreements, and agree on a group justification that both names the correct optical surface and explains why in terms of image and beam behaviour."
-  },
-  {
-   "actor": "Teacher",
-   "role_description": "Facilitates whole-class debrief, drawing out justifications that correctly integrate image characteristics from stage 1 with beam behaviour from stages 2 and 3, and prompting where students conflate mirror and lens types."
-  }
- ],
- "time_bands": [
-  {
-   "minutes": "0-7",
-   "activity": "Teacher introduces the prediction task, reminding students that they now have the full toolkit — image characteristics at varying distances, beam convergence and divergence, and the mirror–lens structural parallel."
-  },
-  {
-   "minutes": "7-20",
-   "activity": "Students work individually on the prediction-and-justification task for each optical device, writing responses without consulting the group."
-  },
-  {
-   "minutes": "20-35",
-   "activity": "Groups compare individual predictions, identify disagreements, and construct a jointly justified group response for each device."
-  },
-  {
-   "minutes": "35-45",
-   "activity": "Whole-class debrief: each group presents one device; teacher ensures every justification invokes both image outcome and beam behaviour, closing the chapter's arc."
-  }
- ],
- "teacher_notes": "This closing unit asks students to reason across the whole chapter — image characteristics, laws of reflection, and converging/diverging beam behaviour — to make and justify predictions about unfamiliar applications. Watch for the persistent confusion between a convex mirror (erect, wide-field side-view mirror) and a concave mirror (torch reflector), which students sometimes swap because both are associated with vehicles; require explicit justification referencing the image type needed for each task. This unit rounds off the plan at the level of the dissolution test: students explain and predict optical outcomes by applying the laws and beam behaviour they have built across all four stages.",
- "materials": [
-  "Printed task cards (one set per student describing each optical device and its purpose)",
-  "Student response sheets"
- ],
- "homework": [
-  "Choose one optical instrument not covered in class (camera, telescope, or microscope) and explain in writing which type of lens or mirror it uses and why, citing the image characteristic required for that instrument to function."
+  "Notebook and pencil",
+  "Whiteboard and markers"
  ]
 }
 

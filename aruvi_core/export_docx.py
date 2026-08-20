@@ -391,8 +391,50 @@ def _lp_unit(doc, p, *, first_pedagogy):
 
 # ── assessment blocks ────────────────────────────────────────────────────────
 
+def _number_line(doc, nl):
+    """The tick line, drawn (2026-08-19). Mirrors `export_assessment_pdf._number_line_html`
+    and `ANumberLine` on screen — one typed spec (`{ticks:[{label}], instruction}`), three
+    renderers, each drawing it the cheapest way its medium allows.
+
+    WORD USES A CELL BORDER AND THE PDF DOES NOT, and that difference is deliberate rather
+    than an inconsistency: xhtml2pdf's collapsed-border support is partial and printed no
+    rule at all, which is why the PDF draws the axis as a background fill. Word renders
+    cell borders properly, so the simpler two-row form is correct here — ticks over a
+    bottom-bordered row, labels beneath. `cantSplit` keeps the pair on one page, which is
+    the failure the PDF version had to solve structurally."""
+    ticks = nl.get("ticks") or []
+    if not ticks:
+        return
+    n = len(ticks)
+    t = doc.add_table(rows=2, cols=n)
+    _no_borders(t)
+    _fixed_table(t, [5.6 / n] * n)
+    for r in t.rows:                                   # never split the rule from its labels
+        trPr = r._tr.get_or_add_trPr()
+        cant = OxmlElement("w:cantSplit"); trPr.append(cant)
+    for i, tk in enumerate(ticks):
+        top = t.cell(0, i)
+        _run(top.paragraphs[0], "|", size=8, color=BODY)
+        top.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+        # the axis: a bottom rule on every tick cell, which Word joins into one line
+        tcPr = top._tc.get_or_add_tcPr()
+        borders = OxmlElement("w:tcBorders")
+        bottom = OxmlElement("w:bottom")
+        bottom.set(qn("w:val"), "single"); bottom.set(qn("w:sz"), "6")
+        bottom.set(qn("w:color"), "2A2A2A")
+        borders.append(bottom); tcPr.append(borders)
+        lab = t.cell(1, i)
+        _run(lab.paragraphs[0], str(tk.get("label") or ""), size=8, color=BODY)
+        lab.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+    if nl.get("instruction"):
+        _run(_para(doc, space_after=2), nl["instruction"], italic=True, size=9, color=BODY)
+
+
 def _stimulus(doc, block):
     if not block:
+        return
+    if block.get("type") == "number_line" and block.get("number_line"):
+        _number_line(doc, block["number_line"])
         return
     if block.get("type") == "table" and block.get("table"):
         tb = block["table"]; header = tb.get("header", []) or []; rows = tb.get("rows", []) or []

@@ -72,6 +72,51 @@ AUTHORED = ("activity_title", "activity_description", "teacher_notes", "material
 PRESERVED = ("period_number", "period_duration_minutes", "progression_stage",
              "stage_label", "synthesis", "roles")
 
+# ── THE STAGE TABLE (2026-08-19, S7) ────────────────────────────────────────────
+# science·middle is no longer the only stage that resynths, so the three stage-shaped
+# facts — the contract, what the model authors, what the platform keeps — become a table
+# row rather than module constants. The engine does not branch on subject; it looks the
+# stage up, and a stage that is not in the table is refused rather than served science's
+# fields (which is how a maths unit would silently acquire `progression_stage`).
+#
+# maths·middle authors `pedagogical_method` and `section_goal` where science authors
+# `pedagogical_approach` and `activity_description`, and it authors its item pools too —
+# as EMPTY arrays, which is the whole point of its brief and is why they are in AUTHORED
+# rather than PRESERVED: the old unit's pools must be replaced, not carried over.
+# `textbook_segments` is PRESERVED — the sections the closer revisits are the platform's
+# registry business (serve.section_registry reads them), not the model's to re-decide.
+STAGES = {
+    ("science", "middle"): {
+        "block": lambda d: resynth_system_block(d),
+        "authored": AUTHORED,
+        "preserved": PRESERVED,
+        "spec": "science_middle_stage_serve.md §6 v1.3",
+    },
+    ("mathematics", "middle"): {
+        "block": lambda d: resynth_system_block_maths_middle(d),
+        "authored": ("activity_title", "pedagogical_method", "section_goal",
+                     "teacher_notes", "visual_aids", "materials", "time_bands",
+                     "textbook_items_in_class", "homework"),
+        "preserved": ("period_number", "period_duration_minutes", "synthesis",
+                      "textbook_segments"),
+        "spec": "ARV-D-181 · F1 2026-08-19 (the double-closer collision)",
+    },
+}
+
+
+def stage_row(subject_folder: str, grade_folder: str) -> dict:
+    from aruvi_core.grades import stage_for
+    key = (subject_folder, stage_for(grade_folder))
+    if key not in STAGES:
+        raise SystemExit(
+            f"resynth is not defined for {key[0]} · {key[1]}. It re-authors a closing "
+            "synthesis against the whole library, and what that unit must BE differs by "
+            "stage — science closes through a fresh applied setting, mathematics through "
+            "teacher-posed problems. Add a STAGES row with its own contract before running "
+            "it here; serving another stage's brief would author the wrong unit and its "
+            "fields with it.")
+    return STAGES[key]
+
 
 # ── library reading ─────────────────────────────────────────────────────────────
 
@@ -158,6 +203,136 @@ OUTPUT — exactly this JSON object, nothing else:
 No other keys — the platform carries the unit's number, stage and duration itself."""
 
 
+def resynth_system_block_maths_middle(duration: int) -> str:
+    """mathematics·middle's own contract (2026-08-19, S7 · F1).
+
+    WHY IT IS NOT SCIENCE'S. Two differences, both measured.
+
+    (a) THE COLLISION IS MEDIATED BY THE TEXTBOOK REFERENCE, and by nothing else. F1
+    enumerated all 81 cross-canonical borrows on this stage: 18 of them repeat an exercise
+    the previous sitting has just worked, and every single one is the SAME `book_ref` on
+    both sides of the join — viii ch 11 re-issues all four of Figure it Out Q1–Q4 §4.2.7,
+    vi ch 3 spends 20 of 40 minutes on Q1, Q8 and Q9 of §3.12. The cause is structural, not
+    careless: a chapter has ONE end-of-chapter review set, both plans' closers reach for it,
+    and neither author knew the other would be attached. A closing unit that names no
+    textbook item cannot collide with any compact's closer, at any count, ever. So this
+    brief does not ask for a better choice of exercises; it asks for a unit that has none.
+    Rule 3's step 4 already declares that shape — a period whose item pools are empty takes
+    an empty anchor, and "the assessment generator omits the exercise companion in this case
+    but still generates a typed question grounded in the section's prose".
+
+    (b) SIZE. Science's brief asks for "one fresh, concrete application — a scenario,
+    artefact, dataset, place or design problem the chapter itself never uses", and a new
+    setting has to be built before it can be used: science·middle's re-authored synthesis
+    now runs 8,115 characters against a 2,520-character body unit (×3.2). Maths does not
+    need a new world to be synthetic in — a proportional-reasoning problem IS the synthesis.
+    This brief therefore asks for the same weight as any other sitting, and says so.
+
+    THE TEMPLATE IS ONE OF OUR OWN. viii ch 7's synthesis was the cleanest seam in the F1
+    read, and clean for exactly this reason: three teacher-posed problems, one per strand of
+    the chapter, no textbook reference anywhere, 3,682 characters — our median. It is
+    described below as properties of the output, never as a model to imitate or a rule to
+    acknowledge (the meta-leak lesson, repair_meta_leak.py).
+    """
+    return f"""ARUVI — CLOSING SYNTHESIS RE-AUTHORING · MATHEMATICS · MIDDLE STAGE
+
+You are re-writing ONE unit: the closing whole-chapter synthesis of a chapter's fullest
+lesson plan. It is served in two situations and must be excellent in both:
+
+1. As the FINAL unit of the fullest plan — the class finishes the chapter with it.
+2. As ONE EXTRA {duration}-minute period appended to a SHORTER complete plan of the same
+   chapter, whose own final unit (given below) already drew the chapter together
+   yesterday.
+
+THE UNIT YOU ARE WRITING closes the chapter by putting its methods to work on a small set
+of problems the teacher poses. Solving them IS the synthesis: the chapter is drawn
+together by being used, not by being recited.
+
+PROPERTIES OF THE UNIT:
+- It carries TWO TO FOUR problems, each reaching for a DIFFERENT major method of the
+  chapter, and together spanning its main strands. Each problem is stated in full, with
+  its numbers, inside the band that poses it — a teacher reads the band aloud and the
+  class can start.
+- The problems are the TEACHER'S OWN, written for this unit and posed on the board. The
+  mathematics in each is the chapter's, and nothing is invented or imported.
+- THE PROBLEMS AND THEIR SOLUTIONS LIVE IN ONE TABLE, in `visual_aids` — three columns,
+  `No. | Problem | Solution`, one row per problem. The Problem cell states the problem in
+  one or two plain sentences with its numbers. The Solution cell gives the answer and the
+  few steps that reach it, in plain words and figures — brief enough for a teacher to read
+  at a glance while the class works, and no longer than the problem it answers. This table
+  is the teacher's whole worked reference.
+- EACH PROBLEM IS WELL-POSED AND SELF-CONSISTENT. It states everything needed to solve it,
+  its data agree with each other and with the solution beside it, and it has one answer.
+  Where a count is named ("the four corner cells", "the six expressions you can form"),
+  that count is the number the problem's own conditions produce. Where a figure carries
+  measurements, they can all hold at once. Where a construction is described, the described
+  construction is the one the solution works on.
+- THE SOLUTION CELL IS THE SETTLED ANSWER. Work each problem out fully first; then write
+  only the route that reaches the answer and the answer itself. Trials that failed,
+  possibilities considered and rejected, re-checks and corrections belong to the working,
+  not to the page a teacher reads at the board. Every step written is a step that holds:
+  a justification names the fact it rests on, and never assumes what it is proving.
+- `teacher_notes` is SHORT — a few sentences at most. It says how the sitting is run and
+  what to watch for as students work; the mathematics is in the table, and is not repeated
+  here. Name, for each problem, only the chapter method it needs — the method its own
+  solution actually uses — and warn only about errors that problem can produce.
+- THE NOTES OPEN BY SENDING THE TEACHER TO THE TABLE. Their first sentence is exactly:
+  Refer to Prepared Table (see material: '<the table's title>') for the problems in full
+  and their worked solutions.
+  Everything above about the notes applies to what follows that sentence. Without it the
+  notes describe a sitting whose mathematics has visibly gone somewhere and say nothing
+  about where.
+- Its `textbook_items_in_class` and `homework` are both `[]`, and its band text names no
+  page, no exercise and no book item. The class works from the board.
+- Its shape gives every student a full attempt before any answer is public: the problems
+  are posed, worked individually with full working, compared in small groups where a
+  disagreement is reconstructed step by step, and then presented — and each presentation
+  is followed by the class NAMING the chapter method the solution rested on.
+- The closing band states the chapter's one idea in a sentence, as the reason the problems
+  yielded — earned closure, not ceremony.
+- It is ONE sitting and weighs the same as any other: {duration} minutes, a handful of
+  bands, materials any classroom has. Depth here is the demand of the problems, never the
+  quantity of material.
+- Every method it calls on appears in EVERY unit-title map given below — the shorter plans
+  differ in what they reach, so write only to what all of them share, and treat the
+  SHORTEST map as binding.
+- Its vehicle differs in kind from every FINAL UNIT given below, and it reuses none of
+  their specific contexts, objects, puzzles or framing questions.
+- NO TEXT ANYWHERE IN THIS UNIT states a quantity of minutes or points beyond this sitting
+  — not the bands, not the teacher notes, not the table. The band's `minutes` field carries
+  the clock, and the platform rescales it to whatever length the sitting is served at, so a
+  duration written into prose is wrong for most of the classes that meet it. Say "the first
+  stretch", "before any discussion", "once every student has attempted all four" — the
+  sequence, never the count. The one exception is a MEASUREMENT inside a problem or its
+  solution: where minutes are the quantity the mathematics is about, they are data and stay.
+
+OUTPUT — exactly this JSON object, nothing else:
+{{
+  "synthesis_unit": {{
+    "activity_title": "…",
+    "pedagogical_method": "one of: Discovery · Problem-solving · Play-way · Inductive ·
+      Deductive — the method this unit runs on",
+    "section_goal": "recall | reason | apply — the goal this unit works at",
+    "teacher_notes": "a few sentences: how the sitting runs, what to watch for, and the
+      chapter method each problem needs — NOT the solutions, which are in the table",
+    "visual_aids": [
+      {{"type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\\n1 | … | …\\n2 | … | …"}}
+    ],
+    "materials": ["…"],
+    "time_bands": [
+      {{"minutes": "0-N", "activity": "…"}},
+      …bands in sequence, integer boundaries, last band ends at {duration}…
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }}
+}}
+No other keys — the platform carries the unit's number, duration, section coverage and
+synthesis marker itself."""
+
+
 # ── per-chapter exclusions, learned by READING (never guessed) ──────────────────
 # When the F1-resynth read finds a floor gap the generated unit missed, the finding is
 # fed forward here verbatim — deterministic evidence in the brief, not another blind
@@ -222,7 +397,7 @@ def prepare_resynth_job(subject_folder: str, grade_folder: str, ch: int,
     duration = std_duration(grade_folder)
     title = (mp_row and str(mp_row["title"]).split(": ", 1)[-1]) or ""
     user_text, fingerprint = resynth_user_block(subject_folder, grade_folder, ch)
-    system_text = resynth_system_block(duration)
+    system_text = stage_row(subject_folder, grade_folder)["block"](duration)
     if not quiet:
         print(f"{subject_folder} · {grade_folder} · ch {ch} — resynth "
               f"(system {len(system_text):,} chars · user {len(user_text):,} chars)")
@@ -239,22 +414,104 @@ def prepare_resynth_job(subject_folder: str, grade_folder: str, ch: int,
 
 # ── validate + install ──────────────────────────────────────────────────────────
 
-def validate_resynth(parsed: dict, duration: int) -> list[str]:
+def validate_resynth(parsed: dict, duration: int, *, row: dict = None) -> list[str]:
+    """`row` defaults to science's for call-site stability; every stage-shaped check below
+    reads it. The maths·middle additions are the two the brief turns on — the empty item
+    pools and the absence of a page reference — checked here rather than trusted, because
+    a closer that quietly kept one exercise would reintroduce the collision this whole
+    re-author exists to remove, and nothing downstream looks."""
+    row = row or STAGES[("science", "middle")]
+    authored = row["authored"]
     problems = []
     u = parsed.get("synthesis_unit")
     if not isinstance(u, dict):
         return ["no synthesis_unit object"]
-    for k in ("activity_title", "teacher_notes", "pedagogical_approach"):
+    method_key = "pedagogical_approach" if "pedagogical_approach" in authored else "pedagogical_method"
+    for k in ("activity_title", "teacher_notes", method_key):
         if not u.get(k):
             problems.append(f"{k} missing")
-    pa = u.get("pedagogical_approach") or ""
+    pa = u.get(method_key) or ""
     if len(pa.split()) > 6:
-        problems.append(f"pedagogical_approach {len(pa.split())} words — it is a "
+        problems.append(f"{method_key} {len(pa.split())} words — it is a "
                         "LABEL (2–5 words), it prints beside the duration")
-    extra = set(u) - set(AUTHORED)
+    extra = set(u) - set(authored)
     if extra:
         problems.append(f"unexpected keys {sorted(extra)} — identity fields are the "
                         "platform's, not the model's")
+    if "textbook_items_in_class" in authored:
+        # DRAFTING SCRATCH IS REJECTED (2026-08-20, the first resynth wave's F1 read).
+        # Seven of 38 closers shipped their working: "wait —", "Re-examine:", "✗", and in
+        # one case ~600 words of abandoned trials before the answer. The brief now asks for
+        # the settled answer only; this refuses the unsettled one, because a teacher reads
+        # this table at the board and nothing downstream looks at it. Deliberately narrow —
+        # these are drafting TELLS, not prose the model might legitimately want.
+        import re as _re
+        # THE CLOCK BAN, CHECKED AT INSTALL (2026-08-20). It has cost 22 declared repairs
+        # on one wave and 28 on the next — more repair effort than every other defect on
+        # this stage combined — because the brief stated it for BANDS and the model obeyed
+        # it exactly there and nowhere else. The brief now binds the whole unit; this
+        # refuses what slips through, so the sweep does not have to run a third time.
+        # `visual_aids` is deliberately NOT scanned: minutes inside a problem are the
+        # quantity being measured, which is why register_scan is scoped away from that
+        # field too (maths vii ch 13, "Priya read for these many minutes each day").
+        _clock = _re.findall(r"\bfor\b[^.;]{0,20}\bminutes\b",
+                             json.dumps({k: u.get(k) for k in ("time_bands", "teacher_notes")},
+                                        ensure_ascii=False), _re.I)
+        if _clock:
+            problems.append(
+                f"a clock quantity in the lesson's own prose {sorted(set(_clock))} — the "
+                "band's `minutes` carries the clock and the platform rescales it")
+        _blob = json.dumps({k: u.get(k) for k in ("visual_aids", "time_bands")},
+                           ensure_ascii=False)
+        _tells = _re.findall(r"wait\s*[—\-–]|re-?examine[:,]|scratch that|"
+                             r"let me (?:re)?check|actually,? (?:no|wait)|✗|"
+                             r"on second thought|correction:|that'?s wrong", _blob, _re.I)
+        if _tells:
+            problems.append(
+                f"the table carries drafting scratch {sorted(set(t.lower() for t in _tells))} "
+                "— the Solution cell is the settled answer, not the working")
+        # The problem/solution TABLE, and a teacher_notes that has not swallowed it.
+        # Both are the 2026-08-19 correction: the first maths resynth put every worked
+        # solution in teacher_notes, which ran to 3,268 characters against a 335-character
+        # median for that chapter's body units. The mathematics belongs in the Material
+        # tab as a table; the notes say how the sitting runs.
+        aids = u.get("visual_aids")
+        tabs = [a for a in (aids or []) if isinstance(a, dict) and a.get("type") == "table"]
+        if not tabs:
+            problems.append("visual_aids carries no table — the problems and their "
+                            "solutions are the Material tab's, not teacher_notes'")
+        else:
+            head = str(tabs[0].get("table") or "").splitlines()[:1]
+            if head and len(head[0].split("|")) != 3:
+                problems.append(f"the table has {len(head[0].split('|'))} columns — it is "
+                                "No. | Problem | Solution")
+        tn = len(u.get("teacher_notes") or "")
+        # 1200 -> 1600 (2026-08-20, second wave). The bound exists to stop the SOLUTIONS
+        # living in the notes: the first resynth wrote 3,268 characters there against a
+        # 335-character median for that chapter's body units. It was set at 1200 from that
+        # one observation, and on the second wave it refused FIVE units whose solutions
+        # were properly in the table — vi ch 3 (notes 1,225 · table 2,444), vi ch 4
+        # (1,212 · 2,581), viii ch 4 (1,234 · 1,801), viii ch 5 (1,330 · 4,846), viii ch 8
+        # (1,396 · 1,372) — every one with four table rows. The tightened brief also asks
+        # the notes to name a method AND a watch-for per problem, which is four of each;
+        # ~1,300 characters is that written plainly. 1600 clears the observed maximum with
+        # headroom and still sits far below the failure it was written against. A bound
+        # that refuses compliant work is a bound set from too little data.
+        if tn > 1600:
+            problems.append(f"teacher_notes {tn} chars — it is a few sentences on running "
+                            "the sitting; the solutions live in the table")
+        for k in ("textbook_items_in_class", "homework"):
+            if u.get(k):
+                problems.append(
+                    f"{k} carries {len(u[k])} item(s) — this unit works from the board. "
+                    "A textbook item here is what collides with the shorter plan's own "
+                    "closer, which is the defect being repaired (ARV-D-181).")
+        import re as _re
+        hits = [b.get("minutes") for b in (u.get("time_bands") or [])
+                if _re.search(r"\bp\.?\s?\d|\bpage\s\d|Figure it Out|Math Talk|Example \d"
+                              r"|Let us|Try This", str(b.get("activity") or ""), _re.I)]
+        if hits:
+            problems.append(f"band(s) {hits} name a textbook item — same reason")
     bands = u.get("time_bands") or []
     if not bands:
         problems.append("no time_bands")
@@ -290,15 +547,19 @@ def install_resynth(parsed: dict, job: dict, ts: str, model: str) -> Path:
     BACKUP.mkdir(parents=True, exist_ok=True)
     shutil.copy2(path, BACKUP / f"{sf}_{gf}_ch{ch:02d}_{ts}.json")
 
-    new_unit = {k: old[k] for k in PRESERVED if k in old}
+    row = stage_row(sf, gf)
+    new_unit = {k: old[k] for k in row["preserved"] if k in old}
     authored = parsed["synthesis_unit"]
-    for k in AUTHORED:
+    for k in row["authored"]:
+        # `in authored` is not enough on maths·middle: its item pools are authored as
+        # EMPTY arrays, and the point of the brief is that they replace the old unit's
+        # full ones. A key the brief names is written whether or not it is truthy.
         if k in authored:
             new_unit[k] = authored[k]
     periods[-1] = new_unit
 
     doc.setdefault("genon_canonical", {})["synthesis_reauthor"] = {
-        "spec": "science_middle_stage_serve.md §6 v1.3",
+        "spec": row["spec"],
         "at": datetime.now().isoformat(timespec="seconds"),
         "ledger_ts": ts, "model": model,
         # provenance only — no staleness gate (founder 2026-08-17: nothing to maintain)
@@ -324,7 +585,9 @@ def finish_resynth(job: dict, full: str, it: int, ot: int, *, model: str, ts: st
 
     parsed, problems, repairs = parse_with_repair(full)
     if parsed is not None:
-        problems = validate_resynth(parsed, job["duration"])
+        problems = validate_resynth(
+            parsed, job["duration"],
+            row=stage_row(job["subject_folder"], job["grade_folder"]))
     elif not problems:
         problems = ["output is not valid JSON"]
     status = "ok" if not problems else "problems"

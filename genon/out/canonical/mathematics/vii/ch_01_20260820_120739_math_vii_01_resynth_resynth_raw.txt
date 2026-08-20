@@ -1,0 +1,45 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Four Problems, One Chapter: Large Numbers Put to Work",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems together by writing them on the board. Students work individually with full working for the first 15 minutes — do not accept answers without written steps. Groups of three then compare working for 8 minutes; any disagreement must be reconstructed step by step, not resolved by majority vote. Four volunteers present, one per problem; after each presentation the class names aloud the chapter method the solution used. Watch for: Problem 1 — students forgetting to count the digit-sum as the minimum clicks, or losing track of the Indian comma grouping when writing the answer in words; Problem 2 — rounding to the wrong place, or rounding both numbers in the same direction when checking whether the sum crosses a boundary; Problem 3 — applying Estu's method only to the first factor and not pausing to check whether the second also admits a shortcut; Problem 4 — treating the 7-digit × 2-digit product as definitely 8-digit without checking the boundary case (smallest 7-digit × smallest 2-digit vs. largest 7-digit × largest 2-digit).",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | A number has the digits 4, 0, 7, 2, 6, 1, 3 in that order from left to right, making a 7-digit number. Write it in the Indian place-value system with commas, give its name in the Indian system, and state the smallest number of calculator button-presses (using +1000, +100, and +10 buttons) needed to reach it. | The number is 40,72,613. Indian name: Forty lakh seventy-two thousand six hundred and thirteen. Minimum button-presses = digit sum = 4+0+7+2+6+1+3 = 23. (Each digit tells how many times its place-value button is pressed; minimum because any other decomposition uses more presses in total.)\n2 | Round 36,84,729 to its nearest ten lakh and its nearest lakh. Then decide, without computing the exact sum, whether 36,84,729 + 28,43,150 is more than 65,00,000 or less. Justify your answer. | Nearest ten lakh: 40,00,000 (since 6,84,729 > 5,00,000, round up). Nearest lakh: 37,00,000 (since 84,729 > 50,000, round up). For the sum: round each number down to the nearest ten lakh — 30,00,000 + 20,00,000 = 50,00,000; round each up — 40,00,000 + 30,00,000 = 70,00,000. Both addends are closer to 37,00,000 and 28,00,000; their sum 36,84,729 + 28,43,150 = 65,27,879, which exceeds 65,00,000. A sufficient justification without exact arithmetic: rounding both down to the nearest lakh gives 36,84,000 + 28,43,000 = 65,27,000 > 65,00,000, so the exact sum must also exceed 65,00,000.\n3 | A school has 25 rows of seats in its hall, each row holding 480 seats. Using a multiplication shortcut, find the total number of seats. Then multiply that total by 5 using a second shortcut. Show your reasoning for both steps. | Step 1 — multiply by 25: 25 = 100 ÷ 4, so 480 × 25 = 480 × 100 ÷ 4 = 48,000 ÷ 4 = 12,000 seats. (Estu's method.) Step 2 — multiply 12,000 by 5: 5 = 10 ÷ 2, so 12,000 × 5 = 12,000 ÷ 2 × 10 = 6,000 × 10 = 60,000. (Roxie's method.) Total after scaling: 60,000.\n4 | A 7-digit number is multiplied by a 2-digit number. How many digits can the product have? Give the smallest possible digit-count and the largest possible digit-count, with one example for each. | Smallest product: fewest digits occur when both factors are as small as possible. Smallest 7-digit number = 10,00,000; smallest 2-digit number = 10. Product = 10,00,00,000, which is 9 digits. Largest product: largest 7-digit = 99,99,999; largest 2-digit = 99. Product = 99,99,999 × 99 < 1,00,00,000 × 100 = 1,00,00,00,000 (10 digits), and 99,99,999 × 99 = 98,99,99,901, which is 10 digits. So the product is always either 8 digits — wait, check: 10,00,000 × 10 = 10,00,00,000 is already 9 digits. Try the true minimum: 10,00,000 × 10 = 10,00,00,000 (9 digits). Can we get 8 digits? The product would need to be less than 10,00,00,000, meaning less than 10,00,000 × 10 — but 10,00,000 is the smallest 7-digit number and 10 is the smallest 2-digit number, so no product of a 7-digit and a 2-digit number can be less than 10,00,00,000. The product therefore has either 9 digits (e.g., 10,00,000 × 10 = 10,00,00,000) or 10 digits (e.g., 99,99,999 × 99 = 98,99,99,901). It is always 9 or 10 digits."
+      }
+    ],
+    "materials": [
+      "Blackboard and chalk",
+      "Notebooks and pencils"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "Teacher writes all four problems on the board and reads each aloud. Students read them through once, ask only clarifying questions about wording (not method), and begin individual work."
+      },
+      {
+        "minutes": "3-18",
+        "activity": "Individual work: every student attempts all four problems in their notebook, writing full working for each. The teacher circulates silently, noting which problems surface the most hesitation, and does not intervene with method hints."
+      },
+      {
+        "minutes": "18-26",
+        "activity": "Groups of three compare answers. Where answers disagree, the group reconstructs both solutions step by step and identifies the point of divergence. The teacher listens to one or two groups and, if a group has resolved a disagreement incorrectly, asks them to read their steps aloud — a wrong step usually becomes visible when stated."
+      },
+      {
+        "minutes": "26-38",
+        "activity": "Four volunteers present one problem each at the board, showing steps. After each presentation the class names the chapter method used: Problem 1 — Indian place-value notation and digit-sum as minimum button-presses; Problem 2 — rounding to nearest neighbour and using rounded values to bound an exact sum; Problem 3 — Estu's method (×25) then Roxie's method (×5); Problem 4 — boundary-case reasoning about digit-count in a product. The teacher accepts a name only when the class can state which step in the solution it describes."
+      },
+      {
+        "minutes": "38-40",
+        "activity": "Teacher states the chapter's one idea aloud: every large number has an exact place in the base-ten system, and that place tells us how to name it, round it, compute with it, and bound the size of results — which is why all four problems yielded to the same set of methods."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

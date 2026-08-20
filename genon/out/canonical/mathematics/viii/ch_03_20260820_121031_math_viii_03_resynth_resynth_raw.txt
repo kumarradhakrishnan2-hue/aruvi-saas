@@ -1,0 +1,46 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Five Ideas at Work: A Chapter in Four Problems",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems on the board at once and give students a full uninterrupted stretch to work individually. After individual work, groups of three compare answers; any disagreement is resolved by reconstructing steps, not by voting. Each presentation ends with the class naming the chapter idea the solution rested on. Watch for: Problem 1 — students writing more than nine of any symbol (the Egyptian cap is nine); Problem 2 — students forgetting to check whether five copies of a landmark number must be regrouped into the next; Problem 3 — students reading position from right to left as in Hindu notation rather than left to right as in the Mesopotamian convention; Problem 4 — students treating the base as a digit rather than regrouping when a count reaches the base value. The chapter method each problem calls on: P1 uses Egyptian landmark-symbol encoding (section 3.3.I); P2 uses base-n addition with regrouping (section 3.3.II); P3 uses Mesopotamian positional decomposition into powers of 60 (section 3.4.I); P4 uses Hindu base-10 place-value decomposition and the role of zero as a digit (section 3.4.IV).",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | A merchant records a stock of 2 314 sacks of grain using the Egyptian hieroglyphic system. The Egyptian landmark numbers are 1, 10, 100, 1 000 (each with its own symbol). Write 2 314 in Egyptian notation, stating how many of each symbol is used. | Decompose by landmark: 2 314 = 2×1000 + 3×100 + 1×10 + 4×1. Symbols used: two 1 000-symbols, three 100-symbols, one 10-symbol, four 1-symbols. No symbol appears ten or more times, so no regrouping is needed. Total: 10 symbols.\n2 | A base-5 system has landmark numbers 1, 5, 25, 125. A trader combines two parcels: the first contains 3 twenty-fives, 4 fives, and 3 ones; the second contains 1 twenty-five, 3 fives, and 4 ones. Find the total, expressed in base-5 landmark notation, regrouping wherever a count reaches 5. | Add each rank: ones: 3+4 = 7 = 1×5 + 2, write 2 ones, carry 1 five. Fives: 4+3+1(carry) = 8 = 1×25 + 3, write 3 fives, carry 1 twenty-five. Twenty-fives: 3+1+1(carry) = 5 = 1×125 + 0, write 0 twenty-fives, carry 1 one-twenty-five. Result: 1 one-hundred-and-twenty-five, 0 twenty-fives, 3 fives, 2 ones — that is, 1×125 + 0×25 + 3×5 + 2×1 = 142 (in Hindu numerals, as a check: 125+15+2 = 142 ✓).\n3 | In the Mesopotamian base-60 positional system, a numeral has two positional groups: the left group represents 2 sixties and 15 ones-within-that-group, and the right group represents 48. Write the Hindu numeral this Mesopotamian numeral stands for. | Left group value: (2×10 + 15) ones-of-that-rank. Wait — each positional group holds a number from 1 to 59 encoded with the two Mesopotamian symbols (wedge = 1, chevron = 10). Left group: 2 chevrons + 15 wedges is not standard; re-read: left group = 1 chevron + 5 wedges = 10+5 = 15; right group = 4 chevrons + 8 wedges = 48. Left group occupies the 60¹ place; right group occupies the 60⁰ place. Value = 15×60 + 48 = 900 + 48 = 948.\n3 | In the Mesopotamian base-60 positional system, a numeral has two positional groups: the left group encodes 15 (one ten-symbol and five one-symbols) and the right group encodes 48 (four ten-symbols and eight one-symbols). What Hindu numeral does this represent? | Left group = 1×10 + 5×1 = 15, occupying the 60¹ position. Right group = 4×10 + 8×1 = 48, occupying the 60⁰ position. Value = 15×60 + 48 = 900 + 48 = 948.\n4 | Priya says: \"In the Hindu base-10 place-value system, the number five hundred and six has a zero in it — but zero means nothing, so we could just leave that place blank and write 56 instead.\" Explain, with the place-value meaning of each digit, why Priya is wrong, and state the value that 5, 0, and 6 each contribute to 506. | In a place-value system each digit's value depends on its position. In 506: the digit 6 is in the ones place, contributing 6×1 = 6; the digit 0 is in the tens place, contributing 0×10 = 0 (no tens, but the place must be marked); the digit 5 is in the hundreds place, contributing 5×100 = 500. Total: 500+0+6 = 506. Writing '56' instead would put 5 in the tens place (value 50) and 6 in the ones place (value 6), giving 56 — a different number. Zero is not 'nothing'; it is the digit that records the absence of that power of ten while keeping all higher digits in their correct positions. Removing it shifts every digit to the right by one place and changes the number."
+      }
+    ],
+    "materials": [
+      "Blackboard or whiteboard",
+      "Chalk or markers",
+      "Rough paper for each student"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-3",
+        "activity": "Write all four problems on the board. Tell the class: each problem uses one idea from this chapter. Work every problem fully on your rough paper — show each step. No comparison yet."
+      },
+      {
+        "minutes": "3-23",
+        "activity": "Individual silent work. Students attempt all four problems, writing full working. The teacher circulates without confirming or correcting — only asking 'what does that symbol stand for?' or 'what position is that group in?' if a student is stuck on what a term means."
+      },
+      {
+        "minutes": "23-33",
+        "activity": "Groups of three compare answers. Where two answers differ, the group goes back to the first step that diverged and reconstructs from there. The teacher listens in and notes which problems drew the most disagreement."
+      },
+      {
+        "minutes": "33-43",
+        "activity": "One student presents each problem's solution at the board, writing the key steps. After each presentation the class calls out the chapter idea it used: Problem 1 — Egyptian landmark symbols and encoding; Problem 2 — base-n addition with regrouping; Problem 3 — positional place value in a non-decimal base; Problem 4 — zero as a place-holding digit, not an absence."
+      },
+      {
+        "minutes": "43-45",
+        "activity": "Closing statement: every number system in this chapter was an answer to the same question — how do we write any count whatever with a small, fixed set of symbols? The Hindu system answered it completely: a fixed base, position carrying the power, and zero holding every place honest. That is why it reached us."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```

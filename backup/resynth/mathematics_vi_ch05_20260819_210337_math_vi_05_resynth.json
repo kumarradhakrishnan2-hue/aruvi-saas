@@ -1,0 +1,2437 @@
+{
+  "filename": "ch_05_canonical.json",
+  "saved_at": "2026-08-19T11:14:02",
+  "plan_status": "canonical",
+  "chapter_number": 5,
+  "chapter_title": "Prime Time",
+  "grade": "Grade VI",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 40,
+      "count": 25
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 25 periods = 1000 minutes\nTotal: 25 periods · 16h 40min",
+  "genon_canonical": {
+    "generated": "2026-08-19",
+    "schedule": "25x40",
+    "constitution": "LP v3.9 / assessment v3.5",
+    "source": "generate_canonical.py one mathematics vi 5",
+    "ledger_ts": "20260818_205348_math_vi_05_top",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-19T12:58:42",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 9,
+            "field": "teacher_notes",
+            "rule": "register/forward",
+            "removed": "for previewing prime factorisation",
+            "replaced_with": "for prime factorisation",
+            "note": "forward reference — 'previewing' asserts a later unit this class may never be served | survives: …students who try to check by multiplying prime pairs will find trial-and-error slow and may naturally ask for a more systematic method.…"
+          },
+          {
+            "unit": 10,
+            "field": "band:3",
+            "rule": "register/forward",
+            "removed": "— these become reasoning questions in the next unit",
+            "replaced_with": "",
+            "note": "forward reference — false for any served count that ends here or borrows a different unit at this slot | survives: …Take student responses without resolving yet.…"
+          },
+          {
+            "unit": 11,
+            "field": "band:3",
+            "rule": "register/forward",
+            "removed": "Save the full discussion for the beginning of the next unit.",
+            "replaced_with": "",
+            "note": "forward reference — the band defers work to a unit that may not follow | survives: …Pose the question for students to think about: when does LCM equal the product of two numbers?…"
+          }
+        ],
+        "ban_hits_before": 3,
+        "ban_hits_after": 0
+      }
+    ]
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.1",
+              "title": "Common Multiples and Common Factors"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Idli-Vada: Counting Into Common Multiples",
+          "pedagogical_method": "Play-way",
+          "textbook_items_in_class": [
+            {
+              "id": "A-1",
+              "type": "activity",
+              "source_section": "section 5.1",
+              "book_ref": "Activity (Idli-Vada Game), section 5.1 p.107",
+              "description": "Students sit in a circle and count aloud; they replace multiples of 3 with 'idli', multiples of 5 with 'vada', and common multiples of both with 'idli-vada'. Players who make a mistake are eliminated. Builds intuition for common multiples through a social game."
+            },
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q1, section 5.1 p.108",
+              "description": "At what number is 'idli-vada' said for the 10th time? (Find the 10th common multiple of 3 and 5.)"
+            },
+            {
+              "id": "E-2",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q2, section 5.1 p.108",
+              "description": "If the game is played from 1 to 90, find: (a) how many times 'idli' is said (including 'idli-vada'); (b) how many times 'vada' is said (including 'idli-vada'); (c) how many times 'idli-vada' is said."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q3, section 5.1 p.108",
+              "description": "What if the game was played till 900? How would the answers to Q2 change?"
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Introduce the circle game using Activity (Idli-Vada Game), section 5.1 p.107 (\"Students sit in a circle and count aloud; they replace multiples of 3....\"). Run one full round with the whole class standing."
+            },
+            {
+              "minutes": "8–20",
+              "activity": "Play two or three rounds, eliminating students who err. Pause after each elimination to ask the class why a particular number triggered 'idli-vada', drawing attention to numbers that are simultaneously multiples of 3 and multiples of 5."
+            },
+            {
+              "minutes": "20–32",
+              "activity": "Work through Figure it Out Q1, section 5.1 p.108 (\"At what number is 'idli-vada' said for the 10th time?...\") and Figure it Out Q2, section 5.1 p.108 (\"If the game is played from 1 to 90, find how many times....\") as a class, listing multiples on the board to confirm the pattern."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Draw a simple two-circle Venn diagram on the board, placing multiples of 3 and multiples of 5 in their respective regions and common multiples at the intersection. Invite students to name the smallest common multiple of 3 and 5 and record the term LCM without formal definition yet."
+            }
+          ],
+          "teacher_notes": "The Idli-Vada game makes the abstract idea of common multiples visceral before any definition is stated — let the game run energetically before drawing mathematical conclusions. A common slip is that students call 3 itself 'idli-vada'; watch for this and ask the class to check whether 3 is also a multiple of 5. The Venn diagram at the close gives a visual anchor for the intersection idea that the next units will formalise.",
+          "materials": [
+            "Open floor space or chairs arranged in a circle",
+            "Whiteboard and markers"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.1",
+              "title": "Common Multiples and Common Factors"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Venn Diagrams and the Idli-Vada Pattern",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q4, section 5.1 p.108",
+              "description": "Is Fig. 5.1 (Venn diagram of multiples of 3 and 5) related to the Idli-Vada game? Draw the figure if the game is played till 60."
+            },
+            {
+              "id": "E-5",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q5, section 5.1 p.108",
+              "description": "Play the Idli-Vada game with different number pairs — (a) 2 and 5, (b) 3 and 7, (c) 4 and 6 — and draw Venn diagrams like Fig. 5.1 for each pair up to 60."
+            },
+            {
+              "id": "E-6",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q6, section 5.1 p.108",
+              "description": "One number in an Idli-Vada game was 4 and nobody ever said just 'vada'. Which of 2, 3, 5, 8, 10 could be the other number?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Open with Figure it Out Q4, section 5.1 p.108 (\"Is Fig. 5.1 related to the Idli-Vada game? Draw the figure if the game is played till 60....\"). Students individually sketch the Venn diagram for multiples of 3 and 5 up to 60, placing each number in the correct region."
+            },
+            {
+              "minutes": "10–26",
+              "activity": "Students work in pairs on Figure it Out Q5, section 5.1 p.108 (\"Play the Idli-Vada game with different number pairs (a) 2 and 5, (b) 3 and 7, (c) 4 and 6....\"). Each pair draws three Venn diagrams up to 60 and records the first common multiple for each pair. Share observations: does the first common multiple equal the product of the two numbers in every case?"
+            },
+            {
+              "minutes": "26–36",
+              "activity": "Class discussion on Figure it Out Q6, section 5.1 p.108 (\"One number was 4 and nobody ever said just 'vada'....\"). Students reason about which second numbers would make every multiple of that number also a multiple of 4, connecting 'nobody says vada alone' to the idea that all multiples of the second number are already multiples of 4."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Consolidate by asking students to state in their own words what the Venn diagram's intersection region represents, and record on the board: common multiples of two numbers are always multiples of the smallest number in that intersection."
+            }
+          ],
+          "teacher_notes": "Encourage students to notice whether the first common multiple always equals the product of the pair; the pair (4, 6) will produce a smaller LCM (12, not 24), which is a key observation to surface. A frequent error is placing a number in both circles but outside the intersection — emphasise that the intersection is precisely where both conditions hold simultaneously. Figure it Out Q6 rewards careful reasoning over calculation.",
+          "materials": [
+            "Squared or plain paper for Venn diagrams",
+            "Whiteboard and markers"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.1",
+              "title": "Common Multiples and Common Factors"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Jump Jackpot: Landing on Common Factors",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "A-2",
+              "type": "activity",
+              "source_section": "section 5.1",
+              "book_ref": "Activity (Jump Jackpot), section 5.1 p.109",
+              "description": "Grumpy places treasures on two numbers; Jumpy selects a jump size and can only land on multiples of that size. Students explore which jump sizes reach both treasure numbers, connecting common factors to a game mechanic."
+            },
+            {
+              "id": "E-7",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q1, section 5.1 p.110",
+              "description": "Find all multiples of 40 that lie between 310 and 410."
+            },
+            {
+              "id": "E-13",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q8, section 5.1 p.111",
+              "description": "In Jump Jackpot, treasures are on 28 and 70. What jump sizes land on both numbers?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Introduce Activity (Jump Jackpot), section 5.1 p.109 (\"Grumpy places treasures on two numbers; Jumpy selects a jump size....\"). Model the game with treasures on 12 and 18: students suggest jump sizes and the class checks which land on both numbers by listing multiples on the board."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Students explore the game in pairs with treasure positions of their own choosing. For each pair of treasure numbers they test, they list all jump sizes that land on both, then identify the largest such jump size. Ask: what is special about the largest jump size?"
+            },
+            {
+              "minutes": "22–32",
+              "activity": "Work through Figure it Out Q8, section 5.1 p.111 (\"In Jump Jackpot, treasures are on 28 and 70. What jump sizes land on both numbers?....\") as a class. List all factors of 28 and 70, circle the common ones, and identify the greatest common factor."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Address Figure it Out Q1, section 5.1 p.110 (\"Find all multiples of 40 that lie between 310 and 410....\"). Briefly consolidate: common factors are factors of the GCF; connect the Jump Jackpot game to the formal idea that a jump size divides both treasure numbers if and only if it is a common factor."
+            }
+          ],
+          "teacher_notes": "Students often list only some common factors and miss 1; remind them that 1 divides every number and is always a common factor. A useful link: the Idli-Vada game found the smallest common multiple; the Jump Jackpot game finds the largest common factor — both ideas emerge from the same family of problems. Figure it Out Q8 is well-suited to group checking since students can verify by repeated subtraction.",
+          "materials": [
+            "Number lines drawn on paper or whiteboard",
+            "Whiteboard and markers"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.1",
+              "title": "Common Multiples and Common Factors"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Reasoning with Factors: Rich Figure it Out Problems",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q2, section 5.1 p.110",
+              "description": "Who am I? (a) A number less than 40, one factor is 7, digit sum is 8. (b) A number less than 100, two factors are 3 and 5, one digit is 1 more than the other."
+            },
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q3, section 5.1 p.111",
+              "description": "A perfect number equals the sum of all its factors divided by 2. Given that 28 is perfect, find a perfect number between 1 and 10."
+            },
+            {
+              "id": "E-10",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q4, section 5.1 p.111",
+              "description": "Find the common factors of: (a) 20 and 28; (b) 35 and 50; (c) 4, 8 and 12; (d) 5, 15 and 25."
+            },
+            {
+              "id": "E-12",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q6, section 5.1 p.111",
+              "description": "Anshu plays Idli-Vada with two numbers both smaller than 10. The first 'idli-vada' comes after number 50. What could the two numbers be?"
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-14",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q8, section 5.1 p.111",
+              "description": "Guna erased numbers from a Venn diagram leaving only the common multiples 24, 48, 72. Find possible values for the two circle labels (the individual multiples regions)."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students work individually on Figure it Out Q2, section 5.1 p.110 (\"Who am I? A number less than 40, one factor is 7, digit sum is 8....\") and Figure it Out Q4, section 5.1 p.111 (\"Find the common factors of (a) 20 and 28; (b) 35 and 50....\"). Encourage systematic listing of factors rather than guessing."
+            },
+            {
+              "minutes": "12–24",
+              "activity": "Pairs share solutions to Q2 and Q4 and reconcile differences. Bring the class together on Figure it Out Q6, section 5.1 p.111 (\"Anshu plays Idli-Vada with two numbers both smaller than 10; the first 'idli-vada' comes after 50....\"). Students reason about which pairs of single-digit numbers have LCM greater than 50."
+            },
+            {
+              "minutes": "24–36",
+              "activity": "Introduce Figure it Out Q3, section 5.1 p.111 (\"A perfect number equals the sum of all its factors divided by 2; given that 28 is perfect, find one between 1 and 10....\"). Students list all factors of small numbers, sum them, and check the perfect-number condition — a rich application of factor listing."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Brief share-out: which number between 1 and 10 is perfect? Ask students what they notice about the factor-sum relationship and record the key observation on the board."
+            }
+          ],
+          "teacher_notes": "The 'Who am I?' problems reward students who work systematically — list multiples of 7 below 40, then check digit sums — rather than trying random numbers. Perfect numbers are an enrichment idea; validate any student who asks whether numbers other than 6 and 28 exist, noting this is an open question in mathematics. Watch for students who include the number itself in their factor list when checking the perfect-number definition.",
+          "materials": [
+            "Whiteboard and markers",
+            "Plain paper for factor trees or lists"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.1",
+              "title": "Common Multiples and Common Factors"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Reconstructing Venn Diagrams and Exploring LCM Boundaries",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-11",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q5, section 5.1 p.111",
+              "description": "Find any three numbers that are multiples of 25 but not multiples of 50."
+            },
+            {
+              "id": "E-15",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q9, section 5.1 p.111",
+              "description": "Find the smallest number that is a multiple of all numbers from 1 to 10, except 7. (Try This)"
+            },
+            {
+              "id": "E-16",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q10, section 5.1 p.111",
+              "description": "Find the smallest number that is a multiple of all the numbers from 1 to 10. (Try This)"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Open with Figure it Out Q5, section 5.1 p.111 (\"Find any three numbers that are multiples of 25 but not multiples of 50....\"). Students write their three numbers, then pair-share and check each other's answers by verifying divisibility by 25 and non-divisibility by 50."
+            },
+            {
+              "minutes": "10–26",
+              "activity": "Students work in small groups on Figure it Out Q9, section 5.1 p.111 (\"Find the smallest number that is a multiple of all numbers from 1 to 10, except 7....\"). Groups list necessary multiples systematically and compare results. Bring groups together to identify the common strategy."
+            },
+            {
+              "minutes": "26–38",
+              "activity": "Extend to Figure it Out Q10, section 5.1 p.111 (\"Find the smallest number that is a multiple of all the numbers from 1 to 10....\"). Students incorporate 7 into the search and compare the two answers, noting how including 7 changes the result."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Consolidate section 5.1: on the board, record the key generalisations — common multiples of two numbers are multiples of their LCM; common factors of two numbers are factors of their GCF — and invite students to express these in their own words."
+            }
+          ],
+          "teacher_notes": "Questions E-15 and E-16 are designated 'Try This' challenges; let groups work at their own pace and celebrate any group that finds a correct answer, since the reasoning demands careful tracking of multiple divisibility conditions simultaneously. A common slip is forgetting that 1 divides everything and need not be tracked separately. These problems naturally motivate prime factorisation, which section 5.4 will formalise.",
+          "materials": [
+            "Whiteboard and markers",
+            "Plain paper for working"
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.2",
+              "title": "Prime Numbers"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Rectangles and Rows: Discovering Primes and Composites",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-17",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Figure it Out Q1, section 5.2 p.114",
+              "description": "Is there any even prime other than 2?"
+            },
+            {
+              "id": "E-20",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Figure it Out Q4, section 5.2 p.114",
+              "description": "Which of the following numbers are prime: 23, 51, 37, 26?"
+            },
+            {
+              "id": "E-25",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Figure it Out Q9, section 5.2 p.114",
+              "description": "Identify whether each statement is true or false and explain: (a) no prime has units digit 4; (b) a product of primes can be prime; (c) primes have no factors; (d) all even numbers are composite; (e) for every prime other than 2, the next number is composite."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Pose the rectangular-arrangement problem from section 5.2: ask students how many different rectangles they can form with 12 counters (or drawn squares), then with 7 counters. Students record all factor pairs for each number and observe that 12 has many arrangements while 7 has only one (1 × 7). Introduce the vocabulary: exactly two factors means prime; more than two means composite; 1 is neither."
+            },
+            {
+              "minutes": "12–22",
+              "activity": "Students repeat the rectangle exercise for the numbers 2 through 20, recording for each number how many distinct rectangles are possible. They sort their numbers into three columns: prime, composite, neither."
+            },
+            {
+              "minutes": "22–32",
+              "activity": "Class discussion on Figure it Out Q1, section 5.2 p.114 (\"Is there any even prime other than 2?....\") and Figure it Out Q4, section 5.2 p.114 (\"Which of 23, 51, 37, 26 are prime?....\"). Use the factor-listing method: check divisibility by small numbers systematically."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Work through Figure it Out Q9, section 5.2 p.114 (\"Identify whether each statement is true or false....\") as a class debate — students vote true or false for each statement and justify orally, with the teacher scribing key reasoning on the board."
+            }
+          ],
+          "teacher_notes": "The rectangle model makes the definition of prime tangible: a prime number cannot form a rectangle with more than one column. Watch for the near-universal error that 1 is prime — ask students to count how many factors 1 has (only one: itself) and show that the definition requires exactly two. Statement (c) in E-25 ('primes have no factors') is a rich misconception to unpack, since every number has at least 1 and itself as factors.",
+          "materials": [
+            "Counters or squared paper for rectangle arrangements",
+            "Whiteboard and markers"
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.2",
+              "title": "Prime Numbers"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "The Sieve of Eratosthenes: Sifting All Primes to 100",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-18",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Figure it Out Q2, section 5.2 p.114",
+              "description": "From the list of primes up to 100, what is the smallest difference between two successive primes? What is the largest difference?"
+            },
+            {
+              "id": "E-19",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Figure it Out Q3, section 5.2 p.114",
+              "description": "Are there an equal number of primes in every row of the sieve table? Which decades have the fewest primes? Which have the most?"
+            },
+            {
+              "id": "E-23",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Figure it Out Q7, section 5.2 p.114",
+              "description": "Find seven consecutive composite numbers between 1 and 100."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "Each student receives (or draws) a 10×10 grid of numbers 1–100. Follow the Sieve of Eratosthenes step by step as described in section 5.2: cross out 1, circle 2 and cross out all other multiples of 2, circle 3 and cross out its remaining multiples, continue with 5 and 7. Students complete the sieve individually."
+            },
+            {
+              "minutes": "15–25",
+              "activity": "Math Talk: ask students why we stop at 7 — why do we not need to check primes beyond 7 for a 100-grid? Accept intuitive answers and guide toward: any composite number up to 100 must have a prime factor not exceeding 10. Discuss the historical note on Eratosthenes."
+            },
+            {
+              "minutes": "25–35",
+              "activity": "Students answer Figure it Out Q2, section 5.2 p.114 (\"What is the smallest and largest difference between successive primes up to 100?....\") and Figure it Out Q3, section 5.2 p.114 (\"Are there equal numbers of primes in every row?....\") by examining their completed sieve grids."
+            },
+            {
+              "minutes": "35–40",
+              "activity": "Address Figure it Out Q7, section 5.2 p.114 (\"Find seven consecutive composite numbers between 1 and 100....\"). Students scan their sieve for a run of crossed-out cells. Confirm the answer and note the concept of prime gaps."
+            }
+          ],
+          "teacher_notes": "Having each student complete their own sieve is essential — shared grids remove the personal discovery moment. A common procedural error is forgetting to circle a prime before crossing out its multiples, which causes those primes to be crossed out themselves; watch for students who end up with no circles in the 20s or 30s. The Math Talk about stopping at 7 is the conceptual heart of the sieve and deserves unhurried discussion.",
+          "materials": [
+            "Pre-printed or student-drawn 1–100 number grids",
+            "Coloured pencils or pens for circling and crossing"
+          ]
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.2",
+              "title": "Prime Numbers"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Twin Primes, Digit Patterns and the 2p+1 Exploration",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-21",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Figure it Out Q5, section 5.2 p.114",
+              "description": "Write three pairs of prime numbers less than 20 whose sum is a multiple of 5."
+            },
+            {
+              "id": "E-24",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Figure it Out Q8, section 5.2 p.114",
+              "description": "Twin primes differ by 2. Find all twin prime pairs between 1 and 100."
+            },
+            {
+              "id": "E-28",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Figure it Out Q12, section 5.2 p.115",
+              "description": "3 is prime and 2 × 3 + 1 = 7 is also prime. Find at least five other primes p for which 2p + 1 is also prime."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-22",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Figure it Out Q6, section 5.2 p.114",
+              "description": "The numbers 13 and 31 are prime and use the same digits. Find other such digit-reversal prime pairs up to 100."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Students use their sieve grids from the previous unit's work to tackle Figure it Out Q5, section 5.2 p.114 (\"Write three pairs of prime numbers less than 20 whose sum is a multiple of 5....\"). Pairs compare lists and check by divisibility — encourage students to notice whether 2 must appear in every such pair."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Introduce twin primes via Figure it Out Q8, section 5.2 p.114 (\"Twin primes differ by 2; find all twin prime pairs between 1 and 100....\"). Students scan their sieve systematically, listing adjacent primes that differ by exactly 2. Whole-class compilation on the board."
+            },
+            {
+              "minutes": "22–36",
+              "activity": "Explore Figure it Out Q12, section 5.2 p.115 (\"3 is prime and 2 × 3 + 1 = 7 is also prime; find at least five other primes p for which 2p + 1 is also prime....\"). Students work in groups, testing primes from their sieve. Ask: can you find a prime p where 2p + 1 is composite? Record both kinds of examples."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Brief class discussion: what patterns did students notice in the 2p + 1 exploration? Emphasise that the exploration itself — conjecturing, testing, finding counterexamples — is the mathematical activity, even if no general rule is proven."
+            }
+          ],
+          "teacher_notes": "The 2p + 1 exploration connects to the Goldbach-style open problems mentioned in the chapter prose; explicitly naming it as an unsolved area of mathematics can be motivating for curious students. Watch for students who test only the first two or three primes and stop — encourage persistence. The twin prime search via the sieve is a good opportunity to connect the visual pattern (adjacent circles) to the arithmetic definition.",
+          "materials": [
+            "Completed sieve grids from the previous exploration",
+            "Whiteboard and markers"
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.2",
+              "title": "Prime Numbers"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Products of Primes, Three-Prime Numbers and Digit Constraints",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-26",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Figure it Out Q10, section 5.2 p.115",
+              "description": "Which of 45, 60, 91, 105, 330 is the product of exactly three distinct prime numbers?"
+            },
+            {
+              "id": "E-27",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Figure it Out Q11, section 5.2 p.115",
+              "description": "How many three-digit prime numbers can you make using each of 2, 4 and 5 exactly once?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "Students work individually on Figure it Out Q10, section 5.2 p.115 (\"Which of 45, 60, 91, 105, 330 is the product of exactly three distinct prime numbers?....\"). For each number, students factor it step by step and count the distinct prime factors. Share and discuss: which numbers have repeated primes?"
+            },
+            {
+              "minutes": "15–30",
+              "activity": "Groups tackle Figure it Out Q11, section 5.2 p.115 (\"How many three-digit prime numbers can you make using 2, 4 and 5 exactly once?....\"). Students list all permutations of the three digits, then check each for primality using the definition and divisibility checks. Record findings systematically on the board."
+            },
+            {
+              "minutes": "30–40",
+              "activity": "Whole-class reasoning discussion: why must any number with a units digit of 2, 4, or 5 fail to be prime (except for 2 and 5 themselves)? Students articulate the rule — even units digit means divisible by 2; units digit 5 means divisible by 5 — and connect this to why the search space for Q11 collapses quickly."
+            }
+          ],
+          "teacher_notes": "E-26 is an excellent context for prime factorisation: students who try to check by multiplying prime pairs will find trial-and-error slow and may naturally ask for a more systematic method. E-27's key insight is that any arrangement ending in 2, 4, or 5 is immediately composite; watch for students who test all six permutations individually rather than applying the digit-rule argument first. Praise reasoning that rules out possibilities without explicit calculation.",
+          "materials": [
+            "Whiteboard and markers",
+            "Plain paper for systematic listing"
+          ]
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.3",
+              "title": "Co-prime Numbers for Safekeeping Treasures"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Safe Pairs: Introducing Co-prime Numbers Through the Treasure Game",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-29",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Figure it Out Q1, section 5.3 p.115",
+              "description": "Check if each pair is 'safe' (co-prime): (a) 15 and 39; (b) 4 and 15; (c) 18 and 29; (d) 20 and 55."
+            },
+            {
+              "id": "E-30",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Figure it Out Q2, section 5.3 p.116",
+              "description": "Which of the following pairs are co-prime: (a) 18 and 35; (b) 15 and 37; (c) 30 and 415; (d) 17 and 69; (e) 81 and 18?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Re-read the treasure-hunting scenario from section 5.3 with the class: Grumpy places treasures on two numbers with jump size 1 forbidden. Ask: which pairs of treasure numbers are truly safe? Introduce co-prime definition — two numbers whose only common factor is 1 — through the game's question."
+            },
+            {
+              "minutes": "12–24",
+              "activity": "Students work individually on Figure it Out Q1, section 5.3 p.115 (\"Check if each pair is 'safe' (co-prime): (a) 15 and 39; (b) 4 and 15; (c) 18 and 29; (d) 20 and 55....\"). For each pair, they list factors of both numbers and check whether any common factor greater than 1 exists."
+            },
+            {
+              "minutes": "24–36",
+              "activity": "Pairs compare answers and move to Figure it Out Q2, section 5.3 p.116 (\"Which of the following pairs are co-prime: (a) 18 and 35; (b) 15 and 37; (c) 30 and 415; (d) 17 and 69; (e) 81 and 18?....\"). Groups record their decisions with explicit justification: 'common factors are only {1}, therefore co-prime' or 'common factor 3 found, therefore not co-prime'."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Consolidate the definition on the board. Ask: can two even numbers ever be co-prime? Can a prime number and any number that is not its multiple always be co-prime? Take student responses without resolving yet."
+            }
+          ],
+          "teacher_notes": "Students sometimes confuse 'co-prime' with 'prime' — make the contrast explicit: 14 and 15 are co-prime even though neither is prime, because their only common factor is 1. The treasure-game framing grounds the otherwise abstract definition: being co-prime means no jump size greater than 1 can reach both treasures. Watch for students who check only one factor and declare co-primality without completing their factor list.",
+          "materials": [
+            "Whiteboard and markers",
+            "Plain paper for factor lists"
+          ]
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.3",
+              "title": "Co-prime Numbers for Safekeeping Treasures"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Co-prime Art: Thread Patterns and the Peg-Gap Rule",
+          "pedagogical_method": "Play-way",
+          "textbook_items_in_class": [
+            {
+              "id": "A-3",
+              "type": "activity",
+              "source_section": "section 5.3",
+              "book_ref": "Activity (Co-prime Art), section 5.3 p.116",
+              "description": "Students observe and analyse thread-art diagrams with different peg counts and thread-gaps. They predict which combinations visit all pegs (co-prime pairs) versus only some pegs (non-co-prime pairs) and create their own diagrams for four specified peg/gap combinations."
+            },
+            {
+              "id": "E-31",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Math Talk, section 5.3 p.116",
+              "description": "Find examples where the LCM equals the product of the two numbers, and examples where LCM is less than the product. How is this related to the pair being co-prime?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–14",
+              "activity": "Introduce Activity (Co-prime Art), section 5.3 p.116 (\"Students observe and analyse thread-art diagrams with different peg counts and thread-gaps....\"). Walk through one completed example with 6 pegs and a gap of 1 (visits all pegs) versus 6 pegs and a gap of 2 (visits only some). Ask students to predict which peg/gap combinations will visit all pegs before drawing."
+            },
+            {
+              "minutes": "14–30",
+              "activity": "Students draw dot-circle representations (or use printed peg templates) and trace the thread path for four specified peg/gap combinations from the activity. They record: total pegs visited before returning to start, whether all pegs were visited, and whether the peg count and gap are co-prime."
+            },
+            {
+              "minutes": "30–38",
+              "activity": "Groups present their findings and the class compiles a table: co-prime pairs → all pegs visited; non-co-prime pairs → only some pegs visited. Ask students to articulate the conjecture in their own words."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Transition to the Math Talk, section 5.3 p.116 (\"Find examples where LCM equals the product versus LCM is less than the product....\"). Pose the question for students to think about: when does LCM equal the product of two numbers?"
+            }
+          ],
+          "teacher_notes": "The co-prime art activity produces a visual proof of co-primality that complements the factor-listing approach: students who drew the patterns remember the result longer than those who merely computed it. Ensure students record both the GCF and the thread result in their table — the connection is the key deliverable. A frequent prediction error is assuming a larger gap always visits fewer pegs; a gap of 5 with 6 pegs visits all 6, which surprises most students.",
+          "materials": [
+            "Printed peg-circle templates or compasses for drawing",
+            "Pencils or thin markers for tracing thread paths",
+            "Whiteboard and markers"
+          ]
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.4",
+              "title": "Prime Factorisation"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Why Partial Factorisation Fails: Motivating Prime Factorisation",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-32",
+              "type": "exercise",
+              "source_section": "section 5.4",
+              "book_ref": "Figure it Out Q1, section 5.4 p.120",
+              "description": "Find the prime factorisations of: 64, 104, 105, 243, 320, 141, 1728, 729, 1024, 1331, 1000."
+            },
+            {
+              "id": "E-33",
+              "type": "exercise",
+              "source_section": "section 5.4",
+              "book_ref": "Figure it Out Q2, section 5.4 p.120",
+              "description": "A number's prime factorisation has one 2, two 3s, and one 11. What is the number?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Present the Anshu–Guna dialogue from section 5.4: Anshu writes 56 = 14 × 4 and claims it shares no common factor with 63, but Guna shows both are divisible by 7. Discuss: why did Anshu's method fail? Establish that writing a number as a product of composites does not reveal all its factors."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Demonstrate prime factorisation using a factor tree: 36 = 2 × 18 = 2 × 2 × 9 = 2 × 2 × 3 × 3. Show a second route: 36 = 4 × 9 = 2 × 2 × 3 × 3. Emphasise that both routes give the same prime factors, introducing the uniqueness fact. Students then build factor trees for their choice of two numbers from Figure it Out Q1, section 5.4 p.120."
+            },
+            {
+              "minutes": "22–36",
+              "activity": "Students complete Figure it Out Q1, section 5.4 p.120 (\"Find the prime factorisations of 64, 104, 105, 243, 320, 141, 1728, 729, 1024, 1331, 1000....\") — teacher assigns a subset of these numbers to each group to ensure all are covered. Groups share answers and the class verifies by multiplication."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Quick round on Figure it Out Q2, section 5.4 p.120 (\"A number's prime factorisation has one 2, two 3s, and one 11; what is the number?....\"). Students multiply: 2 × 3 × 3 × 11 = 198. Discuss: could there be another number with exactly this prime factorisation? Connect to uniqueness."
+            }
+          ],
+          "teacher_notes": "The Anshu–Guna dialogue is the motivating argument for this section; do not skip it, as it shows students concretely why a partial factorisation is not enough. Watch for students who stop factoring once they reach a composite — insist that every branch of the factor tree must end in a prime. The uniqueness claim (same primes regardless of route) is stated here as a remarkable fact; students will prove it formally in a later class.",
+          "materials": [
+            "Whiteboard and markers",
+            "Plain paper for factor trees"
+          ]
+        },
+        {
+          "period_number": 13,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.4",
+              "title": "Prime Factorisation"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Prime Factorisation Without Multiplying First",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-34",
+              "type": "exercise",
+              "source_section": "section 5.4",
+              "book_ref": "Figure it Out Q3, section 5.4 p.120",
+              "description": "Find three prime numbers, all less than 30, whose product is 1955."
+            },
+            {
+              "id": "E-35",
+              "type": "exercise",
+              "source_section": "section 5.4",
+              "book_ref": "Figure it Out Q4, section 5.4 p.120",
+              "description": "Find the prime factorisation without multiplying first: (a) 56 × 25; (b) 108 × 75; (c) 1000 × 81."
+            },
+            {
+              "id": "E-36",
+              "type": "exercise",
+              "source_section": "section 5.4",
+              "book_ref": "Figure it Out Q5, section 5.4 p.120",
+              "description": "What is the smallest number whose prime factorisation has: (a) three different prime numbers; (b) four different prime numbers?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students tackle Figure it Out Q3, section 5.4 p.120 (\"Find three prime numbers all less than 30 whose product is 1955....\"). Guide the approach: since 1955 ends in 5, it is divisible by 5. Divide out 5, then factor the quotient 391. Students work in pairs and present their factor chain."
+            },
+            {
+              "minutes": "12–26",
+              "activity": "Introduce the key idea for Figure it Out Q4, section 5.4 p.120 (\"Find the prime factorisation without multiplying first....\"). Students write the prime factorisations of each factor separately (e.g., 56 = 2³ × 7, 25 = 5²), then combine the lists. Compare the effort with first multiplying: students should find the separate-factorisation route faster and less error-prone."
+            },
+            {
+              "minutes": "26–36",
+              "activity": "Figure it Out Q5, section 5.4 p.120 (\"What is the smallest number whose prime factorisation has three / four different primes?....\"). Students reason: to minimise the product, use the smallest available primes once each. 2 × 3 × 5 = 30 for three primes; 2 × 3 × 5 × 7 = 210 for four primes."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Students verify their answers to Q5 by confirming the prime factorisations are correct and no smaller number with the required count of distinct prime factors exists. Ask: can you always find a smaller number by using a prime more than once? Discuss briefly."
+            }
+          ],
+          "teacher_notes": "E-35 is a powerful fluency-builder: students who understand that the prime factorisation of a product is the combined prime factorisation of each factor develop a flexible approach to later LCM and GCF work. Watch for students who multiply first in Q4 — they miss the point of the exercise. For Q3, the divisibility-by-5 shortcut from the units digit is the entry point; if students do not see it, refer them back to section 5.5's later content as a preview.",
+          "materials": [
+            "Whiteboard and markers",
+            "Plain paper for factor trees"
+          ]
+        },
+        {
+          "period_number": 14,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.4",
+              "title": "Prime Factorisation"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Using Prime Factorisation to Test Co-primality and Divisibility",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-1",
+              "type": "worked_example",
+              "source_section": "section 5.4",
+              "book_ref": "Example, section 5.4 p.120",
+              "description": "Check if 40 and 231 are co-prime using prime factorisation. 40 = 2 × 2 × 2 × 5 and 231 = 3 × 7 × 11 share no common prime factor; therefore 40 and 231 are co-prime."
+            },
+            {
+              "id": "WE-3",
+              "type": "worked_example",
+              "source_section": "section 5.4",
+              "book_ref": "Example, section 5.4 p.121",
+              "description": "Check if 168 is divisible by 12. 168 = 2 × 2 × 2 × 3 × 7 and 12 = 2 × 2 × 3. Since the prime factorisation of 12 is fully contained in that of 168 (168 = 12 × 14), 168 is divisible by 12."
+            },
+            {
+              "id": "E-37",
+              "type": "exercise",
+              "source_section": "section 5.4",
+              "book_ref": "Figure it Out Q1, section 5.4 p.122",
+              "description": "Are the following pairs co-prime? Guess first, then verify using prime factorisation: (a) 30 and 45; (b) 57 and 85; (c) 121 and 1331; (d) 343 and 216."
+            },
+            {
+              "id": "E-38",
+              "type": "exercise",
+              "source_section": "section 5.4",
+              "book_ref": "Figure it Out Q2, section 5.4 p.122",
+              "description": "Is the first number divisible by the second? Use prime factorisation: (a) 225 and 27; (b) 96 and 24; (c) 343 and 17; (d) 999 and 99."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Walk through Example, section 5.4 p.120 (\"Check if 40 and 231 are co-prime using prime factorisation....\") and Example, section 5.4 p.121 (\"Check if 168 is divisible by 12....\") as teacher-led demonstrations, emphasising the two-step rule: for co-primality, compare prime factor lists; for divisibility, check that every prime in the divisor's list appears at least as many times in the dividend's list."
+            },
+            {
+              "minutes": "12–26",
+              "activity": "Students complete Figure it Out Q1, section 5.4 p.122 (\"Are the following pairs co-prime? Guess first, then verify....\") individually. The 'guess first' instruction is important — ask students to record their guess before computing, then compare intuition with the prime-factorisation result."
+            },
+            {
+              "minutes": "26–38",
+              "activity": "Students work in pairs on Figure it Out Q2, section 5.4 p.122 (\"Is the first number divisible by the second?....\"). For each pair, they write both prime factorisations and compare exponent counts for each prime. Whole-class check: which cases required counting exponents carefully?"
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Quick consolidation: ask students to state in one sentence the criterion for divisibility using prime factorisations. Record the class's best formulation on the board."
+            }
+          ],
+          "teacher_notes": "The 'guess first' instruction in E-37 is pedagogically valuable — mismatches between intuition and the factorisation result are powerful learning moments. A systematic error in E-38 is forgetting to count how many times a prime appears: 96 = 2⁵ × 3 and 24 = 2³ × 3, so students must notice that 2 appears five times in 96 and three times in 24 — both conditions are satisfied. Example, section 5.4 p.122 (WE-5) on why 42 is not divisible by 12 is worth pointing students to as self-study since it clarifies the exponent-count rule.",
+          "materials": [
+            "Whiteboard and markers",
+            "Plain paper for factor trees"
+          ]
+        },
+        {
+          "period_number": 15,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.4",
+              "title": "Prime Factorisation"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Co-primality of Primes and Divisibility Reasoning",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-39",
+              "type": "exercise",
+              "source_section": "section 5.4",
+              "book_ref": "Figure it Out Q3, section 5.4 p.122",
+              "description": "First number has prime factorisation 2 × 3 × 7; second has 3 × 7 × 11. Are they co-prime? Does one divide the other?"
+            },
+            {
+              "id": "E-40",
+              "type": "exercise",
+              "source_section": "section 5.4",
+              "book_ref": "Figure it Out Q4, section 5.4 p.122",
+              "description": "Guna says any two prime numbers are co-prime. Is he right?"
+            },
+            {
+              "id": "WE-4",
+              "type": "worked_example",
+              "source_section": "section 5.4",
+              "book_ref": "Example, section 5.4 p.121",
+              "description": "Check if 75 is divisible by 21. 75 = 3 × 5 × 5 and 21 = 3 × 7. Since 7 is a prime factor of 21 but not of 75, 75 is not divisible by 21."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Work through Example, section 5.4 p.121 (\"Check if 75 is divisible by 21; 75 = 3 × 5 × 5 and 21 = 3 × 7....\") as a class to reinforce the 'missing prime factor' case. Then pose Figure it Out Q3, section 5.4 p.122 (\"First number has prime factorisation 2 × 3 × 7; second has 3 × 7 × 11....\") — students read the factorisations directly from the problem without computing them."
+            },
+            {
+              "minutes": "12–24",
+              "activity": "Students reason through Q3: the two numbers share prime factors 3 and 7, so they are not co-prime; neither divides the other because each has a prime factor the other lacks (2 vs 11). Ask students to articulate: what would have to be true for one to divide the other?"
+            },
+            {
+              "minutes": "24–36",
+              "activity": "Class debate on Figure it Out Q4, section 5.4 p.122 (\"Guna says any two prime numbers are co-prime; is he right?....\"). Students construct arguments: any prime p has only factors 1 and p; any prime q different from p has only factors 1 and q; their only shared factor is 1. Record the argument step by step."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Pose the converse question: are co-prime numbers always prime? Students generate counterexamples quickly (e.g., 4 and 9) and record the key distinction: co-primality is a relationship between two numbers, not a property of one number."
+            }
+          ],
+          "teacher_notes": "E-40 is a deductive gem — the argument that any two distinct primes are co-prime is one of the simplest and most satisfying proofs accessible at this level; give students time to articulate it in their own words before scribing. The converse discussion ('are co-prime numbers always prime?') prevents students from collapsing the two ideas. Example, section 5.4 p.121 (WE-2) on 242 and 195 is a good self-study pointer for students who want additional practice with large numbers.",
+          "materials": [
+            "Whiteboard and markers"
+          ]
+        },
+        {
+          "period_number": 16,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.5",
+              "title": "Divisibility Tests"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Last-Digit Patterns: Divisibility by 10, 5 and 2",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-44",
+              "type": "exercise",
+              "source_section": "section 5.5",
+              "book_ref": "Figure it Out Q4, section 5.5 p.126",
+              "description": "Find the remainders when 78, 99, 173, 572, 980, 1111, 2345 are each divided by (a) 10, (b) 5, (c) 2."
+            },
+            {
+              "id": "E-43",
+              "type": "exercise",
+              "source_section": "section 5.5",
+              "book_ref": "Figure it Out Q3, section 5.5 p.125",
+              "description": "Explore whether each statement is always, sometimes, or never true: (a) sum of two even numbers is a multiple of 4; (b) sum of two odd numbers is a multiple of 4."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Ask students to list the first fifteen multiples of 10 on their paper, then circle every units digit. Then list the first fifteen multiples of 5 and do the same. Whole-class observation: multiples of 10 always end in 0; multiples of 5 always end in 0 or 5. Introduce the formal divisibility rules as generalisations of observed patterns."
+            },
+            {
+              "minutes": "12–22",
+              "activity": "Repeat the listing exercise for multiples of 2. Students identify the even-digit pattern (0, 2, 4, 6, 8) and state the divisibility rule for 2. Math Talk: ask students whether the last digit alone always determines divisibility by 2 — they should agree it does, unlike for larger divisors."
+            },
+            {
+              "minutes": "22–34",
+              "activity": "Students apply all three rules to Figure it Out Q4, section 5.5 p.126 (\"Find the remainders when 78, 99, 173, 572, 980, 1111, 2345 are each divided by 10, 5, and 2....\"). For each number and each divisor, they record the units digit, state the rule, and confirm the remainder. Share answers."
+            },
+            {
+              "minutes": "34–40",
+              "activity": "Introduce Figure it Out Q3, section 5.5 p.125 (\"Explore whether the sum of two even numbers is always, sometimes, or never a multiple of 4; same for two odd numbers....\"). Students explore with examples, recording findings. Leave the generalisation open for continued work."
+            }
+          ],
+          "teacher_notes": "The inductive approach here mirrors exactly the NCF's suggestion: students observe patterns in lists of multiples before the rule is stated, so the rule feels like a discovery rather than a dictate. Watch for students who state 'all even numbers are divisible by 10' — this over-generalisation from the multiples-of-10 pattern must be addressed. E-43 is a richer problem than it appears and deserves time; note whether students generate only small-number examples (2 + 2, 4 + 4) or test a variety of even numbers.",
+          "materials": [
+            "Whiteboard and markers",
+            "Plain paper for listing multiples"
+          ]
+        },
+        {
+          "period_number": 17,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.5",
+              "title": "Divisibility Tests"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Two-Digit and Three-Digit Endings: Rules for 4 and 8",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-41",
+              "type": "exercise",
+              "source_section": "section 5.5",
+              "book_ref": "Figure it Out Q1, section 5.5 p.125",
+              "description": "2024 is a leap year. Leap years are multiples of 4, except multiples of 100 that are not multiples of 400. (a) From your birth year to now, which years were leap years? (b) From 2024 to 2099, how many leap years are there?"
+            },
+            {
+              "id": "E-42",
+              "type": "exercise",
+              "source_section": "section 5.5",
+              "book_ref": "Figure it Out Q2, section 5.5 p.125",
+              "description": "Find the largest and smallest 4-digit numbers that are both divisible by 4 and palindromes."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–14",
+              "activity": "Students list multiples of 4 from 4 to 100, recording the last two digits of each. Pose the question from section 5.5: is the last single digit enough to determine divisibility by 4? Students check 12 and 22 (same units digit, different divisibility by 4) and conclude that the last two digits are necessary. State the rule: a number is divisible by 4 if and only if its last two digits form a multiple of 4."
+            },
+            {
+              "minutes": "14–26",
+              "activity": "Extend to divisibility by 8: students list the last three digits of multiples of 8 from 8 to 200 and verify that the three-digit ending rule holds. Present the three equivalent statements from section 5.5's Math Talk prompt and ask students to verify each with two examples."
+            },
+            {
+              "minutes": "26–36",
+              "activity": "Students apply the rules to Figure it Out Q1, section 5.5 p.125 (\"2024 is a leap year; from your birth year to now, which years were leap years; from 2024 to 2099, how many leap years?....\"). Walk through the three-condition rule for leap years and apply divisibility by 4, 100, and 400."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Students begin Figure it Out Q2, section 5.5 p.125 (\"Find the largest and smallest 4-digit palindromes divisible by 4....\"). Identify what a 4-digit palindrome looks like (abba form) and which last-two-digit conditions must hold. Students may not finish; the problem is a natural carry-forward challenge."
+            }
+          ],
+          "teacher_notes": "The 12-vs-22 counterexample is essential: it shows students concretely why a single-digit rule fails for 4, motivating the two-digit rule in a way that a mere statement cannot. Watch for students applying the units-digit rule (checking if the last digit is even) to conclude divisibility by 4 — this is the most common error in this section. The leap-year problem is a rich application since it compounds three divisibility conditions with logical 'except' clauses.",
+          "materials": [
+            "Whiteboard and markers",
+            "Plain paper for listing multiples of 4 and 8"
+          ]
+        },
+        {
+          "period_number": 18,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.5",
+              "title": "Divisibility Tests"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Applying All Five Tests: Palindromes, Remainders and Clever Checking",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-45",
+              "type": "exercise",
+              "source_section": "section 5.5",
+              "book_ref": "Figure it Out Q5, section 5.5 p.126",
+              "description": "The teacher asked if 14560 is divisible by all of 2, 4, 5, 8 and 10. Guna checked only two of these numbers and declared divisibility by all. What could those two numbers be?"
+            },
+            {
+              "id": "E-46",
+              "type": "exercise",
+              "source_section": "section 5.5",
+              "book_ref": "Figure it Out Q6, section 5.5 p.126",
+              "description": "Which of 572, 2352, 5600, 6000, 77622160 are divisible by all of 2, 4, 5, 8 and 10?"
+            },
+            {
+              "id": "E-47",
+              "type": "exercise",
+              "source_section": "section 5.5",
+              "book_ref": "Figure it Out Q7, section 5.5 p.126",
+              "description": "Write two numbers whose product is 10000, where neither number has 0 as its units digit."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–14",
+              "activity": "Tackle Figure it Out Q5, section 5.5 p.126 (\"Guna checked only two of these numbers and declared divisibility by 2, 4, 5, 8 and 10 for 14560....\"). Students reason about divisibility relationships: if a number is divisible by 8, it is automatically divisible by 4 and 2; if divisible by 10, it is divisible by 5 and 2. Map out which divisors imply which others."
+            },
+            {
+              "minutes": "14–26",
+              "activity": "Students apply all five tests to Figure it Out Q6, section 5.5 p.126 (\"Which of 572, 2352, 5600, 6000, 77622160 are divisible by all of 2, 4, 5, 8 and 10?....\"). For each number, they apply the appropriate test (units digit for 2, 5, 10; last two digits for 4; last three digits for 8) and record a yes/no for each divisor."
+            },
+            {
+              "minutes": "26–36",
+              "activity": "Students explore Figure it Out Q7, section 5.5 p.126 (\"Write two numbers whose product is 10000 where neither has 0 as units digit....\"). Since 10000 = 2⁴ × 5⁴, students distribute these prime factors between two numbers in a way that gives neither a factor of 10, meaning neither number can have both a 2 and a 5 in its factorisation."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Consolidate section 5.5: students state from memory the five divisibility rules, then identify which single test certifies the most other tests simultaneously. Confirm: checking divisibility by 8 and by 10 together guarantees divisibility by all five."
+            }
+          ],
+          "teacher_notes": "E-45 is the culminating reasoning problem for this section and rewards students who have internalised the divisibility-implication relationships rather than treating each test as independent. The step-by-step map (8 → 4 → 2; 10 → 5 and 2) is worth drawing explicitly. E-47 is a creative prime-factorisation problem in disguise: the insight that 10000 = 2⁴ × 5⁴ and that avoiding a 0-units-digit means separating all 2s from all 5s is the key.",
+          "materials": [
+            "Whiteboard and markers",
+            "Plain paper for working"
+          ]
+        },
+        {
+          "period_number": 19,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.6",
+              "title": "Fun with Numbers"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Special Numbers: What Makes Each One Different?",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-48",
+              "type": "exercise",
+              "source_section": "section 5.6",
+              "book_ref": "Math Talk (Special Numbers), section 5.6 p.126",
+              "description": "In each box of four numbers, explain how each number is special compared to the others. Share and compare reasons with classmates. Boxes include: {9, 16, 25, 43}; {5, 7, 3, 8}; {27, 3, 17, 27}; {12, 35, 11, 24}; {123, 31, 44, 65}."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Introduce Math Talk (Special Numbers), section 5.6 p.126 (\"In each box of four numbers, explain how each number is special compared to the others....\"). Model with one box: take {9, 16, 25, 43} and demonstrate that 43 is special as the only prime, but 9 is special as the only non-square-of-a-prime, etc. Show that 'special' is relative and multiple answers are valid."
+            },
+            {
+              "minutes": "8–26",
+              "activity": "Students work individually on one box each, writing at least one reason per number explaining its special property. They then pair up and share; pairs must decide together whether the other's reason is valid and mathematically sound. Each pair should challenge at least one reason."
+            },
+            {
+              "minutes": "26–38",
+              "activity": "Whole-class share-out: for each box, collect different valid reasons from the class and list them on the board. Draw attention to cases where the same number is special for different reasons — emphasise that mathematical properties are not unique labels, and that the richness of number theory lies in seeing many relationships simultaneously."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Brief reflection: ask students which number in the chapter they found most surprising and why. Collect two or three responses to close the activity with student voice."
+            }
+          ],
+          "teacher_notes": "The Special Numbers activity has no single correct answer, which can unsettle students accustomed to closed tasks; validate multiple mathematically sound arguments explicitly. A common thin response is 'X is the biggest' or 'X is even' — push students to use chapter-specific vocabulary: prime, composite, factor, multiple, perfect square. Challenging each other's reasons (the pair-share step) is where the deepest reasoning happens, so protect that time.",
+          "materials": [
+            "Whiteboard and markers",
+            "Plain paper or sticky notes for recording reasons"
+          ]
+        },
+        {
+          "period_number": 20,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.6",
+              "title": "Fun with Numbers"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Prime Puzzle: Satisfying Row and Column Products",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-49",
+              "type": "exercise",
+              "source_section": "section 5.6",
+              "book_ref": "Math Talk (Prime Puzzle), section 5.6 p.127",
+              "description": "Fill grids with prime numbers so that the product of each row equals the number to its right and the product of each column equals the number below it. Two grids provided (3×3 and larger). Sub-parts: (a) solve the first puzzle; (b) solve the second larger puzzle."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Introduce Math Talk (Prime Puzzle), section 5.6 p.127 (\"Fill grids with prime numbers so that each row product equals the given right-margin number and each column product equals the given bottom number....\"). Walk through the logic for a simple 2×2 example on the board: prime-factorise the margin numbers, then distribute the prime factors among the grid cells while satisfying all constraints."
+            },
+            {
+              "minutes": "10–28",
+              "activity": "Students work in pairs on the first puzzle (3×3 grid). Each pair prime-factorises each margin number, writes the prime factors available for each row, and searches for an assignment that also satisfies each column product. Pairs compare strategies when they reach different intermediate paths."
+            },
+            {
+              "minutes": "28–38",
+              "activity": "Students who complete the first puzzle move to the second larger puzzle. For those who are stuck, the teacher asks guided questions: 'Which row is most constrained? Which prime must appear in this row?' Support students in articulating their reasoning aloud before writing."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Whole-class discussion: what strategies proved most useful? Students name at least two distinct approaches — for example, starting with the most constrained row versus starting with the margin number with the fewest prime factors."
+            }
+          ],
+          "teacher_notes": "The Prime Puzzle requires genuine constraint-satisfaction reasoning rather than mere calculation; resist giving hints too early and let pairs struggle productively. A common approach that stalls is writing arbitrary primes and adjusting — push students toward the systematic prime-factorisation-first method. The strategy discussion at the close is important for metacognitive development: naming 'start with the most constrained row' as a heuristic transfers to other puzzle-solving contexts.",
+          "materials": [
+            "Printed or drawn grid templates for the puzzles",
+            "Whiteboard and markers"
+          ]
+        },
+        {
+          "period_number": 21,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.1",
+              "title": "Common Multiples and Common Factors"
+            },
+            {
+              "ref": "section 5.2",
+              "title": "Prime Numbers"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Mixed Practice: Multiples, Factors and Prime Classification",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-13",
+              "type": "exercise",
+              "source_section": "section 5.1",
+              "book_ref": "Figure it Out Q8, section 5.1 p.111",
+              "description": "In Jump Jackpot, treasures are on 28 and 70. What jump sizes land on both numbers?"
+            },
+            {
+              "id": "E-26",
+              "type": "exercise",
+              "source_section": "section 5.2",
+              "book_ref": "Figure it Out Q10, section 5.2 p.115",
+              "description": "Which of 45, 60, 91, 105, 330 is the product of exactly three distinct prime numbers?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "Students revisit Figure it Out Q8, section 5.1 p.111 (\"In Jump Jackpot, treasures are on 28 and 70; what jump sizes land on both?....\") but now solve it via prime factorisation rather than listing: 28 = 2² × 7 and 70 = 2 × 5 × 7 share factors 2 and 7, so common factors are 1, 2, 7, 14. Compare this prime-factorisation route with the earlier listing approach."
+            },
+            {
+              "minutes": "15–28",
+              "activity": "Small groups tackle Figure it Out Q10, section 5.2 p.115 (\"Which of 45, 60, 91, 105, 330 is the product of exactly three distinct prime numbers?....\") using complete prime factorisations. Each group presents their factorisation for one number; the class checks collectively."
+            },
+            {
+              "minutes": "28–40",
+              "activity": "Teacher poses two student-generated challenge questions: construct a four-digit number divisible by 4 and 5 but not by 8 or 10, and find a pair of numbers whose GCF is 7 and whose LCM is 84. Students work individually, then pairs compare reasoning routes."
+            }
+          ],
+          "teacher_notes": "This unit consolidates sections 5.1 and 5.2 through problems that now benefit from the prime-factorisation lens of section 5.4. The revisit of Jump Jackpot with prime factorisation is intentional: students who see the connection between the game's common-factor question and the prime-overlap argument deepen their structural understanding. The teacher-posed challenge questions at the close can be calibrated to the class — the divisibility constraint problem can be simplified by restricting to three-digit numbers.",
+          "materials": [
+            "Whiteboard and markers",
+            "Plain paper for working"
+          ]
+        },
+        {
+          "period_number": 22,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.3",
+              "title": "Co-prime Numbers for Safekeeping Treasures"
+            },
+            {
+              "ref": "section 5.4",
+              "title": "Prime Factorisation"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "From Co-prime Art to Factorisation: Connecting the Strands",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-30",
+              "type": "exercise",
+              "source_section": "section 5.3",
+              "book_ref": "Figure it Out Q2, section 5.3 p.116",
+              "description": "Which of the following pairs are co-prime: (a) 18 and 35; (b) 15 and 37; (c) 30 and 415; (d) 17 and 69; (e) 81 and 18?"
+            },
+            {
+              "id": "E-37",
+              "type": "exercise",
+              "source_section": "section 5.4",
+              "book_ref": "Figure it Out Q1, section 5.4 p.122",
+              "description": "Are the following pairs co-prime? Guess first, then verify using prime factorisation: (a) 30 and 45; (b) 57 and 85; (c) 121 and 1331; (d) 343 and 216."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–14",
+              "activity": "Students revisit Figure it Out Q2, section 5.3 p.116 (\"Which of the following pairs are co-prime: 18 and 35; 15 and 37; 30 and 415; 17 and 69; 81 and 18?....\") using prime factorisation rather than factor listing. They compare their earlier factor-listing results with the prime-factorisation method to confirm both give the same answer."
+            },
+            {
+              "minutes": "14–28",
+              "activity": "Students work in pairs on Figure it Out Q1, section 5.4 p.122 (\"Guess first, then verify co-primality for (a) 30 and 45; (b) 57 and 85; (c) 121 and 1331; (d) 343 and 216....\"). Record intuitive guesses before computing — the pairs (121, 1331) = (11², 11³) and (343, 216) = (7³, 2³ × 3³) often surprise students."
+            },
+            {
+              "minutes": "28–38",
+              "activity": "Bring the class together to discuss pair (c): 121 = 11² and 1331 = 11³ share the prime 11, so they are not co-prime even though the numbers look large and unrelated. Ask students to reflect on whether size or appearance is a reliable guide to co-primality."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Close with a brief recap: when are two numbers co-prime? Collect answers using chapter vocabulary — no shared prime factor, GCF is 1 — and record both equivalent statements on the board."
+            }
+          ],
+          "teacher_notes": "The revisit of E-30 using prime factorisation (instead of factor listing) is a deliberate consolidation move: students see that the prime-factorisation approach is faster for larger numbers. The (121, 1331) pair in E-37 is a rich case — students who immediately compute 121 = 11² are demonstrating fluency worth praising aloud. Watch for students who guess 'co-prime' for large-looking numbers on appearance alone; the (121, 1331) counterexample is the corrective.",
+          "materials": [
+            "Whiteboard and markers",
+            "Plain paper for factor trees"
+          ]
+        },
+        {
+          "period_number": 23,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.5",
+              "title": "Divisibility Tests"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Divisibility Across All Five Rules: Extended Practice",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-42",
+              "type": "exercise",
+              "source_section": "section 5.5",
+              "book_ref": "Figure it Out Q2, section 5.5 p.125",
+              "description": "Find the largest and smallest 4-digit numbers that are both divisible by 4 and palindromes."
+            },
+            {
+              "id": "E-43",
+              "type": "exercise",
+              "source_section": "section 5.5",
+              "book_ref": "Figure it Out Q3, section 5.5 p.125",
+              "description": "Explore whether each statement is always, sometimes, or never true: (a) sum of two even numbers is a multiple of 4; (b) sum of two odd numbers is a multiple of 4."
+            },
+            {
+              "id": "E-46",
+              "type": "exercise",
+              "source_section": "section 5.5",
+              "book_ref": "Figure it Out Q6, section 5.5 p.126",
+              "description": "Which of 572, 2352, 5600, 6000, 77622160 are divisible by all of 2, 4, 5, 8 and 10?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "Complete Figure it Out Q2, section 5.5 p.125 (\"Find the largest and smallest 4-digit palindromes divisible by 4....\"). Students identify that a 4-digit palindrome has the form abba; the last two digits are ba, so ba must be divisible by 4. Systematically test candidates for largest (starting from 9999 downward) and smallest (starting from 1001 upward)."
+            },
+            {
+              "minutes": "15–27",
+              "activity": "Students complete Figure it Out Q3, section 5.5 p.125 (\"Explore always/sometimes/never: sum of two even numbers a multiple of 4; sum of two odd numbers a multiple of 4....\"). Students generate multiple examples for each case, sort them, and articulate a conclusion with a counterexample for 'sometimes' cases."
+            },
+            {
+              "minutes": "27–38",
+              "activity": "Students apply all five divisibility tests to Figure it Out Q6, section 5.5 p.126 (\"Which of 572, 2352, 5600, 6000, 77622160 are divisible by all of 2, 4, 5, 8 and 10?....\"). For the large number, guide students to isolate the relevant digit groups: units digit for 2/5/10; last two digits for 4; last three digits for 8."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Students write one sentence summarising the most efficient strategy for checking divisibility by all five numbers simultaneously, based on their work in this unit."
+            }
+          ],
+          "teacher_notes": "The palindrome problem (E-42) is more demanding than it looks: the constraint that both abba ÷ 4 passes and that a ≠ 0 limits candidates considerably. Students who work systematically through the 'ba' last-two-digit values will find the answer reliably; students who guess large palindromes may miss valid candidates. The always/sometimes/never format in E-43 is a valuable logical exercise; 'sometimes' answers must be accompanied by both a case that works and one that does not.",
+          "materials": [
+            "Whiteboard and markers",
+            "Plain paper for systematic listing"
+          ]
+        },
+        {
+          "period_number": 24,
+          "period_duration_minutes": 40,
+          "textbook_segments": [
+            {
+              "ref": "section 5.6",
+              "title": "Fun with Numbers"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Chapter Fluency: Mixed Problems Across All Sections",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-35",
+              "type": "exercise",
+              "source_section": "section 5.4",
+              "book_ref": "Figure it Out Q4, section 5.4 p.120",
+              "description": "Find the prime factorisation without multiplying first: (a) 56 × 25; (b) 108 × 75; (c) 1000 × 81."
+            },
+            {
+              "id": "E-47",
+              "type": "exercise",
+              "source_section": "section 5.5",
+              "book_ref": "Figure it Out Q7, section 5.5 p.126",
+              "description": "Write two numbers whose product is 10000, where neither number has 0 as its units digit."
+            },
+            {
+              "id": "E-49",
+              "type": "exercise",
+              "source_section": "section 5.6",
+              "book_ref": "Math Talk (Prime Puzzle), section 5.6 p.127",
+              "description": "Fill grids with prime numbers so that the product of each row equals the number to its right and the product of each column equals the number below it. Two grids provided (3×3 and larger). Sub-parts: (a) solve the first puzzle; (b) solve the second larger puzzle."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students revisit Figure it Out Q4, section 5.4 p.120 (\"Find the prime factorisation without multiplying first: (a) 56 × 25; (b) 108 × 75; (c) 1000 × 81....\") as a fluency warm-up, targeting speed and accuracy with the combine-factorisations technique."
+            },
+            {
+              "minutes": "12–24",
+              "activity": "Students tackle Figure it Out Q7, section 5.5 p.126 (\"Write two numbers whose product is 10000 where neither has 0 as units digit....\") in pairs. The prime-factorisation route (10000 = 2⁴ × 5⁴, then separate all 2s from all 5s) is the key insight; pairs who find it quickly are asked to find a second valid pair."
+            },
+            {
+              "minutes": "24–38",
+              "activity": "Students work on Math Talk (Prime Puzzle), section 5.6 p.127 (\"Fill grids with prime numbers so that row and column products match the margin numbers....\") — the second larger puzzle. Students who completed both puzzles in an earlier unit use this time to create their own prime puzzle for a partner to solve."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Brief debrief: students identify one problem from the chapter that they initially found difficult and explain in one sentence what helped them understand it. Collect three or four responses to surface different learning moments."
+            }
+          ],
+          "teacher_notes": "This fluency unit draws together prime factorisation (section 5.4), divisibility (section 5.5), and prime puzzles (section 5.6) without rehearsing the same problem type three times. The student-created puzzle extension for fast finishers is mathematically demanding since they must construct margin numbers that are consistent — a genuine creative challenge. The one-sentence reflection at the close helps students identify their own progression, which builds metacognitive awareness.",
+          "materials": [
+            "Whiteboard and markers",
+            "Printed grid templates for Prime Puzzle",
+            "Plain paper for working"
+          ]
+        },
+        {
+          "period_number": 25,
+          "period_duration_minutes": 40,
+          "synthesis": true,
+          "textbook_segments": [
+            {
+              "ref": "section 5.1",
+              "title": "Common Multiples and Common Factors"
+            },
+            {
+              "ref": "section 5.2",
+              "title": "Prime Numbers"
+            },
+            {
+              "ref": "section 5.3",
+              "title": "Co-prime Numbers for Safekeeping Treasures"
+            },
+            {
+              "ref": "section 5.4",
+              "title": "Prime Factorisation"
+            },
+            {
+              "ref": "section 5.5",
+              "title": "Divisibility Tests"
+            },
+            {
+              "ref": "section 5.6",
+              "title": "Fun with Numbers"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Prime Time Synthesis: Connecting Every Strand of the Chapter",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-36",
+              "type": "exercise",
+              "source_section": "section 5.4",
+              "book_ref": "Figure it Out Q5, section 5.4 p.120",
+              "description": "What is the smallest number whose prime factorisation has: (a) three different prime numbers; (b) four different prime numbers?"
+            },
+            {
+              "id": "E-45",
+              "type": "exercise",
+              "source_section": "section 5.5",
+              "book_ref": "Figure it Out Q5, section 5.5 p.126",
+              "description": "The teacher asked if 14560 is divisible by all of 2, 4, 5, 8 and 10. Guna checked only two of these numbers and declared divisibility by all. What could those two numbers be?"
+            },
+            {
+              "id": "E-48",
+              "type": "exercise",
+              "source_section": "section 5.6",
+              "book_ref": "Math Talk (Special Numbers), section 5.6 p.126",
+              "description": "In each box of four numbers, explain how each number is special compared to the others. Share and compare reasons with classmates. Boxes include: {9, 16, 25, 43}; {5, 7, 3, 8}; {27, 3, 17, 27}; {12, 35, 11, 24}; {123, 31, 44, 65}."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Open with a rapid whole-class map of the chapter's key concepts, elicited from students: multiples and factors, LCM and GCF, prime and composite, co-prime, prime factorisation, divisibility tests. Write each term on the board and ask students to pair each with one game, activity or problem from the chapter that illustrated it."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Students work in groups on Figure it Out Q5, section 5.4 p.120 (\"What is the smallest number whose prime factorisation has three / four different primes?....\") and Figure it Out Q5, section 5.5 p.126 (\"Guna checked only two divisors and declared divisibility by all five; what could those two be?....\"). Groups choose which to tackle first and must connect both answers to prime factorisation — the product-of-smallest-primes route for the former, and the divisibility-implication graph for the latter."
+            },
+            {
+              "minutes": "22–36",
+              "activity": "Whole class returns to Math Talk (Special Numbers), section 5.6 p.126 (\"In each box of four numbers, explain how each number is special....\"). Each group takes one box and constructs the most mathematically rich set of reasons they can, drawing on the full vocabulary of the chapter — primality, co-primality, divisibility, factorisation, perfect numbers, twin primes."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Groups share their richest single reason with the class. Close by asking: which idea in this chapter was the most surprising, and which was the most useful? Record a few student responses on the board as a permanent record of the class's mathematical journey through the chapter."
+            }
+          ],
+          "teacher_notes": "This synthesis unit works because every concept introduced in the chapter — from the Idli-Vada game's common multiples through to the Prime Puzzle's constraint satisfaction — can be activated in the Special Numbers discussion. Encourage groups to reach for the most precise vocabulary they know: a student who identifies 43 as 'the only prime' is correct, but a student who also notes that 43 is a prime p for which 2p + 1 = 87 is not prime (a counterexample from section 5.2) is demonstrating deeper synthesis. Watch for groups who give only one-word reasons; press them with 'how do you know?' to surface the underlying reasoning.",
+          "materials": [
+            "Whiteboard and markers",
+            "Plain paper for group work"
+          ]
+        }
+      ]
+    },
+    "period_schedule": {
+      "duration_minutes": 40,
+      "count": 25
+    },
+    "coverage_handoff": {
+      "section_a": {
+        "goal_cluster": [
+          "recall"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 5.1",
+            "section_title": "Common Multiples and Common Factors",
+            "goal": "recall",
+            "anchor_id": "E-1",
+            "anchor_book_ref": "Figure it Out Q1, section 5.1 p.108",
+            "anchor_description": "At what number is 'idli-vada' said for the 10th time? (Find the 10th common multiple of 3 and 5.)"
+          },
+          {
+            "section_ref": "section 5.1",
+            "section_title": "Common Multiples and Common Factors",
+            "goal": "recall",
+            "anchor_id": "E-4",
+            "anchor_book_ref": "Figure it Out Q4, section 5.1 p.108",
+            "anchor_description": "Is Fig. 5.1 (Venn diagram of multiples of 3 and 5) related to the Idli-Vada game? Draw the figure if the game is played till 60."
+          },
+          {
+            "section_ref": "section 5.2",
+            "section_title": "Prime Numbers",
+            "goal": "recall",
+            "anchor_id": "E-17",
+            "anchor_book_ref": "Figure it Out Q1, section 5.2 p.114",
+            "anchor_description": "Is there any even prime other than 2?"
+          },
+          {
+            "section_ref": "section 5.2",
+            "section_title": "Prime Numbers",
+            "goal": "recall",
+            "anchor_id": "E-18",
+            "anchor_book_ref": "Figure it Out Q2, section 5.2 p.114",
+            "anchor_description": "From the list of primes up to 100, what is the smallest difference between two successive primes? What is the largest difference?"
+          },
+          {
+            "section_ref": "section 5.3",
+            "section_title": "Co-prime Numbers for Safekeeping Treasures",
+            "goal": "recall",
+            "anchor_id": "E-29",
+            "anchor_book_ref": "Figure it Out Q1, section 5.3 p.115",
+            "anchor_description": "Check if each pair is 'safe' (co-prime): (a) 15 and 39; (b) 4 and 15; (c) 18 and 29; (d) 20 and 55."
+          }
+        ]
+      },
+      "section_b": {
+        "goal_cluster": [
+          "reason"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 5.2",
+            "section_title": "Prime Numbers",
+            "goal": "reason",
+            "anchor_id": "E-21",
+            "anchor_book_ref": "Figure it Out Q5, section 5.2 p.114",
+            "anchor_description": "Write three pairs of prime numbers less than 20 whose sum is a multiple of 5."
+          },
+          {
+            "section_ref": "section 5.2",
+            "section_title": "Prime Numbers",
+            "goal": "reason",
+            "anchor_id": "E-26",
+            "anchor_book_ref": "Figure it Out Q10, section 5.2 p.115",
+            "anchor_description": "Which of 45, 60, 91, 105, 330 is the product of exactly three distinct prime numbers?"
+          },
+          {
+            "section_ref": "section 5.4",
+            "section_title": "Prime Factorisation",
+            "goal": "reason",
+            "anchor_id": "E-32",
+            "anchor_book_ref": "Figure it Out Q1, section 5.4 p.120",
+            "anchor_description": "Find the prime factorisations of: 64, 104, 105, 243, 320, 141, 1728, 729, 1024, 1331, 1000."
+          },
+          {
+            "section_ref": "section 5.4",
+            "section_title": "Prime Factorisation",
+            "goal": "reason",
+            "anchor_id": "E-34",
+            "anchor_book_ref": "Figure it Out Q3, section 5.4 p.120",
+            "anchor_description": "Find three prime numbers, all less than 30, whose product is 1955."
+          },
+          {
+            "section_ref": "section 5.5",
+            "section_title": "Divisibility Tests",
+            "goal": "reason",
+            "anchor_id": "E-44",
+            "anchor_book_ref": "Figure it Out Q4, section 5.5 p.126",
+            "anchor_description": "Find the remainders when 78, 99, 173, 572, 980, 1111, 2345 are each divided by (a) 10, (b) 5, (c) 2."
+          },
+          {
+            "section_ref": "section 5.5",
+            "section_title": "Divisibility Tests",
+            "goal": "reason",
+            "anchor_id": "E-41",
+            "anchor_book_ref": "Figure it Out Q1, section 5.5 p.125",
+            "anchor_description": "2024 is a leap year. Leap years are multiples of 4, except multiples of 100 that are not multiples of 400. (a) From your birth year to now, which years were leap years? (b) From 2024 to 2099, how many leap years are there?"
+          }
+        ]
+      },
+      "section_c": {
+        "goal_cluster": [
+          "apply"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 5.1",
+            "section_title": "Common Multiples and Common Factors",
+            "goal": "apply",
+            "anchor_id": "E-7",
+            "anchor_book_ref": "Figure it Out Q1, section 5.1 p.110",
+            "anchor_description": "Find all multiples of 40 that lie between 310 and 410."
+          },
+          {
+            "section_ref": "section 5.1",
+            "section_title": "Common Multiples and Common Factors",
+            "goal": "apply",
+            "anchor_id": "E-8",
+            "anchor_book_ref": "Figure it Out Q2, section 5.1 p.110",
+            "anchor_description": "Who am I? (a) A number less than 40, one factor is 7, digit sum is 8. (b) A number less than 100, two factors are 3 and 5, one digit is 1 more than the other."
+          },
+          {
+            "section_ref": "section 5.1",
+            "section_title": "Common Multiples and Common Factors",
+            "goal": "apply",
+            "anchor_id": "E-11",
+            "anchor_book_ref": "Figure it Out Q5, section 5.1 p.111",
+            "anchor_description": "Find any three numbers that are multiples of 25 but not multiples of 50."
+          },
+          {
+            "section_ref": "section 5.3",
+            "section_title": "Co-prime Numbers for Safekeeping Treasures",
+            "goal": "apply",
+            "anchor_id": "A-3",
+            "anchor_book_ref": "Activity (Co-prime Art), section 5.3 p.116",
+            "anchor_description": "Students observe and analyse thread-art diagrams with different peg counts and thread-gaps. They predict which combinations visit all pegs (co-prime pairs) versus only some pegs (non-co-prime pairs) and create their own diagrams for four specified peg/gap combinations."
+          },
+          {
+            "section_ref": "section 5.4",
+            "section_title": "Prime Factorisation",
+            "goal": "apply",
+            "anchor_id": "WE-1",
+            "anchor_book_ref": "Example, section 5.4 p.120",
+            "anchor_description": "Check if 40 and 231 are co-prime using prime factorisation. 40 = 2 × 2 × 2 × 5 and 231 = 3 × 7 × 11 share no common prime factor; therefore 40 and 231 are co-prime."
+          },
+          {
+            "section_ref": "section 5.4",
+            "section_title": "Prime Factorisation",
+            "goal": "apply",
+            "anchor_id": "E-37",
+            "anchor_book_ref": "Figure it Out Q1, section 5.4 p.122",
+            "anchor_description": "Are the following pairs co-prime? Guess first, then verify using prime factorisation: (a) 30 and 45; (b) 57 and 85; (c) 121 and 1331; (d) 343 and 216."
+          },
+          {
+            "section_ref": "section 5.5",
+            "section_title": "Divisibility Tests",
+            "goal": "apply",
+            "anchor_id": "E-45",
+            "anchor_book_ref": "Figure it Out Q5, section 5.5 p.126",
+            "anchor_description": "The teacher asked if 14560 is divisible by all of 2, 4, 5, 8 and 10. Guna checked only two of these numbers and declared divisibility by all. What could those two numbers be?"
+          },
+          {
+            "section_ref": "section 5.6",
+            "section_title": "Fun with Numbers",
+            "goal": "apply",
+            "anchor_id": "E-48",
+            "anchor_book_ref": "Math Talk (Special Numbers), section 5.6 p.126",
+            "anchor_description": "In each box of four numbers, explain how each number is special compared to the others. Share and compare reasons with classmates. Boxes include: {9, 16, 25, 43}; {5, 7, 3, 8}; {27, 3, 17, 27}; {12, 35, 11, 24}; {123, 31, 44, 65}."
+          },
+          {
+            "section_ref": "section 5.6",
+            "section_title": "Fun with Numbers",
+            "goal": "apply",
+            "anchor_id": "E-49",
+            "anchor_book_ref": "Math Talk (Prime Puzzle), section 5.6 p.127",
+            "anchor_description": "Fill grids with prime numbers so that the product of each row equals the number to its right and the product of each column equals the number below it. Two grids provided (3×3 and larger). Sub-parts: (a) solve the first puzzle; (b) solve the second larger puzzle."
+          },
+          {
+            "section_ref": "section 5.1",
+            "section_title": "Common Multiples and Common Factors",
+            "goal": "apply",
+            "anchor_id": "E-13",
+            "anchor_book_ref": "Figure it Out Q8, section 5.1 p.111",
+            "anchor_description": "In Jump Jackpot, treasures are on 28 and 70. What jump sizes land on both numbers?"
+          },
+          {
+            "section_ref": "section 5.3",
+            "section_title": "Co-prime Numbers for Safekeeping Treasures",
+            "goal": "apply",
+            "anchor_id": "E-30",
+            "anchor_book_ref": "Figure it Out Q2, section 5.3 p.116",
+            "anchor_description": "Which of the following pairs are co-prime: (a) 18 and 35; (b) 15 and 37; (c) 30 and 415; (d) 17 and 69; (e) 81 and 18?"
+          },
+          {
+            "section_ref": "section 5.5",
+            "section_title": "Divisibility Tests",
+            "goal": "apply",
+            "anchor_id": "E-42",
+            "anchor_book_ref": "Figure it Out Q2, section 5.5 p.125",
+            "anchor_description": "Find the largest and smallest 4-digit numbers that are both divisible by 4 and palindromes."
+          },
+          {
+            "section_ref": "section 5.6",
+            "section_title": "Fun with Numbers",
+            "goal": "apply",
+            "anchor_id": "E-35",
+            "anchor_book_ref": "Figure it Out Q4, section 5.4 p.120",
+            "anchor_description": "Find the prime factorisation without multiplying first: (a) 56 × 25; (b) 108 × 75; (c) 1000 × 81."
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "section_code": "A",
+        "section_title": "Recall and Apply",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-A-1",
+            "section_ref": "section 5.1",
+            "section_title": "Common Multiples and Common Factors",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "In the Idli-Vada game, players say 'idli' for multiples of 3 and 'vada' for multiples of 5. Which of the following numbers would make a player say 'idli-vada'?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "9",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "21",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "25",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "30",
+                "is_correct": true
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "30, because 30 is a multiple of both 3 (30 ÷ 3 = 10) and 5 (30 ÷ 5 = 6), making it a common multiple of 3 and 5.",
+              "method_one_line": "Check whether the number is divisible by both 3 and 5 to identify a common multiple.",
+              "what_each_option_reveals": {
+                "A": "The student identified a multiple of 3 but did not check for simultaneous divisibility by 5.",
+                "C": "The student identified a multiple of 5 but did not check for simultaneous divisibility by 3.",
+                "B": "The student identified a multiple of 3 but did not verify divisibility by 5."
+              },
+              "inclusivity": {
+                "support": "Let the student list the first ten multiples of 3 and the first ten multiples of 5, then circle numbers that appear in both lists.",
+                "challenge": "Ask the student to state the 8th number at which 'idli-vada' is said, and explain why consecutive 'idli-vada' numbers always differ by 15."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 5.1 p.108",
+              "description": "At what number is 'idli-vada' said for the 10th time? (Find the 10th common multiple of 3 and 5.)"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-2",
+            "section_ref": "section 5.1",
+            "section_title": "Common Multiples and Common Factors",
+            "goal": "recall",
+            "question_type": "SCR",
+            "prompt": "In the Idli-Vada game played with multiples of 4 and multiples of 6, draw a Venn diagram showing all multiples of 4 and multiples of 6 up to 30. List the numbers that go in the overlapping region. What is the smallest number in that region?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Multiples of 4 up to 30: 4, 8, 12, 16, 20, 24, 28. Multiples of 6 up to 30: 6, 12, 18, 24, 30. The overlapping region (common multiples) contains 12 and 24. The smallest common multiple is 12.",
+              "method_one_line": "List all multiples of each number up to 30 and identify the numbers that appear in both lists for the intersection.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Let the student look back at Fig. 5.1 in section 5.1 of the textbook as a model for how to draw and fill the Venn diagram.",
+                "challenge": "Ask the student to write in their own words why every number in the overlapping region is a multiple of 12, and predict the next two common multiples beyond 30."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q4, section 5.1 p.108",
+              "description": "Is Fig. 5.1 (Venn diagram of multiples of 3 and 5) related to the Idli-Vada game? Draw the figure if the game is played till 60."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-3",
+            "section_ref": "section 5.2",
+            "section_title": "Prime Numbers",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "Which of the following correctly describes the number 1?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "It is a composite number because 1 × 1 = 1 gives a rectangular arrangement.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "It is a prime number because it has no factors other than itself.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "It is both prime and composite because every number divides 1 with remainder 0.",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "It is neither prime nor composite because it has exactly one factor.",
+                "is_correct": true
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "1 is neither prime nor composite. A prime number has exactly two distinct factors (1 and itself), and a composite number has more than two. The number 1 has only one factor (itself), so it satisfies neither definition.",
+              "method_one_line": "Apply the definitions: prime requires exactly two factors; composite requires more than two; 1 has only one factor, fitting neither category.",
+              "what_each_option_reveals": {
+                "B": "The student has confused 'has no other factors' with the two-factor definition of prime, missing that a prime must have exactly 1 AND itself as two distinct factors.",
+                "A": "The student is applying an informal rectangular-arrangement argument incorrectly; a 1×1 rectangle uses only one factor, not two distinct ones.",
+                "C": "The student has invented a non-standard rule; the statement that every number divides 1 is false (e.g., 2 does not divide 1)."
+              },
+              "inclusivity": {
+                "support": "Encourage the student to look back at the section 5.2 definitions in the textbook and count exactly how many factors 1, a prime like 7, and a composite like 12 each have.",
+                "challenge": "Ask the student to explain in their own words why mathematicians chose to exclude 1 from the primes, and what would go wrong with the Fundamental Theorem of Arithmetic if 1 were prime."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 5.2 p.114",
+              "description": "Is there any even prime other than 2?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-4",
+            "section_ref": "section 5.2",
+            "section_title": "Prime Numbers",
+            "goal": "recall",
+            "question_type": "SCR",
+            "prompt": "Using the Sieve of Eratosthenes for numbers 1 to 50, list all the prime numbers you find. Then state the smallest gap and the largest gap between two consecutive primes in your list.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Primes up to 50: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47. The smallest gap between consecutive primes is 2 (e.g., between 3 and 5, or 5 and 7, or 11 and 13, or 17 and 19, or 29 and 31, or 41 and 43). The largest gap is 6 (between 23 and 29, or between 31 and 37).",
+              "method_one_line": "Apply the Sieve of Eratosthenes to list primes, then subtract consecutive primes to find the minimum and maximum differences.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Allow the student to use a pre-drawn 1–50 number grid and physically cross out multiples of 2, 3, 5, and 7 before reading off the primes.",
+                "challenge": "Ask the student to find two consecutive primes in the list where the gap is exactly 4 (called prime cousins) and name at least two such pairs."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q2, section 5.2 p.114",
+              "description": "From the list of primes up to 100, what is the smallest difference between two successive primes? What is the largest difference?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-5",
+            "section_ref": "section 5.3",
+            "section_title": "Co-prime Numbers for Safekeeping Treasures",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "Two numbers are co-prime. Which of the following must be true?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "Both numbers are prime.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "One number must be odd.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "Their only common factor is 1.",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "Their product equals their LCM.",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Their only common factor is 1. Two numbers are defined as co-prime if and only if the greatest common factor (GCF) of the pair is 1, meaning no whole number greater than 1 divides both.",
+              "method_one_line": "Apply the definition of co-prime: GCF of the pair equals 1.",
+              "what_each_option_reveals": {
+                "A": "The student has confused co-prime with prime; 8 and 9 are co-prime yet neither is prime.",
+                "D": "While it is true that the LCM of co-prime numbers equals their product, this is a consequence, not the definition; option C is not a necessary truth by itself stated as a definition.",
+                "B": "The student may be over-generalising from the observation that many co-prime pairs contain an odd number, but 2 and 9 are co-prime with one even and one odd, while 4 and 9 are co-prime with an even number too."
+              },
+              "inclusivity": {
+                "support": "Ask the student to look up the definition of co-prime in section 5.3 and write it out in their own words before answering.",
+                "challenge": "Ask the student to find a pair of co-prime numbers where both are composite, and explain why they qualify."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 5.3 p.115",
+              "description": "Check if each pair is 'safe' (co-prime): (a) 15 and 39; (b) 4 and 15; (c) 18 and 29; (d) 20 and 55."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "B",
+        "section_title": "Reason and Explain",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-B-1",
+            "section_ref": "section 5.2",
+            "section_title": "Prime Numbers",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "A student claims: 'If I add two prime numbers, the result is always even.' Is this claim always true, sometimes true, or never true? Justify your answer with examples.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The claim is sometimes true. When both primes are odd (e.g., 3 + 5 = 8, or 7 + 11 = 18), the sum is even. However, 2 is the only even prime, and 2 + 3 = 5, which is odd. So the sum of two primes is odd exactly when one of the primes is 2. The claim fails whenever 2 is one of the addends.",
+              "method_one_line": "Consider the special case of the prime 2 (even), then use the fact that odd + odd = even and even + odd = odd to classify all cases.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest that the student pair up and talk through whether 2 behaves the same way as other primes before writing, then test the claim with 2 + 3, 2 + 5, and 3 + 5.",
+                "challenge": "Ask: if the claim is changed to 'the sum of two odd primes is always even,' is that always, sometimes, or never true? Prove the new claim using the odd + odd rule."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q5, section 5.2 p.114",
+              "description": "Write three pairs of prime numbers less than 20 whose sum is a multiple of 5."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-2",
+            "section_ref": "section 5.2",
+            "section_title": "Prime Numbers",
+            "goal": "reason",
+            "question_type": "ECR",
+            "prompt": "Explain why no prime number greater than 5 can end in the digit 5. Use the definition of prime numbers and the concept of factors in your explanation.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Any whole number ending in the digit 5 is divisible by 5 (this is the divisibility rule for 5: a number is divisible by 5 if its units digit is 0 or 5). So such a number has 5 as a factor in addition to 1 and itself. A prime number must have exactly two distinct factors: 1 and itself. If a number n ends in 5 and n is greater than 5, then n has at least three distinct factors — 1, 5, and n itself — so n cannot be prime. The number 5 itself ends in 5 and is prime, but it is the only exception because for 5, the factor 5 and the number itself are the same factor.",
+              "method_one_line": "Apply the divisibility rule for 5 (units digit 0 or 5 implies divisibility by 5) and the definition that a prime has exactly two factors.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest that the student first write out the divisibility rule for 5 from section 5.5, then use it to explain why 35, 45, and 55 are not prime before generalising.",
+                "challenge": "Ask: using the same style of argument, explain why no prime greater than 2 can be even. Then combine both arguments to say what digits primes greater than 5 can end in."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q10, section 5.2 p.115",
+              "description": "Which of 45, 60, 91, 105, 330 is the product of exactly three distinct prime numbers?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-3",
+            "section_ref": "section 5.4",
+            "section_title": "Prime Factorisation",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "A student starts to find the prime factorisation of 72 by writing 72 = 8 × 9. Another student starts with 72 = 4 × 18. Will both routes give the same final prime factorisation? Show both factor trees and explain why the final result must be the same.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Route 1: 72 = 8 × 9 = 2 × 4 × 9 = 2 × 2 × 2 × 3 × 3 = 2³ × 3². Route 2: 72 = 4 × 18 = 2 × 2 × 2 × 9 = 2 × 2 × 2 × 3 × 3 = 2³ × 3². Both give 2³ × 3². They must agree because the prime factorisation of any whole number is unique (up to the order in which the primes are listed) — this is the uniqueness of prime factorisation stated in section 5.4.",
+              "method_one_line": "Build factor trees via both routes, continuing until all branches end in primes, then compare the prime factor lists.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Provide a blank factor-tree template and suggest the student keep dividing until every branch ends in a circled prime before comparing.",
+                "challenge": "Ask the student to find a third starting factorisation of 72 (different from 8×9 and 4×18), build that tree, and confirm the prime factorisation is again 2³ × 3²."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 5.4 p.120",
+              "description": "Find the prime factorisations of: 64, 104, 105, 243, 320, 141, 1728, 729, 1024, 1331, 1000."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-4",
+            "section_ref": "section 5.4",
+            "section_title": "Prime Factorisation",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "A number N has prime factorisation 2 × 5 × 7. A number M has prime factorisation 3 × 5 × 11. Explain whether N and M are co-prime. Then explain whether M divides N.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "N and M share the prime factor 5, so their GCF is at least 5 (in fact exactly 5). Since their GCF is not 1, N and M are not co-prime. For M to divide N, every prime in M's factorisation must appear at least as many times in N's factorisation. M has the prime 3, but 3 does not appear in N's factorisation at all. Therefore M does not divide N.",
+              "method_one_line": "Compare the prime factor lists: shared primes determine co-primality; inclusion of all of M's primes in N's list determines divisibility.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest drawing two circles, listing the prime factors of N in one and M in the other, and identifying which primes appear in both circles before answering each question.",
+                "challenge": "Ask: change one prime in M's factorisation so that M and N become co-prime, and a different change so that M divides N. State both changes."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q3, section 5.4 p.120",
+              "description": "Find three prime numbers, all less than 30, whose product is 1955."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-5",
+            "section_ref": "section 5.5",
+            "section_title": "Divisibility Tests",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "A four-digit number ends in the digits 60 (its last two digits are 6 and 0). Explain whether this number must be divisible by 2, by 4, by 5, by 8, and by 10. For each divisor, justify your answer using the appropriate divisibility rule.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Divisible by 2: yes, because the units digit is 0, which is even. Divisible by 4: yes, because the last two digits form 60, and 60 ÷ 4 = 15 with no remainder. Divisible by 5: yes, because the units digit is 0. Divisible by 10: yes, because the units digit is 0. Divisible by 8: not necessarily; the rule requires the last three digits to form a multiple of 8, and we do not know the hundreds digit. For example, 1160 ÷ 8 = 145 (yes), but 1260 ÷ 8 = 157.5 (no).",
+              "method_one_line": "Apply each divisibility rule in turn: units digit for 2, 5, 10; last two digits for 4; last three digits for 8.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student write out the five divisibility rules from section 5.5 one by one, then tick off which digit condition is satisfied by the ending '60'.",
+                "challenge": "Ask the student to find the hundreds digit that makes the number also divisible by 8, and explain which values of the hundreds digit work and why."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q4, section 5.5 p.126",
+              "description": "Find the remainders when 78, 99, 173, 572, 980, 1111, 2345 are each divided by (a) 10, (b) 5, (c) 2."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-6",
+            "section_ref": "section 5.5",
+            "section_title": "Divisibility Tests",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "Riya says: 'If a number is divisible by 8, I automatically know it is also divisible by 4 and by 2, without checking.' Is Riya correct? Explain the reasoning using the divisibility rules for 2, 4, and 8.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Riya is correct. Divisibility by 8 means the last three digits form a multiple of 8. Any multiple of 8 is also a multiple of 4 (since 8 = 2 × 4, every multiple of 8 is 4 times some integer, so it is a multiple of 4). Similarly, any multiple of 4 is even (since 4 = 2 × 2), so it is a multiple of 2. Therefore divisibility by 8 implies divisibility by 4 implies divisibility by 2, confirming Riya's statement.",
+              "method_one_line": "Use the factor relationship: 8 = 4 × 2 and 4 = 2 × 2, so every multiple of 8 is automatically a multiple of 4 and of 2.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest checking two specific multiples of 8 (e.g., 24 and 40) to verify that both are divisible by 4 and 2 before forming the general argument.",
+                "challenge": "Ask: by the same reasoning, if a number is divisible by 10, which of 2 and 5 can Riya also claim without checking? Extend the argument and state all valid implications among the five divisors 2, 4, 5, 8, and 10."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 5.5 p.125",
+              "description": "2024 is a leap year. Leap years are multiples of 4, except multiples of 100 that are not multiples of 400. (a) From your birth year to now, which years were leap years? (b) From 2024 to 2099, how many leap years are there?"
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "C",
+        "section_title": "Apply in Context",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-C-1",
+            "section_ref": "section 5.1",
+            "section_title": "Common Multiples and Common Factors",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Bells in a clock tower ring at two different intervals: Bell A rings every 12 minutes and Bell B rings every 18 minutes. Both bells ring together at 8:00 am. After how many minutes will they ring together again? How many times does Bell A ring between the two simultaneous rings (not counting 8:00 am but counting the next simultaneous ring)?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The next simultaneous ring occurs after LCM(12, 18) minutes. Factors of 12: 1, 2, 3, 4, 6, 12. Factors of 18: 1, 2, 3, 6, 9, 18. Common factors: 1, 2, 3, 6. GCF = 6. LCM(12, 18) = (12 × 18) ÷ 6 = 216 ÷ 6 = 36 minutes. Bell A rings every 12 minutes, so in 36 minutes it rings at 12, 24, and 36 minutes — that is 3 times (including the simultaneous ring at 36 minutes).",
+              "method_one_line": "Find LCM(12, 18) by listing common multiples or using the GCF-based formula, then divide the LCM by Bell A's interval.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest listing the first several multiples of 12 and 18 on a number line and circling the first number that appears in both lists.",
+                "challenge": "Ask: if a third Bell C rings every 8 minutes, after how many minutes from 8:00 am will all three bells ring together? Show the calculation."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 5.1 p.110",
+              "description": "Find all multiples of 40 that lie between 310 and 410."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-2",
+            "section_ref": "section 5.1",
+            "section_title": "Common Multiples and Common Factors",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A gardener has 48 rose plants and 36 jasmine plants. He wants to arrange them in rows so that each row has the same number of plants and contains only one type of plant. What is the greatest number of plants per row possible? How many rows of each type will there be?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The greatest number of plants per row is the GCF of 48 and 36. Factors of 48: 1, 2, 3, 4, 6, 8, 12, 16, 24, 48. Factors of 36: 1, 2, 3, 4, 6, 9, 12, 18, 36. Common factors: 1, 2, 3, 4, 6, 12. GCF = 12. With 12 plants per row: roses → 48 ÷ 12 = 4 rows; jasmines → 36 ÷ 12 = 3 rows.",
+              "method_one_line": "Find GCF(48, 36) by listing common factors and choosing the largest; divide each plant count by the GCF for the row counts.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Provide a factor-listing table with two columns (factors of 48, factors of 36) and ask the student to circle factors that appear in both columns before identifying the greatest.",
+                "challenge": "Ask: if the gardener also has 60 lily plants and wants a single row size for all three types, what is the greatest possible row size? How many rows of each type?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q2, section 5.1 p.110",
+              "description": "Who am I? (a) A number less than 40, one factor is 7, digit sum is 8. (b) A number less than 100, two factors are 3 and 5, one digit is 1 more than the other."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-3",
+            "section_ref": "section 5.1",
+            "section_title": "Common Multiples and Common Factors",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Find the smallest number that is a common multiple of 6 and 10 but is not a multiple of 20.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Common multiples of 6 and 10 are multiples of LCM(6, 10). GCF(6, 10) = 2, so LCM(6, 10) = (6 × 10) ÷ 2 = 30. The common multiples of 6 and 10 are: 30, 60, 90, 120, … Check each for divisibility by 20: 30 ÷ 20 = 1.5 (not a multiple of 20). So 30 is the smallest common multiple of 6 and 10 that is not a multiple of 20.",
+              "method_one_line": "Find LCM(6, 10) = 30, then verify 30 is not divisible by 20 using the last-two-digit divisibility rule for 4 (since 20 = 4 × 5).",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest listing multiples of 6 and multiples of 10 separately, then circling numbers that appear in both lists and checking each against divisibility by 20.",
+                "challenge": "Ask: find the smallest common multiple of 6 and 10 that IS also a multiple of 20. Explain how this number relates to LCM(6, 10, 20)."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q5, section 5.1 p.111",
+              "description": "Find any three numbers that are multiples of 25 but not multiples of 50."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-4",
+            "section_ref": "section 5.3",
+            "section_title": "Co-prime Numbers for Safekeeping Treasures",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "In the Jump Jackpot game, Grumpy places treasures on the numbers 35 and 54. Jump size 1 is forbidden. Determine whether 35 and 54 are co-prime. If they are, explain why no single jump size (greater than 1) can land on both treasures. If they are not co-prime, name every jump size greater than 1 that can land on both.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Prime factorisation: 35 = 5 × 7. 54 = 2 × 3³ = 2 × 27. The prime factors of 35 are 5 and 7; the prime factors of 54 are 2 and 3. There are no shared prime factors, so GCF(35, 54) = 1. Therefore 35 and 54 are co-prime. Since their only common factor is 1, and jump size 1 is forbidden, no legal jump size can land on both numbers simultaneously — the treasures are safe.",
+              "method_one_line": "Prime-factorise both numbers, compare the prime factor lists to find GCF, and connect GCF = 1 to the absence of a valid jump size greater than 1.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest listing all factors of 35 and all factors of 54 and checking whether any factor greater than 1 appears in both lists, recalling the definition from section 5.3.",
+                "challenge": "Ask: design a pair of treasure numbers between 50 and 100 that are NOT co-prime and have exactly two common jump sizes greater than 1. State the pair and the common jump sizes."
+              }
+            },
+            "exercise": {
+              "book_ref": "Activity (Co-prime Art), section 5.3 p.116",
+              "description": "Students observe and analyse thread-art diagrams with different peg counts and thread-gaps. They predict which combinations visit all pegs (co-prime pairs) versus only some pegs (non-co-prime pairs) and create their own diagrams for four specified peg/gap combinations."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-5",
+            "section_ref": "section 5.4",
+            "section_title": "Prime Factorisation",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Find the prime factorisation of 360. Then use the prime factorisation to: (a) determine whether 360 is divisible by 24; (b) determine whether 45 and 360 are co-prime.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "360 = 8 × 45 = 8 × 9 × 5 = 2³ × 3² × 5. (a) 24 = 2³ × 3. Check whether every prime in 24's factorisation appears at least as many times in 360's: 2 appears 3 times in both (✓); 3 appears once in 24 and twice in 360 (✓). So 360 is divisible by 24. (b) 45 = 3² × 5. Both 45 and 360 share the prime factors 3 and 5. Since their GCF ≥ 3, they are not co-prime.",
+              "method_one_line": "Build the prime factorisation of 360 via a factor tree, then apply the inclusion criterion for divisibility and the shared-prime criterion for co-primality.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Allow the student to use a factor tree starting from 360 = 10 × 36, continuing until all branches end in primes, before answering parts (a) and (b).",
+                "challenge": "Ask: find the largest factor of 360 that is also a perfect square (a number whose square root is a whole number). Use the prime factorisation to justify your answer."
+              }
+            },
+            "exercise": {
+              "book_ref": "Example, section 5.4 p.120",
+              "description": "Check if 40 and 231 are co-prime using prime factorisation. 40 = 2 × 2 × 2 × 5 and 231 = 3 × 7 × 11 share no common prime factor; therefore 40 and 231 are co-prime."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-6",
+            "section_ref": "section 5.4",
+            "section_title": "Prime Factorisation",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Without multiplying first, find the prime factorisation of 84 × 125. Use your result to state whether 84 × 125 is divisible by 500, and whether it is divisible by 63.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "84 = 2² × 3 × 7. 125 = 5³. So 84 × 125 = 2² × 3 × 5³ × 7. (divisibility by 500) 500 = 2² × 5³. Compare: 84 × 125 has 2² (matches) and 5³ (matches). So 84 × 125 is divisible by 500. Verification: 84 × 125 = 10500; 10500 ÷ 500 = 21. ✓ (divisibility by 63) 63 = 3² × 7. 84 × 125 has 3¹ but 63 requires 3². Since 3 appears only once in 84 × 125 but twice in 63, 84 × 125 is not divisible by 63. Verification: 10500 ÷ 63 ≈ 166.67. ✓",
+              "method_one_line": "Prime-factorise 84 and 125 separately and combine the lists; then apply the inclusion criterion for each divisor.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest building a factor tree for 84 and a separate one for 125, writing out the prime factors for each, then combining all the primes into one list for 84 × 125.",
+                "challenge": "Ask: find the largest number that divides both 84 × 125 and 63 × 100. Show the prime factorisation working."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 5.4 p.122",
+              "description": "Are the following pairs co-prime? Guess first, then verify using prime factorisation: (a) 30 and 45; (b) 57 and 85; (c) 121 and 1331; (d) 343 and 216."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-7",
+            "section_ref": "section 5.5",
+            "section_title": "Divisibility Tests",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A number N is a 4-digit palindrome (it reads the same forwards and backwards). N is divisible by 8. Find the smallest such N and the largest such N.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "A 4-digit palindrome has the form abba, where a ∈ {1, …, 9} and b ∈ {0, …, 9}. Its last three digits are bba. For divisibility by 8, bba must be a multiple of 8. Smallest: start with a = 1, b = 0 → last three digits 001; 001 ÷ 8 = 0.125 (no). b = 1 → 112; 112 ÷ 8 = 14 (yes). So N = 1111. Largest: start with a = 9, b = 9 → last three digits 999; 999 ÷ 8 = 124.875 (no). b = 8 → 889; 889 ÷ 8 = 111.125 (no). b = 7 → 779; 779 ÷ 8 = 97.375 (no). b = 6 → 669; 669 ÷ 8 = 83.625 (no). b = 5 → 559; 559 ÷ 8 = 69.875 (no). b = 4 → 449; 449 ÷ 8 = 56.125 (no). b = 3 → 339; 339 ÷ 8 = 42.375 (no). b = 2 → 229; 229 ÷ 8 = 28.625 (no). b = 1 → 119; 119 ÷ 8 = 14.875 (no). b = 0 → 009; 9 ÷ 8 = 1.125 (no). So no palindrome with a = 9 works. Try a = 8: b = 9 → 998; 998 ÷ 8 = 124.75 (no). b = 8 → 888; 888 ÷ 8 = 111 (yes). N = 8888. Largest is 8888.",
+              "method_one_line": "Write the palindrome as abba, extract the last three digits bba, and check each candidate against the rule that a number is divisible by 8 if and only if its last three digits form a multiple of 8.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student first write out all possible last-three-digit patterns bba for small values of a and b, check each for divisibility by 8, and then assemble the full palindrome.",
+                "challenge": "Ask the student to count how many 4-digit palindromes in total are divisible by 8, and explain a systematic method for counting them without testing every case."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q5, section 5.5 p.126",
+              "description": "The teacher asked if 14560 is divisible by all of 2, 4, 5, 8 and 10. Guna checked only two of these numbers and declared divisibility by all. What could those two numbers be?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-8",
+            "section_ref": "section 5.6",
+            "section_title": "Fun with Numbers",
+            "goal": "apply",
+            "question_type": "SCR",
+            "prompt": "Consider the set of four numbers {14, 15, 16, 17}. For each number, explain one property that makes it special or different from the other three in the set. Use number-theory vocabulary from this chapter (such as prime, composite, factor, multiple, co-prime, divisibility).",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Many valid answers exist. A strong response might include: 17 is the only prime number in the set. 16 is the only perfect power of 2 (16 = 2⁴); equivalently, 16 is the only number in the set that is a power of a single prime. 14 is the only even composite in the set (14 = 2 × 7); it is also the only multiple of 7 in the set. 15 is the only odd composite in the set (15 = 3 × 5); it is also the only multiple of 5. Additionally, 14 and 15 are co-prime, as are 15 and 16, and 16 and 17.",
+              "method_one_line": "Prime-factorise each number, classify as prime or composite, and identify unique properties — parity, prime factors, perfect power status — using chapter vocabulary.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student write the prime factorisation of each number first, then use those factorisations to spot which number is the only prime, the only power of 2, and so on.",
+                "challenge": "Ask the student to find one additional property for each number not mentioned in their first response, aiming to use as many different chapter concepts as possible across the four descriptions."
+              }
+            },
+            "exercise": {
+              "book_ref": "Math Talk (Special Numbers), section 5.6 p.126",
+              "description": "In each box of four numbers, explain how each number is special compared to the others. Share and compare reasons with classmates. Boxes include: {9, 16, 25, 43}; {5, 7, 3, 8}; {27, 3, 17, 27}; {12, 35, 11, 24}; {123, 31, 44, 65}."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-9",
+            "section_ref": "section 5.6",
+            "section_title": "Fun with Numbers",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "In a Prime Puzzle, the product of the numbers in a row of two cells must equal 91, and the product of the numbers in a column of two cells must equal 65. Each cell must contain a prime number. Find prime numbers p, q, r, s to fill a 2×2 grid where the first row contains p and q (product 91), the second row contains r and s (product 65), the first column contains p and r (product unknown), and the second column contains q and s (product unknown). State all four primes and verify that your grid satisfies the row conditions.",
+            "visual_stimulus": "| p | q | → 91 |\n| r | s | → 65 |",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "91 = 7 × 13. So (p, q) is (7, 13) or (13, 7). 65 = 5 × 13. So (r, s) is (5, 13) or (13, 5). To find column products: if p = 7, q = 13, r = 5, s = 13: column 1 product = 7 × 5 = 35; column 2 product = 13 × 13 = 169. If p = 13, q = 7, r = 13, s = 5: column 1 product = 13 × 13 = 169; column 2 product = 7 × 5 = 35. Both grids are valid (they are mirror images). All four cells contain primes (5, 7, 13, 13) and the row products 91 and 65 are satisfied. Note: 13 appears in two cells, which is permitted since the puzzle only requires each cell to contain a prime.",
+              "method_one_line": "Prime-factorise each row product to identify the two primes for that row, then assemble the grid and compute column products as a verification check.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student start by prime-factorising 91 and 65 separately before trying to fill the grid, and recall that each row product must equal exactly the product of the two primes in that row.",
+                "challenge": "Ask the student to design their own 2×2 Prime Puzzle (choose four prime entries, compute the row and column products, then present just the margin numbers as the puzzle) and confirm it has a unique solution."
+              }
+            },
+            "exercise": {
+              "book_ref": "Math Talk (Prime Puzzle), section 5.6 p.127",
+              "description": "Fill grids with prime numbers so that the product of each row equals the number to its right and the product of each column equals the number below it. Two grids provided (3×3 and larger). Sub-parts: (a) solve the first puzzle; (b) solve the second larger puzzle."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-10",
+            "section_ref": "section 5.1",
+            "section_title": "Common Multiples and Common Factors",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "In Jump Jackpot, Grumpy places treasures on 28 and 70. List all possible jump sizes greater than 1 that land on both numbers. Which is the greatest such jump size?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "A jump size lands on both 28 and 70 if and only if it is a common factor of both numbers. Factors of 28: 1, 2, 4, 7, 14, 28. Factors of 70: 1, 2, 5, 7, 10, 14, 35, 70. Common factors: 1, 2, 7, 14. Common factors greater than 1: 2, 7, 14. The greatest common factor is 14. Verification: 28 ÷ 14 = 2 ✓; 70 ÷ 14 = 5 ✓.",
+              "method_one_line": "List all factors of 28 and 70, identify common factors, and pick the greatest.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student write all factors of 28 in one column and all factors of 70 in another, then circle numbers that appear in both columns.",
+                "challenge": "Ask: if Grumpy adds a third treasure on 42, which jump sizes now land on all three numbers? Show the working by finding GCF(28, 70, 42)."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q8, section 5.1 p.111",
+              "description": "In Jump Jackpot, treasures are on 28 and 70. What jump sizes land on both numbers?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-11",
+            "section_ref": "section 5.3",
+            "section_title": "Co-prime Numbers for Safekeeping Treasures",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Determine which of the following pairs are co-prime. For each pair, show the factor comparison clearly: (a) 18 and 35; (b) 81 and 18.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "(a) 18 and 35: Factors of 18: 1, 2, 3, 6, 9, 18. Factors of 35: 1, 5, 7, 35. Common factors: only 1. GCF = 1. Therefore 18 and 35 are co-prime. (b) 81 and 18: Factors of 81: 1, 3, 9, 27, 81. Factors of 18: 1, 2, 3, 6, 9, 18. Common factors: 1, 3, 9. GCF = 9. Since GCF ≠ 1, 81 and 18 are not co-prime.",
+              "method_one_line": "List all factors of each number, identify common factors, and check whether GCF = 1.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student use a two-column table — one column for each number's factors — and draw lines between matching factors to find the common ones.",
+                "challenge": "Ask: verify parts (a) and (b) a second way by finding the prime factorisations of both numbers in each pair and checking for shared primes. Confirm both methods give the same answer."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q2, section 5.3 p.116",
+              "description": "Which of the following pairs are co-prime: (a) 18 and 35; (b) 15 and 37; (c) 30 and 415; (d) 17 and 69; (e) 81 and 18?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-12",
+            "section_ref": "section 5.5",
+            "section_title": "Divisibility Tests",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A four-digit number has the form 3_28, where the blank is a single digit. Find all values of the missing digit for which 3_28 is divisible by 4. Show your reasoning using the last-two-digit divisibility rule.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Divisibility by 4 depends only on the last two digits. The last two digits of 3_28 are 28. Since 28 ÷ 4 = 7 exactly, 28 is a multiple of 4. Therefore any digit in the blank position preserves divisibility by 4 — the missing digit can be any of 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 and the number is always divisible by 4. All ten digit values work. Verification: 3028 ÷ 4 = 757; 3528 ÷ 4 = 882; 3928 ÷ 4 = 982. ✓",
+              "method_one_line": "Identify the last two digits (28), check 28 ÷ 4, and conclude that the hundreds digit has no effect on divisibility by 4.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Remind the student that the divisibility rule for 4 states that only the last two digits matter; ask them to write just '28' and divide by 4 before considering what the blank can be.",
+                "challenge": "Ask: change the problem to find all values of the missing digit for which 3_28 is divisible by 8. Now the last three digits matter — what values of the blank work?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q2, section 5.5 p.125",
+              "description": "Find the largest and smallest 4-digit numbers that are both divisible by 4 and palindromes."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-13",
+            "section_ref": "section 5.6",
+            "section_title": "Fun with Numbers",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Find the prime factorisation of 56 × 25 without multiplying the two numbers first. Then use this factorisation to decide: (a) Is 56 × 25 divisible by 50? (b) Is 56 × 25 divisible by 28?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "56 = 2³ × 7. 25 = 5². So 56 × 25 = 2³ × 5² × 7. (a) 50 = 2 × 5². Compare: 56 × 25 has 2³ (2 appears at least once ✓) and 5² (exact match ✓). So 56 × 25 is divisible by 50. Verification: 56 × 25 = 1400; 1400 ÷ 50 = 28. ✓ (b) 28 = 2² × 7. Compare: 56 × 25 has 2³ ≥ 2² ✓ and 7¹ = 7¹ ✓. So 56 × 25 is divisible by 28. Verification: 1400 ÷ 28 = 50. ✓",
+              "method_one_line": "Combine the prime factorisations of 56 and 25 to get the factorisation of their product, then apply the inclusion criterion for each divisor.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student build a factor tree for 56 and a separate one for 25, write out both prime factorisations, and then list all the primes together before answering parts (a) and (b).",
+                "challenge": "Ask: find the largest perfect-square factor of 56 × 25 using its prime factorisation. Explain how you determined it using the prime factorisation."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q4, section 5.4 p.120",
+              "description": "Find the prime factorisation without multiplying first: (a) 56 × 25; (b) 108 × 75; (c) 1000 × 81."
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

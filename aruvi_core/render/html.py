@@ -63,6 +63,37 @@ def _render_table(pipe_text: str) -> str:
             f'<table class="vs-table">{thead}<tbody>{body}</tbody></table>{note}</div>')
 
 
+def _render_number_line(raw: str) -> str:
+    """A tick line, drawn — the third renderer of one typed spec (2026-08-19).
+
+    `StimulusType.NUMBER_LINE` has been in the enum since the tag landed and this file had
+    no branch for it, so every tick line fell through to the prose fallback below and
+    printed its raw `number_line: 8 | ... | 12` source. Unlike its two siblings this
+    renderer receives only `VisualStimulus.content` — a string — because the legacy typed
+    dataclass carries no parsed block, so it parses through `assessment_norm`, the same
+    function the certifier's declared-type gate validates against. Parsing in two places
+    would let the gate and the page disagree about what a valid tick line is.
+
+    Real HTML here (unlike xhtml2pdf, which needed the one-row trick and a filled rule):
+    a bordered row of cells is exactly what a browser draws well."""
+    from ..assessment_norm import _maths_number_line                   # noqa: PLC0415
+    block = _maths_number_line(raw)     # strips the tag, splits, then validates via _nl_block
+    if not block:
+        return ""
+    nl = block["number_line"]
+    ticks = nl.get("ticks") or []
+    if not ticks:
+        return ""
+    w = f"{100.0 / len(ticks):.4f}%"
+    marks = "".join(f'<td class="nl-tick" style="width:{w}">|</td>' for _ in ticks)
+    labs = "".join(f'<td class="nl-lab" style="width:{w}">{_esc(t.get("label") or "")}</td>'
+                   for t in ticks)
+    instr = (f'<div class="vs-prose">{_esc(nl.get("instruction"))}</div>'
+             if nl.get("instruction") else "")
+    return (f'<div class="vs vs-nl"><table class="nl-tbl">'
+            f'<tr>{marks}</tr><tr>{labs}</tr></table>{instr}</div>')
+
+
 def _render_stimulus(vs: VisualStimulus) -> str:
     if vs is None or vs.type == StimulusType.NONE or not vs.content:
         return ""
@@ -70,6 +101,8 @@ def _render_stimulus(vs: VisualStimulus) -> str:
         return f'<div class="vs vs-svg">{vs.content}</div>'  # our own generated SVG
     if vs.type == StimulusType.TABLE:
         return f'<div class="vs">{_render_table(vs.content)}</div>'
+    if vs.type == StimulusType.NUMBER_LINE:
+        return _render_number_line(vs.content)
     return f'<div class="vs vs-prose">{_esc(vs.content)}</div>'
 
 
@@ -169,6 +202,10 @@ _STYLE = """
 .aruvi table.vs-table th { background:#e8eefb; }
 .aruvi .vs-prose { font-style:italic; color:#55617a; }
 .aruvi .vs-svg svg { max-width:100%; height:auto; }
+.aruvi .vs-nl .nl-tbl { border-collapse:collapse; width:78%; margin:2px 0; }
+.aruvi .vs-nl .nl-tick { text-align:center; font-size:12px; color:#2a3242;
+  border-bottom:1px solid #2a3242; padding:0 0 1px 0; line-height:1.1; }
+.aruvi .vs-nl .nl-lab { text-align:center; font-size:12px; color:#2a3242; padding-top:3px; }
 </style>
 """
 

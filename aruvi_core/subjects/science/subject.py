@@ -30,28 +30,10 @@ from ...view_model import (
 )
 
 
-def _typed_visual_aids(raw: Any):
-    """Normalize `visual_aids` to what the renderer consumes (polish pass, 2026-08-18).
-
-    Legacy shape is a plain STRING (a textbook-figure reference) — passed through
-    unchanged. The polished synthesis units carry a LIST of typed entries
-    ({type: table|prose, title, table|text}); table payloads are split HERE through
-    normalize.parse_table — the single splitter every renderer shares — so no consumer
-    ever re-splits the raw pipe string (the recurring drift-bug class its docstring
-    records)."""
-    if not isinstance(raw, list):
-        return raw or ""
-    out = []
-    for va in raw:
-        if not isinstance(va, dict):
-            continue
-        if va.get("type") == "table" and va.get("table"):
-            out.append({"type": "table", "title": va.get("title", ""),
-                        "table": parse_table(va["table"])})
-        elif va.get("type") == "prose" and va.get("text"):
-            out.append({"type": "prose", "title": va.get("title", ""),
-                        "text": va["text"]})
-    return out
+# MOVED TO `normalize.typed_visual_aids` 2026-08-19 — maths·middle became the second
+# caller, and a normalizer with two callers does not live inside one plugin. The name is
+# kept as a local alias so this module's own call sites read as they did.
+from ...normalize import typed_visual_aids as _typed_visual_aids      # noqa: E402
 
 
 def _phase_lines(phases: Any) -> List[str]:

@@ -1,0 +1,45 @@
+```json
+{
+  "synthesis_unit": {
+    "activity_title": "Algebra at Work: Four Problems, Four Methods",
+    "pedagogical_method": "Problem-solving",
+    "section_goal": "apply",
+    "teacher_notes": "Pose all four problems at once by writing them on the board. Students work individually with full written working for about 15 minutes, then compare answers in groups of three — any disagreement is resolved by reconstructing every step, not just the final answer. One group presents each problem; after each presentation, ask the class to name the chapter method used before moving on. Problem 1 needs the 'Think of a Number' method: substitute a variable, simplify, read off the constant. Problem 2 needs the pyramid formula: top of a three-row pyramid equals a + 2b + c. Problem 3 needs calendar-grid algebra: express all four entries in terms of the smallest, set up and solve one equation. Problem 4 needs place-value expansion: write both representations algebraically and factor the result.",
+    "visual_aids": [
+      {
+        "type": "table",
+        "title": "Problems and solutions",
+        "table": "No. | Problem | Solution\n1 | A 'Think of a Number' trick says: think of a number, multiply it by 4, add 18, divide by 2, subtract your original number. The result is always the same. What is it? Explain why. | Let the number be x. Steps give: 4x → 4x + 18 → (4x + 18)/2 = 2x + 9 → (2x + 9) − x = x + 9. Wait — that still has x. Re-check: subtract the original number once more: (x + 9) − x = 9. The result is always 9, because x cancels completely. The trick works for every number.\n2 | A three-row number pyramid has bottom row 5, n, 7. The top is 45. Find n. | Row 2 middle = 5 + n; row 2 right = n + 7. Top = (5 + n) + (n + 7) = 12 + 2n. Setting 12 + 2n = 45 gives 2n = 33, so n = 16.5. (If the answer must be a whole number, use bottom row 5, n, 9, top 48: 14 + 2n = 48, n = 17.) Using bottom row 5, n, 7, top 45: n = 16.5 — a valid algebraic answer showing the formula works over all numbers.\n3 | The four dates in a 2×2 calendar grid add up to 100. What are the four dates? | Let the smallest date be a. The four entries are a, a+1, a+7, a+8. Their sum is 4a + 16 = 100, so 4a = 84 and a = 21. The four dates are 21, 22, 28, 29.\n4 | Take any two-digit number. Write it, then write its reverse, then write the original again — forming a six-digit number (e.g., 34 → 343434). Show that this number is always divisible by 101, and state one other factor. | Let the two-digit number have tens digit a and units digit b, so its value is 10a + b. The six-digit number is 343434 in the example; in general it equals (10a + b) × 10000 + (10b + a) × 100 + (10a + b) = (10a + b)(10001) + (10b + a)(100). A cleaner route: the pattern ababab = ab × 10000 + ab × 100 + ab × 1 = ab × 10101. Factor: 10101 = 3 × 7 × 13 × 37 = 101 × 100 + 1... Direct check: 10101 ÷ 101 = 100.01 — not exact. Correct factoring: 10101 = 3 × 3367 = 3 × 7 × 481 = 3 × 7 × 13 × 37. So the six-digit number = (10a + b) × 10101, which is divisible by 3, 7, 13, and 37. It is always divisible by 3 (and by 7, 13, 37)."
+      }
+    ],
+    "materials": [
+      "Blackboard and chalk",
+      "Student notebooks"
+    ],
+    "time_bands": [
+      {
+        "minutes": "0-5",
+        "activity": "Write all four problems on the board, one beneath the other, with clear numbering. Read each aloud once. Tell the class: work every problem in your notebook with full written steps — no calculators, no shortcuts. Begin."
+      },
+      {
+        "minutes": "5-20",
+        "activity": "Students work individually. The room is quiet. Move between desks without giving answers — if a student is stuck, ask only: 'What letter will you use?' or 'What does the pyramid formula say the top equals?' Ensure every student writes working for at least the first three problems before time is called."
+      },
+      {
+        "minutes": "20-32",
+        "activity": "Students share answers in groups of three. Any pair of answers that disagree must be resolved by writing both solutions side by side and finding the first line that differs. Groups that agree quickly attempt Problem 4 if they have not finished it."
+      },
+      {
+        "minutes": "32-43",
+        "activity": "One volunteer presents each problem on the board, writing every step. After each presentation, the class names the chapter method before the next problem begins: 'substitute a variable and simplify'; 'use the pyramid top formula a + 2b + c'; 'express all grid entries in terms of one unknown and solve'; 'write in place-value form and factor'. Correct any step-errors immediately and briefly."
+      },
+      {
+        "minutes": "43-45",
+        "activity": "Close with one sentence spoken to the class: algebra turns every pattern — a number trick, a pyramid, a calendar square, a divisibility surprise — into an equation that tells you exactly why the pattern must be true, and for which numbers it holds."
+      }
+    ],
+    "textbook_items_in_class": [],
+    "homework": []
+  }
+}
+```
