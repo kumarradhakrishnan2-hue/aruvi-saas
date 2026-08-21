@@ -576,7 +576,7 @@ export default function Home() {
               pendingAttach={pendingAttach} onConsumeAttach={() => setPendingAttach(null)}
               onStartTour={tourDismissed ? undefined : startTour}
               tourActive={!!tour} tourStep={tour}
-              onTourInfo={setTourInfo} onProfilePortal={onProfilePortal}
+              onTourInfo={setTourInfo} onProfilePortal={onProfilePortal} onOpenProfile={goProfile}
               sectionCheck={sectionCheck} onSectionCheckDone={() => setSectionCheck(false)} />}
         </main>
       </div>

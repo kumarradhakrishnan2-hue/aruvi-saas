@@ -72,7 +72,7 @@ function classesFromReadiness(readiness) {
   return out;
 }
 
-export default function MyPlans({ subject, grade, ready, readiness, onReady, onNavigate, onEnterGenerate, user, onSignOut, pendingOpen, onConsumePending, pendingAttach, onConsumeAttach, onStartTour, tourActive, tourStep, onTourInfo, onProfilePortal, sectionCheck, onSectionCheckDone }) {
+export default function MyPlans({ subject, grade, ready, readiness, onReady, onNavigate, onEnterGenerate, user, onSignOut, pendingOpen, onConsumePending, pendingAttach, onConsumeAttach, onStartTour, tourActive, tourStep, onTourInfo, onProfilePortal, onOpenProfile, sectionCheck, onSectionCheckDone }) {
   const [openPlan, setOpenPlan] = useState(null);  // { view, sectionKey } for LessonView
   const [loading, setLoading] = useState(false);
   const [setupStarted, setSetupStarted] = useState(false); // 2a welcome → grid flow gate
@@ -838,7 +838,13 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
               </div>
             </div>
             <div className="ap-list">
-              <button className="ap-row" onClick={() => { onSectionCheckDone(); onProfilePortal && onProfilePortal("subject"); }}>
+              {/* onOpenProfile (page.jsx `goProfile`), NOT onProfilePortal("subject"). The portal
+                  intents each launch a MANAGE screen — "subject" runs startManageSubjects(), the
+                  pick-what-you-teach chooser — which is why this kept landing her in a
+                  change-sections-style window instead of her profile. `goProfile` opens the plain
+                  accordion for the subject she just created, where the master EDIT toggle reveals
+                  the pencils and dustbins. That is the surface the tour has just explained. */}
+              <button className="ap-row" onClick={() => { onSectionCheckDone(); onOpenProfile && onOpenProfile(); }}>
                 <span className="ch-meta"><span className="ch-meta-tx"><b>Open my teaching profile</b></span><span className="ch-go" aria-hidden="true">›</span></span>
                 <span className="ch-name">Sections, class durations, periods and the year&rsquo;s total</span>
               </button>
