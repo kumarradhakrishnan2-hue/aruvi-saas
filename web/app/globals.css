@@ -28,6 +28,17 @@
   --f-display: "Fraunces", Georgia, serif;
   --f-body: "Newsreader", Georgia, serif;
   --f-mono: "IBM Plex Mono", ui-monospace, monospace;
+  /* ── The shell measure (2026-08-21) ──
+     ONE number governs the width of the whole signed-in shell: the reading column in <main>,
+     the brand row, and the right edge the Ask-Aruvi mark hangs off. Before this, only <main>
+     was capped and centred while .hdr / .main-tabs spanned the full viewport — so on a Mac the
+     content sat as a ~860px column in the middle while the brand pinned to the far left and the
+     Ask-Aruvi glyph to the far right, hundreds of pixels adrift from the content they belong to.
+     Chrome is now aligned TO the content, not to the screen. Change it here, not per-component.
+     (The pine bar fill and the tab row's paper strip still span edge to edge — only their
+     CONTENTS are capped, which is what makes the bar read as a bar.) */
+  --shell-w: 860px;
+  --shell-pad: 34px;   /* must match .hdr / .tabs / main horizontal padding */
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -63,19 +74,32 @@ body {
 }
 /* Children repaint on the bar tokens. The pine fill covers the safe-area strip + the BRAND
    ROW ONLY — the My Classes / My Lessons / Ask-Aruvi tab row stays on paper (it repaints
-   itself opaque below). Scoped under .topbar only — .hdr/.tabs styles used anywhere else
-   (first-run, login) are untouched. */
-.topbar .hdr { background: transparent; border-bottom-color: var(--bar-line); }
+   itself opaque below). Scoped under .topbar only — .tabs styles used anywhere else are
+   untouched.
+   ★ 2026-08-21 — FIRST RUN WEARS THE SAME BAR. `.fr-brand` (FirstRun.jsx) is listed alongside
+   `.topbar` on every rule below, so the pre-activation flow and the signed-in shell paint from
+   ONE set of rules and cannot drift. First run was still showing a centred paper brand with the
+   user stacked above it — an older Aruvi, and the teacher met it for her entire first session,
+   from sign-in through to her section cards. What first run does NOT get is nav: no tab row, no
+   settings gear (Phase 1 is shell-less by design, CLAUDE.md §0). Login is deliberately still
+   excluded — it has no bar at all, only a centred card. */
+.topbar .hdr, .fr-brand .hdr { background: transparent; border-bottom-color: var(--bar-line); }
+/* Cap the brand row to the shell measure so Aruvi. / gear / log-out line up with the left and
+   right edges of the content column below, instead of the screen edges (2026-08-21). Scoped
+   under .topbar — .fr-brand caps to the first-run column instead, in its own block. */
+.topbar .hdr { width: 100%; max-width: var(--shell-w); margin: 0 auto; }
 .topbar .main-tabs { background: var(--paper); border-bottom: none; } /* opaque paper over the fill — tabs keep their normal treatment, minus the full-width hairline under the row */
-.topbar .brand-row { color: var(--bar-ink); }
+.topbar .brand-row, .fr-brand .brand-row { color: var(--bar-ink); }
 /* The brand dot: the one-logo red (#c0392b) goes muddy on a pine fill, so the bar alone
    uses the dark palette's brighter red of the same family. */
-.topbar .brand-row em { color: #e0705f; }
-.topbar .hdr-brand-tag { color: var(--bar-ink-soft); }
-.topbar .hdr-user-name { color: var(--bar-ink); }
-.topbar .hdr-theme, .topbar .hdr-gear, .topbar .hdr-user-logout { color: var(--bar-ink-soft); }
-.topbar .hdr-theme:hover, .topbar .hdr-gear:hover { color: var(--bar-ink); }
-.topbar .hdr-user-logout:hover { color: var(--bar-accent); }
+.topbar .brand-row em, .fr-brand .brand-row em { color: #e0705f; }
+.topbar .hdr-brand-tag, .fr-brand .hdr-brand-tag { color: var(--bar-ink-soft); }
+.topbar .hdr-user-name, .fr-brand .hdr-user-name { color: var(--bar-ink); }
+.topbar .hdr-theme, .topbar .hdr-gear, .topbar .hdr-user-logout,
+.fr-brand .hdr-theme, .fr-brand .hdr-user-logout { color: var(--bar-ink-soft); }
+.topbar .hdr-theme:hover, .topbar .hdr-gear:hover,
+.fr-brand .hdr-theme:hover { color: var(--bar-ink); }
+.topbar .hdr-user-logout:hover, .fr-brand .hdr-user-logout:hover { color: var(--bar-accent); }
 /* The bar is out of flow, so a spacer reserves its height. --nav-h is measured from the bar
    itself (page.jsx); the fallbacks are the real rendered heights per breakpoint so the very
    first paint doesn't jump before the measurement lands. */
@@ -262,7 +286,7 @@ select:focus, input:focus { outline: none; border-color: var(--pine); }
 .pillopt:hover, .pillopt:focus { color: var(--pine-d); outline: none; }
 .pillopt:hover::after, .pillopt:focus::after { background-color: var(--clay); }
 
-main { max-width: 860px; margin: 0 auto; padding: 40px 34px 96px; position: relative; z-index: 1; }
+main { max-width: var(--shell-w); margin: 0 auto; padding: 40px var(--shell-pad) 96px; position: relative; z-index: 1; }
 @media (max-width: 600px) {
   main { padding: 26px 18px 72px; }
 }
@@ -2005,7 +2029,11 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .fr-wrap {
   min-height: 100vh; min-height: 100dvh;
   display: flex; flex-direction: column;
-  padding: calc(22px + env(safe-area-inset-top)) 20px calc(22px + env(safe-area-inset-bottom));
+  /* Top padding reserves the FIXED .fr-brand bar (2026-08-21). --fr-bar-h is measured from the
+     bar itself in FirstRun.jsx; the 74px fallback is its real rendered height, so the very first
+     paint doesn't jump before the measurement lands (same idiom as .topbar-spacer / --nav-h).
+     The bar owns the safe-area inset now, so it is no longer added here. */
+  padding: calc(var(--fr-bar-h, 74px) + 22px) 20px calc(22px + env(safe-area-inset-bottom));
   max-width: 480px; margin: 0 auto;
   overflow-x: hidden; /* safety net: no step's content may force horizontal scroll */
   /* Section palette — same tokens the readiness grid (.rd) and My Class (.myclasses) define.
@@ -2015,14 +2043,32 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
   --sec-a:#1e5c4a; --sec-a-bg:#e8f0eb; --sec-b:#b65a31; --sec-b-bg:#f7e9e0;
   --sec-c:#9a7321; --sec-c-bg:#f4ecd8; --sec-d:#5a6b8c; --sec-d-bg:#e8ecf4;
 }
-.fr-brand { text-align: center; padding: 6px 0 18px; position: relative; }
-.fr-brand .brand-row { justify-content: center; font-size: 27px; }
-.fr-brand .brand-row em { font-style: normal; color: #c0392b; }
-.fr-user { display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding-bottom: 10px; }
-.fr-user-name { font-family: var(--f-mono); font-size: 11px; letter-spacing: .03em; color: var(--pine-d); }
-.fr-user-logout { background: none; border: none; cursor: pointer; font-family: var(--f-mono); font-size: 11px; letter-spacing: .03em; color: var(--ink-soft); padding: 2px 4px; }
-.fr-user-logout:hover { color: var(--clay); }
-.fr-brand-tag, .hdr-brand-tag { display: block; font-family: var(--f-mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft); margin-top: 2px; }
+/* The first-run top bar — the shell's pine chrome, minus the nav (2026-08-21). The bar palette
+   tokens are copied from .topbar's block above because custom properties inherit by DOM subtree,
+   not by selector, and .fr-brand is not inside .topbar; the PAINTING is shared (every
+   `.topbar .x, .fr-brand .x` rule above), so only these five values live in two places, and the
+   dark theme flips both selectors together at the bottom of this file.
+   `fixed` matches the shell's own bar, and matters more here: .fr-wrap is a centred flex column
+   (`justify-content: center` at ≥700px), so an in-flow bar would float down the page with the
+   step content instead of sitting at the top. Being out of flow, it needs --fr-bar-h below. */
+.fr-brand {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 6;
+  background: var(--bar-fill);
+  padding-top: env(safe-area-inset-top);
+  --bar-fill: var(--pine-d);
+  --bar-ink: #f3efe6;
+  --bar-ink-soft: rgba(243, 239, 230, .66);
+  --bar-line: rgba(243, 239, 230, .18);
+  --bar-accent: #cf7f56;
+}
+/* Contents cap to the FIRST-RUN column (not --shell-w), so the brand and the log-out sit on the
+   same left/right edges as the step content below them — chrome aligns to its content, the same
+   rule the shell follows. Padding matches .fr-wrap's 20px gutter. */
+.fr-brand .hdr { width: 100%; max-width: 480px; margin: 0 auto; padding: 13px 20px; gap: 14px; }
+@media (min-width: 700px) { .fr-brand .hdr { max-width: 560px; } }
+/* (.fr-brand-tag was dropped from this rule on 2026-08-21 — first run now uses the shell's own
+   .hdr-brand-tag, along with .brand / .hdr-user / .hdr-user-id / .hdr-user-name / .hdr-user-logout.) */
+.hdr-brand-tag { display: block; font-family: var(--f-mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft); margin-top: 2px; }
 
 /* three-step progress rail */
 .fr-prog { list-style: none; display: flex; align-items: center; gap: 4px; padding: 0 0 22px; margin: 0; }
@@ -2045,6 +2091,14 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .fr-step-body, .fr-welcome-body { flex: 1; }
 .fr-q { font-family: var(--f-display); font-weight: 600; font-size: 27px; line-height: 1.18; letter-spacing: -.4px; color: var(--ink); margin: 0 0 6px; }
 .fr-hint { color: var(--ink-soft); margin: 0 0 20px; font-size: 15px; }
+/* The section default, STATED not asked (2026-08-21 — see FirstRun.jsx's Class step). A quiet
+   note, not a second question: the step still asks one thing. Hairline above so it reads as a
+   footnote to the class choice rather than another demand. */
+.fr-sec-note {
+  margin: 24px 0 0; padding-top: 18px; border-top: 1px solid var(--line);
+  font-size: 14px; line-height: 1.5; color: var(--ink-soft);
+}
+.fr-sec-note b { font-weight: 600; color: var(--ink); }
 
 .fr-opt-chip { flex: none; width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: var(--paper-sunk); font-family: var(--f-mono); font-weight: 600; font-size: 14px; color: var(--pine-d); }
 .fr-loading { color: var(--ink-soft); font-style: italic; padding: 8px 2px; }
@@ -2163,32 +2217,15 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 
 /* screen 4 — "Lesson plan ready!" celebratory header (centered — distinct from the smaller,
    left-aligned .fr-ready-note banner style used later on sectionCards). */
-.fr-plan-ready { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; margin: 4px 0 22px; }
-/* tick + "Lesson plan ready!" sit on ONE row, centred; the sub-line drops below */
-.fr-plan-ready-head { display: flex; align-items: center; justify-content: center; gap: 12px; }
-.fr-plan-ready-check {
-  flex: none; width: 40px; height: 40px; border-radius: 50%;
-  background: #e7f1ec; color: var(--pine); font-size: 20px;
-  display: flex; align-items: center; justify-content: center;
-}
-.fr-plan-ready-title { font-family: var(--f-display); font-weight: 600; font-size: 24px; color: var(--ink); margin: 0; }
-.fr-plan-ready-sub { font-size: 14px; color: var(--ink-soft); margin: 0; }
+/* (The whole of Screen 4 — "Lesson plan ready!" — was RETIRED on 2026-08-21. It went through
+   two designs in one day: a --paper-sunk stats card with a pale tick, then the four-unit
+   GLIMPSE on the marginal rail that replaced it. The founder then cut the screen itself: the
+   chapter CTA hands straight off to My Lessons and the ordinary preparing card holds the wait,
+   so first run has no waiting screen of its own. .fr-plan-kicker, .fr-teaser-title/-meta and
+   the .fr-glimpse-* rail went with it. See FirstRun.jsx `prepareAndHandOff`. */
 
-/* screen 4 — facts teaser card (never the full plan — see FirstRun.jsx header) */
-.fr-teaser-card {
-  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
-  padding: 22px 20px; margin: 4px 0 18px; border-radius: 14px;
-  background: var(--paper-sunk); border: 1px solid var(--line-soft);
-}
-.fr-teaser-title { width: 100%; text-align: center; font-family: var(--f-display); font-weight: 600; font-size: 24px; line-height: 1.2; color: var(--ink); margin: 0; }
-.fr-teaser-sub { width: 100%; text-align: center; font-size: 14px; color: var(--ink-soft); margin: 0; }
-.fr-teaser-stats { display: flex; gap: 26px; margin-top: 10px; }
-.fr-teaser-stat { display: flex; flex-direction: column; align-items: flex-start; }
-.fr-teaser-stat-num { font-family: var(--f-display); font-weight: 600; font-size: 22px; color: var(--pine-d); line-height: 1; }
-.fr-teaser-stat-label { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-soft); margin-top: 3px; }
-
-/* screen 4 — "Teach this lesson to your class" + suggested-class box */
-.fr-teach-heading { font-family: var(--f-display); font-weight: 600; font-size: 19px; color: var(--ink); margin: 4px 0 2px; }
+/* screen 4 — suggested-class box. (.fr-teach-heading, the "Now let's set up your class" line,
+   was retired 2026-08-21 — the screen said the same thing four times; the CTA says it once.) */
 .fr-suggested-class {
   display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; row-gap: 8px;
   width: 100%; padding: 14px; margin: 6px 0 6px; border-radius: 12px;
@@ -2222,15 +2259,8 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
    The brand block (logo · username · log out) MUST stay pinned at the top exactly where the
    previous screen left it — so DON'T centre the whole column (that dragged the header down).
    Instead let only the spinner body take the middle via auto vertical margins. */
-.fr-celebrate-body { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; margin: auto 0; }
-.fr-celebrate-spin {
-  width: 40px; height: 40px; border-radius: 50%;
-  border: 3px solid var(--line-soft); border-top-color: var(--pine);
-  animation: fr-spin .9s linear infinite;
-}
-@keyframes fr-spin { to { transform: rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) { .fr-celebrate-spin { animation: none; } }
-.fr-celebrate-title { font-family: var(--f-display); font-weight: 600; font-size: 20px; color: var(--ink); margin: 0; }
+/* (.fr-celebrate-* — the 1.8s "Section Cards are being created…" beat — retired 2026-08-21
+   with goCreateCards. That manufactured wait is now the shell's real preparing card. */
 
 /* sectionCards — the payoff itself ("My week screen.jpg"): one card per fan-out section, a
    colour-cycled left stripe (SECTION_ACCENTS in FirstRun.jsx) so multiple cards read as
@@ -2889,10 +2919,17 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 
 /* ── desktop adaptation: a larger rendering of the same mobile model ── */
 @media (min-width: 700px) {
-  .fr-wrap { max-width: 560px; padding-top: 40px; justify-content: center; }
+  /* Still has to clear the fixed bar — a bare `padding-top: 40px` here would override the
+     reservation set on .fr-wrap above and let tall steps slide under it (2026-08-21). */
+  .fr-wrap { max-width: 560px; padding-top: calc(var(--fr-bar-h, 74px) + 40px); justify-content: center; }
   .fr-q { font-size: 32px; }
   .fr-welcome-title { font-size: 36px; }
-  .fr-cta { max-width: 420px; }
+  /* The CTA fills the column, exactly as it does on a phone. It used to be capped at 420px
+     here, but the column is 520px (560 − 2×20) and .fr-foot centres it — so the green bar
+     landed at 80% of the width of the section/duration wheel directly above it, visibly short
+     at both ends (founder, 2026-08-21). Desktop is "a larger rendering of the same mobile
+     model" (§0): the button and the rows it belongs to share one measure. Do not re-cap it
+     without also capping the wheel. */
 }
 
 /* ══ Prepare Lesson — the supreme, token-costing act ══════════════════════════════════════
@@ -2962,22 +2999,9 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 .dash-nudge-click:hover .dash-nudge-cta { color:var(--pine-d); }
 .dash-nudge-click:focus-visible { outline:none; border-color:var(--pine-d); box-shadow:0 0 0 3px var(--tint-pine); }
 
-/* "Add more classes in this subject" prompt — the progressive-acquisition invitation shown
-   below the cards once she's teaching one class of one subject. A warm ochre-on-cream window
-   (distinct from the pine walkthrough nudge) that reads as "grow your profile", with a quiet
-   corner dismiss and a serif-italic CTA matching the nudge's conversational voice. */
-.dash-expand { position:relative; background:#faf3e6; border:1.5px solid var(--ochre); border-radius:14px;
-  padding:15px 17px 14px; margin:20px 0 6px; box-shadow:0 6px 18px rgba(31,42,36,.07); }
-.dash-expand-x { position:absolute; top:9px; right:10px; background:transparent; border:none; padding:2px;
-  line-height:1; font-size:13px; color:var(--ink-soft); cursor:pointer; opacity:.65; }
-.dash-expand-x:hover { opacity:1; }
-.dash-expand-text { padding-right:20px; }
-.dash-expand-title { font-family:var(--f-display); font-weight:500; font-size:17px; color:var(--clay); line-height:1.3; }
-.dash-expand-sub { font-size:13px; color:var(--ink-soft); margin-top:3px; line-height:1.45; }
-.dash-expand-cta { display:inline-block; margin:11px 0 0; background:transparent; border:none; padding:0;
-  font-family:var(--f-body); font-style:italic; font-size:15.5px; font-weight:500; color:var(--clay);
-  cursor:pointer; text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px; }
-.dash-expand-cta:hover { color:var(--ochre); }
+/* (The .dash-expand* rules for the "Do you teach {subject} to other classes?" window stood
+   here until 2026-08-21. The window was removed and the standing "+" portal ungated in its
+   place — see the plusShow note in MyPlans.jsx.) */
 
 /* Success banner — the activation moment (Screen 6), same freeze position as the welcome. */
 .dash-success { position:sticky; top:var(--nav-h, 118px); z-index:4; background:var(--tint-pine); border:1px solid var(--pine);
@@ -3016,11 +3040,8 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
   filter:drop-shadow(0 2px 5px rgba(31,42,36,.45)); animation:gt-bob 1.1s ease-in-out infinite; }
 @keyframes gt-bob { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-7px); } }
 
-/* First-run stand-in disclosure — shown on the "Lesson plan ready" teaser whenever the chosen
-   chapter had no saved test plan and another chapter is standing in. Ochre-warm so it reads as
-   a deliberate notice, not an error. */
-.fr-standin { background:#f8f1e2; border:1.5px solid var(--ochre); border-radius:12px;
-  padding:12px 14px; margin:0 0 16px; font-size:13.5px; line-height:1.55; color:var(--ink-soft); }
+/* (.fr-standin — the "another chapter is standing in" notice on the retired Screen 4 — went
+   2026-08-21. The substitution it disclosed was itself removed on 2026-08-10. */
 
 /* Inline circled "+" in tour copy — the section card's round .sc-add button in miniature, so the
    text shows the control exactly as it appears on the card. */
@@ -3102,8 +3123,10 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 
   /* — The fixed top bar: same pine-chrome idea at dark depth. A deep pine fill, clearly
        greener than the near-neutral --paper, with the shared cream ink. Only the bar tokens
-       flip; the .topbar-scoped child rules in the header section do the painting. — */
-  [data-theme-effective="dark"] .topbar {
+       flip; the .topbar/.fr-brand-scoped child rules in the header section do the painting.
+       .fr-brand (first run) rides the same flip — one bar, one dark treatment. — */
+  [data-theme-effective="dark"] .topbar,
+  [data-theme-effective="dark"] .fr-brand {
     --bar-fill: #14332a;
     --bar-ink: #e9e4d7;
     --bar-ink-soft: rgba(233, 228, 215, .62);
@@ -3139,7 +3162,6 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
   [data-theme-effective="dark"] .assess-lo,
   [data-theme-effective="dark"] .ch-ongoing,
   [data-theme-effective="dark"] .mycal .cal-chip.on,
-  [data-theme-effective="dark"] .fr-plan-ready-check,
   [data-theme-effective="dark"] .fr-sc-ready,
   [data-theme-effective="dark"] .fr-wheel,
   [data-theme-effective="dark"] .myclasses .add-node:hover { background: var(--tint-pine); }
@@ -3148,8 +3170,6 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
   [data-theme-effective="dark"] .tp-remove-confirm:hover { background: var(--tint-clay); }
 
   [data-theme-effective="dark"] .myclasses .dur-add:hover,
-  [data-theme-effective="dark"] .dash-expand,
-  [data-theme-effective="dark"] .fr-standin { background: var(--tint-cream); }
 
   [data-theme-effective="dark"] .ch-untracked { background: var(--tint-cream); color: var(--ink-soft); }
 
@@ -3732,7 +3752,12 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
    My Classes/My Lessons tab row. No circle chrome: the symbol stands on its own, prominent.
    .main-tabs is position:sticky (a positioned ancestor), so this anchors to it without
    disturbing the centred tabs. ───────── */
-.ask-q { position: absolute; right: 24px; top: 50%; transform: translateY(-50%);
+/* The tab row spans the viewport (its paper strip is the full-width bar), so `right: 24px`
+   pinned the glyph to the SCREEN edge — on a Mac that stranded it hundreds of px right of the
+   860px content column. It now hangs off the content column's OWN right edge: the min(100%, …)
+   collapses the centring term to zero once the viewport is narrower than the shell measure, so
+   below 860px it is simply the row's own gutter — exactly where it used to be (2026-08-21). */
+.ask-q { position: absolute; right: calc((100% - min(100%, var(--shell-w))) / 2 + var(--shell-pad)); top: 50%; transform: translateY(-50%);
   border: none; background: none; color: var(--pine); line-height: 0; cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center; padding: 2px; }
 .ask-q:hover { color: var(--pine-d); }

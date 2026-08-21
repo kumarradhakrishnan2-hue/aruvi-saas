@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import ThemeToggle from "./ThemeToggle";
 import { getJSON, postJSON, markPrepared, pretty, gradeUp, ROMAN } from "../lib/format";
-import { pushSectionState } from "../lib/sectionState";
-import { RollWheel, PickWheel, PpwTotalWheel, PpwSplitCell, normPpw, ppwMapSum, setPpwSplit,
-         setPpwTotal, lowestDuration, DEFAULT_PPW } from "./wheels";
+import { bindSectionChapter, pushSectionState } from "../lib/sectionState";
+import { RollWheel, normPpw, ppwMapSum, lowestDuration, DEFAULT_PPW } from "./wheels";
 
 /* ───────── FirstRun — shell-less Guided First Experience (Phase 1, 2026-07-01) ─────────
  * The mobile-first, progressive-acquisition entry point (CLAUDE.md §0). Until the teacher has
@@ -18,18 +18,29 @@ import { RollWheel, PickWheel, PpwTotalWheel, PpwSplitCell, normPpw, ppwMapSum, 
  * only revealed for editing if the teacher taps "Want to change?". Each answer quietly becomes
  * part of the profile later; she never feels she is "building a profile."
  *
- * Steps: welcome → subject → grade → chapter (+duration) → preview (screen 4, "Lesson plan
- * ready!" — a FACTS TEASER, not the plan itself) → FULL-PROFILE ACQUISITION (2026-07-05:
- * sections → durations → periods/week per duration → annual budget, for this subject·grade;
- * generation is a one-way street, no back to chapter) → creatingCards (reward beat) → DIRECT
- * handoff: page.jsx opens the real workspace shell (two tabs + settings header) and she lands on
- * the My Classes home. No interstitial — an earlier "Go to my classes →" button was removed
- * (2026-07-02): she can't know what "my classes" means before she has ever seen the shell.
+ * Steps: welcome → subject → grade → chapter (+duration). That is ALL of it. The chapter CTA
+ * fires the serve and hands off immediately; page.jsx opens the shell on MY LESSONS, where the
+ * ordinary preparing card shows the progress bar and is replaced in place by the real lesson,
+ * with the tour offer beneath it. There is NO "Lesson plan ready!" screen and no creatingCards
+ * beat — first run has no waiting screen of its own, because the shell already has one.
  *
- * UNATTACHED cards (2026-07-05): the handoff deposits the lesson in My Lessons (markPrepared) but
- * does NOT bind it to any section — the home cards land in the "pick a chapter" state, and she
- * taps "+" on a card to attach the waiting lesson. Auto-binding is what used to make the first
- * class look "done" and leave the profile orphaned (see MEMORY.md 2026-07-05).
+ * ★ THREE STEPS, AND ONLY THREE (founder, 2026-08-21). Between the preview and the handoff there
+ * used to be FOUR more screens — sections → periods/week → durations → annual budget — demanded
+ * at the moment of her first success, in a flow whose own rail promises Subject · Class · Chapter.
+ * All four are gone. Sections are STATED on the Class step ("we'll start you with Section 9A",
+ * changeable in the profile); duration was already asked on the chapter step and was a straight
+ * duplicate; periods/week and annual budget are seeded with the defaults those screens opened on
+ * and are met later in the profile and Year Plan, where they first mean something. She lands on
+ * My Lessons rather than My Classes because the promise was a lesson plan, not an empty card.
+ *
+ * ★ THE CARD LANDS ATTACHED (founder, 2026-08-21) — this REVERSES the 2026-07-05 "cards land
+ * UNATTACHED" rule for first run. That rule existed because auto-binding made the first class
+ * look finished while the profile behind it had never been built; the profile IS built now
+ * (subject · class · section · duration · calibrated budget), so the reason has expired, and
+ * what the rule left behind was an empty card at the end of a flow whose whole promise was a
+ * lesson. `prepareAndHandOff` binds the plan to the default section the moment it lands. The
+ * tour still TEACHES attaching — its orchestration forces the card unbound at steps ≤9 and
+ * re-binds at 10 — so the demo is unaffected by starting from a bound card.
  *
  * NO DAY SCHEDULE (2026-07-02): the weekly-arrangement step is GONE. Aruvi organizes by the
  * section pointer ("where did I stop?"), not by days — the calendar was a category error
@@ -74,15 +85,10 @@ const PERIOD_CHOICES = Array.from({ length: 60 }, (_, i) => i + 1);        // 1,
 // range so a school with many parallel sections can scroll ("wheel") past the first few and
 // pick any of them.
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const SECTION_LETTERS = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)); // A…Z
-// The four steps of the post-lesson class set-up, shown as a progress rail so she can see the
-// whole run and that it ends soon.
-// Periods BEFORE durations (founder, 2026-07-26) — she sizes her week first, then names the
-// lengths, and the split between them rides on the duration screen itself.
-const ACQ_STEPS = ["Sections", "Periods", "Durations", "Budget"];
-
-// Annual-budget estimator — mirrors TeachingProfile's (duplicated to keep first run self-contained;
-// the 4-method estimator is the same one the Settings profile uses).
+// Annual-budget estimator — kept because buildActivationPayload still seeds a budget record.
+// (ACQ_STEPS, the four-step rail for the deleted post-lesson set-up, went on 2026-08-21; the
+// only rail left is the real one, Subject · Class · Chapter. METHOD_ORDER and budgetPeriods
+// went with it — the profile and Year Plan own the estimator's UI now.)
 const DAYS_IN_WEEK = 6;
 const ESTIMATE_WEEKS = 30;
 const METHODS = {
@@ -91,17 +97,8 @@ const METHODS = {
   days:    { label: "I know my working days",     unit: "working days",   step: 1 },
   auto:    { label: "I’m not sure — estimate it", unit: "",               step: 0 },
 };
-const METHOD_ORDER = ["weeks", "periods", "days", "auto"];
 const defaultValueFor = (method, ppw) =>
   method === "weeks" ? 30 : method === "periods" ? ppw * 30 : method === "days" ? 180 : 0;
-const budgetPeriods = (ppw, b) => {
-  if (!b) return null;
-  if (b.method === "weeks") return ppw * b.value;
-  if (b.method === "periods") return b.value;
-  if (b.method === "days") return Math.round(ppw * b.value / DAYS_IN_WEEK);
-  return b.value ? b.value : ppw * ESTIMATE_WEEKS; // auto: NCF total when resolved, else flat fallback
-};
-
 // Teachers say "Class 7", not "Grade VII" — convert the Roman grade slug to its number
 // for display (ROMAN starts at "iii" → 3). Falls back to the Roman form if unmapped.
 const classNum = (g) => {
@@ -112,38 +109,14 @@ const classNum = (g) => {
 // RollWheel + PickWheel live in wheels.jsx (extracted 2026-07-02) — the SAME selection UI
 // is reused by the Settings profile redo, per the one-UI rule.
 
-/* SectionPicker — the multi-select overlay behind "Change section" (screen 5, picking from the
- * full A–Z letter list, opened from the suggested-class Add/Edit button). `allowEmpty` is kept
- * for callers that don't require a minimum of one. */
-function SectionPicker({ letters, selected, tagFor, title, allowEmpty, onDone, onClose }) {
-  // Every time this picker opens it starts fully unticked — no section pre-checked, even if
-  // some were picked last time — so she always makes a fresh, deliberate choice.
-  const [picked, setPicked] = useState([]);
-  const toggle = (s) => setPicked((a) => (a.includes(s) ? a.filter((x) => x !== s) : [...a, s].sort()));
+/* (SectionPicker — the A–Z multi-select overlay behind "Change section" — was deleted on
+ * 2026-08-21 with the screens that opened it. First run no longer asks for sections at all:
+ * it states the Section {N}A default on the Class step and points at the teaching profile,
+ * which owns section editing. SECTION_LETTERS and toggleSection went with it. */
 
-  return (
-    <div className="fr-modal-bg" onClick={(e) => { if (e.currentTarget === e.target) onClose(); }}>
-      <div className="fr-modal">
-        <h2 className="fr-q">{title || "Select sections"}</h2>
-        <p className="fr-hint">
-          Choose all the sections you will teach this lesson to.
-          {letters.length > 4 ? " Wheel up or down, or use the arrows, for more." : ""}
-        </p>
-        <PickWheel options={letters} selected={picked} onToggle={toggle} ariaLabel={title || "Select sections"}
-          labelFor={(s) => (tagFor ? `Section ${tagFor(s)}` : s)}>
-          <button type="button" className="primary fr-cta" disabled={!allowEmpty && picked.length === 0}
-            onClick={() => onDone(picked)}>
-            Done
-          </button>
-        </PickWheel>
-      </div>
-    </div>
-  );
-}
-
-export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
+export default function FirstRun({ user, onComplete, onPrepared, onPrepareError, onExit, onSignOut }) {
   const [step, setStep] = useState("welcome");
-  // welcome | subject | grade | chapter | preview | acqSections | acqDurations | acqPpw | acqBudget | creatingCards
+  // welcome | subject | grade | chapter   — that is the whole flow (2026-08-21)
 
   const [subjects, setSubjects] = useState([]);
   const [subject, setSubject] = useState("");   // slug
@@ -169,12 +142,26 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   // opens that field's wheel picker (the other field's wheel, if open, closes — only one
   // edit box open at a time).
   const [editingField, setEditingField] = useState(null); // null | "duration" | "periods"
+  /* ★ Has she MOVED either wheel by hand? (2026-08-21 — the "it generated at the default" bug.)
+   * Both defaults are seeded from async fetches, and both seeding effects used to run
+   * unconditionally. The periods one carried a comment claiming it "never clobbers a manual
+   * edit (chapterNo unchanged)" because React bails on an unchanged value — but that only holds
+   * when the values MATCH. Her hand-set 16 against a recommendation of 19 is not a match, so the
+   * late-arriving fetch overwrote it and the request went out at 50 × 19. (The engine was never
+   * at fault: SS·ix ch 4 serves 60 × 16 exactly, verified against the library.)
+   * Reset points differ because the two facts belong to different things: the periods
+   * recommendation is per CHAPTER, so picking another chapter re-earns the right to seed;
+   * duration is a property of the CLASS, so only changing subject/class does. */
+  const periodsTouched = useRef(false);
+  const durationTouched = useRef(false);
 
   // Section fan-out. `sections` is the letters she's teaching this lesson to (default one,
   // "A", matching the mockup's default "VI A" before she changes it).
   const [sections, setSections] = useState(["A"]);
   const [sectionPickerOpen, setSectionPickerOpen] = useState(false);
   const [activating, setActivating] = useState(false);      // busy state for the final handoff
+  // Calibrated periods/year for this subject·class, from /chapters. null = no master-plan row.
+  const [annualBudget, setAnnualBudget] = useState(null);
 
   // FULL-PROFILE acquisition (2026-07-05) — after the lesson is generated, first run now collects
   // the whole teaching profile for this subject·grade (sections → durations → periods/week per
@@ -185,22 +172,13 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   const [ppwByDur, setPpwByDur] = useState({ [DEFAULT_DURATION]: DEFAULT_PPW }); // { [minutes]: count }
   const [weekTotal, setWeekTotal] = useState(DEFAULT_PPW);              // periods a week, asked FIRST
   const [budget, setBudget] = useState(null);                           // { method, value }
-  // Annual-period figures for the budget "estimate" screen. `recTotal` is Aruvi's calibrated
-  // budget for this subject·class and leads the line; `ncfTotal` is the published NCF norm,
-  // shown alongside it (founder, 2026-07-26 — show both, don't hide the norm).
-  const [ncfTotal, setNcfTotal] = useState(null);
-  const [recTotal, setRecTotal] = useState(null);
+  // (ncfTotal / recTotal — the calibrated-vs-NCF comparison on the budget screen — went with
+  // that screen on 2026-08-21. Year Plan shows the same comparison, where she can act on it.)
 
-  // Preview step — live generation is deferred, so "Generate Lesson Plan" pulls the closest
-  // matching SAVED plan for this subject·grade·chapter and reads its view model for the teaser
-  // facts (periods, assessment items) — see the "preview" step below, not the full document.
-  const [previewBusy, setPreviewBusy] = useState(false);
-  const [previewView, setPreviewView] = useState(null);
-  const [previewNote, setPreviewNote] = useState("");
-  const [previewError, setPreviewError] = useState("");
-  // Which saved plan the preview used — deposited in My Lessons at handoff (markPrepared), but
-  // NOT bound to any section; she attaches it herself via "+" on a card.
-  const [previewPlanFile, setPreviewPlanFile] = useState(null);
+  // (The preview state — previewBusy/View/Note/Error/PlanFile — went with the "Lesson plan
+  // ready!" screen on 2026-08-21. Nothing is previewed in first run any more: the serve is
+  // fired and the shell opens on My Lessons, where the ordinary preparing card holds the wait
+  // and is replaced in place by the real lesson. See prepareAndHandOff below.)
   /* genon in FIRST RUN (founder, 2026-07-26). This screen used to look only for a pre-saved plan
    * and, finding none, said "no saved test plans available yet" — even for a chapter that HAS a
    * certified canonical and could be built deterministically in milliseconds. Same wiring as
@@ -245,12 +223,44 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
       // if the API is old or the response is malformed.
       const sd = Number(d.standard_duration_minutes) || DEFAULT_DURATION;
       setStdDuration(sd);
-      setDurationMin(sd);
+      // Seed the wheel ONLY if she hasn't set it herself — this fetch resolves after she can
+      // already have opened "Change duration" (see the periodsTouched/durationTouched note).
+      if (!durationTouched.current) setDurationMin(sd);
+      /* ★ The CALIBRATED annual budget for this subject·class (2026-08-21). It seeds the
+         profile's budget record at handoff. It matters that this is the master plan's own
+         total and not a guess: Year Plan does not display the per-chapter recommendation, it
+         distributes HER budget across the chapters by weight. So when first run seeded a
+         plausible-looking 30 weeks × 6/week = 180 for a class whose calibrated year is 245,
+         Year Plan scaled every chapter by 180/245 and the founder met a chapter the chapter
+         step had just recommended at 19 being suggested at 14. Seeding the real total makes
+         the two agree by construction, because the per-chapter recommendations ARE that
+         total's effort-weighted shares. */
+      const ab = Number(d.annual_budget_periods);
+      setAnnualBudget(ab > 0 ? ab : null);
     }).catch(() => setChapters([]));
     getJSON(`/genon/${subject}/${grade}/chapters`)
       .then((d) => { setGenonChs(d.chapters || []); setCanonMinutes(d.canonical_minutes || {}); })
       .catch(() => { setGenonChs([]); setCanonMinutes({}); });
   }, [subject, grade]);
+
+  /* The top bar is position:fixed (see the Brand note below), so a spacer has to reserve its
+     height in the flow. MEASURED rather than hardcoded, because the brand block's height moves
+     with the breakpoint's font sizes — the same reason page.jsx measures --nav-h for the
+     shell's bar. `.fr-wrap` carries a fallback for the first paint, before this lands. */
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const root = document.documentElement;
+    const measure = () => {
+      const el = document.querySelector(".fr-brand");
+      if (el) root.style.setProperty("--fr-bar-h", `${Math.round(el.getBoundingClientRect().height)}px`);
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => {
+      window.removeEventListener("resize", measure);
+      root.style.removeProperty("--fr-bar-h");   // the shell must never inherit it
+    };
+  }, [step]);
 
   // Can this chapter be built deterministically from a certified canonical?
   const genonAvailable = !!chapterNo && genonChs.includes(Number(chapterNo));
@@ -280,18 +290,25 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
     setChapterNo(no);
     const est = estimateFor(no);
     setDefaultPeriods(est);
+    // A new chapter carries its own recommendation, so her previous hand-set count was about a
+    // different chapter — seeding is right again here, and the wheel re-earns the right to seed.
+    periodsTouched.current = false;
     setPeriods(est);
     setEditingField((f) => (f === "periods" ? null : f)); // close a stale edit box, if open
   };
 
   // Still needed for the initial load (chapters arrive AFTER chapterNo is seeded) and any external
-  // chapterNo change: keep the estimate in step. A no-op when pickChapter already set it (same
-  // value → React bails), so it never clobbers a manual "Change periods" edit (chapterNo unchanged).
+  // chapterNo change: keep the estimate in step.
+  // ★ The `defaultPeriods` tag ("Aruvi recommended") must ALWAYS track the chapter, but the WHEEL
+  //   is only seeded while she hasn't set it herself — this effect firing late is exactly what
+  //   overwrote her count before (see periodsTouched above). Leaving her edit box open matters
+  //   too: closing it under her mid-edit was the visible half of the same bug.
   useEffect(() => {
     const c = chapters.find((x) => String(x.chapter_number) === String(chapterNo));
     if (!c) return;
     const est = estimateFor(chapterNo);
     setDefaultPeriods(est);
+    if (periodsTouched.current) return;
     setPeriods(est);
     setEditingField((f) => (f === "periods" ? null : f)); // close a stale edit box, if open
   }, [chapters]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -302,101 +319,63 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
   // number + letter, e.g. "6A" — displayed everywhere else as "Section 6A".
   const tagFor = (letter) => `${classNum(grade)}${letter}`;
 
-  // ── acquisition handlers ──
-  const startAcquisition = () => {
-    setDurations([durationMin]);                 // seed durations from the chapter-step choice
-    setPpwByDur({ [durationMin]: DEFAULT_PPW });
-    setWeekTotal(DEFAULT_PPW);
-    // Pre-pick the 30-week year (choice #1) as the rational default (2026-07-08): combined with
-    // her periods/week it yields a sane budget, so a hurried tap-through still lands somewhere
-    // real. Other methods stay fully prominent (no dimming) so she can switch freely.
-    setBudget({ method: "weeks", value: 30 });
-    setStep("acqSections");
-  };
-  const toggleSection = (s) =>
-    setSections((a) => (a.includes(s) ? a.filter((x) => x !== s) : [...a, s].sort()));
-  // Ticking a length never changes the SIZE of the week — only how it is divided. The anchor (the
-  // lowest ticked length) always holds the remainder, so a newly ticked length starts at 0 and an
-  // untick hands its periods straight back.
-  const toggleDuration = (d) =>
-    setDurations((a) => (a.includes(d)
-      ? (a.length > 1 ? a.filter((x) => x !== d) : a)                 // keep at least one
-      : [...a, d].sort((x, y) => x - y)));
-  // Leaving the weekly-total screen: apply the number she just set to whatever split exists.
-  const goPpwToDur = () => {
-    setPpwByDur((m) => setPpwTotal(durations, m, lowestDuration(durations), weekTotal));
-    setStep("acqDurations");
-  };
-  const setPpwCount = (d, v) =>
-    setPpwByDur((m) => setPpwSplit(durations, m, lowestDuration(durations), d, v));
+  // (startAcquisition — which seeded the profile defaults and opened the deleted four-screen
+  // set-up — went on 2026-08-21 with the "Lesson plan ready!" screen that called it. The exact
+  // same defaults are now passed straight into finishActivation as `over` by prepareAndHandOff.)
+  // (toggleDuration / goPpwToDur / setPpwCount lived here until 2026-08-21 — they drove the
+  // deleted acqDurations + acqPpw screens and had no other caller. The multi-duration split
+  // they maintained is still reachable from the teaching profile, which owns it now.)
 
-  // Annual-periods figures for the budget "estimate" method (only while that screen shows).
-  // Both are read: Aruvi's calibrated budget leads, the NCF norm is shown next to it.
-  useEffect(() => {
-    if (step !== "acqBudget" || !subject || !grade) return;
-    let live = true;
-    setNcfTotal(null);
-    setRecTotal(null);
-    getJSON(`/subjects/${subject}/${grade}/ncf-periods`)
-      .then((d) => {
-        if (!live || !d) return;
-        setNcfTotal(d.ncf_total_periods != null ? d.ncf_total_periods : null);
-        setRecTotal(d.recommended_total_periods != null ? d.recommended_total_periods : null);
-      })
-      .catch(() => { if (live) { setNcfTotal(null); setRecTotal(null); } });
-    return () => { live = false; };
-  }, [step, subject, grade]);
+  // (The /ncf-periods fetch for the budget screen's "estimate" method stood here until
+  // 2026-08-21. It was gated on `step === "acqBudget"`, a step that no longer exists, so it
+  // could never fire again. Year Plan owns that comparison now.)
 
   // Build the CANONICAL readiness payload — the FULL profile for this one subject·grade: every
   // chosen section, the durations, the per-duration weekly counts (+ derived periods_per_week),
   // and the annual budget keyed by grade index 0. grids[] ships all -1 (no day schedule, ever).
-  const buildActivationPayload = () => {
+  const buildActivationPayload = (over) => {
+    const durs = (over && over.durations) || durations;
+    const ppwSrc = (over && over.ppwByDur) || ppwByDur;
+    const wkTotal = (over && over.weekTotal) || weekTotal;
+    const bdg = (over && over.budget) || budget;
     const secObjs = sections.map((s) => ({ tag: tagFor(s), sec: s }));
     const grid = sections.map(() => DAYS.map(() => -1));
-    const ppwMap = normPpw(durations, ppwByDur, weekTotal, lowestDuration(durations));
+    const ppwMap = normPpw(durs, ppwSrc, wkTotal, lowestDuration(durs));
     const subjectRecord = {
       name: pretty(subject),
       grades: [{
         grade: gradeUp(grade),
         sections: secObjs,
-        durations: [...durations],
+        durations: [...durs],
         ppw_by_duration: ppwMap,
-        ppw_anchor: lowestDuration(durations),
+        ppw_anchor: lowestDuration(durs),
         periods_per_week: ppwMapSum(ppwMap),
       }],
       grids: [grid],
-      budget: { 0: budget || { method: "auto", value: 0 } },
+      budget: { 0: bdg || { method: "auto", value: 0 } },
     };
     return { subjects: [subjectRecord] };
   };
 
-  // "Create teaching cards" (screen 4) fires this: hold on a short "Section Cards are being
-  // created…" beat (screen "creatingCards") so the moment reads as something being built for
-  // her, then hand off DIRECTLY into the shell — no interstitial, no "go to…" button naming a
-  // destination she has never seen. The My Classes home she lands on IS the reward payoff:
-  // her section cards (unattached), ready for her to tap "+" and attach the waiting lesson.
-  const goCreateCards = () => {
-    setStep("creatingCards");
-    setTimeout(finishActivation, 1800);
-  };
+  // (goCreateCards — the 1.8s "Section Cards are being created…" beat — went on 2026-08-21.
+  // The wait it manufactured is now the shell's own preparing card, which is a REAL wait for a
+  // real request and lands on the screen where the lesson actually appears.)
 
   // Finalize: deposit the previewed plan in My Lessons (NOT bound to any section) and hand the
   // full-profile canonical readiness payload to onComplete. Persistence (POST /readiness) is
   // page.jsx's job, same as the old upfront wizard.
-  const finishActivation = () => {
+  /* `over` carries the profile values the caller has just decided but that React state has not
+     caught up with yet — the handoff happens in the SAME tick as the seeding, so reading them
+     back off state here would read the previous render's. */
+  const finishActivation = (over) => {
     setActivating(true);
     try {
-      if (previewPlanFile) {
-        // Deposit the lesson in My Lessons — but DELIBERATELY do not bind it to any section.
-        // Cards land UNATTACHED so she taps "+" on a card to attach the waiting lesson. Binding it
-        // here is what used to make the first class look "done" and leave the profile orphaned.
-        markPrepared(subject, grade, previewPlanFile);
-      }
-      // Guarantee every card lands UNATTACHED: clear any stale binding for these exact section
-      // keys, both locally AND on the server. A reused section key (e.g. english_iii_3A left over
-      // from an earlier run) otherwise resurrects its old chapter via pullSectionState, so a
-      // "fresh" card shows already attached. First run only runs for an empty profile, so a clear
-      // here is always safe.
+      // Clear any STALE binding for these exact section keys, locally AND on the server. A
+      // reused key (e.g. english_iii_3A left over from an earlier run) otherwise resurrects its
+      // old chapter via pullSectionState, so a "fresh" card shows someone else's chapter. First
+      // run only runs for an empty profile, so a clear here is always safe.
+      // NOTE this no longer means the card stays empty — prepareAndHandOff binds the NEW lesson
+      // to the default section the moment it lands (see there; reverses 2026-07-05).
       sections.forEach((s) => {
         const secKey = `${subject}_${grade}_${tagFor(s)}`;
         try {
@@ -407,55 +386,77 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
         pushSectionState(secKey);   // no chapter in localStorage now → deletes the server row
       });
     } catch {}
-    onComplete && onComplete(buildActivationPayload());
+    onComplete && onComplete(buildActivationPayload(over), (over && over.preparing) || null);
   };
-
-  // "Generate Lesson Plan" — live generation is deferred (see api/main.py's /generate stub),
-  // so we pull a SAVED plan's real facts (periods, assessment item count) for the teaser
-  // summary, same pattern Allocate.jsx's G7 spoke uses to serve saved-plan previews. We no
-  // longer render the plan itself here — see screen 4a "preview" below: showing the full
-  // document before she's attached it to a class got in the way of the guided flow, and a
-  // REAL generated plan will live in this same saved-plans folder later, so this fetch already
-  // works unchanged once live generation lands. Try the exact chosen chapter first; if this
-  // subject·grade has no saved plan for it yet, fall back to whichever saved plan IS available
-  // so testing isn't blocked (the disclosure note below stays honest about that substitution).
-  const generate = async () => {
-    if (!chosenChapter) return;
-    setStep("preview");
-    setPreviewBusy(true);
-    setPreviewError("");
-    setPreviewNote("");
-    setPreviewView(null);
-    setPreviewPlanFile(null);
-    try {
-      // ── genon path: build THIS chapter from its certified canonical, at her chosen shape ──
-      if (genonAvailable) {
-        try {
-          const resp = await postJSON(`/genon/${subject}/${grade}/${chapterNo}/plan`,
-            { rows: [{ duration: durationMin, count: periods }] });
-          const viewRes = await getJSON(`/plans/${subject}/${grade}/${resp.filename}/view`);
-          setPreviewView(viewRes.view);
-          setPreviewPlanFile(resp.filename);
-          if (resp.coverage_note) setPreviewNote(resp.coverage_note);
-          return;
-        } catch (e) {
-          // The genon path failed. It used to fall through to a saved-plan preview "rather than
-          // dead-end her first ever lesson" — but that fallback stood in ANOTHER CHAPTER's
-          // prototype-era plan, which is a worse first experience than an honest sentence, and
-          // it concealed a missing canonical behind a plausible-looking lesson.
-          setPreviewError((e && e.detail) || "Couldn't build the lesson plan right now. Try again in a moment.");
-          return;
-        }
-      }
-      // ── NO CANONICAL → NO LESSON (founder, 2026-08-10; retired with the fallback above).
-      // Same sentence as the API's 404 and as PrepareLesson, so a missing canonical reads
-      // identically wherever it is met — for her, and as a standing check for us.
-      setPreviewError("No underlying chapter yet.");
-    } catch (e) {
-      setPreviewError("Couldn't load a lesson plan right now. Try again in a moment.");
-    } finally {
-      setPreviewBusy(false);
-    }
+  /* ★ PREPARE AND HAND OFF (founder, 2026-08-21) — there is no "Lesson plan ready!" screen.
+   * The chapter step's CTA now fires the serve and IMMEDIATELY opens the shell on My Lessons,
+   * where the ordinary preparing card takes over: the proposed lesson drawn at full strength
+   * with a progress bar where "Ready to teach" will be, replaced in place when the plan lands.
+   * That is exactly what a normal run does (page.jsx `onPreparing`/`onPrepared`), so first run
+   * no longer has a waiting screen of its own — one wait, one place, learnt once.
+   *
+   * The request is deliberately NOT awaited before handing off. FirstRun unmounts the instant
+   * page.jsx flips to the shell, but the fetch keeps running inside this closure and still
+   * resolves to onPrepared/onPrepareError — the same trick PrepareLesson already relies on.
+   *
+   * Everything the payload needs is passed DOWN as `over` rather than set on state first: the
+   * seeding and the handoff happen in one tick, so state would still hold the previous values.
+   */
+  const prepareAndHandOff = () => {
+    if (!chosenChapter || activating) return;
+    const rows = [{ duration: durationMin, count: periods }];
+    const preparing = {
+      subject, grade,
+      chapterNo: Number(chapterNo),
+      chapterTitle: chosenChapter.chapter_title,
+      rows,
+    };
+    /* The four screens that used to ask for these are gone. The BUDGET is the calibrated year
+       for this subject·class, not the old 30-weeks guess — see the annual_budget_periods note
+       in the /chapters effect for why that guess made Year Plan contradict the chapter step.
+       Periods/week is still an approximation (DEFAULT_PPW); it drives the weekly split, not any
+       figure she is shown, and the profile lets her correct it. */
+    const over = {
+      durations: [durationMin],
+      ppwByDur: { [durationMin]: DEFAULT_PPW },
+      weekTotal: DEFAULT_PPW,
+      budget: annualBudget
+        ? { method: "periods", value: annualBudget }
+        : { method: "weeks", value: 30 },      // no master-plan row for this subject·class
+      preparing,
+    };
+    finishActivation(over);            // profile saved, shell opens on My Lessons, bar showing
+    /* ★ HOLD THE BAR (2026-08-21). A genon serve is ~0.3 ms and the round trip is barely more,
+     * so without this the card is replaced in the same breath it appears and she sees nothing —
+     * which is exactly what the founder reported after the first cut of this handoff. The five
+     * seconds are not fake progress: PrepareLesson has held the identical beat since 2026-08-06
+     * (PREPARING_MS), for the same reason, and this is her FIRST lesson — the one moment the
+     * pause is most worth having. Duplicated rather than shared because PrepareLesson also
+     * skips the hold for a plan she has held before (`already_yours`), which cannot apply here:
+     * on first run nothing is ever already hers. */
+    const startedAt = Date.now();
+    const holdBar = () => new Promise((res) => setTimeout(res, Math.max(0, 5000 - (Date.now() - startedAt))));
+    postJSON(`/genon/${subject}/${grade}/${chapterNo}/plan`, { rows })
+      .then(async (resp) => {
+        await holdBar();
+        markPrepared(subject, grade, resp.filename);
+        /* ★ ATTACH IT (founder, 2026-08-21) — reverses the 2026-07-05 "cards land UNATTACHED"
+         * rule, for first run only. That rule was written when binding here made the first class
+         * look finished while the profile behind it was never built; the profile IS built now
+         * (subject · class · section · duration · calibrated budget), so the reason has expired
+         * and what is left is an empty card at the end of a flow whose whole promise was a
+         * lesson. The tour still TEACHES attaching — its own orchestration forces the card
+         * unbound at steps ≤9 and re-binds at 10, so the demo is unaffected by starting bound. */
+        const secKey = `${subject}_${grade}_${tagFor(sections[0] || "A")}`;
+        bindSectionChapter(secKey, resp.filename);
+        onPrepared && onPrepared({ subject, grade, filename: resp.filename });
+      })
+      .catch((e) => {
+        // Same sentence the API and PrepareLesson use for a chapter with no canonical, so a
+        // missing chapter reads identically wherever it is met.
+        onPrepareError && onPrepareError(preparing,
+          (e && e.detail) || "Couldn't build the lesson plan right now. Try again in a moment.");
+      });
   };
 
   /* ── shared: three-step progress rail (Subject · Grade · Chapter) ── */
@@ -473,16 +474,37 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
     );
   };
 
+  /* ── The top bar (2026-08-21) ──────────────────────────────────────────────────────────
+   * First run now wears the SAME pine chrome as the signed-in shell (globals.css `.topbar`
+   * / `.hdr`): pine fill edge to edge, cream ink, brand left, theme toggle + user/log-out
+   * right, contents capped to the flow's own column. Before this it was a centred paper
+   * brand with the user stacked above it — visibly an older Aruvi, and she met it for the
+   * whole of her first session, from sign-in to her section cards.
+   *
+   * It reuses the shell's OWN class names (.hdr / .brand / .hdr-brand-tag / .hdr-user…) so
+   * the two can never drift: globals.css paints `.topbar` and `.fr-brand` from one shared
+   * block of rules. What it deliberately does NOT carry is NAV — no tabs, no settings gear.
+   * Phase 1 is shell-less by design (CLAUDE.md §0); this is chrome, not navigation.
+   *
+   * Positioned `fixed` (like the shell's bar) so it never rides `.fr-wrap`'s desktop
+   * vertical centring; `--fr-bar-h` below reserves its height in the flow. */
   const Brand = () => (
     <div className="fr-brand">
-      {user && (
-        <div className="fr-user">
-          <span className="fr-user-name">{user}</span>
-          {onSignOut && <button className="fr-user-logout" onClick={onSignOut}>Log out</button>}
+      <header className="hdr">
+        <div className="brand">
+          <span className="brand-row">Aruvi<em>.</em></span>
+          <span className="hdr-brand-tag">lesson studio</span>
         </div>
-      )}
-      <span className="brand-row">Aruvi<em>.</em></span>
-      <span className="fr-brand-tag">lesson studio</span>
+        <div className="hdr-user">
+          <ThemeToggle />
+          {user && (
+            <div className="hdr-user-id">
+              <span className="hdr-user-name">{user}</span>
+              {onSignOut && <button className="hdr-user-logout" onClick={onSignOut}>Log out</button>}
+            </div>
+          )}
+        </div>
+      </header>
     </div>
   );
 
@@ -548,258 +570,61 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
           <h1 className="fr-q">Which class do you teach {pretty(subject)} to?</h1>
           <p className="fr-hint">You can add more classes later. Roll the box or use the arrows — the class shown is your pick.</p>
           {grades.length === 0 && <div className="fr-loading">Loading classes…</div>}
+          {/* Changing class re-earns the right to seed the duration wheel: 50 min is a fact about
+              Class 9, not about her, so a new class means a new standard. */}
           {grades.length > 0 && (
-            <RollWheel ariaLabel="Class" value={grade} onChange={setGrade} large
+            <RollWheel ariaLabel="Class" value={grade}
+              onChange={(v) => { durationTouched.current = false; setGrade(v); }} large
               items={grades.map((g) => ({ id: g, chip: classNum(g), label: `Class ${classNum(g)}` }))} />
+          )}
+
+          {/* ★ Sections: STATED, not asked (founder, 2026-08-21). They used to be the first of
+              FOUR screens demanded AFTER her first lesson generated — sections, periods/week,
+              durations, annual budget — which broke the rail's own three-step promise at the
+              moment of her first success. The first fix moved a section PICKER here; the founder
+              then cut that too ("too complicated in first run"). So first run simply says which
+              section it is starting her on and where to change it. She still gets a real section
+              card before the tour — whose steps 7–14 all anchor on one — without being asked a
+              question whose answer is almost always "just the one". */}
+          {grades.length > 0 && grade && (
+            <p className="fr-sec-note">
+              We&rsquo;ll start you with <b>Section {tagFor(sections[0] || "A")}</b>. You can add or
+              rename sections any time from your teaching profile.
+            </p>
           )}
         </div>
         <div className="fr-foot">
-          <button className="primary fr-cta" disabled={!grade} onClick={() => setStep("chapter")}>Continue</button>
+          <button className="primary fr-cta" disabled={!grade}
+            onClick={() => setStep("chapter")}>Continue</button>
           <button className="fr-link" onClick={() => setStep("subject")}>← Change subject</button>
         </div>
       </div>
     );
   }
 
-  /* ── STEP 4 · LESSON PLAN READY — facts teaser + "teach this lesson" + suggested class, all
-   * one screen (mockup: "Lesson generated" screen 1). Generation is a one-way street from here
-   * — no back-to-chapter escape hatch; the only way forward is "Create teaching cards". Screen
-   * 5's section picker is the modal at the bottom, opened from the suggested-class Add/Edit. ── */
-  if (step === "preview") {
-    const assessmentCount = previewView
-      ? (previewView.assessment?.groups || []).reduce((sum, g) => sum + (g.items ? g.items.length : 0), 0)
-      : null;
-    return (
-      <div className="fr-wrap">
-        <Brand />
-        <div className="fr-step-body">
-          {/* A genon build is a pure partition (the seam-polish path was removed at campaign
-              step 0), so there is nothing to warn her about. */}
-          {previewBusy && <div className="fr-loading">Building your lesson plan…</div>}
-          {!previewBusy && previewError && <div className="empty">{previewError}</div>}
-          {!previewBusy && !previewError && previewView && (
-            <>
-              <div className="fr-plan-ready">
-                <div className="fr-plan-ready-head">
-                  <span className="fr-plan-ready-check" aria-hidden="true">✓</span>
-                  <h1 className="fr-plan-ready-title">Lesson plan ready!</h1>
-                </div>
-                <p className="fr-plan-ready-sub">Your lesson has been generated successfully.</p>
-              </div>
+  /* (The "Lesson plan ready!" screen stood here until 2026-08-21 — first the tick-and-stats
+   * card, then briefly the four-unit GLIMPSE that replaced it. The founder cut the screen
+   * itself: the chapter CTA now hands off straight to My Lessons and the ordinary preparing
+   * card does the waiting, exactly as a normal run does. One wait, one place. Deleted with
+   * it: previewView/previewBusy/previewError/previewNote/previewPlanFile and the .fr-plan-*
+   * / .fr-glimpse-* styling. `prepareAndHandOff` above is what the CTA calls now.) */
 
-              {/* The stand-in disclosure that stood here is RETIRED with the substitution it
-                  disclosed (founder, 2026-08-10). It existed because a chapter with no plan was
-                  served another chapter's, and the swap had to be said out loud; there is no
-                  swap now — a chapter without a canonical says "No underlying chapter yet." and
-                  nothing is deposited. `previewNote` survives for the coverage note, which is
-                  about HER chapter, so the teaser title no longer has two cases. */}
-              {previewNote && <div className="fr-standin" role="note">{previewNote}</div>}
-
-              <div className="fr-teaser-card">
-                <h2 className="fr-teaser-title">{chosenChapter ? chosenChapter.chapter_title : previewView.lesson_plan.chapter_title}</h2>
-                <p className="fr-teaser-sub">{pretty(subject)} · Class {classNum(grade)}</p>
-                <div className="fr-teaser-stats">
-                  <div className="fr-teaser-stat">
-                    <span className="fr-teaser-stat-num">{previewView.lesson_plan.total_periods}</span>
-                    <span className="fr-teaser-stat-label">periods</span>
-                  </div>
-                  <div className="fr-teaser-stat">
-                    <span className="fr-teaser-stat-num">{assessmentCount}</span>
-                    <span className="fr-teaser-stat-label">assessment items</span>
-                  </div>
-                </div>
-              </div>
-
-              <p className="fr-hint">Your lesson plan needs a home. Help us set up your class to receive the plan.</p>
-              <h2 className="fr-teach-heading">Now let’s set up your class</h2>
-            </>
-          )}
-        </div>
-        <div className="fr-foot">
-          <button className="primary fr-cta" disabled={previewBusy || !previewView} onClick={startAcquisition}>
-            Set up my class →
-          </button>
-          <p className="fr-secure">Your lesson is safe in My Lessons.</p>
-        </div>
-      </div>
-    );
-  }
-
-  /* ── PROFILE ACQUISITION (after the lesson is ready) — sections → periods/week → durations
-   * (carrying the split inline) → annual budget, for this one subject·grade. On finish,
-   * cards are created UNATTACHED and the lesson waits in My Lessons for her to tap "+". ── */
-  if (step === "acqSections") {
-    return (
-      <div className="fr-wrap">
-        <Brand />
-        <Progress steps={ACQ_STEPS} active="Sections" />
-        <div className="fr-step-body">
-          <h1 className="fr-q">Which sections of Class {classNum(grade)} do you teach {pretty(subject)} to?</h1>
-          <p className="fr-hint">Each section gets its own class card. Pick all the sections you teach.</p>
-          <PickWheel options={SECTION_LETTERS} selected={sections} onToggle={toggleSection}
-            ariaLabel="Sections" labelFor={(s) => `Section ${tagFor(s)}`}>
-            <button type="button" className="primary fr-cta" disabled={!sections.length}
-              onClick={() => setStep("acqPpw")}>Continue</button>
-          </PickWheel>
-        </div>
-        <div className="fr-foot">
-          <button className="fr-link" onClick={() => setStep("preview")}>← Back</button>
-        </div>
-      </div>
-    );
-  }
-
-  if (step === "acqPpw") {
-    return (
-      <div className="fr-wrap">
-        <Brand />
-        <Progress steps={ACQ_STEPS} active="Periods" />
-        <div className="fr-step-body">
-          <h1 className="fr-q">How many periods a week does Class {classNum(grade)} get for {pretty(subject)}?</h1>
-          <p className="fr-hint">This would help us suggest NCF aligned periods needed for a chapter.</p>
-          <PpwTotalWheel value={weekTotal} onChange={setWeekTotal} />
-        </div>
-        <div className="fr-foot">
-          <button type="button" className="primary fr-cta" onClick={goPpwToDur}>Continue</button>
-          <button className="fr-link" onClick={() => setStep("acqSections")}>← Back</button>
-        </div>
-      </div>
-    );
-  }
-
-  if (step === "acqDurations") {
-    /* The split lives HERE, as a second column, instead of on a screen of its own: she has just
-     * said how big her week is, so ticking a second length is a question about DIVIDING it. The
-     * lowest ticked length is the non-editable remainder; the others are 0…total dropdowns. */
-    const anchor = lowestDuration(durations);
-    const map = normPpw(durations, ppwByDur, weekTotal, anchor);
-    const multi = durations.length > 1;
-    return (
-      <div className="fr-wrap">
-        <Brand />
-        <Progress steps={ACQ_STEPS} active="Durations" />
-        <div className="fr-step-body">
-          <h1 className="fr-q">How long are your {pretty(subject)} periods for Class {classNum(grade)}?</h1>
-          <p className="fr-hint">{multi
-            ? `Split your ${weekTotal} periods between the lengths — the shortest one takes whatever is left over.`
-            : "Most classes are one length. Add another only if some run longer."}</p>
-          <PickWheel options={DURATION_CHOICES} selected={durations} onToggle={toggleDuration}
-            ariaLabel="Period durations" labelFor={(d) => `${d} min`} initialScrollTo={durationMin}
-            leadingHeader={multi ? "Duration" : null}
-            trailingHeader={multi ? "Periods / week" : null}
-            summaryFor={multi ? (d) => `${d} min × ${map[d] || 0}` : null}
-            trailing={(d, on) => (
-              <PpwSplitCell duration={d} selected={on} map={map} total={weekTotal}
-                isAnchor={d === anchor} onSet={setPpwCount} show={multi} />
-            )}>
-            <button type="button" className="primary fr-cta" disabled={!durations.length}
-              onClick={() => setStep("acqBudget")}>Continue</button>
-          </PickWheel>
-        </div>
-        <div className="fr-foot">
-          <button className="fr-link" onClick={() => setStep("acqPpw")}>← Back</button>
-        </div>
-      </div>
-    );
-  }
-
-  if (step === "acqBudget") {
-    const ppw = ppwMapSum(normPpw(durations, ppwByDur, weekTotal, lowestDuration(durations)));
-    const picked = !!budget;                                   // no method selected until she taps one
-    const bSel = budget && budget.method === "auto"
-      ? { method: "auto", value: ppw * ESTIMATE_WEEKS } : budget;
-    const setMethod = (m) => setBudget({ method: m, value: defaultValueFor(m, ppw) });
-    // Floor the entered figure at 1 (B3, 2026-07-06): a 0-period year is never a real answer
-    // (allocation would hand every chapter 0 periods), so the input simply can't hold 0 — clearing
-    // it or stepping down snaps back to 1. "auto" needs no input (always a positive estimate).
-    const stepValue = (delta) => setBudget({ ...bSel, value: Math.max(1, bSel.value + delta) });
-    const setValue = (v) => setBudget({ ...bSel, value: Math.max(1, v || 0) });
-    // Backstop: if anything still yields a non-positive (or NaN) budget, hold the CTA and warn.
-    const emptyBudget = picked && !(budgetPeriods(ppw, bSel) > 0);
-    return (
-      <div className="fr-wrap">
-        <Brand />
-        <Progress steps={ACQ_STEPS} active="Budget" />
-        <div className="fr-step-body">
-          <h1 className="fr-q">How long is your teaching year for Class {classNum(grade)}?</h1>
-          <p className="fr-hint">Pick one method below based on what you know.</p>
-          {/* Each method carries its OWN result below it, so tapping a choice shows the period
-              number right where she chose — and once she's picked, the other methods dim to keep
-              her focused on the one she selected. */}
-          <div className="tp-methods">
-            {METHOD_ORDER.map((m) => {
-              const on = picked && budget.method === m;
-              return (
-                <div key={m} className="fr-bud-row">
-                  <button type="button" className={`tp-method ${on ? "on" : ""}`}
-                    onClick={() => setMethod(m)}>
-                    {METHODS[m].label}
-                  </button>
-                  {on && (
-                    <div className="fr-bud-detail">
-                      {m !== "auto" && (
-                        <div className="tp-val-row">
-                          <button type="button" className="tp-val-btn" onClick={() => stepValue(-METHODS[m].step)} aria-label="Less">−</button>
-                          <input type="number" className="tp-val-input" min="1" value={bSel.value}
-                            onChange={(e) => setValue(parseInt(e.target.value, 10) || 0)} aria-label={METHODS[m].unit} />
-                          <button type="button" className="tp-val-btn" onClick={() => stepValue(METHODS[m].step)} aria-label="More">+</button>
-                          <span className="tp-val-unit">{METHODS[m].unit}</span>
-                        </div>
-                      )}
-                      <p className="tp-total">≈ {budgetPeriods(ppw, bSel)} periods for the year, at {ppw} a week</p>
-                      {m !== "auto" && budgetPeriods(ppw, bSel) <= 0 && (
-                        <p className="fr-bud-warn">Enter how many {METHODS[m].unit} you teach — a year needs at least a few periods.</p>
-                      )}
-                      {m === "auto" && (
-                        /* Show BOTH figures (founder, 2026-07-26): Aruvi's calibrated annual budget
-                           for this subject·class leads, the published NCF norm sits in brackets
-                           behind it. They are counted in different period lengths at secondary
-                           (ours 50 min, NCF's flat 40), so neither alone tells the whole story —
-                           and hiding the norm would look like we were contradicting it silently. */
-                        <p className="tp-estimate-sub">{(() => {
-                          const parts = ["based on a 30-week year"];
-                          if (recTotal != null) {
-                            parts.push(`Aruvi recommends ${recTotal} periods a year for this class`
-                              + (ncfTotal != null && ncfTotal !== recTotal ? ` (NCF norm: ${ncfTotal})` : ""));
-                          } else if (ncfTotal != null) {
-                            parts.push(`as per NCF, this class requires ${ncfTotal} periods`);
-                          }
-                          return `(${parts.join(". ")}.)`;
-                        })()}</p>
-                      )}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <div className="fr-foot">
-          <button type="button" className="primary fr-cta" disabled={!picked || emptyBudget} onClick={goCreateCards}>
-            Set up my class ✓
-          </button>
-          <button className="fr-link" onClick={() => setStep("acqDurations")}>← Back</button>
-        </div>
-      </div>
-    );
-  }
+  /* ── The FOUR ACQUISITION SCREENS were deleted here on 2026-08-21 (founder) ──────────────
+   * acqSections → acqPpw → acqDurations → acqBudget stood between the generated lesson and
+   * the shell. The rail promises three steps (Subject · Class · Chapter); these were four
+   * more, demanded at the moment of her FIRST success — the same inversion of §0's
+   * benefit-first rule that the "teach other classes?" window was struck for, four screens
+   * deep instead of one. And annual budget is the most abstract question in the product,
+   * put to someone ninety seconds old who has not yet seen a lesson.
+   * Where each went: SECTIONS moved onto the Class step, where it belongs (and where it
+   * guarantees a card exists before the tour, whose steps 7-14 all anchor on one). DURATION
+   * was already asked on the chapter step — it was a duplicate. PERIODS/WEEK and BUDGET are
+   * now seeded with the same sane defaults startAcquisition always used, and she meets them
+   * in the teaching profile or Year Plan when they first mean something. ── */
 
   /* ── STEP · CREATING CARDS — the reward beat, then a DIRECT handoff into the shell.
    * The My Classes home she lands on shows the cards themselves (with the lesson bound),
    * so no interstitial screen re-describes them or asks her to "go" anywhere. ── */
-  if (step === "creatingCards") {
-    return (
-      <div className="fr-wrap fr-celebrate">
-        <Brand />
-        <div className="fr-celebrate-body">
-          <span className="fr-celebrate-spin" aria-hidden="true" />
-          <h1 className="fr-celebrate-title">{activating ? "Setting up your classes…" : "Section Cards are being created…"}</h1>
-          <p className="fr-hint">Just a moment while Aruvi sets up your class.</p>
-        </div>
-      </div>
-    );
-  }
-
   /* ── STEP 3 · CHAPTER (+ calibrated default duration/periods) ── */
   return (
     <div className="fr-wrap">
@@ -831,7 +656,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
             ) : (
               <div className="fr-default-wheel-wrap">
                 <RollWheel ariaLabel="Class duration" value={String(durationMin)}
-                  onChange={(v) => setDurationMin(Number(v))}
+                  onChange={(v) => { durationTouched.current = true; setDurationMin(Number(v)); }}
                   items={DURATION_CHOICES.map((m) => ({ id: String(m), chip: m, label: "minute classes" }))} />
                 {/* Interim (2026-07-05): first run collects a SINGLE duration on purpose — the
                     mixed-duration case (per-week count per type → count-multiset at generation)
@@ -864,7 +689,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
             ) : (
               <div className="fr-default-wheel-wrap">
                 <RollWheel ariaLabel="Estimated periods" value={String(periods)}
-                  onChange={(v) => setPeriods(Number(v))}
+                  onChange={(v) => { periodsTouched.current = true; setPeriods(Number(v)); }}
                   items={PERIOD_CHOICES.map((p) => ({ id: String(p), chip: p, label: p === 1 ? "period" : "periods" }))} />
                 <button type="button" className="fr-done-btn" onClick={() => setEditingField(null)}>Done</button>
               </div>
@@ -912,7 +737,7 @@ export default function FirstRun({ user, onComplete, onExit, onSignOut }) {
         </div>
       </div>
       <div className="fr-foot">
-        <button className="primary fr-cta prepare-cta" disabled={!chosenChapter} onClick={generate}>Prepare the lesson →</button>
+        <button className="primary fr-cta prepare-cta" disabled={!chosenChapter || activating} onClick={prepareAndHandOff}>Prepare the lesson →</button>
         <button className="fr-link" onClick={() => setStep("grade")}>← Change class</button>
       </div>
     </div>

@@ -40,8 +40,9 @@ export function clearUser() {
 }
 
 /* Build a per-user localStorage key so one teacher's client state never bleeds into another's
- * on a shared browser (A3, 2026-07-06). Mirrors the plus_portal_{user}/expand_*_{user} scheme
- * already used in MyPlans. Pre-login (no user yet) it falls back to a bare "_" suffix, so the
+ * on a shared browser (A3, 2026-07-06). (It was modelled on the plus_portal_{user}/expand_*_{user}
+ * keys in MyPlans, all of which were retired on 2026-08-21 when the standing "+" was ungated —
+ * this helper is now the scheme.) Pre-login (no user yet) it falls back to a bare "_" suffix, so the
  * key is still stable and non-leaking. Use for any per-user client cache/preference key. */
 export function userKey(base) {
   return `${base}_${getUser() || ""}`;

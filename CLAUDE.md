@@ -27,17 +27,95 @@ progress is made. A fresh session starts cold — this file is how context carri
 > becomes Home", "arrange the week", "Calendar", or shows a 4-item bottom bar, read it as
 > superseded by this note.
 >
-> ★ **ADDED 2026-07-06 — the standing "+" profile portal (the gliding path).** The "Do you
-> teach {subject} to other classes?" window appears **once, ever** (after first generation +
-> tour resolution, pinned to the first one-class subject). Once it is resolved (used, ✕-ed, or
-> ignored — a spent appearance never returns), a permanent prominent **"+"** appears in My Classes —
+> ★ **ADDED 2026-07-06, AMENDED 2026-08-21 — the standing "+" profile portal (the gliding
+> path).** ★★ **The "Do you teach {subject} to other classes?" window is GONE and the "+" is
+> UNGATED (founder, 2026-08-21).** The window used to appear once ever after first generation +
+> tour resolution, and the "+" unlocked only once it was resolved (used / ✕-ed / spent in a past
+> session). It was struck for two reasons: it asked for more configuration at the exact moment of
+> her FIRST successful generation — inverting this section's own benefit-first rule — and it was
+> the third mechanism for one job, alongside tour step 15 and the "+" itself. **The coupling
+> mattered:** the window was the only thing that set the unlock keys, so deleting the modal alone
+> would have left a new one-class teacher — precisely the person the gliding path exists for —
+> with no "+" at all. So `plusShow` is now simply `onProfilePortal && ready && (tourStep === 15
+> || !tourActive)`; the sticky `plus_portal_{user}` flag, the four `expand_*_{user}` keys, the
+> three unlock paths, `onExpandClasses` and the `.dash-expand*` CSS are all deleted. She now
+> reaches the "+" EARLIER than before (no wait on tour resolution). Do not re-gate it, and do not
+> reintroduce a push nudge. `profileAutoAdd`/`autoAddClassSubject` survive as permanently-null
+> plumbing (TeachingProfile's auto-add flow is still wired, just uncalled).
+> A permanent prominent **"+"** sits in My Classes —
 > its own row, right side, below "Your classes are ready", above the section cards. It opens a
 > Subject · Class · Section chooser routing into TeachingProfile's SAME flows (one-shot
 > `profilePortal` intent in page.jsx), in **manage mode**: enrolled options pre-ticked, untick =
 > removal behind the dustbins' scoped warning — warned, never blocked (keep-≥1-subject still
-> holds). A portal visit always exits to My Classes, never the profile accordion. After the one
-> window, all growth is pull via the + — no further reminders, ever. STATIC-verified only;
-> live + mobile pass pending (MEMORY.md 2026-07-06 top entry).
+> holds). A portal visit always exits to My Classes, never the profile accordion. **ALL growth is
+> pull via the + — there is no push nudge anywhere, ever.** STATIC-verified only (babel-parse
+> clean on page.jsx/MyPlans.jsx/format.js/TeachingProfile.jsx/GuidedTour.jsx, CSS braces balanced
+> 1987/1987, zero surviving references); live + mobile pass pending (MEMORY.md 2026-07-06 entry).
+
+> ★★ **ADDED 2026-08-21 — FIRST RUN IS THREE STEPS, AND ONLY THREE.** The rail promises
+> Subject · Class · Chapter. Until now, four MORE screens stood between the generated lesson and
+> the shell — `acqSections` → `acqPpw` → `acqDurations` → `acqBudget` — demanded at the moment of
+> her FIRST success. Same inversion of the benefit-first rule the "teach other classes?" window
+> was struck for, four screens deep instead of one; and annual budget is the most abstract
+> question in the product, put to someone ninety seconds old who has not yet seen a lesson.
+> **All four deleted.** Where each went: **sections** are now STATED on the Class step ("We'll
+> start you with Section 9A", changeable in the profile) — the founder first asked for a picker
+> there, then cut it too ("too complicated in first run"); **duration** was already asked on the
+> chapter step and was a straight duplicate; **periods/week + annual budget** are seeded with the
+> very defaults those screens opened on (`startAcquisition`) and are met later in TeachingProfile
+> and Year Plan. She still gets a real section card before the tour, which matters because tour
+> steps **7–14 all anchor on one** (`section-add`, `attach-pop`, `section-card-target`,
+> `mark-complete`) — a section-less tour would point the hand at nothing and render "section
+> undefined". **Landing moved to MY LESSONS** (`onFirstRunComplete` → `goLessons()`): the promise
+> was a lesson plan, not an empty card. The tour offer (the same `.dash-nudge`) now renders on
+> BOTH surfaces; `startTour` calls `goClasses()` first so step 1 still opens where it always did.
+> **`finishTour` — the single exit for Done AND Skip — raises a one-shot "Are these your
+> sections?" prompt** on My Classes: EDIT, not add, routing into TeachingProfile's existing
+> section manage screen via `onProfilePortal("section")`. It exists because Aruvi assumed the
+> section on her behalf, and tour's end is the first moment she can judge that. Deleted with the
+> screens: `SectionPicker`, `SECTION_LETTERS`, `toggleSection`, `ACQ_STEPS`, `METHOD_ORDER`,
+> `budgetPeriods`, `toggleDuration`, `goPpwToDur`, `setPpwCount`, `ncfTotal`/`recTotal` and the
+> `/ncf-periods` fetch gated on the dead step.
+>
+> ★★ **AND THERE IS NO "LESSON PLAN READY!" SCREEN (founder, same day).** Screen 4 went through
+> two designs in one day — the `--paper-sunk` stats card with a pale tick, then the four-unit
+> GLIMPSE on the marginal rail that replaced it — and then the founder cut the screen itself.
+> **First run has no waiting screen of its own, because the shell already has one.** The chapter
+> CTA calls `prepareAndHandOff`: it fires the serve, hands off in the SAME tick, and page.jsx
+> opens My Lessons with the ordinary preparing card (`onPreparing`'s descriptor — real title,
+> real period shape, progress bar where "Ready to teach" will be), replaced in place by
+> `onPrepared` when the plan lands. Exactly what a normal run does — one wait, one place, learnt
+> once. The request is deliberately NOT awaited before the handoff: FirstRun unmounts instantly
+> but the fetch keeps running in its closure and still resolves to page.jsx's own
+> `onPrepared`/`onPrepareError` (now passed down as props) — the same trick PrepareLesson relies
+> on. **`finishActivation(over)` / `buildActivationPayload(over)` take the profile values as an
+> ARGUMENT** because seeding and handoff happen in one tick, so reading them back off state would
+> read the previous render's. Gone with the screen: `startAcquisition`, `goCreateCards`, the
+> 1.8s `creatingCards` beat, all five `preview*` states, `GLIMPSE_*`, and the `.fr-plan-*` /
+> `.fr-teaser-*` / `.fr-glimpse-*` / `.fr-celebrate-*` / `.fr-standin` CSS. FirstRun.jsx: 920 → 702 lines.
+> **Two follow-ons the same day, both from live testing:** (a) **the bar never appeared** — the
+> five-second hold lives in `PrepareLesson` (`PREPARING_MS`), which this path bypasses, so the
+> ~0.3 ms serve replaced the card in the breath it was drawn. `prepareAndHandOff` now holds the
+> same beat itself (not shared, because PrepareLesson also skips it for an `already_yours` plan,
+> which can never apply on first run). (b) **Year Plan contradicted the chapter step** — ch 4
+> recommended at 19, suggested at 14. Year Plan does not show the per-chapter recommendation; it
+> distributes HER BUDGET across chapters by weight. The seeded budget was a plausible-looking
+> `30 weeks × DEFAULT_PPW(6) = 180` against SS·ix's calibrated year of **245**, so every chapter
+> scaled by 180/245 — 19 × 180/245 = 13.96 → 14, exactly what was reported. First run now seeds
+> the budget from `/chapters`' own `annual_budget_periods`, and since `sum(recommended_periods)
+> == annual_budget_periods == 245`, the two screens agree by construction. **Whenever first run
+> stops ASKING for something, check what still DERIVES from it** — periods/week is the remaining
+> approximation (it drives the weekly split, not any figure she is shown).
+>
+> ★ **THE "IT GENERATED AT THE DEFAULT" BUG (fixed 2026-08-21).** Amending duration/periods on the
+> chapter step was silently discarded — SS·ix ch 4 asked at 60 min × 16 came back 50 × 19. **The
+> engine was never at fault** (verified directly against the library: `serve_plan` returns exactly
+> 16 units with `{duration: 60, count: 16}`). Two seeding effects overwrote her values when their
+> fetches resolved: the periods one carried a comment claiming it "never clobbers a manual edit"
+> because React bails on an unchanged value — true only when the values MATCH, and 16 ≠ 19. Now
+> guarded by `periodsTouched` / `durationTouched` refs, reset at different points because the
+> facts differ: the periods recommendation is per CHAPTER (so `pickChapter` re-earns the seed),
+> duration is a property of the CLASS (so only changing class does).
 
 The product is **pivoting** from an "upfront-profile-first" flow to a **mobile-first,
 progressive-acquisition** model. Full spec: `docs/Aruvi_Mobile_First_Progressive_Acquisition_Model_v0.2.md`
@@ -360,6 +438,34 @@ generic look.
 - The on-screen plan/assessment view is a React renderer in `web/app/page.jsx`
   (`ViewModelView` and friends). `aruvi_core/render/html.py` is the separate **export/PDF**
   renderer — keep the two visually aligned.
+- **One shell measure — `--shell-w` (860px) / `--shell-pad` (34px), 2026-08-21.** The signed-in
+  shell is ONE centred column and the chrome aligns TO it, never to the screen. `main`,
+  `.topbar .hdr` (brand · theme · gear · user/log-out) and the Ask-Aruvi mark's right offset all
+  derive from these two tokens; the `.topbar` pine fill and `.main-tabs` paper strip still span
+  edge to edge (only their CONTENTS are capped — that is what makes the bar read as a bar).
+  Before this only `main` was capped, so on a Mac the content sat as an 860px column mid-screen
+  while the brand pinned far left and Ask Aruvi far right, adrift from the content they belong
+  to. `.ask-q` uses `calc((100% - min(100%, var(--shell-w)))/2 + var(--shell-pad))` — the
+  centring term collapses to zero below 860px, so narrow viewports keep the plain gutter they
+  always had. Do NOT reintroduce a per-component width; change the measure here.
+  STATIC-verified only (csstree clean, braces balanced) — live + mobile pass owed.
+- **ONE BAR, TWO PHASES — first run wears the shell's chrome (2026-08-21).** `FirstRun.jsx`'s
+  `<Brand/>` was a centred paper brand with the user stacked above it — a visibly older Aruvi
+  that the teacher met for her ENTIRE first session, sign-in through to her section cards. It
+  now renders the shell's own markup (`.hdr` › `.brand`/`.hdr-brand-tag` + `.hdr-user` ›
+  ThemeToggle + `.hdr-user-id`) inside `.fr-brand`, and globals.css lists `.fr-brand` beside
+  `.topbar` on every bar-painting rule (and in the dark-theme flip), so the two CANNOT drift —
+  only the five `--bar-*` token values are duplicated, because custom properties inherit by DOM
+  subtree and `.fr-brand` is not inside `.topbar`. What first run deliberately does NOT get is
+  NAV: no tab row, no settings gear — Phase 1 is shell-less by design (§0). Login keeps its
+  centred card, no bar. `.fr-brand` is `position: fixed` (as the shell's bar is) because
+  `.fr-wrap` is a centred flex column at ≥700px and an in-flow bar would float down the page
+  with the step content; `--fr-bar-h` is measured in FirstRun.jsx and reserved as `.fr-wrap`
+  padding-top (74px fallback for first paint, the `--nav-h`/`.topbar-spacer` idiom) — note the
+  ≥700px `.fr-wrap` rule must keep adding it or tall steps slide under the bar. Contents cap to
+  the FIRST-RUN column (480/560px), not `--shell-w`: chrome aligns to its own content.
+  STATIC-verified only (babel-parse clean, braces 1984/1984, csstree clean bar the known
+  `env()` false positives) — live + mobile pass owed.
 - **Mobile compatibility is a standing requirement — check it on a regular basis (VERY
   IMPORTANT).** Many Indian K–12 teachers will reach Aruvi on a phone, so the web UI must
   stay usable on small screens, not just desktop. Treat mobile as a first-class viewport:

@@ -72,7 +72,7 @@ function classesFromReadiness(readiness) {
   return out;
 }
 
-export default function MyPlans({ subject, grade, ready, readiness, onReady, onNavigate, onEnterGenerate, user, onSignOut, pendingOpen, onConsumePending, pendingAttach, onConsumeAttach, onStartTour, tourActive, tourStep, onTourInfo, onExpandClasses, onProfilePortal }) {
+export default function MyPlans({ subject, grade, ready, readiness, onReady, onNavigate, onEnterGenerate, user, onSignOut, pendingOpen, onConsumePending, pendingAttach, onConsumeAttach, onStartTour, tourActive, tourStep, onTourInfo, onProfilePortal, sectionCheck, onSectionCheckDone }) {
   const [openPlan, setOpenPlan] = useState(null);  // { view, sectionKey } for LessonView
   const [loading, setLoading] = useState(false);
   const [setupStarted, setSetupStarted] = useState(false); // 2a welcome → grid flow gate
@@ -84,113 +84,67 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   // plans for EVERY subject·grade the teacher handles, keyed `${subjectSlug}/${gradeSlug}`.
   const [plansByKey, setPlansByKey] = useState({});
 
-  // "Do you teach {subject} to other classes?" — ONE appearance, EVER (founder, 2026-07-06;
-  // supersedes the per-subject 3-appearance budgets). The window shows exactly once: after the
-  // first generation, once the guided tour is resolved (completed or skipped), pinned to the
-  // first subject that has exactly one class. It stays up for THAT session until she uses it or
-  // ✕'s it — either ending hands over to the standing "+" portal, which owns all further growth.
-  // It never returns in a later session: an ignored appearance also counts as spent, and the "+"
-  // unlocks instead. Reminding beyond this single moment is an irritation, not acquisition.
-  // Bumping expandTick re-reads storage after a write (storage isn't reactive).
-  const [expandTick, setExpandTick] = useState(0);
-
   // All classes across all subjects (one card per subject·grade·section).
   const classes = ready ? classesFromReadiness(readiness) : [];
 
-  // Gate: show the invitations once the teacher is past onboarding — she COMPLETED the guided
-  // tour, SKIPPED it (at inception or mid-way), or attached a lesson without ever taking it. Held
-  // back only while the tour is still on offer OR running, so it never competes with "take the tour".
-  //   • tourActive  → the walkthrough overlay is up.
+  // Onboarding gate — used ONLY for the welcome copy below (which instruction she is ready to
+  // read). She is past onboarding when she has COMPLETED the guided tour, SKIPPED it (at
+  // inception or mid-way), or attached a lesson without ever taking it.
   //   • onStartTour → page.jsx passes this ONLY while the tour is still offered (it becomes
   //     undefined the instant she Skips or finishes — both route through finishTour/tourDismissed).
   //     So `!onStartTour` == "she has resolved the tour this session (skipped or done)".
   //   • anyBoundTop → she attached a lesson (covers the never-offered / manual-attach path).
-  const subjectsArr = (readiness && readiness.subjects) || [];
   const anyBoundTop = ready && classes.some((c) => {
     if (typeof window === "undefined") return false;
     try { return !!window.localStorage.getItem(`current_chapter_${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`); }
     catch { return false; }
   });
   const tourResolved = anyBoundTop || !onStartTour; // attached, or skipped/completed the tour
-  const expandGateOpen = ready && !tourActive && tourResolved && !!onExpandClasses;
 
-  // Storage: shown + subject are cross-session (localStorage — the single appearance is spent
-  // forever, pinned to one subject); session + dismiss are session-scoped (sessionStorage —
-  // "shown this session" keeps it up across tab-hops; ✕ hides it now, the plus flag is the
-  // permanent part).
-  const expKeys = {
-    shown: `expand_shown_${user || ""}`,
-    subject: `expand_subject_${user || ""}`,
-    session: `expand_session_${user || ""}`,
-    dismiss: `expand_dismiss_${user || ""}`,
-  };
-  const lsGet = (k) => { try { return window.localStorage.getItem(k); } catch { return null; } };
-  const ssGet = (k) => { try { return window.sessionStorage.getItem(k); } catch { return null; } };
+  // The standing "+" profile portal — the gliding path to acquisition. PERMANENT: from the
+  // moment she has classes, growth is always available as PULL. Placed BELOW the "Your classes
+  // are ready" box but ABOVE the section cards: classes encompass new subjects too, so the
+  // portal governs the whole card list, never the welcome.
+  //
+  // ★ 2026-08-21 — the "+" was UNGATED and the window in front of it REMOVED (founder). Until
+  // now a one-time "Do you teach {subject} to other classes?" window appeared after her first
+  // generation, and the "+" unlocked only once that window was resolved — used, ✕-ed, or spent
+  // in a past session — via a sticky per-user flag plus four storage keys
+  // (expand_shown/_subject/_session/_dismiss). Two reasons it went: (a) it asked for more
+  // configuration at the exact moment of her FIRST success, inverting §0's benefit-first rule;
+  // (b) it was the third mechanism for one job, alongside tour step 15 and this "+" itself.
+  // NOTE the coupling that made this more than a modal deletion: with the window gone, none of
+  // the old unlock paths could ever fire, so a new one-class teacher — precisely the person the
+  // gliding path exists for — would have been left with no "+" at all and only the settings
+  // gear. Ungating it also means she reaches it EARLIER than before: no wait on tour resolution
+  // plus a window render. Do not re-gate it.
+  //
+  // Never competes with the guided tour — EXCEPT step 15, which deliberately features this "+"
+  // (the guide rings it and the transparent hand lands on it), so it is surfaced then even
+  // though the tour is active.
+  const plusShow = !!onProfilePortal && ready && (tourStep === 15 || !tourActive);
 
-  // The one window to render (or null): never shown before → pin to the first one-class
-  // subject; shown THIS session → keep showing the same pinned subject (until ✕/used);
-  // shown in a PAST session → never again. `expandTick` is referenced so this recomputes
-  // after storage writes.
-  const _expandTickRef = expandTick; // eslint-disable-line no-unused-vars
-  let expandTarget = null;
-  if (typeof window !== "undefined" && expandGateOpen && ssGet(expKeys.dismiss) !== "1") {
-    const oneClass = subjectsArr.filter((s) => (s.grades || []).length === 1);
-    if (lsGet(expKeys.shown) !== "1") expandTarget = oneClass[0] || null;
-    else if (ssGet(expKeys.session) === "1") {
-      const slug = lsGet(expKeys.subject);
-      expandTarget = oneClass.find((s) => subjectSlug(s.name) === slug) || null;
-    }
-  }
-
-  // Spend the single appearance the first time the window actually renders.
-  const expandTargetName = expandTarget ? expandTarget.name : null;
+  /* ★ RE-ASSERT THE BINDING WHEN THE TOUR ENDS (founder, 2026-08-21: "all actions should end up
+   * with LP being loaded onto the default section"). First run binds the lesson to her section
+   * as it lands, but the tour's own orchestration FORCES the card unbound at steps ≤9 so it can
+   * demonstrate attaching — so a teacher who skips at, say, step 5 is dropped on a card the tour
+   * emptied on her behalf and never refilled. Only step 10 re-binds, and she never reached it.
+   * `sectionCheck` turns true exactly once, in finishTour, for both endings — so this is the one
+   * place that sees every exit. Idempotent: if she completed the tour the card is already bound
+   * to this plan and bindSectionChapter is not called. */
   useEffect(() => {
-    if (typeof window === "undefined" || !expandTargetName) return;
-    try {
-      if (window.localStorage.getItem(expKeys.shown) !== "1") {
-        window.localStorage.setItem(expKeys.shown, "1");
-        window.localStorage.setItem(expKeys.subject, subjectSlug(expandTargetName));
-        window.sessionStorage.setItem(expKeys.session, "1");
-        setExpandTick((t) => t + 1);
-      }
-    } catch {}
+    if (!sectionCheck || typeof window === "undefined") return;
+    classes.forEach((c) => {
+      const key = `${c.subjectSlug}/${c.gradeSlug}`;
+      const plan = latestPrepared(plansByKey[key]);
+      if (!plan) return;
+      const secKey = `${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`;
+      let bound = null;
+      try { bound = window.localStorage.getItem(`current_chapter_${secKey}`); } catch {}
+      if (!bound) bindSectionChapter(secKey, plan.filename);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [expandTargetName, user]);
-
-  const dismissExpand = () => {
-    try { window.sessionStorage.setItem(expKeys.dismiss, "1"); } catch {}
-    unlockPlus(); // resolving the window (✕) opens the standing "+" portal for good
-    setExpandTick((t) => t + 1);
-  };
-
-  // The standing "+" profile portal (founder, 2026-07-06) — the gliding path to acquisition.
-  // It appears the moment the ONE expand window is resolved, by any of its three endings:
-  // (1) she used it — added another class and completed the flow (derived: any subject now has
-  // >1 class); (2) she clicked ✕ (dismissExpand above); (3) she ignored it — the appearance was
-  // spent in a past session and the window never returns. From then on it is PERMANENT (per-user
-  // localStorage flag, sticky even if her profile later shrinks back to one class). After the
-  // single window, ALL growth is pull, never push — further reminders are an irritation.
-  // Placed BELOW the "Your classes are ready" box but ABOVE the section cards: classes
-  // encompass new subjects too, so the portal governs the whole card list, never the welcome.
-  const plusKey = `plus_portal_${user || ""}`;
-  const plusFlagOn = () => { try { return window.localStorage.getItem(plusKey) === "1"; } catch { return false; } };
-  const unlockPlus = () => { try { window.localStorage.setItem(plusKey, "1"); } catch {} };
-  const plusUnlocked = (typeof window !== "undefined") && ready && (
-    plusFlagOn()
-    || subjectsArr.some((s) => (s.grades || []).length > 1)              // path 1: add-class completed
-    || (lsGet(expKeys.shown) === "1" && ssGet(expKeys.session) !== "1")  // path 3: spent in a past session, ignored
-  );
-  // Make the unlock sticky the moment any path first derives true.
-  useEffect(() => {
-    if (plusUnlocked && !plusFlagOn()) unlockPlus();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [plusUnlocked]);
-  // Never compete with the guided tour; needs the portal callback from page.jsx. EXCEPTION: the
-  // tour's step 15 deliberately features this "+" (the grow portal), so it's surfaced then even
-  // though the tour is active — the guide rings it and the transparent hand lands on it.
-  const plusShow = !!onProfilePortal && (
-    tourStep === 15 || (plusUnlocked && !tourActive && tourResolved)
-  );
+  }, [sectionCheck, plansByKey]);
 
   // Fetch saved plans once per distinct subject·grade the teacher handles.
   useEffect(() => { setOpenPlan(null);
@@ -855,19 +809,44 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
         })}
       </div>
 
-      {/* Progressive acquisition — the ONE "grow" invitation, ever (see the expandTarget note
-          above): shown once after the first generation + tour, pinned to the first one-class
-          subject. Tapping opens the teaching-profile add-a-class flow scoped to that subject;
-          ✕ or use hands over to the standing "+" portal. Warm-ochre window, distinct from the
-          pine walkthrough nudge above. */}
-      {expandTarget && (
-        <div className="dash-expand" role="note">
-          <button className="dash-expand-x" aria-label="Not now" onClick={dismissExpand}>✕</button>
-          <div className="dash-expand-text">
-            <div className="dash-expand-title">Do you teach {expandTarget.name} to other classes?</div>
-            <div className="dash-expand-sub">Add another class and Aruvi sets it up the same way — its sections, period lengths, and teaching year.</div>
+      {/* (The one-time "Do you teach {subject} to other classes?" window stood here until
+          2026-08-21 — removed with its storage keys; see the plusShow note above. All growth
+          is now PULL, via the standing "+" portal.) */}
+
+      {/* ★ "Would you like to check your set-up?" — once, when the tour ends (founder, 2026-08-21).
+          First run asks THREE things (subject · class · chapter) and assumes the rest on her
+          behalf: the section, the periods-per-week, and the calibrated annual budget that Year
+          Plan is then built on. A sections-only prompt (the first cut of this) covered one of
+          three, which is why it read as insufficient. So it now offers the whole subject profile
+          — and it can, because she has just watched the tour explain what all of it is. That is
+          the entire argument for putting it HERE rather than in first run: before the tour these
+          words mean nothing to her; after it they mean something.
+          Declining is a real answer and is therefore the primary button: her set-up already
+          works, the lesson is attached, and nothing here is a gate. */}
+      {sectionCheck && classes.length > 0 && (
+        <div className="ap-overlay" onClick={onSectionCheckDone}>
+          <div className="ap-modal ap-confirm" onClick={(e) => e.stopPropagation()}>
+            <button className="ap-close" aria-label="Close" onClick={onSectionCheckDone}>✕</button>
+            <div className="ap-head">
+              <div className="ap-kicker">Your teaching</div>
+              <div className="ap-title">Would you like to check your set-up?</div>
+              <div className="ap-sub">
+                Aruvi started you off with {classes.length === 1
+                  ? <>Section <b>{classes[0].sectionTag}</b></>
+                  : <><b>{classes.length} sections</b></>} and its own suggested periods for the
+                year. You can change any of it — or leave it and carry on teaching.
+              </div>
+            </div>
+            <div className="ap-list">
+              <button className="ap-row" onClick={() => { onSectionCheckDone(); onProfilePortal && onProfilePortal("subject"); }}>
+                <span className="ch-meta"><span className="ch-meta-tx"><b>Open my teaching profile</b></span><span className="ch-go" aria-hidden="true">›</span></span>
+                <span className="ch-name">Sections, class durations, periods and the year&rsquo;s total</span>
+              </button>
+            </div>
+            <button type="button" className="primary fr-cta" onClick={onSectionCheckDone}>
+              Not now &mdash; take me to my classes
+            </button>
           </div>
-          <button className="dash-expand-cta" onClick={() => onExpandClasses(expandTarget.name)}>Add another class&nbsp;&rarr;</button>
         </div>
       )}
 

@@ -50,7 +50,7 @@ export default function Home() {
   const [readiness, setReadiness] = useState(null); // readiness projection (durations/grids/budget) — feeds G4's weekly ratio
   const [readinessLoaded, setReadinessLoaded] = useState(false); // has GET /readiness resolved? (gates the first-run decision, avoids a flash)
   const [editFlow, setEditFlow] = useState(null);  // "profile" (settings gear) | "lessonplans" (My Lessons tab) | null (My Classes home)
-  const [profileAutoAdd, setProfileAutoAdd] = useState(null);  // subject NAME to auto-launch the add-a-class flow for (from the My Classes "expand classes" prompt)
+  const [profileAutoAdd, setProfileAutoAdd] = useState(null);  // subject NAME to auto-launch the add-a-class flow for. ALWAYS null since 2026-08-21 (its only caller, the "expand classes" prompt)
   const [profilePortal, setProfilePortal] = useState(null);  // "subject" | "class" | "section" — one-shot intent from My Classes' standing "+" portal
   const [pendingOpen, setPendingOpen] = useState(null);  // {subject,grade,sectionTag,filename} — deep-link from Track into My Week
   // Where a Prepare-a-lesson flow should RETURN once the chapter is prepared. Set when Prepare is
@@ -85,8 +85,30 @@ export default function Home() {
   const [tourDismissed, setTourDismissed] = useState(false);   // session-only; never persisted
   // Also closes Ask Aruvi: Skip can be pressed on step 18 while the panel is open, and the
   // tour must never leave the shell in a state it opened.
-  const finishTour = () => { setAskOpen(false); setTour(null); setTourDismissed(true); };
-  const startTour = () => setTour(1);
+  /* ★ Ending the tour asks her to check her sections (founder, 2026-08-21). First run no longer
+     ASKS which sections she teaches — it states a default ("we'll start you with Section 9A")
+     because the question was too much to put in front of a brand-new teacher. That default can
+     of course be wrong, and by the end of the tour she knows exactly what a section is and has
+     watched one being tracked — so this is the first moment the question is cheap to answer.
+     It rides finishTour, which is the SINGLE exit for both endings: "Done ✓" on the last step
+     and "Skip" from any step. Session-only, like tourDismissed — it is a prompt, not a gate. */
+  const [sectionCheck, setSectionCheck] = useState(false);
+  /* EVERY ending lands on My Classes (founder, 2026-08-21). Done, Skip and the ✕ all route
+     through here, and none of them used to navigate — so skipping from steps 3–7, which run on
+     My Lessons, left her there, and the prompt below (which renders inside MyPlans) had no host
+     to render in. She reported exactly that: "skip … lands in My Lessons with My Classes
+     remaining empty". My Classes is also where the payoff now is, since the first lesson is
+     bound to her section. */
+  const finishTour = () => {
+    setAskOpen(false); setTour(null); setTourDismissed(true);
+    goClasses();
+    setSectionCheck(true);
+  };
+  /* The tour opens on My Classes. It always did implicitly, because its only entry point was a
+     nudge ON My Classes; now that first run lands on My Lessons and the same nudge renders
+     there too, step 1 ("this is where your classes sit") would otherwise ring the My Classes
+     tab over the My Lessons view. Navigate first, then start. */
+  const startTour = () => { goClasses(); setTour(1); };
 
   // Areas 4 + 5: a VERIFIED section mismatch — the class is not on the chapter she just
   // attached, or not marked complete. pushSectionState calls this only when the server was read
@@ -196,7 +218,7 @@ export default function Home() {
     });
   };
 
-  const onFirstRunComplete = (payload) => {
+  const onFirstRunComplete = (payload, preparing) => {
     const subs = (payload && payload.subjects) || [];
     if (subs.length) {
       setReadiness(projectReadiness({ subjects: subs }));
@@ -204,6 +226,18 @@ export default function Home() {
       const first = subs[0];
       setSubject(subjectSlugify(first.name));
       if (first.grades && first.grades[0]) setGrade((first.grades[0].grade || "").toLowerCase());
+      /* ★ Land on MY LESSONS, not My Classes (founder, 2026-08-21). First run's whole promise is
+         a lesson plan, so the first thing she should see when the shell opens is the lesson —
+         not a section card that is empty until she attaches something to it. The tour offer
+         renders below it there, and the tour itself starts by naming both tabs, so she still
+         meets My Classes within seconds — with a reason to care about it.
+         `preparing` is the proposed-lesson descriptor: first run fires the serve and hands off
+         in the SAME tick, so the plan is still in flight when the shell opens. Setting it here
+         puts the ordinary progress card at the head of My Lessons — the identical wait a normal
+         run shows — and `onPrepared` replaces it in place when the serve lands. First run has no
+         waiting screen of its own any more; there is one wait, in one place. */
+      goLessons();
+      if (preparing) setPreparingCard(preparing);
       // READ-AFTER-WRITE (lib/verify.js). This is the ACTIVATION write — the one that turns a
       // first-time teacher into a set-up one — and it used to end in an empty catch, so a lost
       // profile looked exactly like a successful setup until her next sign-in.
@@ -391,12 +425,11 @@ export default function Home() {
     setTour(tour - 1);
   };
   const goProfile = () => { setProfileAutoAdd(null); setProfilePortal(null); setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null); };
-  // From the My Classes "add more classes in this subject" prompt: open the teaching profile and
-  // auto-launch its existing add-a-class flow scoped to that subject (sections → durations →
-  // periods/week → annual budget per new class). TeachingProfile consumes the directive once.
-  const onExpandClasses = (subjectName) => {
-    setProfileAutoAdd(subjectName); setProfilePortal(null); setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null);
-  };
+  // (The "add more classes in this subject" prompt that used to call in here was removed on
+  // 2026-08-21 along with its one-time window — see the plusShow note in MyPlans.jsx. Nothing
+  // sets `profileAutoAdd` to a subject any more, so TeachingProfile's `autoAddClassSubject`
+  // is permanently null: its idle state, and the same value goProfile/onProfilePortal pass.
+  // The state is kept because the auto-add flow it drives is still wired and may be re-used.)
   // From My Classes' standing "+" portal (founder, 2026-07-06): open the teaching profile with a
   // one-shot intent — "subject" | "class" | "section" — and TeachingProfile launches the matching
   // manage screen (add AND remove, same flows the gear uses). Consumed once, like profileAutoAdd.
@@ -417,7 +450,11 @@ export default function Home() {
   // Phase 1 gate (§0): no app shell until `ready` — a teacher with an existing (real,
   // server-persisted) readiness profile skips first-run; a brand-new teacher, OR one whose
   // profile was reset, gets the shell-less Guided First Experience until she completes it.
-  if (!ready) return <FirstRun user={user} onComplete={onFirstRunComplete} onSignOut={onSignOut} />;
+  // onPrepared / onPrepareError are page.jsx's OWN handlers, the same ones PrepareLesson uses:
+  // first run fires the serve and hands off in the same tick, so the request resolves after
+  // FirstRun has unmounted and must land on the shell's preparing card, not on a dead screen.
+  if (!ready) return <FirstRun user={user} onComplete={onFirstRunComplete}
+                       onPrepared={onPrepared} onPrepareError={onPrepareError} onSignOut={onSignOut} />;
 
   return (
     <>
@@ -511,6 +548,7 @@ export default function Home() {
             <div className="editflow">
               <MyLessonPlans readiness={readiness} onAllocate={onAllocateScoped} onOpenSection={onOpenSection}
                 tourStep={tour} preparing={preparingCard}
+                onStartTour={tourDismissed ? undefined : startTour} tourActive={!!tour}
                 onDismissPrepareError={onDismissPrepareError} />
             </div>
           ) : (editFlow === "profile" && ready) ? (
@@ -538,7 +576,8 @@ export default function Home() {
               pendingAttach={pendingAttach} onConsumeAttach={() => setPendingAttach(null)}
               onStartTour={tourDismissed ? undefined : startTour}
               tourActive={!!tour} tourStep={tour}
-              onTourInfo={setTourInfo} onExpandClasses={onExpandClasses} onProfilePortal={onProfilePortal} />}
+              onTourInfo={setTourInfo} onProfilePortal={onProfilePortal}
+              sectionCheck={sectionCheck} onSectionCheckDone={() => setSectionCheck(false)} />}
         </main>
       </div>
 

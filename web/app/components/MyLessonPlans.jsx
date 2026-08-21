@@ -276,7 +276,7 @@ function ProposedCard({ preparing, onDismiss }) {
 }
 
 export default function MyLessonPlans({ readiness, onAllocate, tourStep, preparing,
-                                        onDismissPrepareError }) {
+                                        onStartTour, tourActive, onDismissPrepareError }) {
   const LS_SUBJECT = userKey("mylessons_subject");
   const LS_CLASS = userKey("mylessons_class");
   const LS_PANE = userKey("mylessons_pane");
@@ -850,6 +850,35 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
       )}
 
       {prepareCTA}
+
+      {/* ★ The tour offer, BELOW her lesson (founder, 2026-08-21). First run now lands here
+          rather than on My Classes, so this is the first shell screen she ever sees: her lesson
+          plan, then the offer to be shown around. It renders only while the tour is still on
+          offer and only in the lessons pane — the Year Plan is not where a first-timer is.
+          Same markup and copy as the nudge MyPlans shows on My Classes: whichever surface she
+          reaches first makes the same offer, and taking it there resolves it everywhere,
+          because page.jsx stops passing onStartTour the moment it is taken or skipped. */}
+      {pane === "lessons" && effView !== "archived" && !tourActive && onStartTour && (
+        <div className="dash-nudge dash-nudge-click" role="button" tabIndex={0}
+          aria-label="Show me how — start the guided walkthrough"
+          onClick={() => onStartTour()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+              e.preventDefault(); onStartTour();
+            }
+          }}>
+          <div className="dash-nudge-row">
+            <span className="dash-nudge-hand" aria-hidden="true">→</span>
+            <div className="dash-nudge-text">
+              <div className="dash-nudge-title">Let me show you around first</div>
+              <div className="dash-nudge-sub">
+                A short walk through tracking sections and handling lesson plans. Your lesson stays
+                here in My Lessons — you can add it to a class whenever you&rsquo;re ready.
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       </>
       )}
 
