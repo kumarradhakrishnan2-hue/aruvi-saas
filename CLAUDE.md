@@ -513,6 +513,11 @@ data/                  ★ the single data root (everything that migrates to clo
   readiness/           Bucket B: per-tenant teaching profiles  → {tenant}/{user}/profile.json
   allocations/         Bucket B: per-tenant allocation registers → {tenant}/{user}/{subject}/{grade}/
 docs/                  architecture-plan.md, ALLOCATION_REPORT_*.md, flow PNG, mockups/ (design refs, not loaded by code)
+  administrative_architecture.md  ★ the ADMIN half — account · academic year · cutover ·
+                       notes · data rights · entitlement, as a 0→6 dependency chain with the
+                       exact PORTS an external partner implements. Vendor-neutral by design
+                       (roadmap §4 forbids pre-picking the cloud/gateway). Read before any
+                       work on auth, billing, privacy, subscriptions or the academic year.
 cowork prompts/        ★ authoring prompts for the `chapter` skill (chapter_summary +
                        competency_mapping/effort_index, per subject/stage) — copied over
                        wholesale from Project Aruvi 2026-07-01 (see §10); this is now the

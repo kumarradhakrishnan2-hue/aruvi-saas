@@ -72,9 +72,129 @@ class JobQueue(Protocol):
 
 
 # ── Auth (managed identity provider behind an adapter) ─────────────────────────
+@dataclass
+class Identity:
+    """The verified caller, as the auth layer resolves it — the ONLY shape identity
+    travels in above the port. `user_id` and `tenant_id` are separate values that today
+    happen to be equal (an individual teacher is her own tenant); an institutional tier
+    later makes them differ with no change to this shape."""
+    user_id: str
+    tenant_id: str
+    role: str = "teacher"
+
+
 @runtime_checkable
 class AuthProvider(Protocol):
-    def verify_token(self, token: str) -> Dict[str, Any]: ...  # -> {user_id, tenant_id, role}
+    """Port over the identity provider. The reference implementation
+    (adapters/header_auth_provider.py) treats the token as the raw X-Aruvi-User header
+    value — no password, dev only. A partner's IdP adapter verifies a real signed token
+    behind this same method; `api/main.py:_current_identity()` is the single caller, so
+    the swap touches one wiring line and nothing else."""
+    def verify_token(self, token: str) -> "Identity":
+        """Resolve a credential to a verified Identity. Raise ValueError on an invalid
+        or expired token — the API layer translates that to 401."""
+        ...
+
+
+# ── Account + tenant record (administrative architecture Step 0) ────────────────
+# The spine of the administrative half (docs/administrative_architecture.md §5 Step 0):
+# billing, privacy, notifications and institutions all hang off this record, and it is
+# the one place where `tenant` stops being an alias for `user`. Today every account is
+# an individual teacher — her own tenant, tenant_id == account_id — but they are stored
+# as SEPARATE fields so the institutional tier (one school tenant owning many accounts)
+# is a data change, not a schema change.
+@dataclass
+class Account:
+    """A teacher's durable account record. NOT year-scoped (a subscription is rolling,
+    §2.5) and NOT the teaching profile (that stays in ReadinessRepository)."""
+    account_id: str            # stable internal id, never the email; doubles as user_id
+    tenant_id: str             # today == account_id; a school later owns many accounts
+    display_name: str
+    email: str = ""
+    phone: str = ""
+    locale: str = "en-IN"
+    school_name: str = ""
+    status: str = "active"     # active | suspended | pending_deletion
+    created_at: str = ""
+    consent: Dict[str, Any] = field(default_factory=dict)   # {policy_version, accepted_at, channels}
+    notify: Dict[str, Any] = field(default_factory=dict)    # {email: bool, push: bool, whatsapp: bool}
+
+
+@runtime_checkable
+class AccountRepository(Protocol):
+    """Persists account + tenant records, keyed by tenant_id + user_id (== account_id).
+
+    File-based (JSON) implementation for now (adapters/account_repository_file.py at
+    STATE_DIR/accounts/{tenant}/{user}/account.json); the partner's cloud adapter swaps
+    in behind this same port. `_current_identity()` in api/main.py is the only place
+    that resolves a request to an Account — identity derivation must never scatter.
+    """
+    def load(self, tenant_id: str, user_id: str) -> Optional["Account"]:
+        """Load an account record, or None if the caller has none yet."""
+        ...
+
+    def save(self, account: "Account") -> None:
+        """Create or fully replace an account record (small, always written whole)."""
+        ...
+
+    def find_by_email(self, email: str) -> Optional["Account"]:
+        """Look an account up by email (case-insensitive), or None. Empty emails never
+        match — dev accounts have no email."""
+        ...
+
+    def delete(self, tenant_id: str, user_id: str) -> None:
+        """Remove the account record — administrative_architecture.md §2.6 semantics
+        (the full erase traversal is Step 4's DataRightsService; this removes only the
+        account record itself). No-op if absent."""
+        ...
+
+
+# ── Academic year (administrative architecture Step 1) ──────────────────────────
+# Year-scoped addressing: every piece of TEACHING state (section state, allocations,
+# prepared register, plan archive — later chapter notes) is filed under an academic
+# year, {kind}/{tenant}/{user}/{year}/…, so cutover (Step 2) is a folder boundary,
+# never a data rewrite. The account and the teaching profile are deliberately NOT
+# year-scoped: the subscription is rolling (§2.5) and the class list carries across
+# years (§2.7). The year list is per-teacher because schools start at different times
+# (CBSE Apr–Mar, several state boards Jun–May).
+@dataclass
+class AcademicYear:
+    year_id: str               # "2026-27" — filesystem-safe as-is, used as the path segment
+    starts_on: str             # ISO date — varies by board
+    ends_on: str               # ISO date
+    is_current: bool = False
+
+
+@runtime_checkable
+class AcademicYearRepository(Protocol):
+    """Persists a teacher's academic years and which one is current, keyed by
+    tenant_id + user_id.
+
+    File-based (JSON) implementation for now (adapters/academic_year_repository_file.py
+    at STATE_DIR/academic_years/{tenant}/{user}/years.json). Step 2 (cutover) extends
+    this port with close_year(); do not add it speculatively.
+    """
+    def current(self, tenant_id: str, user_id: str) -> Optional["AcademicYear"]:
+        """The teacher's current academic year, or None if none has been opened yet.
+        The API layer bootstraps a default year on first touch — adapters never invent
+        one."""
+        ...
+
+    def list_years(self, tenant_id: str, user_id: str) -> List["AcademicYear"]:
+        """All years ever opened for this teacher, oldest first. Empty list if none."""
+        ...
+
+    def open_year(self, tenant_id: str, user_id: str, year: "AcademicYear") -> None:
+        """Add a year to the teacher's list. Idempotent on year_id — re-opening an
+        existing year updates its dates/flag rather than duplicating it. If the year is
+        marked current, every other year's is_current is cleared (one current, always).
+        """
+        ...
+
+    def set_current(self, tenant_id: str, user_id: str, year_id: str) -> None:
+        """Mark one existing year current (clearing the others). Raise ValueError if
+        the year_id has never been opened."""
+        ...
 
 
 # ── Billing (Razorpay etc.; provider is just the charging mechanism) ───────────
