@@ -138,6 +138,52 @@ export function markPrepared(subject, grade, filename, periods) {
   })).catch(() => {});
 }
 
+/* ───────── chapter notes — server-backed (admin architecture Step 3, 2026-08-22) ─────
+ * Notes were the last teacher data living ONLY in the browser (CLOUD_DATA_MODEL.md §2.8).
+ * They are now a year-scoped server record — ONE note per chapter per academic year —
+ * keyed "{subjectSlug}/{gradeSlug}/{chapter_number}". localStorage stays an optimistic
+ * cache (same pattern as section state): the server is authoritative on load, the cache
+ * keeps the editor instant and offline-tolerant. NO version history, by design (§2.4):
+ * the server keeps one text + one updated_at, and refuses only a WRITE that is older
+ * than what it holds (409 carries the newer copy so the stale device adopts it). */
+
+/* All of this teacher's notes for the current year: {note_key: {text, updated_at}}.
+ * Returns null when the server is unreachable — callers keep their local cache then. */
+export async function fetchPlanNotes() {
+  try {
+    const d = await getJSON("/plan-notes");
+    return d.notes || {};
+  } catch {
+    return null;
+  }
+}
+
+/* Save one chapter's note (empty text deletes it — editing IS deleting, §2.4).
+ * Resolves {ok:true} on success; {ok:false, stale:true, note} when the server holds a
+ * newer copy (the caller should adopt `note`); {ok:false} on any other failure (the
+ * local cache still has the text — nothing is lost, the next save retries). */
+export async function savePlanNote(subject, grade, chapter, text) {
+  if (!subject || !grade || !chapter) return { ok: false };
+  try {
+    const r = await fetch(`${API}/plan-notes`, withUser({
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        subject, grade, chapter: String(chapter), text: text || "",
+        updated_at: new Date().toISOString(),
+      }),
+    }));
+    if (r.status === 409) {
+      let note = null;
+      try { note = (await r.json())?.detail?.note || null; } catch {}
+      return { ok: false, stale: true, note };
+    }
+    return { ok: r.ok };
+  } catch {
+    return { ok: false };
+  }
+}
+
 /* ───────── period apportionment — ONE method, defined once (2026-08-13) ─────────
  * Largest-remainder: split `total` whole periods across `weights`, giving every
  * remainder-ranked chapter one extra until the total is exactly used. This is the method

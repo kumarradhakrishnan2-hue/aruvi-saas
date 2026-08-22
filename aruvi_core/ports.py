@@ -197,6 +197,69 @@ class AcademicYearRepository(Protocol):
         ...
 
 
+# ── Chapter notes (administrative architecture Step 3 — the last data gap) ──────
+# The teacher's own writing on a chapter — until now the ONLY teacher data living
+# nowhere but the browser (CLOUD_DATA_MODEL.md §2.8's invariant violation). One note
+# per CHAPTER within an academic year (founder, 2026-08-22: two notes exist only when
+# two YEARS are involved — within a year, preparing the same chapter at two period
+# counts still reads/writes the single note, preserving the 2026-07-23 "one surface"
+# decision). The store is year-scoped like the other teaching state, which is exactly
+# how notes stay with their year's plans at cutover (§2.4) — the new year simply starts
+# with an empty folder.
+#
+# TWO RULES THAT MUST NOT SOFTEN (spec §2.4):
+#   * NO VERSION HISTORY, EVER. Editing a note IS deleting its previous text; saving an
+#     empty note IS deleting it. "She deleted it" must stay simply true.
+#   * Last-write-wins needs a TIMESTAMP, not history: save() must refuse to overwrite a
+#     newer stored copy with an older one (StaleNoteWrite) — the whole of the
+#     multi-device protection, and all of it there will ever be.
+@dataclass
+class PlanNote:
+    """One chapter's note. `note_key` is "{subject}/{grade}/{chapter_number}" — the
+    chapter's identity, NOT a plan filename (one note per chapter per year)."""
+    note_key: str
+    text: str
+    updated_at: str            # ISO timestamp — the anti-clobber field. NOT a history.
+
+
+class StaleNoteWrite(ValueError):
+    """Raised by save() when the incoming note's updated_at is older than the stored
+    copy's — a stale device trying to overwrite a fresher edit. The caller re-reads and
+    shows the newer note; it never force-writes."""
+
+
+@runtime_checkable
+class PlanNoteRepository(Protocol):
+    """Persists a teacher's chapter notes, keyed by tenant_id + user_id + year_id.
+
+    File-based (JSON) implementation for now (adapters/plan_note_repository_file.py at
+    STATE_DIR/plan_notes/{tenant}/{user}/{year}/notes.json); the partner's cloud adapter
+    swaps in behind this same port. Step 4's export traversal reads load_all() to carry
+    her notes out beside their plans.
+    """
+    def load(self, tenant_id: str, user_id: str, year_id: str,
+             note_key: str) -> Optional["PlanNote"]:
+        """One chapter's note, or None if she has written nothing on it this year."""
+        ...
+
+    def save(self, tenant_id: str, user_id: str, year_id: str,
+             note: "PlanNote") -> None:
+        """Upsert one note. Raises StaleNoteWrite if the stored copy is newer than
+        `note.updated_at`. Saving empty/whitespace text DELETES the note — the everyday
+        edit flow is the delete flow (§2.4); there is no separate lifecycle."""
+        ...
+
+    def load_all(self, tenant_id: str, user_id: str, year_id: str) -> Dict[str, "PlanNote"]:
+        """Every note this teacher wrote this year: {note_key: PlanNote}. Empty dict if
+        none. The export/erase traversal (Step 4) walks this."""
+        ...
+
+    def delete(self, tenant_id: str, user_id: str, year_id: str, note_key: str) -> None:
+        """Remove one note outright. No-op if absent. (The UI path is save-empty; this
+        exists for Step 4's erase traversal and for symmetry.)"""
+        ...
+
+
 # ── Billing (Razorpay etc.; provider is just the charging mechanism) ───────────
 @runtime_checkable
 class BillingProvider(Protocol):
@@ -233,34 +296,38 @@ class AllocationRepository(Protocol):
     Merge semantics: save_allocation() merges new/overwritten chapters into the existing
     register, preserving chapters not included in the current save.
 
-    File-based (JSON) implementation for now; Supabase adapter swaps in later without
-    touching business logic.
+    Year-scoped (Step 1): the register is TEACHING state, so every method also takes
+    `year_id` — an allocation belongs to one academic year and cutover simply starts a
+    fresh folder. The API layer resolves the year; adapters just address by it.
+
+    File-based (JSON) implementation for now; the partner's cloud adapter swaps in later
+    without touching business logic.
     """
-    def load_register(self, tenant_id: str, user_id: str,
+    def load_register(self, tenant_id: str, user_id: str, year_id: str,
                       subject: str, grade: Union[str, int]) -> Dict[str, "AllocationRecord"]:
-        """Load this teacher's Annual Allocation Register for a subject·grade as
-        {chapter_num: AllocationRecord}. Returns empty dict if none exists yet."""
+        """Load this teacher's Annual Allocation Register for a subject·grade in one
+        academic year as {chapter_num: AllocationRecord}. Empty dict if none exists yet."""
         ...
 
-    def save_allocation(self, tenant_id: str, user_id: str,
+    def save_allocation(self, tenant_id: str, user_id: str, year_id: str,
                         subject: str, grade: Union[str, int],
                         chapters_allocation: Dict[str, "AllocationRecord"]) -> None:
-        """Save allocation data for this teacher, merging into the existing register.
+        """Save allocation data for this teacher's year, merging into the existing register.
 
         Chapters in chapters_allocation overwrite existing allocations for those chapters.
         Chapters not in chapters_allocation retain their previous allocations.
         """
         ...
 
-    def get_summary(self, tenant_id: str, user_id: str,
+    def get_summary(self, tenant_id: str, user_id: str, year_id: str,
                     subject: str, grade: Union[str, int]) -> AllocationSummary:
-        """Return a summary of this teacher's current register state."""
+        """Return a summary of this teacher's current register state for one year."""
         ...
 
-    def clear_register(self, tenant_id: str, user_id: str,
+    def clear_register(self, tenant_id: str, user_id: str, year_id: str,
                        subject: str, grade: Union[str, int]) -> None:
-        """Erase this teacher's register for a subject·grade (the "Reset allocations"
-        action). No-op if no register exists yet."""
+        """Erase this teacher's register for a subject·grade in one year (the "Reset
+        allocations" action). No-op if no register exists yet."""
         ...
 
 
@@ -332,18 +399,20 @@ SectionState = Dict[str, Any]  # {chapter: str, unit_index: Optional[int], done:
 
 @runtime_checkable
 class SectionStateRepository(Protocol):
-    """Persists per-section teaching execution state, keyed by tenant_id + user_id.
+    """Persists per-section teaching execution state, keyed by tenant_id + user_id +
+    year_id (Step 1: pointers/done/bookmarks are the most year-bound state there is —
+    cutover clears them by opening a new year folder, never by rewriting rows).
 
-    File-based (JSON) implementation for now; a Supabase adapter (the `lesson_pointer`
-    table, extended with `chapter` + `done`) swaps in behind this same port at Phase 4
-    without touching the API routes, engine, or the React components.
+    File-based (JSON) implementation for now; the partner's cloud adapter (the
+    `lesson_pointer` table, extended with `chapter` + `done`) swaps in behind this same
+    port without touching the API routes, engine, or the React components.
     """
-    def load_all(self, tenant_id: str, user_id: str) -> Dict[str, "SectionState"]:
-        """All tracked sections for this teacher: {section_key: SectionState}.
+    def load_all(self, tenant_id: str, user_id: str, year_id: str) -> Dict[str, "SectionState"]:
+        """All tracked sections for this teacher's year: {section_key: SectionState}.
         Returns an empty dict if the teacher has tracked nothing yet."""
         ...
 
-    def save_one(self, tenant_id: str, user_id: str, section_key: str,
+    def save_one(self, tenant_id: str, user_id: str, year_id: str, section_key: str,
                  chapter: str, unit_index: Optional[int], done: bool,
                  bookmark_unit: Optional[int] = None,
                  bookmark_phase: Optional[int] = None) -> None:
@@ -353,8 +422,15 @@ class SectionStateRepository(Protocol):
         unaffected; passing them stores the teacher's phase place-marker on the same row."""
         ...
 
-    def delete_one(self, tenant_id: str, user_id: str, section_key: str) -> None:
+    def delete_one(self, tenant_id: str, user_id: str, year_id: str, section_key: str) -> None:
         """Remove one section's state — the "untrack" reversal. No-op if absent."""
+        ...
+
+    def clear_all(self, tenant_id: str, user_id: str, year_id: str) -> None:
+        """Erase ALL section teaching-state for this teacher's year. Used by the 'start
+        setup over' profile reset (DELETE /readiness) so stale bindings can't resurrect
+        into a freshly rebuilt profile. No-op if nothing is stored. (Promoted into the
+        Protocol 2026-08-22 — it was an impl-only extra the API already relied on.)"""
         ...
 
 
@@ -375,23 +451,25 @@ class SectionStateRepository(Protocol):
 # this same port at Phase 4 with no change to the API routes or the React components.
 @runtime_checkable
 class PlanArchiveRepository(Protocol):
-    """Persists which saved plans a teacher has archived, keyed by tenant_id + user_id.
+    """Persists which saved plans a teacher has archived, keyed by tenant_id + user_id +
+    year_id (Step 1: My Lessons folds each closing year into its own archive folder, so
+    the flag lives inside the year it was set in).
 
     The plan key is the frontend's `${subjectSlug}/${gradeSlug}/${filename}` — the same
     identity used to load the plan — so archive state binds to the plan without duplicating
     any of its content.
     """
-    def load_all(self, tenant_id: str, user_id: str) -> Dict[str, str]:
-        """All archived plan keys for this teacher: {plan_key: archived_at_iso}.
+    def load_all(self, tenant_id: str, user_id: str, year_id: str) -> Dict[str, str]:
+        """All archived plan keys for this teacher's year: {plan_key: archived_at_iso}.
         Returns an empty dict if nothing is archived."""
         ...
 
-    def archive(self, tenant_id: str, user_id: str, plan_key: str) -> None:
+    def archive(self, tenant_id: str, user_id: str, year_id: str, plan_key: str) -> None:
         """Mark one plan archived (records archived_at). Idempotent — re-archiving a plan
         that is already archived leaves the original timestamp untouched."""
         ...
 
-    def restore(self, tenant_id: str, user_id: str, plan_key: str) -> None:
+    def restore(self, tenant_id: str, user_id: str, year_id: str, plan_key: str) -> None:
         """Un-archive one plan — the reversal. No-op if the plan was not archived."""
         ...
 
@@ -408,19 +486,23 @@ class PlanArchiveRepository(Protocol):
 # this same port at Phase 4 with no change to the API routes or the React components.
 @runtime_checkable
 class PreparedPlansRepository(Protocol):
-    """Persists which saved plans a teacher has prepared, keyed by tenant_id + user_id.
+    """Persists which saved plans a teacher has prepared, keyed by tenant_id + user_id +
+    year_id (Step 1: what she prepared belongs to the year she prepared it in — the new
+    year's My Lessons starts fresh, the old year's stays openable from its folder).
 
     The plan key is the frontend's `${subjectSlug}/${gradeSlug}/${filename}` — the same
     identity used to load the plan and to key the archive — so prepared state binds to the plan
     without duplicating any of its content.
     """
-    def load_all(self, tenant_id: str, user_id: str) -> Dict[str, Any]:
-        """All prepared plan keys for this teacher, keyed by plan_key. The value is either a
-        legacy prepared_at ISO string, or a record `{"at": iso, "periods": int|None}` once the
-        teacher's chosen period count is stored alongside. Empty dict if nothing prepared yet."""
+    def load_all(self, tenant_id: str, user_id: str, year_id: str) -> Dict[str, Any]:
+        """All prepared plan keys for this teacher's year, keyed by plan_key. The value is
+        either a legacy prepared_at ISO string, or a record `{"at": iso, "periods": int|None}`
+        once the teacher's chosen period count is stored alongside. Empty dict if nothing
+        prepared yet."""
         ...
 
-    def mark(self, tenant_id: str, user_id: str, plan_key: str, periods: "int | None" = None) -> None:
+    def mark(self, tenant_id: str, user_id: str, year_id: str, plan_key: str,
+             periods: "int | None" = None) -> None:
         """Record one plan as prepared. The prepared_at timestamp is set once (idempotent). When
         `periods` is given (the teacher's chosen period count for that chapter) it is stored and
         UPDATED on every call, so re-preparing tracks the latest generation's periods."""

@@ -11,6 +11,7 @@ Data comes from local disk (api/data.py) for now; live generation and the DB com
 """
 from __future__ import annotations
 
+from datetime import date, datetime, timezone
 from typing import Any, Dict, List, Optional
 
 from fastapi import Depends, FastAPI, Header, HTTPException
@@ -32,6 +33,11 @@ from aruvi_core.adapters.readiness_repository_file import ReadinessRepositoryFil
 from aruvi_core.adapters.section_state_repository_file import SectionStateRepositoryFileImpl
 from aruvi_core.adapters.plan_archive_repository_file import PlanArchiveRepositoryFileImpl
 from aruvi_core.adapters.prepared_plans_repository_file import PreparedPlansRepositoryFileImpl
+from aruvi_core.adapters.account_repository_file import AccountRepositoryFileImpl
+from aruvi_core.adapters.academic_year_repository_file import AcademicYearRepositoryFileImpl
+from aruvi_core.adapters.header_auth_provider import HeaderAuthProvider
+from aruvi_core.adapters.plan_note_repository_file import PlanNoteRepositoryFileImpl
+from aruvi_core.ports import Account, AcademicYear, PlanNote, StaleNoteWrite
 from aruvi_core.grades import stage_for, UnknownGradeError
 from aruvi_core.report_competency import build_report as build_competency_report
 # NOTE: the PDF/DOCX exporters are imported lazily inside their endpoints (not here)
@@ -87,20 +93,81 @@ plan_archive_repo = PlanArchiveRepositoryFileImpl(config.STATE_DIR)
 # Supabase-backed store behind the same PreparedPlansRepository port at Phase 4. (2026-07-05)
 prepared_plans_repo = PreparedPlansRepositoryFileImpl(config.STATE_DIR)
 
+# Chapter-notes repository (administrative architecture Step 3) — the teacher's own
+# writing on a chapter, lifted OFF browser localStorage (the last teacher data with no
+# owner, CLOUD_DATA_MODEL.md §2.8). One note per chapter per academic year; year-scoped
+# like the rest of the teaching state so notes stay with their year's plans at cutover.
+plan_note_repo = PlanNoteRepositoryFileImpl(config.STATE_DIR)
 
-# Identity. No password stage yet: the caller's user ID arrives in the X-Aruvi-User
-# request header (set by the login portal, sent on every API call). Each user ID is its
-# own individual-teacher tenant, so tenant_id == user_id (matches the ICP "individual
-# teacher = a tenant with one user", CLOUD_DATA_MODEL.md §3). Phase 4 replaces the header
-# read with the (tenant_id, user_id) decoded from the Supabase auth token via the
-# AuthProvider port — this one function is the only thing that changes.
+# Account + tenant record (administrative architecture Step 0) — the durable record that
+# billing, privacy, notifications and the institutional tier all hang off. NOT year-scoped
+# (a subscription is rolling). Bucket-B STATE under STATE_DIR (data/accounts/).
+account_repo = AccountRepositoryFileImpl(config.STATE_DIR)
+
+# Academic years (administrative architecture Step 1) — which years exist for a teacher and
+# which is current. Every piece of TEACHING state below is filed under the current year;
+# the account and the teaching profile deliberately are not. STATE_DIR (data/academic_years/).
+academic_year_repo = AcademicYearRepositoryFileImpl(config.STATE_DIR)
+
+# Identity provider behind the AuthProvider port. The reference impl treats the raw
+# X-Aruvi-User header value as the credential (no password — dev). A partner's IdP adapter
+# replaces THIS LINE and nothing else.
+auth_provider = HeaderAuthProvider()
+
+
+# Identity (administrative architecture Step 0). The credential still arrives in the
+# X-Aruvi-User request header (set by the login portal, sent on every API call), but it is
+# now resolved through the AuthProvider port and the ACCOUNT RECORD rather than asserted:
+# tenant_id and user_id are separate values read off the account, which today happen to be
+# equal (an individual teacher is her own tenant). A first-ever request JIT-creates the
+# account, preserving the "any user ID signs in" dev behaviour. This function is the ONLY
+# place a request becomes an identity — derivation must never scatter.
 #
 # Falls back to "local" when no header is present (e.g. health checks, curl) so nothing
 # 500s; a real teacher always has one because the frontend gates the app behind login.
 def _current_identity(x_aruvi_user: Optional[str] = Header(default=None)) -> tuple[str, str]:
-    """Return (tenant_id, user_id) for the caller, from the X-Aruvi-User header."""
-    uid = (x_aruvi_user or "").strip() or "local"
-    return (uid, uid)
+    """Return (tenant_id, user_id) for the caller, resolved via the account record."""
+    ident = auth_provider.verify_token(x_aruvi_user or "")
+    account = account_repo.load(ident.tenant_id, ident.user_id)
+    if account is None:
+        account = Account(
+            account_id=ident.user_id,
+            tenant_id=ident.tenant_id,
+            display_name=ident.user_id,
+            created_at=datetime.now(timezone.utc).isoformat(),
+        )
+        account_repo.save(account)
+    return (account.tenant_id, account.account_id)
+
+
+# Academic-year resolution (administrative architecture Step 1). Year-scoped routes accept
+# an OPTIONAL ?year_id= query param; when absent (always, for today's frontend) the year is
+# resolved server-side from the teacher's AcademicYearRepository, bootstrapping a default
+# on first touch so no request ever lacks a year in its address. The default follows the
+# CBSE April–March calendar; a teacher on a June–May state board edits her year record
+# later (Step 2's cutover UI) — the LABEL is what addressing needs, not the exact dates.
+def _default_academic_year() -> AcademicYear:
+    """The academic year today's date falls in, April-anchored ("2026-27")."""
+    today = date.today()
+    start_year = today.year if today.month >= 4 else today.year - 1
+    return AcademicYear(
+        year_id=f"{start_year}-{str(start_year + 1)[-2:]}",
+        starts_on=f"{start_year}-04-01",
+        ends_on=f"{start_year + 1}-03-31",
+        is_current=True,
+    )
+
+
+def _resolve_year(tenant_id: str, user_id: str, year_id: Optional[str] = None) -> str:
+    """The year a teaching-state request addresses: the explicit ?year_id= if given,
+    else the teacher's current year (bootstrapped on first touch)."""
+    if year_id and year_id.strip():
+        return year_id.strip()
+    current = academic_year_repo.current(tenant_id, user_id)
+    if current is None:
+        current = _default_academic_year()
+        academic_year_repo.open_year(tenant_id, user_id, current)
+    return current.year_id
 
 
 class PeriodRow(BaseModel):
@@ -229,17 +296,19 @@ def _diff_profiles(old_subjects: List[Dict[str, Any]],
     return {"removed_subjects": rem_subj, "removed_grades": rem_grade, "removed_sections": rem_sec}
 
 
-def _cascade_impact(tenant_id: str, user_id: str, diff: Dict[str, Any]) -> List[Dict[str, Any]]:
+def _cascade_impact(tenant_id: str, user_id: str, year_id: str,
+                    diff: Dict[str, Any]) -> List[Dict[str, Any]]:
     """Name the downstream losses for a removal diff, checking which removed scopes actually
-    have a saved allocation register. Sections carry no allocation (subject·grade keyed) but
+    have a saved allocation register (in the current academic year — the profile edit only
+    ever endangers current-year work). Sections carry no allocation (subject·grade keyed) but
     orphan their LU pointer — flagged so the frontend clears it."""
     impact: List[Dict[str, Any]] = []
 
     def reg_count(subj: str, grd: str) -> int:
         try:
             return len(engine.get_allocation_register(
-                tenant_id=tenant_id, user_id=user_id, subject_name=subj, grade=grd,
-                allocation_repo=allocation_repo))
+                tenant_id=tenant_id, user_id=user_id, year_id=year_id,
+                subject_name=subj, grade=grd, allocation_repo=allocation_repo))
         except Exception:
             return 0
 
@@ -257,17 +326,20 @@ def _cascade_impact(tenant_id: str, user_id: str, diff: Dict[str, Any]) -> List[
     return impact
 
 
-def _apply_cascade(tenant_id: str, user_id: str, diff: Dict[str, Any]) -> None:
-    """Clear the allocation register for every removed subject·grade and removed grade.
-    Narrow: only the removed scope; siblings untouched. Sections' LU pointers are
-    localStorage (frontend-cleared)."""
+def _apply_cascade(tenant_id: str, user_id: str, year_id: str, diff: Dict[str, Any]) -> None:
+    """Clear the allocation register for every removed subject·grade and removed grade
+    (current year only — past years' registers are archives, never cascaded). Narrow: only
+    the removed scope; siblings untouched. Sections' LU pointers are localStorage
+    (frontend-cleared)."""
     for r in diff["removed_subjects"]:
         for gs in r["grades"]:
             engine.clear_allocation_register(tenant_id=tenant_id, user_id=user_id,
-                subject_name=r["subject"], grade=gs, allocation_repo=allocation_repo)
+                year_id=year_id, subject_name=r["subject"], grade=gs,
+                allocation_repo=allocation_repo)
     for r in diff["removed_grades"]:
         engine.clear_allocation_register(tenant_id=tenant_id, user_id=user_id,
-            subject_name=r["subject"], grade=r["grade"], allocation_repo=allocation_repo)
+            year_id=year_id, subject_name=r["subject"], grade=r["grade"],
+            allocation_repo=allocation_repo)
 
 
 @app.get("/health")
@@ -459,21 +531,22 @@ def _count_units(groups) -> int:
 
 
 @app.get("/plans/{subject}/{grade}")
-def get_plans(subject: str, grade: str,
+def get_plans(subject: str, grade: str, year_id: Optional[str] = None,
               identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
     sub = _subject(subject)
     tenant_id, user_id = identity
+    year = _resolve_year(tenant_id, user_id, year_id)
     plans = data.list_saved_plans(subject, grade)
     # This teacher's archived plan keys for this subject·grade — so each listing carries its
     # OWN archived flag and the client can split the one list into Active vs Archived views
     # (archive is a flag, not a separate location; see PlanArchiveRepository). Keys are the
     # full `${subject}/${grade}/${filename}` the frontend also uses.
-    archived = plan_archive_repo.load_all(tenant_id, user_id)
+    archived = plan_archive_repo.load_all(tenant_id, user_id, year)
     # This teacher's PREPARED plan keys for this subject·grade. The saved-plan library is shared
     # read-only content (live gen deferred), so without this flag My Lessons would show every
     # sample plan to every teacher. `prepared` lets the client show only what she actually made;
     # a plan a section is attached to is treated as prepared client-side too (belt-and-braces).
-    prepared = prepared_plans_repo.load_all(tenant_id, user_id)
+    prepared = prepared_plans_repo.load_all(tenant_id, user_id, year)
     # Enrich each listing with total_units (LU count) for the section-card rail. Best-effort:
     # a plan that fails to normalize just ships total_units=None and the card skips its rail.
     for p in plans:
@@ -545,20 +618,23 @@ def get_plan_view(subject: str, grade: str, filename: str) -> Dict[str, Any]:
 
 
 @app.get("/subjects/{subject}/{grade}/allocation")
-def get_allocation(subject: str, grade: str,
+def get_allocation(subject: str, grade: str, year_id: Optional[str] = None,
                    identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
     """Load this teacher's Persistent Annual Allocation Register for a subject/grade.
 
-    Scoped to X-Aruvi-User: two teachers' registers for the same subject·grade are
-    independent. Returns the full saved register so the frontend can rehydrate its
-    final-allocation view on page load — surviving a server restart or a fresh
-    browser/profile, not just a localStorage cache in the same browser.
+    Scoped to X-Aruvi-User and to an academic year (?year_id=, defaulting server-side to
+    the teacher's current year): two teachers' registers for the same subject·grade are
+    independent, and so are two years'. Returns the full saved register so the frontend
+    can rehydrate its final-allocation view on page load — surviving a server restart or
+    a fresh browser/profile, not just a localStorage cache in the same browser.
     """
     _subject(subject)
     tenant_id, user_id = identity
+    year = _resolve_year(tenant_id, user_id, year_id)
     register = engine.get_allocation_register(
         tenant_id=tenant_id,
         user_id=user_id,
+        year_id=year,
         subject_name=subject,
         grade=grade,
         allocation_repo=allocation_repo,
@@ -568,21 +644,25 @@ def get_allocation(subject: str, grade: str,
 
 @app.post("/subjects/{subject}/{grade}/save_allocation")
 def save_allocation(subject: str, grade: str, req: SaveAllocationRequest,
+                    year_id: Optional[str] = None,
                     identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
     """Save allocation data to this teacher's Persistent Annual Allocation Register.
 
     Merges the provided allocation into the existing register for the subject/grade,
-    scoped to X-Aruvi-User. Chapters in the allocation overwrite existing allocations;
-    untouched chapters persist.
+    scoped to X-Aruvi-User and the academic year (?year_id=, defaulting server-side to
+    the teacher's current year). Chapters in the allocation overwrite existing
+    allocations; untouched chapters persist.
 
     Returns the updated Annual Allocation Summary.
     """
     _subject(subject)
     tenant_id, user_id = identity
+    year = _resolve_year(tenant_id, user_id, year_id)
     try:
         engine.save_allocation(
             tenant_id=tenant_id,
             user_id=user_id,
+            year_id=year,
             subject_name=subject,
             grade=grade,
             chapters_allocation=req.allocation,
@@ -591,6 +671,7 @@ def save_allocation(subject: str, grade: str, req: SaveAllocationRequest,
         summary = engine.get_allocation_summary(
             tenant_id=tenant_id,
             user_id=user_id,
+            year_id=year,
             subject_name=subject,
             grade=grade,
             allocation_repo=allocation_repo,
@@ -611,16 +692,18 @@ def save_allocation(subject: str, grade: str, req: SaveAllocationRequest,
 
 
 @app.delete("/subjects/{subject}/{grade}/allocation")
-def delete_allocation(subject: str, grade: str,
+def delete_allocation(subject: str, grade: str, year_id: Optional[str] = None,
                       identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
     """Erase this teacher's saved Annual Allocation Register for a subject/grade — the
     server-side half of the "Reset allocations" action (the frontend also clears its
-    localStorage cache). Scoped to X-Aruvi-User."""
+    localStorage cache). Scoped to X-Aruvi-User and the academic year."""
     _subject(subject)
     tenant_id, user_id = identity
+    year = _resolve_year(tenant_id, user_id, year_id)
     engine.clear_allocation_register(
         tenant_id=tenant_id,
         user_id=user_id,
+        year_id=year,
         subject_name=subject,
         grade=grade,
         allocation_repo=allocation_repo,
@@ -651,9 +734,10 @@ def preview_readiness_impact(req: ReadinessRequest,
     DELETE, without saving. The sidebar editor calls this before a destructive save so it can
     show a contextual warning. Returns {destructive, impact:[...]}."""
     tenant_id, user_id = identity
+    year = _resolve_year(tenant_id, user_id)
     current = readiness_repo.load_profile(tenant_id, user_id) or {}
     diff = _diff_profiles(current.get("subjects", []), req.subjects)
-    impact = _cascade_impact(tenant_id, user_id, diff)
+    impact = _cascade_impact(tenant_id, user_id, year, diff)
     return {"destructive": bool(impact), "impact": impact}
 
 
@@ -668,9 +752,10 @@ def save_readiness(req: ReadinessRequest,
     cascade=true, clear exactly the removed scopes' registers, then save. Additive edits
     save normally."""
     tenant_id, user_id = identity
+    year = _resolve_year(tenant_id, user_id)
     current = readiness_repo.load_profile(tenant_id, user_id) or {}
     diff = _diff_profiles(current.get("subjects", []), req.subjects)
-    impact = _cascade_impact(tenant_id, user_id, diff)
+    impact = _cascade_impact(tenant_id, user_id, year, diff)
 
     if impact and not req.cascade:
         raise HTTPException(status_code=409, detail={
@@ -681,7 +766,7 @@ def save_readiness(req: ReadinessRequest,
 
     try:
         if impact:
-            _apply_cascade(tenant_id, user_id, diff)
+            _apply_cascade(tenant_id, user_id, year, diff)
         readiness_repo.save_profile(tenant_id, user_id, {"subjects": req.subjects})
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to save readiness: {str(e)}")
@@ -698,8 +783,9 @@ def clear_readiness(identity: tuple = Depends(_current_identity)) -> Dict[str, s
     chapter bindings for a reused section key (e.g. first-gen would show a card already
     "attached" to a chapter from a previous run — see MEMORY.md 2026-07-05)."""
     tenant_id, user_id = identity
+    year = _resolve_year(tenant_id, user_id)
     readiness_repo.clear_profile(tenant_id, user_id)
-    section_state_repo.clear_all(tenant_id, user_id)
+    section_state_repo.clear_all(tenant_id, user_id, year)
     return {"status": "cleared"}
 
 
@@ -722,23 +808,27 @@ class SectionStateRequest(BaseModel):
 
 
 @app.get("/section-state")
-def get_section_state(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
-    """All of this teacher's tracked sections: {"states": {section_key: {chapter,
-    unit_index, done, bookmark_unit, bookmark_phase, updated_at}}}. The app reconciles these
-    into its localStorage cache on load, so a fresh device shows the same tracking/progress
-    (and bookmark) the teacher set on another."""
+def get_section_state(year_id: Optional[str] = None,
+                      identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """All of this teacher's tracked sections for the year (?year_id=, defaulting to her
+    current year): {"states": {section_key: {chapter, unit_index, done, bookmark_unit,
+    bookmark_phase, updated_at}}}. The app reconciles these into its localStorage cache on
+    load, so a fresh device shows the same tracking/progress (and bookmark) the teacher set
+    on another."""
     tenant_id, user_id = identity
-    return {"states": section_state_repo.load_all(tenant_id, user_id)}
+    year = _resolve_year(tenant_id, user_id, year_id)
+    return {"states": section_state_repo.load_all(tenant_id, user_id, year)}
 
 
 @app.post("/section-state")
-def save_section_state(req: SectionStateRequest,
+def save_section_state(req: SectionStateRequest, year_id: Optional[str] = None,
                        identity: tuple = Depends(_current_identity)) -> Dict[str, str]:
     """Upsert one section's teaching state (full snapshot). Called when a chapter is tracked,
     the pointer advances, a chapter is marked complete, or the teacher moves her bookmark."""
     tenant_id, user_id = identity
+    year = _resolve_year(tenant_id, user_id, year_id)
     try:
-        section_state_repo.save_one(tenant_id, user_id, req.section_key,
+        section_state_repo.save_one(tenant_id, user_id, year, req.section_key,
                                     req.chapter, req.unit_index, req.done,
                                     req.bookmark_unit, req.bookmark_phase)
     except Exception as e:
@@ -747,11 +837,12 @@ def save_section_state(req: SectionStateRequest,
 
 
 @app.delete("/section-state/{section_key}")
-def clear_section_state(section_key: str,
+def clear_section_state(section_key: str, year_id: Optional[str] = None,
                         identity: tuple = Depends(_current_identity)) -> Dict[str, str]:
     """Remove one section's state — the untrack reversal (and the completed-chapter reset)."""
     tenant_id, user_id = identity
-    section_state_repo.delete_one(tenant_id, user_id, section_key)
+    year = _resolve_year(tenant_id, user_id, year_id)
+    section_state_repo.delete_one(tenant_id, user_id, year, section_key)
     return {"status": "cleared"}
 
 
@@ -774,62 +865,126 @@ def _plan_key(subject: str, grade: str, filename: str) -> str:
 
 
 @app.get("/plan-archive")
-def get_plan_archive(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
-    """All of this teacher's archived plan keys: {"archived": {plan_key: archived_at_iso}}.
-    The client uses this to render the Archived view (and could split Active/Archived without
-    re-reading each /plans call)."""
+def get_plan_archive(year_id: Optional[str] = None,
+                     identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """All of this teacher's archived plan keys for the year: {"archived": {plan_key:
+    archived_at_iso}}. The client uses this to render the Archived view (and could split
+    Active/Archived without re-reading each /plans call)."""
     tenant_id, user_id = identity
-    return {"archived": plan_archive_repo.load_all(tenant_id, user_id)}
+    year = _resolve_year(tenant_id, user_id, year_id)
+    return {"archived": plan_archive_repo.load_all(tenant_id, user_id, year)}
 
 
 @app.post("/plan-archive")
-def archive_plan(req: PlanArchiveRequest,
+def archive_plan(req: PlanArchiveRequest, year_id: Optional[str] = None,
                  identity: tuple = Depends(_current_identity)) -> Dict[str, str]:
     """Archive one plan (declutter without deleting). The UI blocks this for a plan any section
     is actively teaching; the server simply records the flag. Idempotent."""
     tenant_id, user_id = identity
+    year = _resolve_year(tenant_id, user_id, year_id)
     key = _plan_key(req.subject, req.grade, req.filename)
     try:
-        plan_archive_repo.archive(tenant_id, user_id, key)
+        plan_archive_repo.archive(tenant_id, user_id, year, key)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to archive plan: {str(e)}")
     return {"status": "archived"}
 
 
 @app.delete("/plan-archive")
-def restore_plan(req: PlanArchiveRequest,
+def restore_plan(req: PlanArchiveRequest, year_id: Optional[str] = None,
                  identity: tuple = Depends(_current_identity)) -> Dict[str, str]:
     """Restore one archived plan back into My Lessons. Lossless — the plan's identity and all
     its back-references never moved. No-op if it wasn't archived."""
     tenant_id, user_id = identity
+    year = _resolve_year(tenant_id, user_id, year_id)
     key = _plan_key(req.subject, req.grade, req.filename)
     try:
-        plan_archive_repo.restore(tenant_id, user_id, key)
+        plan_archive_repo.restore(tenant_id, user_id, year, key)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to restore plan: {str(e)}")
     return {"status": "restored"}
 
 
 @app.get("/plans-prepared")
-def get_prepared_plans(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
-    """All of this teacher's prepared plan keys: {"prepared": {plan_key: prepared_at_iso}}."""
+def get_prepared_plans(year_id: Optional[str] = None,
+                       identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """All of this teacher's prepared plan keys for the year: {"prepared": {plan_key:
+    prepared_at_iso}}."""
     tenant_id, user_id = identity
-    return {"prepared": prepared_plans_repo.load_all(tenant_id, user_id)}
+    year = _resolve_year(tenant_id, user_id, year_id)
+    return {"prepared": prepared_plans_repo.load_all(tenant_id, user_id, year)}
 
 
 @app.post("/plans-prepared")
-def mark_plan_prepared(req: PlanArchiveRequest,
+def mark_plan_prepared(req: PlanArchiveRequest, year_id: Optional[str] = None,
                        identity: tuple = Depends(_current_identity)) -> Dict[str, str]:
     """Record one plan as prepared by this teacher — called when she generates/attaches a lesson
     (first-run activation, or the everyday PrepareLesson flow). Idempotent. This is what lets My
     Lessons show only her own work rather than the whole shared sample library."""
     tenant_id, user_id = identity
+    year = _resolve_year(tenant_id, user_id, year_id)
     key = _plan_key(req.subject, req.grade, req.filename)
     try:
-        prepared_plans_repo.mark(tenant_id, user_id, key, req.periods)
+        prepared_plans_repo.mark(tenant_id, user_id, year, key, req.periods)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to mark plan prepared: {str(e)}")
     return {"status": "prepared"}
+
+
+class PlanNoteRequest(BaseModel):
+    """Body for POST /plan-notes — one chapter's note, whole (no history, §2.4)."""
+    subject: str
+    grade: str
+    chapter: str               # chapter_number as a string (title fallback allowed)
+    text: str                  # empty/whitespace = delete (editing IS deleting)
+    updated_at: str            # client's edit timestamp, ISO — the anti-clobber field
+
+
+def _note_key(subject: str, grade: str, chapter: str) -> str:
+    """Canonical note key: the CHAPTER's identity (one note per chapter per year —
+    founder 2026-08-22 — never a plan filename). Guards against path-ish junk."""
+    chapter = str(chapter).strip()
+    if not chapter or "/" in chapter or "\\" in chapter or ".." in chapter:
+        raise HTTPException(status_code=400, detail="Invalid chapter identity.")
+    return f"{subject}/{grade}/{chapter}"
+
+
+@app.get("/plan-notes")
+def get_plan_notes(year_id: Optional[str] = None,
+                   identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """All of this teacher's chapter notes for the year: {"notes": {note_key: {text,
+    updated_at}}}. The app reconciles these into its localStorage cache on load, so her
+    notes follow her to any device (localStorage remains an optimistic cache; this is
+    authoritative)."""
+    tenant_id, user_id = identity
+    year = _resolve_year(tenant_id, user_id, year_id)
+    notes = plan_note_repo.load_all(tenant_id, user_id, year)
+    return {"notes": {k: {"text": n.text, "updated_at": n.updated_at}
+                      for k, n in notes.items()}}
+
+
+@app.post("/plan-notes")
+def save_plan_note(req: PlanNoteRequest, year_id: Optional[str] = None,
+                   identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Upsert one chapter's note (empty text deletes it — the everyday edit flow IS the
+    delete flow, §2.4). Returns 409 with the server's newer copy when the write is stale,
+    so a stale device shows the fresher note instead of clobbering it."""
+    tenant_id, user_id = identity
+    year = _resolve_year(tenant_id, user_id, year_id)
+    key = _note_key(req.subject, req.grade, req.chapter)
+    try:
+        plan_note_repo.save(tenant_id, user_id, year,
+                            PlanNote(note_key=key, text=req.text, updated_at=req.updated_at))
+    except StaleNoteWrite:
+        newer = plan_note_repo.load(tenant_id, user_id, year, key)
+        raise HTTPException(status_code=409, detail={
+            "error": "stale_note",
+            "message": "A newer copy of this note exists.",
+            "note": {"text": newer.text, "updated_at": newer.updated_at} if newer else None,
+        })
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to save note: {str(e)}")
+    return {"status": "deleted" if not req.text.strip() else "saved"}
 
 
 @app.post("/subjects/{subject}/{grade}/generate")
@@ -895,6 +1050,7 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
 
     _subject(subject)
     tenant_id, user_id = identity
+    year = _resolve_year(tenant_id, user_id)
     matrix = [(r.duration, r.count) for r in req.rows if r.duration > 0 and r.count > 0]
     if not matrix:
         raise HTTPException(status_code=400, detail="At least one duration row is required.")
@@ -952,8 +1108,8 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
     if canonical is not None:
         filename = canonical["filename"]
         try:
-            prepared_plans_repo.mark(tenant_id, user_id, _plan_key(subject, grade, filename),
-                                     total_periods)
+            prepared_plans_repo.mark(tenant_id, user_id, year,
+                                     _plan_key(subject, grade, filename), total_periods)
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Could not register the plan: {e}")
         return {
@@ -1024,13 +1180,13 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
     # another teacher warmed is still new to her, and her own second look at it is not.
     # (founder, 2026-08-04)
     plan_key = _plan_key(subject, grade, filename)
-    already_yours = plan_key in prepared_plans_repo.load_all(tenant_id, user_id)
+    already_yours = plan_key in prepared_plans_repo.load_all(tenant_id, user_id, year)
 
     hit = data.load_saved_plan(subject, grade, filename)
     if hit is not None:
         try:
-            prepared_plans_repo.mark(tenant_id, user_id, _plan_key(subject, grade, filename),
-                                     total_periods)
+            prepared_plans_repo.mark(tenant_id, user_id, year,
+                                     _plan_key(subject, grade, filename), total_periods)
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Could not register the plan: {e}")
         hg = hit.get("genon") or {}
@@ -1049,7 +1205,7 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
     key = _plan_key(subject, grade, filename)
     prepared_periods = total_periods
     try:
-        prepared_plans_repo.mark(tenant_id, user_id, key, prepared_periods)
+        prepared_plans_repo.mark(tenant_id, user_id, year, key, prepared_periods)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Plan saved but not registered: {e}")
 

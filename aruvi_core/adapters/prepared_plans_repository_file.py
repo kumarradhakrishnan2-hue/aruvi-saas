@@ -1,7 +1,7 @@
 """File-based implementation of PreparedPlansRepository.
 
 Persists which saved plans a teacher has actually PREPARED as JSON at
-ARUVI_STATE_DIR/prepared_plans/{tenant_id}/{user_id}/prepared.json, shaped as
+ARUVI_STATE_DIR/prepared_plans/{tenant_id}/{user_id}/{year_id}/prepared.json, shaped as
 
     { "english/vi/ch_04_....json": {"at": "2026-07-05T09:12:00+00:00", "periods": 22}, ... }
 
@@ -18,11 +18,13 @@ premise. This register is the per-tenant STATE (Bucket B) that records the teach
 preparations, so /plans can flag (and the client can filter to) only her work. First-run marks
 its chapter on activation; the everyday PrepareLesson flow appends on each generate.
 
-Every store is keyed by tenant_id + user_id. With no auth yet both stub to the same
-X-Aruvi-User value; Phase 4 swaps the values from the Supabase auth token, no schema change,
-and this file adapter is replaced (behind the same port) by a `prepared_at` column on the
-saved-plan row — or, once live generation lands, by the mere existence of the teacher's own
-generated plan row.
+Every store is keyed by tenant_id + user_id + year_id (administrative_architecture.md
+Step 1, 2026-08-22): what she prepared belongs to the year she prepared it in — the new
+year's My Lessons starts fresh, the old year's stays openable from its folder. The API
+layer resolves which year is current; this adapter just addresses by it. With no auth yet
+tenant_id == user_id (the X-Aruvi-User value); the partner's cloud adapter replaces this
+file (behind the same port) with a `prepared_at` column on the saved-plan row — or, once
+live generation lands, the mere existence of the teacher's own generated plan row.
 """
 import json
 import os
@@ -56,11 +58,11 @@ class PreparedPlansRepositoryFileImpl(PreparedPlansRepository):
         # multi-instance deployment moves this to the DB row-lock at Phase 4.
         self._lock = threading.Lock()
 
-    def _path(self, tenant_id: str, user_id: str) -> Path:
-        return self.base_dir / _slug(tenant_id) / _slug(user_id) / "prepared.json"
+    def _path(self, tenant_id: str, user_id: str, year_id: str) -> Path:
+        return self.base_dir / _slug(tenant_id) / _slug(user_id) / _slug(year_id) / "prepared.json"
 
-    def _read(self, tenant_id: str, user_id: str) -> Dict[str, Any]:
-        path = self._path(tenant_id, user_id)
+    def _read(self, tenant_id: str, user_id: str, year_id: str) -> Dict[str, Any]:
+        path = self._path(tenant_id, user_id, year_id)
         if not path.exists():
             return {}
         try:
@@ -69,11 +71,11 @@ class PreparedPlansRepositoryFileImpl(PreparedPlansRepository):
         except (IOError, json.JSONDecodeError):
             return {}
 
-    def _write(self, tenant_id: str, user_id: str, data: Dict[str, Any]) -> None:
+    def _write(self, tenant_id: str, user_id: str, year_id: str, data: Dict[str, Any]) -> None:
         # ATOMIC write: temp file in the same dir, then os.replace() over the target (atomic on
         # POSIX/Windows), so a reader always sees the complete old or complete new file — never a
         # half-written one — and concurrent writers can't interleave into corrupt JSON.
-        path = self._path(tenant_id, user_id)
+        path = self._path(tenant_id, user_id, year_id)
         path.parent.mkdir(parents=True, exist_ok=True)
         tmp = None
         try:
@@ -93,17 +95,17 @@ class PreparedPlansRepositoryFileImpl(PreparedPlansRepository):
                 except OSError:
                     pass
 
-    def load_all(self, tenant_id: str, user_id: str) -> Dict[str, Any]:
-        """All prepared plan keys for this teacher. Value is either a legacy prepared_at ISO
-        string, or a record {"at": iso, "periods": int|None} — callers must handle both."""
-        return self._read(tenant_id, user_id)
+    def load_all(self, tenant_id: str, user_id: str, year_id: str) -> Dict[str, Any]:
+        """All prepared plan keys for this teacher's year. Value is either a legacy prepared_at
+        ISO string, or a record {"at": iso, "periods": int|None} — callers must handle both."""
+        return self._read(tenant_id, user_id, year_id)
 
-    def mark(self, tenant_id: str, user_id: str, plan_key: str, periods=None) -> None:
+    def mark(self, tenant_id: str, user_id: str, year_id: str, plan_key: str, periods=None) -> None:
         """Record one plan as prepared. prepared_at is set once (idempotent); `periods` (the
         teacher's chosen period count) is stored as a record and UPDATED on every call so a
         re-prepare tracks the latest generation. Legacy string values are upgraded in place."""
         with self._lock:
-            data = self._read(tenant_id, user_id)
+            data = self._read(tenant_id, user_id, year_id)
             existing = data.get(plan_key)
             # Preserve the original prepared_at across shapes (str = legacy, dict = new record).
             if isinstance(existing, dict):
@@ -120,4 +122,4 @@ class PreparedPlansRepositoryFileImpl(PreparedPlansRepository):
             # Only write when something actually changed (keeps the register churn-free / idempotent).
             if existing != record:
                 data[plan_key] = record
-                self._write(tenant_id, user_id, data)
+                self._write(tenant_id, user_id, year_id, data)

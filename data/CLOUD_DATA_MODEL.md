@@ -247,7 +247,19 @@ Migration action: write `PreparedPlansRepositorySupabaseImpl` behind the existin
 into §2.3's `lesson` table when plans go per-tenant. This register is not throwaway scaffolding —
 it is the exact seam live generation plugs into (§4 step 5).
 
-### 2.8 Teacher notes (chapter notes + period notes) — the overlay on a plan reference — localStorage-only, NOT yet server-backed
+### 2.8 Teacher notes (chapter notes + period notes) — the overlay on a plan reference — chapter notes SERVER-BACKED 2026-08-22
+
+> **★ CLOSED 2026-08-22 (admin architecture Step 3).** Chapter notes are now a year-scoped
+> server record behind the `PlanNoteRepository` port (`plan_note_repository_file.py`,
+> `STATE_DIR/plan_notes/{tenant}/{user}/{year}/notes.json`; routes GET/POST `/plan-notes`).
+> **One note per CHAPTER per academic year** (founder: two notes only across two YEARS —
+> within a year the "one surface" decision of 2026-07-23 stands), keyed
+> `{subjectSlug}/{gradeSlug}/{chapter_number}` — the chapter's identity, NOT a plan filename.
+> No version history ever (§2.4): empty-text save IS delete; anti-clobber via `updated_at`
+> (stale write → 409 carrying the newer copy, which the client adopts). localStorage is now
+> the optimistic cache (ChapterOrg reconciles from the server on mount and MIGRATES a legacy
+> cache-only note up once); the modal discloses "Saved to your account". Period notes remain
+> unbuilt/deferred. The paragraphs below are kept as design history.
 
 **These are the per-tenant overlay named in §2.3** ("the only teacher-authored additions are
 notes … per-tenant overlay data that hang off the reference"). Two kinds, per CLAUDE.md §0:
@@ -337,8 +349,10 @@ safe.
 
 ## 5. Invariants to keep checking (grep-able)
 
-- No teacher-entered data without a `tenant_id` (+ `user_id` for row-owned data). Notes (§2.8)
-  are the current exception — localStorage-only, per-user scoped as a stopgap; server-back before launch.
+- No teacher-entered data without a `tenant_id` (+ `user_id` for row-owned data). ~~Notes (§2.8)
+  are the current exception~~ — **exception CLOSED 2026-08-22**: chapter notes are server-backed
+  and tenant/year-keyed behind `PlanNoteRepository`; the invariant now holds with no exceptions
+  (period notes are unbuilt, so nothing violates it).
 - No shared content carrying a tenant key (would break the cache economics and the IP model).
 - A teacher's plan is a **reference** to the shared cache, never a per-tenant copy of the bytes
   (§2.3). The only future exception is copy-on-write on an LP edit — which doesn't exist yet.

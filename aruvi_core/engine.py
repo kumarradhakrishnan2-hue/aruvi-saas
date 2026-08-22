@@ -77,6 +77,7 @@ def save_allocation(
     *,
     tenant_id: str,
     user_id: str,
+    year_id: str,
     subject_name: str,
     grade: Union[str, int],
     chapters_allocation: Dict[str, AllocationRecord],
@@ -85,45 +86,52 @@ def save_allocation(
     """Save allocation data to this teacher's Persistent Annual Allocation Register.
 
     Merges chapters_allocation into the existing register — new/overwritten chapters
-    replace existing ones; untouched chapters persist. Keyed per tenant + user.
+    replace existing ones; untouched chapters persist. Keyed per tenant + user +
+    academic year (`year_id`, threaded straight through to the repository — the API
+    layer resolves which year is current; this wrapper stays a pure pass-through).
     """
-    allocation_repo.save_allocation(tenant_id, user_id, subject_name, grade, chapters_allocation)
+    allocation_repo.save_allocation(tenant_id, user_id, year_id, subject_name, grade,
+                                    chapters_allocation)
 
 
 def get_allocation_summary(
     *,
     tenant_id: str,
     user_id: str,
+    year_id: str,
     subject_name: str,
     grade: Union[str, int],
     allocation_repo: AllocationRepository,
 ) -> AllocationSummary:
-    """Retrieve a summary of this teacher's current allocation register state."""
-    return allocation_repo.get_summary(tenant_id, user_id, subject_name, grade)
+    """Retrieve a summary of this teacher's current allocation register state for one
+    academic year."""
+    return allocation_repo.get_summary(tenant_id, user_id, year_id, subject_name, grade)
 
 
 def get_allocation_register(
     *,
     tenant_id: str,
     user_id: str,
+    year_id: str,
     subject_name: str,
     grade: Union[str, int],
     allocation_repo: AllocationRepository,
 ) -> Dict[str, AllocationRecord]:
-    """Retrieve this teacher's full saved register ({chapter_num: AllocationRecord}) so the
-    frontend can rehydrate its final-allocation view without re-deriving it from the
-    LRM/mappings."""
-    return allocation_repo.load_register(tenant_id, user_id, subject_name, grade)
+    """Retrieve this teacher's full saved register ({chapter_num: AllocationRecord}) for one
+    academic year so the frontend can rehydrate its final-allocation view without re-deriving
+    it from the LRM/mappings."""
+    return allocation_repo.load_register(tenant_id, user_id, year_id, subject_name, grade)
 
 
 def clear_allocation_register(
     *,
     tenant_id: str,
     user_id: str,
+    year_id: str,
     subject_name: str,
     grade: Union[str, int],
     allocation_repo: AllocationRepository,
 ) -> None:
-    """Erase this teacher's saved register for a subject·grade (the "Reset allocations"
-    action)."""
-    allocation_repo.clear_register(tenant_id, user_id, subject_name, grade)
+    """Erase this teacher's saved register for a subject·grade in one academic year (the
+    "Reset allocations" action)."""
+    allocation_repo.clear_register(tenant_id, user_id, year_id, subject_name, grade)

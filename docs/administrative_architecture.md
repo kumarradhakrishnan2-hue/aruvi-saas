@@ -1,6 +1,16 @@
 # Aruvi — Administrative Architecture & the Ports a Partner Implements
 
-**Status:** design settled, unbuilt. Written 2026-08-21.
+**Status:** design settled. **Step 3 BUILT 2026-08-22** (PlanNoteRepository — with one
+founder delta from §5 Step 3's text: the note key is the CHAPTER's identity
+`{subject}/{grade}/{chapter_number}`, ONE note per chapter per academic year, not one per
+plan file — the §7 "notes split per plan" open item is thereby RESOLVED: notes split only
+across years, and the 2026-07-23 "one surface" decision stands within a year).
+**Steps 0 + 1 BUILT 2026-08-22** (account + tenant record,
+year-scoped addressing, dev-data migration — see MEMORY.md 2026-08-22; two deliberate
+deltas from the text below: ReadinessRepository does NOT gain `year_id` — the §5 Step-1
+scope list wins over its "every existing repository" sentence, founder-confirmed — and the
+year on routes is an optional `?year_id=` resolved server-side to the teacher's current
+year). Steps 2–6 unbuilt. Written 2026-08-21.
 **Read with:** `data/CLOUD_DATA_MODEL.md` (the Bucket A / Bucket B boundary), `CLAUDE.md §0`
 (the mobile-first progressive-acquisition model), `aruvi_core/ports.py` (the existing seams),
 and `docs/Aruvi_Technology_Partnership_and_Production_Roadmap.pdf` (the partner brief).

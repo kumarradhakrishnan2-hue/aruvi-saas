@@ -687,7 +687,72 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-20 (newest) — F1 · NOTES PASS (second pass): TEACHER_NOTES AUDITED ON ALL
+## 2026-08-22 (newest) — ADMIN ARCHITECTURE STEP 3 BUILT: CHAPTER NOTES SERVER-BACKED
+## (PlanNoteRepository) — THE LAST DATA GAP CLOSED
+
+Same session as Steps 0+1 below. **The founder resolved spec §7's open item:** ONE note per
+chapter within an academic year — notes split only when two YEARS are involved — so the key
+is the CHAPTER's identity `{subjectSlug}/{gradeSlug}/{chapter_number}` (title fallback),
+never a plan filename, and the 2026-07-23 "one surface" decision stands within a year.
+Built: `PlanNote` + `StaleNoteWrite` + `PlanNoteRepository` in ports.py;
+`plan_note_repository_file.py` (`plan_notes/{tenant}/{user}/{year}/notes.json`, atomic
+writes + process lock like section_state); routes GET/POST `/plan-notes` (year-resolved
+server-side like the rest). §2.4's two rules enforced mechanically: **empty-text save IS
+delete** (no separate lifecycle, no tombstone) and **anti-clobber without history** — a
+save whose `updated_at` is older than the stored copy raises StaleNoteWrite → HTTP 409
+carrying the NEWER copy, which the client adopts; equal timestamps accepted (idempotent).
+Web (LessonView `ChapterOrg` + format.js `fetchPlanNotes`/`savePlanNote`): localStorage
+demoted to optimistic cache; mount shows cache instantly then reconciles from the server
+(server wins); a cache-only note with no server copy is a LEGACY browser-only note and is
+migrated up once — nothing written before this landed is stranded; the notes modal now
+discloses "Saved to your account · opens on any device you sign in from" (the spec's
+"done when she is told" clause). Tests: NEW test_plan_notes.py (roundtrip, empty-delete,
+stale-refused/equal-accepted, no-history-on-disk, year+tenant isolation, full API
+roundtrip incl. 409-with-newer and traversal guard); suite 28 files green (same 5
+pre-existing content failures excluded). CLOUD_DATA_MODEL §2.8/§5 updated — the "notes
+are the exception" invariant violation is CLOSED. Web half STATIC-verified only
+(babel-parse clean) — **owes the live pass**: note surviving a cache clear/device change,
+the legacy-lift firing once, and the 409 path. Period notes remain deferred/unbuilt.
+Step 4 (export/erase) is now unblocked.
+
+## 2026-08-22 — ADMIN ARCHITECTURE STEPS 0+1 BUILT: ACCOUNT RECORD +
+## YEAR-SCOPED ADDRESSING, DEV DATA MIGRATED
+
+Built `docs/administrative_architecture.md` §5 Steps 0 and 1 together (both are re-filing
+jobs on the same repositories). **Step 0:** `Account` + `AccountRepository` and `Identity` +
+an expanded `AuthProvider` in ports.py; file adapters `account_repository_file.py`
+(`data/accounts/{tenant}/{user}/account.json`) and `header_auth_provider.py` (the
+X-Aruvi-User stub, now behind the port). `_current_identity()` in api/main.py — still the
+ONLY identity derivation point — now resolves header → AuthProvider → account record,
+**JIT-creating the account on first request** (preserves "any user ID signs in"), and returns
+`(account.tenant_id, account.account_id)` — separate values that today happen to be equal.
+**Step 1:** `AcademicYear` + `AcademicYearRepository` (+ file adapter,
+`data/academic_years/{tenant}/{user}/years.json`; exactly one `is_current`, oldest-first
+listing, `set_current` refuses unopened years). The four TEACHING-state repos — allocations,
+section_state, prepared_plans, plan_archive — gained `year_id` after `user_id` in every
+method (13 signatures; SectionState's impl-only `clear_all` promoted into the Protocol) and
+file under `{kind}/{tenant}/{user}/{year}/…`. engine.py's 4 allocation wrappers thread
+`year_id` as pure pass-through. **Readiness is deliberately NOT year-scoped** (class list
+carries, §2.7) — founder confirmed over the spec's blanket "every repository" sentence.
+**Year resolution is server-side** (founder choice): year-scoped routes take an OPTIONAL
+`?year_id=`; absent → `_resolve_year()` reads the teacher's current year, bootstrapping the
+April-anchored default (`2026-27`, CBSE Apr–Mar) on first touch. **ZERO web changes** — no
+static-only React edit owed. Migration: `aruvi-scripts/migrate_step01.py` (one-shot,
+idempotent — second run prints "Nothing to do"); RUN on the real dev data 2026-08-22: 13
+folders moved into `2026-27/`, 7 accounts + year records created (identities discovered as
+the UNION across all Bucket-B kinds, so kumar9/10/11 — prepared_plans-only — weren't
+stranded). Tests: test_allocation updated (+ cross-year + tenant≠user cases); NEW
+test_account, test_academic_year, test_year_scope, test_migration (idempotency proven on a
+fixture tree). 27 test files green incl. test_api end-to-end on migrated data; the 5 failing
+files (genon_plan_key, link_resolver, normalized_item, unit_order, unitize) fail on CONTENT
+assertions predating this work and import nothing changed here. Steps 2–6 NOT started.
+Housekeeping for the founder: (a) a stale `.git/index.lock` (+ `.git/objects/5f/tmp_obj_*`)
+was left by a failed stash in the Cowork sandbox (the mount forbids deletes under .git) —
+remove locally before the next git op; (b) `data/accounts/stranger1/` +
+`data/academic_years/stranger1/` are leftovers of a live isolation check the sandbox could
+not delete — `rm -rf` them at leisure.
+
+## 2026-08-20 — F1 · NOTES PASS (second pass): TEACHER_NOTES AUDITED ON ALL
 ## 39 CLOSERS, ONE MORE WRONG ANSWER FOUND, 46 REPAIR RECORDS CORRECTED
 
 Executed `docs/f1_maths_notes_pass_brief.md` in full, same doctrine (declared old → new

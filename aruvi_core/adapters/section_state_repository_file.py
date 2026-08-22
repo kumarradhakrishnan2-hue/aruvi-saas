@@ -1,7 +1,7 @@
 """File-based implementation of SectionStateRepository.
 
 Persists per-section teaching execution state as JSON at
-ARUVI_DATA_DIR/section_state/{tenant_id}/{user_id}/state.json, shaped as
+ARUVI_DATA_DIR/section_state/{tenant_id}/{user_id}/{year_id}/state.json, shaped as
 
     { section_key: {chapter, unit_index, done, bookmark_unit, bookmark_phase, updated_at}, ... }
 
@@ -11,8 +11,11 @@ stays a client-side optimistic cache; this file is authoritative on load/reconci
 Supabase adapter (the `lesson_pointer` table extended with `chapter` + `done`) swaps in
 later behind the same SectionStateRepository port with no change to the API or the app.
 
-Every store is keyed by tenant_id + user_id. With no auth yet both stub to the same
-X-Aruvi-User value; Phase 4 swaps the values from the Supabase auth token, no schema change.
+Every store is keyed by tenant_id + user_id + year_id (administrative_architecture.md
+Step 1, 2026-08-22): pointers, done flags and bookmarks are the most year-bound state
+there is — the teacher-side cutover clears them by opening a new year folder, never by
+rewriting rows. The API layer resolves which year is current; this adapter just
+addresses by it. With no auth yet tenant_id == user_id (the X-Aruvi-User value).
 
 save_one is a full per-section snapshot upsert (the client always sends the complete
 current state for a section), so there is no field-level merge to reason about.
@@ -53,11 +56,11 @@ class SectionStateRepositoryFileImpl(SectionStateRepository):
         # A multi-process/multi-instance deployment moves this to the DB row-lock (Supabase, §2.4).
         self._lock = threading.Lock()
 
-    def _path(self, tenant_id: str, user_id: str) -> Path:
-        return self.base_dir / _slug(tenant_id) / _slug(user_id) / "state.json"
+    def _path(self, tenant_id: str, user_id: str, year_id: str) -> Path:
+        return self.base_dir / _slug(tenant_id) / _slug(user_id) / _slug(year_id) / "state.json"
 
-    def _read(self, tenant_id: str, user_id: str) -> Dict[str, Any]:
-        path = self._path(tenant_id, user_id)
+    def _read(self, tenant_id: str, user_id: str, year_id: str) -> Dict[str, Any]:
+        path = self._path(tenant_id, user_id, year_id)
         if not path.exists():
             return {}
         try:
@@ -81,7 +84,7 @@ class SectionStateRepositoryFileImpl(SectionStateRepository):
             except Exception:
                 return {}
 
-    def _write(self, tenant_id: str, user_id: str, data: Dict[str, Any]) -> None:
+    def _write(self, tenant_id: str, user_id: str, year_id: str, data: Dict[str, Any]) -> None:
         # ATOMIC write (2026-07-03): write a temp file in the same dir, then os.replace() it
         # over the target. os.replace is atomic on POSIX/Windows, so a reader always sees either
         # the complete old file or the complete new one — never a half-written file. Critically,
@@ -90,7 +93,7 @@ class SectionStateRepositoryFileImpl(SectionStateRepository):
         # brace — each writer replaces atomically and the last one wins, both valid. The previous
         # open(path,"w") truncate-then-write could tear under that race, and a corrupt file made
         # _read() fall back to {} → the client reconcile then wiped every local binding.
-        path = self._path(tenant_id, user_id)
+        path = self._path(tenant_id, user_id, year_id)
         path.parent.mkdir(parents=True, exist_ok=True)
         tmp = None
         try:
@@ -110,11 +113,11 @@ class SectionStateRepositoryFileImpl(SectionStateRepository):
                 except OSError:
                     pass
 
-    def load_all(self, tenant_id: str, user_id: str) -> Dict[str, SectionState]:
-        """All tracked sections for this teacher. Empty dict if none."""
-        return self._read(tenant_id, user_id)
+    def load_all(self, tenant_id: str, user_id: str, year_id: str) -> Dict[str, SectionState]:
+        """All tracked sections for this teacher's year. Empty dict if none."""
+        return self._read(tenant_id, user_id, year_id)
 
-    def save_one(self, tenant_id: str, user_id: str, section_key: str,
+    def save_one(self, tenant_id: str, user_id: str, year_id: str, section_key: str,
                  chapter: str, unit_index: Optional[int], done: bool,
                  bookmark_unit: Optional[int] = None,
                  bookmark_phase: Optional[int] = None) -> None:
@@ -124,7 +127,7 @@ class SectionStateRepositoryFileImpl(SectionStateRepository):
         phase place-marker on the same row — default None so existing callers/tests that don't
         pass them store no bookmark, unchanged."""
         with self._lock:
-            data = self._read(tenant_id, user_id)
+            data = self._read(tenant_id, user_id, year_id)
             data[section_key] = {
                 "chapter": chapter,
                 "unit_index": unit_index,
@@ -133,27 +136,27 @@ class SectionStateRepositoryFileImpl(SectionStateRepository):
                 "bookmark_phase": bookmark_phase,
                 "updated_at": datetime.now(timezone.utc).isoformat(),
             }
-            self._write(tenant_id, user_id, data)
+            self._write(tenant_id, user_id, year_id, data)
 
-    def delete_one(self, tenant_id: str, user_id: str, section_key: str) -> None:
+    def delete_one(self, tenant_id: str, user_id: str, year_id: str, section_key: str) -> None:
         """Remove one section's state (untrack). No-op if absent."""
         with self._lock:
-            data = self._read(tenant_id, user_id)
+            data = self._read(tenant_id, user_id, year_id)
             if section_key in data:
                 data.pop(section_key, None)
-                self._write(tenant_id, user_id, data)
+                self._write(tenant_id, user_id, year_id, data)
 
-    def clear_all(self, tenant_id: str, user_id: str) -> None:
-        """Erase ALL section teaching-state for this teacher. Used by the 'start setup over'
-        profile reset (DELETE /readiness) so stale bindings can't resurrect into a freshly
-        rebuilt profile — otherwise a section key reused by the new profile inherits the old
-        chapter + pointer. No-op if nothing is stored."""
+    def clear_all(self, tenant_id: str, user_id: str, year_id: str) -> None:
+        """Erase ALL section teaching-state for this teacher's year. Used by the 'start setup
+        over' profile reset (DELETE /readiness) so stale bindings can't resurrect into a
+        freshly rebuilt profile — otherwise a section key reused by the new profile inherits
+        the old chapter + pointer. No-op if nothing is stored."""
         with self._lock:
-            path = self._path(tenant_id, user_id)
+            path = self._path(tenant_id, user_id, year_id)
             if not path.exists():
                 return
             try:
                 path.unlink()
             except OSError:
                 # mounts that allow overwrite but not unlink → write an empty map instead
-                self._write(tenant_id, user_id, {})
+                self._write(tenant_id, user_id, year_id, {})

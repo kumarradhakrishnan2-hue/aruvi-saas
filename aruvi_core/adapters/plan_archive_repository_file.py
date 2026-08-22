@@ -1,7 +1,7 @@
 """File-based implementation of PlanArchiveRepository.
 
 Persists which saved plans a teacher has archived as JSON at
-ARUVI_STATE_DIR/plan_archive/{tenant_id}/{user_id}/archive.json, shaped as
+ARUVI_STATE_DIR/plan_archive/{tenant_id}/{user_id}/{year_id}/archive.json, shaped as
 
     { "science/vi/ch_03_....json": "2026-07-04T09:12:00+00:00", ... }
 
@@ -15,10 +15,12 @@ There is deliberately NO hard delete of plans anywhere: archiving is reversible 
 the key), and the plan's frozen identity means every back-reference (LU pointer, notes, section
 attachment) survives untouched. See ports.PlanArchiveRepository for the full rationale.
 
-Every store is keyed by tenant_id + user_id. With no auth yet both stub to the same
-X-Aruvi-User value; Phase 4 swaps the values from the Supabase auth token, no schema change,
-and this file adapter is replaced (behind the same port) by an `archived_at` column on the
-plan row / a small `plan_archive` table.
+Every store is keyed by tenant_id + user_id + year_id (administrative_architecture.md
+Step 1, 2026-08-22): My Lessons folds each closing year into its own archive folder, so the
+flag lives inside the year it was set in. The API layer resolves which year is current;
+this adapter just addresses by it. With no auth yet tenant_id == user_id (the X-Aruvi-User
+value); the partner's cloud adapter replaces this file (behind the same port) with an
+`archived_at` column on the plan row / a small `plan_archive` table.
 """
 import json
 import os
@@ -52,11 +54,11 @@ class PlanArchiveRepositoryFileImpl(PlanArchiveRepository):
         # multi-instance deployment moves this to the DB row-lock at Phase 4.
         self._lock = threading.Lock()
 
-    def _path(self, tenant_id: str, user_id: str) -> Path:
-        return self.base_dir / _slug(tenant_id) / _slug(user_id) / "archive.json"
+    def _path(self, tenant_id: str, user_id: str, year_id: str) -> Path:
+        return self.base_dir / _slug(tenant_id) / _slug(user_id) / _slug(year_id) / "archive.json"
 
-    def _read(self, tenant_id: str, user_id: str) -> Dict[str, Any]:
-        path = self._path(tenant_id, user_id)
+    def _read(self, tenant_id: str, user_id: str, year_id: str) -> Dict[str, Any]:
+        path = self._path(tenant_id, user_id, year_id)
         if not path.exists():
             return {}
         try:
@@ -65,11 +67,11 @@ class PlanArchiveRepositoryFileImpl(PlanArchiveRepository):
         except (IOError, json.JSONDecodeError):
             return {}
 
-    def _write(self, tenant_id: str, user_id: str, data: Dict[str, Any]) -> None:
+    def _write(self, tenant_id: str, user_id: str, year_id: str, data: Dict[str, Any]) -> None:
         # ATOMIC write: temp file in the same dir, then os.replace() over the target (atomic on
         # POSIX/Windows), so a reader always sees the complete old or complete new file — never a
         # half-written one — and concurrent writers can't interleave into corrupt JSON.
-        path = self._path(tenant_id, user_id)
+        path = self._path(tenant_id, user_id, year_id)
         path.parent.mkdir(parents=True, exist_ok=True)
         tmp = None
         try:
@@ -89,22 +91,22 @@ class PlanArchiveRepositoryFileImpl(PlanArchiveRepository):
                 except OSError:
                     pass
 
-    def load_all(self, tenant_id: str, user_id: str) -> Dict[str, str]:
-        """All archived plan keys for this teacher: {plan_key: archived_at_iso}."""
-        return self._read(tenant_id, user_id)
+    def load_all(self, tenant_id: str, user_id: str, year_id: str) -> Dict[str, str]:
+        """All archived plan keys for this teacher's year: {plan_key: archived_at_iso}."""
+        return self._read(tenant_id, user_id, year_id)
 
-    def archive(self, tenant_id: str, user_id: str, plan_key: str) -> None:
+    def archive(self, tenant_id: str, user_id: str, year_id: str, plan_key: str) -> None:
         """Mark one plan archived. Idempotent — keeps the original archived_at if already set."""
         with self._lock:
-            data = self._read(tenant_id, user_id)
+            data = self._read(tenant_id, user_id, year_id)
             if plan_key not in data:
                 data[plan_key] = datetime.now(timezone.utc).isoformat()
-                self._write(tenant_id, user_id, data)
+                self._write(tenant_id, user_id, year_id, data)
 
-    def restore(self, tenant_id: str, user_id: str, plan_key: str) -> None:
+    def restore(self, tenant_id: str, user_id: str, year_id: str, plan_key: str) -> None:
         """Un-archive one plan. No-op if absent."""
         with self._lock:
-            data = self._read(tenant_id, user_id)
+            data = self._read(tenant_id, user_id, year_id)
             if plan_key in data:
                 data.pop(plan_key, None)
-                self._write(tenant_id, user_id, data)
+                self._write(tenant_id, user_id, year_id, data)

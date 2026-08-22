@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { pushSectionState, readLocalBookmark, writeLocalBookmark } from "../lib/sectionState";
-import { userKey, boldMarks } from "../lib/format";
+import { userKey, boldMarks, fetchPlanNotes, savePlanNote } from "../lib/format";
 
 /* ───────── Lesson view (Screen 3) + assessment artifact (Screen 3b) ─────────
  * A COMPLETION surface, not a navigation one (2026-06-29 redesign). The plan's periods
@@ -1284,6 +1284,9 @@ function ChapterNotesModal({ chapterTitle, subjectGrade, initial, onSave, onClos
             <div className="cn-title">{chapterTitle}</div>
             {subjectGrade ? <div className="cn-sg">{subjectGrade}</div> : null}
             <div className="cn-scope">Shared across every section on this plan</div>
+            {/* Disclosure (admin architecture Step 3): holding her notes server-side is
+                legitimate because she is TOLD — "done when … she is told that they do". */}
+            <div className="cn-scope">Saved to your account · opens on any device you sign in from</div>
           </div>
           <button className="cn-x" aria-label="Close" onClick={onClose}>✕</button>
         </div>
@@ -1552,12 +1555,40 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
   // tracking, and every section, read/write ONE shared note (arch-plan §I-bis).
   // Per-user scope (userKey appends _{user}) so chapter notes never bleed across teachers on
   // a shared browser — the asset key alone (subject·grade·chapter) is identical across users.
+  //
+  // SERVER-BACKED as of 2026-08-22 (admin architecture Step 3): the note is a year-scoped
+  // per-tenant record — ONE note per chapter per academic year — and localStorage is now the
+  // optimistic CACHE, same pattern as section state. On mount: show the cache instantly,
+  // then reconcile from GET /plan-notes (server wins); a cache-only note with no server copy
+  // is a legacy browser-only note and is MIGRATED UP once, so nothing she wrote before this
+  // landed is stranded. On save: cache + POST; a 409 (stale write from another device) adopts
+  // the server's newer copy instead of clobbering it (§2.4 — timestamp, not history).
   const notesKey = userKey(`chapter_notes_${lp.subject}_${lp.grade}_${lp.chapter_title || ""}`);
+  // The server key uses the chapter NUMBER (stable identity); title only as a fallback for
+  // plans without one. Must stay in sync with api/main.py's _note_key.
+  const noteChapter = lp.chapter_number ? String(lp.chapter_number) : (lp.chapter_title || "");
   const [noteText, setNoteText] = useState("");
   const [notesOpen, setNotesOpen] = useState(false);
   useEffect(() => {
     if (typeof window === "undefined") return;
-    setNoteText(window.localStorage.getItem(notesKey) || "");
+    const cached = window.localStorage.getItem(notesKey) || "";
+    setNoteText(cached);
+    let dead = false;
+    fetchPlanNotes().then((notes) => {
+      if (dead || notes === null) return;          // server unreachable → keep the cache
+      const srv = notes[`${lp.subject}/${lp.grade}/${noteChapter}`];
+      if (srv && typeof srv.text === "string") {
+        setNoteText(srv.text);                      // server is authoritative
+        try {
+          if (srv.text.trim()) window.localStorage.setItem(notesKey, srv.text);
+          else window.localStorage.removeItem(notesKey);
+        } catch {}
+      } else if (cached.trim()) {
+        savePlanNote(lp.subject, lp.grade, noteChapter, cached);  // one-time legacy lift
+      }
+    });
+    return () => { dead = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notesKey]);
   const saveNote = (t) => {
     setNoteText(t);
@@ -1565,6 +1596,16 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
       if (t.trim()) window.localStorage.setItem(notesKey, t);
       else window.localStorage.removeItem(notesKey);
     }
+    savePlanNote(lp.subject, lp.grade, noteChapter, t).then((res) => {
+      if (res && res.stale && res.note && typeof res.note.text === "string") {
+        // Another device wrote a fresher note — adopt it, never overwrite it.
+        setNoteText(res.note.text);
+        try {
+          if (res.note.text.trim()) window.localStorage.setItem(notesKey, res.note.text);
+          else window.localStorage.removeItem(notesKey);
+        } catch {}
+      }
+    });
     setNotesOpen(false);
   };
   const hasNote = !!noteText.trim();

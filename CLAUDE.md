@@ -620,6 +620,33 @@ iterated mockup). **STATICALLY verified only** (babel-parse clean, CSS balanced,
 unit tests pass) — per §11 the sandbox can't `next dev`; **live render + mobile (~390px) check is
 the immediate must-do before further work.**
 
+**Administrative architecture Steps 0+1 (2026-08-22) — account record + year-scoped
+addressing, BUILT and migrated.** Per `docs/administrative_architecture.md` §5: `Account`/
+`AccountRepository` + `Identity`/expanded `AuthProvider` + `AcademicYear`/
+`AcademicYearRepository` in ports.py, each with a file adapter (`data/accounts/…`,
+`data/academic_years/…`, `header_auth_provider.py`). `_current_identity()` now resolves
+through the account record (JIT-created on first request) — tenant_id and user_id are
+separate values that happen to be equal. The four TEACHING-state repos (allocations,
+section_state, prepared_plans, plan_archive) are year-scoped: `year_id` after `user_id` in
+every method, paths `{kind}/{tenant}/{user}/{year}/…`. Readiness deliberately NOT
+year-scoped (the class list carries, spec §2.7). Year resolution is SERVER-side: routes take
+optional `?year_id=`, absent → the teacher's current year, bootstrapped April-anchored
+("2026-27"). Zero web changes. Dev data migrated via `aruvi-scripts/migrate_step01.py`
+(idempotent, re-runnable). New tests: test_account / test_academic_year / test_year_scope /
+test_migration. Full entry: MEMORY.md 2026-08-22.
+
+**Administrative architecture Step 3 (2026-08-22, same session) — chapter notes
+server-backed.** `PlanNoteRepository` + file adapter (`plan_notes/{tenant}/{user}/{year}/
+notes.json`) + GET/POST `/plan-notes`. **ONE note per chapter per academic year** (founder:
+notes split only across years; key = `{subject}/{grade}/{chapter_number}`, never a plan
+filename — spec §7's "notes split per plan" item resolved). §2.4 enforced: empty-text save
+IS delete; no history; stale write (older `updated_at`) → 409 carrying the newer copy, which
+the client adopts. Web: ChapterOrg treats localStorage as an optimistic cache, reconciles
+from the server on mount, migrates a legacy browser-only note up once, and the notes modal
+discloses "Saved to your account". Web half STATIC-verified only — owes a live pass.
+CLOUD_DATA_MODEL §2.8's invariant violation is closed. Steps 2, 4, 5, 6 not started
+(4 is now unblocked). Full entry: MEMORY.md 2026-08-22.
+
 **Persistence + tenanting groundwork (2026-06-28) — the front-end-only state is now
 server-persisted and per-tenant, ahead of full Phase-4 auth.** Built: (a) a **user-ID login
 portal** (`web/app/components/Login.jsx`) gating the app — no password yet; the ID travels as
