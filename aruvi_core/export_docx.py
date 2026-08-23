@@ -32,7 +32,7 @@ from .report_competency import grade_roman, subject_display
 from .compound_options import display_label, group_of, grouped_option_sets
 from .export_lesson_pdf import (
     targeted_competencies, _duration_breakdown, _group_word as _lp_group_word,
-    _phase_duration, AXIS_INFO,
+    _phase_duration, AXIS_INFO, group_lo, period_lo,
 )
 from .export_assessment_pdf import (intro_paragraph, CTX_WORD, question_type_full,
                                     textbook_companion)
@@ -149,8 +149,12 @@ def _hairlines(table, color=LINE_HEX):
     table._tbl.tblPr.append(b)
 
 
-def _shaded_band(doc, hex_color, kicker, kicker_color, title, title_color, *, title_size=13):
-    """A full-width one-cell shaded band with a small kicker over a title (stage bands)."""
+def _shaded_band(doc, hex_color, kicker, kicker_color, title, title_color, *, title_size=13,
+                 subtitle=""):
+    """A full-width one-cell shaded band with a small kicker over a title (stage bands).
+
+    `subtitle` prints one italic line under the title — the group's learning outcome on
+    the lesson-plan bands (2026-08-23). Mirrors `.st-lo` in the two PDF stylesheets."""
     t = doc.add_table(rows=1, cols=1)
     _no_borders(t)
     cell = t.cell(0, 0)
@@ -163,6 +167,13 @@ def _shaded_band(doc, hex_color, kicker, kicker_color, title, title_color, *, ti
     tp = cell.add_paragraph()
     tp.paragraph_format.space_before = Pt(1); tp.paragraph_format.space_after = Pt(0)
     _run(tp, title, bold=True, size=title_size, color=title_color, font=SERIF)
+    if subtitle:
+        sp = cell.add_paragraph()
+        sp.paragraph_format.space_before = Pt(1); sp.paragraph_format.space_after = Pt(0)
+        # Same pine kicker the period-level LO carries, so a band-borne LO (science,
+        # English, maths secondary) is not the only one that reads as a bare italic line.
+        _run(sp, "Learning outcome: ", bold=True, size=8, color=PINE, caps=True)
+        _run(sp, subtitle, italic=True, size=8.5, color=BODY, font=SERIF)
     doc.add_paragraph().paragraph_format.space_after = Pt(2)
     return t
 
@@ -301,7 +312,7 @@ def _lp_front(doc, lp, competencies, spines=None):
         doc.add_paragraph().paragraph_format.space_after = Pt(2)
 
 
-def _lp_unit(doc, p, *, first_pedagogy):
+def _lp_unit(doc, p, *, first_pedagogy, fallback_lo=""):
     meta = p.get("meta", {}) or {}
     dur = meta.get("duration_minutes")
     head = _para(doc, space_before=8, space_after=2)
@@ -309,6 +320,14 @@ def _lp_unit(doc, p, *, first_pedagogy):
     if dur:
         _run(head, f"{dur} min   ", size=9, color=SOFT)
     _run(head, p.get("title", ""), bold=True, size=10.5, color=INK, font=SERIF)
+    # Learning outcome, directly under the period head — print parity with the PDF's
+    # `.lo-line`. A period-level LO (SS, TWAU) wins; fallback_lo carries a group's LO
+    # down to its first period on the layouts that render no band (maths, flat SS).
+    _lo = period_lo(p) or fallback_lo
+    if _lo:
+        lp_ = _para(doc, space_after=2)
+        _run(lp_, "Learning outcome: ", bold=True, size=8.5, color=PINE, caps=True)
+        _run(lp_, _lo, italic=True, size=8.5, color=BODY, font=SERIF)
     ped = p.get("approach") or ""
     if ped:
         pp = _para(doc, space_after=2)
@@ -634,10 +653,13 @@ def export_lesson_plan_docx(view, *, competencies=None, competency_spines=None, 
     _show_band = lp.get("subject", "") != "mathematics" and not _ss_flat_units
     first = True
     for i, g in enumerate(lp.get("groups", []) or [], 1):
+        glo = group_lo(g)
         if _show_band:
-            _shaded_band(doc, KRAFT_HEX, f"{word.upper()} {i}", PINE, g.get("label", ""), INK)
+            _shaded_band(doc, KRAFT_HEX, f"{word.upper()} {i}", PINE, g.get("label", ""), INK,
+                         subtitle=glo)
+            glo = ""
         for p in _iter_group_periods(g):
-            _lp_unit(doc, p, first_pedagogy=first); first = False
+            _lp_unit(doc, p, first_pedagogy=first, fallback_lo=glo); first = False; glo = ""
     return _tobytes(doc)
 
 
@@ -694,12 +716,15 @@ def export_integrated_docx(view, *, include_answers=False, unit_number=None, com
         periods = _iter_group_periods(g)
         if unit_number is not None and not any(p.get("number") == unit_number for p in periods):
             continue
+        glo = group_lo(g)
         if _show_band:
-            _shaded_band(doc, KRAFT_HEX, f"{word.upper()} {i}", PINE, g.get("label", ""), INK)
+            _shaded_band(doc, KRAFT_HEX, f"{word.upper()} {i}", PINE, g.get("label", ""), INK,
+                         subtitle=glo)
+            glo = ""
         for p in periods:
             if unit_number is not None and p.get("number") != unit_number:
                 continue
-            _lp_unit(doc, p, first_pedagogy=first); first = False
+            _lp_unit(doc, p, first_pedagogy=first, fallback_lo=glo); first = False; glo = ""
             items = by_anchor.get(p.get("number"), [])
             if items:
                 ap = _para(doc, space_before=8, space_after=3, align=WD_ALIGN_PARAGRAPH.CENTER)

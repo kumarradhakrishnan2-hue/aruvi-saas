@@ -296,6 +296,17 @@ def render_lesson_pdf_html(
   .stage-band .st-k {{ font-family: Helvetica; font-size: 6.5pt; font-weight: bold; letter-spacing: 1px;
                        text-transform: uppercase; color: {PINE}; }}
   .stage-band .st {{ font-family: Georgia, serif; font-size: 10.5pt; font-weight: bold; color: {INK}; }}
+  /* The band LO wears the SAME pine kicker as the period-level one below (2026-08-23) —
+     without it, the subjects whose LO rides the band (science, English, maths secondary)
+     showed a bare italic line while SS and TWAU showed a labelled one. */
+  .stage-band .st-lo-k {{ font-family: Helvetica; font-size: 6.5pt; font-weight: bold; letter-spacing: 0.6px;
+                          text-transform: uppercase; color: {PINE}; }}
+  .stage-band .st-lo {{ font-family: Georgia, serif; font-size: 8pt; font-style: italic; color: #4a463e; }}
+
+  .lo-line {{ margin-top: 4px; margin-bottom: 2px; padding-left: 2px; }}
+  .lo-line .lo-k {{ font-family: Helvetica; font-size: 6.5pt; font-weight: bold; letter-spacing: 0.6px;
+                    text-transform: uppercase; color: {PINE}; }}
+  .lo-line .lo-t {{ font-family: Georgia, serif; font-size: 8.5pt; font-style: italic; color: #3f3b34; }}
 
   .period-band {{ width: 100%; margin-top: 12px; }}
   .period-band td {{ background-color: {GREY_BAND}; border-top: 0.75px solid #e2ddd2; border-bottom: 0.75px solid #e2ddd2;
@@ -481,6 +492,29 @@ def _stage_table(groups: List[Dict[str, Any]]) -> str:
     )
 
 
+def group_lo(g: Dict[str, Any]) -> str:
+    """The LO a GROUP was authored at — science middle (stage), science secondary and
+    maths secondary (section), English (section × spine cell). Empty for the two
+    subjects that carry the LO on the period instead (SS, TWAU) and for maths
+    middle/preparatory, which have no LO layer at all."""
+    return str((g.get("meta") or {}).get("implied_lo") or "").strip()
+
+
+def period_lo(p: Dict[str, Any]) -> str:
+    """The LO(s) a PERIOD was authored at — SS (one per competency edge, so a unit may
+    carry several) and TWAU (one per period). Joined; empty for every other subject."""
+    return " ".join(str(x).strip() for x in (p.get("learning_outcomes") or []) if str(x).strip())
+
+
+def _lo_line(text: str) -> str:
+    """The lesson plan's own LO line (2026-08-23). Until now the LO reached the teacher
+    ONLY through the assessment, so anyone using the plan alone never saw what the
+    teaching builds toward. Rendered at the granularity the LO was authored at — never
+    invented per period — so a stage LO prints once above its stage, not five times."""
+    return (f'<div class="lo-line"><span class="lo-k">Learning outcome:</span> '
+            f'<span class="lo-t">{_esc(text)}</span></div>') if text else ""
+
+
 def _stages_body(groups: List[Dict[str, Any]], subject: str = "") -> str:
     word = _group_word(groups)
     # Mathematics shows no section/stage band above its periods — the units render as one flat
@@ -496,25 +530,42 @@ def _stages_body(groups: List[Dict[str, Any]], subject: str = "") -> str:
     out = ""
     seen = 0  # running period count across the whole chapter — first one carries the "Pedagogy:" label
     for i, g in enumerate(groups, 1):
+        glo = group_lo(g)
         if show_band:
+            # The group's LO rides INSIDE the band — one print per stage/section, above
+            # the units that build it. Where the band is suppressed (maths, and SS's flat
+            # single "unit" group) there is nothing to hang it on, so it falls through to
+            # the group's FIRST period instead; that is the only case maths·secondary,
+            # which has section LOs but no band, is reached at all.
             out += (
                 f'<table class="stage-band"><tr><td>'
                 f'<span class="st-k">{_esc(word)} {i}</span><br/>'
                 f'<span class="st">{_esc(g.get("label"))}</span>'
-                f'</td></tr></table>'
+                + (f'<br/><span class="st-lo-k">Learning outcome:</span> '
+                   f'<span class="st-lo">{_esc(glo)}</span>' if glo else "")
+                + f'</td></tr></table>'
             )
+            glo = ""
         for p in g.get("periods", []) or []:
             seen += 1
-            out += _period_block(p, is_first=(seen == 1))
-        # nested children (English section → spine): render child periods under the section
+            out += _period_block(p, is_first=(seen == 1), fallback_lo=glo)
+            glo = ""
+        # nested children (English section → spine): render child periods under the section.
+        # A CHILD never gets a band of its own, so its LO always falls to its first period.
+        # Modern English plans collapse the lone section wrapper and put spines at the top
+        # level (CLAUDE.md §3(d)), where the band above carries the LO; this path is the
+        # legacy multi-section plan, whose LO lives on the spine child, not the section.
         for c in g.get("children", []) or []:
+            clo = group_lo(c)
             for p in c.get("periods", []) or []:
                 seen += 1
-                out += _period_block(p, is_first=(seen == 1))
+                out += _period_block(p, is_first=(seen == 1), fallback_lo=clo)
+                clo = ""
     return out
 
 
-def _period_block(p: Dict[str, Any], *, is_first: bool = False) -> str:
+def _period_block(p: Dict[str, Any], *, is_first: bool = False,
+                  fallback_lo: str = "") -> str:
     num = p.get("number")
     dur = (p.get("meta", {}) or {}).get("duration_minutes")
     dur_str = f"{dur} min" if dur else ""
@@ -634,7 +685,12 @@ def _period_block(p: Dict[str, Any], *, is_first: bool = False) -> str:
         if hw else ""
     )
 
-    return band + mat_line + notes_line + aids_html + phase_tbl + homework
+    # LO sits directly under the period band — the framing the teacher reads before the
+    # materials and the timed spine. A period-level LO (SS, TWAU) always wins; fallback_lo
+    # carries a GROUP's LO down to its first period on the layouts that render no band.
+    lo_html = _lo_line(period_lo(p) or fallback_lo)
+
+    return band + lo_html + mat_line + notes_line + aids_html + phase_tbl + homework
 
 
 def export_lesson_plan_pdf(

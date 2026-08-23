@@ -178,7 +178,7 @@ class ScienceSubject:
         if is_secondary:
             groups = self._secondary_lp_groups(raw, periods_raw)
         else:
-            groups = self._middle_lp_groups(lp, periods_raw)
+            groups = self._middle_lp_groups(raw, lp, periods_raw)
 
         return LessonPlanView(
             subject="science", grade=grade,
@@ -188,7 +188,8 @@ class ScienceSubject:
             groups=groups,
         )
 
-    def _middle_lp_groups(self, lp: Dict[str, Any], periods_raw: list) -> List[Group]:
+    def _middle_lp_groups(self, raw: Dict[str, Any], lp: Dict[str, Any],
+                          periods_raw: list) -> List[Group]:
         # stage_number -> {label, description, implied_lo}
         stage_meta: Dict[int, Dict[str, str]] = {}
         for cp in lp.get("cognitive_progression", []):
@@ -199,6 +200,24 @@ class ScienceSubject:
             n = il.get("stage_number")
             stage_meta.setdefault(n, {})["implied_lo"] = il.get("implied_lo", "")
             stage_meta[n].setdefault("label", il.get("stage_label", ""))
+        # The stage LO lives in the top-level coverage_handoff (Rule 5: "recorded
+        # exclusively in the coverage_handoff array"), NOT in lp["implied_los"] —
+        # no certified canonical carries that key, so before this rejoin every
+        # middle group came through with an empty implied_lo. Same join the
+        # secondary branch below already does, keyed on stage_number instead of
+        # period_numbers. lp["implied_los"] is kept as the fallback for any older
+        # plan that does carry it, and only fills a stage the handoff left blank.
+        for e in (raw.get("coverage_handoff") or lp.get("coverage_handoff") or []):
+            if not isinstance(e, dict):
+                continue
+            n = e.get("stage_number")
+            lo = e.get("implied_lo")
+            if isinstance(lo, list):
+                lo = " ".join(str(x).strip() for x in lo if x)
+            if lo:
+                stage_meta.setdefault(n, {})["implied_lo"] = str(lo).strip()
+            if e.get("stage_label"):
+                stage_meta[n].setdefault("label", e["stage_label"])
 
         groups: List[Group] = []
         by_stage: Dict[int, Group] = {}

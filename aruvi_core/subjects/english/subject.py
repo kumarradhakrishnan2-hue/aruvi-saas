@@ -347,6 +347,22 @@ class EnglishSubject:
         sec_index: Dict[str, Group] = {}
         spine_index: Dict[tuple, Group] = {}
 
+        # (spine, section_id) -> implied_lo. English's handoff is a DICT keyed by spine,
+        # each holding section_contributions[] — one cell per (section × spine), which is
+        # exactly the granularity the LO is authored at. Rejoined here so the lesson plan
+        # can show what a spine group builds toward; previously the LO reached only the
+        # pair of items Rule 2 generates from each cell. A group taught under several
+        # spines carries several LOs — joined in the order the group names them.
+        lo_by_cell: Dict[tuple, str] = {}
+        ho = raw.get("coverage_handoff") or lp.get("coverage_handoff") or {}
+        if isinstance(ho, dict):
+            for spine, entry in ho.items():
+                if not isinstance(entry, dict):
+                    continue
+                for c in (entry.get("section_contributions") or []):
+                    if isinstance(c, dict) and c.get("implied_lo"):
+                        lo_by_cell[(spine, c.get("section_id"))] = str(c["implied_lo"]).strip()
+
         for p in periods:
             sid = p.get("section_id", "")
             if sid not in sec_index:
@@ -366,7 +382,13 @@ class EnglishSubject:
                 sig, label = ("+".join(spines) if spines else "general"), _spine_label(spines)
             key = (sid, sig)
             if key not in spine_index:
-                sg = Group(type="spine", label=label, meta={"spine_codes": spines})
+                _los: List[str] = []
+                for _sp in spines:
+                    _lo = lo_by_cell.get((_sp, sid))
+                    if _lo and _lo not in _los:
+                        _los.append(_lo)
+                sg = Group(type="spine", label=label,
+                           meta={"spine_codes": spines, "implied_lo": " ".join(_los)})
                 spine_index[key] = sg
                 sec_index[sid].children.append(sg)
             # approach: pedagogical_methods is a {spine: method} dict — join the

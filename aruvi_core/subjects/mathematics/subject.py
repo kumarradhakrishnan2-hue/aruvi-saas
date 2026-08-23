@@ -230,7 +230,17 @@ class MathematicsSubject:
                 else:
                     label = title or key
                 bands = p.get("time_bands")
-                gmeta = {"section_anchor": key, "section_title": title}
+                # The section's implied LO(s) ride the same handoff row the title comes
+                # from. Rule 6 (INVERTED LO FLOW) permits ONE OR TWO per section, so the
+                # field is a list here where science secondary's is a string — join, the
+                # way that port already joins its own list case. Carried so the lesson
+                # plan can show the teacher what the section builds toward; before this
+                # the LO reached only the assessment items generated from it.
+                _lo = ho.get("implied_lo")
+                if isinstance(_lo, list):
+                    _lo = " ".join(str(x).strip() for x in _lo if x)
+                gmeta = {"section_anchor": key, "section_title": title,
+                         "implied_lo": str(_lo or "").strip()}
             else:
                 seg = (p.get("textbook_segments") or [{}])[0]
                 # THE SYNTHESIS UNIT IS ITS OWN GROUP (2026-08-10, S7). On a token stage the

@@ -38,7 +38,7 @@ from .pdf_fonts import font_face_css
 from .export_lesson_pdf import (
     PINE, KRAFT, GREY_BAND, GREY_HEAD, INK, LINE,
     _metadata_table, _competency_table, _english_competency_table, _stage_table, _period_block,
-    _group_word, targeted_competencies,
+    _group_word, targeted_competencies, group_lo,
 )
 from .export_assessment_pdf import (
     G_ACCENT, G_HEAD, G_DARK, G_TINT, G_EDGE,
@@ -76,12 +76,14 @@ def _iter_group_periods(g: Dict[str, Any]) -> List[Dict[str, Any]]:
 
 # ── body: stage band once · unit · its anchored items ───────────────────────
 
-def _stage_band(word: str, n: Any, label: str) -> str:
+def _stage_band(word: str, n: Any, label: str, lo: str = "") -> str:
     return (
         '<table class="stage-band"><tr><td>'
         f'<span class="st-k">{_esc(word).upper()} {_esc(n)}</span><br/>'
         f'<span class="st">{label}</span>'
-        '</td></tr></table>'
+        + (f'<br/><span class="st-lo-k">Learning outcome:</span> '
+           f'<span class="st-lo">{_esc(lo)}</span>' if lo else "")
+        + '</td></tr></table>'
     )
 
 
@@ -111,12 +113,19 @@ def _integrated_body(view: Dict[str, Any], include_answers: bool,
         periods = _iter_group_periods(g)
         if unit_number is not None and not any(p.get("number") == unit_number for p in periods):
             continue
+        # Same LO placement as the lesson-plan-only export: on the band where there is
+        # one, otherwise down to the group's first period. Assessment items keep their
+        # own LO regardless — the founder's call (2026-08-23): the repeat is concrete
+        # for the teacher, who reads an item without paging back to its stage band.
+        glo = group_lo(g)
         if _show_band:
-            out += _stage_band(word, gi, _esc(g.get("label")))
+            out += _stage_band(word, gi, _esc(g.get("label")), glo)
+            glo = ""
         for p in periods:
             if unit_number is not None and p.get("number") != unit_number:
                 continue
-            out += _period_block(p, is_first=first_period)
+            out += _period_block(p, is_first=first_period, fallback_lo=glo)
+            glo = ""
             first_period = False
             items = by_anchor.get(p.get("number"), [])
             if items:
@@ -191,6 +200,14 @@ def _css() -> str:
   .stage-band .st-k {{ font-family: Helvetica; font-size: 6.5pt; font-weight: bold; letter-spacing: 1px;
                        text-transform: uppercase; color: {PINE}; }}
   .stage-band .st {{ font-family: Georgia, serif; font-size: 10.5pt; font-weight: bold; color: {INK}; }}
+  .stage-band .st-lo-k {{ font-family: Helvetica; font-size: 6.5pt; font-weight: bold; letter-spacing: 0.6px;
+                          text-transform: uppercase; color: {PINE}; }}
+  .stage-band .st-lo {{ font-family: Georgia, serif; font-size: 8pt; font-style: italic; color: #4a463e; }}
+
+  .lo-line {{ margin-top: 4px; margin-bottom: 2px; padding-left: 2px; }}
+  .lo-line .lo-k {{ font-family: Helvetica; font-size: 6.5pt; font-weight: bold; letter-spacing: 0.6px;
+                    text-transform: uppercase; color: {PINE}; }}
+  .lo-line .lo-t {{ font-family: Georgia, serif; font-size: 8.5pt; font-style: italic; color: #3f3b34; }}
 
   /* lesson-plan unit block */
   .period-band {{ width: 100%; margin-top: 12px; }}
