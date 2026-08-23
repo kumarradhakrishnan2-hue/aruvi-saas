@@ -38,7 +38,7 @@ from .pdf_fonts import font_face_css
 from .export_lesson_pdf import (
     PINE, KRAFT, GREY_BAND, GREY_HEAD, INK, LINE,
     _metadata_table, _competency_table, _english_competency_table, _stage_table, _period_block,
-    _group_word, targeted_competencies, group_lo,
+    _group_word, targeted_competencies, group_lo, period_card_css,
 )
 from .export_assessment_pdf import (
     G_ACCENT, G_HEAD, G_DARK, G_TINT, G_EDGE,
@@ -81,7 +81,7 @@ def _stage_band(word: str, n: Any, label: str, lo: str = "") -> str:
         '<table class="stage-band"><tr><td>'
         f'<span class="st-k">{_esc(word).upper()} {_esc(n)}</span><br/>'
         f'<span class="st">{label}</span>'
-        + (f'<br/><span class="st-lo-k">Learning outcome:</span> '
+        + (f'<br/><span class="st-lo-k">LEARNING OUTCOME</span> '
            f'<span class="st-lo">{_esc(lo)}</span>' if lo else "")
         + '</td></tr></table>'
     )
@@ -206,8 +206,9 @@ def _css() -> str:
 
   .lo-line {{ margin-top: 4px; margin-bottom: 2px; padding-left: 2px; }}
   .lo-line .lo-k {{ font-family: Helvetica; font-size: 6.5pt; font-weight: bold; letter-spacing: 0.6px;
-                    text-transform: uppercase; color: {PINE}; }}
+                    color: {PINE}; }}
   .lo-line .lo-t {{ font-family: Georgia, serif; font-size: 8.5pt; font-style: italic; color: #3f3b34; }}
+{period_card_css()}
 
   /* lesson-plan unit block */
   .period-band {{ width: 100%; margin-top: 12px; }}

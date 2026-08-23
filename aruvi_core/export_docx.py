@@ -312,6 +312,41 @@ def _lp_front(doc, lp, competencies, spines=None):
         doc.add_paragraph().paragraph_format.space_after = Pt(2)
 
 
+def _lp_card(doc, lo_items, materials, notes):
+    """The period's standing fields as one stack of LABEL | value rows — the Word twin of
+    `export_lesson_pdf._period_card` (2026-08-23). Same rows, same order, same rule about
+    when the LO row appears; rounded corners are the one thing only this side can do, and
+    xhtml2pdf's inability to round is not a reason to square this off too.
+    """
+    rows = []
+    if lo_items:
+        rows.append(("Learning outcome" + ("s" if len(lo_items) > 1 else ""), lo_items))
+    if materials:
+        rows.append(("Materials", [materials]))
+    if notes:
+        rows.append(("Teacher notes", [notes]))
+    if not rows:
+        return
+    t = doc.add_table(rows=len(rows), cols=2)
+    _hairlines(t)
+    sec = doc.sections[0]
+    avail = (sec.page_width - sec.left_margin - sec.right_margin) / 914400.0
+    _fixed_table(t, [1.25, avail - 1.25])
+    for i, (label, values) in enumerate(rows):
+        kp = t.cell(i, 0).paragraphs[0]
+        kp.paragraph_format.space_before = Pt(3); kp.paragraph_format.space_after = Pt(3)
+        _run(kp, label, bold=True, size=8, color=PINE, caps=True)
+        cell = t.cell(i, 1)
+        for j, val in enumerate(values):
+            vp = cell.paragraphs[0] if j == 0 else cell.add_paragraph()
+            vp.paragraph_format.space_before = Pt(3 if j == 0 else 1)
+            vp.paragraph_format.space_after = Pt(3)
+            # Several values = several LOs on one unit (SS's competency edges). Bulleted
+            # so the teacher can see they are distinct outcomes, not one long sentence.
+            _run(vp, ("• " if len(values) > 1 else "") + str(val), size=9, color=BODY)
+    doc.add_paragraph().paragraph_format.space_after = Pt(1)
+
+
 def _lp_unit(doc, p, *, first_pedagogy, fallback_lo=""):
     meta = p.get("meta", {}) or {}
     dur = meta.get("duration_minutes")
@@ -320,25 +355,21 @@ def _lp_unit(doc, p, *, first_pedagogy, fallback_lo=""):
     if dur:
         _run(head, f"{dur} min   ", size=9, color=SOFT)
     _run(head, p.get("title", ""), bold=True, size=10.5, color=INK, font=SERIF)
-    # Learning outcome, directly under the period head — print parity with the PDF's
-    # `.lo-line`. A period-level LO (SS, TWAU) wins; fallback_lo carries a group's LO
-    # down to its first period on the layouts that render no band (maths, flat SS).
-    _lo = period_lo(p) or fallback_lo
-    if _lo:
-        lp_ = _para(doc, space_after=2)
-        _run(lp_, "Learning outcome: ", bold=True, size=8.5, color=PINE, caps=True)
-        _run(lp_, _lo, italic=True, size=8.5, color=BODY, font=SERIF)
     ped = p.get("approach") or ""
     if ped:
         pp = _para(doc, space_after=2)
         if first_pedagogy:
             _run(pp, "Pedagogy: ", bold=True, size=10.5, color=INK)
         _run(pp, ped, italic=True, size=10.5, color=SOFT)
-    mats = p.get("materials") or []
-    if mats:
-        mp = _para(doc, space_after=2)
-        _run(mp, "Materials: ", bold=True, size=9, color=INK)
-        _run(mp, ", ".join(mats), size=9, color=BODY)
+    # LO · Materials · Teacher notes now travel together as ONE labelled stack, in the
+    # PDF's order (notes therefore move ABOVE the prepared visual aids, where they used
+    # to sit below them). A period-level LO (SS, TWAU) fills the first row; fallback_lo
+    # is a group's LO and only arrives on layouts with no band to have printed it.
+    _lo_items = [str(x).strip() for x in (p.get("learning_outcomes") or []) if str(x).strip()] \
+        or ([fallback_lo] if fallback_lo else [])
+    _mats = " · ".join(str(m).strip() for m in (p.get("materials") or []) if str(m).strip())
+    _notes = " ".join(str(n).strip() for n in (p.get("teacher_notes") or []) if str(n).strip())
+    _lp_card(doc, _lo_items, _mats, _notes)
     # Typed prepared content (polish pass, 2026-08-18): print parity with the PDF —
     # a worksheet/card/key ships as a real Word table, not a paragraph about one.
     aids = meta.get("visual_aids")
@@ -382,11 +413,7 @@ def _lp_unit(doc, p, *, first_pedagogy, fallback_lo=""):
                 for chunk in str(va["text"]).split("\n\n"):
                     _run(_para(doc, space_after=2), chunk.replace("\n", " "),
                          size=9, color=BODY)
-    notes = p.get("teacher_notes") or []
-    if notes:
-        npp = _para(doc, space_after=3)
-        _run(npp, "Teacher notes: ", bold=True, size=9, color=INK)
-        _run(npp, " ".join(notes), size=9, color=BODY)
+    # (Teacher notes moved into _lp_card above — see the comment there.)
     phases = [ph for ph in (p.get("phases") or []) if ph.get("text") or ph.get("label")]
     if phases:
         t = doc.add_table(rows=len(phases), cols=2); _hairlines(t)

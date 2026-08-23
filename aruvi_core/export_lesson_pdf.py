@@ -308,6 +308,8 @@ def render_lesson_pdf_html(
                     text-transform: uppercase; color: {PINE}; }}
   .lo-line .lo-t {{ font-family: Georgia, serif; font-size: 8.5pt; font-style: italic; color: #3f3b34; }}
 
+{period_card_css()}
+
   .period-band {{ width: 100%; margin-top: 12px; }}
   .period-band td {{ background-color: {GREY_BAND}; border-top: 0.75px solid #e2ddd2; border-bottom: 0.75px solid #e2ddd2;
                      padding: 5px 8px; vertical-align: middle; }}
@@ -506,6 +508,81 @@ def period_lo(p: Dict[str, Any]) -> str:
     return " ".join(str(x).strip() for x in (p.get("learning_outcomes") or []) if str(x).strip())
 
 
+def period_card_css() -> str:
+    """The period card's rules, as ONE shared block (2026-08-23).
+
+    Lives here but is spliced into BOTH stylesheets — this module's and
+    `export_integrated_pdf`'s, which owns a duplicated copy of the lesson-plan classes.
+    First cut defined `.pcard` only here, so the integrated document rendered the card's
+    markup with no rules at all: no border, no rules between rows, labels in plain body
+    grey. Exactly the drift that module's docstring warns about. Shared, it cannot recur.
+
+    Constraints this is written around, all xhtml2pdf:
+      • `text-transform` is NOT applied — the labels are uppercased in Python instead.
+      • `border-radius` is ignored, so the card is square where the Word twin is rounded.
+      • NO background fill anywhere: a lesson plan is printed, often on a school inkjet,
+        and a tinted block behind every period is the most expensive thing on the page
+        (founder, 2026-08-23). Structure is carried by hairlines and the label colour.
+    """
+    return f"""
+  .pcard {{ width: 100%; margin-top: 7px; margin-bottom: 4px; border: 0.75px solid {LINE}; }}
+  .pcard td {{ padding: 8px 10px; vertical-align: top; }}
+  td.pc-k {{ font-family: Helvetica; font-size: 6.5pt; font-weight: bold; letter-spacing: 0.7px;
+             color: {PINE}; line-height: 1.35; }}
+  td.pc-v {{ font-family: Georgia, serif; font-size: 8.5pt; color: #26241f; line-height: 1.45; }}
+  td.pc-kt {{ font-family: Helvetica; font-size: 6.5pt; font-weight: bold; letter-spacing: 0.7px;
+              color: {PINE}; line-height: 1.35; border-top: 0.75px solid #e4ddcf; }}
+  td.pc-vt {{ font-family: Georgia, serif; font-size: 8.5pt; color: #26241f; line-height: 1.45;
+              border-top: 0.75px solid #e4ddcf; }}
+"""
+
+
+def _bullets(items: List[str]) -> str:
+    """Literal bullet lines. xhtml2pdf's <ul>/<li> inside a table cell indents
+    unpredictably and sometimes swallows the marker, so the bullet is drawn as text."""
+    if len(items) == 1:
+        return _esc(items[0])
+    return "<br/>".join(f"&bull;&nbsp; {_esc(i)}" for i in items)
+
+
+def _period_card(lo_items: List[str], materials: str, notes: str) -> str:
+    """The period's standing fields as ONE bordered stack of labelled rows (2026-08-23).
+
+    Replaces three same-weight `label: value` paragraphs that ran together into grey mush
+    once a materials list got long. Every row is `LABEL | value` on a fixed label column,
+    so the labels form a scan rail down the left edge — §4's ledger-hairline idiom.
+
+    The LO row appears ONLY for the subjects whose LO is authored per period (SS, TWAU).
+    Where it belongs to the group instead (science stage, English spine, maths secondary
+    section) it is printed once on the band above and deliberately NOT repeated here —
+    founder, 2026-08-23. So the card is a two-row stack for those subjects and a three-row
+    stack for these, with the same grammar either way.
+
+    Built as a table, not divs: xhtml2pdf has no flexbox or grid, and a float-based
+    two-column rule breaks as soon as the value wraps past the label's height.
+    """
+    rows = []
+    if lo_items:
+        rows.append(("Learning outcome" + ("s" if len(lo_items) > 1 else ""),
+                     _bullets(lo_items)))
+    if materials:
+        rows.append(("Materials", _esc(materials)))
+    if notes:
+        rows.append(("Teacher notes", _esc(notes)))
+    if not rows:
+        return ""
+    # ONE class per cell, never "pc-k pc-top": xhtml2pdf's CSS matcher does not reliably
+    # resolve a multi-valued class attribute, which is why the first cut lost the label
+    # colour as well as the rule. The row-divider variants are separate whole classes.
+    # Labels are uppercased HERE because `text-transform` is not honoured either.
+    trs = "".join(
+        f'<tr><td class="{"pc-kt" if i else "pc-k"}" width="19%">{_esc(k).upper()}</td>'
+        f'<td class="{"pc-vt" if i else "pc-v"}">{v}</td></tr>'
+        for i, (k, v) in enumerate(rows)
+    )
+    return f'<table class="pcard">{trs}</table>'
+
+
 def _lo_line(text: str) -> str:
     """The lesson plan's own LO line (2026-08-23). Until now the LO reached the teacher
     ONLY through the assessment, so anyone using the plan alone never saw what the
@@ -541,7 +618,7 @@ def _stages_body(groups: List[Dict[str, Any]], subject: str = "") -> str:
                 f'<table class="stage-band"><tr><td>'
                 f'<span class="st-k">{_esc(word)} {i}</span><br/>'
                 f'<span class="st">{_esc(g.get("label"))}</span>'
-                + (f'<br/><span class="st-lo-k">Learning outcome:</span> '
+                + (f'<br/><span class="st-lo-k">LEARNING OUTCOME</span> '
                    f'<span class="st-lo">{_esc(glo)}</span>' if glo else "")
                 + f'</td></tr></table>'
             )
@@ -590,10 +667,10 @@ def _period_block(p: Dict[str, Any], *, is_first: bool = False,
     )
 
     mats = p.get("materials") or []
-    mat_line = (
-        f'<div class="p-line"><span class="p-lbl">Materials:</span> {_esc(", ".join(mats))}</div>'
-        if mats else ""
-    )
+    # Middot-joined, not comma-joined: a materials entry is often itself a comma list
+    # ("Lemon juice, soap solution, baking soda solution, …"), so commas alone gave one
+    # undifferentiated run in which the teacher could not see where an item ended.
+    mats_txt = " · ".join(str(m).strip() for m in mats if str(m).strip())
 
     # Typed prepared content (polish pass, 2026-08-18): the port pre-splits table aids
     # through normalize.parse_table, so this renders STRUCTURE — a teacher printing the
@@ -659,10 +736,7 @@ def _period_block(p: Dict[str, Any], *, is_first: bool = False,
     # Teacher notes — the colleague's margin note (view-model first-class field),
     # replacing the raw activity description.
     notes = p.get("teacher_notes") or []
-    notes_line = (
-        f'<div class="p-line"><span class="p-lbl">Teacher notes:</span> {_esc(" ".join(notes))}</div>'
-        if notes else ""
-    )
+    notes_txt = " ".join(str(n).strip() for n in notes if str(n).strip())
 
     phases = [ph for ph in (p.get("phases") or []) if ph.get("text") or ph.get("label")]
     if phases:
@@ -685,12 +759,15 @@ def _period_block(p: Dict[str, Any], *, is_first: bool = False,
         if hw else ""
     )
 
-    # LO sits directly under the period band — the framing the teacher reads before the
-    # materials and the timed spine. A period-level LO (SS, TWAU) always wins; fallback_lo
-    # carries a GROUP's LO down to its first period on the layouts that render no band.
-    lo_html = _lo_line(period_lo(p) or fallback_lo)
+    # A period-level LO (SS, TWAU) becomes the card's first row — several where the unit
+    # carries several edges. fallback_lo is the GROUP's LO, and only ever arrives on the
+    # layouts that render no band at all (maths, SS's flat single "unit" group), so it can
+    # never duplicate a band that already printed it.
+    lo_items = [x for x in (p.get("learning_outcomes") or []) if str(x).strip()] \
+        or ([fallback_lo] if fallback_lo else [])
+    card = _period_card(lo_items, mats_txt, notes_txt)
 
-    return band + lo_html + mat_line + notes_line + aids_html + phase_tbl + homework
+    return band + card + aids_html + phase_tbl + homework
 
 
 def export_lesson_plan_pdf(
