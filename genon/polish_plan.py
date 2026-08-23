@@ -6,7 +6,7 @@ The teacher-facing path is the "Smooth unit transitions with AI" checkbox in Pre
 SAME function over a plan already on disk, so a polish pass can be judged without
 creating another plan in the teacher's library:
 
-    python3 genon/polish_plan.py data/content/saved_plans/social_sciences/ix/ch_05_20260726_120401.json --dry
+    python3 genon/polish_plan.py data/cloud/content/saved_plans/social_sciences/ix/ch_05_20260726_120401.json --dry
     ANTHROPIC_API_KEY=... python3 genon/polish_plan.py <plan.json>
 
 --dry builds and prints the flagged payload (no API call, no spend). A live run writes

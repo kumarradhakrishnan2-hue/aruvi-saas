@@ -138,17 +138,19 @@ The pipeline's inputs and outputs all live in the **Aruvi-SaaS** repo:
 | Item | Aruvi-SaaS path |
 |---|---|
 | Chapter PDFs (source textbooks) | `textbooks/{subject}/{grade}/` |
-| Summary output | `data/content/chapters/{subject}/{grade}/summaries/` |
-| Mapping / effort-index output | `data/content/chapters/{subject}/{grade}/mappings/` |
-| Curricular Goals / framework | `data/content/framework/{subject}/{stage}/` |
-| Mapping constitutions | `data/content/constitutions/competency_mapping/{subject}/{stage}/` |
+| Summary output | `data/authoring/chapters/{subject}/{grade}/summaries/` |
+| Mapping / effort-index output | `data/cloud/content/chapters/{subject}/{grade}/mappings/` |
+| Curricular Goals / framework | `data/cloud/content/framework/{subject}/{stage}/` |
+| Mapping constitutions | `data/authoring/constitutions/competency_mapping/{subject}/{stage}/` |
 
-`data/content/` is the app's Bucket A content root (`api/config.py` `DATA_DIR`) — files delivered
-there are what the SaaS reads at runtime. The Social Sciences prompts (middle Step 2, secondary
-Step 1 and Step 2) already state these Aruvi-SaaS paths. **Where an older prompt's internal path
-table still says `mnt/data/knowledge_commons/textbooks/...` or `mnt/data/mirror/...`, translate:
-textbooks → `textbooks/{subject}/{grade}/` and `mirror/chapters/...` → `data/content/chapters/...`,
-both under the Aruvi-SaaS root.** Never write pipeline output into Project Aruvi.
+Two roots since 2026-08-23 (CLOUD_DATA_MODEL.md §0.5): `data/cloud/content/` is the app's
+runtime content root (`api/config.py` `DATA_DIR`) — mappings delivered there are what the SaaS
+reads; `data/authoring/` is the founder-secure root (summaries, constitutions) that never syncs
+to production. **Where an older prompt's internal path table still says
+`mnt/data/knowledge_commons/textbooks/...`, `mnt/data/mirror/...`, or the pre-split
+`data/content/...`, translate: textbooks → `textbooks/{subject}/{grade}/`, summaries/
+constitutions → `data/authoring/...`, mappings/framework → `data/cloud/content/...`, all under
+the Aruvi-SaaS root.** Never write pipeline output into Project Aruvi.
 
 ---
 

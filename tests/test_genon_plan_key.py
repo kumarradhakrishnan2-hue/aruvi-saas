@@ -12,7 +12,7 @@ Guards:
   4. save -> load round trip with an explicit filename (the cache fill + hit),
      and that a second save of the same key does not create a second file.
 
-Run:  ARUVI_DATA_DIR=$PWD/data/content python3 tests/test_genon_plan_key.py
+Run:  ARUVI_DATA_DIR=$PWD/data/cloud/content python3 tests/test_genon_plan_key.py
 (stdlib only, like every other suite)
 """
 import copy
@@ -23,7 +23,7 @@ import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.environ.setdefault("ARUVI_DATA_DIR", os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "content"))
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "cloud", "content"))
 
 from api import data  # noqa: E402
 

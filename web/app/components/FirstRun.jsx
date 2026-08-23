@@ -66,7 +66,7 @@ import { RollWheel, normPpw, ppwMapSum, lowestDuration, DEFAULT_PPW } from "./wh
 
 // ── The calibrated standard (founder, 2026-07-26) ──
 // Both defaults on the chapter step now come from OUR calibrated master plan
-// (data/content/allocation_norms/master_plan.json), served by GET /subjects/{s}/{g}/chapters
+// (data/cloud/content/allocation_norms/master_plan.json), served by GET /subjects/{s}/{g}/chapters
 // as `standard_duration_minutes` (class-banded: 40 for ≤VII, 45 for VIII, 50 for IX–X) and
 // per-chapter `recommended_periods` (share of the calibrated annual budget by effort weight).
 // That is the same basis the certified canonicals were authored at — SS IX ch 5 is 21×50 —

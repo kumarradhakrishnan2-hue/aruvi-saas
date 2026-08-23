@@ -1,6 +1,6 @@
 """The calibrated standard is what the product defaults to (founder, 2026-07-26).
 
-Two period tables live under data/content/allocation_norms/ and they disagree:
+Two period tables live under data/cloud/content/allocation_norms/ and they disagree:
 
   ncf_period_norms.json  — the NCF adaptation. Annual totals by subject·STAGE, counted in a
                            flat 40-minute period (its own _meta.unit says so).

@@ -127,6 +127,21 @@ def test_api_routes():
     # Traversal-ish chapter identity is rejected.
     assert c.post("/plan-notes", json={**body, "chapter": "../evil"},
                   headers=h).status_code == 400
+    # Grade normalization (kumar23's live find, 2026-08-22): the client sends the view
+    # model's DISPLAY grade ("Grade IV"), but the key must use the common slug ("iv") so
+    # notes agree with every sibling store. Display and slug forms must hit the SAME note.
+    c.post("/plan-notes", json={"subject": "The_World_Around_Us", "grade": "Grade IV",
+                                "chapter": "5", "text": "display-grade write",
+                                "updated_at": "2026-08-22T10:00:00+00:00"}, headers=h)
+    notes = c.get("/plan-notes", headers=h).json()["notes"]
+    assert "the_world_around_us/iv/5" in notes, f"got keys: {list(notes)}"
+    r = c.post("/plan-notes", json={"subject": "the_world_around_us", "grade": "iv",
+                                    "chapter": "5", "text": "slug write, same note",
+                                    "updated_at": "2026-08-22T11:00:00+00:00"}, headers=h)
+    assert r.json()["status"] == "saved"
+    notes = c.get("/plan-notes", headers=h).json()["notes"]
+    assert notes["the_world_around_us/iv/5"]["text"] == "slug write, same note"
+    assert len([k for k in notes if k.endswith("/5")]) == 1, "one note, not two keys"
     # Another teacher sees nothing.
     assert c.get("/plan-notes", headers={"X-Aruvi-User": "OtherKumar"}).json()["notes"] == {}
     print("✓ /plan-notes routes: save, list, 409-with-newer, delete, isolation")

@@ -342,7 +342,7 @@ def test_unit_granularity_stages_are_untouched():
     for sub, gr, ch in (("social_sciences", "ix", "ch_03"),
                         ("social_sciences", "viii", "ch_03"),
                         ("science", "ix", "ch_08")):
-        fs = sorted(glob.glob("data/content/saved_plans/%s/%s/%s_canonical*.json"
+        fs = sorted(glob.glob("data/cloud/content/saved_plans/%s/%s/%s_canonical*.json"
                               % (sub, gr, ch)))
         if not fs:
             continue

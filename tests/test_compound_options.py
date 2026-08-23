@@ -22,7 +22,7 @@ from aruvi_core.compound_options import (          # noqa: E402
 )
 from aruvi_core.normalize import normalize_options  # noqa: E402
 
-SAVED = REPO / "data" / "content" / "saved_plans" / "english" / "ix"
+SAVED = REPO / "data" / "cloud" / "content" / "saved_plans" / "english" / "ix"
 
 
 def opt(label, text, correct=False):
@@ -135,7 +135,7 @@ def test_the_two_real_items():
 
 
 if __name__ == "__main__":
-    os.environ.setdefault("ARUVI_DATA_DIR", str(REPO / "data" / "content"))
+    os.environ.setdefault("ARUVI_DATA_DIR", str(REPO / "data" / "cloud" / "content"))
     test_flat_items_are_untouched()
     test_both_notations_group_identically()
     test_compound_groups_and_letters()

@@ -11,7 +11,7 @@
   4. LO is NEVER displayed in the LP (renderer rule — asserted here only as:
      the data stays available for assessment linking, i.e. we don't destroy it).
 
-Run:  ARUVI_DATA_DIR=$PWD/data/content python3 tests/test_lp_standard.py
+Run:  ARUVI_DATA_DIR=$PWD/data/cloud/content python3 tests/test_lp_standard.py
 """
 import glob
 import json
@@ -28,7 +28,7 @@ import aruvi_core.subjects.the_world_around_us  # noqa: F401
 from aruvi_core import subjects
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SAVED = os.path.join(REPO, "data", "content", "saved_plans")
+SAVED = os.path.join(REPO, "data", "cloud", "content", "saved_plans")
 
 failures = []
 

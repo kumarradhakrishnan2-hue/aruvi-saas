@@ -112,7 +112,7 @@ def main() -> int:
 
     # Is this the standard canonical or a compact? The master plan's counts settle it —
     # the top is the largest, anything below it installs under its own _pNN name.
-    mp = json.loads((HERE.parent / "data/content/allocation_norms/master_plan.json")
+    mp = json.loads((HERE.parent / "data/cloud/content/allocation_norms/master_plan.json")
                     .read_text(encoding="utf-8"))
     klass = {"iii": "III", "iv": "IV", "v": "V", "vi": "VI", "vii": "VII",
              "viii": "VIII", "ix": "IX", "x": "X"}[grade_folder]

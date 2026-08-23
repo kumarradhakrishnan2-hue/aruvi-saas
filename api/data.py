@@ -171,7 +171,7 @@ def load_saved_plan(subject: str, grade: str, filename: str) -> Optional[Dict[st
 
 
 # ── master allocation plan (2026-07-25) ─────────────────────────────────────────
-# data/content/allocation_norms/master_plan.json — derived from the founder's
+# data/cloud/content/allocation_norms/master_plan.json — derived from the founder's
 # allocation workbook (ncf_chapterwise_period_allocation.xlsx) by genon/master_plan.py.
 # It knows the FULL syllabus per subject·grade, INCLUDING placeholder chapters that
 # have no content yet — so it is the single source for allocation numerators
@@ -281,7 +281,7 @@ def master_canonical_plan(subject: str, grade: str, chapter_number: int) -> Opti
 
 
 # ── genon canonicals (relocated 2026-07-25, founder decision) ───────────────────
-# data/content/ is the home of ALL crucial server content, and saved_plans/ is the
+# data/cloud/content/ is the home of ALL crucial server content, and saved_plans/ is the
 # home of lesson plans — so the certified canonicals live THERE, as ordinary
 # saved-plan files named ch_NN_canonical.json (plan_status "canonical"). The genon/
 # folder holds engine code only, never content. The phase stream is DERIVED: it is

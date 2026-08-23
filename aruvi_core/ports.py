@@ -260,6 +260,53 @@ class PlanNoteRepository(Protocol):
         ...
 
 
+# ── Data rights: export + erase (administrative architecture Step 4) ────────────
+# One traversal, three obligations: DPDP data portability, DPDP erasure, Apple
+# 5.1.1(v) in-app account deletion. Both actions must remain reachable while the
+# subscription is LAPSED (§2.5) — data rights do not lapse with payment. The export
+# walks every Bucket-B store a teacher owns; it NEVER includes the shared lesson-plan
+# library (that is licensed content she already has as PDFs — §2.6, and copying it
+# per-tenant breaks the cache economics and the IP model). Erase walks the same path
+# destructively and is precise, not absolute (§2.6): the receipt NAMES what is kept
+# and why — disaster-recovery backups (purged ≤30 days), statutory tax records, and
+# the shared content that was never hers. After erase the user ID is NOT reserved:
+# signing in again JIT-creates a brand-new empty account (founder, 2026-08-22 — a
+# tombstone would itself be a remnant).
+@dataclass
+class ErasureReceipt:
+    """What an erase did — returned to the caller, deliberately NOT stored (a stored
+    receipt under her key would itself be a remnant). `kept` wording must match what
+    the privacy policy actually promises; test_data_rights pins it."""
+    erased: List[str] = field(default_factory=list)     # human-readable, e.g. "chapter notes (2026-27)"
+    kept: List[Dict[str, str]] = field(default_factory=list)   # [{"what": …, "why": …}]
+    erased_at: str = ""
+
+
+@runtime_checkable
+class DataRightsService(Protocol):
+    """Port over the export/erase traversal. The file reference implementation
+    (adapters/data_rights_service_file.py) walks the Bucket-B file stores; the
+    partner's cloud adapter re-implements both methods against their DB — for erase
+    that is one tenant-scoped DELETE per table, which is also the moment RLS is
+    proven real: if this traversal can reach another tenant's row, isolation never
+    existed."""
+    def export(self, tenant_id: str, user_id: str, fmt: str = "docx") -> bytes:
+        """Everything this teacher owns, as ONE document: her account record, teaching
+        profile, chapter notes across every year — each beside its chapter's identity —
+        and her teaching state per year. `fmt` is "docx" (default — editable, because
+        notes are notes to her future self: she will extend them, not just read them)
+        or "pdf" (same document via the same xhtml2pdf engine the allocation report
+        uses; founder 2026-08-22 — every Aruvi export offers both). Raise ValueError
+        for any other fmt."""
+        ...
+
+    def erase(self, tenant_id: str, user_id: str) -> "ErasureReceipt":
+        """Destroy everything export() reaches, account record last, and return the
+        receipt. Idempotent: erasing an already-empty identity returns an empty
+        `erased` list and never errors."""
+        ...
+
+
 # ── Billing (Razorpay etc.; provider is just the charging mechanism) ───────────
 @runtime_checkable
 class BillingProvider(Protocol):

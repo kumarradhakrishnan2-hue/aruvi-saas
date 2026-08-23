@@ -17,7 +17,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "genon"))
 
-os.environ.setdefault("ARUVI_DATA_DIR", str(REPO / "data" / "content"))
+os.environ.setdefault("ARUVI_DATA_DIR", str(REPO / "data" / "cloud" / "content"))
 
 from summary_sections import (  # noqa: E402
     NONE, PROSE, STRUCTURED, closing_anchors, reconcile, summary_sections,
@@ -141,7 +141,7 @@ class TestAgainstTheInstalledCorpus(unittest.TestCase):
         import json
         from aruvi_core.genon import compile_stream
         from aruvi_core.genon.serve import section_registry
-        p = (REPO / "data" / "content" / "saved_plans" / subject / grade
+        p = (REPO / "data" / "cloud" / "content" / "saved_plans" / subject / grade
              / f"ch_{ch:02d}_canonical.json")
         top = compile_stream(json.loads(p.read_text()))
         return section_registry(top), closing_anchors(top)

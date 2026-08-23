@@ -1419,7 +1419,7 @@ class TestCompileEndToEnd(unittest.TestCase):
         if not p.is_file():
             self.skipTest("TWAU V prototype plan not on disk")
         summ = (Path(__file__).resolve().parents[1]
-                / "data/content/chapters/the_world_around_us/v/summaries/ch_05_summary.json")
+                / "data/authoring/chapters/the_world_around_us/v/summaries/ch_05_summary.json")
         if not summ.is_file():
             self.skipTest("TWAU V ch 5 summary not on disk")
 
@@ -2011,5 +2011,5 @@ class TestCertifierHoldsOnAMediatedAnchorStage(unittest.TestCase):
 
 if __name__ == "__main__":
     os.environ.setdefault("ARUVI_DATA_DIR", str(Path(__file__).resolve().parents[1]
-                                                / "data" / "content"))
+                                                / "data" / "cloud" / "content"))
     unittest.main(verbosity=2)

@@ -15,10 +15,10 @@ Two properties are locked here, and they are different:
      caught the defect; property 1 alone would not have, because the ports read the
      authored key, not the normalized one.)
 
-Stdlib only. Needs ARUVI_DATA_DIR=$PWD/data/content for the end-to-end half; that half
+Stdlib only. Needs ARUVI_DATA_DIR=$PWD/data/cloud/content for the end-to-end half; that half
 skips itself, loudly, when no library is on disk.
 
-    ARUVI_DATA_DIR=$PWD/data/content python3 tests/test_genon_approach_survives_serve.py
+    ARUVI_DATA_DIR=$PWD/data/cloud/content python3 tests/test_genon_approach_survives_serve.py
 """
 import os
 import pathlib
@@ -73,7 +73,7 @@ print("\nend-to-end: a served plan renders an approach on every unit")
 import json  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-PLANS = pathlib.Path(os.environ.get("ARUVI_DATA_DIR", ROOT / "data/content")) / "saved_plans"
+PLANS = pathlib.Path(os.environ.get("ARUVI_DATA_DIR", ROOT / "data/cloud/content")) / "saved_plans"
 
 LIBRARIES = [
     ("mathematics", "ix", 4, 13),
@@ -122,7 +122,7 @@ for subject, grade, chapter, periods in LIBRARIES:
 
 if not ran:
     print("  NOTE: no libraries found — the end-to-end half did not run. Set "
-          "ARUVI_DATA_DIR=$PWD/data/content")
+          "ARUVI_DATA_DIR=$PWD/data/cloud/content")
 
 print()
 if FAILURES:

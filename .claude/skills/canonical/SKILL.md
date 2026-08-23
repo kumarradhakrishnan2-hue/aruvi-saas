@@ -20,9 +20,9 @@ files are the prompt — read the live files fresh each run, never quote them fr
 1. Confirm subject, grade, chapter number with the user.
 2. Preconditions on disk — check, do not create:
    - chapter summary + competency mapping exist (else: run the `chapter` skill first);
-   - `data/content/constitutions/lesson_plan/<subject>/<stage>/lesson_plan_constitution.txt`
+   - `data/authoring/constitutions/lesson_plan/<subject>/<stage>/lesson_plan_constitution.txt`
      and the matching assessment constitution exist; record both VERSION lines;
-   - the chapter's row exists in `data/content/allocation_norms/master_plan.json`
+   - the chapter's row exists in `data/cloud/content/allocation_norms/master_plan.json`
      (note `recommended_periods`, `floor_periods_at_standard`, `variant_plan`).
 3. If a `ch_NN_canonical.json` already exists for this chapter, ask the user whether this
    run REPLACES it (regeneration re-keys every derived plan — offered, never substituted)

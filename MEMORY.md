@@ -687,7 +687,250 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-22 (newest) — ADMIN ARCHITECTURE STEP 3 BUILT: CHAPTER NOTES SERVER-BACKED
+## 2026-08-23 (newest) — THE CLOUD/LOCAL RESTRUCTURE: data/cloud/ IS THE
+## MIGRATION UNIT, data/authoring/ IS FOUNDER-SECURE
+
+**Why.** The founder asked, given the genon architecture (authored canonicals + deterministic
+serve + on-demand exports), what the MINIMUM production cloud artifacts are. Tracing actual
+runtime reads settled it: serving is selection, never generation, so **no constitution, no
+framework prompt-text, no chapter summary and no LLM is read at serve time**. The old
+"everything under data/ migrates" promise (CLAUDE.md §5) was therefore FALSE for the minimum —
+`data/content/` interleaved runtime serve content with the deepest authoring IP. Two findings
+against the standing docs while tracing: (a) **chapter summaries are read by NOTHING at
+runtime** — `GET /chapters` builds its list from MAPPINGS + the master-plan combo (summaries
+are authoring inputs + the certification registry-of-record only); (b) **framework/ is
+split-use** — the runtime DOES read `competency_descriptions_*.json` + english
+`spine_to_cg.json`, while the cg/pedagogy .txt are prompt inputs (public-NCF-derived, so the
+whole framework/ tree rides in cloud rather than splitting a second tree).
+
+**The layout (CLOUD_DATA_MODEL.md §0.5, the new authority).** `data/cloud/` goes to
+production byte for byte: `content/` (allocation_norms · chapters/**/mappings · framework ·
+saved_plans = certified libraries + the served-plan cache) → object store behind `DATA_DIR`;
+`state/` (accounts · academic_years · readiness · allocations · section_state ·
+prepared_plans · plan_archive · plan_notes) → Supabase behind `STATE_DIR`. `data/authoring/`
+(constitutions, chapters/**/summaries) is FOUNDER-SECURE, never syncs, and — grep-able
+invariant — is NEVER read by `api/` or `aruvi_core/`; promotion of an authoring artifact to
+runtime is a recorded decision first. `data/testing/` stays local behind the new
+`TESTING_DIR` seam (`ARUVI_TESTING_DIR`), deliberately outside the migration unit. The
+served-plan store is a CACHE (deterministic ~ms serves, deterministically named): it may
+start empty in cloud, but the read path has no regen-on-miss yet, so sync it or build that
+first (§4 step 4 records this).
+
+**What changed.** `aruvi-scripts/migrate_cloud_layout.py` (idempotent, move-never-copy,
+refuses to merge) performed the physical move. `api/config.py`: DATA_DIR → `data/cloud/
+content`, STATE_DIR → `data/cloud/state`, new TESTING_DIR; `api/testing_campaign.py` uses
+TESTING_DIR. `genon/prompt_assembly.py` grew `AUTHORING_ROOT` (`ARUVI_AUTHORING_DIR`) and
+routes constitutions + summaries there, framework + mappings to DATA_ROOT. Living genon
+modules repointed (master_plan, variant_plans, build_library, extract_determinate,
+recover_from_raw, polish_plan); **spent one-shot repair/amend scripts deliberately left on
+the old paths** — they are history, not tooling. All `tests/` defaults/docstrings updated
+(the TWAU summary fixture now under `data/authoring/`). Skills: `chapter` SKILL.md's path
+table splits summaries→authoring / mappings→cloud; `canonical` SKILL.md repointed —
+**both need re-pasting into Settings > Capabilities** (the loaded cache is read-only).
+CLAUDE.md §5/§7 rewritten. A `.DS_Store`-only husk of `data/content/` remains (sandbox
+cannot delete); founder removes by hand.
+
+**Cross-confirmation.** The parallel 2026-08-23 mapping session below hit the move mid-flight,
+briefly read it as data loss, then verified the full corpus intact at the new root and all ten
+content-reading tests green there — see its item (4) for the carry-forward lesson.
+
+---
+
+## 2026-08-23 — SS JUSTIFICATIONS SHORTENED UNDER 120 WORDS, THE
+## SECOND MACHINERY SWEEP, AND A NOTE ON THE data/cloud RELOCATION
+
+Follow-on to the de-leak entry below. Three things happened.
+
+**(1) Length banding exposed a tail.** Word-count bands per subject (now a **Word bands**
+tab in `docs/aruvi_mapping_internal_references.xlsx`) showed social sciences alone carrying
+a long tail: 48 justifications at 121–180 words and **29 above 180**, one at 251. Maths,
+TWAU and science topped out inside 81–120 with a handful of outliers. A 250-word paragraph
+in the LP competency table is unreadable whether or not it cites Rule 5(b) — length is the
+second half of the same problem.
+
+**(2) The 77 SS justifications over 120 words were rewritten, 13,170 → 8,288 words (−37%).**
+Not a regex job: each was condensed by hand (four parallel subagents on a fixed brief, then
+verified centrally). The brief: keep the named sections/activities **in their exact quoted
+form and spelling, diacritics included** — that is how a teacher locates the material — keep
+the closing judgement of centrality, cut restatement of the competency's own wording and
+repeated enumeration, invent nothing. Verification was independent of the agents' own
+claims: every capitalised phrase and quoted name in a proposal was traced back to its source
+(**zero fabricated section names**), the banned machinery vocabulary was re-checked, and word
+counts recomputed. Longest result 117 words, median 108. Applied with the same byte-safe swap
++ structural deep-diff as the first pass, with a pre-write assert that each field still
+matched the text the proposal was written against (`aruvi-scripts/mapping_shorten_ss.py`).
+
+**(3) A SECOND machinery sweep — the first scan had missed 92 instances, and the lesson is
+about CASE and word-FORM.** The original classifier was case-sensitive and matched only the
+exact phrases seen in samples, so it never saw: **`architecturally` / `architectural`** (109
+across every subject — "the chapter is architecturally organised around", "the chapter's
+architectural spine"; the adverb is always droppable, the adjective nearly so),
+**"Named structural element qualifying as present."** as a whole sentence (capital N — 18,
+SS·vii ships it in eight chapters), **"qualifying as weight 1"** (lowercase w), and
+**"Remove C-6.4 and … dissolves"** (a C-code where the pattern expected "this competency").
+All 92 fixed (`mapping_deleak_fixup2.py`), plus one article slip (`an passing reference`,
+`mapping_deleak_fixup3.py`). **Two survivors are deliberate and must stay:** "spanning its
+sub-disciplines" (SS·ix ch 5 — NCF curriculum vocabulary) and "the dissolution of the Maurya
+Empire" (SS·vii ch 6 — actual history). A third, "substantive from procedural justice"
+(SS·viii ch 11), is a legal term of art. **Corpus state: 942 justifications, 66,176 words,
+zero machinery hits under a case-insensitive scan, no SS field over 120 words.** All four
+scripts are idempotent and now re-run as clean no-ops — that is the regression check.
+
+**(4) ⚠ THE DATA ROOT MOVED MID-SESSION — `data/content/` → `data/cloud/content/`.** Another
+session performed the physical Bucket A/B split while this work was in flight (`api/config.py`
+now defaults `DATA_DIR` to `data/cloud/content` and `STATE_DIR` to `data/cloud/state`; new
+`data/authoring/` and `data/testing/` trees alongside). **Nothing was lost — the move carried
+the amended files** (verified: 334 mapping files at the new path, 942 justifications, zero
+machinery, zero SS fields over 120 words, and the amended SS·ix ch 4 C-2.4 text present).
+For five minutes it LOOKED like the corpus had been deleted, because `data/content/` was left
+behind holding only `.DS_Store` files. Two things to carry forward: **when a path under
+`data/` suddenly reads empty, look for the tree having MOVED before assuming loss** (the
+`find`-by-name across the repo root is the fast check); and **any tooling that hardcodes
+`data/content/` is now pointing at an empty directory** — the four `mapping_deleak_*`
+scripts and `mapping_shorten_ss.py` were re-pointed at `data/cloud/content/chapters`, and the
+test invocation is now `ARUVI_DATA_DIR=$PWD/data/cloud/content`. All ten content-reading tests
+green at the new root.
+
+---
+
+## 2026-08-22 — THE MAPPING JUSTIFICATIONS ARE DE-LEAKED: THE
+## CONSTITUTION'S MACHINERY NO LONGER REACHES THE TEACHER
+
+**The leak.** `export_lesson_pdf.targeted_competencies` copies each mapping's
+`justification` field VERBATIM into the lesson plan's competency table. Those fields were
+written as an audit trail for the *authoring* pipeline, so they argue the weighting the way
+the constitution reasons about it — and the teacher was reading it. The founder's example:
+SS·ix ch 4 C-2.4 ended "…is developed substantively across multiple named sections,
+**satisfying Rule 5(b)**." A teacher has no need for Rule 5(b), or for Weight 2, or for the
+dissolution test.
+
+**The corpus scan (all 334 mapping files).** 346 sentences in 87 files, five kinds:
+(A) **rule citations** — "satisfying Rule 5(a)", "Weight 1 under Rule 6", "Rule 7 permits
+Weight 3", "Rule 8's positional test", "under Rules 4 and 7" — 101; (B) **weight machinery**
+— "Weight 2, not Weight 3", "confirming Weight 3 eligibility" — 29; (C) **the dissolution
+test** — "Complete removal of this competency structurally dissolves…" — 34; (D) **the rule
+wording quoted verbatim without naming a rule** — "architecturally distinct", "could stand
+alone as a learning unit", "developed substantively and deliberately across multiple named
+sections", "the sub-discipline governing the chapter's primary structural activity" — 117
+(the largest class, and the one a grep for "Rule" misses); (E) **classification words used as
+verdicts** — substantive / incidental / adjunct / co-central — 65. Concentration:
+**social_sciences 303** (viii 15 files, vi 14, vii 12, ix 9), mathematics 34, science 7,
+TWAU 2. **English mappings carry no `justification` at all**, so nothing leaked there.
+
+**Applied 2026-08-22.** 321 sentences rewritten in teacher language (Weight 3 → "the
+chapter's central focus", Weight 2 → "a major strand", Weight 1 → "a supporting mention",
+"could stand alone as a learning unit" → "could be taught as a lesson in its own right",
+"Complete removal … dissolves" → "the chapter would have no purpose without it"); **25
+deleted outright** because the sentence WAS the verdict and nothing else — SS·viii ships a
+bare "Rule 6 is satisfied." in thirteen chapters, and SS·vii a bare "History
+sub-discipline." **Two kept on purpose:** "substantive from procedural justice" (SS·viii
+ch 11) is a legal term of art, and "spanning its sub-disciplines" (SS·ix ch 5) is NCF
+curriculum vocabulary — neither is Aruvi machinery.
+
+**How, and why it is safe.** `aruvi-scripts/mapping_deleak_{common,scrub,patch,fixup}.py`.
+The write is a **byte-safe swap in the raw file text** — the old justification is re-encoded
+with `json.dumps` (both `ensure_ascii` variants tried) and replaced only when it occurs
+exactly once — never a re-serialisation, so indentation, key order and unicode escaping are
+untouched everywhere else. Every file is re-parsed after the swap and deep-compared to the
+original with `justification` blanked; the run aborts on any structural drift. Verified:
+334 files parse, every `weight`/`c_code`/`cg` and list length identical, 87 files changed,
+all five subject-port parity tests + `test_lp_standard` + `test_calibrated_defaults` green,
+and every one of the 321 rewrites located on disk. **Re-running the scripts is a no-op** —
+they are idempotent, which is the cheapest regression check there is. Backup:
+`outputs/backup/mappings_backup_20260822.tar.gz` (data/ is git-ignored — there is no other
+safety net). Audit record with every before/after pair:
+`docs/aruvi_mapping_internal_references.xlsx`.
+
+**Two traps worth remembering.** (1) The scrub is *sentence-scoped*, and the sentence
+splitter must treat `.'` and `."` as sentence ends — without that, a dissolution sentence
+following a quoted clause is not sentence-initial and comes back lowercase mid-paragraph.
+(2) A naive `\b([A-Z][A-Za-z ]+?) sub-discipline\b` eats "**Because the** sub-discipline";
+the discipline names had to be enumerated (History|Geography|Political Science|Economics).
+Both were caught by reading the output, not by the residual-machinery regex — a clean
+scanner says nothing about grammar.
+
+**NOT changed, still open.** 146 mapping files carry `"summary_path": "mirror/chapters/…"`,
+a path into the retired prototype mirror rather than this repo's `data/content/` — stale
+plumbing, nothing reads it today. science + mathematics mappings keep a chapter-level
+`dissolution_test` FIELD; the name is internal but its prose is fine and it does not reach
+the LP. **The real fix is upstream:** the authoring prompts under `cowork prompts/` are what
+taught the model to argue this way, so a regenerated chapter will re-introduce the machinery
+unless they are amended to say the justification is read by TEACHERS.
+
+---
+
+## 2026-08-22 — ADMIN ARCHITECTURE STEP 4 BUILT: EXPORT + ERASE
+## (DataRightsService) — DPDP PORTABILITY, DPDP ERASURE, APPLE 5.1.1(v)
+
+Same session as Steps 0+1+3 below. **Founder decisions:** export is a WORD DOCUMENT ONLY
+(no JSON half — the spec's "notes to her future self" argument taken whole); scope is
+EVERYTHING Bucket-B (account, profile, notes across every year — each beside its chapter
+identity — allocations, section progress, prepared register, archive flags), never the
+shared plan library; after erase the user ID is NOT reserved — signing in again
+JIT-creates a fresh empty account (a tombstone would itself be a remnant, §2.6).
+Built: `ErasureReceipt` + `DataRightsService` in ports.py;
+`data_rights_service_file.py` (reads via the same file adapters the API uses; the ONE
+filesystem read is enumerating which subject·grade allocation registers exist — the
+port deliberately has no listing method; `_year_ids` unions opened years with on-disk
+year folders so orphaned data is never invisible to its owner);
+`export_data_rights_docx.py` (python-docx, style-matched to export_allocation_docx);
+routes `GET /data-rights/export` (docx download) + `POST /data-rights/erase` (requires
+the literal body `{"confirm": "erase"}` — a typed confirmation so no stray client call
+can destroy an account). **Erase mechanics:** account record LAST; `_rm` climbs and
+removes now-empty ancestor folders up to each store root (an empty folder named after
+her is still a remnant — the first test run caught exactly this; a school tenant's
+folder survives because it is non-empty); idempotent (second erase → empty `erased`,
+no error). **The receipt's `kept` wording is PINNED by test_data_rights** (backups
+purged ≤30 days · GST/tax records · shared library) — it must match the privacy policy;
+change both together or neither. NO entitlement gate on either route, ever (§2.5 —
+rights don't lapse with payment). Tests: NEW test_data_rights.py — export contents,
+**export-as-tenant-isolation-test** (tenant B's text must not appear in A's export),
+shared-library exclusion disclosure, erase completeness + receipt + idempotency +
+neighbour-untouched, route roundtrip (PK magic bytes, confirm guard, post-erase fresh
+start). Suite 29 files green (same 5 pre-existing content failures excluded). No web
+change this step (UI surfaces are Step 6) — founder smoke check: restart uvicorn, then
+`curl -H "X-Aruvi-User: kumar1" -o mydata.docx localhost:8000/data-rights/export` and
+open it in Word. Remaining: Steps 2 (cutover), 5 (entitlement), 6 (UI).
+**Export REFORMATTED same day (founder review of the first live export — six points):**
+(1) house format — the builder now IMPORTS the allocation report's helpers
+(`export_allocation_docx._run/_cell/_hairlines/_set_widths/_section_head/_rule` + palette),
+so the two documents cannot drift; (2) a PURPOSE paragraph at top — the spirit
+("everything you create in Aruvi belongs to you…"), deliberately no regulation names;
+(3) teaching profile as a TABLE (Subject · Class · Sections); (4) chapter notes NUMBERED,
+each a separated block with a bold identity line "N. Subject · Class N · Chapter N —
+Title"; (5) teaching state as a TABLE (No. · Subject · Class · Chapter · Sections ·
+Status) with **NO filenames, canonical identities, raw section keys or period counts** —
+test_data_rights now asserts their ABSENCE; (6) the closing note adds the pre-deletion
+advisory (export first; deletion removes all personal data within a short period,
+unrecoverable). Plumbing this needed: `_parse_section_key` (parse from the RIGHT — subject
+slugs contain underscores), `_chapter_num_from_file` ("ch_05_canonical.json" → 5, bare "3"
+tolerated), `_teaching_rows` grouping sections by subject·grade·chapter with plain-words
+status ("started" / "at Learning Unit N" / "completed"), and a `chapter_title` resolver
+INJECTED from api/main.py over `data.list_saved_plans` — the export's one window into
+Bucket-A content, kept at the API layer so the service never crosses the bucket boundary.
+Verified against kumar23's real data: profile table row "The World Around Us · IV · 4A",
+note block "1. … · Chapter 5 — Food for Health", state row "Ch. 5 — Food for Health · 4A ·
+4A: started".
+**PDF twin added, same day (founder: "both pdf and word options like all other
+exports"):** `export_data_rights_pdf.py` — the SAME payload through xhtml2pdf (the
+allocation report's engine and CSS vocabulary: Georgia brand header + clay dot, rule as
+1-cell table, hairline tables), so the two formats cannot disagree on content. Port +
+service `export()` gained `fmt: str = "docx"` ("docx" | "pdf", ValueError otherwise);
+route takes `?format=pdf` (400 on anything else). Both deps already in
+api/requirements.txt. Verified on kumar23's real data (pdftotext shows purpose, profile
+table, numbered note with chapter name, teaching-state table).
+**Live-export find, same day (kumar23):** the first real export showed the note key
+stored as "the_world_around_us/Grade IV/5" — the client sends the view model's DISPLAY
+grade, which varies by subject port, while every sibling store keys by the slug ("iv").
+Fixed by NORMALIZING the grade in the key on BOTH sides — api/main.py `_note_key`
+(authoritative; lowercases subject, strips grade/class prefix, spaces→_) and format.js
+`planNoteKey` (the GET-side lookup MUST mirror it or reconcile misses server notes) —
+plus a regression test (display form and slug form hit the SAME note) and a one-off
+rewrite of kumar23's stored key. Also confirmed NOT a bug: his "ch 4" note text sits
+under chapter 5 because he actually prepared ch_05 "Food for Health" (section state
+proves it) — the filing was correct, the memory was not.
+
+## 2026-08-22 — ADMIN ARCHITECTURE STEP 3 BUILT: CHAPTER NOTES SERVER-BACKED
 ## (PlanNoteRepository) — THE LAST DATA GAP CLOSED
 
 Same session as Steps 0+1 below. **The founder resolved spec §7's open item:** ONE note per

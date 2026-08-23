@@ -64,10 +64,16 @@ def _cache_ctrl() -> dict:
     """Return cache_control block if caching is enabled, else empty dict."""
     return {"cache_control": {"type": "ephemeral", "ttl": "1h"}} if USE_PROMPT_CACHE else {}
 
-# ── Data root (deviation 1: repo data/content instead of prototype mirror) ────
+# ── Data roots (2026-08-23: the cloud/local split, CLOUD_DATA_MODEL.md §0.5) ──
+# DATA_ROOT      = data/cloud/content — runtime serve content (mappings, framework).
+# AUTHORING_ROOT = data/authoring     — founder-secure pipeline inputs (constitutions,
+#                                       chapter summaries). Never reaches production.
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DATA_ROOT = Path(os.environ.get("ARUVI_DATA_DIR", REPO_ROOT / "data" / "content"))
+DATA_ROOT = Path(os.environ.get("ARUVI_DATA_DIR",
+                                REPO_ROOT / "data" / "cloud" / "content"))
+AUTHORING_ROOT = Path(os.environ.get("ARUVI_AUTHORING_DIR",
+                                     REPO_ROOT / "data" / "authoring"))
 
 # ── Stage derivation ──────────────────────────────────────────────────────────
 
@@ -108,15 +114,18 @@ def resolve_paths(grade: str, subject: str, chapter_number: int) -> dict:
     stage  = get_stage(grade)
     grade_f = grade_to_folder(grade)
     subj_f  = subject_to_folder(subject)
-    mirror  = DATA_ROOT  # deviation 1: was PROJECT_ROOT / "mirror"
+    # §0.5 routing: constitutions + summaries come from AUTHORING_ROOT (founder-
+    # secure); framework + mappings from DATA_ROOT (cloud serve content).
+    auth    = AUTHORING_ROOT
+    mirror  = DATA_ROOT
     nn      = f"{chapter_number:02d}"
     # Prefer stage-routed LP and assessment constitutions
     # (`{subject}/{stage}/...txt`); fall back to the flat path for subjects
     # that haven't been split by stage yet.
-    _lp_staged = mirror / f"constitutions/lesson_plan/{subj_f}/{stage}/lesson_plan_constitution.txt"
-    _lp_flat   = mirror / f"constitutions/lesson_plan/{subj_f}/lesson_plan_constitution.txt"
-    _ac_staged = mirror / f"constitutions/assessment/{subj_f}/{stage}/assessment_constitution.txt"
-    _ac_flat   = mirror / f"constitutions/assessment/{subj_f}/assessment_constitution.txt"
+    _lp_staged = auth / f"constitutions/lesson_plan/{subj_f}/{stage}/lesson_plan_constitution.txt"
+    _lp_flat   = auth / f"constitutions/lesson_plan/{subj_f}/lesson_plan_constitution.txt"
+    _ac_staged = auth / f"constitutions/assessment/{subj_f}/{stage}/assessment_constitution.txt"
+    _ac_flat   = auth / f"constitutions/assessment/{subj_f}/assessment_constitution.txt"
     return {
         "lp_constitution":  _lp_staged if _lp_staged.exists() else _lp_flat,
         "assessment_const": _ac_staged if _ac_staged.exists() else _ac_flat,
@@ -124,9 +133,9 @@ def resolve_paths(grade: str, subject: str, chapter_number: int) -> dict:
         # Mathematics and English summaries are .json (structured for LP/A
         # constitutions); all others are plain .txt.
         "chapter_summary":  (
-            mirror / f"chapters/{subj_f}/{grade_f}/summaries/ch_{nn}_summary.json"
+            auth / f"chapters/{subj_f}/{grade_f}/summaries/ch_{nn}_summary.json"
             if subj_f in _JSON_SUMMARY_SUBJECTS
-            else mirror / f"chapters/{subj_f}/{grade_f}/summaries/ch_{nn}_summary.txt"
+            else auth / f"chapters/{subj_f}/{grade_f}/summaries/ch_{nn}_summary.txt"
         ),
         "chapter_mapping":  mirror / f"chapters/{subj_f}/{grade_f}/mappings/ch_{nn}_mapping.json",
     }

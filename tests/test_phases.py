@@ -4,12 +4,12 @@ Covers:
   1. parse_minutes_band — en-dash / hyphen / em-dash / spaced / junk forms.
   2. phases_from — {minutes, description|activity} dicts -> typed Phase objects.
   3. phase_tiling_issues — gap / overlap / wrong-end detection.
-  4. THE REAL LIBRARY: every saved plan under data/content/saved_plans runs through its
+  4. THE REAL LIBRARY: every saved plan under data/cloud/content/saved_plans runs through its
      subject's lesson_plan_to_view; every period must carry parsed phases, and phase
      tiling is REPORTED (not asserted per-period — saved plans are carried as-is; we
      assert only that parsing succeeded and the overwhelming majority tile cleanly).
 
-Run:  ARUVI_DATA_DIR=$PWD/data/content python3 tests/test_phases.py
+Run:  ARUVI_DATA_DIR=$PWD/data/cloud/content python3 tests/test_phases.py
 (stdlib only, like every other suite)
 """
 import glob
@@ -29,7 +29,7 @@ import aruvi_core.subjects.the_world_around_us  # noqa: F401
 from aruvi_core import subjects
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SAVED = os.path.join(REPO, "data", "content", "saved_plans")
+SAVED = os.path.join(REPO, "data", "cloud", "content", "saved_plans")
 
 failures = []
 

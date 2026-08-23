@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { pushSectionState, readLocalBookmark, writeLocalBookmark } from "../lib/sectionState";
-import { userKey, boldMarks, fetchPlanNotes, savePlanNote } from "../lib/format";
+import { userKey, boldMarks, fetchPlanNotes, savePlanNote, planNoteKey } from "../lib/format";
 
 /* ───────── Lesson view (Screen 3) + assessment artifact (Screen 3b) ─────────
  * A COMPLETION surface, not a navigation one (2026-06-29 redesign). The plan's periods
@@ -1576,7 +1576,7 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
     let dead = false;
     fetchPlanNotes().then((notes) => {
       if (dead || notes === null) return;          // server unreachable → keep the cache
-      const srv = notes[`${lp.subject}/${lp.grade}/${noteChapter}`];
+      const srv = notes[planNoteKey(lp.subject, lp.grade, noteChapter)];
       if (srv && typeof srv.text === "string") {
         setNoteText(srv.text);                      // server is authoritative
         try {

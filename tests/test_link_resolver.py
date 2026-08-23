@@ -5,10 +5,10 @@ assessment item resolves to >= 1 period with ZERO orphans, and the uniform contr
 formed (anchor_period == max(linked_periods)).
 
 Unlike the per-subject port tests (one fixture each), this walks the FULL real saved-plan
-corpus under data/content/saved_plans/ so all 8 rules are exercised on real data, exactly as
+corpus under data/cloud/content/saved_plans/ so all 8 rules are exercised on real data, exactly as
 the plan requires ("derived from saved-file inspection, never constitution prose").
 
-Run standalone:  ARUVI_DATA_DIR=$PWD/data/content python3 tests/test_link_resolver.py
+Run standalone:  ARUVI_DATA_DIR=$PWD/data/cloud/content python3 tests/test_link_resolver.py
 """
 from __future__ import annotations
 
@@ -29,7 +29,7 @@ import aruvi_core.subjects.the_world_around_us  # noqa: E402
 from aruvi_core import subjects               # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PLANS = os.path.join(ROOT, "data", "content", "saved_plans")
+PLANS = os.path.join(ROOT, "data", "cloud", "content", "saved_plans")
 
 
 def _link_context(r):

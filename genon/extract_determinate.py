@@ -39,7 +39,7 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-PLANS = ROOT / "data/content/saved_plans"
+PLANS = ROOT / "data/cloud/content/saved_plans"
 OUT = ROOT / "genon/out/answer_checks"
 
 HEADER = '''#!/usr/bin/env python3

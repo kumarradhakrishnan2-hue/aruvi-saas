@@ -1000,7 +1000,7 @@ def main():
     opt_lines, opt_moved, opt_scanned = normalize_library(subject, grade, ch)
     print("\n".join(opt_lines))
 
-    mp = json.loads((REPO / "data/content/allocation_norms/master_plan.json").read_text())
+    mp = json.loads((REPO / "data/cloud/content/allocation_norms/master_plan.json").read_text())
     row = next(c for c in mp["combos"][f"{subject}|{klass}"]["chapters"]
                if c["chapter"] == ch)
     ok, lines, sweep, fails = certify(subject, grade, ch, row)

@@ -15,7 +15,7 @@ pulled up to position 4; ch_07: consolidation period 11 shown as unit 8), scienc
 WHOLE saved-plan corpus so no translator can regress (and any NEW subject/stage is covered
 the day its first plan is saved).
 
-Run: ARUVI_DATA_DIR=$PWD/data/content python3 tests/test_unit_order.py
+Run: ARUVI_DATA_DIR=$PWD/data/cloud/content python3 tests/test_unit_order.py
 """
 import glob
 import json
@@ -39,7 +39,7 @@ PLUGINS = {
 }
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA = os.environ.get("ARUVI_DATA_DIR", os.path.join(ROOT, "data", "content"))
+DATA = os.environ.get("ARUVI_DATA_DIR", os.path.join(ROOT, "data", "cloud", "content"))
 
 
 def flatten(groups):

@@ -16,7 +16,7 @@ from aruvi_core.normalize import classify_stimulus, parse_table  # noqa: E402
 from aruvi_core.view_model import StimulusType  # noqa: E402
 
 DATA = os.environ.get("ARUVI_DATA_DIR", os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "content"))
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "cloud", "content"))
 
 
 def test_two_column_table_is_table():

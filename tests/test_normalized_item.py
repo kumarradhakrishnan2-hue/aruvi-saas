@@ -18,7 +18,7 @@ asserts, for every item, that the subject-agnostic NormalizedItem is well formed
     no None/""/[]/{} values outside the identity/link keep-set, and linked_lo is ABSENT
     (not null) for Maths middle/prep
 
-Run standalone:  ARUVI_DATA_DIR=$PWD/data/content python3 tests/test_normalized_item.py
+Run standalone:  ARUVI_DATA_DIR=$PWD/data/cloud/content python3 tests/test_normalized_item.py
 """
 from __future__ import annotations
 
@@ -41,7 +41,7 @@ from aruvi_core.view_model import (           # noqa: E402
 )
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PLANS = os.path.join(ROOT, "data", "content", "saved_plans")
+PLANS = os.path.join(ROOT, "data", "cloud", "content", "saved_plans")
 
 TYPES = {t.value for t in QuestionType}
 TEMPLATES = set(RENDER_TEMPLATE.values())

@@ -380,7 +380,7 @@ teacher → web (Next.js) → HTTP → FastAPI (api/) → aruvi_core (Python eng
   rides in `unit["extra"]` and is spliced back by `serve._period_from_unit` — without it a
   served plan loses whatever its subject's port groups on.
 - **The calibrated standard is the default (2026-07-26)** — two period tables live under
-  `data/content/allocation_norms/` and they disagree: `ncf_period_norms.json` (NCF adaptation,
+  `data/cloud/content/allocation_norms/` and they disagree: `ncf_period_norms.json` (NCF adaptation,
   by subject·**stage**, in flat **40-minute** periods) and `master_plan.json` (OUR calibration —
   the founder's allocation workbook via `genon/master_plan.py`, by subject·**class**, at
   **class-banded durations: 40 ≤VII · 45 VIII · 50 IX**, with a precomputed per-chapter
@@ -402,7 +402,7 @@ teacher → web (Next.js) → HTTP → FastAPI (api/) → aruvi_core (Python eng
 - ★ **SUPERSEDED 2026-07-26 by the bullet above** — kept as history: this is how the NCF
   norms were wired in, and it is still the FALLBACK path when the master plan has no row.
 - **NCF period norms — wired into first-run's estimated-periods field (2026-07-01)** —
-  `data/content/allocation_norms/ncf_period_norms.json` (+ the original
+  `data/cloud/content/allocation_norms/ncf_period_norms.json` (+ the original
   `NCF_adapted_for_Aruvi.xlsx` kept alongside for provenance) holds the National Curricular
   Framework's recommended teaching periods per subject per stage
   (preparatory/middle/secondary, in 40-minute periods/year). This is Bucket A read-only
@@ -508,10 +508,17 @@ aruvi_core/            engine (Python, no UI deps)
 api/                   FastAPI service (main.py, data.py, config.py) — wraps the engine
 web/                   Next.js app (app/page.jsx = login gate + 2 tabs: My Plans + Generate; see §11; app/globals.css = design)
 tests/                 test_*.py + fixtures/ (real saved plans + mappings as parity fixtures)
-data/                  ★ the single data root (everything that migrates to cloud) — see §7
-  content/             Bucket A: read-only CONTENT (chapters, constitutions, framework, sample plans)
-  readiness/           Bucket B: per-tenant teaching profiles  → {tenant}/{user}/profile.json
-  allocations/         Bucket B: per-tenant allocation registers → {tenant}/{user}/{subject}/{grade}/
+data/                  ★ the data root, laid out along the CLOUD/LOCAL boundary (2026-08-23,
+                       CLOUD_DATA_MODEL.md §0.5) — see §7
+  cloud/               ★ THE MIGRATION UNIT — everything here goes to production, byte for byte
+    content/           Bucket A-serve → object store (DATA_DIR): allocation_norms,
+                       chapters/**/mappings, framework, saved_plans (libraries + serve cache)
+    state/             Bucket B → Supabase Postgres (STATE_DIR): accounts, academic_years,
+                       readiness, allocations, section_state, prepared_plans, plan_archive,
+                       plan_notes — all {tenant}/{user}[/{year}]-keyed
+  authoring/           ★ FOUNDER-SECURE, never syncs: constitutions, chapters/**/summaries
+                       (read only by the genon pipeline + chapter skill, NEVER by api/)
+  testing/             local testing-campaign state (TESTING_DIR) — outside the migration unit
 docs/                  architecture-plan.md, ALLOCATION_REPORT_*.md, flow PNG, mockups/ (design refs, not loaded by code)
   administrative_architecture.md  ★ the ADMIN half — account · academic year · cutover ·
                        notes · data rights · entitlement, as a 0→6 dependency chain with the
@@ -542,19 +549,33 @@ Web fonts load via a Google Fonts `@import` (needs internet, else serif fallback
 
 ---
 
-## 7. Data source — self-contained under `data/` (rebuilt 2026-06-28)
+## 7. Data source — laid out along the cloud/local boundary (restructured 2026-08-23)
 
-The app no longer reads from the prototype mirror at runtime. **All data lives under
-`data/`**, the single root that migrates to the cloud. `api/config.py` exposes two seams,
-kept strictly apart (the Bucket A / Bucket B split in `CLOUD_DATA_MODEL.md §0`):
+The app no longer reads from the prototype mirror at runtime. **`data/cloud/` is the literal
+migration unit** — everything under it goes to production, byte for byte; everything outside
+it stays founder-local (`CLOUD_DATA_MODEL.md §0.5`, the third axis on top of the A/B split).
+Consequence of the genon architecture: serving is deterministic selection from certified
+libraries, so constitutions, summaries and prompt-texts are authoring inputs the production
+runtime NEVER reads. `api/config.py` exposes three seams:
 
-- **`DATA_DIR`** (env `ARUVI_DATA_DIR`) — **Bucket A**, shared read-only CONTENT (chapter
-  summaries/mappings, constitutions, framework, sample saved plans). Defaults to
-  `data/content/` (a self-contained copy lifted from the prototype mirror). The app never
-  writes here. Cloud home: object/vector store.
-- **`STATE_DIR`** (env `ARUVI_STATE_DIR`) — **Bucket B**, per-user/tenant STATE the app
-  writes at runtime. Defaults to `data/` (subfolders `readiness/`, `allocations/`). Cloud
-  home: Supabase Postgres.
+- **`DATA_DIR`** (env `ARUVI_DATA_DIR`) — **Bucket A-serve**, shared read-only content the
+  RUNTIME reads: `allocation_norms/`, `chapters/**/mappings/`, `framework/` (the runtime
+  reads its competency glossaries + english `spine_to_cg.json`; the NCF-derived cg/pedagogy
+  .txt ride along — public-source, not worth splitting a second tree), `saved_plans/`
+  (certified canonical libraries + the served-plan cache). Defaults to
+  `data/cloud/content/`. The app never writes here except `save_generated_plan` (the shared
+  serve cache). Cloud home: object store.
+- **`STATE_DIR`** (env `ARUVI_STATE_DIR`) — **Bucket B**, per-user/tenant STATE. Defaults to
+  `data/cloud/state/` (accounts, academic_years, readiness, allocations, section_state,
+  prepared_plans, plan_archive, plan_notes). Cloud home: Supabase Postgres.
+- **`TESTING_DIR`** (env `ARUVI_TESTING_DIR`) — the testing-campaign register, LOCAL-only,
+  `data/testing/` — deliberately outside the migration unit.
+
+**`data/authoring/`** (constitutions, `chapters/**/summaries/`; env `ARUVI_AUTHORING_DIR`
+for the genon pipeline's `prompt_assembly.py`) is FOUNDER-SECURE and never syncs. Grep-able
+invariant: nothing under `api/` or `aruvi_core/` may read it — a runtime feature wanting an
+authoring artifact is a promotion decision recorded in CLOUD_DATA_MODEL.md first.
+Migration was `aruvi-scripts/migrate_cloud_layout.py` (idempotent, re-runnable).
 
 Both default-derive from the repo root (never hardcoded to a machine). So a fresh clone is
 runnable with **no env vars and no sibling `Project Aruvi` folder**. The prototype is still
@@ -576,7 +597,7 @@ science/english/maths/ss/twau ports, render, allocate, **allocation (tenant-keye
 merge + isolation), readiness (per-tenant persistence + projection-stripping)**, api. Each
 subject's parity test runs a REAL saved prototype plan through its normalizers — fixtures are
 the acceptance spec. Full suite is **11/11 green** (2026-06-28; the two previously-stale
-allocation/api tests were fixed). `test_*` that hit content need `ARUVI_DATA_DIR=$PWD/data/content`.
+allocation/api tests were fixed). `test_*` that hit content need `ARUVI_DATA_DIR=$PWD/data/cloud/content` (the default since the 2026-08-23 cloud/local restructure — so usually no env var at all).
 
 Tooling note: the Cowork browser preview only rasterizes the first viewport, so scrolled
 screenshots can come back blank — verify via DOM (`preview_eval`) or bring content to the top.
@@ -644,8 +665,18 @@ IS delete; no history; stale write (older `updated_at`) → 409 carrying the new
 the client adopts. Web: ChapterOrg treats localStorage as an optimistic cache, reconciles
 from the server on mount, migrates a legacy browser-only note up once, and the notes modal
 discloses "Saved to your account". Web half STATIC-verified only — owes a live pass.
-CLOUD_DATA_MODEL §2.8's invariant violation is closed. Steps 2, 4, 5, 6 not started
-(4 is now unblocked). Full entry: MEMORY.md 2026-08-22.
+CLOUD_DATA_MODEL §2.8's invariant violation is closed. Full entry: MEMORY.md 2026-08-22.
+
+**Administrative architecture Step 4 (2026-08-22, same session) — export + erase.**
+`DataRightsService` + `ErasureReceipt` in ports.py; `data_rights_service_file.py` walks
+every Bucket-B store; `export_data_rights_docx.py` renders the export as ONE editable Word
+document (founder: Word only, everything Bucket-B, never the shared library). Routes:
+`GET /data-rights/export` (docx download) · `POST /data-rights/erase` (typed confirmation
+`{"confirm": "erase"}`; account record last; empty ancestor folders removed; idempotent;
+receipt's `kept` wording pinned by test_data_rights and must match the privacy policy).
+No entitlement gate on either route, ever (§2.5). Erased IDs are not reserved — re-signin
+JIT-creates a fresh account. test_data_rights.py includes the export-as-tenant-isolation
+test. No web UI yet (Step 6). Remaining: Steps 2, 5, 6. Full entry: MEMORY.md 2026-08-22.
 
 **Persistence + tenanting groundwork (2026-06-28) — the front-end-only state is now
 server-persisted and per-tenant, ahead of full Phase-4 auth.** Built: (a) a **user-ID login
@@ -711,14 +742,14 @@ chapter-level effort-signal addition, 2026-07-01) — Project Aruvi's copy is no
 should not be edited. **Pipeline I/O also fully lives here as of 2026-07-15:** textbook PDFs
 sit at `textbooks/{subject}/{grade}/` (repo root — the one true PDF home; Project Aruvi's
 `knowledge_commons/textbooks/` no longer exists on disk), outputs deliver to
-`data/content/chapters/{subject}/{grade}/{summaries,mappings}/`, and the skill's new "Data
+`data/authoring/chapters/.../summaries/` + `data/cloud/content/chapters/.../mappings/` (split 2026-08-23), and the skill's "Data
 paths" section instructs translating any older prompt's `mnt/data/...` path table to these.
 SS secondary (Grade IX) added to the skill the same day (see MEMORY.md 2026-07-15).
 
 **Remaining `../Project Aruvi` dependencies, audited 2026-07-01** — everything else is
 either historical/documentation-only or already severed:
 - **Live/runtime:** none. `api/config.py`'s `DATA_DIR` defaults to this repo's own
-  `data/content/` (§7); no env var or sibling folder needed to run the app (confirmed by
+  `data/cloud/content/` (§7); no env var or sibling folder needed to run the app (confirmed by
   grep — the only `ARUVI_DATA_DIR=../Project Aruvi/...` reference left was a stale
   MEMORY.md smoke-test command from before the 2026-06-28 `data/` migration, now corrected).
 - **Authoring-time, still real and NOT yet migrated:** `../Project Aruvi/knowledge_commons/`
@@ -824,5 +855,5 @@ binary won't load) and Google-Fonts `@import` stalls the build. So web changes h
 verified **statically** (balanced braces, default exports, prop-contract greps, CSS brace
 balance, unit-testing pure helpers like `splitByRatio`). **Live render + mobile check must be
 done locally:** `python3 -m uvicorn api.main:app --port 8000; npm --prefix web run dev` — no
-`ARUVI_DATA_DIR` needed now (defaults to `data/content/`, §7). Sign in with any user ID
+`ARUVI_DATA_DIR` needed now (defaults to `data/cloud/content/`, §7). Sign in with any user ID
 (e.g. `Kumar1`, which has seeded data) to pass the login gate.

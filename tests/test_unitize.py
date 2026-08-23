@@ -2,7 +2,7 @@
 
 Stdlib only; run directly:  python3 tests/test_unitize.py
 (No ARUVI_DATA_DIR needed for the unit cases; the corpus scan runs only if saved plans
-are reachable under ./data/content/saved_plans.)
+are reachable under ./data/cloud/content/saved_plans.)
 """
 import glob
 import json
@@ -102,7 +102,7 @@ def test_walker_scope():
 # ── 3. no corruption anywhere in the historic corpus (best-effort; skipped if absent) ─
 def test_corpus_no_corruption():
     root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                        "data", "content", "saved_plans")
+                        "data", "cloud", "content", "saved_plans")
     files = glob.glob(os.path.join(root, "**", "*.json"), recursive=True)
     if not files:
         print("  (corpus scan skipped — no saved plans found)")

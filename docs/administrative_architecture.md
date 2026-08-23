@@ -1,6 +1,9 @@
 # Aruvi — Administrative Architecture & the Ports a Partner Implements
 
-**Status:** design settled. **Step 3 BUILT 2026-08-22** (PlanNoteRepository — with one
+**Status:** design settled. **Step 4 BUILT 2026-08-22** (DataRightsService — export is a
+single editable Word document covering everything Bucket-B, per founder; erase receipts
+per §2.6 with wording pinned by test_data_rights; the erased user ID is not reserved —
+re-signin JIT-creates a fresh account). **Step 3 BUILT 2026-08-22** (PlanNoteRepository — with one
 founder delta from §5 Step 3's text: the note key is the CHAPTER's identity
 `{subject}/{grade}/{chapter_number}`, ONE note per chapter per academic year, not one per
 plan file — the §7 "notes split per plan" open item is thereby RESOLVED: notes split only

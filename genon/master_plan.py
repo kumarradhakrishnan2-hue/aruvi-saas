@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Genon step-2 master plan: annual budgets -> per-chapter allocation + drop floors.
 
-Source: data/content/allocation_norms/ncf_chapterwise_period_allocation.xlsx
+Source: data/cloud/content/allocation_norms/ncf_chapterwise_period_allocation.xlsx
 (budget sheet = founder's realistic annual budgets; Chapters sheet = effort weights).
 Standard durations (HANDOVER Decision 2): 40 min for classes <= VII, 45 for VIII, 50 for IX.
 Floor: unit-dropping begins when teacher_minutes / canonical_minutes < 0.6
@@ -14,7 +14,7 @@ import openpyxl
 
 from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent          # aruvi-saas/
-NORMS = REPO / "data" / "content" / "allocation_norms"
+NORMS = REPO / "data" / "cloud" / "content" / "allocation_norms"
 WB = str(NORMS / "ncf_chapterwise_period_allocation.xlsx")
 DROP_THRESHOLD = 0.6
 
@@ -94,7 +94,7 @@ def canonical_periods(a, c, subject=None, cls_roman=None):
 
 
 def _load_pins():
-    """Per-chapter canonical_periods overrides (data/content/allocation_norms/
+    """Per-chapter canonical_periods overrides (data/cloud/content/allocation_norms/
     canonical_period_pins.json). See that file's _meta for the reasoning.
 
     WHY THIS EXISTS (2026-08-07). A chapter whose library is already AUTHORED must not
@@ -212,7 +212,7 @@ for key, budget in sorted(budgets.items(), key=lambda kv: (kv[0][0], ROMAN[kv[0]
 out = {
     "_meta": {
         "generated": "2026-07-24",
-        "source_workbook": "data/content/allocation_norms/ncf_chapterwise_period_allocation.xlsx",
+        "source_workbook": "data/cloud/content/allocation_norms/ncf_chapterwise_period_allocation.xlsx",
         "standard_durations": {"<=VII": 40, "VIII": 45, "IX": 50},
         "allocation_method": "largest remainder over chapter effort weights (same as Allocate.jsx / api allocator)",
         "floor_definition": f"unit-dropping begins when teacher_minutes/canonical_minutes < {DROP_THRESHOLD}; "

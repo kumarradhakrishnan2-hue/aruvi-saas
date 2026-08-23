@@ -1,8 +1,9 @@
 """Test-campaign tracker state — docs/testing.md §6a.
 
 Persists the 11-stage certification campaign's tick-offs, comments, provenance
-records and defect register INSIDE Aruvi itself (Bucket-B-style state under
-STATE_DIR/testing/), so the tracker UI (docs/testing_tracker.html, also served at
+records and defect register INSIDE Aruvi itself (LOCAL-only state under
+TESTING_DIR = data/testing/ — deliberately outside the data/cloud/ migration unit,
+CLOUD_DATA_MODEL.md §0.5), so the tracker UI (docs/testing_tracker.html, also served at
 GET /api/testing/tracker) survives restarts and both actors see one register.
 
 Deliberately schema-light: the UI owns the checklist DEFINITIONS (which steps
@@ -22,7 +23,7 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import HTMLResponse, PlainTextResponse
 from pydantic import BaseModel
 
-from .config import STATE_DIR
+from .config import TESTING_DIR
 
 router = APIRouter(prefix="/api/testing", tags=["testing-campaign"])
 
@@ -31,7 +32,7 @@ _SCOPES = ("step0", "stages", "combos", "cross", "batch")
 
 
 def _state_path() -> str:
-    return os.path.join(STATE_DIR, "testing", "campaign_state.json")
+    return os.path.join(TESTING_DIR, "campaign_state.json")
 
 
 def _default_state() -> Dict[str, Any]:

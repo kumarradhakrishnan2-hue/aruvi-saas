@@ -147,6 +147,18 @@ export function markPrepared(subject, grade, filename, periods) {
  * the server keeps one text + one updated_at, and refuses only a WRITE that is older
  * than what it holds (409 carries the newer copy so the stale device adopts it). */
 
+/* The server's canonical note key for a chapter. MUST mirror api/main.py's _note_key:
+ * grade normalized to the common slug ("iv", never "Grade IV" — the view model's display
+ * grade varies by subject port, and the un-normalized key filed a TWAU note under
+ * "Grade IV" while every sibling store said "iv"; found in the first live export,
+ * 2026-08-22). Used for the GET-side lookup; the POST side is normalized by the server. */
+export function planNoteKey(subject, grade, chapter) {
+  let g = String(grade || "").trim().toLowerCase();
+  for (const p of ["grade", "class"]) if (g.startsWith(p)) g = g.slice(p.length).trim();
+  g = g.replace(/ /g, "_") || "unknown";
+  return `${String(subject || "").trim().toLowerCase()}/${g}/${String(chapter || "").trim()}`;
+}
+
 /* All of this teacher's notes for the current year: {note_key: {text, updated_at}}.
  * Returns null when the server is unreachable — callers keep their local cache then. */
 export async function fetchPlanNotes() {

@@ -32,8 +32,8 @@ sys.path.insert(0, ROOT)
 from aruvi_core.genon import compile_stream                      # noqa: E402
 from aruvi_core.genon.serve import authored_registry              # noqa: E402
 
-MP = os.path.join(ROOT, "data/content/allocation_norms/master_plan.json")
-SAVED = os.path.join(ROOT, "data/content/saved_plans")
+MP = os.path.join(ROOT, "data/cloud/content/allocation_norms/master_plan.json")
+SAVED = os.path.join(ROOT, "data/cloud/content/saved_plans")
 
 GRADE_KEY = {"III": "iii", "IV": "iv", "V": "v", "VI": "vi", "VII": "vii",
              "VIII": "viii", "IX": "ix", "X": "x"}

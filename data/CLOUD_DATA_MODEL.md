@@ -8,7 +8,15 @@ its current home, its future home, and the table shape it maps to.
 Read alongside `CLAUDE.md` §9 (roadmap) and §11 (web architecture). This doc supersedes the
 scattered porting notes for the data question specifically.
 
-Last updated: 2026-07-13 (added **§2.8 teacher notes** — chapter + period notes, the per-tenant
+Last updated: 2026-08-23 (added **§0.5 the physical cloud/local layout** — a THIRD axis on top
+of the A/B split: what goes to production cloud vs what stays founder-local. `data/cloud/` is now
+the literal migration unit ({content,state} mirroring the two seams), `data/authoring/` the
+founder-secure root that never syncs. Consequence of the genon architecture: serving is
+deterministic selection from certified libraries, so constitutions, framework prompt-texts and
+chapter summaries are AUTHORING-time inputs the production runtime never reads — §1's rows for
+them are superseded by §0.5. The §1 output-cache row also reads differently now: the served-plan
+store is a reconstructible cache of ~ms deterministic serves, not an LLM-spend lever — the
+authored library itself is the economic asset.) Prior: 2026-07-13 (added **§2.8 teacher notes** — chapter + period notes, the per-tenant
 overlay §2.3 named but never enumerated as a migration item; records the 2026-07-13 per-user
 localStorage scope fix for the cross-user chapter-notes leak, and the `plan_note` table + planned
 `PlanNoteRepository` port that brings notes to parity with §2.4/§2.6/§2.7 before Supabase). Prior:
@@ -34,7 +42,61 @@ Lessons, built 2026-07-05.) Prior: 2026-07-04 (§2.4 server-backed section state
 
 ---
 
+## 0.5 Physical layout — what goes cloud vs what stays with the founder (2026-08-23)
+
+The A/B split says *who owns* a byte (everyone vs one tenant). It does NOT say whether the
+byte belongs in production at all. The genon architecture settles that second question:
+**serving is deterministic selection from certified canonical libraries — no LLM, no prompt,
+no constitution is read at serve time.** So Bucket A splits into a SERVE half (runtime-read,
+goes cloud) and an AUTHORING half (pipeline inputs, founder-secure, never syncs). The disk
+layout now encodes the boundary literally:
+
+```
+data/
+  CLOUD_DATA_MODEL.md  README.md
+  cloud/                      ★ THE MIGRATION UNIT — everything here goes to production
+    content/                  Bucket A-serve → object store  (config.DATA_DIR)
+      allocation_norms/         master_plan.json + ncf_period_norms.json (+ source workbook)
+      chapters/{s}/{g}/mappings/  chapter list, titles, effort weights (runtime-read)
+      framework/{s}/{stage}/      competency_descriptions_*.json + english spine_to_cg.json
+                                  are runtime-read; the cg_*/pedagogy_*.txt ride along —
+                                  they are public-NCF-derived, not secret, and splitting a
+                                  second tree wasn't worth it (decision 2026-08-23)
+      saved_plans/{s}/{g}/        certified canonical libraries (the IP of record) + the
+                                  served-plan cache (deterministically named, warm-from-zero)
+    state/                    Bucket B → Supabase Postgres  (config.STATE_DIR)
+      accounts/ academic_years/ readiness/ allocations/
+      section_state/ prepared_plans/ plan_archive/ plan_notes/
+  authoring/                  ★ FOUNDER-SECURE — never syncs to production
+    constitutions/              the generation rulebooks (deepest IP)
+    chapters/{s}/{g}/summaries/ authoring inputs + certification registry-of-record
+  testing/                    local testing-campaign state (api/testing_campaign.py)
+```
+
+**The one-line rule:** `data/cloud/` goes to production, byte for byte (`content/` → object
+store, `state/` → Postgres tables behind the existing ports). Everything else — `authoring/`,
+`testing/`, plus repo-root `textbooks/`, `cowork prompts/`, the `genon/` pipeline — stays on
+the founder's machine. A competitor holding the production stores holds the *outputs*; the
+inputs that regenerate them (constitutions, summaries, prompts, pipeline) never leave.
+
+**Seams:** `ARUVI_DATA_DIR` → `data/cloud/content` · `ARUVI_STATE_DIR` → `data/cloud/state` ·
+`ARUVI_AUTHORING_DIR` → `data/authoring` (read only by the genon pipeline / chapter skill,
+never by `api/`) · testing stays anchored at `data/testing` regardless of STATE_DIR.
+
+**Grep-able invariant:** nothing under `api/` or `aruvi_core/` may read `data/authoring/` —
+if a runtime feature ever needs an authoring artifact (e.g. Ask Aruvi retrieval over
+summaries), that is a *promotion decision* recorded here first, not a path change.
+
+---
+
 ## 1. Bucket A — shared read-only CONTENT (the IP)
+
+> ⚠️ **Read through §0.5 (2026-08-23):** only the SERVE half of this table migrates. The
+> constitutions / framework-text / summaries rows below are authoring-time — they live in
+> `data/authoring/` (or ride along as noted) and do NOT go to the production object store.
+> The "vector store" mentions are moot for serving; they return only if a retrieval feature
+> is promoted. The output-cache row: with genon, the cache is the served-plan store —
+> reconstructible in milliseconds from the libraries, a convenience not an economic lever.
 
 Same bytes for every customer. No tenant key. Today these are local files read via
 `ARUVI_DATA_DIR` (defaults to the prototype's `mirror/`). In cloud they become shared object
@@ -337,8 +399,11 @@ safe.
    - **First, close the §2.8 gap**: notes are the one piece of teacher STATE with no port yet.
      Add `PlanNoteRepository` (+ file impl) so chapter/period notes are server-backed & tenant-keyed
      like the rest, THEN write its Supabase impl. Retire the localStorage-only note store.
-4. **Move shared content** (§1) to object/vector store via the `Storage` adapter; retire
-   `ARUVI_DATA_DIR`.
+4. **Move shared content** to the object store via the `Storage` adapter; retire
+   `ARUVI_DATA_DIR`. Scope is `data/cloud/content/` ONLY (§0.5) — authoring content never
+   ships. The served-plan cache may start empty in cloud (it self-warms), but the read path
+   currently has no regen-on-miss, so either sync the existing files or add regen-on-miss
+   to `/prepare` reads first.
 5. **Wire the output cache** as shared (NOT per-tenant), keyed by content version (§1 last row).
    The per-tenant `lesson` row (§2.3) references it by cache key — reference, never copy; a
    generated plan's `lesson` row also subsumes the §2.7 prepared register (row exists = prepared).

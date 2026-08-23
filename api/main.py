@@ -37,6 +37,7 @@ from aruvi_core.adapters.account_repository_file import AccountRepositoryFileImp
 from aruvi_core.adapters.academic_year_repository_file import AcademicYearRepositoryFileImpl
 from aruvi_core.adapters.header_auth_provider import HeaderAuthProvider
 from aruvi_core.adapters.plan_note_repository_file import PlanNoteRepositoryFileImpl
+from aruvi_core.adapters.data_rights_service_file import DataRightsServiceFileImpl
 from aruvi_core.ports import Account, AcademicYear, PlanNote, StaleNoteWrite
 from aruvi_core.grades import stage_for, UnknownGradeError
 from aruvi_core.report_competency import build_report as build_competency_report
@@ -98,6 +99,25 @@ prepared_plans_repo = PreparedPlansRepositoryFileImpl(config.STATE_DIR)
 # owner, CLOUD_DATA_MODEL.md §2.8). One note per chapter per academic year; year-scoped
 # like the rest of the teaching state so notes stay with their year's plans at cutover.
 plan_note_repo = PlanNoteRepositoryFileImpl(config.STATE_DIR)
+
+# Data rights: export + erase (administrative architecture Step 4). One traversal over
+# every Bucket-B store — DPDP portability, DPDP erasure, Apple 5.1.1(v). Both routes must
+# stay reachable regardless of subscription state (§2.5) — there is deliberately no
+# entitlement check in front of them, ever. The chapter_title resolver is the export's
+# ONE window into Bucket-A content (display titles beside her notes and progress);
+# injected here so the service itself never crosses the bucket boundary.
+def _chapter_title_resolver(subject: str, grade: str, chapter_number: int) -> str:
+    try:
+        for p in data.list_saved_plans(subject, grade):
+            if p.get("chapter_number") == chapter_number:
+                return p.get("chapter_title") or ""
+    except Exception:
+        pass
+    return ""
+
+
+data_rights = DataRightsServiceFileImpl(config.STATE_DIR,
+                                        chapter_title=_chapter_title_resolver)
 
 # Account + tenant record (administrative architecture Step 0) — the durable record that
 # billing, privacy, notifications and the institutional tier all hang off. NOT year-scoped
@@ -372,7 +392,7 @@ def get_chapters(subject: str, grade: str) -> Dict[str, Any]:
     ]
 
     # ── Single-source allocation math (founder, 2026-07-25): the master plan
-    # (data/content/allocation_norms/master_plan.json, derived from the allocation
+    # (data/cloud/content/allocation_norms/master_plan.json, derived from the allocation
     # workbook) is authoritative for BOTH the numerator (chapter effort weight) and
     # the denominator (FULL syllabus weight — including placeholder chapters with no
     # content yet). Suggestions = weight / syllabus_total_weight × the TEACHER'S OWN
@@ -942,11 +962,22 @@ class PlanNoteRequest(BaseModel):
 
 def _note_key(subject: str, grade: str, chapter: str) -> str:
     """Canonical note key: the CHAPTER's identity (one note per chapter per year —
-    founder 2026-08-22 — never a plan filename). Guards against path-ish junk."""
+    founder 2026-08-22 — never a plan filename). Guards against path-ish junk.
+
+    The grade is NORMALIZED to the same slug every other store uses ("iv", never
+    "Grade IV"): the client sends the view model's display grade, which varies by
+    subject port, and an un-normalized key made kumar23's TWAU note file under
+    "Grade IV" while his prepared/section keys said "iv" (found in the first live
+    Step-4 export, 2026-08-22). Normalizing HERE keeps every client honest."""
     chapter = str(chapter).strip()
     if not chapter or "/" in chapter or "\\" in chapter or ".." in chapter:
         raise HTTPException(status_code=400, detail="Invalid chapter identity.")
-    return f"{subject}/{grade}/{chapter}"
+    g = str(grade).strip().lower()
+    for prefix in ("grade", "class"):
+        if g.startswith(prefix):
+            g = g[len(prefix):].strip()
+    g = g.replace(" ", "_") or "unknown"
+    return f"{str(subject).strip().lower()}/{g}/{chapter}"
 
 
 @app.get("/plan-notes")
@@ -985,6 +1016,61 @@ def save_plan_note(req: PlanNoteRequest, year_id: Optional[str] = None,
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to save note: {str(e)}")
     return {"status": "deleted" if not req.text.strip() else "saved"}
+
+
+# ── Data rights (administrative architecture Step 4) ──────────────────────────────
+# NEVER gate these behind entitlement: DPDP access/erasure rights and Apple 5.1.1(v) do
+# not lapse with payment (§2.5). UI surfaces for them come in Step 6.
+@app.get("/data-rights/export")
+def data_rights_export(format: str = "docx",
+                       identity: tuple = Depends(_current_identity)) -> StreamingResponse:
+    """Download everything this teacher owns as one document — account, profile,
+    chapter notes across every year (beside their chapters), and teaching state.
+    `?format=docx` (default, editable Word) or `?format=pdf` — both, like every other
+    Aruvi export (founder 2026-08-22). Deliberately excludes the shared lesson-plan
+    library (ports.DataRightsService)."""
+    tenant_id, user_id = identity
+    fmt = (format or "docx").strip().lower()
+    if fmt not in ("docx", "pdf"):
+        raise HTTPException(status_code=400, detail="format must be 'docx' or 'pdf'.")
+    try:
+        blob = data_rights.export(tenant_id, user_id, fmt)
+    except ImportError:
+        raise HTTPException(status_code=501,
+                            detail="Export needs python-docx / xhtml2pdf on the server.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Export failed: {str(e)}")
+    media = ("application/pdf" if fmt == "pdf" else
+             "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+    fname = f"aruvi-your-data-{_safe_name(user_id)}.{fmt}"
+    return StreamingResponse(
+        iter([blob]), media_type=media,
+        headers={"Content-Disposition": f'attachment; filename="{fname}"'})
+
+
+class EraseRequest(BaseModel):
+    """Body for POST /data-rights/erase. `confirm` must be the literal string "erase":
+    a typed confirmation, so no stray client call can destroy an account."""
+    confirm: str = ""
+
+
+@app.post("/data-rights/erase")
+def data_rights_erase(req: EraseRequest,
+                      identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Erase this teacher's account and every piece of her data (account record last),
+    returning the receipt that names what was kept and why (§2.6). Idempotent. The
+    user ID is not reserved — signing in again starts a brand-new empty account."""
+    if (req.confirm or "").strip().lower() != "erase":
+        raise HTTPException(status_code=400,
+                            detail='Confirmation required: send {"confirm": "erase"}.')
+    tenant_id, user_id = identity
+    try:
+        receipt = data_rights.erase(tenant_id, user_id)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erase failed: {str(e)}")
+    return {"status": "erased" if receipt.erased else "nothing_to_erase",
+            "erased": receipt.erased, "kept": receipt.kept,
+            "erased_at": receipt.erased_at}
 
 
 @app.post("/subjects/{subject}/{grade}/generate")
