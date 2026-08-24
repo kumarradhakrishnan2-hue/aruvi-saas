@@ -7,6 +7,91 @@ work on entitlement UI, pricing pages, or the partner brief's billing sections. 
 
 ---
 
+## ★ 0. THE CURRENT MODEL (founder, 2026-08-22 second session) — supersedes §5's
+## price-anchor hypothesis; §§1–4 and 6–7 below still stand as analysis
+
+**Billing unit: one teacher × one SUBJECT-STAGE** (e.g. Social Science–Middle; 11 combos
+exist, matching the library's structure), **unlimited serves within scope** — a quota
+would create anxiety with no economic basis (serving is selection from a cached library,
+marginal cost ≈ 0). Working figure ₹500/yr per subject-stage; the number stays empirical
+(the §7 test) and lives in config, never code. A two-subject teacher buys two.
+
+**Channel split IS the price fence: Individual = MOBILE APP ONLY · Enterprise = website.**
+No individual web product. This protects the enterprise tier without inflating individual
+price. Consequence, accepted deliberately: the Expo/mobile app moves up the roadmap —
+individual monetization ships with it.
+
+**Enterprise (T-teacher school):** near-equal per-teacher economics, on purpose. The
+T>11 arbitrage (11 personal mobile subscriptions covering all subject-stages, plans
+shared) is real and cannot be priced away — even at equal pricing 11×P beats T×P. The
+pull that breaks it is FEATURES, not price: (1) website access (schools want the computer
+centre — control + consistency), (2) whole-school curriculum alignment, (3) the admin
+dashboard — tracker view per teacher/section, period allocation at CHAPTER granularity.
+"A fair conversation for negotiations. Clear reason." The admin/monitoring layer is also
+the enterprise renewal engine.
+
+**Trial: all 11 subject-stages open · capped at ANY 3 CHAPTERS · unlimited re-serves per
+chapter · NO time limit.** The cap counts chapters, never serves: her initial struggle is
+period allocation — "can I teach this chapter in 10 periods rather than 15?" — and she
+needs 3–4 attempts per chapter to learn the time-fitting, which is the product's core
+value. (`already_yours` re-serves never decrement.) Breadth exposure happens HERE, in
+trial — she sees everything Aruvi covers and can show colleagues.
+
+**Two different after-states, deliberately asymmetric ("the unfairness is fair"):**
+- **Trial exhausted (never paid):** keeps her 3 chapters — viewing, export, print,
+  archive, AND the tracker on them. Locked: new generation. Rationale: she has 3 chapters
+  in her pocket and 2 months of teaching ahead; the experience of actually applying the
+  LP to track sections is the hook that brings her back to pay — LP quality alone is a
+  weaker, non-collective hook.
+- **Lapsed (paid, chose not to renew):** keeps what is hers — her plans: view, export,
+  print, archive. Loses what is Aruvi's — the productivity/tracking tools, and
+  generation. She has already experienced everything; if the productivity gain felt worth
+  the money she renews for it; if not, she keeps her property and lets go what was never
+  hers. **This AMENDS admin architecture §2.5** ("export and delete only") — see actions.
+
+**Why renewal works despite stable textbooks:** cutover and subscription are independent
+clocks. Teachers seldom decide, months ahead, the periods chapter 9 will get — an LP
+generated in advance holds little correspondence to the time actually available when the
+chapter arrives. A running subscription is peace of mind: generate anytime, iterating
+periods against what is already allocated and what remains, no hurry to archive. The
+renewal proposition is the LIVING fit to her time (plus the year's re-versioned library),
+not access to old files.
+
+**The "+" boundary (gating at ADD time, not generate time):** the paid teacher's choosers
+show ONLY her scope — an SS-Middle teacher sees one subject (no dropdown) and three
+classes; simple, unclogged. Attempting to expand the profile beyond scope is the ONE
+upsell moment: an honest "this is a separate subscription" message at a moment she
+initiated (pull, never push — the standing no-nudge rule). Never allow add-now-pay-at-
+generate: "why did you let me add it if I had to pay?" is cognitive dissonance, and
+unpaid subjects would clog every dropdown.
+
+### Action points
+
+1. **Amend `docs/administrative_architecture.md` §2.5**: lapsed = plans retained
+   (view/export/print/archive) + generation and productivity tools locked; export and
+   account-deletion remain always reachable. Trial-exhausted additionally keeps the
+   tracker on her existing chapters. (Step 4's erase/export are unaffected.)
+2. **Step 5 seam shape** (build when resumed): `Entitlement` gains `scopes:
+   [subject/stage]`; trial is COUNTER-based (`chapters_used` of 3, `already_yours`
+   re-serves free) with no expiry date; `require_entitlement(subject, grade)` resolves
+   grade→stage and checks scope; gate sits ONLY in front of generation; `source`
+   (ios/android/web) carries the channel fence. ManualBillingProvider + founder CLI
+   unchanged in spirit.
+3. **Roadmap consequence**: mobile app (Expo) is promoted — it is now the individual
+   PRODUCT, not a port. Enterprise web = current app + future admin dashboard (tracker
+   view + chapter-level allocation view) — that dashboard is the enterprise renewal
+   engine and a Step-6-adjacent build.
+4. **"+" / TeachingProfile**: scope-filtered choosers for paid users; the out-of-scope
+   upsell screen designed once, used only at profile-expansion moments. Trial mode shows
+   all 11.
+5. **Pricing number**: ₹500/subject-stage/yr is the working figure; confirm via the §7
+   20-teacher test (measure week-2 pointer return + the time-fitting reaction, then
+   willingness-to-pay).
+6. **Language**: cap and copy speak in CHAPTERS, never "generations" (§3 compression
+   risk); public claims stay "NCF 2023 aligned" (§6).
+
+---
+
 ## 1. What is settled (build-time facts, independent of price)
 
 - **Subscription shape:** individual · annual · ROLLING (not academic-year aligned) —
@@ -106,7 +191,7 @@ Standing caution: "none aid planning" has two readings — whitespace (everyone 
 job) or absent demand (the market drifted to content dumps because that is what got
 used). Only the field test distinguishes them.
 
-## 5. Working hypotheses (to be confirmed or killed by the test)
+## 5. Working hypotheses — ★ SUPERSEDED by §0 (kept as history)
 
 - **Price anchor: ₹1,999/yr** (`individual_annual`), framed ~₹165/mo, "less than one
   guidebook". Sits above TeachBetter (substance signal), below IndiaSchool.ai, beside

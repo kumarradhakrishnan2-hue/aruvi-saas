@@ -41,3 +41,16 @@ STATE_DIR = os.environ.get("ARUVI_STATE_DIR", _DEFAULT_STATE)
 # Testing-campaign state — local-only, outside the migration unit.
 _DEFAULT_TESTING = str(_REPO_ROOT / "data" / "testing")
 TESTING_DIR = os.environ.get("ARUVI_TESTING_DIR", _DEFAULT_TESTING)
+
+# ── Entitlement (administrative architecture Step 5) ────────────────────────────
+# ENTITLEMENT_ENFORCED: the gate in front of generation. Default OFF — the seam is
+# fully built and tested, but daily dev is undisturbed until the founder flips it
+# (set ARUVI_ENTITLEMENT_ENFORCED=1) for persona testing and at launch.
+ENTITLEMENT_ENFORCED = os.environ.get("ARUVI_ENTITLEMENT_ENFORCED", "").strip().lower() in (
+    "1", "true", "yes", "on")
+
+# TRIAL_CHAPTER_CAP: the free trial covers ANY N chapters across all subject-stages,
+# with unlimited re-serves per chapter (period-fitting takes several attempts — that IS
+# the trial; docs/subscription_model_discussion.md §0). Counted in CHAPTERS, never
+# serves. Empirical; env-overridable for the field test.
+TRIAL_CHAPTER_CAP = int(os.environ.get("ARUVI_TRIAL_CHAPTERS", "3"))

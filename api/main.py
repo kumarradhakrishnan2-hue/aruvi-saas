@@ -38,7 +38,9 @@ from aruvi_core.adapters.academic_year_repository_file import AcademicYearReposi
 from aruvi_core.adapters.header_auth_provider import HeaderAuthProvider
 from aruvi_core.adapters.plan_note_repository_file import PlanNoteRepositoryFileImpl
 from aruvi_core.adapters.data_rights_service_file import DataRightsServiceFileImpl
-from aruvi_core.ports import Account, AcademicYear, PlanNote, StaleNoteWrite
+from aruvi_core.adapters.entitlement_repository_file import EntitlementRepositoryFileImpl
+from aruvi_core.adapters.manual_billing_provider import ManualBillingProvider
+from aruvi_core.ports import Account, AcademicYear, Entitlement, PlanNote, StaleNoteWrite
 from aruvi_core.grades import stage_for, UnknownGradeError
 from aruvi_core.report_competency import build_report as build_competency_report
 # NOTE: the PDF/DOCX exporters are imported lazily inside their endpoints (not here)
@@ -119,6 +121,15 @@ def _chapter_title_resolver(subject: str, grade: str, chapter_number: int) -> st
 data_rights = DataRightsServiceFileImpl(config.STATE_DIR,
                                         chapter_title=_chapter_title_resolver)
 
+# Entitlement (administrative architecture Step 5 — the payment-shaped hole). Model:
+# docs/subscription_model_discussion.md §0. Tenant-keyed, server-resolved, platform-
+# tagged. The ONE gate sits in front of generation (genon_make_plan) — generation is
+# what costs money; nothing else is ever gated, and data rights explicitly never are.
+# Enforcement is OFF by default (config.ENTITLEMENT_ENFORCED) so the seam is real but
+# daily dev is undisturbed; the founder operates it via aruvi-scripts/entitlement.py.
+entitlement_repo = EntitlementRepositoryFileImpl(config.STATE_DIR)
+billing_provider = ManualBillingProvider(entitlement_repo)
+
 # Account + tenant record (administrative architecture Step 0) — the durable record that
 # billing, privacy, notifications and the institutional tier all hang off. NOT year-scoped
 # (a subscription is rolling). Bucket-B STATE under STATE_DIR (data/accounts/).
@@ -188,6 +199,74 @@ def _resolve_year(tenant_id: str, user_id: str, year_id: Optional[str] = None) -
         current = _default_academic_year()
         academic_year_repo.open_year(tenant_id, user_id, current)
     return current.year_id
+
+
+# ── Entitlement gate (administrative architecture Step 5) ───────────────────────
+# One check, one place: in front of generation. Model per
+# docs/subscription_model_discussion.md §0 — trial capped by CHAPTERS (any
+# TRIAL_CHAPTER_CAP across all subject-stages, unlimited re-serves per chapter because
+# period-fitting takes several attempts and that IS the trial); paid = unlimited within
+# "{subject}/{stage}" scopes; "*" = all. Messages are teacher-facing, plain words
+# (testing.md C13): they speak in chapters and subscriptions, never generations/scopes.
+def _trial_chapter_key(subject: str, grade: str, chapter_number: int) -> str:
+    return f"{subject}/{grade}/{chapter_number}"
+
+
+def _entitlement_of(tenant_id: str) -> Entitlement:
+    """The tenant's entitlement, JIT-starting the trial on first touch — a brand-new
+    teacher generates immediately (benefit first), her chapter counter simply starts."""
+    ent = entitlement_repo.load(tenant_id)
+    if ent is None:
+        ent = Entitlement(plan_id="trial", status="trial", source="trial", scopes=["*"])
+        entitlement_repo.save(tenant_id, ent)
+    return ent
+
+
+def _check_entitlement(tenant_id: str, subject: str, grade: str,
+                       chapter_number: int) -> None:
+    """Raise HTTP 402 when generation is not covered. No-op when enforcement is off
+    (config.ENTITLEMENT_ENFORCED, default False — dev undisturbed)."""
+    if not config.ENTITLEMENT_ENFORCED:
+        return
+    ent = _entitlement_of(tenant_id)
+    if ent.status == "trial":
+        key = _trial_chapter_key(subject, grade, chapter_number)
+        if key in ent.trial_chapters:            # re-serve: always free
+            return
+        if len(ent.trial_chapters) < config.TRIAL_CHAPTER_CAP:
+            return
+        raise HTTPException(status_code=402, detail=(
+            f"Your free trial covers {config.TRIAL_CHAPTER_CAP} chapters, and you have "
+            f"used them. Your chapters stay yours — subscribe to prepare new ones."))
+    if ent.status in ("active", "grace"):
+        if ent.valid_until and ent.valid_until < date.today().isoformat():
+            raise HTTPException(status_code=402, detail=(
+                "Your subscription has ended. Renew to keep preparing new chapters — "
+                "everything you made stays yours."))
+        stage = stage_for(grade)
+        if "*" in ent.scopes or f"{subject}/{stage}" in ent.scopes:
+            return
+        raise HTTPException(status_code=402, detail=(
+            "Your subscription covers a different subject. Add this one to keep "
+            "preparing its chapters."))
+    raise HTTPException(status_code=402, detail=(
+        "Your subscription has ended. Renew to keep preparing new chapters — "
+        "everything you made stays yours."))
+
+
+def _count_trial_chapter(tenant_id: str, subject: str, grade: str,
+                         chapter_number: int) -> None:
+    """AFTER a successful serve: add the chapter to the trial counter (once). Called on
+    success only, so a typo-guard 400 or an unauthored-chapter 404 never burns a trial
+    chapter. Counts even when enforcement is off — the counter is honest history the
+    future UI shows, not the gate itself."""
+    ent = _entitlement_of(tenant_id)
+    if ent.status != "trial":
+        return
+    key = _trial_chapter_key(subject, grade, chapter_number)
+    if key not in ent.trial_chapters:
+        ent.trial_chapters.append(key)
+        entitlement_repo.save(tenant_id, ent)
 
 
 class PeriodRow(BaseModel):
@@ -1073,6 +1152,24 @@ def data_rights_erase(req: EraseRequest,
             "erased_at": receipt.erased_at}
 
 
+@app.get("/entitlement")
+def get_entitlement(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """The caller's entitlement state, for the (Step 6) UI: trial counter ("2 of 3
+    chapters used"), subscription status, scopes. JIT-starts the trial on first read so
+    a brand-new teacher's counter exists before her first generation. `enforced` tells
+    the client whether the gate is live at all (dev default: off)."""
+    tenant_id, _user_id = identity
+    ent = _entitlement_of(tenant_id)
+    return {
+        "plan_id": ent.plan_id, "status": ent.status, "valid_until": ent.valid_until,
+        "source": ent.source, "scopes": ent.scopes,
+        "trial_chapters_used": len(ent.trial_chapters),
+        "trial_chapter_cap": config.TRIAL_CHAPTER_CAP,
+        "trial_chapters": ent.trial_chapters,
+        "enforced": config.ENTITLEMENT_ENFORCED,
+    }
+
+
 @app.post("/subjects/{subject}/{grade}/generate")
 def generate(subject: str, grade: str) -> JSONResponse:
     """Stub — live generation is deferred. The frontend treats this as 'coming soon' and
@@ -1170,6 +1267,10 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
         raise HTTPException(status_code=404,
                             detail="No underlying chapter yet.")
 
+    # ── THE entitlement gate (Step 5) — the only one in the product. After the 404 so
+    # an unauthored chapter never triggers a paywall message; before any serving work.
+    _check_entitlement(tenant_id, subject, grade, chapter_number)
+
     def _std_row(c) -> Dict[int, int]:
         row = (c.get("period_rows_snapshot") or [{}])[0]
         try:
@@ -1198,6 +1299,7 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
                                      _plan_key(subject, grade, filename), total_periods)
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Could not register the plan: {e}")
+        _count_trial_chapter(tenant_id, subject, grade, chapter_number)
         return {
             "status": "prepared", "identity": True,
             "filename": filename,
@@ -1275,6 +1377,7 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
                                      _plan_key(subject, grade, filename), total_periods)
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Could not register the plan: {e}")
+        _count_trial_chapter(tenant_id, subject, grade, chapter_number)
         hg = hit.get("genon") or {}
         return {
             "status": "prepared", "cached": True,
@@ -1294,6 +1397,7 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
         prepared_plans_repo.mark(tenant_id, user_id, year, key, prepared_periods)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Plan saved but not registered: {e}")
+    _count_trial_chapter(tenant_id, subject, grade, chapter_number)
 
     g = plan["genon"]
     return {

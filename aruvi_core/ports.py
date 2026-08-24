@@ -307,11 +307,61 @@ class DataRightsService(Protocol):
         ...
 
 
+# ── Entitlement (administrative architecture Step 5 — the payment-shaped hole) ──
+# The structure the thing that cannot be built yet (a payment gateway) fits into.
+# Model: docs/subscription_model_discussion.md §0 (founder, 2026-08-22). The billing
+# unit is one teacher × one SUBJECT-STAGE, unlimited serves within scope; the trial is
+# capped by CHAPTERS (3, any subject-stage), never by serves — her initial struggle is
+# period-fitting and she needs several attempts per chapter, so re-serving a chapter she
+# already holds is always free. Entitlement is keyed by TENANT (a school later pays once
+# for many teachers), resolved SERVER-side, and carries its platform of purchase —
+# `source` is why this seam must exist before any gateway is chosen: web takes
+# Razorpay/UPI, Android takes Play Billing, iOS takes Apple IAP, and a subscription
+# bought on her phone must be honoured wherever she signs in.
+@dataclass
+class Entitlement:
+    """One tenant's right to generate. `scopes` entries are "{subject}/{stage}"
+    (e.g. "social_sciences/middle"); the single entry "*" means all subject-stages
+    (trial breadth, enterprise). `valid_until` is an ISO date; empty means no time
+    limit (the trial deliberately has none — the cap is chapters, not days).
+    `trial_chapters` records the chapter identities ("{subject}/{grade}/{chapter}")
+    counted against the trial cap — membership is what makes re-serves free."""
+    plan_id: str               # "trial" | "individual_annual" | "enterprise_annual"
+    status: str                # trial | active | grace | expired
+    valid_until: str = ""      # ISO date; "" = no time limit
+    source: str = "trial"      # trial | manual | web | ios | android
+    scopes: List[str] = field(default_factory=list)
+    trial_chapters: List[str] = field(default_factory=list)
+
+
+@runtime_checkable
+class EntitlementRepository(Protocol):
+    """Persists entitlements, keyed by tenant_id ONLY (the subscription belongs to the
+    tenant; every user under it rides it). File-based reference implementation now
+    (adapters/entitlement_repository_file.py); the partner's cloud adapter swaps in
+    behind this same port. NOT year-scoped — a subscription is rolling (§2.5)."""
+    def load(self, tenant_id: str) -> Optional["Entitlement"]:
+        """The tenant's entitlement, or None if never granted (the API layer decides
+        whether None means 'start a trial')."""
+        ...
+
+    def save(self, tenant_id: str, ent: "Entitlement") -> None:
+        """Create or fully replace the tenant's entitlement (small, written whole)."""
+        ...
+
+
 # ── Billing (Razorpay etc.; provider is just the charging mechanism) ───────────
 @runtime_checkable
 class BillingProvider(Protocol):
+    """Port over the charging mechanism. The reference implementation is
+    ManualBillingProvider (adapters/manual_billing_provider.py): the founder IS the
+    gateway — grant, expire and revoke by hand via the entitlement CLI, real behaviour
+    with no vendor. The partner's job is to implement this Protocol against the chosen
+    gateway(s) and populate Entitlement.source; nothing above the port changes."""
     def create_subscription(self, tenant_id: str, plan_id: str) -> Dict[str, Any]: ...
     def verify_webhook(self, payload: bytes, signature: str) -> Dict[str, Any]: ...
+    def cancel(self, tenant_id: str) -> Dict[str, Any]: ...
+    def fetch_status(self, tenant_id: str) -> Dict[str, Any]: ...
 
 
 # ── Allocation persistence (Persistent Annual Allocation Register) ──────────────
