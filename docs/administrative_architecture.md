@@ -1,6 +1,11 @@
 # Aruvi — Administrative Architecture & the Ports a Partner Implements
 
-**Status:** design settled. **Step 4 BUILT 2026-08-22** (DataRightsService — export is a
+**Status:** design settled. **Step 5 BUILT 2026-08-24** (entitlement seam to the model of
+`docs/subscription_model_discussion.md` §0 — deltas from §5 Step 5's text: `Entitlement`
+gains `scopes` (subject-stage billing) + `trial_chapters` (the trial is capped by ANY 3
+CHAPTERS with unlimited re-serves, no time limit — never by days or serves);
+enforcement sits behind `ARUVI_ENTITLEMENT_ENFORCED`, default OFF; §2.5's lapsed
+semantics amended in place). **Step 4 BUILT 2026-08-22** (DataRightsService — export is a
 single editable Word document covering everything Bucket-B, per founder; erase receipts
 per §2.6 with wording pinned by test_data_rights; the erased user ID is not reserved —
 re-signin JIT-creates a fresh account). **Step 3 BUILT 2026-08-22** (PlanNoteRepository — with one
@@ -149,7 +154,17 @@ Forcing renewal at year-end bunches revenue risk and mixes money with planning a
 moment. A subscription taken in Oct 2026 runs to Oct 2027, so it covers the next year's
 planning season.
 
-**Lapsed state: export and delete only.** No read-only tier, no "dummy access". But the floor
+> ★ **AMENDED 2026-08-24 (founder, subscription-model discussion §0 — supersedes the
+> "export and delete only" line below).** Lapsed state: **she keeps what is HERS, loses
+> what is ARUVI'S.** Her generated plans remain viewable, exportable, printable and
+> archivable — having paid for a year, they are her property. Locked: generation of new
+> plans AND the productivity/tracking tools (the tracker is the renewal hook; giving it
+> away removes the reason to renew). Trial-exhausted (never paid) differs deliberately:
+> she ADDITIONALLY keeps the tracker on her trial chapters, because experiencing the
+> tracking loop on real teaching is what converts her — "the unfairness is fair": each
+> state keeps exactly what moves her to the next one. The legal floor below is unchanged.
+
+~~**Lapsed state: export and delete only.** No read-only tier, no "dummy access".~~ The floor
 below is not a product tier — it is a legal and store requirement:
 
 - She can always sign in to **download her data** and **delete her account**. DPDP erasure and

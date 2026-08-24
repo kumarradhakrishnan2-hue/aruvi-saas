@@ -67,6 +67,11 @@ unpaid subjects would clog every dropdown.
 
 ### Action points
 
+> Progress 2026-08-24: **1 DONE** (§2.5 amended in place) · **2 DONE** (Step 5 built —
+> ports, file adapter, ManualBillingProvider, CLI, gate in genon_make_plan, GET
+> /entitlement, enforcement flag default OFF, test_entitlement.py green) · 3–6 open
+> (3 = Step 6 surfaces + Expo promotion; 5 = the 20-teacher test).
+
 1. **Amend `docs/administrative_architecture.md` §2.5**: lapsed = plans retained
    (view/export/print/archive) + generation and productivity tools locked; export and
    account-deletion remain always reachable. Trial-exhausted additionally keeps the

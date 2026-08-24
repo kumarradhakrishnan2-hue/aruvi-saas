@@ -676,7 +676,28 @@ document (founder: Word only, everything Bucket-B, never the shared library). Ro
 receipt's `kept` wording pinned by test_data_rights and must match the privacy policy).
 No entitlement gate on either route, ever (§2.5). Erased IDs are not reserved — re-signin
 JIT-creates a fresh account. test_data_rights.py includes the export-as-tenant-isolation
-test. No web UI yet (Step 6). Remaining: Steps 2, 5, 6. Full entry: MEMORY.md 2026-08-22.
+test. No web UI yet (Step 6). Full entry: MEMORY.md 2026-08-22.
+
+**Administrative architecture Step 5 (2026-08-24) — the entitlement seam, built to the
+SETTLED SUBSCRIPTION MODEL: `docs/subscription_model_discussion.md` §0 (read it before
+any pricing/entitlement/monetization work — it supersedes its own earlier hypotheses).**
+Billing unit = teacher × SUBJECT-STAGE, unlimited serves in scope; Individual = mobile
+app only · Enterprise = website (the channel split is the price fence; the Expo app is
+now THE individual product); trial = all 11 subject-stages, ANY 3 chapters, unlimited
+re-serves per chapter, no time limit; trial-exhausted keeps plans + tracker,
+lapsed keeps plans but not the tracker (**§2.5 amended in place** — no longer
+export-and-delete-only); upsell only at the profile-expansion moment, pull never push;
+paid choosers show only her scope. Built: `Entitlement` (scopes = "{subject}/{stage}",
+"*" = all; `trial_chapters` counter; `source` = the channel fence) + tenant-keyed
+`EntitlementRepository` + expanded `BillingProvider` with `ManualBillingProvider` (the
+founder IS the gateway) + CLI `aruvi-scripts/entitlement.py` grant|revoke|status|
+trial-reset. THE one gate sits in genon_make_plan only (402s speak in CHAPTERS, never
+"generations"; counting happens after success so 400/404 never burn a chapter; data
+rights never gated). **Enforcement default OFF** (`ARUVI_ENTITLEMENT_ENFORCED`;
+`ARUVI_TRIAL_CHAPTERS` default 3). `GET /entitlement` feeds the future Step-6 counter.
+test_entitlement.py green. Remaining: Steps 2, 6 — Step 6 next (trial counter,
+exhausted state, upsell screen, subscription status, export/erase buttons), then the
+persona pass with enforcement ON. Full entry: MEMORY.md 2026-08-24.
 
 **Persistence + tenanting groundwork (2026-06-28) — the front-end-only state is now
 server-persisted and per-tenant, ahead of full Phase-4 auth.** Built: (a) a **user-ID login

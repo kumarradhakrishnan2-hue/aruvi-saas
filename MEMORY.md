@@ -687,7 +687,52 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-23 (newest) — THE CLOUD/LOCAL RESTRUCTURE: data/cloud/ IS THE
+## 2026-08-24 (newest) — ADMIN ARCHITECTURE STEP 5 BUILT: THE ENTITLEMENT SEAM,
+## TO THE SUBSCRIPTION MODEL OF docs/subscription_model_discussion.md §0
+
+The subscription model was settled first (two long founder sessions, recorded in
+`docs/subscription_model_discussion.md` — §0 is the current model, read it before
+touching pricing/entitlement anything). Headlines: billing unit = teacher ×
+SUBJECT-STAGE, unlimited serves in scope (a quota would create anxiety with no economic
+basis — serving is cached selection); Individual = MOBILE APP ONLY, Enterprise = website
+(the channel split IS the price fence; Expo app promoted to being THE individual
+product); trial = ALL 11 subject-stages open, capped at ANY 3 CHAPTERS, unlimited
+re-serves per chapter (period-fitting takes 3–4 attempts and that IS the trial), NO time
+limit; trial-exhausted keeps plans + tracker on her chapters, lapsed keeps plans but
+LOSES the tracker ("the unfairness is fair" — each state keeps exactly what converts
+her); renewal = the living fit to her time, since teachers cannot fix chapter 9's
+periods months ahead. **Admin architecture §2.5 amended in place** (lapsed is no longer
+export-and-delete-only). Gating is at ADD time, not generate time: paid choosers show
+ONLY her scope (no clogged dropdowns, no add-now-pay-later dissonance); the profile-
+expansion moment is the ONE upsell surface, pull never push.
+
+BUILT (all STATIC + unit-verified, enforcement OFF by default so nothing changes live):
+`Entitlement` (plan_id/status/valid_until/source/scopes/trial_chapters — scopes are
+"{subject}/{stage}", "*" = all; `source` ios/android/web/manual/trial is the channel
+fence and why the seam precedes any gateway) + `EntitlementRepository` (TENANT-keyed,
+NOT year-scoped — subscriptions roll) in ports.py; `entitlement_repository_file.py`
+(`entitlements/{tenant}/entitlement.json`); `BillingProvider` expanded (cancel,
+fetch_status) with `manual_billing_provider.py` — the founder IS the gateway, webhooks
+raise loudly; founder CLI `aruvi-scripts/entitlement.py`
+grant|revoke|status|trial-reset (trial-reset is the persona-testing aid).
+`api/config.py`: `ENTITLEMENT_ENFORCED` (env ARUVI_ENTITLEMENT_ENFORCED, default OFF) +
+`TRIAL_CHAPTER_CAP` (env ARUVI_TRIAL_CHAPTERS, default 3). api/main.py: `_entitlement_of`
+(JIT trial on first touch), `_check_entitlement` (raises 402; messages speak in CHAPTERS
+and subscriptions, never "generations"/"scope" — the §0 language rule), and
+`_count_trial_chapter` called AFTER each of genon_make_plan's three success returns
+(identity / cache-hit / fresh) so a typo-guard 400 or unauthored-chapter 404 never burns
+a trial chapter; the check itself sits after the library 404, before serving. THE gate
+is in genon_make_plan ONLY; data rights stay ungated forever. `GET /entitlement` feeds
+the future Step-6 counter UI ("2 of 3 chapters used") + `enforced` flag. Tests:
+test_entitlement.py (repo isolation, manual provider grant/expire/revoke, flag-off
+default, 3-chapter cap + free re-serves + idempotent counting, paid scope/date/revoke +
+"*", route JIT). Suite 30 files green (same 5 pre-existing content failures excluded).
+NEXT: Step 6 minimal surfaces (trial counter, exhausted state, upsell screen,
+subscription status, export/erase buttons), then the persona end-to-end pass with
+enforcement ON (trial → exhaust → grant → lapse; one school tenant with two users) as
+dress rehearsal for the 20-teacher field test.
+
+## 2026-08-23 — THE CLOUD/LOCAL RESTRUCTURE: data/cloud/ IS THE
 ## MIGRATION UNIT, data/authoring/ IS FOUNDER-SECURE
 
 **Why.** The founder asked, given the genon architecture (authored canonicals + deterministic
