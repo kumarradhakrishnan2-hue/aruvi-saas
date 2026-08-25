@@ -1,110 +1,137 @@
-# Persona Test Checklist — subscription model end-to-end (2026-08-24)
+# Persona Test Checklist — front door + subscription model end-to-end (updated 2026-08-25)
 
-Report against the numbers. Every test assumes the API is running WITH the flag:
-`ARUVI_ENTITLEMENT_ENFORCED=1 python3 -m uvicorn api.main:app --host 0.0.0.0 --port 8000`
-and the web dev server as usual. Reset kumar3 between personas:
-`curl -X POST -H "X-Aruvi-User: kumar3" -H "Content-Type: application/json" -d '{"confirm":"erase"}' localhost:8000/data-rights/erase`
-Grant/revoke: `python3 aruvi-scripts/entitlement.py grant|revoke|status|trial-reset kumar3 [--scopes social_sciences/middle]`
+Report against the numbers. Setup for every pass:
+- API: `ARUVI_ENTITLEMENT_ENFORCED=1 python3 -m uvicorn api.main:app --host 0.0.0.0 --port 8000`
+- Web: `npm --prefix web run dev -- -H 0.0.0.0`
+- Reset any identity: `curl -X POST -H "X-Aruvi-User: <id-or-mobile>" -H "Content-Type: application/json" -d '{"confirm":"erase"}' localhost:8000/data-rights/erase`
+- Grant/revoke: `python3 aruvi-scripts/entitlement.py grant|revoke|status|trial-reset <id>`
+- **First-time device** = a browser that has never signed in: use a PRIVATE TAB, or
+  clear the site's localStorage. Fresh identities = any unused 10-digit mobile number.
 
 ---
 
-## A · Fresh trial teacher (erase kumar3 first)
+## Z · The front door (new — do this pass first)
 
-1. Sign in → welcome page: trial terms line in PINE above "Let's get started"; prepare
-   bar visible WITHOUT scrolling (360×800 esp.); "Lesson plan in seconds, not hours";
-   bar shows brand + kumar3 only (no theme toggle).
-2. Subject step: ALL subjects offered (trial breadth). Class step: all classes.
-3. Chapter step: NO trial line here (welcome said it). Generate chapter 1 → lands in
-   My Lessons; tour offer appears below the lesson (fresh teacher = eligible).
-4. + Prepare Lesson → chapter step shows "1 of 3 free chapters used. Regenerating same
-   chapter allowed."
-5. Re-generate the SAME chapter at different periods 2–3× → counter stays at 1.
-6. Generate chapters 2 and 3 (any subjects — cross-subject on purpose) → counter 2, 3.
-7. Ask for a 4th chapter → POPUP (no section card behind it): kicker "FREE TRIAL ENDS",
-   message "…Your 3 chapters stay yours…", bold SUBSCRIBE, "Not now"; backdrop tap
-   dismisses.
-8. TRIAL-EXHAUSTED state: all 3 chapters still open/export/print; TRACKER STILL WORKS
-   (attach to section, move pointer, mark complete) — exhausted keeps the tracker,
-   unlike lapsed. "+" portal still visible. Settings › Subscription: "Free trial — 3 of
-   3 chapters used".
+1. **First-time device** → the CHOOSE page appears (not sign-in): pine bar with brand;
+   headline + 4 tick benefits; "Choose what works for you"; Free-to-try card
+   highlighted by default (pine outline, NO "Recommended" badge); Subscribe card
+   (clay accents) with ONLY the honest bullets (no "priority support", no "export &
+   more"); "🔒 upgrade or switch anytime"; CTA "Create sign in"; quiet "Already have
+   an ID? Sign in" below.
+2. Tap between the two cards → highlight moves; brand colors only (pine/clay — no
+   orange gradient).
+3. **OTP page**: +91 + 10-digit field (letters impossible); "Generate OTP" disabled
+   until 10 digits; after Generate, the OTP field + "Preview build: enter 0000" note.
+4. Wrong code (e.g. 1234) → error line; `0000` → verifies.
+5. **Trial path** (Free-to-try chosen): lands straight on the slimmed WELCOME —
+   "Welcome to Aruvi!", "Aruvi is free to try.", the trial CARD (tick circle, "Your
+   free trial" terms, "To get started"), CTA — no benefits list here anymore, no
+   theme toggle on the bar. Prepare bar visible without scrolling at 360×800.
+6. **Subscribe path** (fresh number, Subscribe chosen): step rail Verify → About you →
+   Subjects → Pay tracks correctly. About you: Save disabled until name+role+state
+   filled; school optional.
+7. **Subjects = the cart**: all 11 subject·stage combos listed (Science M/S · Social
+   Science M/S · Maths P/M/S · English P/M/S · TWAU P); ticking updates the running
+   total at ₹500 each; Continue disabled with empty cart.
+8. **Pay**: line per combo + total; the honest stub note ("online payment opens
+   soon — this activates right away"); "Pay ₹N & start" → lands in first run.
+9. That first run is SCOPE-FILTERED: subject wheel = only what she bought (one item
+   if one scope), class wheel = only her stage's classes; welcome was the CLEAN
+   version (no trial card, no "free to try").
+10. After onboarding once, reopening the app on the same tab → SIGN-IN screen
+    (returning device): benefits block, "Who's planning today?" with NO sub-text,
+    one field; legacy IDs (kumar1) still work; a mobile ID works; "New to Aruvi?
+    Get started →" returns to the choose page.
+11. Settings › Subscription for the new subscriber: ledger rows (Subject/Stage/
+    Class/Validity dd-Mmm-yy), one trio per purchased scope.
+
+## A · Fresh trial teacher (erase the trial mobile / kumar3 first; NO grant)
+
+12. Confirm clean: `curl -H "X-Aruvi-User: <id>" localhost:8000/entitlement` →
+    status trial, used 0.
+13. Welcome shows the trial card (see Z5). Subject step: ALL subjects. Class step:
+    all classes.
+14. Chapter step: no trial line (welcome said it). Generate chapter 1 → My Lessons;
+    tour offer appears below the lesson.
+15. + Prepare Lesson → chapter step: "1 of 3 free chapters used. Regenerating same
+    chapter allowed."
+16. Re-generate the SAME chapter at different periods 2–3× → counter stays 1.
+17. Chapters 2 and 3 (cross-subject on purpose) → counter 2, 3.
+18. 4th chapter → POPUP (no card behind it): "FREE TRIAL ENDS", "…Your 3 chapters
+    stay yours…", bold SUBSCRIBE, "Not now"; backdrop dismisses.
+19. Trial-exhausted: all 3 chapters open/export/print; TRACKER STILL WORKS (attach,
+    pointer, mark complete); "+" portal visible; Settings › Subscription: "Free
+    trial — 3 of 3 chapters used".
 
 ## B · Convert: trial-exhausted → subscribed
 
-9. `grant kumar3 --scopes social_sciences/middle` → within ~20s or on next app focus,
-   generation works again for SS middle chapters — unlimited, counter line GONE from
-   the chapter step.
-10. Settings › Subscription & billing: pill SUBSCRIBED + ledger rows — Subject: Social
-    Science / Stage: Middle / Class: 6, 7 & 8 / Validity: until dd-Mmm-yy.
-11. Ask for a SCIENCE chapter (trial-era subject still in her profile) → popup, kicker
-    "SEPARATE SUBSCRIPTION", "…covers a different subject…".
-12. Profile (Settings › Profile) → edit pen → SUBJECT pen: wheel shows her paid subject
-    PLUS any trial-era enrolled subjects (so they can be removed), but NO other
-    catalogue subjects; upsell line below the wheel. CLASS pen: only classes 6–8
-    offered (+ any enrolled others); same upsell line.
-13. "Keep it" in a removal warning re-ticks the item (subjects AND classes).
-14. Removing her ONLY subject: allowed, warned, profile empties → "+ add a subject".
-    (Then rebuild or re-erase.)
+20. `grant <id> --scopes social_sciences/middle` → within ~20s/on focus, SS-middle
+    generation works, unlimited, counter line gone.
+21. Settings › Subscription: SUBSCRIBED + ledger rows, Validity dd-Mmm-yy.
+22. A Science chapter (trial-era subject) → popup "SEPARATE SUBSCRIPTION".
+23. Profile edit pens: subject wheel = paid subject + any trial-era ENROLLED subjects
+    only (so they can be removed), upsell line below; class wheel = classes 6–8 (+
+    enrolled others).
+24. "Keep it" in a removal warning re-ticks the item (subjects AND classes).
+25. Removing her ONLY subject: allowed, warned, empties to "+ add a subject".
 
-## C · Subscribed from the start (erase, grant, THEN first sign-in)
+## C · Subscribed from the start
 
-15. Welcome: CLEAN — no trial terms line. Subject step: ONE-item wheel (Social
-    Science). Class step: only 6, 7, 8.
-16. Generate freely; no counter anywhere; chapter step clean.
+26. Covered by Z6–Z9. Additionally: no trial chrome anywhere in the session — no
+    counter, no trial card, no trial line.
 
-## D · Revocation / lapsed (from state B or C)
+## D · Revocation / lapsed
 
-17. `revoke kumar3` while she is ON My Classes in the app → within ~20s or on focus:
-    moved to My Lessons; My Classes TAB GONE.
-18. My Lessons: dropdowns work, plans open, EXPORT works (plan PDF/DOCX); "Prepare a
-    new lesson →" bar GONE.
-19. Any straggler generation attempt → popup kicker "SUBSCRIPTION ENDED".
-20. Settings: Subscription shows ENDED + "plans remain yours"; Profile opens READ-ONLY
-    (no pen); "+" portal absent everywhere; tracking taps don't persist (server 402).
-21. Data rights while lapsed: BOTH downloads work; Delete my account works. (Rights
-    never lapse.)
+27. `revoke <id>` while she is ON My Classes → within ~20s/on focus: moved to My
+    Lessons; My Classes TAB GONE.
+28. My Lessons: dropdowns work, plans open, plan export works; "Prepare a new
+    lesson →" bar GONE.
+29. Straggler generation attempt → popup "SUBSCRIPTION ENDED".
+30. Settings: ENDED + "plans remain yours"; Profile read-only (no pen); "+" absent;
+    tracking taps don't persist (server 402).
+31. Data rights while lapsed: BOTH data downloads work; Delete my account works.
 
-## E · Renewal (from D)
+## E · Renewal
 
-22. `grant kumar3 --scopes social_sciences/middle` again → My Classes tab returns,
-    prepare bar returns, pen returns, tracker works. Nothing lost from before.
+32. `grant` again → My Classes tab, prepare bar, pen, tracker all return; nothing lost.
 
-## F · Settings screen suite (any signed-in user)
+## F · Settings suite (any signed-in user)
 
-23. Gear → frozen bar "⚙ Settings ✕" (one title only, larger, no hairline below); tabs +
-    Ask mark gone while inside; ✕ from home/subview/profile returns EXACTLY where you
-    were (test from My Classes AND from My Lessons).
-24. Cards: Profile → Subscription & billing → Your data & export → Help → Support →
-    About; no icons; all fit one phone screen; Help opens Ask Aruvi; Support/About show
-    their placeholder texts.
-25. Appearance row: theme toggles (and the toggle exists NOWHERE else — first-run bar
-    and shell bar are clean).
-26. Delete my account: type-"erase" flow → farewell → Done signs out; re-signin =
-    brand-new teacher.
+33. Gear → frozen "⚙ Settings ✕" bar (one title, no hairline); tabs + Ask mark gone
+    inside; ✕ returns exactly where you were (test from My Classes AND My Lessons).
+34. Cards in order: Profile · Subscription & billing · Your data & export · Help ·
+    Support · About; no icons; one phone screen; Help opens Ask Aruvi;
+    Support/About placeholders.
+35. Appearance row toggles theme — and the toggle exists nowhere else (shell bar and
+    first-run bar are clean).
+36. Delete my account: type-"erase" → farewell → Done signs out; re-signin = new
+    teacher.
 
 ## G · Tour eligibility
 
-27. kumar1 (veteran): NO tour offer on either surface, any session.
-28. Fresh post-first-run teacher (state A step 3): offer appears; take it once through
-    all 19 steps — step 15/17 opens the PROFILE correctly through the new gear anchor.
-29. After she really teaches (pointer moved): offer never returns.
+37. kumar1 (veteran): NO tour offer, either surface, any session.
+38. Fresh post-first-run teacher: offer appears; take the 19 steps once — the profile
+    step anchors the gear correctly.
+39. After real teaching (pointer moved): offer never returns.
 
-## H · Combinations we haven't touched (worth one pass each)
+## H · Combinations
 
-30. **Enterprise-style grant**: `grant kumar3 --plan enterprise_annual` (scopes default
-    "*") → everything unlimited; Subscription card reads All subjects / All stages /
-    3 to 10; profile choosers unfiltered.
-31. **Multi-scope**: `grant kumar3 --scopes social_sciences/middle,science/secondary` →
-    Subscription card shows TWO Subject/Stage/Class trios + one Validity; choosers
-    offer both.
-32. **Expired-by-date** (vs revoked): `grant kumar3 --until 2025-01-01` → same lapsed
-    behavior everywhere (the date, not the founder's hand, ended it).
-33. **Notes while lapsed**: open a plan's chapter notes — writing should still work
-    (notes are hers, not a productivity lock — CONFIRM this is the behavior you want;
-    if notes should lock too, tell me).
-34. **Dark mode**: paywall popup, Settings cards, trial lines — all legible in dark.
-35. **360×800 sweep**: welcome, chapter step + counter, popup, Settings, subscription
-    ledger — no horizontal scroll, no clipped buttons.
-36. **Flag off sanity**: restart API WITHOUT the flag → all trial/subscription chrome
-    vanishes everywhere; app behaves exactly as before Step 5 existed.
+40. **Enterprise grant**: `grant <id> --plan enterprise_annual` (scopes "*") →
+    unlimited everything; Subscription card: All subjects / All stages / 3 to 10;
+    choosers unfiltered.
+41. **Multi-scope checkout**: buy TWO combos in the cart (₹1000 total) → Subscription
+    card shows two Subject/Stage/Class trios + one Validity; first run offers both
+    subjects.
+42. **Expired-by-date**: `grant <id> --until 2025-01-01` → same lapsed behavior as
+    revoked.
+43. **Notes while lapsed**: chapter notes still writable — CONFIRM this is the rule
+    you want (her writing vs productivity tool); tell me if notes should lock too.
+44. **Dark mode**: choose page, OTP, cart, welcome card, paywall popup, Settings —
+    all legible.
+45. **360×800 sweep**: every new screen (Z1–Z9) — no horizontal scroll, no clipped
+    CTAs, step rail fits.
+46. **Flag off sanity**: API without the flag → ALL trial/subscription chrome gone
+    (choose page still shows both cards, but trial card/counters/popups never
+    appear in-app); behaves like pre-Step-5 Aruvi.
 
 Report failures by number.

@@ -32,7 +32,8 @@ const scopeLabel = (s) =>
 /* Subscribed details as ledger rows (founder, 2026-08-24): Subject · Stage · Class ·
  * Validity, one row each. Classes derive from the stage (the billing unit is
  * subject-STAGE, so the class list is a fact of the stage, not a choice). */
-const STAGE_CLASSES = { preparatory: "3, 4 & 5", middle: "6, 7 & 8", secondary: "9 & 10" };
+const STAGE_CLASSES = { preparatory: "3, 4 & 5", middle: "6, 7 & 8",
+                        secondary: "9 (10 coming soon)" };
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const fmtValidity = (iso) => {
@@ -50,7 +51,8 @@ const scopeRows = (scope) => {
 /* `view` is LIFTED to page.jsx (founder 2026-08-24: the frozen Settings bar's back
  * button is hierarchical — subview → home → origin — so the shell must know which
  * level is showing). Values: home | subscription | data | support | about. */
-export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOut }) {
+export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOut,
+                                   onSubscribe, syncTick = 0 }) {
   const [ent, setEnt] = useState(null);
   const [busy, setBusy] = useState("");        // "docx" | "pdf" | "erase" | ""
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -58,7 +60,8 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
   const [failMsg, setFailMsg] = useState("");
   const [receipt, setReceipt] = useState(null);
 
-  useEffect(() => { fetchEntitlement().then(setEnt); }, []);
+  // Re-fetch when the shell signals a subscription change (in-app subscribe done).
+  useEffect(() => { fetchEntitlement().then(setEnt); }, [syncTick]);
 
   const download = async (fmt) => {
     setBusy(fmt); setFailMsg("");
@@ -159,6 +162,13 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
             <div className="set-plan"><span className="set-plan-txt">Your plan details will appear here.</span></div>
           )}
         </div>
+        {/* Subscribe from here too (founder, 2026-08-25): on trial or ended, the same
+            wizard the paywall and the front door open. */}
+        {(onTrial || lapsed) && onSubscribe && (
+          <button className="paywall-subscribe set-subscribe" onClick={onSubscribe}>
+            Subscribe
+          </button>
+        )}
         <p className="set-hint">Billing, payments and invoices will appear here once online
           payments open.</p>
       </div>

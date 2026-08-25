@@ -614,7 +614,12 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   // Home header: time-of-day greeting (repeat view only — see below).
   const hour = new Date().getHours();
   const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
-  const firstName = (user || "").trim();
+  // Never greet her by her mobile number (founder, 2026-08-25): the id is now the
+  // mobile for onboarded teachers, and "Good evening, 1234567890!" is nobody's name.
+  // Until a real name is acquired (subscription checkout), a numeric id greets plainly:
+  // "Good evening!". Named dev ids (kumar1) keep the personal touch.
+  const rawId = (user || "").trim();
+  const firstName = /^\d+$/.test(rawId) ? "" : rawId;
 
   // Ready but the teacher has no classes at all (empty profile).
   if (!classes.length) {

@@ -550,7 +550,6 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
           <h1 className="fr-welcome-title">Welcome to Aruvi!</h1>
           {trialInfo && trialInfo.enforced && trialInfo.status === "trial" ? (
             <>
-              <p className="fr-welcome-sub fr-welcome-try">Aruvi is free to try.</p>
               <div className="fr-welcome-rule" aria-hidden="true" />
               <div className="fr-trial-card">
                 <span className="fr-trial-tick" aria-hidden="true">✓</span>

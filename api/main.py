@@ -1191,6 +1191,137 @@ def get_entitlement(identity: tuple = Depends(_current_identity)) -> Dict[str, A
     }
 
 
+@app.get("/onboarding/known")
+def onboarding_known(id: str = "") -> Dict[str, Any]:
+    """Does this mobile/ID already sit in the tenant database? An existence check that
+    deliberately does NOT go through _current_identity — that dependency JIT-creates,
+    and the whole point here is to answer without creating. The SIGN-IN screen gates
+    on this (founder, 2026-08-25): sign-in admits REGISTERED identities only; unknown
+    numbers are sent to Create sign in (OTP), which is what registers them."""
+    uid = (id or "").strip()
+    if not uid:
+        return {"known": False}
+    return {"known": account_repo.load(uid, uid) is not None}
+
+
+@app.post("/onboarding/verified")
+def onboarding_verified(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Called the moment an OTP verifies (trial path; the subscribe path registers via
+    checkout): the number joins the tenant database — _current_identity's JIT creation
+    IS the registration. In production the real OTP/app auth replaces the 0000 stub;
+    this contract stays."""
+    tenant_id, user_id = identity
+    return {"status": "registered", "tenant_id": tenant_id, "user_id": user_id}
+
+
+_STAGE_GRADES = {"preparatory": ["iii", "iv", "v"], "middle": ["vi", "vii", "viii"],
+                 "secondary": ["ix", "x"]}
+
+
+def _default_grade_record(subject_slug: str, grade_slug: str) -> Dict[str, Any]:
+    """One canonical grade record with the calibrated defaults — mirrors what first
+    run's activation seeds (section A, standard duration, 6 periods/week)."""
+    dur = data.standard_duration_minutes(grade_slug, subject_slug)
+    n = {"iii": 3, "iv": 4, "v": 5, "vi": 6, "vii": 7, "viii": 8, "ix": 9, "x": 10}.get(
+        grade_slug, 0)
+    return {"grade": grade_slug.upper(),
+            "sections": [{"tag": f"{n}A", "sec": "A"}],
+            "durations": [dur],
+            "ppw_by_duration": {str(dur): 6},
+            "ppw_anchor": dur,
+            "periods_per_week": 6}
+
+
+def _apply_subscription_profile(tenant_id: str, user_id: str,
+                                scopes: List[str]) -> None:
+    """★ SUBSCRIPTION CREATES THE DEFAULT PROFILE (founder, 2026-08-25). Every
+    purchased scope lands as a profile entry immediately — the founder bought SS +
+    English and found only SS in My Lessons' dropdown, because first run creates one
+    subject and the rest waited on the "+". Rules:
+      · per scope: the stage's LOWEST class offered by the content, section A,
+        standard duration, 6 periods/week, the calibrated annual budget;
+      · a subject she ALREADY has (trialed her real subject, then paid for it) keeps
+        its existing record — her sections and numbers are never reset — but only the
+        grades inside purchased stages survive; the purchased stage's default grade is
+        added when missing;
+      · subjects OUTSIDE every purchased scope are DROPPED (trial test artifacts —
+        founder: the subscription overrides the trial profile), and their section
+        pointers are cleared server-side. Their PLANS remain on the server; they
+        reappear if that subject is ever subscribed.
+    The tour-end "Are these your sections?" prompt is the designed amend moment, so
+    defaults are safe. Full-replace save through the same repo the API uses."""
+    slugify = lambda name: (name or "").lower().replace(" ", "_")
+    by_subj: Dict[str, List[str]] = {}
+    for sc in scopes:
+        subj, stage = (sc.split("/") + [""])[:2]
+        by_subj.setdefault(subj, []).append(stage)
+
+    existing = (readiness_repo.load_profile(tenant_id, user_id) or {}).get("subjects", [])
+    existing_by_slug = {slugify(s.get("name", "")): s for s in existing}
+    year = _resolve_year(tenant_id, user_id)
+
+    new_subjects: List[Dict[str, Any]] = []
+    for subj, stages in by_subj.items():
+        offered = data.list_grades(subj)                     # content's grade slugs
+        allowed = [g for st in stages for g in _STAGE_GRADES.get(st, []) if g in offered]
+        prior = existing_by_slug.get(subj)
+        grades: List[Dict[str, Any]] = []
+        if prior:
+            grades = [g for g in (prior.get("grades") or [])
+                      if (g.get("grade") or "").lower() in allowed]
+        for st in stages:
+            stage_grades = [g for g in _STAGE_GRADES.get(st, []) if g in offered]
+            if stage_grades and not any((g.get("grade") or "").lower() in stage_grades
+                                        for g in grades):
+                grades.append(_default_grade_record(subj, stage_grades[0]))
+        if not grades:
+            continue
+        budget: Dict[str, Any] = {}
+        for gi, g in enumerate(grades):
+            gslug = (g.get("grade") or "").lower()
+            val = (data.master_annual_budget(subj, gslug)
+                   or (g.get("periods_per_week") or 6) * 30)
+            # keep a prior budget where the grade survived from the old record
+            prior_b = None
+            if prior:
+                for pj, pg in enumerate(prior.get("grades") or []):
+                    if pg.get("grade") == g.get("grade"):
+                        prior_b = (prior.get("budget") or {}).get(str(pj))
+                        break
+            budget[str(gi)] = prior_b or {"method": "periods", "value": int(val)}
+        new_subjects.append({
+            "name": pretty_subject(subj),
+            "grades": grades,
+            "grids": [[[-1] * 6 for _s in (g.get("sections") or [])] for g in grades],
+            "budget": budget,
+        })
+
+    # Clear section pointers of everything dropped (the plans themselves stay).
+    kept_keys = set()
+    for s in new_subjects:
+        sslug = slugify(s["name"])
+        for g in s["grades"]:
+            for sec in g.get("sections") or []:
+                kept_keys.add(f"{sslug}_{(g.get('grade') or '').lower()}_{sec.get('tag')}")
+    for s in existing:
+        sslug = slugify(s.get("name", ""))
+        for g in s.get("grades") or []:
+            for sec in g.get("sections") or []:
+                key = f"{sslug}_{(g.get('grade') or '').lower()}_{sec.get('tag')}"
+                if key not in kept_keys:
+                    try:
+                        section_state_repo.delete_one(tenant_id, user_id, year, key)
+                    except Exception:
+                        pass
+
+    if new_subjects:
+        readiness_repo.save_profile(tenant_id, user_id, {"subjects": new_subjects})
+
+
+def pretty_subject(slug: str) -> str:
+    return " ".join(w.capitalize() for w in (slug or "").split("_"))
+
+
 class CheckoutRequest(BaseModel):
     """Body for POST /onboarding/checkout — the subscribe path's final step."""
     scopes: List[str]          # ["social_sciences/middle", ...] — the cart
@@ -1227,6 +1358,12 @@ def onboarding_checkout(req: CheckoutRequest,
         account_repo.save(acct)
     result = billing_provider.create_subscription(
         tenant_id, "individual_annual", scopes=scopes, source="web")
+    # Every purchased scope becomes a ready-made profile entry (founder, 2026-08-25);
+    # out-of-scope trial artifacts are dropped. See _apply_subscription_profile.
+    try:
+        _apply_subscription_profile(tenant_id, user_id, scopes)
+    except Exception:
+        pass   # a profile hiccup must never fail an activation
     return {"status": "active", "scopes": result.get("scopes"),
             "valid_until": result.get("valid_until"),
             "amount_inr": len(scopes) * config.PRICE_PER_SUBJECT_STAGE}

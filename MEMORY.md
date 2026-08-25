@@ -758,6 +758,59 @@ about to spend a chapter is when the number informs a decision; no ambient chip
 anywhere. Both lines render ONLY when `enforced && status === "trial"` — gate off (dev)
 = no trial chrome at all. `.trial-note` CSS (quiet italic, centered). STATIC-verified
 (babel ×3, css 1971/1971); live pass = kumar3's next run.
+**DIRECT SUBSCRIBER STILL GETS FIRST RUN (founder, 2026-08-25 follow-on):** the guided
+first generation is how she LEARNS to generate, so a ready profile must not skip it.
+Server-derived heuristic, no stored flag: `ready && nothing-ever-prepared &&
+nothing-bound` → `firstGenNeeded` → FirstRun renders (scope-filtered to her purchase,
+clean welcome — both already built); fetch-failure → never force it on a veteran.
+`onFirstRunComplete` now MERGES her one walked-through subject record into the
+checkout-created defaults (same-name replaced, others keep their place; the merged set
+is what verifyReadiness writes) — so English survives her SS walk-through. Post-trial
+subscribers have prepared plans → skip first run, as they should. Brief shell flash
+possible while the heuristic resolves (accepted).
+**SUBSCRIPTION CREATES THE DEFAULT PROFILE (founder, 2026-08-25 — "I subscribed for SS
+and English but the dropdown shows only SS"):** `/onboarding/checkout` now calls
+`_apply_subscription_profile` after activation — every purchased scope lands as a
+profile entry immediately: the stage's LOWEST class the content offers, section A,
+standard duration, 6 ppw, CALIBRATED annual budget (master plan; ppw×30 fallback).
+Rules: a subject she already has KEEPS its record (sections/numbers never reset; only
+grades inside purchased stages survive; each purchased stage's default grade added if
+missing; prior budgets kept for surviving grades); subjects OUTSIDE every purchased
+scope are DROPPED (trial artifacts — the subscription overrides the trial profile) and
+their section pointers cleared server-side; their PLANS stay and resurface if that
+subject is ever bought. Safe because the tour-end "Are these your sections?" prompt is
+the designed amend moment (confirmed present — finishTour, both Done and Skip).
+CONSEQUENCES: (a) direct-subscribe now lands in the SHELL with ready cards (profile
+exists → first run skipped; §0b's scope-filtered first run remains only for the
+erased-profile path); (b) out-of-scope trial plans disappear from My Lessons' profile-
+driven dropdowns until that subject is subscribed; (c) in-app subscribe onDone
+rehydrates GET /readiness so the new cards appear without reload. Verified: TWAU trial
+artifact + purchase of SS·middle + English·prep → profile becomes exactly SS VI (6A,
+210) + English III (3A, 140). Same session:
+**ONBOARDING ITERATION 2 (founder live, 2026-08-25):** (a) the CART is now DROPDOWN
+ROWS — Subject ▾ + Stage ▾ per row (stage options limited to what the subject offers),
+"+ Add another subject & stage", ✕ per row, the chosen stage's classes said in small
+pine text ("Class 6, 7 & 8"), running total of complete de-duplicated rows.
+(b) **`SubscribeFlow.jsx` EXTRACTED — one wizard, two doors:** Login's post-OTP path
+AND the trial-exhausted paywall's Subscribe button, which now opens the SAME flow
+full-screen in-app (`.subflow-overlay`), landing at About you (she's already verified);
+onDone bumps `entSyncTick` so the trial→active flip lands immediately (scope filters,
+counters, paywall). (c) OTP is FOUR AUTO-ADVANCING BOXES (backspace steps back).
+(d) Numeric ids never greet by number — "Good evening!" plain until a name exists.
+Earlier same day:
+**SIGN-IN GATED ON REGISTRATION (founder live find, 2026-08-25):** the sign-in screen
+was letting a brand-new number straight in (the dev any-ID JIT), skipping OTP. Now: OTP
+verify calls `POST /onboarding/verified` (registration = the JIT, made explicit);
+sign-in probes `GET /onboarding/known` — an existence check that deliberately does NOT
+go through _current_identity (which would JIT-create) — and refuses unknown identities
+with "We don't know this number yet — use Create sign in". Dev accounts (kumar1…)
+exist, so they still sign in. The raw API keeps JIT for curl/CLI convenience.
+Production: app-identified number + face/biometrics for returning users (doc §0 action
+7). Also same-day iPhone fix: `.ob-foot` + all `.fr-foot`s are STICKY-BOTTOM with
+dvh + safe-area, so every CTA is visible without scrolling; choose-page polish
+(compact tick paragraph in pine, headline "in seconds", honest-bullets trimmed,
+"switch anytime" line cut, welcome "free to try" line cut, the ONE `.fr-brand` bar
+reused un-fixed).
 **THE ONBOARDING FRONT DOOR BUILT (founder-designed, 2026-08-24/25 — the biggest web
 slice yet).** Login.jsx is now the onboarding shell. FIRST-TIME device (localStorage
 `aruvi_device_seen` unset) → CHOOSE page: benefits + two plan cards (Free-to-try

@@ -139,6 +139,18 @@ unpaid subjects would clog every dropdown.
    willingness-to-pay).
 6. **Language**: cap and copy speak in CHAPTERS, never "generations" (§3 compression
    risk); public claims stay "NCF 2023 aligned" (§6).
+7. **AT LAUNCH (with real OTP)**: (a) the trial-farming fence becomes real — a number
+   must be OWNED to verify; the dummy 0000 protects nothing and device detection only
+   picks the greeting screen, never entitlement (founder verified live, 2026-08-25);
+   (b) SIGN-IN must stop JIT-creating accounts for unknown numbers — sign-in is for
+   existing accounts only; an unknown number is told so and routed to the front door.
+   ★ (b) BUILT AHEAD, 2026-08-25: sign-in now checks `GET /onboarding/known` (an
+   existence probe that never JIT-creates) and refuses unknown identities, pointing
+   them at Create sign in; OTP verification calls `POST /onboarding/verified`, which
+   registers the number in the tenant database. The raw API still JIT-creates on any
+   header (dev convenience for curl/CLI); only the UI path is gated. In production the
+   mobile APP identifies the authenticated number itself and uses face recognition /
+   device biometrics for returning access — the known/registered contract stays.
 
 ---
 

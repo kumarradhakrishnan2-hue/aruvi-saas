@@ -6,6 +6,7 @@ import { setSectionMismatchHandler, pullSectionState } from "./lib/sectionState"
 import GenerateTab from "./components/GenerateTab";
 import MyPlans from "./components/MyPlans";
 import Login from "./components/Login";
+import SubscribeFlow from "./components/SubscribeFlow";
 import FirstRun from "./components/FirstRun";
 import TeachingProfile from "./components/TeachingProfile";
 import Settings from "./components/Settings";
@@ -247,10 +248,45 @@ export default function Home() {
     });
   };
 
+  /* ★ A DIRECT SUBSCRIBER STILL GETS THE GUIDED FIRST GENERATION (founder,
+     2026-08-25): checkout creates her default profile, so `ready` is true — but the
+     first-run pathway is how she LEARNS to generate. Server-derived heuristic, no
+     stored flag (the 2026-07-06 rule): ready + NOTHING ever prepared + NOTHING bound
+     = she has never generated → first run (scope-filtered to what she paid for).
+     Completing it (or any generation) ends the condition forever. Unknown (fetch
+     failed) → never force first run on a veteran. */
+  const [firstGenNeeded, setFirstGenNeeded] = useState(false);
+  useEffect(() => {
+    if (!ready || !user) { setFirstGenNeeded(false); return; }
+    let live = true;
+    Promise.all([
+      getJSON("/plans-prepared").catch(() => null),
+      getJSON("/section-state").catch(() => null),
+    ]).then(([p, s]) => {
+      if (!live || !p || !s) return;
+      const prepared = Object.keys((p && p.prepared) || {}).length > 0;
+      const bound = Object.values((s && s.states) || {}).some((st) => st && st.chapter);
+      setFirstGenNeeded(!prepared && !bound);
+    });
+    return () => { live = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, user]);
+
   const onFirstRunComplete = (payload, preparing) => {
     const subs = (payload && payload.subjects) || [];
+    setFirstGenNeeded(false);
     if (subs.length) {
-      setReadiness(projectReadiness({ subjects: subs }));
+      /* MERGE with the checkout-created defaults, never replace (founder,
+         2026-08-25): first run builds ONE subject record from her choices; a direct
+         subscriber's other purchased subjects (English beside her SS walk-through)
+         must survive the activation write. Same-name records are replaced by hers;
+         the rest keep their place. A fresh trial teacher has no base → unchanged. */
+      const base = (readiness && readiness.subjects) || [];
+      const merged = base.length
+        ? base.map((b) => subs.find((n) => n.name === b.name) || b)
+            .concat(subs.filter((n) => !base.some((b) => b.name === n.name)))
+        : subs;
+      setReadiness(projectReadiness({ subjects: merged }));
       setReady(true);
       const first = subs[0];
       setSubject(subjectSlugify(first.name));
@@ -270,7 +306,7 @@ export default function Home() {
       // READ-AFTER-WRITE (lib/verify.js). This is the ACTIVATION write — the one that turns a
       // first-time teacher into a set-up one — and it used to end in an empty catch, so a lost
       // profile looked exactly like a successful setup until her next sign-in.
-      verifyReadiness(subs);
+      verifyReadiness(merged);
     }
   };
 
@@ -406,6 +442,12 @@ export default function Home() {
     setPreparingCard(null);                       // never a card for a blocked prepare
     setPaywall(message || "Subscribe to prepare new chapters.");
   };
+  /* The paywall's Subscribe opens the SAME SubscribeFlow the front door uses (founder,
+     2026-08-25), landing at About you — she is already verified (signed in). On
+     completion: close, and bump the entitlement sync so the trial→active flip lands
+     immediately (scope filters, counters, paywall all refresh). */
+  const [subscribeOpen, setSubscribeOpen] = useState(false);
+  const [entSyncTick, setEntSyncTick] = useState(0);
 
   // From My Lesson Plans → Track: deep-link into My Week to open a SECTION's pointer-enabled
   // plan (grade-level reads, section-level acts). Scope the tab, leave the library, and stash
@@ -508,7 +550,7 @@ export default function Home() {
       clearInterval(iv);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, user]);
+  }, [ready, user, entSyncTick]);
 
   /* LAPSED = the reading room (founder, 2026-08-24): only My Lessons (open, choose
      subject/class, export) + Settings (profile locked). A lapsed teacher standing on
@@ -571,7 +613,7 @@ export default function Home() {
   // onPrepared / onPrepareError are page.jsx's OWN handlers, the same ones PrepareLesson uses:
   // first run fires the serve and hands off in the same tick, so the request resolves after
   // FirstRun has unmounted and must land on the shell's preparing card, not on a dead screen.
-  if (!ready) return <FirstRun user={user} onComplete={onFirstRunComplete}
+  if (!ready || firstGenNeeded) return <FirstRun user={user} onComplete={onFirstRunComplete}
                        onPrepared={onPrepared} onPrepareError={onPrepareError} onSignOut={onSignOut} />;
 
   return (
@@ -711,7 +753,8 @@ export default function Home() {
           ) : (editFlow === "settings" && ready) ? (
             <div className="editflow">
               <Settings view={settingsView} setView={setSettingsView}
-                onOpenProfile={openProfileFromSettings}
+                onOpenProfile={openProfileFromSettings} syncTick={entSyncTick}
+                onSubscribe={() => setSubscribeOpen(true)}
                 onAsk={() => setAskOpen(true)} onSignOut={onSignOut} />
             </div>
           ) :
@@ -740,6 +783,25 @@ export default function Home() {
 
       {/* Ask Aruvi Q&A — full-screen deterministic helpline (browse + keyword search). */}
       {askOpen && <AskAruvi onClose={() => setAskOpen(false)} />}
+      {subscribeOpen && (
+        <div className="subflow-overlay">
+          <SubscribeFlow userId={user}
+            onDone={() => {
+              setSubscribeOpen(false);
+              setEntSyncTick((t) => t + 1);
+              /* Checkout also rewrote her PROFILE server-side (every purchased scope
+                 becomes a default card; trial artifacts dropped) — rehydrate it so the
+                 new cards appear without a reload. */
+              getJSON("/readiness").then((d) => {
+                if (d && d.ready && d.readiness) {
+                  setReadiness(projectReadiness(d.readiness));
+                  setReady(true);
+                }
+              }).catch(() => {});
+            }}
+            onCancel={() => setSubscribeOpen(false)} />
+        </div>
+      )}
       {paywall && (
         <div className="paywall-bg" onClick={() => setPaywall(null)}>
           <div className="paywall-card" onClick={(e) => e.stopPropagation()}>
@@ -752,7 +814,8 @@ export default function Home() {
                 : "Subscription ended"
             }</div>
             <div className="paywall-msg">{paywall}</div>
-            <button className="paywall-subscribe" onClick={() => setPaywall(null)}>
+            <button className="paywall-subscribe"
+              onClick={() => { setPaywall(null); setSubscribeOpen(true); }}>
               Subscribe
             </button>
             <button className="paywall-later" onClick={() => setPaywall(null)}>
