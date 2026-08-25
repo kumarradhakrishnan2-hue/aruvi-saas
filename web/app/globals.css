@@ -3510,6 +3510,124 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
   border-radius: 5px; padding: 9px 20px; font-family: var(--f-mono); font-size: 12px;
   letter-spacing: .06em; text-transform: uppercase; }
 .cn-save:hover { background: var(--pine-d); }
+
+/* ── Paywall window (founder 2026-08-24; the first Step-6 surface). A blocked prepare
+ * (402) never shows a card — this modal carries the server's sentence, Subscribe bold
+ * below it, a quiet Not now underneath. Same visual family as the notes modal. */
+.paywall-bg { position: fixed; inset: 0; background: rgba(31,42,36,.42); display: flex;
+  align-items: center; justify-content: center; padding: 20px; z-index: 60; }
+.paywall-card { background: var(--paper); border: 1px solid var(--line); border-radius: 12px;
+  width: 100%; max-width: 400px; padding: 22px 24px 18px; display: flex;
+  flex-direction: column; align-items: center; text-align: center; gap: 4px; }
+.paywall-msg { font-family: var(--f-body); font-size: 15px; line-height: 1.55;
+  color: var(--ink); margin-top: 8px; }
+.paywall-subscribe { all: unset; cursor: pointer; background: var(--pine); color: var(--paper);
+  border-radius: 5px; padding: 10px 26px; margin-top: 16px; font-family: var(--f-mono);
+  font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.paywall-subscribe:hover { background: var(--pine-d); }
+.paywall-later { all: unset; cursor: pointer; margin-top: 10px; font-family: var(--f-body);
+  font-style: italic; font-size: 12.5px; color: var(--ink-soft); }
+.paywall-later:hover { color: var(--clay); }
+/* Trial counter line — Prepare Lesson's chapter step, its only home (founder
+ * 2026-08-24). Quiet by design: information, never anxiety. */
+.trial-note { font-family: var(--f-body); font-style: italic; font-size: 12.5px;
+  line-height: 1.5; color: var(--ink-soft); text-align: center; margin: 6px 0 10px; }
+/* Trial TERMS — the welcome page, prominently above "Let's get started" (founder
+ * 2026-08-24: the welcome must state the terms of engagement; said once, said there).
+ * The sibling rule reclaims most of the h2's 56px top margin when the terms render, so
+ * the welcome keeps to one screen and the prepare bar stays visible without scrolling. */
+.fr-trial-terms { font-family: var(--f-body); font-size: 13.5px;
+  line-height: 1.45; color: var(--pine); max-width: 34ch; margin: 30px auto 0; }
+.fr-trial-terms + .fr-welcome-h2 { margin-top: 30px; }
+
+/* ── Your account (gear surface, below the teaching profile — Step 6 slice 2) ── */
+.acct { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); }
+.acct-row { display: flex; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line-soft);
+  font-size: 13.5px; align-items: baseline; }
+.acct-k { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--ink-soft); flex: none; width: 92px; }
+.acct-v { color: var(--ink); }
+.acct-blurb { font-family: var(--f-body); font-style: italic; font-size: 12.5px;
+  color: var(--ink-soft); margin: 14px 0 8px; }
+.acct-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.acct-dl { all: unset; cursor: pointer; border: 1px solid var(--pine); color: var(--pine);
+  border-radius: 5px; padding: 8px 14px; font-family: var(--f-mono); font-size: 11.5px;
+  letter-spacing: .04em; }
+.acct-dl:hover { background: var(--pine); color: var(--paper); }
+.acct-dl:disabled { opacity: .5; cursor: default; }
+.acct-del-open { all: unset; cursor: pointer; display: block; margin-top: 18px;
+  font-family: var(--f-body); font-style: italic; font-size: 12.5px; color: var(--danger); }
+.acct-del { margin-top: 14px; border: 1px solid var(--danger); border-radius: 8px;
+  padding: 12px 14px; }
+.acct-del-warn { font-size: 13px; color: var(--ink); margin: 0 0 10px; line-height: 1.5; }
+.acct-del-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.acct-del-input { border: 1px solid var(--line); border-radius: 5px; padding: 7px 10px;
+  font-family: var(--f-mono); font-size: 12px; width: 110px; background: var(--paper); color: var(--ink); }
+.acct-del-go { all: unset; cursor: pointer; background: var(--danger); color: #fff;
+  border-radius: 5px; padding: 8px 14px; font-family: var(--f-mono); font-size: 11.5px; }
+.acct-del-go:disabled { opacity: .4; cursor: default; }
+.acct-del-cancel { all: unset; cursor: pointer; font-size: 12.5px; color: var(--ink-soft); padding: 6px; }
+.acct-fail { color: var(--danger); font-size: 12.5px; margin-top: 10px; }
+.acct-farewell { font-size: 14px; color: var(--ink); margin: 10px 0 16px; line-height: 1.55; }
+.acct-bye { max-width: 200px; }
+
+/* ── Settings screen (the gear's own view — founder 2026-08-24; mockup frame 2) ── */
+.setwrap { max-width: 560px; }
+.set-title { font-family: var(--f-display); font-size: 24px; font-weight: 600; color: var(--ink); }
+.set-sub { font-family: var(--f-body); font-style: italic; font-size: 13px; color: var(--ink-soft);
+  margin: 2px 0 18px; }
+.set-group { margin-bottom: 18px; }
+.set-cap { font-family: var(--f-mono); font-size: 10px; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; }
+.set-card { border: 1px solid var(--line); border-radius: 12px; background: var(--card-bg); overflow: hidden; }
+.set-card-pad { padding: 4px 0; }
+.set-back { display: inline-block; margin-bottom: 10px; }
+.set-hint { font-family: var(--f-body); font-style: italic; font-size: 12.5px;
+  color: var(--ink-soft); margin: 12px 0; line-height: 1.55; }
+/* The big cards (founder's structure, Aruvi voice): plain --card-bg fill distinct
+ * from the paper page, icon · title over small text · chevron. COMPACT on purpose
+ * (founder 2026-08-24): tight padding and gaps so the whole list fits one phone
+ * screen without scrolling. */
+.set-bigcard { all: unset; box-sizing: border-box; display: flex; width: 100%;
+  align-items: center; gap: 10px; padding: 9px 14px; margin-bottom: 7px;
+  border: 1px solid var(--line); border-radius: 10px; background: var(--card-bg);
+  cursor: pointer; }
+.set-bigcard:hover { border-color: var(--pine); }
+.set-bigtext { flex: 1; display: flex; flex-direction: column; gap: 1px; }
+.set-biglab { font-family: var(--f-display); font-size: 14.5px; font-weight: 600; color: var(--ink); }
+.set-bigsub { font-family: var(--f-body); font-size: 11px; color: var(--ink-soft); }
+.set-group-tail { margin-top: 14px; }
+/* Frozen Settings bar — replaces the tab row while in Settings (same nav slot).
+ * The Ask-Aruvi idiom: title left, ✕ at the right end closes the whole of Settings. */
+.set-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  border-bottom: none; }   /* no hairline under the Settings bar (founder) */
+.topbar .main-tabs.set-bar { border-bottom: none; }
+.set-bar-title { font-family: var(--f-display); font-size: 19px; font-weight: 600;
+  color: var(--ink); padding: 10px 0 10px 4px; display: inline-flex; align-items: center; gap: 9px; }
+.set-bar-gear { font-size: 20px; color: var(--ink-soft); }
+.set-bar-x { all: unset; cursor: pointer; color: var(--ink-soft); font-size: 15px;
+  line-height: 1; padding: 10px 6px; }
+.set-bar-x:hover { color: var(--clay); }
+.set-row { all: unset; box-sizing: border-box; display: flex; width: 100%; align-items: center;
+  gap: 10px; padding: 9px 14px; border-bottom: 1px solid var(--line-soft); font-size: 13px;
+  cursor: pointer; color: var(--ink); font-family: var(--f-body); }
+.set-card .set-row:last-child { border-bottom: none; }
+.set-row:hover { background: var(--paper-2); }
+.set-row:disabled { opacity: .5; cursor: default; }
+.set-row-static { cursor: default; }
+.set-row-static:hover { background: transparent; }
+.set-ric { width: 24px; text-align: center; font-size: 14px; flex: none; }
+.set-lab { flex: 1; }
+.set-row-danger .set-lab { color: var(--danger); }
+.set-val { font-size: 11.5px; color: var(--ink-soft); }
+.set-chev { color: var(--ink-soft); }
+.set-plan { display: flex; align-items: center; gap: 10px; padding: 12px 14px; flex-wrap: wrap; }
+.set-pill { border: 1px solid var(--line); background: var(--paper-2); border-radius: 12px;
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase;
+  padding: 3px 9px; color: var(--pine); flex: none; }
+.set-pill-on { color: var(--ochre); }
+.set-pill-off { color: var(--clay); }
+.set-plan-txt { font-size: 12.5px; color: var(--ink); line-height: 1.45; }
 @media (max-width: 600px) {
   .cn-paper { height: 204px; }
   .cn-foot { flex-wrap: wrap; }

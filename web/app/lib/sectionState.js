@@ -145,15 +145,19 @@ export function pushSectionState(sectionKey) {
 /* Authoritative reconcile on load: pull every tracked section from the server and rewrite
  * the localStorage cache to match. For each KNOWN section key (from the readiness profile),
  * apply the server row, or clear the local cache if the server has none — so a device that
- * missed a track (or an untrack) done elsewhere converges to server truth. Returns a promise;
- * callers bump a render tick once it resolves so the cards re-read the refreshed cache. */
+ * missed a track (or an untrack) done elsewhere converges to server truth. Resolves TRUE
+ * when the server answered (the cache now reflects server truth) and FALSE when it could
+ * not (offline / server down — cache untouched, and NOT trustworthy as "nothing is
+ * attached"). Callers bump a render tick either way; the boolean lets first-run-shaped
+ * UI (the tour offer) wait for a real answer instead of mistaking an empty cache for a
+ * new teacher (kumar1's phantom tour, 2026-08-24). */
 export async function pullSectionState(sectionKeys) {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined") return false;
   let states = {};
   try {
     states = (await getJSON("/section-state")).states || {};
   } catch {
-    return; // offline / server down → keep the existing local cache untouched
+    return false; // offline / server down → keep the existing local cache untouched
   }
   // SAFETY GUARD (2026-07-03): a WHOLESALE-empty server response ({} for every section) is far
   // more likely a transient/corrupt-empty read than the teacher having genuinely untracked every
@@ -196,4 +200,5 @@ export async function pullSectionState(sectionKeys) {
       }
     } catch {}
   });
+  return true;
 }

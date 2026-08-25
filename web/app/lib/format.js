@@ -196,6 +196,21 @@ export async function savePlanNote(subject, grade, chapter, text) {
   }
 }
 
+/* ───────── entitlement (admin architecture Step 5/6, 2026-08-24) ─────────
+ * The caller's subscription/trial state, for the disclosure surfaces: the first-run
+ * chapter step's coverage line and Prepare Lesson's counter ("2 of 3 free chapters
+ * used"). Returns null when unreachable — every caller treats null as "show nothing"
+ * (a missing counter must never block a screen). Fields used by the UI: status
+ * ('trial'|'active'|...), trial_chapters_used, trial_chapter_cap, trial_chapters,
+ * enforced (false in dev → all trial chrome hidden, since nothing is actually gated). */
+export async function fetchEntitlement() {
+  try {
+    return await getJSON("/entitlement");
+  } catch {
+    return null;
+  }
+}
+
 /* ───────── period apportionment — ONE method, defined once (2026-08-13) ─────────
  * Largest-remainder: split `total` whole periods across `weights`, giving every
  * remainder-ranked chapter one extra until the total is exactly used. This is the method

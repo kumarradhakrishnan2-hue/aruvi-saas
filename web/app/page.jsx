@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getJSON, pretty, gradeUp, ROMAN, projectReadiness, API, withUser, getUser, setUser, clearUser } from "./lib/format";
 import { verifiedWrite, readinessFingerprint } from "./lib/verify";
 import { setSectionMismatchHandler, pullSectionState } from "./lib/sectionState";
@@ -8,9 +8,10 @@ import MyPlans from "./components/MyPlans";
 import Login from "./components/Login";
 import FirstRun from "./components/FirstRun";
 import TeachingProfile from "./components/TeachingProfile";
+import Settings from "./components/Settings";
 import MyLessonPlans from "./components/MyLessonPlans";
 import GuidedTour from "./components/GuidedTour";
-import ThemeToggle from "./components/ThemeToggle";
+// ThemeToggle moved into Settings (App › Appearance) — no longer on the shell's bar.
 import AskAruvi from "./ask-aruvi/AskAruvi";
 
 /* ───────── app shell ─────────
@@ -83,6 +84,34 @@ export default function Home() {
   const [tour, setTour] = useState(null);
   const [tourInfo, setTourInfo] = useState(null);   // { tag, chapter } from MyPlans
   const [tourDismissed, setTourDismissed] = useState(false);   // session-only; never persisted
+  /* ★ THE OFFER IS SERVER-CONFIRMED, ONCE, HERE (2026-08-24 — kumar1's phantom tour).
+     The 2026-08-21 change put the offer on BOTH surfaces, but only MyPlans carried a
+     gate; MyLessonPlans rendered it purely on `onStartTour` being passed — so a veteran
+     with 25 bound sections and advanced pointers was offered the 19-step tour on every
+     My Lessons visit. And the obvious gate ("nothing attached") is WRONG since first
+     run auto-binds her lesson to the default section — it would kill the offer for the
+     exact person it exists for. The server-derived signal for "still new enough to
+     offer the tour" is therefore: AT MOST ONE bound section AND no teaching progress
+     anywhere (no pointer advanced, nothing done). It self-closes forever the moment she
+     actually teaches — no stored flag, no localStorage desync trap (2026-07-06 rule).
+     null = not yet answered / unreachable → no offer (unknown must never look new). */
+  const [tourEligible, setTourEligible] = useState(null);
+  useEffect(() => {
+    if (!ready || !user) { setTourEligible(null); return; }
+    let live = true;
+    getJSON("/section-state")
+      .then((d) => {
+        if (!live) return;
+        const rows = Object.values((d && d.states) || {});
+        const bound = rows.filter((st) => st && st.chapter);
+        const progressed = rows.some((st) => st && (st.done || st.unit_index != null));
+        setTourEligible(bound.length <= 1 && !progressed);
+      })
+      .catch(() => { if (live) setTourEligible(null); });
+    return () => { live = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, user]);
+  const tourOnOffer = tourEligible === true && !tourDismissed;
   // Also closes Ask Aruvi: Skip can be pressed on step 18 while the panel is open, and the
   // tour must never leave the shell in a state it opened.
   /* ★ Ending the tour asks her to check her sections (founder, 2026-08-21). First run no longer
@@ -366,6 +395,18 @@ export default function Home() {
     setPreparingCard(desc ? { ...desc, failed: true, message } : null);
   const onDismissPrepareError = () => setPreparingCard(null);
 
+  // ── The paywall window (founder, 2026-08-24 — the first Step-6 surface, built early
+  // because the live kumar3 trial met the raw 402 inside a section card). A 402 is not
+  // an error: the proposed card comes DOWN (no failed state, no inline message) and this
+  // modal carries the server's own sentence, with Subscribe bold below it. Subscribe is
+  // not wired to a purchase flow yet (no gateway — Step 5's ManualBillingProvider is the
+  // founder); until then it closes the window. `paywall` holds the message string.
+  const [paywall, setPaywall] = useState(null);
+  const onPaywall = (message) => {
+    setPreparingCard(null);                       // never a card for a blocked prepare
+    setPaywall(message || "Subscribe to prepare new chapters.");
+  };
+
   // From My Lesson Plans → Track: deep-link into My Week to open a SECTION's pointer-enabled
   // plan (grade-level reads, section-level acts). Scope the tab, leave the library, and stash
   // a pending-open hint that MyPlans consumes on mount.
@@ -424,7 +465,38 @@ export default function Home() {
     else if (tour === 19) setAskOpen(true);   // 19→18: re-open the panel the step rings
     setTour(tour - 1);
   };
-  const goProfile = () => { setProfileAutoAdd(null); setProfilePortal(null); setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null); };
+  const goProfile = () => { setProfileViaSettings(false); setProfileAutoAdd(null); setProfilePortal(null); setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null); };
+  /* ── Settings context (founder, 2026-08-24 final) ──
+   * The gear opens Settings; the PROFILE is Settings' top card (no separate person
+   * icon — fewer buttons). While in Settings (or the profile reached THROUGH it), the
+   * tab row is REPLACED by a frozen Settings bar (back + title): the tabs and the Ask
+   * mark had no role there and read as stale chrome. Back is hierarchical — subview →
+   * Settings home → wherever she came FROM (captured at gear-press). Portal/tour paths
+   * still open the profile directly with the ordinary tab row (they exit by their own
+   * flows), so only the settings-origin visit wears the bar. */
+  const settingsOriginRef = useRef(null);          // "lessonplans" | "profile" | null
+  const [settingsView, setSettingsView] = useState("home");
+  const [profileViaSettings, setProfileViaSettings] = useState(false);
+  const goSettings = () => {
+    if (editFlow !== "settings" && !profileViaSettings) settingsOriginRef.current = editFlow;
+    setProfileViaSettings(false); setSettingsView("home");
+    setEditFlow("settings"); setTab("myplans"); setGenerateEntry(null);
+  };
+  const openProfileFromSettings = () => {
+    setProfileViaSettings(true); setProfileAutoAdd(null); setProfilePortal(null);
+    setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null);
+  };
+  /* ✕ closes Settings ENTIRELY, from anywhere in it — home, a subview, or the profile
+     reached through it — back to wherever she was at gear-press. Same idiom as Ask
+     Aruvi's ✕ (founder, 2026-08-24: no back-and-title pair; one titled row, one ✕). */
+  const settingsClose = () => {
+    setProfileViaSettings(false); setSettingsView("home");
+    const o = settingsOriginRef.current;
+    if (o === "lessonplans") goLessons();
+    else if (o === "profile") goProfile();
+    else goClasses();
+  };
+  const inSettingsBar = editFlow === "settings" || (editFlow === "profile" && profileViaSettings);
   // (The "add more classes in this subject" prompt that used to call in here was removed on
   // 2026-08-21 along with its one-time window — see the plusShow note in MyPlans.jsx. Nothing
   // sets `profileAutoAdd` to a subject any more, so TeachingProfile's `autoAddClassSubject`
@@ -438,7 +510,8 @@ export default function Home() {
   };
   // Which centre tab lights up: My Lessons only when the repository is open; the profile
   // (settings) view lights neither; everything else — home cards, Generate — reads as My Classes.
-  const activeNav = editFlow === "lessonplans" ? "lessons" : editFlow === "profile" ? "none" : "classes";
+  const activeNav = editFlow === "lessonplans" ? "lessons"
+    : (editFlow === "profile" || editFlow === "settings") ? "none" : "classes";
 
   // Still restoring from localStorage — render nothing for a beat (no login flash).
   if (user === null) return null;
@@ -484,9 +557,12 @@ export default function Home() {
           <span className="hdr-brand-tag">lesson studio</span>
         </div>
         <div className="hdr-user">
-          <ThemeToggle />
-          <button className="hdr-gear" onClick={goProfile} aria-label="Settings" title="Settings"
-            data-tour="settings-gear">⚙</button>
+          {/* ONE icon (founder, 2026-08-24 final — fewer buttons): the gear opens
+              Settings, and the PROFILE is Settings' top card. ThemeToggle lives in
+              Settings › App › Appearance. The tour's profile step keeps this anchor —
+              the profile is reached through here. */}
+          <button className="hdr-gear" onClick={goSettings} aria-label="Settings"
+            title="Settings" data-tour="settings-gear">⚙</button>
           {/* rightmost: profile name stacked over its own log out */}
           <div className="hdr-user-id">
             <span className="hdr-user-name">{user}</span>
@@ -499,6 +575,22 @@ export default function Home() {
           marked with the same clay-red underline the original My Plans/Generate tabs used.
           Nouns only: My Classes (where did I stop?) and My Lessons (the plan repository).
           "+ Prepare Lesson" is a verb, so it lives as an action inside both views, never here. */}
+      {inSettingsBar ? (
+        /* The frozen Settings bar (founder, 2026-08-24): while in Settings — or the
+           profile reached through it — the tabs and the Ask mark are replaced by the
+           Ask-Aruvi idiom: title left, ✕ at the right end. The ✕ closes the whole of
+           Settings back to where she came from; every option keeps this row. Same nav
+           slot and classes, so it stays pinned exactly as the tab row does. */
+        <nav className="tabs main-tabs set-bar" aria-label="Settings">
+          {/* ONE "Settings" only (founder): the bar's large title, gear glyph beside it
+              the way the Ask mark sits beside its title; the screen below carries no
+              second heading. ✕ right closes to origin. No hairline under this bar. */}
+          <span className="set-bar-title">
+            <span className="set-bar-gear" aria-hidden="true">⚙</span>Settings
+          </span>
+          <button className="set-bar-x" onClick={settingsClose} aria-label="Close settings">✕</button>
+        </nav>
+      ) : (
       <nav className="tabs main-tabs" aria-label="Primary">
         <button className={`tab ${activeNav === "classes" ? "active" : ""}`} onClick={goClasses}
           data-tour="nav-classes">
@@ -517,6 +609,7 @@ export default function Home() {
           </svg>
         </button>
       </nav>
+      )}
       </div>
       {/* reserves the fixed bar's height in the flow — see the .topbar comment above */}
       <div className="topbar-spacer" aria-hidden="true" />
@@ -548,7 +641,7 @@ export default function Home() {
             <div className="editflow">
               <MyLessonPlans readiness={readiness} onAllocate={onAllocateScoped} onOpenSection={onOpenSection}
                 tourStep={tour} preparing={preparingCard}
-                onStartTour={tourDismissed ? undefined : startTour} tourActive={!!tour}
+                onStartTour={tourOnOffer ? startTour : undefined} tourActive={!!tour}
                 onDismissPrepareError={onDismissPrepareError} />
             </div>
           ) : (editFlow === "profile" && ready) ? (
@@ -559,22 +652,31 @@ export default function Home() {
              * signed-out return without rebuilding hits first run naturally (server profile
              * is gone, so GET /readiness comes back empty). */
             <div className="editflow" data-tour="profile-root">
-              <TeachingProfile readiness={readiness} onChange={setReadiness} onBack={goClasses}
+              {/* Profile ONLY — the account/data/app rows live on the gear's Settings
+                  screen now (founder, 2026-08-24; AccountPanel dissolved into it). */}
+              <TeachingProfile readiness={readiness} onChange={setReadiness}
+                onBack={profileViaSettings ? null : goClasses}
                 autoAddClassSubject={profileAutoAdd} onConsumeAutoAdd={() => setProfileAutoAdd(null)}
                 portalIntent={profilePortal} onConsumePortal={() => setProfilePortal(null)} />
+            </div>
+          ) : (editFlow === "settings" && ready) ? (
+            <div className="editflow">
+              <Settings view={settingsView} setView={setSettingsView}
+                onOpenProfile={openProfileFromSettings}
+                onAsk={() => setAskOpen(true)} onSignOut={onSignOut} />
             </div>
           ) :
             !subject ? <div className="empty">Connecting to the Aruvi engine…</div> :
             tab === "generate" ? <GenerateTab subject={subject} grade={grade} ready={ready} readiness={readiness}
               onNavigate={setTab} entry={generateEntry} onScope={(s, g) => { setSubject(s); setGrade(g); }}
               onConsumeEntry={() => setGenerateEntry(null)} onPrepared={onPrepared}
-              onPreparing={onPreparing} onPrepareError={onPrepareError} /> :
+              onPreparing={onPreparing} onPrepareError={onPrepareError} onPaywall={onPaywall} /> :
             <MyPlans subject={subject} grade={grade} ready={ready} readiness={readiness}
               onReady={onReadyComplete} onNavigate={setTab} onEnterGenerate={onEnterGenerate}
               user={user} onSignOut={onSignOut}
               pendingOpen={pendingOpen} onConsumePending={() => setPendingOpen(null)}
               pendingAttach={pendingAttach} onConsumeAttach={() => setPendingAttach(null)}
-              onStartTour={tourDismissed ? undefined : startTour}
+              onStartTour={tourOnOffer ? startTour : undefined}
               tourActive={!!tour} tourStep={tour}
               onTourInfo={setTourInfo} onProfilePortal={onProfilePortal} onOpenProfile={goProfile}
               sectionCheck={sectionCheck} onSectionCheckDone={() => setSectionCheck(false)} />}
@@ -589,6 +691,20 @@ export default function Home() {
 
       {/* Ask Aruvi Q&A — full-screen deterministic helpline (browse + keyword search). */}
       {askOpen && <AskAruvi onClose={() => setAskOpen(false)} />}
+      {paywall && (
+        <div className="paywall-bg" onClick={() => setPaywall(null)}>
+          <div className="paywall-card" onClick={(e) => e.stopPropagation()}>
+            <div className="kicker kicker-soft">Free trial ends</div>
+            <div className="paywall-msg">{paywall}</div>
+            <button className="paywall-subscribe" onClick={() => setPaywall(null)}>
+              Subscribe
+            </button>
+            <button className="paywall-later" onClick={() => setPaywall(null)}>
+              Not now
+            </button>
+          </div>
+        </div>
+      )}
 
     </>
   );

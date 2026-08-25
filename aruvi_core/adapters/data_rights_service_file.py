@@ -268,6 +268,15 @@ class DataRightsServiceFileImpl(DataRightsService):
         if self._rm(self.data_dir / "academic_years" / t / u,
                     stop=self.data_dir / "academic_years"):
             erased.append("academic-year records")
+        # Subscription/entitlement record (Step 5, added to the walk 2026-08-24 — a new
+        # Bucket-B store MUST join this traversal the day it is born, or an erased
+        # teacher's trial counter survives her erasure). Tenant-keyed with no user
+        # segment, so remove it ONLY for an individual (tenant == user): erasing one
+        # teacher of a school must never destroy the school's subscription.
+        if _slug(tenant_id) == _slug(user_id):
+            if self._rm(self.data_dir / "entitlements" / t,
+                        stop=self.data_dir / "entitlements"):
+                erased.append("subscription record")
         # Account record LAST — identity must outlive its data during the walk.
         if self.accounts.load(tenant_id, user_id) is not None:
             self._rm(self.data_dir / "accounts" / t / u, stop=self.data_dir / "accounts")

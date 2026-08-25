@@ -21,7 +21,7 @@ const subjectSlug = (n) => (n || "").toLowerCase().replace(/ /g, "_");
 const gradeSlugOf = (g) => (g || "").toLowerCase();
 
 export default function GenerateTab({ subject, grade, ready, readiness, onNavigate, entry, onScope, onConsumeEntry, onPrepared,
-                                     onPreparing, onPrepareError }) {
+                                     onPreparing, onPrepareError, onPaywall }) {
   // Picker local state: which subject has been chosen (by name) while in "pick" mode. Defaults to
   // the only subject when there's just one (so "pick" mode then only asks for grade).
   const subs0 = (readiness && readiness.subjects) || [];
@@ -104,7 +104,7 @@ export default function GenerateTab({ subject, grade, ready, readiness, onNaviga
   // ── scoped (or already consumed) → the everyday single-chapter generate flow for the
   // active subject·grade. No allocation gate — pick a chapter, set its periods, generate. ──
   return <PrepareLesson subject={subject} grade={grade} readiness={readiness} onNavigate={onNavigate} onPrepared={onPrepared}
-    onPreparing={onPreparing} onPrepareError={onPrepareError} />;
+    onPreparing={onPreparing} onPrepareError={onPrepareError} onPaywall={onPaywall} />;
 }
 
 // When a chosen subject has exactly one grade, enter it once (in an effect, never during render).

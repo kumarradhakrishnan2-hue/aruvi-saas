@@ -46,8 +46,10 @@ progress is made. A fresh session starts cold — this file is how context carri
 > its own row, right side, below "Your classes are ready", above the section cards. It opens a
 > Subject · Class · Section chooser routing into TeachingProfile's SAME flows (one-shot
 > `profilePortal` intent in page.jsx), in **manage mode**: enrolled options pre-ticked, untick =
-> removal behind the dustbins' scoped warning — warned, never blocked (keep-≥1-subject still
-> holds). A portal visit always exits to My Classes, never the profile accordion. **ALL growth is
+> removal behind the dustbins' scoped warning — warned, never blocked (★ keep-≥1-subject
+> RETIRED 2026-08-24, kumar3 live: removing the only subject is allowed, warned like any
+> removal; an emptied profile shows the empty state's "+ add a subject" in-session and lands
+> on first run after a fresh sign-in). A portal visit always exits to My Classes, never the profile accordion. **ALL growth is
 > pull via the + — there is no push nudge anywhere, ever.** STATIC-verified only (babel-parse
 > clean on page.jsx/MyPlans.jsx/format.js/TeachingProfile.jsx/GuidedTour.jsx, CSS braces balanced
 > 1987/1987, zero surviving references); live + mobile pass pending (MEMORY.md 2026-07-06 entry).

@@ -176,15 +176,25 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   autoBindHoldRef.current = !!pendingAttach;
   const uiBusyRef = useRef(false);
   uiBusyRef.current = !!(attachFor || untrackFor || openPlan || historyFor);
+  // Has the local bindings cache been confirmed against the server at least once this
+  // mount? Until then an EMPTY cache is not evidence of anything — a cleared browser +
+  // a server-restart window made kumar1 (25 bound sections server-side) look like a
+  // brand-new teacher and offered him the guided tour (2026-08-24). The tour offer and
+  // the "nothing attached" welcome copy wait for this; the cards themselves never do.
+  const [reconciled, setReconciled] = useState(false);
   useEffect(() => {
     if (!ready) return;
     const keys = classesFromReadiness(readiness)
       .map((c) => `${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`);
-    if (!keys.length) return;
+    if (!keys.length) { setReconciled(true); return; }   // nothing to reconcile
     let live = true;
     const sync = () => {
       if (!live || uiBusyRef.current || autoBindHoldRef.current) return;
-      pullSectionState(keys).then(() => { if (live) setSyncTick((t) => t + 1); });
+      pullSectionState(keys).then((ok) => {
+        if (!live) return;
+        if (ok) setReconciled(true);
+        setSyncTick((t) => t + 1);
+      });
     };
     sync(); // initial reconcile
     const onVis = () => { if (document.visibilityState === "visible") sync(); };
@@ -627,6 +637,10 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   // Nothing planned yet? The class cards still show — each as "Pick a chapter to begin" —
   // with a welcome CTA banner ABOVE them. Cards are never hidden.
   const anyBound = classes.some((c) => currentChapterFile(`${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`));
+  // "No bindings" is only BELIEVABLE once the server has confirmed it (or the cache
+  // already shows a binding, which needs no confirmation). Until then, neither the
+  // welcome copy nor the tour offer may treat her as new — see the reconcile note above.
+  const bindingsKnown = anyBound || reconciled;
   // Any lesson SHE PREPARED for one of her classes? After first-gen this is TRUE (the lesson
   // was deposited but left unattached), so the welcome nudge points her at the "+" to attach it.
   // Prepared-only — a raw library entry must never trigger the nudge/welcome copy.
@@ -659,7 +673,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
         </div>
       )}
 
-      {!anyBound && (
+      {!anyBound && bindingsKnown && (
         <div className="dash-welcome dash-welcome-row">
           <div className="dash-welcome-text">
             <div className="dash-welcome-title">Your classes are ready</div>
@@ -688,7 +702,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
           time. So the invitation now sits directly under the welcome, above the cards, and says
           out loud that the lesson will wait. The "+" instruction is held back until the tour is
           resolved (taken or skipped) — see the welcome sub above. */}
-      {!anyBound && anyPlans && !tourActive && onStartTour && (
+      {!anyBound && bindingsKnown && anyPlans && !tourActive && onStartTour && (
         /* The WHOLE window is the target (founder, 2026-07-26) — a teacher reading an invitation
            should not have to hunt for the small link at the bottom of it. It is a real button for
            assistive tech too: role + tabIndex + Enter/Space, with ONE accessible name covering the

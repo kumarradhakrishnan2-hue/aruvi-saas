@@ -72,6 +72,51 @@ unpaid subjects would clog every dropdown.
 > /entitlement, enforcement flag default OFF, test_entitlement.py green) · 3–6 open
 > (3 = Step 6 surfaces + Expo promotion; 5 = the 20-teacher test).
 
+0a. **Two doors at the front (founder, 2026-08-24): trial-default + direct subscribe.**
+   Industry norm (verified across the scanned sites: Twinkl sells directly off its
+   pricing page; MagicSchool/Eduaide show buy-now beside the free tier; app stores run
+   "subscribe now, first N days free" — trial INSIDE the subscription): offer both a
+   "Start free" default AND a visible subscribe path for the already-convinced buyer
+   (typically colleague-referred — word-of-mouth buyers must not be forced to re-earn
+   their conviction through a trial). Channel-split placement, per §0: **individual
+   direct-subscribe = an IAP surface inside the mobile app**, reachable from its first
+   screen — never a web checkout (that would breach the price fence); **the web login
+   page carries the ENTERPRISE door** ("For schools — get Aruvi for your teachers")
+   plus "Get the app" for individuals. Aruvi-specific niceness: because the trial is
+   chapter-capped with no clock and serves cost nothing, the direct subscriber loses
+   nothing by passing through it — her 3 trial chapters are simply the first 3 of her
+   unlimited ones, so the front door can honestly say "Start free — subscribe anytime."
+   Build timing: Step 6 / marketing site, after the disclosure moments below.
+
+0b. **THE TWO FIRST-ENTRY FLOWS (founder, 2026-08-24 — supersedes 0's moments (a)/(b)
+   placements; the popup (c) stands).** The login page offers **(a) Subscribe** and
+   **(b) Free trial**; both funnel into the SAME welcome-first journey:
+   - **(a) Subscribed:** welcome page is the first engagement; the SUBJECT step comes
+     pre-scoped to her paid plan (her subject shown, no dropdown) and the CLASS step
+     lists only her stage's classes. Everything after is identical to trial EXCEPT no
+     gating anywhere — no counter line, no cap, no popup. Her welcome reads clean (no
+     trial terms). [Future build — needs the purchase flow; the scope-filtered chooser
+     is the same mechanism as the paid "+" in §0.]
+   - **(b) Trial:** the WELCOME page states the terms of engagement, prominently, above
+     "Let's get started": *"Your free trial covers any 3 chapters. For any single
+     chapter, you can generate unlimited number of Lesson plans."* — WITHOUT growing the
+     screen's height (the prepare bar must stay visible with no scrolling; implemented
+     by reclaiming the h2's top margin when the line renders). Because the welcome says
+     it, the chapter step does NOT repeat the coverage line. The chapter-step counter
+     appears only once a chapter is actually spent and reads: *"x of 3 free chapters
+     used. Regenerating same chapter allowed."* [BUILT 2026-08-24 — welcome line,
+     chapter-step removal, counter rewording; login-page split is future with (a).]
+
+0. **Step 6 opening brief — trial disclosure, three moments** (deferred to Step 6 with
+   the screens in front of us; founder 2026-08-24): (a) first run's CHAPTER step, one
+   quiet line — "Your free trial covers any 3 chapters — unlimited plans for each" (the
+   first moment "chapter" means something; lands as generosity); (b) after each trial
+   generation, the counter — "2 of 3 free chapters used. Re-preparing these is always
+   free" (the second sentence is what licenses fearless period-experimenting); (c) a
+   DESIGNED exhausted screen — her 3 chapters listed, still open/trackable, "Your
+   chapters stay yours — subscribe to prepare new ones". Deliberately NOTHING at
+   sign-in — a trial banner before her first lesson is anxiety with no benefit.
+   `GET /entitlement` already feeds all three.
 1. **Amend `docs/administrative_architecture.md` §2.5**: lapsed = plans retained
    (view/export/print/archive) + generation and productivity tools locked; export and
    account-deletion remain always reachable. Trial-exhausted additionally keeps the

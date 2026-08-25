@@ -684,8 +684,11 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
       <div className="tp">
         <div className="kicker kicker-ochre">{manage ? "Your teaching · subjects" : "Teaching profile · add a subject"}</div>
         <h1 className="fr-q">{manage ? "What do you teach?" : "What else do you teach?"}</h1>
+        {/* keep-≥1-subject RETIRED (founder, 2026-08-24, kumar3 live): removing her only
+            subject is allowed — warned like any removal, never blocked. An emptied
+            profile lands on the empty state's "+ add a subject". */}
         <p className="fr-hint">{manage
-          ? "Tick a subject to add it — untick one to remove it. Keep at least one."
+          ? "Tick a subject to add it — untick one to remove it."
           : "Pick the subject — or several — to add."}</p>
         {options.length === 0 && <p className="fr-hint">Every subject Aruvi offers is already in your profile.</p>}
         {/* ★ Clustering is keyed to the MODE, not the screen (founder, 2026-07-26).
@@ -699,7 +702,8 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
         {options.length > 0 && (
           <PickWheel options={options} selected={picked} onToggle={toggle} cluster={!manage}
             ariaLabel={manage ? "Your subjects" : "Subjects to add"}>
-            <button type="button" className="primary fr-cta" disabled={!picked.length}
+            <button type="button" className="primary fr-cta"
+              disabled={manage ? false : !picked.length}
               onClick={manage ? onManageSubjectsContinue : onSubjectsPicked}>
               Continue
             </button>
@@ -721,7 +725,14 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
                 <h2 className="fr-q">Remove {names}?</h2>
                 <p className="fr-hint">{classesOf || "Its classes"} — all cards and bookmarks — will be removed. Your lessons stay in the library.</p>
                 <button type="button" className="tp-remove-confirm" onClick={applySubjectChanges}>Yes, remove {names}</button>
-                <button type="button" className="fr-link fr-center" onClick={() => setSubConfirm(null)}>Keep {subConfirm.removes.length === 1 ? "it" : "them"}</button>
+                {/* "Keep it" must MEAN keep it (founder, 2026-08-24, kumar3 live): re-tick
+                    the subjects she was about to remove, so the picker returns showing them
+                    kept — not unticked and waiting to be re-chosen. Adds she ticked stay. */}
+                <button type="button" className="fr-link fr-center"
+                  onClick={() => {
+                    setPicked((cur) => Array.from(new Set([...cur, ...subConfirm.removes])));
+                    setSubConfirm(null);
+                  }}>Keep {subConfirm.removes.length === 1 ? "it" : "them"}</button>
               </div>
             </div>
           );
@@ -776,7 +787,13 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
                 <h2 className="fr-q">Remove {names} from {draft.name}?</h2>
                 <p className="fr-hint">{tags} — their cards and bookmarks — will be removed.{allGone ? ` No class is left — ${draft.name} goes with it.` : ""} Your lessons stay in the library.</p>
                 <button type="button" className="tp-remove-confirm" onClick={applyClassChanges}>Yes, remove {names}</button>
-                <button type="button" className="fr-link fr-center" onClick={() => setClassConfirm(null)}>Keep {classConfirm.removes.length === 1 ? "it" : "them"}</button>
+                {/* "Keep it" re-ticks the classes she was about to remove — same rule as
+                    the subjects confirm (founder, 2026-08-24). */}
+                <button type="button" className="fr-link fr-center"
+                  onClick={() => {
+                    setPicked((cur) => Array.from(new Set([...cur, ...classConfirm.removes])));
+                    setClassConfirm(null);
+                  }}>Keep {classConfirm.removes.length === 1 ? "it" : "them"}</button>
               </div>
             </div>
           );
@@ -1170,6 +1187,9 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
             <h1 className="lvl-title">Your teaching profile</h1>
             <div className="tp-hd-spacer" aria-hidden="true"></div>
           </div>
+          {/* The big pen — right end of the title row (founder, 2026-08-24 final):
+              one green pen to enter edit mode, Done to leave. In edit mode every
+              dimension carries its own small pen. */}
           {canon.length > 0 && (
             editing ? (
               <button className="tp-edit-toggle on" onClick={() => setEditing(false)} aria-label="Done editing">Done</button>
@@ -1203,9 +1223,14 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
             <div className="tp-sub-hd" onClick={() => setOpenSubject(open ? null : s.name)}>
               <span className="tp-sub-left">
                 <span className="tp-sub-name">{s.name}</span>
+                {/* ONE idiom in edit mode (founder, 2026-08-24): a pen per dimension,
+                    each opening the FULL choice list with enrolled options pre-ticked —
+                    unticking removes behind the usual scoped warning, ticking adds via
+                    the usual flows. The red dustbins and green "+ add" buttons are
+                    retired: too many verbs on one screen. */}
                 {editing && open && (
-                  <button className="tp-bin" aria-label={`Remove ${s.name}`}
-                    onClick={(e) => { e.stopPropagation(); setConfirm({ kind: "subject", si }); }}><Bin /></button>
+                  <button className="tp-icon-btn" aria-label={`Edit subjects`}
+                    onClick={(e) => { e.stopPropagation(); startManageSubjects(); }}><Pencil /></button>
                 )}
               </span>
               <span className="tp-sub-side">
@@ -1235,8 +1260,8 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
                     <span className="tp-cc-left">
                       <span className="tp-cc-name">Class {classNum(g.grade)}</span>
                       {editing && (
-                        <button className="tp-bin" aria-label={`Remove Class ${classNum(g.grade)}`}
-                          onClick={() => setConfirm({ kind: "grade", si, gi })}><Bin /></button>
+                        <button className="tp-icon-btn" aria-label={`Edit classes of ${s.name}`}
+                          onClick={() => startManageClasses(si)}><Pencil /></button>
                       )}
                     </span>
                     <div className="tp-cc-right">
@@ -1279,14 +1304,14 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
               );
             })}
 
-            {open && editing && (
-              <button className="tp-add" onClick={() => startAddClass(si)}>+ add a class</button>
-            )}
+            {/* "+ add a class" retired — adding happens by ticking in the class pen's
+                full list (startManageClasses), same screen as removing. */}
           </div>
         );
       })}
 
-      {(editing || canon.length === 0) && (
+      {/* Empty profile keeps ONE way in — nothing else to edit yet. */}
+      {canon.length === 0 && (
         <button className="tp-add tp-add-subject" onClick={startAddSubject}>+ add a subject</button>
       )}
 

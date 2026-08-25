@@ -237,7 +237,8 @@ def _check_entitlement(tenant_id: str, subject: str, grade: str,
             return
         raise HTTPException(status_code=402, detail=(
             f"Your free trial covers {config.TRIAL_CHAPTER_CAP} chapters, and you have "
-            f"used them. Your chapters stay yours — subscribe to prepare new ones."))
+            f"used them. Your {config.TRIAL_CHAPTER_CAP} chapters stay yours — "
+            f"subscribe to prepare new ones."))
     if ent.status in ("active", "grace"):
         if ent.valid_until and ent.valid_until < date.today().isoformat():
             raise HTTPException(status_code=402, detail=(

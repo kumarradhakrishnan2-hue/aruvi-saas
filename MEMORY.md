@@ -732,6 +732,151 @@ subscription status, export/erase buttons), then the persona end-to-end pass wit
 enforcement ON (trial → exhaust → grant → lapse; one school tenant with two users) as
 dress rehearsal for the 20-teacher field test.
 
+**Same-day live find (kumar3's iPhone trial) → THE PAYWALL WINDOW, built early.** Two
+things from the first real 4th-chapter block: (a) mobile testing needs uvicorn started
+with `--host 0.0.0.0` (the enforcement env var restart had dropped it — subjects
+wouldn't load on the phone); (b) the 402 rendered as a message INSIDE the proposed
+section card via the ordinary ARV-D-087 failed-card path — wrong: **a paywall is not an
+error** (founder). Built: PrepareLesson catches `e.status === 402` and calls a new
+`onPaywall(msg)` (threaded through GenerateTab) instead of onPrepareError/setError;
+page.jsx pulls the preparing card DOWN (never a card for a blocked prepare) and raises
+`.paywall-bg/.paywall-card` — kicker "Free trial", the server's own sentence verbatim
+(single source of copy; amended to "Your 3 chapters stay yours"), **Subscribe** bold
+(pine button; closes the window until a purchase flow exists — no gateway yet), and a
+quiet italic "Not now". CSS beside the notes modal's family. STATIC-verified only
+(babel ×3 clean, css braces 1970/1970) — kumar3's next live 4th-chapter attempt is the
+live pass. Trial-disclosure moments (a)(b) of the Step-6 brief (chapter-step line +
+counter) remain unbuilt — deliberately waiting for Step 6 proper.
+**Step 6 slice 1 — trial disclosures (a)+(b), same day.** The paywall popup's kicker is
+"Free trial ends" (founder). New `format.js fetchEntitlement()` (null on failure = show
+nothing, never block). Moment (a): FirstRun's chapter step, above the CTA — "Your free
+trial covers any 3 chapters — unlimited plans for each" (cap dynamic). Moment (b):
+PrepareLesson's chapter step under the instruction line — "N of 3 free chapters used.
+Re-preparing these is always free." (fresh trial shows the coverage sentence instead of
+"0 of 3"); founder chose the chapter step as the ONLY counter home — the moment she is
+about to spend a chapter is when the number informs a decision; no ambient chip
+anywhere. Both lines render ONLY when `enforced && status === "trial"` — gate off (dev)
+= no trial chrome at all. `.trial-note` CSS (quiet italic, centered). STATIC-verified
+(babel ×3, css 1971/1971); live pass = kumar3's next run.
+**FOURTH PASS (founder, live): the Settings bar is the ASK-ARUVI IDIOM — title left,
+✕ right.** No "← back" + title pair: the frozen row reads "Settings · ✕", and the ✕
+closes the WHOLE of Settings (home, any subview, or the profile reached through it)
+straight back to wherever she was at gear-press (`settingsClose`; the hierarchical
+`settingsBack` is gone). Subviews deliberately have no back-to-home — reopen the gear
+("rest fine", founder). `.set-bar` = space-between, `.set-bar-x` styled like the app's
+close marks.
+**THIRD PASS same day (founder, live on phone): ONE GEAR, FROZEN SETTINGS BAR,
+PROFILE CARD ON TOP, COMPACT CARDS.** The person icon is REMOVED (fewer buttons):
+the gear is the only door and **Profile is Settings' TOP card** ("Profile · Your
+teaching profile" → TeachingProfile). While in Settings — or the profile reached
+THROUGH it — the tab row + Ask mark are REPLACED by a **frozen Settings bar** (`.set-bar`
+in the same `.main-tabs` nav slot, so it pins identically): "← back · Settings". The
+tabs/Ask had no role there and read as stale chrome (the founder's exact complaint).
+**Back is hierarchical** (`settingsBack` in page.jsx): profile→settings home,
+subview→home, home→ORIGIN (captured in `settingsOriginRef` at gear-press:
+lessonplans/profile/null → goLessons/goProfile/goClasses). Settings' `view` state is
+LIFTED to page.jsx for this. Profile via portal/tour keeps the ordinary tab row
+(those paths exit through their own flows); TeachingProfile's own back button hides
+when entered via settings (the bar has the one back). Subview back-links removed.
+Cards COMPACTED (9px padding, 7px gaps, 14.5/11px type) so the list fits one phone
+screen. **The big edit pen is back at the RIGHT END of the "Your teaching profile"
+title row** (mid-turn founder correction — not below the cards; `.tp-edit-below`
+CSS orphaned). STATIC-verified (babel ×3, css 2028/2028); live pass owed.
+**SECOND PASS same day (founder): SETTINGS AS FIVE CARDS + PROFILE PENS.** Settings home
+is now the founder's card structure in his order — Subscription & billing ("Plan,
+billing & usage") · Your data & export ("Download your Aruvi data") · Help ("Ask Aruvi
+guide", opens Ask Aruvi) · Support ("Email & feedback") · About Aruvi ("Version info /
+legal") — each a `.set-bigcard` on the existing `--card-bg` token (plain fill distinct
+from paper, dark-flipped already), leading to SUBVIEWS; Subscription shows the live plan
+state + an honest "billing arrives with online payments" line; Support/About are
+deliberate UI-FIRST placeholders (founder: shape the surface now, fill as features
+land). NO Profile card (the person icon is the profile's dedicated door). Below the
+cards: Appearance (ThemeToggle) + Account (Log out · Delete). **TeachingProfile edit
+rework (supersedes the "don't touch profile" hold):** the big green pen moved BELOW the
+subject cards (`.tp-edit-below`; header clean); in edit mode ONE idiom — a pen per
+dimension: subject pen → `startManageSubjects()` (full pre-ticked list), class pen →
+`startManageClasses(si)`, sections/ppw/budget pens unchanged; the red dustbins and the
+green "+ add a class"/"+ add a subject" buttons are RETIRED (adds happen by ticking in
+the same manage lists that remove; scoped warnings unchanged; empty profile keeps its
+one "+ add a subject"). The confirm-modal kinds "subject"/"grade" and `Bin`/
+`startAddClass` are now dead paths on disk. STATIC-verified (babel ×3, css 2025/2025) —
+live pass owed on both screens at 360×800.
+**SLICE 2 SUPERSEDED SAME DAY → THE PROFILE/SETTINGS SPLIT (founder; mockup
+`docs/mockups/profile-settings-split.html`).** The gear stopped being a synonym for the
+teaching profile. Header is now: brand · **PERSON icon** (SVG, → TeachingProfile,
+carries the tour's `data-tour="settings-gear"` anchor since that step is about the
+profile) · **GEAR** (→ NEW `components/Settings.jsx`) · user/logout — **ThemeToggle
+moved off the bar** into Settings › App › Appearance (the toggle IS the row control).
+Settings = grouped list (mockup frame 2, PRUNED to what exists per the junk-drawer
+rule): Subscription card (trial counter / subscribed·scopes·valid-until / ended;
+enforcement-gated) · Profile › "What you teach" row (subtitle "N subjects · M classes";
+second door to the same TeachingProfile) · Your data (Word/PDF download rows) · App
+(Appearance + Ask Aruvi) · Account (Log out · Delete my account with the typed-"erase"
+flow). Deliberately absent: Security/passwords, Preferences, invoices, School &
+Academic Year (Step 2), demographics (arrive with subscription checkout — will live
+here), Reports, bottom tab bar (two-tabs decision stands). `editFlow` gains "settings";
+AccountPanel.jsx is DEAD CODE on disk (dissolved into Settings). **TeachingProfile
+itself deliberately untouched** (founder: no profile redesign yet — the chip-based
+direct-manipulation mockup frames 1+4 await a separate decision). `.set-*` CSS.
+STATIC-verified (babel ×2, css 2015/2015) — live pass owed: person-icon SVG sizing in
+the bar, Settings on 360×800, downloads, delete flow, tour step 16 anchoring the person
+icon.
+**STEP 6 SLICE 2 — "YOUR ACCOUNT" GEAR SURFACE (same day, now superseded above).** New
+`components/AccountPanel.jsx`, rendered below TeachingProfile inside the settings-gear
+editflow (page.jsx): (1) SUBSCRIPTION in plain words from /entitlement — trial counter,
+"Subscribed · {scopes}" + valid-until, or "Subscription ended — your plans remain yours"
+— shown ONLY when the gate is enforced (a card describing unenforced rules would lie);
+(2) DOWNLOAD MY DATA as Word/PDF — fetch→blob→anchor because a bare href can't carry
+X-Aruvi-User (iPhone Safari opens its viewer, the platform's save path); (3) DELETE MY
+ACCOUNT — Apple 5.1.1(v)'s in-app deletion: typed "erase" confirmation mirroring the
+API guard, success shows a farewell + backup-purge note then onSignOut (the account no
+longer exists). Data-rights actions never gated on subscription state (§2.5). `.acct-*`
+CSS (ledger rows, outline pine download buttons, danger-bordered delete zone).
+STATIC-verified (babel ×2, css 1993/1993) — live pass owed: downloads on iPhone Safari,
+the typed-confirm flow, and post-erase sign-out. NEXT: persona end-to-end pass, then
+the "+" upsell / scope-filtered choosers.
+**TRIAL DISCLOSURES REWORKED to the two-flow front door (founder, 2026-08-24 —
+subscription doc §0b supersedes the first placements).** Login page will offer
+Subscribe | Free trial (future, with the purchase flow); both land on WELCOME first.
+Trial welcome now states the terms PROMINENTLY above "Let's get started" ("Your free
+trial covers any 3 chapters. For any single chapter, you can generate unlimited number
+of Lesson plans") — `.fr-trial-terms`, with a sibling rule reclaiming the h2's 56px top
+margin so the screen height barely grows and the prepare bar needs no scroll. Because
+the welcome says it, FirstRun's CHAPTER step no longer carries the coverage line, and
+PrepareLesson's counter (its only home) shows ONLY once a chapter is spent, reworded to
+"x of 3 free chapters used. Regenerating same chapter allowed." Subscribed customers
+(future flow): welcome clean of trial terms, subject pre-scoped to the paid plan, class
+list stage-filtered, no gating. STATIC-verified (babel ×2, css 1973/1973); live check
+at 360×800 owed — CTA visibility on the welcome with the terms line is the thing to eye.
+**KUMAR1'S PHANTOM TOUR (same day) — the offer is now SERVER-CONFIRMED ELIGIBILITY.**
+He was offered the 19-step tour despite 27 bound sections. Two defects found: (a) the
+reconcile race — MyPlans reads bindings off the localStorage cache, and a cleared
+browser + a server-restart window left it empty, so the app believed "nothing attached";
+FIXED by `pullSectionState` now resolving true/false (false = server unanswered, cache
+NOT trustworthy) and MyPlans gating the welcome copy + its nudge on `bindingsKnown`
+(anyBound || first successful reconcile; no-keys profiles count as reconciled). (b) the
+REAL bug — the 2026-08-21 "offer on both surfaces" change: only MyPlans carried a gate;
+MyLessonPlans rendered the nudge purely on `onStartTour` being passed, i.e. for EVERY
+teacher EVERY session. And the obvious gate ("nothing attached") is WRONG because first
+run AUTO-BINDS the lesson to the default section — it would kill the offer for the exact
+person it exists for (the ungated MyLessonPlans render had been silently load-bearing
+since 2026-08-21). FIX at the source: page.jsx fetches /section-state once per sign-in
+and computes `tourEligible` = **at most ONE bound section AND no teaching progress
+anywhere** (no unit_index set, nothing done) — self-closes forever the moment she
+actually teaches, no stored flag (the 2026-07-06 no-client-flag rule kept); null/
+unreachable = no offer (unknown must never look new). `onStartTour` is passed to BOTH
+surfaces only when `tourEligible === true`. Verified against real data: kumar1 bound 27
+/ progressed → ineligible; a fresh first-runner (1 auto-bound, no progress) → eligible.
+STATIC-verified (babel ×3) — live check: kumar1 reload shows NO tour offer anywhere; a
+fresh teacher still gets it after first run.
+**And the erase walk learned about entitlements (same day):** Step 4's traversal
+predated Step 5's store, so an erased teacher's used-up trial counter would have
+SURVIVED her erasure (a remnant + an infinite-trial loophole in reverse: erase would
+have reset nothing). data_rights erase now removes `entitlements/{tenant}` — but ONLY
+when tenant == user, so erasing one teacher of a school never destroys the school's
+subscription; receipt lists "subscription record"; test_data_rights pins it. STANDING
+RULE: a new Bucket-B store joins the erase/export traversal the day it is born.
+
 ## 2026-08-23 — THE CLOUD/LOCAL RESTRUCTURE: data/cloud/ IS THE
 ## MIGRATION UNIT, data/authoring/ IS FOUNDER-SECURE
 

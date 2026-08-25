@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { getJSON, postJSON, markPrepared, pad, pretty, ROMAN, annualBudgetPeriods, largestRemainder } from "../lib/format";
+import { getJSON, postJSON, markPrepared, pad, pretty, ROMAN, annualBudgetPeriods, largestRemainder, fetchEntitlement } from "../lib/format";
 import { verifiedWrite, planIsPrepared } from "../lib/verify";
 import { RollWheel } from "./wheels";
 import ViewModelView from "./ViewModelView";
@@ -34,9 +34,14 @@ const classNum = (g) => {
 };
 
 export default function PrepareLesson({ subject, grade, readiness, onNavigate, onPrepared,
-                                        onPreparing, onPrepareError }) {
+                                        onPreparing, onPrepareError, onPaywall }) {
   const [chapters, setChapters] = useState([]);
   const [chapterNo, setChapterNo] = useState("");          // chapter_number as string
+  // Trial counter for the chapter step (Step 6 moment (b), founder 2026-08-24: shown
+  // HERE and only here — the moment she is about to spend a chapter is the one moment
+  // the number informs a decision). null = not fetched/failed → no line, never a block.
+  const [trialInfo, setTrialInfo] = useState(null);
+  useEffect(() => { fetchEntitlement().then(setTrialInfo); }, []);
   const [periods, setPeriods] = useState(DEFAULT_PERIODS);
   const [step, setStep] = useState("chapter");             // "chapter" | "preview"
   const [plans, setPlans] = useState([]);                  // saved plans (preview source + committed budget)
@@ -380,6 +385,13 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
         const msg = (e && e.detail)
           ? e.detail                       // the API's own 4xx wording, written for her
           : "Couldn't build the lesson plan right now. Try again in a moment.";
+        // ── THE PAYWALL IS NOT AN ERROR (founder, 2026-08-24). A 402 (trial exhausted /
+        // out of subscription) must never render as a failed card or an inline card
+        // message — the card comes DOWN and a modal carries the sentence instead, with
+        // Subscribe below it. The server's own wording travels up unchanged (single
+        // source of copy); the shell owns the window. Fallback without the prop: the
+        // ordinary error path, so an older caller still shows her something.
+        if (e && e.status === 402 && onPaywall) { onPaywall(msg); return; }
         if (onPrepareError) onPrepareError(descriptor, msg);
         setError(msg);
       } finally {
@@ -452,6 +464,17 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
       <p className="h2-sub prep-instr">
         Pick one chapter and enter the periods you plan to spend teaching it.
       </p>
+      {/* Trial counter — shown only once a chapter has actually been spent (the welcome
+          page already stated the terms, so a fresh trial shows nothing here; founder,
+          2026-08-24). Wording per founder: "Regenerating same chapter allowed". Hidden
+          when the gate is off, she isn't on trial, or the fetch failed. */}
+      {trialInfo && trialInfo.enforced && trialInfo.status === "trial"
+        && trialInfo.trial_chapters_used > 0 ? (
+        <p className="trial-note">
+          {trialInfo.trial_chapters_used} of {trialInfo.trial_chapter_cap} free chapters
+          used. Regenerating same chapter allowed.
+        </p>
+      ) : null}
 
       {!chapters.length ? (
         <div className="empty">No chapter mappings for this subject &amp; grade yet.</div>

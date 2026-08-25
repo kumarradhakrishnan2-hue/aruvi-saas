@@ -63,6 +63,12 @@ def _seed(tmp, tenant=T, user=U, note="Bring the shipwreck cards."):
     svc.sections.save_one(tenant, user, Y, "science_vii_7A", "ch_03_canonical.json", 4, False)
     svc.prepared.mark(tenant, user, Y, "science/vii/ch_03.json", 16)
     svc.archive.archive(tenant, user, Y, "science/vii/ch_09.json")
+    # Entitlement (Step 5) — tenant-keyed; must be erased for an individual.
+    from aruvi_core.ports import Entitlement
+    from aruvi_core.adapters.entitlement_repository_file import EntitlementRepositoryFileImpl
+    EntitlementRepositoryFileImpl(tmp).save(tenant, Entitlement(
+        plan_id="trial", status="trial", source="trial", scopes=["*"],
+        trial_chapters=[f"science/vii/{i}" for i in (1, 2, 3)]))
     return svc
 
 
@@ -134,6 +140,8 @@ def test_erase_walks_everything_and_receipts():
         assert "account record" in receipt.erased
         assert "teaching profile" in receipt.erased
         assert f"chapter notes ({Y})" in receipt.erased
+        assert "subscription record" in receipt.erased, \
+            "the Step-5 entitlement store must join the erase walk"
         assert receipt.erased[-1] == "account record", "account goes LAST"
         # §2.6 receipt wording — pinned; must match the privacy policy's promises.
         whats = [k["what"] for k in receipt.kept]

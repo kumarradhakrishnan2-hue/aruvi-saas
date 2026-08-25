@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
-import { getJSON, postJSON, markPrepared, pretty, gradeUp, ROMAN } from "../lib/format";
+import { getJSON, postJSON, markPrepared, pretty, gradeUp, ROMAN, fetchEntitlement } from "../lib/format";
 import { bindSectionChapter, pushSectionState } from "../lib/sectionState";
 import { RollWheel, normPpw, ppwMapSum, lowestDuration, DEFAULT_PPW } from "./wheels";
 
@@ -187,10 +187,14 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
    * with no canonical yet. */
   const [genonChs, setGenonChs] = useState([]);          // chapter numbers with a canonical
   const [canonMinutes, setCanonMinutes] = useState({});  // {chapter: canonical total minutes}
+  const [trialInfo, setTrialInfo] = useState(null);      // /entitlement, for the trial line
 
   // Load the subject catalogue once (used on the subject step).
   useEffect(() => {
     getJSON("/subjects").then((d) => setSubjects(d.subjects || [])).catch(() => setSubjects([]));
+    // Trial state for the chapter step's disclosure line (Step 6 moment (a)); null on
+    // failure = line simply doesn't render.
+    fetchEntitlement().then(setTrialInfo);
   }, []);
 
   // Stepping away from the chapter step and back (← Change class, ← Back to chapter, etc.)
@@ -524,6 +528,19 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
             <li><span className="fr-pain-tick">✓</span><span>Assessment built in</span></li>
             <li><span className="fr-pain-tick">✓</span><span>Every section's status at one glance</span></li>
           </ul>
+          {/* Trial terms — THE one place the trial is explained (founder, 2026-08-24:
+              the welcome page must clarify the terms of engagement, prominently, above
+              "Let's get started"; the chapter step no longer repeats it). The adjacent-
+              sibling CSS rule trims the h2's 56px top margin when this renders, so the
+              welcome stays one screen and the prepare bar needs no scroll. Hidden when
+              the gate is off or she isn't on trial (a subscribed customer sees no trial
+              terms — her welcome reads clean). */}
+          {trialInfo && trialInfo.enforced && trialInfo.status === "trial" ? (
+            <p className="fr-trial-terms">
+              Your free trial covers any {trialInfo.trial_chapter_cap} chapters. For any
+              single chapter, you can generate unlimited number of Lesson plans.
+            </p>
+          ) : null}
           <h2 className="fr-welcome-h2">Let’s get started</h2>
           <p className="fr-welcome-sub">
             Answer three quick questions and Aruvi will create your first lesson plan.
@@ -737,6 +754,8 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
         </div>
       </div>
       <div className="fr-foot">
+        {/* (The trial terms line moved to the WELCOME page, its one home — founder,
+            2026-08-24. The chapter step stays clean.) */}
         <button className="primary fr-cta prepare-cta" disabled={!chosenChapter || activating} onClick={prepareAndHandOff}>Prepare the lesson →</button>
         <button className="fr-link" onClick={() => setStep("grade")}>← Change class</button>
       </div>
