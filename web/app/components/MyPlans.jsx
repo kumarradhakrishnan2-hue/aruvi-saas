@@ -72,7 +72,7 @@ function classesFromReadiness(readiness) {
   return out;
 }
 
-export default function MyPlans({ subject, grade, ready, readiness, onReady, onNavigate, onEnterGenerate, user, onSignOut, pendingOpen, onConsumePending, pendingAttach, onConsumeAttach, onStartTour, tourActive, tourStep, onTourInfo, onProfilePortal, onOpenProfile, sectionCheck, onSectionCheckDone }) {
+export default function MyPlans({ subject, grade, ready, readiness, onReady, onNavigate, onEnterGenerate, user, onSignOut, lapsed, pendingOpen, onConsumePending, pendingAttach, onConsumeAttach, onStartTour, tourActive, tourStep, onTourInfo, onProfilePortal, onOpenProfile, sectionCheck, onSectionCheckDone }) {
   const [openPlan, setOpenPlan] = useState(null);  // { view, sectionKey } for LessonView
   const [loading, setLoading] = useState(false);
   const [setupStarted, setSetupStarted] = useState(false); // 2a welcome → grid flow gate
@@ -122,7 +122,9 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   // Never competes with the guided tour — EXCEPT step 15, which deliberately features this "+"
   // (the guide rings it and the transparent hand lands on it), so it is surfaced then even
   // though the tour is active.
-  const plusShow = !!onProfilePortal && ready && (tourStep === 15 || !tourActive);
+  // `!lapsed`: an expired subscription hides the growth portal — profile changes are
+  // productivity tools she lets go of (§2.5 as amended; the server 402s regardless).
+  const plusShow = !!onProfilePortal && ready && !lapsed && (tourStep === 15 || !tourActive);
 
   /* ★ RE-ASSERT THE BINDING WHEN THE TOUR ENDS (founder, 2026-08-21: "all actions should end up
    * with LP being loaded onto the default section"). First run binds the lesson to her section

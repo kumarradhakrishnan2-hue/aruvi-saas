@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import ThemeToggle from "./ThemeToggle";
+// (ThemeToggle import removed 2026-08-24 — Appearance lives in Settings.)
 import { getJSON, postJSON, markPrepared, pretty, gradeUp, ROMAN, fetchEntitlement } from "../lib/format";
 import { bindSectionChapter, pushSectionState } from "../lib/sectionState";
 import { RollWheel, normPpw, ppwMapSum, lowestDuration, DEFAULT_PPW } from "./wheels";
@@ -500,7 +500,9 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
           <span className="hdr-brand-tag">lesson studio</span>
         </div>
         <div className="hdr-user">
-          <ThemeToggle />
+          {/* ThemeToggle removed 2026-08-24 — Appearance lives in Settings › App once
+              the shell opens; first run keeps the bar to brand + identity (the founder
+              met the stale toggle here on the subscribed-entry test). */}
           {user && (
             <div className="hdr-user-id">
               <span className="hdr-user-name">{user}</span>
@@ -511,6 +513,29 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
       </header>
     </div>
   );
+
+  /* ── SUBSCRIBED-ENTRY SCOPE FILTER (founder, 2026-08-24; §0b flow (a)) ──
+     A teacher who arrives already PAID (granted before her first sign-in) is offered
+     only what she bought: the subject wheel filters to her scopes' subjects, the class
+     wheel to her scopes' STAGES — one subject means a one-item wheel, no clutter, no
+     mid-first-run paywall possible. Trial and "*" grants see everything (breadth in
+     trial is deliberate). `trialInfo` is the /entitlement fetch above. */
+  const frPaidScopes = (trialInfo && trialInfo.enforced
+    && (trialInfo.status === "active" || trialInfo.status === "grace")
+    && !(trialInfo.scopes || []).includes("*")) ? trialInfo.scopes : null;
+  const frStageOf = (g) => {
+    const r = (g || "").toLowerCase();
+    if (["iii", "iv", "v"].includes(r)) return "preparatory";
+    if (["vi", "vii", "viii"].includes(r)) return "middle";
+    return "secondary";
+  };
+  const visibleSubjects = frPaidScopes
+    ? subjects.filter((s) => frPaidScopes.some((sc) => sc.split("/")[0] === s))
+    : subjects;
+  const visibleGrades = frPaidScopes
+    ? grades.filter((g) => frPaidScopes.some((sc) =>
+        sc.split("/")[0] === subject && sc.split("/")[1] === frStageOf(g)))
+    : grades;
 
   /* ── WELCOME ── */
   if (step === "welcome") {
@@ -523,7 +548,7 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
             We help you teach engaging, NCF-aligned lessons while saving you time.
           </p>
           <ul className="fr-pain-list">
-            <li><span className="fr-pain-tick">✓</span><span>Lesson plan in minutes, not hours</span></li>
+            <li><span className="fr-pain-tick">✓</span><span>Lesson plan in seconds, not hours</span></li>
             <li><span className="fr-pain-tick">✓</span><span>NCF / NCERT aligned</span></li>
             <li><span className="fr-pain-tick">✓</span><span>Assessment built in</span></li>
             <li><span className="fr-pain-tick">✓</span><span>Every section's status at one glance</span></li>
@@ -563,10 +588,10 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
         <div className="fr-step-body">
           <h1 className="fr-q">What do you teach?</h1>
           <p className="fr-hint">Let’s start with one subject. Roll the box or use the arrows — the subject shown is your pick.</p>
-          {subjects.length === 0 && <div className="fr-loading">Loading subjects…</div>}
-          {subjects.length > 0 && (
+          {visibleSubjects.length === 0 && <div className="fr-loading">Loading subjects…</div>}
+          {visibleSubjects.length > 0 && (
             <RollWheel ariaLabel="Subject" value={subject} onChange={setSubject} large
-              items={subjects.map((s) => ({ id: s, chip: pretty(s).charAt(0), label: pretty(s) }))} />
+              items={visibleSubjects.map((s) => ({ id: s, chip: pretty(s).charAt(0), label: pretty(s) }))} />
           )}
         </div>
         <div className="fr-foot">
@@ -586,13 +611,13 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
         <div className="fr-step-body">
           <h1 className="fr-q">Which class do you teach {pretty(subject)} to?</h1>
           <p className="fr-hint">You can add more classes later. Roll the box or use the arrows — the class shown is your pick.</p>
-          {grades.length === 0 && <div className="fr-loading">Loading classes…</div>}
+          {visibleGrades.length === 0 && <div className="fr-loading">Loading classes…</div>}
           {/* Changing class re-earns the right to seed the duration wheel: 50 min is a fact about
               Class 9, not about her, so a new class means a new standard. */}
-          {grades.length > 0 && (
+          {visibleGrades.length > 0 && (
             <RollWheel ariaLabel="Class" value={grade}
               onChange={(v) => { durationTouched.current = false; setGrade(v); }} large
-              items={grades.map((g) => ({ id: g, chip: classNum(g), label: `Class ${classNum(g)}` }))} />
+              items={visibleGrades.map((g) => ({ id: g, chip: classNum(g), label: `Class ${classNum(g)}` }))} />
           )}
 
           {/* ★ Sections: STATED, not asked (founder, 2026-08-21). They used to be the first of

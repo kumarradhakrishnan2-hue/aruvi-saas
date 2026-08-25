@@ -758,6 +758,63 @@ about to spend a chapter is when the number informs a decision; no ambient chip
 anywhere. Both lines render ONLY when `enforced && status === "trial"` — gate off (dev)
 = no trial chrome at all. `.trial-note` CSS (quiet italic, centered). STATIC-verified
 (babel ×3, css 1971/1971); live pass = kumar3's next run.
+**SUBSCRIBED-ENTRY FIRST RUN (founder tested subscribe-before-first-signin):** (a) the
+first-run bar had the STALE ThemeToggle (Appearance moved into Settings) — removed;
+first-run bar = brand + identity only, no gear (Phase 1 stays shell-less). (b) §0b flow
+(a)'s scope filter built: a teacher who arrives already PAID sees only what she bought —
+FirstRun's subject wheel filters to her scopes' subjects, the class wheel to her scopes'
+STAGES (one subject = a one-item wheel; no mid-first-run paywall possible); trial and
+"*" see all 11. Uses the same trialInfo (/entitlement) fetch; no trial-terms line shows
+for paid (status-gated already).
+**LAPSED = THE READING ROOM, and revocation lands MID-SESSION (founder, persona
+pass):** the founder's definition, implemented — a lapsed subscriber can only access
+MY LESSONS (choose subject/class from her profile-driven dropdowns, open LPs, export/
+print) plus SETTINGS with the profile locked; "a dummy system to access the LPs and
+export them". Concretely: the **My Classes tab HIDES** for lapsed; a lapsed teacher
+standing on My Classes (including the instant a mid-session revoke lands) is moved to
+My Lessons; the **"Prepare a new lesson →" bar in My Lessons is GONE** (renewal lives
+in Settings, never pushed here); profile pen + "+" already hidden. **Mid-session
+detection:** page.jsx's entitlement fetch became a SYNC on the section-state cadence
+idiom — focus/visibilitychange + 20s visible interval — so a terminal revoke reaches
+the phone UI within seconds (server 402s authoritative regardless).
+**THE POST-TRIAL SCOPE FILTER built (founder, persona pass — §0's gating-at-add-time,
+the last unbuilt piece of it):** a PAID teacher's profile choosers show ONLY her
+entitled scope — subjects wheel filtered to her scopes' subjects, classes wheel to her
+scopes' STAGES (client `stageOfRoman`); the quiet `.trial-note` line below the wheel is
+the ONE upsell ("Your subscription covers what's shown here. Another subject or stage
+is a separate subscription.") — her moment, pull never push. **CRITICAL GUARD: enrolled
+entries always stay listed even when unpaid** — trial-era additions are her profile,
+and hiding them from a pre-ticked manage list would silently count them as REMOVALS on
+Continue. Trial and "*" grants see all 11, unchanged. Plumbing: page.jsx's entitlement
+fetch also yields `paidScopes` (null unless enforced && active/grace) → TeachingProfile
+prop. My Lessons dropdowns needed no change — they are PROFILE-driven, never catalogue-
+driven, so trial-era plans in unpaid subjects stay reachable (plans are hers).
+**PERSONA-PASS FIXES (founder, live):** (a) Subscribed card = LEDGER ROWS — Subject /
+Stage / Class (derived from stage: prep 3-4-5 · middle 6-7-8 · secondary 9-10; the
+billing unit is subject-STAGE so classes are a fact, not a choice) / Validity
+(dd-Mmm-yy); one trio per scope, "*" reads All subjects · 3 to 10. (b) Paywall KICKER
+matches the wall — read off the server's sentence: "Free trial ends" / "Subscription
+ended" (revoked/lapsed) / "Separate subscription" (out-of-scope). (c) **THE LAPSED
+LOCKOUT built** (§2.5 amended was spec'd but only generation was gated — founder caught
+revoked kumar3 still adding sections/subjects): `_check_productivity` 402s POST/DELETE
+/readiness + /section-state when status==expired & enforced (trial/active/grace pass;
+reads, plans, export, notes, archive stay open — test_entitlement pins all of it);
+UI half: page.jsx fetches entitlement on ready → `lapsed` prop → MyPlans hides the "+"
+portal, TeachingProfile hides the edit pen (profile read-only). Welcome copy: "Lesson
+plan in SECONDS, not hours".
+**FIFTH PASS (founder, live, final for the day):** ONE "Settings" only — the bar's
+title is THE title (19px display font + ⚙ glyph at 20px beside it, Ask-Aruvi placement),
+the in-content h1 + subtitle removed (home and farewell); no hairline under the bar. All
+function icons (👤💳⬇?✉ⓘ◐↪🗑📄) stripped from cards and rows — text + chevron only; the
+bar's gear is identity, not function. **PROFILE FIXES (kumar3 live):** (a) keep-≥1-
+subject RETIRED — removing the only subject continues, warned like any removal; emptied
+profile → empty state in-session, first run after fresh sign-in (CLAUDE.md §0 amended in
+place); manage-subjects Continue is never disabled in manage mode. (b) **"Keep it" now
+MEANS keep it** — both confirm modals (subjects + classes) re-tick the about-to-be-
+removed entries on Keep, instead of returning an unticked picker that forced re-
+selection. Class-manage remove-all already cascaded correctly (subject goes with it,
+warned). All STATIC-verified; the day's screens are live-tested by the founder on
+iPhone as built.
 **FOURTH PASS (founder, live): the Settings bar is the ASK-ARUVI IDIOM — title left,
 ✕ right.** No "← back" + title pair: the frozen row reads "Settings · ✕", and the ✕
 closes the WHOLE of Settings (home, any subview, or the profile reached through it)

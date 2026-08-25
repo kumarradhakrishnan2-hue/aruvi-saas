@@ -137,6 +137,37 @@ def test_paid_scope_and_expiry():
         config.ENTITLEMENT_ENFORCED = False
 
 
+def test_lapsed_lockout_productivity():
+    """§2.5 as amended (founder persona pass, 2026-08-24): an EXPIRED subscription
+    keeps her plans (reads/export stay open) but locks the productivity tools —
+    profile writes and section tracking 402. Trial teachers are untouched."""
+    from fastapi.testclient import TestClient
+    from api import config, main as api_main
+
+    config.ENTITLEMENT_ENFORCED = True
+    try:
+        c = TestClient(api_main.app)
+        h = {"X-Aruvi-User": "LapsedLock"}
+        api_main.billing_provider.create_subscription("LapsedLock", "individual_annual")
+        api_main.billing_provider.cancel("LapsedLock")
+        assert c.post("/readiness", json={"subjects": []}, headers=h).status_code == 402
+        assert c.post("/section-state", json={"section_key": "s", "chapter": "c"},
+                      headers=h).status_code == 402
+        assert c.delete("/section-state/s", headers=h).status_code == 402
+        assert c.delete("/readiness", headers=h).status_code == 402
+        # Reads and data rights stay fully open (plans are hers).
+        assert c.get("/section-state", headers=h).status_code == 200
+        assert c.get("/plans-prepared", headers=h).status_code == 200
+        assert c.get("/data-rights/export", headers=h).status_code == 200
+        # A trial teacher is untouched by the lockout.
+        h2 = {"X-Aruvi-User": "TrialLock"}
+        assert c.post("/section-state", json={"section_key": "s", "chapter": "c"},
+                      headers=h2).status_code == 200
+        print("✓ Lapsed: productivity locked, plans/reads/export open, trial untouched")
+    finally:
+        config.ENTITLEMENT_ENFORCED = False
+
+
 def test_entitlement_route():
     """GET /entitlement gives the UI its counter; JIT-starts the trial."""
     from fastapi.testclient import TestClient
@@ -156,5 +187,6 @@ if __name__ == "__main__":
     test_gate_off_by_default()
     test_trial_chapter_cap_and_free_reserves()
     test_paid_scope_and_expiry()
+    test_lapsed_lockout_productivity()
     test_entitlement_route()
     print("\n✅ All entitlement tests passed!")

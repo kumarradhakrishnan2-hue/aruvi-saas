@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { getJSON, pretty, gradeUp, ROMAN, projectReadiness, API, withUser, getUser, setUser, clearUser } from "./lib/format";
+import { getJSON, pretty, gradeUp, ROMAN, projectReadiness, API, withUser, getUser, setUser, clearUser, fetchEntitlement } from "./lib/format";
 import { verifiedWrite, readinessFingerprint } from "./lib/verify";
 import { setSectionMismatchHandler, pullSectionState } from "./lib/sectionState";
 import GenerateTab from "./components/GenerateTab";
@@ -474,6 +474,51 @@ export default function Home() {
    * Settings home → wherever she came FROM (captured at gear-press). Portal/tour paths
    * still open the profile directly with the ordinary tab row (they exit by their own
    * flows), so only the settings-origin visit wears the bar. */
+  /* Lapsed lockout, UI half (§2.5 as amended; server 402s are the authority): when the
+     subscription is positively expired, the growth/tracking entry points hide — the
+     "+" portal on My Classes and the profile's edit pen. Plans stay fully open. */
+  const [entLapsed, setEntLapsed] = useState(false);
+  /* paidScopes: the PAID teacher's subject-stage scopes (["social_sciences/middle"]),
+     null when not paid / gate off / trial — TeachingProfile's choosers filter to these
+     (§0: post-trial, only paid options are offered; the upsell line sits below the
+     wheel). Trial and "*" grants see everything. */
+  const [paidScopes, setPaidScopes] = useState(null);
+  useEffect(() => {
+    if (!ready || !user) { setEntLapsed(false); setPaidScopes(null); return; }
+    let live = true;
+    const sync = () => fetchEntitlement().then((e) => {
+      if (!live || !e) return;
+      setEntLapsed(!!(e.enforced && e.status === "expired"));
+      setPaidScopes((e.enforced && (e.status === "active" || e.status === "grace"))
+        ? (e.scopes || []) : null);
+    });
+    sync();
+    /* MID-SESSION REVOCATION lands fast (founder, 2026-08-24): re-check on focus /
+       visibility (the founder revokes in a terminal, switches back to the phone) and
+       on a light interval — same cadence idiom as the section-state sync. The server
+       402s are the authority regardless; this keeps the UI honest within seconds. */
+    const onVis = () => { if (document.visibilityState === "visible") sync(); };
+    document.addEventListener("visibilitychange", onVis);
+    window.addEventListener("focus", sync);
+    const iv = setInterval(() => { if (document.visibilityState === "visible") sync(); }, 20000);
+    return () => {
+      live = false;
+      document.removeEventListener("visibilitychange", onVis);
+      window.removeEventListener("focus", sync);
+      clearInterval(iv);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, user]);
+
+  /* LAPSED = the reading room (founder, 2026-08-24): only My Lessons (open, choose
+     subject/class, export) + Settings (profile locked). A lapsed teacher standing on
+     My Classes — including the moment a mid-session revoke lands — is moved to
+     My Lessons; the My Classes tab itself hides below. */
+  useEffect(() => {
+    if (entLapsed && ready && editFlow === null) goLessons();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [entLapsed, ready, editFlow]);
+
   const settingsOriginRef = useRef(null);          // "lessonplans" | "profile" | null
   const [settingsView, setSettingsView] = useState("home");
   const [profileViaSettings, setProfileViaSettings] = useState(false);
@@ -592,10 +637,14 @@ export default function Home() {
         </nav>
       ) : (
       <nav className="tabs main-tabs" aria-label="Primary">
+        {/* Lapsed hides My Classes — tracking is a productivity tool she has let go;
+            the reading room is My Lessons (§2.5 as amended). */}
+        {!entLapsed && (
         <button className={`tab ${activeNav === "classes" ? "active" : ""}`} onClick={goClasses}
           data-tour="nav-classes">
           My Classes
         </button>
+        )}
         <button className={`tab ${activeNav === "lessons" ? "active" : ""}`} onClick={goLessons}
           data-tour="nav-lessons">
           My Lessons
@@ -640,7 +689,7 @@ export default function Home() {
             /* My Lessons — the plan repository (subject → grade → chapter). */
             <div className="editflow">
               <MyLessonPlans readiness={readiness} onAllocate={onAllocateScoped} onOpenSection={onOpenSection}
-                tourStep={tour} preparing={preparingCard}
+                tourStep={tour} preparing={preparingCard} lapsed={entLapsed}
                 onStartTour={tourOnOffer ? startTour : undefined} tourActive={!!tour}
                 onDismissPrepareError={onDismissPrepareError} />
             </div>
@@ -655,7 +704,7 @@ export default function Home() {
               {/* Profile ONLY — the account/data/app rows live on the gear's Settings
                   screen now (founder, 2026-08-24; AccountPanel dissolved into it). */}
               <TeachingProfile readiness={readiness} onChange={setReadiness}
-                onBack={profileViaSettings ? null : goClasses}
+                onBack={profileViaSettings ? null : goClasses} lapsed={entLapsed} paidScopes={paidScopes}
                 autoAddClassSubject={profileAutoAdd} onConsumeAutoAdd={() => setProfileAutoAdd(null)}
                 portalIntent={profilePortal} onConsumePortal={() => setProfilePortal(null)} />
             </div>
@@ -673,7 +722,7 @@ export default function Home() {
               onPreparing={onPreparing} onPrepareError={onPrepareError} onPaywall={onPaywall} /> :
             <MyPlans subject={subject} grade={grade} ready={ready} readiness={readiness}
               onReady={onReadyComplete} onNavigate={setTab} onEnterGenerate={onEnterGenerate}
-              user={user} onSignOut={onSignOut}
+              user={user} onSignOut={onSignOut} lapsed={entLapsed}
               pendingOpen={pendingOpen} onConsumePending={() => setPendingOpen(null)}
               pendingAttach={pendingAttach} onConsumeAttach={() => setPendingAttach(null)}
               onStartTour={tourOnOffer ? startTour : undefined}
@@ -694,7 +743,14 @@ export default function Home() {
       {paywall && (
         <div className="paywall-bg" onClick={() => setPaywall(null)}>
           <div className="paywall-card" onClick={(e) => e.stopPropagation()}>
-            <div className="kicker kicker-soft">Free trial ends</div>
+            {/* Kicker matches WHICH wall she hit (founder, 2026-08-24): the server's
+                sentence is the source of truth, so the heading is read off it —
+                trial exhaustion · lapsed/revoked subscription · out-of-scope subject. */}
+            <div className="kicker kicker-soft">{
+              /free trial/i.test(paywall) ? "Free trial ends"
+                : /different subject/i.test(paywall) ? "Separate subscription"
+                : "Subscription ended"
+            }</div>
             <div className="paywall-msg">{paywall}</div>
             <button className="paywall-subscribe" onClick={() => setPaywall(null)}>
               Subscribe

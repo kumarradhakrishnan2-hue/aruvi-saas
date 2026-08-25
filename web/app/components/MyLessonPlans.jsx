@@ -276,7 +276,7 @@ function ProposedCard({ preparing, onDismiss }) {
 }
 
 export default function MyLessonPlans({ readiness, onAllocate, tourStep, preparing,
-                                        onStartTour, tourActive, onDismissPrepareError }) {
+                                        onStartTour, tourActive, onDismissPrepareError, lapsed }) {
   const LS_SUBJECT = userKey("mylessons_subject");
   const LS_CLASS = userKey("mylessons_class");
   const LS_PANE = userKey("mylessons_pane");
@@ -616,7 +616,10 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
     .sort((a, b) => classNum(a) - classNum(b))
     .map((g) => ({ id: g, label: `${classNum(g)}` }));
 
-  const prepareCTA = (
+  /* LAPSED (§2.5 as amended, founder 2026-08-24): My Lessons becomes the reading room —
+     open, export, print. The prepare bar disappears entirely; renewal is offered in
+     Settings, never pushed here. */
+  const prepareCTA = lapsed ? null : (
     <div className="mlp-allocate">
       <span className="mlp-allocate-q">Need a chapter you don&rsquo;t have yet?</span>
       <button className="mlp-allocate-btn prepare-cta" onClick={() => onAllocate && onAllocate(sSlug, gSlug)}>

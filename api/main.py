@@ -255,6 +255,21 @@ def _check_entitlement(tenant_id: str, subject: str, grade: str,
         "everything you made stays yours."))
 
 
+def _check_productivity(tenant_id: str) -> None:
+    """The LAPSED lockout (§2.5 as amended; founder 2026-08-24 persona pass): an
+    expired subscription keeps her PLANS — open, export, print, archive, notes — but
+    loses the productivity tools: profile changes (sections/classes/subjects) and
+    section tracking. Trial and active/grace pass freely; only a positively-expired
+    entitlement blocks. No-op when enforcement is off. Raises 402 in plain words."""
+    if not config.ENTITLEMENT_ENFORCED:
+        return
+    ent = entitlement_repo.load(tenant_id)
+    if ent is not None and ent.status == "expired":
+        raise HTTPException(status_code=402, detail=(
+            "Your subscription has ended. Renew to use tracking and profile tools — "
+            "your lesson plans stay available to open and export."))
+
+
 def _count_trial_chapter(tenant_id: str, subject: str, grade: str,
                          chapter_number: int) -> None:
     """AFTER a successful serve: add the chapter to the trial counter (once). Called on
@@ -852,6 +867,7 @@ def save_readiness(req: ReadinessRequest,
     cascade=true, clear exactly the removed scopes' registers, then save. Additive edits
     save normally."""
     tenant_id, user_id = identity
+    _check_productivity(tenant_id)     # lapsed: profile is read-only (§2.5 amended)
     year = _resolve_year(tenant_id, user_id)
     current = readiness_repo.load_profile(tenant_id, user_id) or {}
     diff = _diff_profiles(current.get("subjects", []), req.subjects)
@@ -883,6 +899,7 @@ def clear_readiness(identity: tuple = Depends(_current_identity)) -> Dict[str, s
     chapter bindings for a reused section key (e.g. first-gen would show a card already
     "attached" to a chapter from a previous run — see MEMORY.md 2026-07-05)."""
     tenant_id, user_id = identity
+    _check_productivity(tenant_id)     # lapsed: profile is read-only (§2.5 amended)
     year = _resolve_year(tenant_id, user_id)
     readiness_repo.clear_profile(tenant_id, user_id)
     section_state_repo.clear_all(tenant_id, user_id, year)
@@ -926,6 +943,7 @@ def save_section_state(req: SectionStateRequest, year_id: Optional[str] = None,
     """Upsert one section's teaching state (full snapshot). Called when a chapter is tracked,
     the pointer advances, a chapter is marked complete, or the teacher moves her bookmark."""
     tenant_id, user_id = identity
+    _check_productivity(tenant_id)     # lapsed: tracking is locked (§2.5 amended)
     year = _resolve_year(tenant_id, user_id, year_id)
     try:
         section_state_repo.save_one(tenant_id, user_id, year, req.section_key,
@@ -941,6 +959,7 @@ def clear_section_state(section_key: str, year_id: Optional[str] = None,
                         identity: tuple = Depends(_current_identity)) -> Dict[str, str]:
     """Remove one section's state — the untrack reversal (and the completed-chapter reset)."""
     tenant_id, user_id = identity
+    _check_productivity(tenant_id)     # lapsed: tracking is locked (§2.5 amended)
     year = _resolve_year(tenant_id, user_id, year_id)
     section_state_repo.delete_one(tenant_id, user_id, year, section_key)
     return {"status": "cleared"}

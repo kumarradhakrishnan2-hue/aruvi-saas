@@ -131,7 +131,16 @@ const gradeDraftFrom = (rec) => {
   };
 };
 
-export default function TeachingProfile({ readiness, onChange, onBack, autoAddClassSubject, onConsumeAutoAdd, portalIntent, onConsumePortal }) {
+/* Stage of a roman grade (client copy of grades.stage_for — the scope unit is
+ * "{subject}/{stage}"). */
+const stageOfRoman = (roman) => {
+  const r = (roman || "").toLowerCase();
+  if (["iii", "iv", "v"].includes(r)) return "preparatory";
+  if (["vi", "vii", "viii"].includes(r)) return "middle";
+  return "secondary";
+};
+
+export default function TeachingProfile({ readiness, onChange, onBack, lapsed, paidScopes, autoAddClassSubject, onConsumeAutoAdd, portalIntent, onConsumePortal }) {
   // SINGLE SOURCE OF TRUTH: the profile lives in the parent's `readiness` prop. Derive the
   // canonical subjects[] straight from it — no mirrored local copy. That way an edit (which
   // routes through persist → onChange → setReadiness) re-renders THIS view and every other
@@ -678,7 +687,16 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
   if (screen === "pickSubjects") {
     const manage = pickMode === "manage";
     const enrolled = canon.map((s) => s.name);
-    const options = manage ? catalogue : catalogue.filter((n) => !enrolled.includes(n));
+    /* ★ POST-TRIAL SCOPE FILTER (founder, 2026-08-24; §0 gating-at-add-time): a PAID
+       teacher's chooser shows ONLY her entitled subjects — unpaid catalogue entries
+       never clog the wheel, and the quiet line below is the ONE upsell (her moment,
+       pull never push). ENROLLED subjects always stay listed even when unpaid
+       (trial-era additions are her profile; hiding them from a pre-ticked manage list
+       would silently count them as removals on Continue). Trial = all 11, unchanged. */
+    const scoped = Array.isArray(paidScopes) && !paidScopes.includes("*");
+    const allowedSubj = scoped ? new Set(paidScopes.map((s) => s.split("/")[0])) : null;
+    const options = (manage ? catalogue : catalogue.filter((n) => !enrolled.includes(n)))
+      .filter((n) => !allowedSubj || allowedSubj.has(subjectSlugOf(n)) || enrolled.includes(n));
     const toggle = (n) => setPicked((a) => (a.includes(n) ? a.filter((x) => x !== n) : [...a, n]));
     return (
       <div className="tp">
@@ -708,6 +726,12 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
               Continue
             </button>
           </PickWheel>
+        )}
+        {scoped && (
+          <p className="trial-note">
+            Your subscription covers what's shown here. Another subject or stage is a
+            separate subscription.
+          </p>
         )}
         <button className="fr-link" onClick={() => setScreen("view")}>{backLabel}</button>
 
@@ -744,7 +768,16 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
   if (screen === "classes") {
     const manageC = classMode === "manage";
     const have = draft.grades.map((g) => g.grade);
-    const options = manageC ? gradeOptions : gradeOptions.filter((g) => !have.includes(g));
+    /* Same post-trial scope filter as the subjects wheel, at STAGE granularity: a paid
+       SS·Middle teacher sees classes 6–8 only. Enrolled grades always stay listed
+       (same silent-removal hazard). Trial and "*" scopes see everything. */
+    const scopedC = Array.isArray(paidScopes) && !paidScopes.includes("*");
+    const allowedStages = scopedC
+      ? new Set(paidScopes.filter((s) => s.split("/")[0] === subjectSlugOf(draft.name))
+          .map((s) => s.split("/")[1]))
+      : null;
+    const options = (manageC ? gradeOptions : gradeOptions.filter((g) => !have.includes(g)))
+      .filter((g) => !allowedStages || allowedStages.has(stageOfRoman(g)) || have.includes(g));
     const toggle = (roman) => setPicked((a) => (a.includes(roman) ? a.filter((x) => x !== roman) : [...a, roman]));
     const adding = have.length > 0; // add-a-class on an existing subject vs a brand-new subject
     return (
@@ -770,6 +803,12 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
               Continue
             </button>
           </PickWheel>
+        )}
+        {scopedC && (
+          <p className="trial-note">
+            Your subscription covers what's shown here. Another subject or stage is a
+            separate subscription.
+          </p>
         )}
 
         {/* Manage-mode removal warning — names the classes AND their section cards; if nothing
@@ -1190,7 +1229,10 @@ export default function TeachingProfile({ readiness, onChange, onBack, autoAddCl
           {/* The big pen — right end of the title row (founder, 2026-08-24 final):
               one green pen to enter edit mode, Done to leave. In edit mode every
               dimension carries its own small pen. */}
-          {canon.length > 0 && (
+          {/* `!lapsed`: an expired subscription makes the profile READ-ONLY — she keeps
+              seeing what she taught, but the edit pen hides (§2.5 as amended; the
+              server refuses the writes regardless). */}
+          {canon.length > 0 && !lapsed && (
             editing ? (
               <button className="tp-edit-toggle on" onClick={() => setEditing(false)} aria-label="Done editing">Done</button>
             ) : (
