@@ -477,20 +477,21 @@ export default function Home() {
   // work (report/archive buttons at 4/5 on My Lessons, "open the lesson" card at 6 + preview at 7,
   // popup at 9/14, attach/unbind at the 9↔10 boundary, lesson at 11–12, demo-complete at 13–14, the
   // big "+" grow button surfaced at 15) is orchestrated by MyPlans/MyLessonPlans off the numeric
-  // tourStep; here we only handle SHELL navigation: 2→3 open My Lessons · 7→8 back to My Classes ·
-  // 14→15 close the popup back to My Classes home (the "+" step) · 15→16 open the profile (step 16
-  // rings the settings gear over it) · 16→17 back to My Classes (the Ask Aruvi mark) · 17→18 OPEN
-  // Ask Aruvi so step 18 rings the real panel · 18→19 close it again for the centred "Welcome to
-  // Aruvi" sign-off · 19 Done → My Classes.
+  // tourStep; here we only handle SHELL navigation (numbers shifted +1 from step 12 on —
+  // the bookmark step, 2026-08-25): 2→3 open My Lessons · 7→8 back to My Classes ·
+  // 15→16 close the popup back to My Classes home (the "+" step) · 16→17 open the profile
+  // (step 17 rings the settings gear over it) · 17→18 back to My Classes (the Ask Aruvi
+  // mark) · 18→19 OPEN Ask Aruvi so step 19 rings the real panel · 19→20 close it again
+  // for the centred "Welcome to Aruvi" sign-off · 20 Done → My Classes.
   const tourNext = () => {
     if (tour === 2) goLessons();
     else if (tour === 7) goClasses();
-    else if (tour === 14) goClasses();
-    else if (tour === 15) goProfile();
-    else if (tour === 16) goClasses();          // leave the profile → show the Ask Aruvi mark on My Classes
-    else if (tour === 17) setAskOpen(true);     // show her the panel itself, not just its mark
-    else if (tour === 18) setAskOpen(false);    // clear the screen for the sign-off
-    else if (tour === 19) { setAskOpen(false); finishTour(); goClasses(); return; }
+    else if (tour === 15) goClasses();
+    else if (tour === 16) goProfile();
+    else if (tour === 17) goClasses();          // leave the profile → show the Ask Aruvi mark on My Classes
+    else if (tour === 18) setAskOpen(true);     // show her the panel itself, not just its mark
+    else if (tour === 19) setAskOpen(false);    // clear the screen for the sign-off
+    else if (tour === 20) { setAskOpen(false); finishTour(); goClasses(); return; }
     setTour(tour + 1);
   };
   // Tour Back — mirrors every move so each step reverses cleanly: 3→2 back to My Classes' tab
@@ -501,10 +502,10 @@ export default function Home() {
     if (tour === 1) { setTour(null); return; }
     if (tour === 3) goClasses();
     else if (tour === 8) goLessons();
-    else if (tour === 16) goClasses();
-    else if (tour === 17) goProfile();   // back to the settings-gear step (profile open)
-    else if (tour === 18) setAskOpen(false);  // 18→17: the mark on the tab row, panel closed
-    else if (tour === 19) setAskOpen(true);   // 19→18: re-open the panel the step rings
+    else if (tour === 17) goClasses();
+    else if (tour === 18) goProfile();   // back to the settings-gear step (profile open)
+    else if (tour === 19) setAskOpen(false);  // 19→18: the mark on the tab row, panel closed
+    else if (tour === 20) setAskOpen(true);   // 20→19: re-open the panel the step rings
     setTour(tour - 1);
   };
   const goProfile = () => { setProfileViaSettings(false); setProfileAutoAdd(null); setProfilePortal(null); setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null); };

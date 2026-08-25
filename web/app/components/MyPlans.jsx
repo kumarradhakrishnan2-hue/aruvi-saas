@@ -124,7 +124,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   // though the tour is active.
   // `!lapsed`: an expired subscription hides the growth portal — profile changes are
   // productivity tools she lets go of (§2.5 as amended; the server 402s regardless).
-  const plusShow = !!onProfilePortal && ready && !lapsed && (tourStep === 15 || !tourActive);
+  const plusShow = !!onProfilePortal && ready && !lapsed && (tourStep === 16 || !tourActive);
 
   /* ★ RE-ASSERT THE BINDING WHEN THE TOUR ENDS (founder, 2026-08-21: "all actions should end up
    * with LP being loaded onto the default section"). First run binds the lesson to her section
@@ -287,7 +287,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     return null;
   })();
   const tourIdx = tourTarget ? tourTarget.idx : -1;
-  const tourDemoDone = tourStep === 13 || tourStep === 14;   // demo-complete rendering only
+  const tourDemoDone = tourStep === 14 || tourStep === 15;   // demo-complete rendering only
 
   // Report the target's name + chapter up so the step copy can say "attach {chapter} to {tag}".
   useEffect(() => {
@@ -308,14 +308,15 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
       unbindSection(sectionKey);                        // Back from 10 → 9 undoes it
       setSyncTick((t) => t + 1);
     }
-    // Steps 11–12: the tracking lesson view is open; any other step closes it.
-    if (tourStep === 11 || tourStep === 12) {
+    // Steps 11–13: the tracking lesson view is open (11 tracking · 12 the bookmark ·
+    // 13 mark-complete); any other step closes it.
+    if (tourStep === 11 || tourStep === 12 || tourStep === 13) {
       if (!openPlan && !loading) openLesson(c.subjectSlug, c.gradeSlug, plan, sectionKey);
     } else if (openPlan) setOpenPlan(null);
     // Steps 9 and 14: the "Track a chapter for this section" popup; any other step closes it.
     // (At 9 nothing is bound, so the just-generated lesson is IN the list — the hand points at
     // it; at 14 the bound chapter is excluded, matching the "pick the NEXT chapter" moment.)
-    if (tourStep === 9 || tourStep === 14) {
+    if (tourStep === 9 || tourStep === 15) {
       if (!attachFor) setAttachFor({ c, sectionKey });
     } else if (attachFor) setAttachFor(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -758,6 +758,16 @@ about to spend a chapter is when the number informs a decision; no ambient chip
 anywhere. Both lines render ONLY when `enforced && status === "trial"` — gate off (dev)
 = no trial chrome at all. `.trial-note` CSS (quiet italic, centered). STATIC-verified
 (babel ×3, css 1971/1971); live pass = kumar3's next run.
+**TOUR IS 20 STEPS — the BOOKMARK step added at 12 (founder, 2026-08-25):** anchor
+`data-tour="phase-bookmark"` on the `.uv-bkmk` button; box placed ABOVE it (below
+covered the thing itself — live fix); hand on the bookmark; copy: "Move this bookmark
+to any particular phase… Each section will have independent bookmarks." Sits between
+the tracking view (11) and mark-complete (now 13) — the lesson view is already open on
+the Lesson tab, the bookmark's home. RENUMBERED +1 from 12 on, everywhere: page.jsx
+tourNext/tourBack shell-nav maps (15/16/17/18/19/20), MyPlans `tourDemoDone` (14||15),
+lesson-open steps (11||12||13), popup steps (9||15), `plusShow` (tourStep 16);
+GuidedTour header/step list; counter derives from TOTAL. Any future step insert must
+walk this same list.
 **DIRECT SUBSCRIBER STILL GETS FIRST RUN (founder, 2026-08-25 follow-on):** the guided
 first generation is how she LEARNS to generate, so a ready profile must not skip it.
 Server-derived heuristic, no stored flag: `ready && nothing-ever-prepared &&

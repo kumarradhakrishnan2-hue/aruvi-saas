@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-/* ───────── GuidedTour — the one-time first-run walk, 19 steps (revised 2026-07-26) ─────────
+/* ───────── GuidedTour — the one-time first-run walk, 20 steps (bookmark step added
+ * 2026-08-25) ─────────
  * Launched from the "Show me how" nudge on My Classes after the first lesson is generated but not
- * yet attached. Guide-driven: every step has Back · Skip · Next and an "N of 19" counter; Next
+ * yet attached. Guide-driven: every step has Back · Skip · Next and an "N of 20" counter; Next
  * itself performs the move (nav, opening the preview, the popup, the attach, the profile), with a
  * TRANSPARENT outline hand (SVG, not the filled emoji) showing where the real tap would land.
- * Steps 12–14 demo the completed state without touching her real progress.
+ * Steps 13–15 demo the completed state without touching her real progress.
  *
  * Step model (1-based; page.jsx owns shell navigation, MyPlans/MyLessonPlans own view state):
  *    1 My Classes tab         — where your classes sit
@@ -21,15 +22,16 @@ import { useEffect, useRef, useState } from "react";
  *    9 the track-a-chapter popup, hand on the just-generated lesson row — Next attaches it
  *   10 the attached card      — success; Next opens it
  *   11 the tracking view      — box lifted above the notes/mark-complete tail so both stay visible
- *   12 Mark-complete + hand   — demo only, never really clicked
- *   13 completed card's "+"   — card demoed as Complete; box pinned to the viewport bottom so the
+ *   12 the phase BOOKMARK + hand — drag it to where you stopped / begin next; per section
+ *   13 Mark-complete + hand   — demo only, never really clicked
+ *   14 completed card's "+"   — card demoed as Complete; box pinned to the viewport bottom so the
  *                               progress rail AND the second section card stay visible
- *   14 the popup again        — pick the next chapter (bound one excluded)
- *   15 the big "+" grow button — add/amend sections, classes or subjects (My Classes home)
- *   16 the settings gear      — where the teaching profile lives
- *   17 the Ask Aruvi mark      — up to 100 Q&A across 5 categories + intelligent search
- *   18 Ask Aruvi OPEN          — page.jsx opens the panel on 17→18; the box rings the panel itself
- *   19 "Welcome to Aruvi"      — a centred sign-off, no anchor, no hand; Done lands on My Classes
+ *   15 the popup again        — pick the next chapter (bound one excluded)
+ *   16 the big "+" grow button — add/amend sections, classes or subjects (My Classes home)
+ *   17 the settings gear      — where the teaching profile lives
+ *   18 the Ask Aruvi mark      — up to 100 Q&A across 5 categories + intelligent search
+ *   19 Ask Aruvi OPEN          — page.jsx opens the panel on 18→19; the box rings the panel itself
+ *   20 "Welcome to Aruvi"      — a centred sign-off, no anchor, no hand; Done lands on My Classes
  *
  * Anchor extras per step: `handAnchor` (hand on a different element than the ring, e.g. the row
  * inside the popup), `tipAnchor` (tooltip placed off another element — first match in the array
@@ -64,16 +66,16 @@ const STEPS = [
     title: "See the lesson plan you just now generated.",
     body: () => "You can filter your lesson plans by subject and class to see them all in one place." },
   // Step 4 — the report button on the just-generated lesson card. Hand centred on the icon.
-  { anchor: "lesson-report", place: "below", hand: true, handPos: "center",
+  { anchor: "lesson-report", place: "below",
     title: "Generate PDF reports",
     body: () => "You can generate PDF reports of Lesson plan and assessment by clicking this button." },
   // Step 5 — the archive button on the lesson card. Hand centred on the icon.
-  { anchor: "lesson-archive", place: "below", hand: true, handPos: "center",
+  { anchor: "lesson-archive", place: "below",
     title: "You can archive a Lesson plan",
     body: () => "Push those lesson plans you no more want to see into the archive box. Restore it back anytime you need it." },
   // Step 6 — "open the lesson": rings the same lesson card as step 3 (identical anchor + centred
   // hand). Next opens the preview (MyLessonPlans drives that off tourStep === 7).
-  { anchor: "lesson-first", place: "below", hand: true, handPos: "center",
+  { anchor: "lesson-first", place: "below",
     title: "Let us open the lesson",
     body: () => "click on the lesson card to open a particular lesson" },
   // Box LIFTED above the sticky "Attach to a class" bar (lift 130) so the bottom stays visible.
@@ -97,6 +99,13 @@ const STEPS = [
   { anchor: "lesson-root", place: "below", tipAnchor: ["unit-tabs", "lesson-phase-1"], scrollTop: true,
     title: "You are now ready to use the plan to teach and track progress.",
     body: () => "Everything for a unit sits under four tabs — Overview, Material, Lesson and Assess — with clear timed steps and teacher guidance." },
+  // Step 12 — the phase BOOKMARK (founder, 2026-08-25): visible because step 11 opened
+  // the tracking view on the in-progress unit's Lesson tab, which is the bookmark's home.
+  // Box ABOVE the bookmark — placed below it covered the very thing being introduced
+  // (founder, live, 2026-08-25).
+  { anchor: "phase-bookmark", place: "above",
+    title: "Bookmark where you left a particular section",
+    body: () => "Move this bookmark to any particular phase to indicate where you stopped or wish to begin next for a section. Each section will have independent bookmarks." },
   { anchor: "mark-complete", place: "above", hand: true,
     title: "Track progress.",
     body: (i) => `Track chapter progress of “${i.chapter}” with section ${i.tag} unit by unit. Upon completion of a unit, click this button to mark it complete.` },
@@ -108,14 +117,14 @@ const STEPS = [
   { anchor: "attach-pop", place: "over",
     title: "Select a plan.",
     body: () => "You can use the same window shown in step 8 to select an existing chapter or generate a new plan." },
-  { anchor: "grow-add", place: "below", handPos: "center", hand: true,
+  { anchor: "grow-add", place: "below",
     title: "Add/amend sections, classes and/or subjects.",
     body: () => "Use this button to quickly add sections, classes or subjects to your teaching profile." },
   { anchor: "settings-gear", place: "below",
     title: "Your teaching profile.",
     body: () => "Your teaching profile is built based on interactions. You may pro-actively build and edit your profile here." },
   // Step 17 — Ask Aruvi (the bare stream-a mark on the tab row). Transparent hand centred on it.
-  { anchor: "ask-aruvi", place: "below", hand: true, handPos: "center",
+  { anchor: "ask-aruvi", place: "below",
     title: "Use Ask Aruvi to answer your queries",
     body: () => "Get answers for up to 100 questions across 5 categories and use intelligent search to narrow your query." },
   // Step 18 — the panel is now OPEN (page.jsx opened it on Next from 17), so she sees the thing

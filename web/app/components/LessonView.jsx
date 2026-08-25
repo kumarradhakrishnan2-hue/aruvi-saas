@@ -249,6 +249,7 @@ function PhaseBookmark({ phaseCount, phase, onMove }) {
       onKeyDown={onKey}
       aria-label={`Lesson bookmark — on phase ${phase + 1} of ${phaseCount}; drag or use arrow keys to move`}
       title="Your bookmark — drag to the phase you want to mark"
+      data-tour="phase-bookmark"
     >
       {/* One CHUNKY solid arrow (no thin stem — too fine to grab on a phone; founder
           2026-07-23). Short fat body by the time, big head pointing right at the phase start. */}
