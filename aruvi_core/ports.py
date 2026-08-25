@@ -114,6 +114,11 @@ class Account:
     phone: str = ""
     locale: str = "en-IN"
     school_name: str = ""
+    # Occupational/demographic fields, collected at SUBSCRIPTION checkout only (never
+    # in trial — asking less is a DPDP asset; founder 2026-08-24). Optional forever.
+    role: str = ""             # Teacher | Academic coordinator | ...
+    state: str = ""
+    city: str = ""
     status: str = "active"     # active | suspended | pending_deletion
     created_at: str = ""
     consent: Dict[str, Any] = field(default_factory=dict)   # {policy_version, accepted_at, channels}

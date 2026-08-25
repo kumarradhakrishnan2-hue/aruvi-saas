@@ -542,38 +542,40 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
     return (
       <div className="fr-wrap fr-welcome">
         <Brand />
+        {/* SLIMMED WELCOME (founder-approved frame, 2026-08-24): the benefits list
+            moved to the front door (Login); this screen is orientation only. The trial
+            card renders ONLY for a trial teacher — a subscribed entrant gets the clean
+            version (title · To get started · CTA). */}
         <div className="fr-welcome-body">
-          <h1 className="fr-welcome-title">Welcome to Aruvi</h1>
-          <p className="fr-welcome-sub">
-            We help you teach engaging, NCF-aligned lessons while saving you time.
-          </p>
-          <ul className="fr-pain-list">
-            <li><span className="fr-pain-tick">✓</span><span>Lesson plan in seconds, not hours</span></li>
-            <li><span className="fr-pain-tick">✓</span><span>NCF / NCERT aligned</span></li>
-            <li><span className="fr-pain-tick">✓</span><span>Assessment built in</span></li>
-            <li><span className="fr-pain-tick">✓</span><span>Every section's status at one glance</span></li>
-          </ul>
-          {/* Trial terms — THE one place the trial is explained (founder, 2026-08-24:
-              the welcome page must clarify the terms of engagement, prominently, above
-              "Let's get started"; the chapter step no longer repeats it). The adjacent-
-              sibling CSS rule trims the h2's 56px top margin when this renders, so the
-              welcome stays one screen and the prepare bar needs no scroll. Hidden when
-              the gate is off or she isn't on trial (a subscribed customer sees no trial
-              terms — her welcome reads clean). */}
+          <h1 className="fr-welcome-title">Welcome to Aruvi!</h1>
           {trialInfo && trialInfo.enforced && trialInfo.status === "trial" ? (
-            <p className="fr-trial-terms">
-              Your free trial covers any {trialInfo.trial_chapter_cap} chapters. For any
-              single chapter, you can generate unlimited number of Lesson plans.
-            </p>
-          ) : null}
-          <h2 className="fr-welcome-h2">Let’s get started</h2>
-          <p className="fr-welcome-sub">
-            Answer three quick questions and Aruvi will create your first lesson plan.
-          </p>
+            <>
+              <p className="fr-welcome-sub fr-welcome-try">Aruvi is free to try.</p>
+              <div className="fr-welcome-rule" aria-hidden="true" />
+              <div className="fr-trial-card">
+                <span className="fr-trial-tick" aria-hidden="true">✓</span>
+                <h2 className="fr-trial-h">Your free trial</h2>
+                <p className="fr-trial-p">
+                  Your free trial covers any {trialInfo.trial_chapter_cap} chapters. For
+                  any single chapter, you can generate unlimited number of Lesson plans.
+                </p>
+                <h2 className="fr-trial-h">To get started</h2>
+                <p className="fr-trial-p">
+                  Answer three quick questions and Aruvi will create your first lesson plan.
+                </p>
+              </div>
+            </>
+          ) : (
+            <>
+              <h2 className="fr-welcome-h2">To get started</h2>
+              <p className="fr-welcome-sub">
+                Answer three quick questions and Aruvi will create your first lesson plan.
+              </p>
+            </>
+          )}
         </div>
         <div className="fr-foot">
           <button className="primary fr-cta prepare-cta" onClick={() => setStep("subject")}>Prepare my first lesson →</button>
-          <p className="fr-secure">🛡 Your data is private and secure</p>
         </div>
       </div>
     );

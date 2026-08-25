@@ -1187,7 +1187,49 @@ def get_entitlement(identity: tuple = Depends(_current_identity)) -> Dict[str, A
         "trial_chapter_cap": config.TRIAL_CHAPTER_CAP,
         "trial_chapters": ent.trial_chapters,
         "enforced": config.ENTITLEMENT_ENFORCED,
+        "price_per_subject_stage": config.PRICE_PER_SUBJECT_STAGE,
     }
+
+
+class CheckoutRequest(BaseModel):
+    """Body for POST /onboarding/checkout — the subscribe path's final step."""
+    scopes: List[str]          # ["social_sciences/middle", ...] — the cart
+    name: str = ""
+    role: str = ""
+    state: str = ""
+    city: str = ""
+    school: str = ""
+
+
+@app.post("/onboarding/checkout")
+def onboarding_checkout(req: CheckoutRequest,
+                        identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """★ DEV STUB — the preview's 'payment' (founder, 2026-08-24). No gateway exists,
+    so this activates the subscription directly through the ManualBillingProvider (the
+    founder IS the gateway) and saves the checkout's demographic fields onto the
+    Account record. The real gateway adapter replaces the activation half wholesale
+    (web → Razorpay/UPI; the iOS app routes this step to Apple IAP instead); the
+    account-fields half stays. The UI never fakes a payment succeeded screen — it says
+    plainly that the preview activates instantly."""
+    tenant_id, user_id = identity
+    scopes = [s.strip() for s in (req.scopes or []) if s.strip()]
+    if not scopes:
+        raise HTTPException(status_code=400, detail="Pick at least one subject & stage.")
+    acct = account_repo.load(tenant_id, user_id)
+    if acct is not None:
+        if req.name.strip():
+            acct.display_name = req.name.strip()
+        acct.phone = user_id                     # mobile IS the id on this path
+        acct.role = req.role.strip()
+        acct.state = req.state.strip()
+        acct.city = req.city.strip()
+        acct.school_name = req.school.strip()
+        account_repo.save(acct)
+    result = billing_provider.create_subscription(
+        tenant_id, "individual_annual", scopes=scopes, source="web")
+    return {"status": "active", "scopes": result.get("scopes"),
+            "valid_until": result.get("valid_until"),
+            "amount_inr": len(scopes) * config.PRICE_PER_SUBJECT_STAGE}
 
 
 @app.post("/subjects/{subject}/{grade}/generate")

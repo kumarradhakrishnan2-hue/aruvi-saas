@@ -54,3 +54,8 @@ ENTITLEMENT_ENFORCED = os.environ.get("ARUVI_ENTITLEMENT_ENFORCED", "").strip().
 # the trial; docs/subscription_model_discussion.md §0). Counted in CHAPTERS, never
 # serves. Empirical; env-overridable for the field test.
 TRIAL_CHAPTER_CAP = int(os.environ.get("ARUVI_TRIAL_CHAPTERS", "3"))
+
+# PRICE_PER_SUBJECT_STAGE (₹/year): the working figure from the subscription-model
+# discussion (§0 — ₹500 pending the field test). Config, never code; the onboarding
+# cart reads it via GET /entitlement.
+PRICE_PER_SUBJECT_STAGE = int(os.environ.get("ARUVI_PRICE_PER_SUBJECT_STAGE", "500"))

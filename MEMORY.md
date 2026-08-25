@@ -758,6 +758,33 @@ about to spend a chapter is when the number informs a decision; no ambient chip
 anywhere. Both lines render ONLY when `enforced && status === "trial"` — gate off (dev)
 = no trial chrome at all. `.trial-note` CSS (quiet italic, centered). STATIC-verified
 (babel ×3, css 1971/1971); live pass = kumar3's next run.
+**THE ONBOARDING FRONT DOOR BUILT (founder-designed, 2026-08-24/25 — the biggest web
+slice yet).** Login.jsx is now the onboarding shell. FIRST-TIME device (localStorage
+`aruvi_device_seen` unset) → CHOOSE page: benefits + two plan cards (Free-to-try
+highlighted by default, NO badge; Subscribe's bullets HONEST-ONLY — "priority support"/
+"export & more" struck, since trial exports too and support doesn't exist) + "Create
+sign in". → OTP page: **MOBILE NUMBER IS THE IDENTITY** (one field, +91, 10 digits; the
+id contract unchanged — mobile is just the id's new shape); ★ OTP STUB: code 0000
+verifies, labeled honestly in-UI ("Preview build: enter 0000") — a dummy OTP protects
+nothing; the real SMS vendor sits behind the AuthProvider seam later, and the
+trial-farming fence is only real then. → TRIAL path: straight in (slimmed welcome →
+first run). → SUBSCRIBE path with step rail Verify·About you·Subjects·Pay: About you =
+name/role/state/city/school-optional (Account gained role/state/city fields —
+checkout-only, never trial; DPDP-minimal); Subjects = **the picker IS the cart** —
+subject·stage combos DERIVED from /subjects+grades (never hardcoded), live total at
+`config.PRICE_PER_SUBJECT_STAGE` (env ARUVI_PRICE_PER_SUBJECT_STAGE, default ₹500,
+served via /entitlement); Pay = ★ HONEST STUB `POST /onboarding/checkout` — no fake
+gateway screen: saves demographics onto the Account, activates via ManualBillingProvider
+(source "web"), UI says "online payment opens soon — this activates right away"; iOS
+later swaps this one screen for Apple IAP. RETURNING device → SIGN-IN screen: benefits
+block + "Who's planning today?" (sub-text removed, founder) + one field accepting
+mobile-or-legacy-ID + "New to Aruvi? Get started →". **WELCOME SLIMMED to the approved
+frame:** "Welcome to Aruvi!" · (trial-only) "Aruvi is free to try." + the trial CARD
+(tick, "Your free trial" terms, "To get started") · clean version for subscribed
+entrants; benefits list left the welcome (it lives at the front door now);
+`.fr-trial-terms` CSS orphaned. Verified: checkout roundtrip (2 scopes → ₹1000, account
+fields saved, entitlement active), empty-cart 400; suite 30 green; babel+css clean.
+Live pass owed on the whole flow (fresh device = clear localStorage or private tab).
 **SUBSCRIBED-ENTRY FIRST RUN (founder tested subscribe-before-first-signin):** (a) the
 first-run bar had the STALE ThemeToggle (Appearance moved into Settings) — removed;
 first-run bar = brand + identity only, no gear (Phase 1 stays shell-less). (b) §0b flow
