@@ -1191,6 +1191,54 @@ def get_entitlement(identity: tuple = Depends(_current_identity)) -> Dict[str, A
     }
 
 
+class AccountUpdate(BaseModel):
+    """Body for POST /account — the Settings › Personal profile editor. Only provided
+    fields change; the id/phone (her sign-in) is never editable here."""
+    name: Optional[str] = None
+    email: Optional[str] = None      # double-confirmed client-side
+    role: Optional[str] = None
+    state: Optional[str] = None
+    city: Optional[str] = None
+    school: Optional[str] = None
+
+
+@app.get("/account")
+def get_account(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """The caller's personal-profile fields (Settings › Personal profile). Never gated
+    on subscription state — seeing and correcting her own record is her right."""
+    tenant_id, user_id = identity
+    a = account_repo.load(tenant_id, user_id)
+    if a is None:
+        raise HTTPException(status_code=404, detail="No account.")
+    return {"display_name": a.display_name, "email": a.email, "phone": a.phone,
+            "role": a.role, "state": a.state, "city": a.city,
+            "school_name": a.school_name, "created_at": a.created_at}
+
+
+@app.post("/account")
+def update_account(req: AccountUpdate,
+                   identity: tuple = Depends(_current_identity)) -> Dict[str, str]:
+    """Update personal-profile fields. Partial: only sent fields change."""
+    tenant_id, user_id = identity
+    a = account_repo.load(tenant_id, user_id)
+    if a is None:
+        raise HTTPException(status_code=404, detail="No account.")
+    if req.name is not None:
+        a.display_name = req.name.strip() or a.display_name
+    if req.email is not None:
+        a.email = req.email.strip()
+    if req.role is not None:
+        a.role = req.role.strip()
+    if req.state is not None:
+        a.state = req.state.strip()
+    if req.city is not None:
+        a.city = req.city.strip()
+    if req.school is not None:
+        a.school_name = req.school.strip()
+    account_repo.save(a)
+    return {"status": "saved"}
+
+
 @app.get("/onboarding/known")
 def onboarding_known(id: str = "") -> Dict[str, Any]:
     """Does this mobile/ID already sit in the tenant database? An existence check that
@@ -1201,7 +1249,14 @@ def onboarding_known(id: str = "") -> Dict[str, Any]:
     uid = (id or "").strip()
     if not uid:
         return {"known": False}
-    return {"known": account_repo.load(uid, uid) is not None}
+    # Email sign-in (founder, 2026-08-26): resolve the email to its account and hand
+    # the CANONICAL id (the mobile) back — the session always runs under the mobile.
+    if "@" in uid:
+        acct = account_repo.find_by_email(uid)
+        if acct:
+            return {"known": True, "id": acct.account_id}
+        return {"known": False}
+    return {"known": account_repo.load(uid, uid) is not None, "id": uid}
 
 
 @app.post("/onboarding/verified")
@@ -1326,6 +1381,7 @@ class CheckoutRequest(BaseModel):
     """Body for POST /onboarding/checkout — the subscribe path's final step."""
     scopes: List[str]          # ["social_sciences/middle", ...] — the cart
     name: str = ""
+    email: str = ""            # double-confirmed client-side (founder, 2026-08-25)
     role: str = ""
     state: str = ""
     city: str = ""
@@ -1351,6 +1407,8 @@ def onboarding_checkout(req: CheckoutRequest,
         if req.name.strip():
             acct.display_name = req.name.strip()
         acct.phone = user_id                     # mobile IS the id on this path
+        if req.email.strip():
+            acct.email = req.email.strip()
         acct.role = req.role.strip()
         acct.state = req.state.strip()
         acct.city = req.city.strip()

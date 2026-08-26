@@ -191,16 +191,19 @@ export default function Login({ onEnter }) {
     );
   }
 
-  /* ── SIGN IN (returning) — registered identities only ── */
+  /* ── SIGN IN (returning) — registered identities only, MOBILE or EMAIL only
+   * (founder, 2026-08-26: no free-form user IDs at the front door; an email resolves
+   * server-side to its account's mobile, which is what the session runs under). ── */
   const trimmed = id.trim();
+  const signinOk = /^\d{10}$/.test(trimmed) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
   const submitSignin = async (e) => {
     e.preventDefault();
-    if (!trimmed) return;
+    if (!signinOk) return;
     setSigninErr("");
     try {
       const d = await getJSON(`/onboarding/known?id=${encodeURIComponent(trimmed)}`);
-      if (d && d.known) { enter(trimmed); return; }
-      setSigninErr("We don't know this number yet — tap “New to Aruvi? Get started” below to create your sign in.");
+      if (d && d.known) { enter(d.id || trimmed); return; }
+      setSigninErr("We don't recognise this mobile or email yet — tap “New to Aruvi? Get started” below to create your sign in.");
     } catch {
       setSigninErr("Couldn't reach Aruvi right now. Try again in a moment.");
     }
@@ -215,11 +218,11 @@ export default function Login({ onEnter }) {
         <h1 className="login-q">Who&rsquo;s planning today?</h1>
         <form onSubmit={submitSignin}>
           <label className="login-field ob-field">
-            <span>Mobile number or user ID</span>
+            <span>Mobile number or email</span>
             <input ref={inputRef} type="text" value={id} onChange={(e) => setId(e.target.value)}
-              placeholder="e.g. 98xxxxxxxx" autoComplete="off" spellCheck={false} />
+              placeholder="98xxxxxxxx or you@example.com" autoComplete="off" spellCheck={false} />
           </label>
-          <button type="submit" className="primary login-btn" disabled={!trimmed}>
+          <button type="submit" className="primary login-btn" disabled={!signinOk}>
             Enter Aruvi →
           </button>
         </form>

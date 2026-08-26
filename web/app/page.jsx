@@ -520,6 +520,23 @@ export default function Home() {
   /* Lapsed lockout, UI half (§2.5 as amended; server 402s are the authority): when the
      subscription is positively expired, the growth/tracking entry points hide — the
      "+" portal on My Classes and the profile's edit pen. Plans stay fully open. */
+  /* Her NAME on the bar once captured (founder, 2026-08-26): the account's
+     display_name replaces the raw mobile/id top-right (and in the greeting) as soon
+     as checkout / Personal profile captures it. A numeric display_name is the JIT
+     default, not a name — keep showing the id then. Re-checked on entitlement sync so
+     an in-app subscribe updates it live. */
+  const [displayName, setDisplayName] = useState("");
+  useEffect(() => {
+    if (!user) { setDisplayName(""); return; }
+    fetch(`${API}/account`, withUser()).then((r) => (r.ok ? r.json() : null)).then((a) => {
+      const nm = a && (a.display_name || "").trim();
+      // FIRST name only, capitalised (founder, 2026-08-26) — bar and greeting both.
+      const first = nm && !/^\d+$/.test(nm) ? nm.split(/\s+/)[0] : "";
+      setDisplayName(first ? first.charAt(0).toUpperCase() + first.slice(1) : "");
+    }).catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, entSyncTick]);
+
   const [entLapsed, setEntLapsed] = useState(false);
   /* paidScopes: the PAID teacher's subject-stage scopes (["social_sciences/middle"]),
      null when not paid / gate off / trial — TeachingProfile's choosers filter to these
@@ -653,7 +670,7 @@ export default function Home() {
             title="Settings" data-tour="settings-gear">⚙</button>
           {/* rightmost: profile name stacked over its own log out */}
           <div className="hdr-user-id">
-            <span className="hdr-user-name">{user}</span>
+            <span className="hdr-user-name">{displayName || user}</span>
             <button className="hdr-user-logout" onClick={onSignOut}>Log out</button>
           </div>
         </div>
@@ -766,7 +783,7 @@ export default function Home() {
               onPreparing={onPreparing} onPrepareError={onPrepareError} onPaywall={onPaywall} /> :
             <MyPlans subject={subject} grade={grade} ready={ready} readiness={readiness}
               onReady={onReadyComplete} onNavigate={setTab} onEnterGenerate={onEnterGenerate}
-              user={user} onSignOut={onSignOut} lapsed={entLapsed}
+              user={displayName || user} onSignOut={onSignOut} lapsed={entLapsed}
               pendingOpen={pendingOpen} onConsumePending={() => setPendingOpen(null)}
               pendingAttach={pendingAttach} onConsumeAttach={() => setPendingAttach(null)}
               onStartTour={tourOnOffer ? startTour : undefined}

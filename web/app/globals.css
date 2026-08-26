@@ -17,6 +17,7 @@
   --ss-plum: #7d5878;
   --danger: #c0392b;
   --card-bg: #f3f1ea;
+  --field-bg: #ffffff;   /* form inputs — lighter than cards (founder 2026-08-26) */
   /* semantic surface/edge tokens (light values = former hardcodes; flipped in dark) */
   --tint-pine: #eef4f0;
   --tint-pine-2: #f1f6f3;
@@ -3112,6 +3113,7 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
     --ss-plum:    #a884a2;
     --danger:     #e0705f;
     --card-bg:    #1d2621;
+    --field-bg:   #232d27;
     --tint-pine:   #1f2c26;
     --tint-pine-2: #1f2c26;
     --tint-cream:  #262b22;
@@ -3631,6 +3633,11 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
   padding: 9px 26px 9px 8px; font-family: var(--f-body); font-size: 13px; }
 .ob-row-selects select:disabled { opacity: .5; }
 .ob-row-selects select.ob-ph { font-weight: 700; }
+/* A select whose field-name option is still showing reads grey, like a placeholder. */
+.ob-field select.ob-unset { color: var(--ink-soft); }
+/* All onboarding/profile form controls sit on the LIGHTER field background. */
+.ob-field input, .ob-field select, .ob-mobile-row input, .ob-cc, .ob-otp-box,
+.ob-email-view, .ob-row-selects select { background-color: var(--field-bg); }
 .ob-row-x { all: unset; cursor: pointer; color: var(--ink-soft); font-size: 13px; padding: 4px; }
 .ob-row-x:hover { color: var(--clay); }
 .ob-row-classes { font-family: var(--f-body); font-style: italic; font-size: 11.5px;
@@ -3638,6 +3645,14 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 .ob-addrow { all: unset; cursor: pointer; display: block; font-family: var(--f-mono);
   font-size: 11.5px; letter-spacing: .04em; color: var(--pine); padding: 6px 2px 2px; }
 .ob-addrow:hover { color: var(--pine-d); }
+/* email double-blind confirm */
+.ob-email-next { margin-top: 6px; }
+/* Confirmed email, styled like a filled field (same size as inputs). */
+.ob-email-view { display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; border: 1px solid var(--line); border-radius: 7px; padding: 11px 12px;
+  font-family: var(--f-body); font-size: 14px; color: var(--ink);
+  background: var(--card-bg); }
+.setwrap-tight { margin-top: -12px; }
 /* OTP — four auto-advancing boxes (founder 2026-08-25) */
 .ob-otp-label { display: block; font-family: var(--f-mono); font-size: 10.5px;
   letter-spacing: .07em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; }
@@ -3650,6 +3665,11 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 .subflow-overlay { position: fixed; inset: 0; z-index: 70; background: var(--paper);
   overflow: auto; }
 .set-subscribe { display: block; margin: 12px 0 4px; }
+/* Email double-blind confirm (subscribe About-you step) */
+.ob-email-next { display: block; margin-top: 8px; }
+.ob-email-next:disabled { opacity: .4; cursor: default; }
+.ob-email-ok { font-size: 13px; color: var(--ink); margin: 12px 0 0; display: flex;
+  align-items: baseline; gap: 8px; flex-wrap: wrap; }
 .ob-total { display: flex; justify-content: space-between; align-items: baseline;
   border-top: 1px solid var(--line); margin-top: 12px; padding-top: 10px; font-size: 14px;
   color: var(--ink); }

@@ -2,6 +2,14 @@
 import { useEffect, useState } from "react";
 import { API, withUser, fetchEntitlement, pretty } from "../lib/format";
 import ThemeToggle from "./ThemeToggle";
+import { ROLES, STATES } from "./SubscribeFlow";
+
+const EMAIL_OK = (e) => /^\S+@\S+\.\S+$/.test((e || "").trim());
+const maskEmail = (e) => {
+  const [u, d] = String(e).split("@");
+  if (!d) return "•••";
+  return `${u.slice(0, 1)}•••@${d}`;
+};
 
 /* ── Settings — the gear's own screen (founder, 2026-08-24 second pass) ──
  *
@@ -28,6 +36,143 @@ import ThemeToggle from "./ThemeToggle";
 
 const scopeLabel = (s) =>
   s === "*" ? "All subjects" : pretty(String(s).replace("/", " · "));
+
+/* Settings › Personal profile — view + edit of the account record. Self-contained:
+ * fetches GET /account on mount, saves via POST /account (partial). */
+function PersonalProfile({ onSaved }) {
+  const [acct, setAcct] = useState(null);
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("");
+  const [stateName, setStateName] = useState("");
+  const [city, setCity] = useState("");
+  const [school, setSchool] = useState("");
+  const [email, setEmail] = useState("");            // confirmed value (unchanged = keep)
+  const [emailStage, setEmailStage] = useState("ok"); // ok | enter | confirm
+  const [emailNew, setEmailNew] = useState("");
+  const [email2, setEmail2] = useState("");
+  const [emailErr, setEmailErr] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [note, setNote] = useState("");
+
+  useEffect(() => {
+    fetch(`${API}/account`, withUser()).then((r) => (r.ok ? r.json() : null)).then((a) => {
+      if (!a) return;
+      setAcct(a);
+      setName(a.display_name || ""); setRole(a.role || ""); setStateName(a.state || "");
+      setCity(a.city || ""); setSchool(a.school_name || ""); setEmail(a.email || "");
+      setEmailStage(a.email ? "ok" : "enter");
+    }).catch(() => {});
+  }, []);
+
+  const save = async () => {
+    setBusy(true); setNote("");
+    try {
+      const r = await fetch(`${API}/account`, withUser({
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, role, state: stateName, city, school }),
+      }));
+      if (!r.ok) throw new Error(String(r.status));
+      onSaved && onSaved();          // back to the Settings cards (founder, 2026-08-26)
+      return;
+    } catch {
+      setNote("Couldn't save right now — try again.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  if (!acct) return <div className="setwrap"><div className="fr-loading">Loading…</div></div>;
+  return (
+    <div className="setwrap setwrap-tight">
+      <h1 className="set-title">Personal profile</h1>
+      {/* Labels ABOVE the boxes (founder, 2026-08-26 — placeholder-only left fields
+          ambiguous once filled; reverted same day). */}
+      <label className="login-field ob-field"><span>Your name</span>
+        <input type="text" value={name} placeholder="Enter your full name"
+          onChange={(e) => setName(e.target.value)} /></label>
+      <div className="acct-row"><span className="acct-k">Mobile</span>
+        <span className="acct-v">{acct.phone || "—"}</span></div>
+
+      {emailStage === "ok" && (
+        /* Field-styled, like every other row (founder, 2026-08-26 — the confirmed
+           email read too small as a bare line). */
+        <label className="login-field ob-field"><span>Email</span>
+          <div className="ob-email-view">
+            <span>{email ? maskEmail(email) : "—"}</span>
+            <button type="button" className="fr-link"
+              onClick={() => { setEmailNew(""); setEmail2(""); setEmailStage("enter"); }}>
+              change
+            </button>
+          </div>
+        </label>
+      )}
+      {emailStage === "enter" && (
+        <>
+          <label className="login-field ob-field"><span>New email</span>
+            <input type="email" autoComplete="off" value={emailNew}
+              onChange={(e) => { setEmailNew(e.target.value); setEmailErr(""); }}
+              placeholder="Enter your email" /></label>
+          {EMAIL_OK(emailNew) && (
+            <button type="button" className="fr-link"
+              onClick={() => { setEmail2(""); setEmailStage("confirm"); }}>
+              Confirm this email →
+            </button>
+          )}
+        </>
+      )}
+      {emailStage === "confirm" && (
+        <>
+          <label className="login-field ob-field"><span>Re-enter your email</span>
+            <input type="email" autoComplete="off" autoFocus value={email2}
+              onChange={(e) => { setEmail2(e.target.value); setEmailErr(""); }}
+              placeholder="Type it again to confirm" /></label>
+          {emailErr && <p className="ob-err" role="alert">{emailErr}</p>}
+          <button type="button" className="fr-link" disabled={!EMAIL_OK(email2)}
+            onClick={() => {
+              if (email2.trim().toLowerCase() === emailNew.trim().toLowerCase()) {
+                setEmail(emailNew.trim()); setEmailStage("ok"); setEmailErr("");
+              } else {
+                setEmailErr("The two entries don't match — try again."); setEmail2("");
+              }
+            }}>
+            Verify →
+          </button>
+        </>
+      )}
+
+      <label className="login-field ob-field"><span>Role</span>
+        <select value={role} className={role ? "" : "ob-unset"}
+          onChange={(e) => setRole(e.target.value)}>
+          <option value="">Select your role</option>
+          {ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
+        </select></label>
+      <label className="login-field ob-field"><span>State</span>
+        <select value={stateName} className={stateName ? "" : "ob-unset"}
+          onChange={(e) => setStateName(e.target.value)}>
+          <option value="">Select your state</option>
+          {STATES.map((s) => <option key={s} value={s}>{s}</option>)}
+        </select></label>
+      <label className="login-field ob-field"><span>City</span>
+        <input type="text" value={city} placeholder="Enter your city"
+          onChange={(e) => setCity(e.target.value)} /></label>
+      <label className="login-field ob-field"><span>School name (optional)</span>
+        <input type="text" value={school} placeholder="Enter your school name"
+          onChange={(e) => setSchool(e.target.value)} /></label>
+
+      {/* Save never waits on the email step (founder, 2026-08-26): other fields save
+          freely; a half-done email change is simply not saved until Verify completes —
+          the previously confirmed email (or none) stays. */}
+      <button className="primary fr-cta ob-cta" disabled={busy}
+        onClick={save}>{busy ? "Saving…" : "Save"}</button>
+      {emailStage !== "ok" && (
+        <p className="ob-quiet">Email isn't saved until you confirm it — everything else
+          saves now.</p>
+      )}
+      {note && <p className="ob-quiet">{note}</p>}
+    </div>
+  );
+}
 
 /* Subscribed details as ledger rows (founder, 2026-08-24): Subject · Stage · Class ·
  * Validity, one row each. Classes derive from the stage (the billing unit is
@@ -120,6 +265,13 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
   // No in-content back links: the frozen Settings bar above carries the one back
   // button (hierarchical — page.jsx settingsBack).
   const back = null;
+
+  /* ── PERSONAL PROFILE subview (founder, 2026-08-25): her account details, editable.
+     Email edits use the same double-blind confirmation as acquisition. The mobile
+     (her sign-in) is shown, never editable here. */
+  if (view === "personal") {
+    return <PersonalProfile onSaved={() => setView("home")} />;
+  }
 
   /* ── subviews ── */
   if (view === "subscription") {
@@ -227,11 +379,16 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
     <div className="setwrap">
       {/* No heading here — the frozen bar above IS the one "Settings" title
           (founder: two different-size "Settings" texts were showing). */}
-      {/* Profile on TOP (founder, 2026-08-24 — the profile lives inside Settings;
-          no separate header icon). */}
+      {/* Two profiles, clearly told apart (founder, 2026-08-25): PERSONAL (who she is —
+          account details, editable here) on top, TEACHING (what she teaches) below. */}
+      <button className="set-bigcard" onClick={() => setView("personal")}>
+        <span className="set-bigtext"><span className="set-biglab">Personal profile</span>
+          <span className="set-bigsub">Your name, email, role and school details</span></span>
+        <span className="set-chev">›</span>
+      </button>
       <button className="set-bigcard" onClick={() => onOpenProfile && onOpenProfile()}>
-        <span className="set-bigtext"><span className="set-biglab">Profile</span>
-          <span className="set-bigsub">Your teaching profile</span></span>
+        <span className="set-bigtext"><span className="set-biglab">Teaching profile</span>
+          <span className="set-bigsub">Subjects, classes, sections and periods you teach</span></span>
         <span className="set-chev">›</span>
       </button>
       <button className="set-bigcard" onClick={() => setView("subscription")}>

@@ -687,7 +687,48 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-24 (newest) — ADMIN ARCHITECTURE STEP 5 BUILT: THE ENTITLEMENT SEAM,
+## 2026-08-25/26 (newest) — STEP 6 LIVE-ITERATED ON THE FOUNDER'S PHONE: FRONT DOOR,
+## SETTINGS SUITE, PERSONAL PROFILE, TOUR 20-STEP, SIGN-IN MOBILE/EMAIL-ONLY
+
+Two marathon live sessions after Step 5. Everything below is BUILT and static-verified;
+the founder is about to run the full persona pass (docs/persona_test_checklist.md, rewritten
+2026-08-26 — 52 numbered tests, now including a "Notes for an automated (Claude in Chrome)
+run" preamble: servers must already be running with `ARUVI_ENTITLEMENT_ENFORCED=1` on the
+SAME command line + `--host 0.0.0.0`; the browser agent can't run the entitlement CLI, so
+grants/revokes are founder steps — erase alone is reachable as an HTTP POST).
+
+- **Front door** (`Login.jsx`): first-time device → CHOOSE (compact one-paragraph pine-tick
+  benefits, "…in seconds", Free-to-try default-highlighted, honest Subscribe bullets only)
+  → OTP (mobile IS the id; four auto-advancing boxes, stub 0000 disclosed;
+  `/onboarding/verified` registers) → trial straight in, or `SubscribeFlow.jsx` (shared
+  wizard, also opened in-app by the paywall's Subscribe: About you → Subjects-as-CART of
+  Subject▾/Stage▾ dropdown ROWS (+add row, ✕, no per-row price, total at bottom, secondary
+  = "Class 9 (Class 10 coming soon)") → honest Pay stub). Sticky footers for iPhone CTAs.
+- **Sign-in is registered-only AND mobile/email-only (2026-08-26).** `/onboarding/known`
+  never JIT-creates; an "@" id resolves via `account_repo.find_by_email` and returns the
+  CANONICAL id (the mobile) which the session runs under; plain ids echo `id` back. Client
+  gates Enter on 10-digit-or-email shape — free-form IDs (kumar1) can no longer pass the
+  screen (dev testing of them = curl/X-Aruvi-User).
+- **Checkout writes the default teaching profile per scope** (lowest class of stage,
+  section "{n}A", standard duration, ppw 6, calibrated budget; in-scope records kept,
+  out-of-scope trial artifacts dropped) — fixes "bought SS+English, saw only SS". Direct
+  subscribers still walk first run, scope-filtered (`frPaidScopes`).
+- **Settings**: frozen "⚙ Settings ✕" bar (Ask-Aruvi idiom); cards Personal profile /
+  Teaching profile / Subscription & billing (ledger + Subscribe button when trial/lapsed)
+  / data / Help / Support / About. **PersonalProfile**: labels ABOVE fields (placeholder-only
+  experiment reverted same day — "not clear what they represent"), fields on `--field-bg`
+  (#fff light / #232d27 dark), mobile under name, email DOUBLE-BLIND only when changing it,
+  Save not gated on email stage, **Save exits back to the Settings cards**. Name → first
+  name only, capitalized, in hdr + greeting.
+- **Tour is 20 steps**: step 12 = bookmark (anchor `phase-bookmark`, place "above" so the
+  box doesn't cover it, no hand); hands removed from 4/5/6/12/16/18.
+- Env lessons (recurring): stale Next bundles + old uvicorn on :8000 mimic product bugs —
+  hard-reload/`lsof -ti:8000 | xargs kill` before diagnosing; entitlement changes surface
+  in ≤20s or on focus.
+
+---
+
+## 2026-08-24 — ADMIN ARCHITECTURE STEP 5 BUILT: THE ENTITLEMENT SEAM,
 ## TO THE SUBSCRIPTION MODEL OF docs/subscription_model_discussion.md §0
 
 The subscription model was settled first (two long founder sessions, recorded in
@@ -758,6 +799,18 @@ about to spend a chapter is when the number informs a decision; no ambient chip
 anywhere. Both lines render ONLY when `enforced && status === "trial"` — gate off (dev)
 = no trial chrome at all. `.trial-note` CSS (quiet italic, centered). STATIC-verified
 (babel ×3, css 1971/1971); live pass = kumar3's next run.
+**EMAIL DOUBLE-BLIND + PERSONAL/TEACHING PROFILE SPLIT (founder, 2026-08-25/26):**
+(a) the subscribe wizard's About-you acquires EMAIL via double-blind confirmation —
+typed once, then HIDDEN, retyped fresh; only a case-insensitive match confirms ("✓
+Email confirmed: k•••@x" + change link); Save disabled until confirmed; checkout body +
+Account.email carry it. (b) Settings' profile card split in two: **Personal profile**
+on top ("Your name, email, role and school details") → NEW self-contained editor
+(`PersonalProfile` in Settings.jsx; GET/POST `/account` — new routes, partial update,
+mobile shown read-only as her sign-in, email edits reuse the same double-blind stages,
+never subscription-gated) and **Teaching profile** below ("Subjects, classes, sections
+and periods you teach") → TeachingProfile as before. ROLES/STATES now exported from
+SubscribeFlow (one list). Tour hands trimmed to action steps only (3, 8, 9, 10, 13, 14
+— founder removed 4, 5, 6, 12, 16, 18).
 **TOUR IS 20 STEPS — the BOOKMARK step added at 12 (founder, 2026-08-25):** anchor
 `data-tour="phase-bookmark"` on the `.uv-bkmk` button; box placed ABOVE it (below
 covered the thing itself — live fix); hand on the bookmark; copy: "Move this bookmark
