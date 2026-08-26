@@ -8,8 +8,7 @@ import { API, getJSON, pretty, idInUse, errDetail } from "../lib/format";
  * sentence of its own to return; the server's text stays the authority on the Pay path.
  * If one is reworded, reword both: api/main.py `_guard_email_not_taken`. */
 export const EMAIL_TAKEN =
-  "This email is already in use by another Aruvi account. Use a different address, "
-  + "or sign in with that account's mobile number.";
+  "This email is already in use by another Aruvi account. Use a different address.";
 /* Founder, 2026-08-26: this screen CREATES a sign-in, so its refusal stays inside that
  * job — "use a different number". The first cut sent her to the sign-in door with a
  * link; she is standing at the create door, and the instruction there is to create. */
@@ -102,6 +101,7 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
   const [school, setSchool] = useState("");
   const [stageMap, setStageMap] = useState(null);
   const [owned, setOwned] = useState([]);            // live scopes — not for sale again
+  const [skippedAbout, setSkippedAbout] = useState(false);  // her details were already on file
   const [trialChapters, setTrialChapters] = useState([]);   // for the purge notice on Pay
   const [rows, setRows] = useState([{ subject: "", stage: "" }]);
   const [price, setPrice] = useState(500);
@@ -128,7 +128,15 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
         if (a.state) setStateName(a.state);
         if (a.city) setCity(a.city);
         if (a.school_name) setSchool(a.school_name);
-        if (looksReal && a.email && a.role && a.state) setScreen("cart");
+        if (looksReal && a.email && a.role && a.state) {
+          setScreen("cart");
+          /* ★ Remember that About-you was SKIPPED (founder, 2026-08-26). The cart's
+             Back used to walk to the previous STEP unconditionally, so a subscriber
+             adding a subject was taken into a personal-details form she had never been
+             shown — from Settings, that reads as "Back took me to Personal profile".
+             Back should undo what she did, and what she did was open the chooser. */
+          setSkippedAbout(true);
+        }
       })
       .catch(() => {});
     return () => { live = false; };
@@ -380,7 +388,12 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
         <div className="ob-foot">
           <button className="primary fr-cta" disabled={!cartScopes.length}
             onClick={() => setScreen("pay")}>Continue →</button>
-          <button className="fr-link" onClick={() => setScreen("about")}>← Back</button>
+          {/* Back leaves the wizard when About-you was never shown (see setSkippedAbout);
+              otherwise it returns to the step she actually came from. */}
+          <button className="fr-link"
+            onClick={() => (skippedAbout ? (onCancel && onCancel()) : setScreen("about"))}>
+            ← Back
+          </button>
         </div>
       </div>
     );

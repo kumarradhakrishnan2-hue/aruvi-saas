@@ -123,6 +123,13 @@ class Account:
     created_at: str = ""
     consent: Dict[str, Any] = field(default_factory=dict)   # {policy_version, accepted_at, channels}
     notify: Dict[str, Any] = field(default_factory=dict)    # {email: bool, push: bool, whatsapp: bool}
+    # ★ THE GUIDED TOUR IS OFFERED ONCE, EVER (founder, 2026-08-26, live). ISO timestamp
+    # of the moment the offer was first shown; empty means never. It lives on the ACCOUNT
+    # and not in localStorage because "once" has to mean once across her devices and
+    # across sign-outs, and it must survive a cutover — the previous rule derived
+    # eligibility from having no bound sections, which is exactly what a new academic
+    # year recreates, so the tour came back every June and every time she cleared a card.
+    tour_offered_at: str = ""
 
 
 @runtime_checkable

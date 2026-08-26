@@ -129,7 +129,12 @@ sandbox runs 3.10** (a `X | None` annotation shipped green and refused to boot).
 > everything. The paywall promise below was withdrawn with it — it now reads *"the
 > chapters you made in a subject you subscribe to come with you"*, which is true on both
 > paths. Kept here as written, because the reasoning was sound and only the screen
-> outvoted it. See MEMORY.md 2026-08-26 (evening).
+> outvoted it. **Cut again an hour later:** the paywall now says only *"Your free trial
+> covers 3 chapters, and you have used them. Subscribe to keep preparing."* — founder:
+> *"if a teacher pays for a new subject and ditches trial chapters, she does not care."*
+> Three chapters were a demonstration, not a body of work, and a rule about what survives
+> is a poor thing to hand someone at the moment she is deciding whether to pay.
+> See MEMORY.md 2026-08-26 (evening).
 - **The problem.** The paywall promises *"Your 3 chapters stay yours"* — but
   `_apply_subscription_profile` dropped the out-of-scope subject, leaving those plans on disk
   with **no chooser entry able to reach them**. The promise was not kept.

@@ -687,7 +687,91 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-26 (newest, evening) — INVOICING: A NUMBERED DOCUMENT PER PURCHASE,
+## 2026-08-26 (newest, late) — WHAT OF TODAY'S WORK IS NOW VERIFIED LIVE
+
+Everything below this entry was written "STATIC ONLY — live pass owed". This records what
+has since been walked in a real browser, on the founder's Mac, so the next session knows
+what is still owed rather than re-testing what is proven.
+
+**PASSED LIVE (teacher `1000000001`, Science · Middle retired to 25-Aug-2026, Science ·
+Secondary live; 3 class-9 plans, two bound to 9A and 9C):**
+- **Per-scope retirement** — the 8B card stays on My Classes (readiness is deliberately
+  NOT scope-filtered: the class list carries); preparing a class-8 chapter is refused
+  naming *"Science · Middle ended on 25-Aug-2026"*; 9A and 9C open, track and mark
+  complete exactly as before; the profile "+" offers class 9 only; Settings shows one
+  card "ended" in clay and one "until".
+- **The full lapsed lockout** with nothing live — My Classes tab gone, "+" and pen and
+  prepare bar gone, plans still open, Word and PDF exports still work, chapter notes
+  read-only, no tour offer. Then restored, nothing lost.
+- **Additive purchase + invoicing** — `1000000001` bought Science Middle and Secondary,
+  the second purchase kept the first, and the invoice issued as `ARV/2026-27/7834`
+  (the offset series), stored with its PDF under her account.
+- **The subscription page** — a card per subscription, own validity, invoice download.
+- **Back from the Add-subjects cart** now leaves the wizard instead of walking into a
+  personal-details form she was never shown (found live, fixed same session).
+
+**★ FOUND LIVE, SAME SESSION — the cutover dismissal outlived its session (and its
+teacher).** Founder: *"I said NOT YET, then logged out and logged in — it's gone."* The
+flag is documented as session-only ("it returns on her next sign-in until she actually
+cuts over") and the code did not do it: `cutoverDismissed` sat in `page.jsx`, **and
+sign-out is not a remount**, so the dismissal survived into her next sign-in — and into
+the NEXT TEACHER's session on that tab. Byte for byte the defect A2 found in
+`everGeneratedRef` this morning, in different clothes. Fixed by keying it to the teacher
+(`useEffect(..., [user])` clearing both `cutoverDismissed` and `cutoverResult`), not by
+adding a line to `onSignOut` — an identity can change without passing through it.
+**Verified live the same session: NOT YET → sign out → sign in, and the offer is back.**
+**The standing rule earned this morning has now been broken twice in one day: ANY state
+holding a per-teacher answer must be keyed to the teacher.** Worth grepping page.jsx for
+the remaining candidates before the next persona run.
+
+**★ FOUND LIVE — the tour came back every cutover, and every time a card was cleared.**
+Founder: *"It should come only once at end of trial or for a direct subscriber at the end
+of first generation. If he skips it deliberately it's gone. We cannot keep invoking it
+again and again."* The gate was DERIVED — at most one bound section and no progress
+anywhere — with an explicit note in the code that a stored flag was avoided on purpose
+("no localStorage desync trap"). **But that derivation describes a teacher who LOOKS new,
+and a veteran looks new every June**: the academic-year cutover clears her bindings by
+design, so the 20-step tour was offered to her again each year, and again whenever she
+cleared a card. A heuristic cannot express "once, ever" — only a fact can.
+Now `Account.tour_offered_at` (write-once, `POST /account/tour-offered`), spent the moment
+the offer is RENDERED rather than when she takes it, because ignoring it is as deliberate
+an answer as skipping it. On the account rather than in localStorage so "once" survives
+sign-out and a second device. The local flag is deliberately not set on write — that
+would pull the nudge out from under the teacher who is looking at it — and the
+session ref that guards against a mid-session re-read is cleared on identity change,
+per the rule above. Old accounts have no field, which correctly reads as "never
+offered", so everyone still gets their one showing.
+
+**★ ALSO CORRECTED: the cutover design in the docs is STALE.** `PART H` of the persona
+run (and the step-7 checklist built from it) describes "Start the 2027-28 school year?"
+as an offer that opens the year. The code now **rolls the year automatically** on the
+cutover date (`_auto_roll_year`, carrying tracking across so she can finish a chapter
+mid-June), and what she is offered is the SECOND half — clearing the carried-over
+tracking, button *"Start my classes fresh →"*, `cleanup_pending` / `cleanup_due`.
+`cutover_due` survives only as an alias for older clients. Anyone testing from PART H
+will look for a prompt that no longer exists; the checklist needs rewriting against the
+route, not the write-up.
+
+**STILL OWED A LIVE PASS:** the trial purge (needs a fresh trial persona with chapters in
+two subjects, buying only one) · the confirmation email actually SENDING over SMTP (every
+attempt so far landed in the file outbox) · the front-door guards (mobile already in use,
+email already in use at the field, duplicate cart rows) · trial Settings hiding Personal
+profile and Your data & export · the academic-year cutover at a simulated June · the
+20-step tour · and every one of these at 360×800 and on a real iPhone.
+
+**Two terminal traps that cost most of the session, both now defended:**
+- `lsof -ti:8000 | xargs kill` kills EVERY process holding a socket on 8000 — including
+  the Next dev server, which talks to the API. It took down localhost:3000 twice and
+  looked like a broken build. Use `kill $(lsof -nP -iTCP:8000 -sTCP:LISTEN -t)`.
+- A missing SMTP variable and a malformed `ARUVI_TODAY` were both SILENT: mail went to
+  the file outbox and the real date was used, while every screen looked plausible. Both
+  now print a line at startup (`[aruvi] mail: …`, `[aruvi] date: …`). **A testing seam
+  that fails quietly is worse than one that fails loudly** — it turns a two-minute
+  configuration error into an hour of debugging the product.
+
+---
+
+## 2026-08-26 (evening) — INVOICING: A NUMBERED DOCUMENT PER PURCHASE,
 ## STORED, MAILED AND SHOWN BESIDE THE SUBSCRIPTION IT PAID FOR
 
 Founder brief, with a Stripe/Anthropic receipt mail as the reference: *"create a
@@ -796,9 +880,17 @@ argued from the PROMISE; the evening argued from the SCREEN. A subject she trial
 did not buy cannot be prepared in, tracked, or given sections — **every card of it is a
 door that no longer opens**, and a shelf of dead doors is not a kindness. When a promise
 and a screen disagree, the screen is the thing she experiences; **change the promise.**
-So the 402 no longer says the chapters stay hers. It says: *"Subscribe to keep preparing
-— the chapters you made in a subject you subscribe to come with you."* True on both
-paths, and it says what it can keep rather than what it takes.
+So the 402 no longer says the chapters stay hers.
+
+**★ And an hour later it stopped saying anything about survival at all.** The repair —
+*"the chapters you made in a subject you subscribe to come with you"* — was true, and
+still wrong: founder, *"if a teacher pays for a new subject and ditches trial chapters,
+she does not care."* Three chapters are a DEMONSTRATION, not a body of work, and a
+conditional rule about what survives is a poor thing to hand someone in the second she is
+deciding whether to pay. The paywall now states the fact and the action and stops: *"Your
+free trial covers 3 chapters, and you have used them. Subscribe to keep preparing."*
+**Worth keeping as a pattern: when a promise turns out to be false, the first instinct is
+to make it accurate — the better question is whether it needed saying at all.**
 
 **The purge** (`_purge_trial_artifacts`, called from checkout when the prior entitlement
 was a trial). Three boundaries, each load-bearing:

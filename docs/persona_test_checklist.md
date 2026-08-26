@@ -104,11 +104,11 @@ Report against the numbers. Setup for every pass:
     chapter allowed."
 18. Re-generate the SAME chapter at different periods 2–3× → counter stays 1.
 19. Chapters 2 and 3 (cross-subject on purpose) → counter 2, 3.
-20. 4th chapter → POPUP (no card behind it): "FREE TRIAL ENDS", "…Subscribe to keep
-    preparing — the chapters you made in a subject you subscribe to come with you."
-    (reworded 2026-08-26 evening: the old "Your 3 chapters stay yours" became false
-    once the trial purge landed — see 22f), bold SUBSCRIBE, "Not now"; backdrop
-    dismisses.
+20. 4th chapter → POPUP (no card behind it): "FREE TRIAL ENDS", "Your free trial covers
+    3 chapters, and you have used them. Subscribe to keep preparing." — and NOTHING
+    about what survives (2026-08-26 evening: "Your 3 chapters stay yours" became false
+    with the trial purge, and its replacement asked her to hold a rule in her head while
+    deciding whether to pay). Bold SUBSCRIBE, "Not now"; backdrop dismisses.
 21. **Paywall SUBSCRIBE opens the subscribe wizard IN-APP** (with the Aruvi bar/logo
     on top): starts at About you; if her personal profile is already complete it skips
     straight to Subjects. Completing Pay activates without sign-out; scoped choosers

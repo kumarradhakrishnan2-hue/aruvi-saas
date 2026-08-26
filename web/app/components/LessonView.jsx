@@ -2178,13 +2178,28 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
     // wrapping as needed, with the back button beside it top-right — no row spent on
     // the back button alone.
     const headerContent = (
-      <div className="lv-hd lv-hd-merge">
+      <div className="lv-hd">
+        {/* ★ THE BUTTON MOVED OFF THE TITLE'S ROW (founder, 2026-08-26): "the orgn
+            button is taking away so much real estate from activity name". It now sits
+            on its own thin row above, exactly as the chapter-org page places its back —
+            same `.co-topbar` idiom, kicker left, pill right — so the unit title gets the
+            full width it needs and the two screens share one header shape. The earlier
+            note here ("no row spent on the back button alone") traded horizontal space
+            for vertical; on a long unit title at phone width that was the wrong way
+            round, and the row is not spent alone — it carries the chapter line. */}
+        <div className="co-topbar">
+          <span className="kicker kicker-soft co-topkick">
+            {String(lp.subject || "").replace(/_/g, " ")}
+            {lp.grade ? `·${String(lp.grade).replace(/grade|class/gi, "").trim().toUpperCase()}` : ""}
+            {lp.chapter_number ? `·Ch. ${String(lp.chapter_number).padStart(2, "0")}` : ""}
+          </span>
+          <button className="back back-tr" data-tour="preview-back"
+            onClick={showFullPlan ? () => setShowFullPlan(false) : () => setShowOrg(true)}>
+            {showFullPlan ? "← back" : "← Orgn."}
+          </button>
+        </div>
         <div className="lv-title lv-title-full"><span className="lv-unum">{inDropped ? "✦ " : `${previewAt + 1}.`}</span>{pu.title}
           {inDropped ? <div className="uv-durline">Dropped section · for self-study · not scheduled</div> : null}</div>
-        <button className="back back-tr" data-tour="preview-back"
-          onClick={showFullPlan ? () => setShowFullPlan(false) : () => setShowOrg(true)}>
-          ← back
-        </button>
       </div>
     );
     return (
@@ -2213,12 +2228,18 @@ export default function LessonView({ view, sectionKey = "", onExit, preview = fa
   // read-only, so "Mark complete" no longer appears under Overview / Material / Assess.
   const actUnit = undoTo != null ? undoTo : cur;
   const trackHeader = (
-    <div className="lv-hd lv-hd-merge">
+    <div className="lv-hd">
+      {/* Its own thin row above the title — see headerContent above for why. */}
+      <div className="co-topbar">
+        <span className="kicker kicker-soft co-topkick">
+          {String(lp.subject || "").replace(/_/g, " ")}
+          {lp.grade ? `·${String(lp.grade).replace(/grade|class/gi, "").trim().toUpperCase()}` : ""}
+          {lp.chapter_number ? `·Ch. ${String(lp.chapter_number).padStart(2, "0")}` : ""}
+        </span>
+        <button className="back back-tr" onClick={goOrg}>← Orgn.</button>
+      </div>
       <div className="lv-title lv-title-full"><span className="lv-unum">{inDropped ? "✦ " : `${previewAt + 1}.`}</span>{pu.title}
         {inDropped ? <div className="uv-durline">Dropped section · for self-study · not scheduled</div> : null}</div>
-      {/* Back raises the chapter-org altitude (like My Lessons), NOT straight to section cards
-          (founder 2026-07-23) — the org page's own back exits to the cards. */}
-      <button className="back back-tr" onClick={goOrg}>← back</button>
     </div>
   );
 

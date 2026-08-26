@@ -1208,9 +1208,17 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .lv-pvview .lv-hd { border-bottom:none; padding-bottom:6px; margin-bottom:10px; }
 /* Merged top row (2026-07-10): unit title left (flex:1, wraps freely), back button
    top-right in the SAME row — the back no longer costs a row of its own. */
+/* RETIRED 2026-08-26 — the unit header no longer puts the back pill on the title's row
+   (it stole the width a long unit title needs). Both unit headers now use `.co-topbar`,
+   the chapter-org page's own arrangement: chapter kicker left, pill right, title on the
+   full width below. Kept as a definition only in case a legacy view still names it. */
 .lv-hd-merge { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding-top:2px; }
 .lv-hd-merge .lv-title-full { flex:1; min-width:0; }
 .lv-hd-merge .back { flex:none; margin-top:4px; }
+/* The unit header's own copy of the org-page top row: the pill must not shrink, and the
+   kicker gives way (ellipsis) rather than pushing it off the edge at 360px. */
+.lv-hd .co-topbar .co-topkick { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.lv-hd .co-topbar .back-tr { flex:none; }
 .lv-fullsub { font-family:var(--f-mono); font-size:11px; color:var(--ink-soft); margin-top:4px; }
 
 /* segmented progress bar — same language as the section bars in My Lesson Plans / Track */

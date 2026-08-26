@@ -126,7 +126,28 @@ export default function Home() {
   /* A LAPSED teacher is never offered the tour (founder, 2026-08-26): it walks her
      through attaching, tracking and preparing — every one of which her subscription
      has just taken away. Offering it would teach her the shape of a locked door. */
-  const tourOnOffer = tourEligible === true && !tourDismissed && !entLapsed;
+  /* ★ ONCE, EVER (founder, 2026-08-26, live: "we cannot keep invoking it again and
+     again"). `tourEligible` describes a teacher who LOOKS new — at most one bound
+     section, no progress — and a veteran looks new every time her bindings are cleared,
+     which is exactly what the June cutover does to every teacher by design. So the
+     server now records that the offer was shown (`tour_offered_at` on her account), and
+     that fact outranks the heuristic. It is on the account, not in localStorage,
+     because "once" must survive sign-out and a second device. */
+  const [tourSpent, setTourSpent] = useState(false);
+  const tourOfferedThisSession = useRef(false);
+  const tourOnOffer = tourEligible === true && !tourSpent && !tourDismissed && !entLapsed;
+  /* Spend it the moment it is OFFERED, not when she takes it. Skipping is a deliberate
+     answer ("if he skips it deliberately its gone") and so is ignoring it; the one thing
+     she must never get is the same prompt every June. The local flag is deliberately NOT
+     set here — that would hide the nudge she is looking at and take away the button. The
+     server write lands, and her NEXT sign-in reads it. Fire-and-forget: if the write
+     fails she is offered it once more, which is the harmless direction to err in. */
+  useEffect(() => {
+    if (!tourOnOffer || tourOfferedThisSession.current) return;
+    tourOfferedThisSession.current = true;
+    fetch(`${API}/account/tour-offered`, withUser({ method: "POST" })).catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tourOnOffer]);
   // Also closes Ask Aruvi: Skip can be pressed on step 18 while the panel is open, and the
   // tour must never leave the shell in a state it opened.
   /* ★ Ending the tour asks her to check her sections (founder, 2026-08-21). First run no longer
@@ -577,6 +598,11 @@ export default function Home() {
       // FIRST name only, capitalised (founder, 2026-08-26) — bar and greeting both.
       const first = nm && !/^\d+$/.test(nm) ? nm.split(/\s+/)[0] : "";
       setDisplayName(first ? first.charAt(0).toUpperCase() + first.slice(1) : "");
+      /* Has the tour already had its one showing? (2026-08-26 — see tourOnOffer.)
+         Never while it is on screen in THIS session: a mid-session re-read (a subscribe
+         or a profile save bumps entSyncTick) would otherwise pull the nudge out from
+         under her the instant the write we just made came back. */
+      setTourSpent(!!(a && a.tour_offered_at) && !tourOfferedThisSession.current);
     }).catch(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, entSyncTick]);
@@ -594,6 +620,21 @@ export default function Home() {
   // Session-only, deliberately never persisted (see the ✕ in MyPlans): closing the offer
   // clears this visit, and it returns on her next sign-in until she actually cuts over.
   const [cutoverDismissed, setCutoverDismissed] = useState(false);
+  /* ★ AND IT IS CLEARED WHENEVER THE TEACHER CHANGES (founder, live, 2026-08-26): NOT
+     YET, then sign out and back in, and the offer stayed gone — because SIGN-OUT IS NOT
+     A REMOUNT. page.jsx keeps running, so a "session-only" flag outlives the session it
+     belonged to, and outlives the teacher too: the next person to sign in on that tab
+     inherited her dismissal. Exactly the defect A2 found in `everGeneratedRef` this
+     morning, in different clothes — the standing rule from that fix is that ANY state
+     holding a per-teacher answer must be keyed to the teacher. Keyed on `user` rather
+     than added to onSignOut alone, because an identity can change without passing
+     through it. */
+  useEffect(() => {
+    setCutoverDismissed(false);
+    setCutoverResult(null);
+    // Same rule, same reason: this ref answers "was the tour shown to HER this session".
+    tourOfferedThisSession.current = false;
+  }, [user]);
   useEffect(() => {
     if (!ready || !user) { setYearInfo(null); return; }
     let live = true;

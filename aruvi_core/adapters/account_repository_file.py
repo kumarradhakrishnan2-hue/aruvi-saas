@@ -137,4 +137,7 @@ class AccountRepositoryFileImpl(AccountRepository):
             created_at=str(raw.get("created_at", "")),
             consent=dict(raw.get("consent") or {}),
             notify=dict(raw.get("notify") or {}),
+            # Absent on every record written before 2026-08-26 — an empty string there
+            # correctly means "never offered", so old accounts get their one offer.
+            tour_offered_at=str(raw.get("tour_offered_at") or ""),
         )

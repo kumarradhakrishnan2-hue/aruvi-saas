@@ -148,8 +148,32 @@ erasure_log = ErasureLogFileImpl(config.STATE_DIR)
 if config.SMTP_HOST and config.SMTP_USER and config.SMTP_PASSWORD:
     notifier = SmtpNotifier(config.SMTP_HOST, config.SMTP_PORT, config.SMTP_USER,
                             config.SMTP_PASSWORD, from_addr=config.MAIL_FROM)
+    print(f"[aruvi] mail: SMTP {config.SMTP_HOST} as {config.SMTP_USER} — mail WILL send")
 else:
     notifier = FileNotifier(config.STATE_DIR, from_addr=config.MAIL_FROM)
+    # ★ SAID OUT LOUD AT STARTUP (2026-08-26). Nothing on screen distinguishes a mail
+    #   that was sent from one that was written to disk — a subscription succeeds either
+    #   way, by design — so a missing SMTP variable looked exactly like a mail that
+    #   vanished. Twice. The one place that knows is this line, and it costs nothing.
+    missing = [n for n, v in (("ARUVI_SMTP_HOST", config.SMTP_HOST),
+                              ("ARUVI_SMTP_USER", config.SMTP_USER),
+                              ("ARUVI_SMTP_PASSWORD", config.SMTP_PASSWORD)) if not v]
+    print(f"[aruvi] mail: FILE OUTBOX ({config.STATE_DIR}/outbox) — NOTHING WILL SEND. "
+          f"Unset: {', '.join(missing)}")
+
+# ★ SAY WHAT DAY THE SERVICE THINKS IT IS (2026-08-26). A malformed ARUVI_TODAY is
+#   deliberately non-fatal — a testing seam must never be the reason a server won't
+#   boot — but silence made "2026-26-08" (month 26) look exactly like a working
+#   simulation, and every date-dependent screen then reported the real day while the
+#   tester read them as June. Loud, and still non-fatal.
+if config.SIMULATED_TODAY:
+    try:
+        date.fromisoformat(config.SIMULATED_TODAY)
+        print(f"[aruvi] date: SIMULATING {config.SIMULATED_TODAY} "
+              f"(★ testing only — expiry, cutover and invoice dates all move)")
+    except ValueError as _e:
+        print(f"[aruvi] date: ARUVI_TODAY={config.SIMULATED_TODAY!r} is NOT a valid date "
+              f"({_e}). Expected YYYY-MM-DD. Using the real date: {date.today()}")
 
 # Account + tenant record (administrative architecture Step 0) — the durable record that
 # billing, privacy, notifications and the institutional tier all hang off. NOT year-scoped
@@ -385,15 +409,17 @@ def _check_entitlement(tenant_id: str, subject: str, grade: str,
             return
         if len(ent.trial_chapters) < config.TRIAL_CHAPTER_CAP:
             return
-        # ★ The promise is now CONDITIONAL, because the trial purge made the old
-        #   sentence false (2026-08-26 evening). "Your 3 chapters stay yours" was true
-        #   for a teacher who stayed on the exhausted trial, and false the moment she
-        #   subscribed to a different subject — the one path where she would remember
-        #   having been told otherwise. It says what it can keep instead.
+        # ★ SAYS NOTHING ABOUT WHAT SURVIVES (founder, 2026-08-26 evening, third and
+        #   final cut). It began as "Your 3 chapters stay yours", which the trial purge
+        #   made false. The repair — "the chapters you made in a subject you subscribe
+        #   to come with you" — was true but asked her to hold a rule in her head at the
+        #   moment she is deciding whether to pay. The founder's read: *"if a teacher
+        #   pays for a new subject and ditches trial chapters, she does not care."*
+        #   Right — the three trial chapters were a demonstration, not a body of work.
+        #   So the sentence states the fact and the action, and stops.
         raise HTTPException(status_code=402, detail=(
             f"Your free trial covers {config.TRIAL_CHAPTER_CAP} chapters, and you have "
-            f"used them. Subscribe to keep preparing — the chapters you made in a "
-            f"subject you subscribe to come with you."))
+            f"used them. Subscribe to keep preparing."))
     if ent.status in ("active", "grace"):
         stage = stage_for(grade)
         today = _today().isoformat()
@@ -1534,7 +1560,37 @@ def get_account(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
         raise HTTPException(status_code=404, detail="No account.")
     return {"display_name": a.display_name, "email": a.email, "phone": a.phone,
             "role": a.role, "state": a.state, "city": a.city,
-            "school_name": a.school_name, "created_at": a.created_at}
+            "school_name": a.school_name, "created_at": a.created_at,
+            # Has the guided tour already had its one showing? (2026-08-26)
+            "tour_offered_at": a.tour_offered_at}
+
+
+@app.post("/account/tour-offered")
+def mark_tour_offered(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """★ THE TOUR IS OFFERED ONCE, EVER (founder, 2026-08-26, live).
+
+    Called by the client the first time the offer is actually rendered. Write-once: a
+    second call never moves the timestamp, so the record answers "was it offered?" and
+    not "when did she last see it".
+
+    Why a stored flag, when the earlier rule deliberately avoided one ("no localStorage
+    desync trap"): the derived rule — at most one bound section and no progress anywhere
+    — describes a NEW TEACHER, and a teacher becomes indistinguishable from a new one
+    every time her bindings are cleared. Which is precisely what the academic-year
+    cutover does, every June, by design. So a veteran was offered the 20-step tour again
+    each year, and again whenever she cleared her cards. The founder's rule is simpler
+    than any heuristic: show it once, and if she skips it, it is gone. That is a FACT
+    about her account, so it belongs on the account — where it also survives sign-out and
+    a new device, both of which localStorage would lose.
+    """
+    tenant_id, user_id = identity
+    a = account_repo.load(tenant_id, user_id)
+    if a is None:
+        raise HTTPException(status_code=404, detail="No account.")
+    if not a.tour_offered_at:
+        a.tour_offered_at = datetime.now(timezone.utc).isoformat()
+        account_repo.save(a)
+    return {"tour_offered_at": a.tour_offered_at}
 
 
 def _guard_email_not_taken(email: str, self_id: str) -> None:
@@ -1553,7 +1609,7 @@ def _guard_email_not_taken(email: str, self_id: str) -> None:
         if other.account_id != self_id:
             raise HTTPException(status_code=409, detail=(
                 "This email is already in use by another Aruvi account. "
-                "Use a different address, or sign in with that account's mobile number."))
+                "Use a different address."))
 
 
 @app.post("/account")
