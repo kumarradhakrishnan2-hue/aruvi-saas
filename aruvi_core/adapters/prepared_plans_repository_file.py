@@ -100,17 +100,28 @@ class PreparedPlansRepositoryFileImpl(PreparedPlansRepository):
         ISO string, or a record {"at": iso, "periods": int|None} — callers must handle both."""
         return self._read(tenant_id, user_id, year_id)
 
-    def mark(self, tenant_id: str, user_id: str, year_id: str, plan_key: str, periods=None) -> None:
+    def mark(self, tenant_id: str, user_id: str, year_id: str, plan_key: str, periods=None,
+             source_year=None) -> None:
         """Record one plan as prepared. prepared_at is set once (idempotent); `periods` (the
         teacher's chosen period count) is stored as a record and UPDATED on every call so a
-        re-prepare tracks the latest generation. Legacy string values are upgraded in place."""
+        re-prepare tracks the latest generation. Legacy string values are upgraded in place.
+
+        `source_year` (2026-08-26) records that this plan came FROM an earlier academic year —
+        she brought last June's chapter forward rather than generating it fresh. It is
+        provenance, not a copy: the plan asset is the same either way, but a teacher looking
+        at a section card deserves to know she is teaching last year's version. Sticky once
+        set: re-preparing does not silently erase where a plan came from, and only a genuinely
+        NEW generation (which passes no source_year for a plan that never had one) leaves it
+        absent."""
         with self._lock:
             data = self._read(tenant_id, user_id, year_id)
             existing = data.get(plan_key)
             # Preserve the original prepared_at across shapes (str = legacy, dict = new record).
+            cur_source = None
             if isinstance(existing, dict):
                 at = existing.get("at") or datetime.now(timezone.utc).isoformat()
                 cur_periods = existing.get("periods")
+                cur_source = existing.get("source_year")
             elif isinstance(existing, str):
                 at = existing
                 cur_periods = None
@@ -119,7 +130,20 @@ class PreparedPlansRepositoryFileImpl(PreparedPlansRepository):
                 cur_periods = None
             new_periods = periods if periods is not None else cur_periods
             record = {"at": at, "periods": new_periods}
+            new_source = source_year if source_year is not None else cur_source
+            if new_source:
+                record["source_year"] = new_source
             # Only write when something actually changed (keeps the register churn-free / idempotent).
             if existing != record:
                 data[plan_key] = record
+                self._write(tenant_id, user_id, year_id, data)
+
+    def unmark(self, tenant_id: str, user_id: str, year_id: str, plan_key: str) -> None:
+        """Forget that this plan was prepared (2026-08-26, the trial purge). No-op when
+        absent. Removes the RECORD only — the saved plan is shared library content, not
+        hers to delete, and another teacher may be served the same file tomorrow."""
+        with self._lock:
+            data = self._read(tenant_id, user_id, year_id)
+            if plan_key in data:
+                del data[plan_key]
                 self._write(tenant_id, user_id, year_id, data)

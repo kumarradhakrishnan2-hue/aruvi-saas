@@ -1,6 +1,20 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { API, getJSON, pretty } from "../lib/format";
+import { API, getJSON, pretty, idInUse, errDetail } from "../lib/format";
+
+/* The "already in use" sentence, said the same way wherever a credential clashes
+ * (founder, 2026-08-26). Deliberately the SAME words the server's 409 carries — this
+ * client-side copy exists only because the early check (/onboarding/known) has no
+ * sentence of its own to return; the server's text stays the authority on the Pay path.
+ * If one is reworded, reword both: api/main.py `_guard_email_not_taken`. */
+export const EMAIL_TAKEN =
+  "This email is already in use by another Aruvi account. Use a different address, "
+  + "or sign in with that account's mobile number.";
+/* Founder, 2026-08-26: this screen CREATES a sign-in, so its refusal stays inside that
+ * job — "use a different number". The first cut sent her to the sign-in door with a
+ * link; she is standing at the create door, and the instruction there is to create. */
+export const MOBILE_TAKEN =
+  "This mobile number is already in use. Create using a different number.";
 
 /* ── The subscribe wizard: About you → Subjects & stages (dropdown-row cart) → Pay ──
  *
@@ -81,11 +95,14 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
   const [email2, setEmail2] = useState("");
   const [emailStage, setEmailStage] = useState("enter");   // enter | confirm | ok
   const [emailErr, setEmailErr] = useState("");
+  const [emailBusy, setEmailBusy] = useState(false);   // the "already in use" round-trip
   const [role, setRole] = useState("");
   const [stateName, setStateName] = useState("");
   const [city, setCity] = useState("");
   const [school, setSchool] = useState("");
   const [stageMap, setStageMap] = useState(null);
+  const [owned, setOwned] = useState([]);            // live scopes — not for sale again
+  const [trialChapters, setTrialChapters] = useState([]);   // for the purge notice on Pay
   const [rows, setRows] = useState([{ subject: "", stage: "" }]);
   const [price, setPrice] = useState(500);
   const [payBusy, setPayBusy] = useState(false);
@@ -122,6 +139,13 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
     if (screen !== "cart" || stageMap) return;
     getJSON("/entitlement").then((d) => {
       if (d && d.price_per_subject_stage) setPrice(d.price_per_subject_stage);
+      /* ★ What she ALREADY holds, live, is not for sale again (founder, 2026-08-26).
+         `live_scopes` is the server's own answer — the client never compares dates. A
+         trial's "*" is not a holding: it would swallow the entire catalogue. */
+      const live = (d && Array.isArray(d.live_scopes)) ? d.live_scopes : [];
+      setOwned(d && d.status === "trial" ? [] : live.filter((s) => s !== "*"));
+      // Only a teacher still ON the trial has trial artifacts left to lose.
+      setTrialChapters(d && d.status === "trial" ? (d.trial_chapters || []) : []);
     }).catch(() => {});
     getJSON("/subjects").then(async (d) => {
       const map = {};
@@ -149,7 +173,18 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
         body: JSON.stringify({ scopes: cartScopes, name, email: email.trim(),
                                role, state: stateName, city, school }),
       });
-      if (!r.ok) throw new Error(String(r.status));
+      /* ★ THE SERVER'S OWN SENTENCE (2026-08-26). This used to throw the status code
+         away and print "Try again in a moment" — advice that can never work for a
+         deterministic 409 (a taken email), and which hid a CORRECT refusal well enough
+         to read as a broken product. Same lesson as ARV-D-088, same rule: 4xx strings
+         are written for her, 5xx are engine talk and keep the generic line. The
+         Verify-step check above should have caught the clash already; this is the net
+         for the address taken in between, or reached by a path that skipped it. */
+      if (!r.ok) {
+        setPayErr(await errDetail(r, "Couldn't complete the activation. Try again in a moment."));
+        setPayBusy(false);
+        return;
+      }
       onDone && onDone(userId);
     } catch {
       setPayErr("Couldn't complete the activation. Try again in a moment.");
@@ -175,6 +210,8 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
                 <input type="email" inputMode="email" autoComplete="off" value={email}
                   onChange={(e) => { setEmail(e.target.value); setEmailErr(""); }}
                   placeholder="Enter your email" /></label>
+              {/* The taken-address message lands HERE — the stage the fix belongs to. */}
+              {emailErr && <p className="ob-err" role="alert">{emailErr}</p>}
               {EMAIL_OK(email) && (
                 <button type="button" className="fr-link ob-email-next"
                   onClick={() => { setEmail2(""); setEmailStage("confirm"); }}>
@@ -190,16 +227,30 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
                   onChange={(e) => { setEmail2(e.target.value); setEmailErr(""); }}
                   placeholder="Type it again to confirm" /></label>
               {emailErr && <p className="ob-err" role="alert">{emailErr}</p>}
+              {/* ★ The "already in use" check happens HERE, not at Pay (2026-08-26).
+                  The server's 409 was always right; arriving at the END of a checkout is
+                  what made it useless — she had chosen subjects and pressed Pay before
+                  anything told her, and the only advice on screen was "try again", which
+                  for a deterministic clash can never work. One tap from the field she
+                  would have to change anyway. */}
               <button type="button" className="fr-link ob-email-next"
-                disabled={!EMAIL_OK(email2)}
-                onClick={() => {
-                  if (email2.trim().toLowerCase() === email.trim().toLowerCase()) {
-                    setEmailStage("ok"); setEmailErr("");
-                  } else {
+                disabled={!EMAIL_OK(email2) || emailBusy}
+                onClick={async () => {
+                  if (email2.trim().toLowerCase() !== email.trim().toLowerCase()) {
                     setEmailErr("The two entries don't match — try again."); setEmail2("");
+                    return;
                   }
+                  setEmailBusy(true);
+                  const taken = await idInUse(email, userId);
+                  setEmailBusy(false);
+                  if (taken) {
+                    // Back to ENTER with her text intact: the fix is to edit this field.
+                    setEmailErr(EMAIL_TAKEN); setEmail2(""); setEmailStage("enter");
+                    return;
+                  }
+                  setEmailStage("ok"); setEmailErr("");
                 }}>
-                Verify →
+                {emailBusy ? "Checking…" : "Verify →"}
               </button>
             </>
           )}
@@ -249,6 +300,28 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
       rs.map((r, j) => (j === i ? { ...r, ...patch } : r)));
     const dropRow = (i) => setRows((rs) =>
       rs.length > 1 ? rs.filter((_, j) => j !== i) : [{ subject: "", stage: "" }]);
+    /* ★ A PAIR MAY BE BOUGHT ONCE (founder, 2026-08-26). The billing unit is
+       subject × stage, so a second row of the same pair is meaningless in both
+       directions: `cartScopes` de-dupes, so she would see two rows and be charged for
+       one — a discrepancy that reads as a bug whichever way she notices it. Rather than
+       validate after the fact, the choice is simply not offered: a pair taken by ANOTHER
+       row is disabled and says why, and a subject whose every stage is spoken for is
+       disabled whole. Never disable this row's OWN value (hence `j !== self`), or
+       changing your mind would strand the select on a dead option. */
+    /* Taken = in another row of THIS cart, or already held and still running. The two
+       are one question to her ("can I pick this?") and so they are one predicate; only
+       the wording differs, because "already added" and "you have this" are different
+       facts and telling her the wrong one would be worse than saying nothing. */
+    const takenElsewhere = (subject, stage, self) => rows.some(
+      (r, j) => j !== self && r.subject === subject && r.stage === stage)
+      || owned.includes(`${subject}/${stage}`);
+    const alreadyOwned = (subject, stage) => owned.includes(`${subject}/${stage}`);
+    const subjectFull = (subject, self) => {
+      const stages = stageMap[subject] || [];
+      return stages.length > 0 && stages.every((st) => takenElsewhere(subject, st, self));
+    };
+    const nothingLeft = subjectsAvail.length > 0
+      && subjectsAvail.every((s) => subjectFull(s, -1));
     return (
       <div className="ob-wrap">
         {chrome}
@@ -266,13 +339,28 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
                 <select value={r.subject} className={r.subject ? "" : "ob-ph"}
                   onChange={(e) => setRow(i, { subject: e.target.value, stage: "" })}>
                   <option value="">Subject</option>
-                  {subjectsAvail.map((s) => <option key={s} value={s}>{pretty(s)}</option>)}
+                  {subjectsAvail.map((s) => {
+                    const full = subjectFull(s, i);
+                    return (
+                      <option key={s} value={s} disabled={full}>
+                        {pretty(s)}{full ? " — all stages added" : ""}
+                      </option>
+                    );
+                  })}
                 </select>
                 <select value={r.stage} disabled={!r.subject} className={r.stage ? "" : "ob-ph"}
                   onChange={(e) => setRow(i, { stage: e.target.value })}>
                   <option value="">Stage</option>
-                  {(stageMap[r.subject] || []).map((st) =>
-                    <option key={st} value={st}>{pretty(st)}</option>)}
+                  {(stageMap[r.subject] || []).map((st) => {
+                    const dup = takenElsewhere(r.subject, st, i);
+                    const mine = alreadyOwned(r.subject, st);
+                    return (
+                      <option key={st} value={st} disabled={dup}>
+                        {pretty(st)}
+                        {mine ? " · you have this" : dup ? " · already added" : ""}
+                      </option>
+                    );
+                  })}
                 </select>
                 <button type="button" className="ob-row-x" aria-label="Remove this row"
                   onClick={() => dropRow(i)}>✕</button>
@@ -281,7 +369,8 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
             </div>
           ))}
           {stageMap && (
-            <button type="button" className="ob-addrow"
+            // Nothing left to add = no empty row to add it in.
+            <button type="button" className="ob-addrow" disabled={nothingLeft}
               onClick={() => setRows((rs) => [...rs, { subject: "", stage: "" }])}>
               + Add another subject &amp; stage
             </button>
@@ -299,6 +388,12 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
 
   /* pay */
   const total = cartScopes.length * price;
+  /* Subjects she TRIALLED but is not buying — their lessons go when this activates.
+     Derived from the trial chapter keys ("{subject}/{grade}/{chapter}"), which
+     GET /entitlement already returns; nothing new is fetched to ask this. */
+  const buying = new Set(cartScopes.map((s) => s.split("/")[0]));
+  const droppedTrial = Array.from(new Set(
+    (trialChapters || []).map((k) => String(k).split("/")[0]).filter((s) => s && !buying.has(s))));
   return (
     <div className="ob-wrap">
       {chrome}
@@ -309,6 +404,19 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
           <div className="ob-payrow" key={cid}><span>{scopeLabel(cid)}</span><span>₹{price}</span></div>
         ))}
         <div className="ob-total"><span>Total</span><b>₹{total} / year</b></div>
+        {/* ★ SAID BEFORE SHE PAYS (founder, 2026-08-26 evening). Subscribing clears
+            what the trial left in subjects she is NOT buying. That is her work
+            disappearing, so it is stated on the screen with the money on it — the one
+            place she can still change the cart — and not discovered afterwards in an
+            emptier My Lessons. Named, because "some trial lessons" would send her
+            hunting for which. */}
+        {droppedTrial.length > 0 && (
+          <p className="ob-quiet ob-purge-note">
+            Your trial lessons in {droppedTrial.map(pretty).join(" and ")} will be cleared
+            when this activates — {droppedTrial.length > 1 ? "those subjects are" : "that subject is"} not
+            in your subscription. Everything in what you are subscribing to stays.
+          </p>
+        )}
         <p className="ob-quiet">Preview build: online payment opens soon — this activates your
           subscription right away.</p>
         {payErr && <p className="ob-err" role="alert">{payErr}</p>}

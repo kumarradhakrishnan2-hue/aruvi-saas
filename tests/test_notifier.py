@@ -87,12 +87,39 @@ def test_confirmation_singular_and_enterprise():
 
 
 def test_copy_never_claims_certification():
-    """CLAUDE.md / the subscription model: 'NCF aligned', never 'certified'."""
-    t = mail_templates.subscription_confirmation(
-        "a", ["maths/middle"], 500, "2027-01-01", "9000000000")["text"].lower()
-    assert "certified" not in t
-    assert "certification" not in t
-    print("✓ copy says aligned, never certified")
+    """CLAUDE.md / the subscription model: 'NCF aligned', never 'certified'.
+    Checked in BOTH parts — an HTML body is a second place for copy to drift."""
+    body = mail_templates.subscription_confirmation(
+        "a", ["maths/middle"], 500, "2027-01-01", "9000000000")
+    for part in (body["text"].lower(), body.get("html", "").lower()):
+        assert "certified" not in part
+        assert "certification" not in part
+    print("✓ copy says aligned, never certified (text and HTML)")
+
+
+def test_html_part_says_everything_the_text_does():
+    """★ The HTML body (2026-08-26) is styling, never information. A client that refuses
+    HTML — or a screen reader taking the text part — must lose nothing, so every FACT is
+    asserted in both halves. It is also built for mail clients, not browsers: tables,
+    inline styles, no <style> block (Gmail strips it), no web fonts."""
+    body = mail_templates.subscription_confirmation(
+        name="Kumar", scopes=["english/middle", "science/middle"], amount_inr=500,
+        valid_until="2027-08-26", mobile="1000000000",
+        scope_valid_until={"english/middle": "2027-02-01",
+                           "science/middle": "2027-08-26"},
+        added=["science/middle"], invoice_number="ARV/2026-27/0009",
+        unit_amount=500, has_attachment=True)
+    html = body["html"]
+    assert html.lstrip().startswith("<!DOCTYPE html>")
+    for fact in ("Kumar", "Science", "English", "1000000000", "ARV/2026-27/0009", "500"):
+        assert fact in html, fact
+        assert fact in body["text"], fact
+    # The holding block dates every row — that is the whole reason it exists.
+    assert "26-Aug-2027" in html and "01-Feb-2027" in html
+    assert "<style" not in html.lower(), "inline styles only — Gmail strips <style>"
+    assert "flex" not in html.lower() and "grid-template" not in html.lower()
+    assert "@import" not in html and "fonts.googleapis" not in html
+    print("✓ The HTML part carries every fact the text does, in mail-client markup")
 
 
 if __name__ == "__main__":
@@ -103,4 +130,5 @@ if __name__ == "__main__":
     test_confirmation_names_what_she_bought()
     test_confirmation_singular_and_enterprise()
     test_copy_never_claims_certification()
+    test_html_part_says_everything_the_text_does()
     print("\n✅ All notifier tests passed!")

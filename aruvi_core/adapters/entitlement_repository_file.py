@@ -55,6 +55,12 @@ class EntitlementRepositoryFileImpl(EntitlementRepository):
             source=str(raw.get("source", "")),
             scopes=list(raw.get("scopes") or []),
             trial_chapters=list(raw.get("trial_chapters") or []),
+            # Per-scope expiry (2026-08-26). Absent on every record written before it —
+            # those scopes fall back to the entitlement-level valid_until, which is what
+            # they have always meant. No migration script: the fallback IS the migration,
+            # and the next grant stamps real dates.
+            scope_valid_until={str(k): str(v) for k, v
+                               in (raw.get("scope_valid_until") or {}).items()},
         )
 
     def save(self, tenant_id: str, ent: Entitlement) -> None:

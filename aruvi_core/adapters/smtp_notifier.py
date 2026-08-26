@@ -21,7 +21,7 @@ from __future__ import annotations
 
 import smtplib
 import ssl
-from email.message import Message
+from email.message import EmailMessage as StdEmailMessage
 from email.utils import formatdate, make_msgid
 from typing import Any, Dict
 
@@ -47,7 +47,11 @@ class SmtpNotifier(Notifier):
         if not (self.host and self.user and self.password):
             return {"status": "skipped", "reason": "SMTP not configured"}
         try:
-            m = Message()
+            # EmailMessage (the stdlib one) rather than Message: it does the MIME
+            # multipart bookkeeping itself once there is an attachment, and degrades to
+            # a plain text/plain part when there is not — so a mail with no invoice
+            # looks exactly as it did before attachments existed (2026-08-26).
+            m = StdEmailMessage()
             m["From"] = self.from_addr
             m["To"] = msg.to
             m["Subject"] = msg.subject
@@ -55,7 +59,18 @@ class SmtpNotifier(Notifier):
             m["Message-ID"] = make_msgid()
             if msg.reply_to:
                 m["Reply-To"] = msg.reply_to
-            m.set_payload(msg.text, charset="utf-8")
+            m.set_content(msg.text)
+            # multipart/alternative: the client picks the HTML if it can render it and
+            # falls back to the text if it cannot. The text is not a courtesy — every
+            # fact in the HTML is in it, so a plain-text client loses styling and
+            # nothing else (2026-08-26).
+            if (msg.html or "").strip():
+                m.add_alternative(msg.html, subtype="html")
+            for att in (msg.attachments or []):
+                maintype, _, subtype = (att.mime_type or "application/octet-stream").partition("/")
+                m.add_attachment(att.content, maintype=maintype,
+                                 subtype=subtype or "octet-stream",
+                                 filename=att.filename)
 
             context = ssl.create_default_context()
             with smtplib.SMTP(self.host, self.port, timeout=self.timeout) as s:

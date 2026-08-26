@@ -176,6 +176,12 @@ class AcademicYear:
     starts_on: str             # ISO date — varies by board
     ends_on: str               # ISO date
     is_current: bool = False
+    # ★ Set when Aruvi rolled the teacher into this year AUTOMATICALLY on the cutover date
+    # and CARRIED her section bindings across, so she could keep teaching without a break.
+    # It means "she has last year's tracking in this year's folder and has not yet chosen
+    # to start fresh" — the one thing the teacher-side clean-up offer is waiting on.
+    # Cleared when she confirms. (founder, 2026-08-26)
+    cleanup_pending: bool = False
 
 
 @runtime_checkable
@@ -380,13 +386,22 @@ class Entitlement:
     (trial breadth, enterprise). `valid_until` is an ISO date; empty means no time
     limit (the trial deliberately has none — the cap is chapters, not days).
     `trial_chapters` records the chapter identities ("{subject}/{grade}/{chapter}")
-    counted against the trial cap — membership is what makes re-serves free."""
+    counted against the trial cap — membership is what makes re-serves free.
+
+    ★ EVERY SCOPE CARRIES ITS OWN EXPIRY (founder, 2026-08-26). A teacher may add a
+    subject-stage at any time and it runs a full year FROM THAT DAY, so one date for the
+    whole entitlement cannot describe her: `scope_valid_until` maps scope → ISO date and
+    is the authority. `valid_until` remains the LATEST of those dates — a derived
+    convenience for display and for readers that predate this field. A scope with no
+    entry falls back to `valid_until` (legacy records written before per-scope dates, and
+    the "*" grants, whose breadth has no per-scope meaning)."""
     plan_id: str               # "trial" | "individual_annual" | "enterprise_annual"
     status: str                # trial | active | grace | expired
-    valid_until: str = ""      # ISO date; "" = no time limit
+    valid_until: str = ""      # ISO date; "" = no time limit. Derived: max of the below.
     source: str = "trial"      # trial | manual | web | ios | android
     scopes: List[str] = field(default_factory=list)
     trial_chapters: List[str] = field(default_factory=list)
+    scope_valid_until: Dict[str, str] = field(default_factory=dict)
 
 
 @runtime_checkable
@@ -421,15 +436,31 @@ class BillingProvider(Protocol):
 
 # ── Notifications (email today; SMS/push later behind the same port) ───────────
 @dataclass
+class Attachment:
+    """One file travelling with a message. `content` is the bytes themselves, not a
+    path: the notifier may be a remote API adapter with no access to this machine's
+    disk, and an invoice must never depend on the file still being there when the
+    transport gets round to sending."""
+    filename: str
+    content: bytes
+    mime_type: str = "application/pdf"
+
+
+@dataclass
 class EmailMessage:
     """One outbound message. `text` is the canonical body; `html` is optional and a
     plain-text-only transport may ignore it. `reply_to` exists because Aruvi's sender
-    address and the address a teacher should WRITE to may diverge later."""
+    address and the address a teacher should WRITE to may diverge later.
+
+    `attachments` (2026-08-26) carries the invoice PDF. A transport that cannot attach
+    must still deliver the TEXT — the body always states the invoice number, so the mail
+    is complete on its own and the file is a convenience, never the message."""
     to: str
     subject: str
     text: str
     html: str = ""
     reply_to: str = ""
+    attachments: List["Attachment"] = field(default_factory=list)
 
 
 @runtime_checkable
@@ -446,6 +477,74 @@ class Notifier(Protocol):
     fail because a mail server was slow. It returns a result dict describing what
     happened ({"status": "sent"|"written"|"skipped"|"error", ...}) and callers log it."""
     def send(self, msg: EmailMessage) -> Dict[str, Any]: ...
+
+
+# ── Invoicing (2026-08-26) ──────────────────────────────────────────────────────
+@dataclass
+class InvoiceLine:
+    """One purchased subject-stage on an invoice. `valid_until` rides the LINE, not the
+    invoice, because each subscription runs its own year from its own purchase date."""
+    scope: str                 # "science/middle"
+    description: str           # "Science · Middle — Classes 6, 7 and 8"
+    quantity: int = 1
+    unit_amount: int = 0       # ₹, whole rupees
+    valid_from: str = ""       # ISO date
+    valid_until: str = ""      # ISO date
+
+
+@dataclass
+class Invoice:
+    """One purchase, as the document a teacher keeps.
+
+    Money is held in WHOLE RUPEES as integers — Aruvi prices in whole rupees and float
+    arithmetic has no place in a total someone reconciles. `tax_amount` is 0 and
+    `seller_gstin` empty while Aruvi is not GST-registered; the fields exist so the day
+    it registers is a config change and a template branch, not a schema migration.
+
+    `number` is a gapless per-financial-year series (ARV/2026-27/0001) — what an Indian
+    seller's books are expected to show. It is assigned once, at issue, and never reused
+    even if the purchase it records is later refunded or revoked: a numbered series with
+    holes in it is worse than useless."""
+    number: str
+    issued_at: str             # ISO timestamp
+    tenant_id: str
+    user_id: str
+    bill_to_name: str = ""
+    bill_to_email: str = ""
+    bill_to_phone: str = ""
+    bill_to_school: str = ""
+    bill_to_place: str = ""    # "Kochi, Kerala"
+    lines: List["InvoiceLine"] = field(default_factory=list)
+    subtotal: int = 0
+    tax_amount: int = 0
+    tax_note: str = ""         # "No tax charged" while unregistered
+    total: int = 0
+    amount_paid: int = 0
+    payment_method: str = ""   # "Recorded manually" until a gateway exists
+    seller_gstin: str = ""
+    currency: str = "INR"
+
+
+@runtime_checkable
+class InvoiceRepository(Protocol):
+    """Persists invoices, keyed by tenant_id + user_id (Bucket B — her own documents,
+    not shared content). NOT year-scoped: an invoice belongs to the day it was issued
+    and must remain readable across academic-year cutovers for as long as she has the
+    account. The file adapter also stores the rendered PDF beside the record, so the
+    exact bytes she was sent are the exact bytes she can download again."""
+    def save(self, tenant_id: str, user_id: str, invoice: "Invoice",
+             pdf: Optional[bytes] = None) -> None: ...
+
+    def load_all(self, tenant_id: str, user_id: str) -> List["Invoice"]:
+        """Newest first."""
+        ...
+
+    def load_pdf(self, tenant_id: str, user_id: str, number: str) -> Optional[bytes]: ...
+
+    def next_number(self, financial_year: str) -> str:
+        """The next number in the seller's series for that financial year ("2026-27").
+        Must be atomic enough that two concurrent checkouts cannot take the same one."""
+        ...
 
 
 # ── Allocation persistence (Persistent Annual Allocation Register) ──────────────
@@ -687,4 +786,11 @@ class PreparedPlansRepository(Protocol):
         """Record one plan as prepared. The prepared_at timestamp is set once (idempotent). When
         `periods` is given (the teacher's chosen period count for that chapter) it is stored and
         UPDATED on every call, so re-preparing tracks the latest generation's periods."""
+        ...
+
+    def unmark(self, tenant_id: str, user_id: str, year_id: str, plan_key: str) -> None:
+        """Forget that this plan was prepared. No-op when absent. Added 2026-08-26 for the
+        trial purge: a subject she trialled and did not subscribe to leaves records that can
+        only clutter My Lessons. It removes the RECORD, never the plan asset — the saved plan
+        is shared library content, not hers to delete."""
         ...

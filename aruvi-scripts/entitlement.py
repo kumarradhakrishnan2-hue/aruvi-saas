@@ -38,6 +38,11 @@ def main() -> int:
     ap.add_argument("--until", default="", help="ISO date; default = +365 days")
     ap.add_argument("--source", default="manual",
                     choices=["manual", "web", "ios", "android"])
+    # grant is ADDITIVE by default (2026-08-26) — scopes she already holds keep their
+    # own expiry, and each granted scope gets a year of its own. --replace is the
+    # deliberate wipe, which is what grant silently did to every prior scope before.
+    ap.add_argument("--replace", action="store_true",
+                    help="discard scopes she already holds instead of adding to them")
     args = ap.parse_args()
 
     repo = EntitlementRepositoryFileImpl(config.STATE_DIR)
@@ -50,7 +55,8 @@ def main() -> int:
             s.strip() for s in args.scopes.split(",") if s.strip()]
         print(json.dumps(provider.create_subscription(
             args.tenant, args.plan, scopes=scopes,
-            valid_until=args.until, source=args.source), indent=2))
+            valid_until=args.until, source=args.source,
+            replace=args.replace), indent=2))
     elif args.action == "revoke":
         print(json.dumps(provider.cancel(args.tenant), indent=2))
     elif args.action == "trial-reset":

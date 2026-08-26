@@ -60,6 +60,7 @@ class AcademicYearRepositoryFileImpl(AcademicYearRepository):
                 starts_on=str(y.get("starts_on", "")),
                 ends_on=str(y.get("ends_on", "")),
                 is_current=bool(y.get("is_current", False)),
+                cleanup_pending=bool(y.get("cleanup_pending", False)),
             ))
         return out
 

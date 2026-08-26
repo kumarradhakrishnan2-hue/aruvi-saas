@@ -72,8 +72,9 @@ Report against the numbers. Setup for every pass:
    Stage ▾ · ✕, with "+ Add another subject" below and the running total at the bottom
    (₹500 per combo, NO per-row price). Unset dropdowns show bold grey **Subject** /
    **Stage** placeholders. Picking a stage shows its classes below the row; secondary
-   shows "Class 9 (Class 10 coming soon)". Duplicate combos don't double-count.
-   Continue disabled with an empty/incomplete cart.
+   shows "Class 9 (Class 10 coming soon)". **Duplicate combos cannot be ENTERED at all**
+   (2026-08-26 — see 22c; they used to be silently de-duped at the total, which showed
+   two rows and charged for one). Continue disabled with an empty/incomplete cart.
 9. **Pay**: line per combo + total; the honest stub note ("online payment opens
    soon — this activates right away"); "Pay ₹N & start".
 10. **Checkout creates the default teaching profile** per purchased scope: lowest
@@ -103,8 +104,11 @@ Report against the numbers. Setup for every pass:
     chapter allowed."
 18. Re-generate the SAME chapter at different periods 2–3× → counter stays 1.
 19. Chapters 2 and 3 (cross-subject on purpose) → counter 2, 3.
-20. 4th chapter → POPUP (no card behind it): "FREE TRIAL ENDS", "…Your 3 chapters
-    stay yours…", bold SUBSCRIBE, "Not now"; backdrop dismisses.
+20. 4th chapter → POPUP (no card behind it): "FREE TRIAL ENDS", "…Subscribe to keep
+    preparing — the chapters you made in a subject you subscribe to come with you."
+    (reworded 2026-08-26 evening: the old "Your 3 chapters stay yours" became false
+    once the trial purge landed — see 22f), bold SUBSCRIBE, "Not now"; backdrop
+    dismisses.
 21. **Paywall SUBSCRIBE opens the subscribe wizard IN-APP** (with the Aruvi bar/logo
     on top): starts at About you; if her personal profile is already complete it skips
     straight to Subjects. Completing Pay activates without sign-out; scoped choosers
@@ -113,7 +117,66 @@ Report against the numbers. Setup for every pass:
     (attach, pointer, mark complete); "+" portal visible; Settings › Subscription:
     "Free trial — 3 of 3 chapters used" + a **Subscribe** button below (button appears
     whenever on-trial or lapsed).
+22a. **Trial Settings are narrower** (founder, 2026-08-26): the cards show **Teaching
+    profile · Subscription & billing · Help · Support · About** — **no Personal
+    profile, no Your data & export** — with no gap or flash where they were (the flag
+    comes from the shell, not from Settings' own fetch). Deleting the account still
+    works and its last window still offers **"Download my data first"** — on trial that
+    is her only export door. `POST /account` and `GET /data-rights/export` still answer
+    200 by curl: this is what Settings shows, not a gate. Subscribe → both cards return.
 
+22b. **"Already in use", said at the field** (2026-08-26): on Create sign in, a
+    registered mobile is refused **before the OTP** — "This mobile number is already in
+    use. Create using a different number." and nothing else (no Sign in link: this
+    screen creates a sign-in, so its refusal stays inside that job); in
+    checkout About-you and Settings › Personal profile, confirming an email held by
+    another account (or shared by two) shows the same sentence at the **email field**,
+    not at Pay/Save. Her OWN address always re-saves fine. Force the late path by
+    curl-taking an address between Verify and Pay: the Pay error must now be the
+    server's sentence, never "try again in a moment".
+22c. **The cart cannot hold the same subject & stage twice**: pick SS · Middle, add
+    another row — Middle reads "· already added" and is unselectable; once every stage
+    of a subject is taken the subject itself greys ("— all stages added"); with the
+    whole catalogue in the cart "+ Add another" is dead. Changing a row's own value
+    still works.
+22d. **Adding a subject does not overwrite the ones she has** (2026-08-26 — it did):
+    buy Science·Middle + Science·Secondary, then add English·Middle from Settings ›
+    Subscription › **Add subjects & stages**. All THREE must remain, each with its own
+    "Validity … until dd-Mmm-yy" INSIDE its block, and her teaching profile must keep
+    all three subjects. The chooser must not offer a subject-stage she already holds
+    ("· you have this", unselectable); forcing it by curl → **409** naming the date it
+    runs to. The confirmation mail must show what she just added AND
+    "Everything you have with Aruvi now" with a date per line.
+22e. **One subscription ending does not lock the others**: set one scope's date in the
+    past (edit `scope_valid_until` in `entitlements/{id}/entitlement.json`). That
+    subject's generation → **402 naming that subject and its end date**; every other
+    subject still generates; the tracker, "+", edit pen and My Classes all stay; the
+    Settings ledger shows that one as "ended dd-Mmm-yy" in clay. Expire them ALL →
+    only then the full lapsed lockout (tab gone, writes 402, plans still readable).
+
+22f. **The trial purge** (2026-08-26 evening — reverses that morning's "trial plans
+    stay reachable"): trial in English AND Science, then subscribe to **Science only**.
+    The Pay screen must warn, by name, that the English trial lessons will be cleared.
+    After activation: English is gone from My Lessons, from the choosers and from the
+    profile, with its pointers and chapter notes gone too; **Science keeps every
+    chapter, pointer and note**. Adding a subject LATER must purge nothing
+    (`"purged": {}` in the checkout response). The saved plan FILES under
+    `data/cloud/content/saved_plans/` must still be there — the purge removes her
+    records, never shared library content.
+22g. **The subscription page is one box per subscription, latest first**: buy two, add
+    a third later → three separate cards, the newest on top, each with its own
+    Subject / Stage / Class / Validity. An expired one still shows, in clay, as
+    "ended dd-Mmm-yy".
+
+22h. **Invoicing** (2026-08-26): every purchase issues `ARV/{FY}/NNNN`, gapless and
+    April-anchored. Check: the number appears in the confirmation mail body AND the PDF
+    is attached (in the outbox, the PDF is written beside the .txt); the file lands in
+    `state/invoices/{tenant}/{user}/`; Settings shows it on the card of the subscription
+    it paid for and the download works; a second purchase gets its OWN invoice for that
+    purchase only (not the whole holding); another teacher's `GET /invoices/{number}`
+    → 404. The PDF must show no GSTIN and the words "No tax charged" — never a ₹0 tax
+    row. Deleting the account keeps invoices (tax records, §2.6) but she loses access:
+    the last delete window must say so.
 ## B · Convert: trial-exhausted → subscribed
 
 23. `grant <id> --scopes social_sciences/middle` → within ~20s/on focus, SS-middle
@@ -158,6 +221,7 @@ Report against the numbers. Setup for every pass:
     details") · **Teaching profile** ("Subjects, classes, sections and periods you
     teach") · Subscription & billing · Your data & export · Help · Support · About;
     no icons; one phone screen; Help opens Ask Aruvi; Support/About placeholders.
+    **Subscribed or lapsed teacher — on trial see 22a** (two of these cards are absent).
 38. **Personal profile editor**: labels above fields, lighter field background;
     mobile number shown below the name (no "your sign-in" text); email shows masked
     with a "Change" path → double-blind re-entry ONLY when changing email — editing

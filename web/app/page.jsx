@@ -117,6 +117,12 @@ export default function Home() {
      that white-screens the whole app, and it is invisible to babel-parse. (Found live,
      2026-08-26, the day the lapsed-tour rule was added.) */
   const [entLapsed, setEntLapsed] = useState(false);
+  /* ON TRIAL, Settings shows neither Personal profile nor Your data & export (founder,
+     2026-08-26, after the persona run). Held HERE rather than inside Settings so the
+     answer is already known when the gear is pressed — Settings' own fetch resolves a
+     beat later, and two cards appearing and then vanishing is worse than either state.
+     Declared beside entLapsed for the same TDZ reason recorded above. */
+  const [entTrial, setEntTrial] = useState(false);
   /* A LAPSED teacher is never offered the tour (founder, 2026-08-26): it walks her
      through attaching, tracking and preparing — every one of which her subscription
      has just taken away. Offering it would teach her the shape of a locked door. */
@@ -585,6 +591,9 @@ export default function Home() {
   const [yearInfo, setYearInfo] = useState(null);
   const [cutoverBusy, setCutoverBusy] = useState(false);
   const [cutoverResult, setCutoverResult] = useState(null);
+  // Session-only, deliberately never persisted (see the ✕ in MyPlans): closing the offer
+  // clears this visit, and it returns on her next sign-in until she actually cuts over.
+  const [cutoverDismissed, setCutoverDismissed] = useState(false);
   useEffect(() => {
     if (!ready || !user) { setYearInfo(null); return; }
     let live = true;
@@ -632,9 +641,16 @@ export default function Home() {
      null when not paid / gate off / trial — TeachingProfile's choosers filter to these
      (§0: post-trial, only paid options are offered; the upsell line sits below the
      wheel). Trial and "*" grants see everything. */
+  /* ★ Since 2026-08-26 these are the LIVE scopes, not every scope she has ever held:
+     each subject-stage carries its own expiry, so one may have run out while another
+     runs on. The server derives the list (`live_scopes`) — the client compares no
+     dates, the same rule as `lapsed`. `e.scopes` is the fallback for an older API. */
   const [paidScopes, setPaidScopes] = useState(null);
   useEffect(() => {
-    if (!ready || !user) { setEntLapsed(false); setPaidScopes(null); return; }
+    if (!ready || !user) {
+      setEntLapsed(false); setEntTrial(false); setPaidScopes(null);
+      return;
+    }
     let live = true;
     const sync = () => fetchEntitlement().then((e) => {
       if (!live || !e) return;
@@ -644,8 +660,9 @@ export default function Home() {
         ? !!e.lapsed
         : !!(e.enforced && e.status === "expired");
       setEntLapsed(isLapsed);
+      setEntTrial(!!(e.enforced && e.status === "trial"));
       setPaidScopes((e.enforced && !isLapsed && (e.status === "active" || e.status === "grace"))
-        ? (e.scopes || []) : null);
+        ? (Array.isArray(e.live_scopes) ? e.live_scopes : (e.scopes || [])) : null);
     });
     sync();
     /* MID-SESSION REVOCATION lands fast (founder, 2026-08-24): re-check on focus /
@@ -868,6 +885,7 @@ export default function Home() {
               <Settings view={settingsView} setView={setSettingsView}
                 onAccountSaved={() => setEntSyncTick((n) => n + 1)}
                 onOpenProfile={openProfileFromSettings} syncTick={entSyncTick}
+                trial={entTrial}
                 onSubscribe={() => setSubscribeOpen(true)}
                 onAsk={() => setAskOpen(true)} onSignOut={onSignOut} />
             </div>
@@ -887,6 +905,7 @@ export default function Home() {
               onTourInfo={setTourInfo} onProfilePortal={onProfilePortal} onOpenProfile={goProfile}
               yearInfo={yearInfo} onCutover={runCutover} cutoverBusy={cutoverBusy}
               cutoverResult={cutoverResult} onDismissCutoverResult={() => setCutoverResult(null)}
+              cutoverDismissed={cutoverDismissed} onDismissCutover={() => setCutoverDismissed(true)}
               sectionCheck={sectionCheck} onSectionCheckDone={() => setSectionCheck(false)} />}
         </main>
       </div>

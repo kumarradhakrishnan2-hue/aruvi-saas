@@ -120,6 +120,16 @@ sandbox runs 3.10** (a `X | None` annotation shipped green and refused to boot).
 ## PART B — DECISIONS YOU TOOK, NOW BUILT
 
 ### B1. Trial plans stay reachable after subscribing to a different subject
+> ★★ **REVERSED THE SAME EVENING (founder, on seeing it live).** *"The {x,y} stands there
+> in My Lessons with no use, clogging the space for a trial reason that is no longer
+> valid."* A subject she trialled and did not buy cannot be prepared in, tracked or given
+> sections — every card of it is a door that no longer opens. On her FIRST purchase, the
+> records those subjects left (prepared marks, section state, notes) are now purged; the
+> shared plan files are never touched, and a subject she trialled and BOUGHT keeps
+> everything. The paywall promise below was withdrawn with it — it now reads *"the
+> chapters you made in a subject you subscribe to come with you"*, which is true on both
+> paths. Kept here as written, because the reasoning was sound and only the screen
+> outvoted it. See MEMORY.md 2026-08-26 (evening).
 - **The problem.** The paywall promises *"Your 3 chapters stay yours"* — but
   `_apply_subscription_profile` dropped the out-of-scope subject, leaving those plans on disk
   with **no chooser entry able to reach them**. The promise was not kept.
@@ -159,6 +169,28 @@ mobile, which is what the session runs under.
 - **Files.** `api/main.py` (`/onboarding/known`), `web/app/components/Login.jsx`
 - **Note.** Dev IDs like `kumar1` no longer pass this screen — test those with
   `curl -H "X-Aruvi-User: kumar1"`.
+
+### B6. Trial Settings show neither Personal profile nor Your data & export
+Taken after the run, on the same reasoning as B4: the trial is a look at the **teaching**
+product, and the account around it — her details, her export — belongs to a teacher who has
+one. Both cards are hidden and both subviews unreachable while `status: trial`; both return
+whole on subscribing.
+
+Two boundaries deliberately **not** crossed:
+- **UI only — the routes stay open.** `POST /account` and `/data-rights/*` are ungated.
+  Checkout itself writes the account record, so a trial-time `/account` refusal would break
+  the path *out* of the trial; and §2.5's "data rights are never gated" is a promise about
+  the routes. A3's lesson is that a rule must not be **derived** in two places — not that
+  every UI hide needs a 402 behind it.
+- **Delete my account keeps its download.** G3's last window still offers "Download my data
+  first" on trial, where it is now her only export door. Hiding the card must never mean
+  destroying her work with no copy.
+
+The flag rides down from `page.jsx`'s entitlement sync (`entTrial` → `trial` prop) rather than
+Settings' own fetch, so the cards are never drawn and then withdrawn; Settings' `ent` stays as
+the fallback for a state change landing while it is open.
+- **Files.** `web/app/page.jsx`, `web/app/components/Settings.jsx`
+- **STATIC ONLY** — live pass on a trial identity owed (E1's split of labour; H4.4's rule).
 
 ---
 
@@ -326,13 +358,32 @@ The old year's folders are never touched, which is exactly why last year stays r
 ### H2. What she sees
 - **From 1 June, on every visit to My Classes** until she acts: *"Start the 2027-28
   school year?"* — what carries, what starts fresh, and plainly that **nothing is
-  deleted**. Ochre left edge; a "Not now" line, because it is an offer, never a timer.
-  A teacher still finishing a chapter in early June keeps her bookmarks.
+  deleted**. Ochre left edge. **Two ways to defer, both real controls** — an **✕
+  top-right** and a **NOT YET beside START**, the latter styled as the quiet twin of the
+  start button so it reads as a genuine option without competing with it. (The first build
+  shipped a "Not now" that was a plain `<span>`: it looked like a choice and did nothing.
+  The founder found it on sight.) **Dismissal is session-only and never persisted** — a
+  stored "don't ask again" would quietly strand a teacher in last year, and the rule is
+  that she sees the offer every login until she acts. Deferring changes nothing: her year,
+  her bindings and her bookmarks are untouched, so a teacher still finishing a chapter in
+  early June simply carries on.
 - **On confirmation**, a panel states facts, not promises: *"2027-28 has begun. 2 sections
   carried over. Your 3 2026-27 lesson plans are in My Lessons under 2026-27."*
-- **In My Lessons**, a collapsed **"2026-27 · 3 lessons"** folder sits below the current
-  list and below the prepare bar. Expanding it lists last year's plans with their period
-  matrices; tapping one opens it in full, exactly as before.
+- **In My Lessons**, a collapsed **"2026-27 · lessons you prepared last year"** folder
+  sits below the current list and below the prepare bar. Expanding it shows last year's
+  lessons as **the same cards this year's list uses** — number tag, title, period matrix —
+  differing only in the status line, which reads *"Taught in 2026-27"* because tracking
+  belongs to the year she is in now. Tapping one opens it in full, exactly as before.
+  Four points the founder settled on seeing it (all built and verified live):
+  **(a) cards, not lines** — last year's lessons are the same kind of thing as this year's
+  and should look it; **(b) the same sentence on both surfaces**, so the folder reads
+  identically wherever she meets it; **(c) always closed by default** — never persisted,
+  and re-closed whenever she changes subject or class, because an open folder carried over
+  from another class would put last year's work in front of her before this year's;
+  **(d) no duplicates** — a chapter she has brought back into this year is excluded from
+  the folder (his screenshot caught Ch 01 showing twice on one screen, "Teaching now 9A"
+  above and "Taught in 2026-27" below — both true, and confusing). The folder answers only
+  *"what ELSE do I have from last year?"*
 - **In the "+" attach picker too** (founder caught this omission the same day — his
   original spec said *"a teacher trying to add a plan now will see the old folder"*, and
   the first build only put it in My Lessons). A collapsed **"2026-27 · lessons you

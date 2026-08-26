@@ -6,6 +6,20 @@ import { readHistory, recordHistory, hasHistory } from "../lib/sectionHistory";
 import Readiness from "./Readiness";
 import LessonView from "./LessonView";
 
+/* ★ THE YEAR STAMP — ONE component, used on every surface a plan can appear on
+   (founder, 2026-08-26: "all plans in section cards and LP view get a year stamp").
+   A plan carries it when it was prepared in an EARLIER academic year than the one she is
+   in now, and it keeps carrying it after she re-attaches it, because the plan may have
+   been written against an earlier constitution or textbook edition and she must never be
+   uncertain which version is in her hand. Rendered from either source: the year the
+   server derived (`prepared_source_year`) or, inside a prior-year folder, that folder's
+   own year — the folder knows, and its rows are fetched under that year so the server's
+   own flag is naturally absent there. */
+export function YearStamp({ year }) {
+  if (!year) return null;
+  return <div className="sc-yearstamp">{year} version</div>;
+}
+
 const subjectSlug = (name) => (name || "").toLowerCase().replace(/ /g, "_");
 const gradeSlug = (g) => (g || "").toLowerCase();
 
@@ -72,7 +86,7 @@ function classesFromReadiness(readiness) {
   return out;
 }
 
-export default function MyPlans({ subject, grade, ready, readiness, onReady, onNavigate, onEnterGenerate, user, onSignOut, lapsed, pendingOpen, onConsumePending, pendingAttach, onConsumeAttach, onStartTour, tourActive, tourStep, onTourInfo, onProfilePortal, onOpenProfile, sectionCheck, onSectionCheckDone, yearInfo, onCutover, cutoverBusy, cutoverResult, onDismissCutoverResult }) {
+export default function MyPlans({ subject, grade, ready, readiness, onReady, onNavigate, onEnterGenerate, user, onSignOut, lapsed, pendingOpen, onConsumePending, pendingAttach, onConsumeAttach, onStartTour, tourActive, tourStep, onTourInfo, onProfilePortal, onOpenProfile, sectionCheck, onSectionCheckDone, yearInfo, onCutover, cutoverBusy, cutoverResult, onDismissCutoverResult, cutoverDismissed, onDismissCutover }) {
   const [openPlan, setOpenPlan] = useState(null);  // { view, sectionKey } for LessonView
   const [loading, setLoading] = useState(false);
   const [setupStarted, setSetupStarted] = useState(false); // 2a welcome → grid flow gate
@@ -154,7 +168,14 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionCheck, plansByKey]);
 
-  // Fetch saved plans once per distinct subject·grade the teacher handles.
+  /* Fetch saved plans once per distinct subject·grade the teacher handles.
+     ★ ALSO re-fetches when her ACADEMIC YEAR changes (bug found live, 2026-08-26). The
+     `prepared` flag on each plan is YEAR-SCOPED, but this effect used to depend only on
+     [ready, readiness] — neither of which cutover touches. So a teacher who cut over
+     while standing on My Classes kept last year's flags in memory, and the "+" picker
+     went on offering last year's lessons as though they were this year's (while the
+     prior-year folder, correctly excluding them, sat empty). The year is part of what
+     this data means, so it belongs in the dependencies. */
   useEffect(() => { setOpenPlan(null);
     if (!ready) return;
     const seen = new Set();
@@ -167,7 +188,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
         .catch(() => setPlansByKey((prev) => ({ ...prev, [key]: [] })));
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, readiness]);
+  }, [ready, readiness, yearInfo && yearInfo.current_year]);
 
   // Reconcile section teaching-state (tracked chapter + pointer + done) from the SERVER into the
   // localStorage cache, so a device shows the same tracking/progress the teacher set elsewhere
@@ -334,7 +355,11 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   useEffect(() => {
     if (!apPrior || !attachFor) return;
     const { c } = attachFor;
-    const cacheKey = `${apPrior}|${c.subjectSlug}/${c.gradeSlug}`;
+    /* The cache key carries HOW MANY of this class's plans are already prepared this
+       year, so bringing one back from the folder invalidates the folder's own list —
+       otherwise the chapter she just attached is still sitting there when she reopens it. */
+    const here = (plansByKey[`${c.subjectSlug}/${c.gradeSlug}`] || []).filter((p) => p.prepared);
+    const cacheKey = `${apPrior}|${c.subjectSlug}/${c.gradeSlug}|${here.length}`;
     if (apPriorPlans._for === cacheKey) return;
     let live = true;
     setApPriorPlans({ _for: cacheKey });
@@ -342,13 +367,19 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
       .then((d) => {
         if (!live) return;
         const bound = currentChapterFile(`${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`);
-        const mine = (d.plans || []).filter((p) => p.prepared && !p.archived && p.filename !== bound);
+        /* Exclude anything already offered in THIS year's list above (the same rule the
+           My Lessons folder follows): a chapter she has brought back into this year is
+           current work, and listing it in both halves of one small modal is just noise.
+           The folder answers "what ELSE do I have from last year?". */
+        const hereFiles = new Set(here.map((p) => p.filename));
+        const mine = (d.plans || []).filter((p) => p.prepared && !p.archived
+          && p.filename !== bound && !hereFiles.has(p.filename));
         setApPriorPlans({ _for: cacheKey, [apPrior]: mine });
       })
       .catch(() => { if (live) setApPriorPlans({ _for: cacheKey, [apPrior]: [] }); });
     return () => { live = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apPrior, attachFor]);
+  }, [apPrior, attachFor, plansByKey]);
 
   // Tour ended (Done or Skip) → close anything the tour opened, back to the plain cards view.
   const prevTourRef = useRef(null);
@@ -438,13 +469,34 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
      the section card would track a chapter that My Lessons could not show, and the plan
      would be stranded in a folder while she taught from it. Awaited so the refetch that
      follows sees the write. */
-  const attachPriorChapter = async (c, sectionKey, plan) => {
+  const attachPriorChapter = async (c, sectionKey, plan, sourceYear) => {
+    const key = `${c.subjectSlug}/${c.gradeSlug}`;
     try {
-      await markPrepared(c.subjectSlug, c.gradeSlug, plan.filename, plan.prepared_periods);
+      // sourceYear rides along so the card can carry a "2026-27 version" stamp.
+      await markPrepared(c.subjectSlug, c.gradeSlug, plan.filename, plan.prepared_periods, sourceYear);
     } catch { /* the bind still stands; the next /plans read will reconcile */ }
-    setPlansByKey((prev) => { const n = { ...prev }; delete n[`${c.subjectSlug}/${c.gradeSlug}`]; return n; });
+    /* ★ MERGE, never invalidate (bug found by the founder, 2026-08-26). This used to
+       DELETE the cached plan list to force a refetch — but the fetch effect only runs on
+       [ready, readiness], so nothing refetched, and every card for this class rendered
+       "Pick a chapter to begin" until a remount (navigating to My Lessons and back) put
+       the list back. It looked like every attachment had been wiped.
+       The plan asset is the same object in either year, so the cached row is upgraded in
+       place — instantly correct — and the authoritative list is refetched behind it. */
+    setPlansByKey((prev) => {
+      const list = Array.isArray(prev[key]) ? prev[key] : null;
+      if (!list) return prev;                       // nothing cached yet; the fetch below fills it
+      const has = list.some((p) => p.filename === plan.filename);
+      const stamped = { prepared: true, archived: false, prepared_source_year: sourceYear || null };
+      const upgraded = has
+        ? list.map((p) => (p.filename === plan.filename ? { ...p, ...stamped } : p))
+        : list.concat([{ ...plan, ...stamped }]);
+      return { ...prev, [key]: upgraded };
+    });
     setApPrior(null);
     attachChapter(c, sectionKey, plan);
+    getJSON(`/plans/${c.subjectSlug}/${c.gradeSlug}`)
+      .then((d) => setPlansByKey((prev) => ({ ...prev, [key]: d.plans || [] })))
+      .catch(() => {});                             // the optimistic row already stands
   };
 
   const attachChapter = (c, sectionKey, plan) => {
@@ -543,6 +595,8 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
                     <span className="ch-go" aria-hidden="true">›</span>
                   </span>
                   {p.duration_label ? <span className="sc-durline">{p.duration_label}</span> : null}
+                  {/* A plan she brought forward keeps saying so, even in the picker. */}
+                  <YearStamp year={p.prepared_source_year} />
                 </button>
               ))
             )}
@@ -569,7 +623,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
                   <div className="ap-list ap-list-capped">
                     {apPriorPlans[yid].map((p) => (
                       <button key={p.filename} className="ap-row"
-                        onClick={() => attachPriorChapter(c, sectionKey, p)}>
+                        onClick={() => attachPriorChapter(c, sectionKey, p, yid)}>
                         <span className="ch-meta">
                           <span className="ch-name" title={p.chapter_title}>
                             <b className="ch-no">Ch. {pad(p.chapter_number)}:</b> {p.chapter_title}
@@ -577,6 +631,9 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
                           <span className="ch-go" aria-hidden="true">›</span>
                         </span>
                         {p.duration_label ? <span className="sc-durline">{p.duration_label}</span> : null}
+                        {/* The folder's own year IS the stamp — these rows were fetched
+                            under it, so the server flag is absent by construction. */}
+                        <YearStamp year={yid} />
                       </button>
                     ))}
                   </div>
@@ -790,29 +847,47 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
           under her, so nothing moves until she taps. It also states plainly what will
           and will not happen — the fear here is losing last year's work, and the answer
           is that nothing is deleted at all. */}
-      {yearInfo && yearInfo.cutover_due && !tourActive && !cutoverResult && (
+      {yearInfo && (yearInfo.cleanup_due ?? yearInfo.cutover_due) && !tourActive && !cutoverResult && !cutoverDismissed && (
         <div className="dash-nudge yr-nudge">
+          {/* A REAL dismiss control (founder, 2026-08-26 — "Not now" had been a plain
+              <span>, so tapping it did nothing). Session-only: closing it clears this
+              visit, and the offer returns on her next sign-in, which is the founder's
+              rule — every login until she acts. Nothing is persisted, because a stored
+              "don't ask again" would quietly strand a teacher in last year. */}
+          <button className="yr-x" aria-label="Not now — ask me next time"
+            title="Not now" onClick={() => onDismissCutover && onDismissCutover()}>✕</button>
           <div className="dash-nudge-row">
             <div className="dash-nudge-text">
+              {/* The YEAR has already turned — Aruvi does that on its own date. What is
+                  left is hers: whether to clear last year's tracking and start the new
+                  cohort on empty cards. So the question is about her CLASSES, not the
+                  calendar (founder, 2026-08-26). */}
               <div className="dash-nudge-title">
-                Start the {yearInfo.next_year} school year?
+                {yearInfo.current_year} has begun — start your classes fresh?
               </div>
               <div className="dash-nudge-sub">
-                Your class list, sections and periods carry over unchanged. Your section
-                cards start fresh, ready for the new year&rsquo;s chapters. Nothing is
-                deleted — every {yearInfo.current_year} lesson plan and note stays in My
-                Lessons under that year.
+                You are still tracking last year&rsquo;s chapters, so you can finish
+                anything you were part-way through. When you&rsquo;re ready for the new
+                batch, clear them and your section cards start empty. Your class list stays
+                as it is, and nothing is deleted — every{" "}
+                {(yearInfo.prior_years || []).slice(-1)[0] || "earlier"} lesson plan and
+                note stays in My Lessons under that year.
               </div>
             </div>
           </div>
           <div className="yr-nudge-row">
             <button className="yr-nudge-go" disabled={cutoverBusy}
               onClick={() => onCutover && onCutover()}>
-              {cutoverBusy ? "Starting…" : `Start ${yearInfo.next_year} →`}
+              {cutoverBusy ? "Clearing…" : "Start my classes fresh →"}
             </button>
-            <span className="yr-nudge-later">
-              Not now — you can start it any time from here.
-            </span>
+            {/* A real "Not yet" BESIDE the start button (founder, 2026-08-26) — the same
+                act as the ✕, but where a teacher deciding between two options actually
+                looks. The ✕ stays for the corner-tap habit; both defer, neither is
+                remembered beyond this visit. */}
+            <button className="yr-nudge-later"
+              onClick={() => onDismissCutover && onDismissCutover()}>
+              Not yet
+            </button>
           </div>
         </div>
       )}
@@ -824,20 +899,21 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
             <div className="dash-nudge-text">
               <div className="dash-nudge-title">
                 {cutoverResult.already_done
-                  ? `You are already in ${cutoverResult.opened_year}.`
-                  : `${cutoverResult.opened_year} has begun.`}
+                  ? `Your classes are already set for ${cutoverResult.opened_year}.`
+                  : `Ready for ${cutoverResult.opened_year}.`}
               </div>
               <div className="dash-nudge-sub">
                 {cutoverResult.already_done ? (
                   <>Nothing changed.</>
                 ) : (
                   <>
-                    {cutoverResult.sections_carried} section
-                    {cutoverResult.sections_carried === 1 ? "" : "s"} carried over.
+                    {cutoverResult.sections_cleared ?? cutoverResult.sections_carried} section
+                    {(cutoverResult.sections_cleared ?? cutoverResult.sections_carried) === 1 ? "" : "s"} cleared
+                    and ready for your new batch.
                     {cutoverResult.plans_archived > 0 && (
                       <> Your {cutoverResult.plans_archived} {cutoverResult.closed_year} lesson
-                        plan{cutoverResult.plans_archived === 1 ? "" : "s"} {cutoverResult.plans_archived === 1 ? "is" : "are"} in
-                        My Lessons under <b>{cutoverResult.closed_year}</b>.</>
+                        plan{cutoverResult.plans_archived === 1 ? "" : "s"} {cutoverResult.plans_archived === 1 ? "is" : "are"} still
+                        in My Lessons under <b>{cutoverResult.closed_year}</b>.</>
                     )}
                   </>
                 )}
@@ -942,6 +1018,13 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
               <div className="sc-body">
                 <span className="sc-kicker">{pretty(c.subjectSlug)}{plan.chapter_number ? ` · Ch ${plan.chapter_number}` : ""}</span>
                 <div className="sc-title" title={plan.chapter_title}>{plan.chapter_title}</div>
+                {/* ★ YEAR STAMP (founder, 2026-08-26). A chapter she carried forward from an
+                    earlier academic year says so, in small print, on the card she teaches
+                    from. It matters because the plan may have been written against an
+                    earlier constitution or an earlier textbook edition — she should never
+                    be uncertain which version is in her hand. Absent for anything she
+                    prepared this year, which is the ordinary case. */}
+                <YearStamp year={plan.prepared_source_year} />
                 {ticks && (
                   <div className="sc-rail" aria-label={done ? `${total} units, completed` : lu ? `Unit ${lu} of ${total}` : `${total} units, not started`}>
                     {ticks.map((_, t) => (

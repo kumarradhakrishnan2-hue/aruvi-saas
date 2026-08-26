@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { API, getJSON, pad, pretty, userKey, withUser } from "../lib/format";
 import { pullSectionState, readLocalSection } from "../lib/sectionState";
+import { YearStamp } from "./MyPlans";
 import { verifiedWrite, planIsArchived } from "../lib/verify";
 import LessonView from "./LessonView";
 import YearPlan from "./YearPlan";
@@ -309,7 +310,10 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
   const [plansByKey, setPlansByKey] = useState({});
   /* Prior academic years (cutover part A, 2026-08-26): which folder is open, and that
      year's prepared plans for the CURRENT subject·class once fetched. Lazy — a teacher
-     who never opens the folder never pays for the call. */
+     who never opens the folder never pays for the call.
+     ★ ALWAYS starts closed (founder): never persisted, and re-closed whenever she changes
+     subject or class, because an open folder from the last class would put LAST year's
+     work in front of her before this year's. She lives in the current year. */
   const [openPrior, setOpenPrior] = useState(null);
   const [priorPlans, setPriorPlans] = useState({});
   const [openPlan, setOpenPlan] = useState(null);   // { view }
@@ -412,7 +416,9 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
     getJSON(`/plans/${sSlug}/${gSlug}`)
       .then((d) => setPlansByKey((prev) => ({ ...prev, [key]: d.plans || [] })))
       .catch(() => setPlansByKey((prev) => ({ ...prev, [key]: [] })));
-  }, [key, sSlug, gSlug, plansNonce]);
+    // The `prepared` flag is YEAR-SCOPED — see the twin note in MyPlans. A cutover while
+    // this view is mounted must re-read, or it keeps last year's flags.
+  }, [key, sSlug, gSlug, plansNonce, yearInfo && yearInfo.current_year]);
 
   // Reconcile this grade's section teaching-state from the server into the localStorage cache so
   // the status lines match what the teacher set on My Classes / another device. Re-syncs on load,
@@ -476,6 +482,9 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
   const priorYears = useMemo(
     () => ((yearInfo && yearInfo.prior_years) || []).slice().sort().reverse(),
     [yearInfo]);
+  // Changing subject or class re-closes the folder (see the state note above).
+  useEffect(() => { setOpenPrior(null); }, [key]);
+
   useEffect(() => {
     if (!openPrior || !key) return;
     const cacheKey = `${openPrior}|${key}`;
@@ -485,13 +494,20 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
     getJSON(`/plans/${sSlug}/${gSlug}?year_id=${encodeURIComponent(openPrior)}`)
       .then((d) => {
         if (!live) return;
-        const mine = (d.plans || []).filter((p) => p.prepared);
+        /* Exclude anything she has ALREADY brought into this year (founder's screenshot,
+           2026-08-26: a chapter attached from last year's folder then showed twice on one
+           screen — "Teaching now 9A" above and "Taught in 2026-27" below). The folder
+           answers "what else do I have from last year?", so once a lesson is back in play
+           it belongs to this year's list alone. */
+        const here = new Set((plansByKey[key] || []).filter((p) => p.prepared)
+          .map((p) => p.filename));
+        const mine = (d.plans || []).filter((p) => p.prepared && !here.has(p.filename));
         setPriorPlans({ _for: cacheKey, [openPrior]: mine });
       })
       .catch(() => { if (live) setPriorPlans({ _for: cacheKey, [openPrior]: [] }); });
     return () => { live = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openPrior, key, sSlug, gSlug]);
+  }, [openPrior, key, sSlug, gSlug, plansNonce]);
 
   // Guided-tour orchestration (steps 3–7 live on this view: 3 the lesson row, 4 the report button,
   // 5 the archive button, 6 "open the lesson" — same card as 3, hand on it — and 7 the open
@@ -684,8 +700,25 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
     if (at !== bt) return bt.localeCompare(at);          // ISO strings sort lexically
     return (Number(a.chapter_number) || 0) - (Number(b.chapter_number) || 0);
   };
+  /* ★ THIS YEAR'S LIST HOLDS THIS YEAR'S WORK ONLY (founder, 2026-08-26).
+     `isAttached` used to be enough to list a plan here, which was right before academic
+     years existed: a plan a section is teaching is obviously hers. After a cutover it is
+     wrong — a chapter she is still finishing from LAST year would appear in BOTH this
+     year's list and the prior-year folder, which is exactly the mixing the year boundary
+     exists to prevent. A plan carrying `prepared_source_year` belongs to the year it was
+     prepared in; her section card still shows it (stamped), and the folder still holds
+     it, so nothing becomes unreachable — it simply stops pretending to be current. */
   const preparedPlans = (Array.isArray(plans) ? plans : [])
-    .filter((p) => p.prepared || isAttached(p))
+    /* The test is not "does it carry a year stamp?" but "is it THIS year's work?", and
+       those differ for a plan she deliberately brought forward:
+         · prepared THIS year, no stamp        → hers, new          → main list
+         · prepared THIS year, stamped         → carried forward    → main list, stamped
+         · NOT prepared this year, stamped     → last year's        → folder only
+       The third case is the one cutover creates and the only one excluded here. Getting
+       this wrong in either direction is visible: too loose and last year's shelf floods
+       the current list; too tight and a chapter she is actively teaching disappears from
+       My Lessons altogether (both happened while building this). */
+    .filter((p) => (p.prepared || isAttached(p)) && !(p.prepared_source_year && !p.prepared))
     .slice()
     .sort(byRecency);
   // Split the prepared list into the two views by the server-set archived flag (archive is a
@@ -837,6 +870,8 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
                       "Atmosphere and Climate" are indistinguishable. Source: api/data.py
                       duration_label(), served_matrix -> matrix -> period_rows_snapshot. */}
                   {p.duration_label ? <div className="sc-durline">{p.duration_label}</div> : null}
+                  {/* Same stamp, same component, as the section card and both pickers. */}
+                  <YearStamp year={p.prepared_source_year} />
                   {busy ? (
                     /* Re-preparing THIS plan: the progress line replaces the status line on
                        the card she is already looking at, rather than a second card
@@ -902,11 +937,9 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
               {openPrior === yid ? "▾" : "▸"}
             </span>
             <span className="mlp-prior-yr">{yid}</span>
-            <span className="mlp-prior-count">
-              {priorPlans[yid] === undefined
-                ? "…"
-                : `${priorPlans[yid].length} lesson${priorPlans[yid].length === 1 ? "" : "s"}`}
-            </span>
+            {/* Same sentence the "+" attach picker uses, so the folder reads identically
+                wherever she meets it (founder, 2026-08-26). */}
+            <span className="mlp-prior-count">lessons you prepared last year</span>
           </button>
           {openPrior === yid && (
             priorPlans[yid] === undefined ? (
@@ -916,21 +949,22 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
                 No lessons were prepared for this class in {yid}.
               </div>
             ) : (
-              <div className="mlp-prior-list">
+              /* CARDS, not rows (founder, 2026-08-26): last year's lessons are the same
+                 kind of thing as this year's and should look it — the same `.sc-card`
+                 the current list uses, on the shelf state (no tracking status, because
+                 tracking belongs to the year she is in now). */
+              <div className="sc-list mlp-prior-list">
                 {priorPlans[yid].map((p) => (
-                  <button className="mlp-prior-row" key={p.filename}
+                  <div className="sc-card mlp2-shelf" key={p.filename}
                     onClick={() => openPlanView(p)}>
-                    <span className="mlp-prior-n">
-                      {String(p.chapter_number ?? "").padStart(2, "0")}
-                    </span>
-                    <span className="mlp-prior-t">
-                      {p.chapter_title}
-                      {p.duration_label
-                        ? <span className="mlp-prior-dur">{p.duration_label}</span>
-                        : null}
-                    </span>
-                    <span className="mlp-prior-go" aria-hidden="true">→</span>
-                  </button>
+                    <div className="sc-tag">{pad(p.chapter_number)}</div>
+                    <div className="sc-body">
+                      <div className="sc-title">{p.chapter_title}</div>
+                      {p.duration_label ? <div className="sc-durline">{p.duration_label}</div> : null}
+                      {/* The folder's year IS the stamp for its rows (fetched under it). */}
+                      <YearStamp year={yid} />
+                    </div>
+                  </div>
                 ))}
               </div>
             )

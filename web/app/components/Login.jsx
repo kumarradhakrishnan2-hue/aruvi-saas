@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { API, getJSON } from "../lib/format";
-import SubscribeFlow from "./SubscribeFlow";
+import { API, getJSON, idInUse } from "../lib/format";
+import SubscribeFlow, { MOBILE_TAKEN } from "./SubscribeFlow";
 
 /* ───────── The front door — onboarding + sign-in (founder, 2026-08-24/25) ─────────
  *
@@ -49,6 +49,9 @@ export default function Login({ onEnter }) {
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
   const [otpErr, setOtpErr] = useState("");
+  // "Already in use" on the CREATE path, checked before the OTP goes out.
+  const [mobErr, setMobErr] = useState("");
+  const [mobBusy, setMobBusy] = useState(false);
   const otpRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   // Sign-in
   const [id, setId] = useState("");
@@ -152,15 +155,29 @@ export default function Login({ onEnter }) {
             <div className="ob-mobile-row">
               <span className="ob-cc">+91</span>
               <input type="tel" inputMode="numeric" maxLength={10} value={mobile}
-                onChange={(e) => setMobile(e.target.value.replace(/\D/g, ""))}
+                onChange={(e) => { setMobile(e.target.value.replace(/\D/g, "")); setMobErr(""); }}
                 placeholder="Enter mobile number" />
             </div>
           </label>
           <p className="ob-quiet">We&rsquo;ll never share your number.</p>
 
+          {mobErr && <p className="ob-err" role="alert">{mobErr}</p>}
           {!otpSent ? (
-            <button className="primary fr-cta ob-cta" disabled={!mobileOk}
-              onClick={() => setOtpSent(true)}>Generate OTP →</button>
+            /* ★ A REGISTERED NUMBER CANNOT CREATE A SECOND SIGN-IN (founder, 2026-08-26).
+               This screen's button says "Create sign in", and the mobile IS the account
+               id — so a number already in the tenant database is not a new teacher, it
+               is her, arriving at the wrong door. Told before the OTP is sent, with the
+               right door one tap away and her number carried across. */
+            <button className="primary fr-cta ob-cta" disabled={!mobileOk || mobBusy}
+              onClick={async () => {
+                setMobErr(""); setMobBusy(true);
+                const taken = await idInUse(mobile.trim());
+                setMobBusy(false);
+                if (taken) { setMobErr(MOBILE_TAKEN); return; }
+                setOtpSent(true);
+              }}>
+              {mobBusy ? "Checking…" : "Generate OTP →"}
+            </button>
           ) : (
             <>
               {/* Four boxes, auto-advance; backspace steps back (founder, 2026-08-25). */}

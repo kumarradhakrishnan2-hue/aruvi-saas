@@ -60,6 +60,28 @@ TRIAL_CHAPTER_CAP = int(os.environ.get("ARUVI_TRIAL_CHAPTERS", "3"))
 # cart reads it via GET /entitlement.
 PRICE_PER_SUBJECT_STAGE = int(os.environ.get("ARUVI_PRICE_PER_SUBJECT_STAGE", "500"))
 
+# ── Invoicing (2026-08-26) ─────────────────────────────────────────────────────
+# Aruvi is NOT GST-registered today (founder's call), so an invoice carries no GSTIN
+# and no tax row — it says so in words instead, because a "₹0.00 tax" line reads like a
+# rate that happens to be zero rather than a seller who does not charge it. The day
+# registration happens: set ARUVI_GSTIN (and ARUVI_TAX_RATE, a percentage) and the
+# document grows its tax rows. TAX_INCLUSIVE says whether PRICE_PER_SUBJECT_STAGE
+# already contains the tax — the answer changes what she PAYS, so it is stated, never
+# assumed.
+GSTIN = os.environ.get("ARUVI_GSTIN", "").strip()
+TAX_RATE = float(os.environ.get("ARUVI_TAX_RATE", "0") or 0)
+TAX_INCLUSIVE = os.environ.get("ARUVI_TAX_INCLUSIVE", "1").strip().lower() in (
+    "1", "true", "yes", "on")
+TAX_LABEL = os.environ.get("ARUVI_TAX_LABEL", "GST").strip() or "GST"
+# What the seller's books call this financial year's series. Indian FY runs April→March,
+# which is also the academic-year anchor already in the code.
+INVOICE_PREFIX = os.environ.get("ARUVI_INVOICE_PREFIX", "ARV").strip() or "ARV"
+# ★ Each financial year's series OPENS here, not at 1 (founder, 2026-08-26). The number
+# is the one part of an invoice a customer can read volume from, and "0001" tells an
+# early teacher she is the first sale Aruvi ever made. An offset, not a fiction: the
+# series is still gapless and still counts real invoices.
+INVOICE_START = int(os.environ.get("ARUVI_INVOICE_START", "7834"))
+
 # ── Outbound mail (administrative architecture Step 6 — the Notifier port) ──────
 # Credentials NEVER live in the repo. With SMTP_HOST/USER/PASSWORD all set, main.py
 # installs SmtpNotifier and confirmations really send; otherwise FileNotifier writes

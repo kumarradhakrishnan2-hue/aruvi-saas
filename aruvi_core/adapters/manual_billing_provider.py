@@ -25,16 +25,66 @@ class ManualBillingProvider(BillingProvider):
     def create_subscription(self, tenant_id: str, plan_id: str,
                             scopes: Optional[List[str]] = None,
                             valid_until: str = "",
-                            source: str = "manual") -> Dict[str, Any]:
+                            source: str = "manual",
+                            replace: bool = False) -> Dict[str, Any]:
         """Grant an active subscription. `scopes` defaults to ["*"] (all
         subject-stages) — the founder narrows it for individual subject-stage grants.
-        `valid_until` defaults to one year from today (the rolling annual, §2.5)."""
+        `valid_until` defaults to one year from today (the rolling annual, §2.5).
+
+        ★ ADDITIVE BY DEFAULT (founder, 2026-08-26). This used to WRITE A WHOLE NEW
+        entitlement, so a teacher who owned Social Sciences and then bought English was
+        left holding English alone — she paid ₹500 and lost a subject. Scopes she
+        already holds are kept, and each scope carries ITS OWN expiry (a subject added
+        in November runs to the following November, not to the first purchase's
+        anniversary). `replace=True` is the deliberate wipe, for the CLI only.
+
+        A scope named here is (re)stamped with `until` — the caller decides whether that
+        is allowed. The web chooser does not offer a scope that is still live, so in
+        practice this restamps only an EXPIRED scope, which is a renewal.
+        """
         until = valid_until or (date.today() + timedelta(days=365)).isoformat()
-        ent = Entitlement(plan_id=plan_id, status="active", valid_until=until,
-                          source=source, scopes=list(scopes) if scopes else ["*"])
+        asked = list(scopes) if scopes else ["*"]
+        prior = None if replace else self.repo.load(tenant_id)
+        # A trial is not a holding to preserve — the first purchase supersedes it whole
+        # (its breadth is "*", which would otherwise swallow every later scope check).
+        if prior is not None and prior.status == "trial":
+            prior = None
+
+        merged: List[str] = list(prior.scopes) if prior else []
+        for s in asked:
+            if s not in merged:
+                merged.append(s)
+
+        per_scope: Dict[str, str] = {}
+        if prior:
+            # Backfill: scopes granted before per-scope dates existed inherit the old
+            # entitlement-level date, which is exactly what they meant at the time.
+            for s in prior.scopes:
+                inherited = (prior.scope_valid_until or {}).get(s) or prior.valid_until
+                if inherited:
+                    per_scope[s] = inherited
+        for s in asked:
+            # "*" is dated like any other scope. It was skipped in the first cut, and
+            # an enterprise "*" granted on top of an old expired scope then inherited
+            # THAT scope's past date through the derived top-level field — a grant that
+            # was dead the moment it was written (caught by test_paid_scope_and_expiry).
+            per_scope[s] = until
+
+        ent = Entitlement(
+            plan_id=plan_id, status="active",
+            # The entitlement-level date is DERIVED: the latest any scope runs to. Old
+            # readers see a sane single date; the gates read the per-scope map.
+            valid_until=(max(per_scope.values()) if per_scope else until),
+            source=source, scopes=merged,
+            trial_chapters=list(prior.trial_chapters) if prior else [],
+            scope_valid_until=per_scope,
+        )
         self.repo.save(tenant_id, ent)
         return {"tenant_id": tenant_id, "plan_id": plan_id, "status": "active",
-                "valid_until": until, "scopes": ent.scopes}
+                "valid_until": ent.valid_until, "scopes": ent.scopes,
+                "scope_valid_until": ent.scope_valid_until,
+                # What this call actually granted, for the receipt and the mail.
+                "granted": [s for s in asked]}
 
     def verify_webhook(self, payload: bytes, signature: str) -> Dict[str, Any]:
         raise NotImplementedError(
@@ -59,4 +109,5 @@ class ManualBillingProvider(BillingProvider):
             return {"tenant_id": tenant_id, "status": "none"}
         return {"tenant_id": tenant_id, "plan_id": ent.plan_id, "status": ent.status,
                 "valid_until": ent.valid_until, "source": ent.source,
-                "scopes": ent.scopes, "trial_chapters": ent.trial_chapters}
+                "scopes": ent.scopes, "trial_chapters": ent.trial_chapters,
+                "scope_valid_until": ent.scope_valid_until}

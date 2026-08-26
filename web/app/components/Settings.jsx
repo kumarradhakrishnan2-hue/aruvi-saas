@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { API, withUser, fetchEntitlement, pretty } from "../lib/format";
+import { API, withUser, fetchEntitlement, getJSON, pretty, idInUse, errDetail } from "../lib/format";
 import ThemeToggle from "./ThemeToggle";
-import { ROLES, STATES } from "./SubscribeFlow";
+import { ROLES, STATES, EMAIL_TAKEN } from "./SubscribeFlow";
 
 const EMAIL_OK = (e) => /^\S+@\S+\.\S+$/.test((e || "").trim());
 const maskEmail = (e) => {
@@ -32,7 +32,12 @@ const maskEmail = (e) => {
  * Some cards are deliberately UI-first: the founder's direction is to shape the
  * surface now and fill content as features land (payments → billing; support
  * channels → Support; legal texts → About). Placeholders say so honestly.
- * Data-rights actions are never gated on subscription state (§2.5). */
+ *
+ * ★ ON TRIAL two of these cards are not offered — Personal profile and Your data &
+ * export (founder, 2026-08-26). See `onTrial` in the component for the rule and for
+ * the two lines it deliberately does not cross: the ROUTES stay open (data-rights is
+ * never gated on subscription state, §2.5 — this is a choice about what Settings
+ * SHOWS), and Delete my account keeps its own download button on trial. */
 
 const scopeLabel = (s) =>
   s === "*" ? "All subjects" : pretty(String(s).replace("/", " · "));
@@ -51,6 +56,7 @@ function PersonalProfile({ onSaved }) {
   const [emailNew, setEmailNew] = useState("");
   const [email2, setEmail2] = useState("");
   const [emailErr, setEmailErr] = useState("");
+  const [emailBusy, setEmailBusy] = useState(false);   // the "already in use" round-trip
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState("");
 
@@ -72,7 +78,13 @@ function PersonalProfile({ onSaved }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, role, state: stateName, city, school }),
       }));
-      if (!r.ok) throw new Error(String(r.status));
+      /* The SERVER'S OWN SENTENCE on a 4xx (2026-08-26) — a 409 here means the address
+         belongs to another account, and "try again" is advice that can never work for
+         it. Same fix as the checkout path; see SubscribeFlow.doCheckout. */
+      if (!r.ok) {
+        setNote(await errDetail(r, "Couldn't save right now — try again."));
+        return;
+      }
       // Back to the Settings cards (founder, 2026-08-26) AND tell the shell to re-read
       // the account, so a changed name lands on the bar/greeting without a reload.
       onSaved && onSaved();
@@ -115,6 +127,8 @@ function PersonalProfile({ onSaved }) {
             <input type="email" autoComplete="off" value={emailNew}
               onChange={(e) => { setEmailNew(e.target.value); setEmailErr(""); }}
               placeholder="Enter your email" /></label>
+          {/* The taken-address message lands HERE — the stage the fix belongs to. */}
+          {emailErr && <p className="ob-err" role="alert">{emailErr}</p>}
           {EMAIL_OK(emailNew) && (
             <button type="button" className="fr-link"
               onClick={() => { setEmail2(""); setEmailStage("confirm"); }}>
@@ -130,15 +144,24 @@ function PersonalProfile({ onSaved }) {
               onChange={(e) => { setEmail2(e.target.value); setEmailErr(""); }}
               placeholder="Type it again to confirm" /></label>
           {emailErr && <p className="ob-err" role="alert">{emailErr}</p>}
-          <button type="button" className="fr-link" disabled={!EMAIL_OK(email2)}
-            onClick={() => {
-              if (email2.trim().toLowerCase() === emailNew.trim().toLowerCase()) {
-                setEmail(emailNew.trim()); setEmailStage("ok"); setEmailErr("");
-              } else {
+          {/* Told at VERIFY, not at Save — the twin of the checkout check. */}
+          <button type="button" className="fr-link"
+            disabled={!EMAIL_OK(email2) || emailBusy}
+            onClick={async () => {
+              if (email2.trim().toLowerCase() !== emailNew.trim().toLowerCase()) {
                 setEmailErr("The two entries don't match — try again."); setEmail2("");
+                return;
               }
+              setEmailBusy(true);
+              const taken = await idInUse(emailNew, acct && acct.account_id);
+              setEmailBusy(false);
+              if (taken) {
+                setEmailErr(EMAIL_TAKEN); setEmail2(""); setEmailStage("enter");
+                return;
+              }
+              setEmail(emailNew.trim()); setEmailStage("ok"); setEmailErr("");
             }}>
-            Verify →
+            {emailBusy ? "Checking…" : "Verify →"}
           </button>
         </>
       )}
@@ -183,6 +206,9 @@ const STAGE_CLASSES = { preparatory: "3, 4 & 5", middle: "6, 7 & 8",
                         secondary: "9 (10 coming soon)" };
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+/* Only ever a FALLBACK for an older API that sends no `live_scopes` — the server is the
+   authority on what has expired (it also honours ARUVI_TODAY, which a browser cannot). */
+const todayISO = () => new Date().toISOString().slice(0, 10);
 const fmtValidity = (iso) => {
   const s = String(iso || "").slice(0, 10);
   const [y, m, d] = s.split("-").map(Number);
@@ -199,8 +225,10 @@ const scopeRows = (scope) => {
  * button is hierarchical — subview → home → origin — so the shell must know which
  * level is showing). Values: home | subscription | data | support | about. */
 export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOut,
-                                   onSubscribe, onAccountSaved, syncTick = 0 }) {
+                                   onSubscribe, onAccountSaved, syncTick = 0,
+                                   trial = false }) {
   const [ent, setEnt] = useState(null);
+  const [invoices, setInvoices] = useState([]);
   const [busy, setBusy] = useState("");        // "docx" | "pdf" | "erase" | ""
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmText, setConfirmText] = useState("");
@@ -215,6 +243,41 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
 
   // Re-fetch when the shell signals a subscription change (in-app subscribe done).
   useEffect(() => { fetchEntitlement().then(setEnt); }, [syncTick]);
+
+  /* Her invoices, newest first (2026-08-26). Fetched with the entitlement and on the
+     same tick, so a fresh purchase's invoice appears with the subscription it paid for
+     rather than a refresh later. */
+  useEffect(() => {
+    let live = true;
+    getJSON("/invoices")
+      .then((d) => { if (live) setInvoices((d && d.invoices) || []); })
+      .catch(() => { if (live) setInvoices([]); });
+    return () => { live = false; };
+  }, [syncTick]);
+
+  /* ★ ON TRIAL, NEITHER "Personal profile" NOR "Your data & export" IS OFFERED
+     (founder, 2026-08-26, after the persona run). The trial is a look at the teaching
+     product; the account around it belongs to a teacher who has one. Both cards are
+     hidden and both subviews are unreachable while the trial runs, and both return
+     whole the moment she subscribes.
+     Two boundaries deliberately NOT crossed:
+       · UI ONLY. `POST /account` and `/data-rights/*` stay open — checkout writes the
+         account record itself, and §2.5's "data rights are never gated" is a promise
+         about the routes, not about which cards Settings chooses to show.
+       · Delete my account keeps its download. The export is the only copy she can keep
+         and G3's whole point is that she has it before anything is destroyed — so the
+         last window's "Download my data first" button works on trial exactly as it does
+         on a subscription.
+     `trial` comes from the SHELL, which has already synced by the time the gear is
+     pressed; this component's own `ent` is the fallback and also catches a state change
+     landing while Settings is open. */
+  const onTrial = !!trial || !!(ent && ent.enforced && ent.status === "trial");
+
+  // If the trial answer lands while she is standing in one of those subviews, leave.
+  useEffect(() => {
+    if (onTrial && (view === "personal" || view === "data")) setView("home");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onTrial, view]);
 
   const download = async (fmt) => {
     setBusy(fmt); setFailMsg("");
@@ -233,6 +296,29 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
       setTimeout(() => URL.revokeObjectURL(url), 30000);
     } catch {
       setFailMsg("Couldn't prepare your download right now. Try again in a moment.");
+    } finally {
+      setBusy("");
+    }
+  };
+
+  /* One invoice PDF. Same blob-download shape as the data export above — the file
+     arrives with the API's own filename, and a failure says so instead of leaving a
+     dead link (2026-08-26). */
+  const downloadInvoice = async (number) => {
+    setBusy(`inv-${number}`); setFailMsg("");
+    try {
+      const r = await fetch(`${API}/invoices/${encodeURI(number)}`, withUser());
+      if (!r.ok) throw new Error(String(r.status));
+      const url = URL.createObjectURL(await r.blob());
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Aruvi-invoice-${String(number).replace(/\//g, "-")}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 30000);
+    } catch {
+      setFailMsg("Couldn't fetch that invoice right now. Try again in a moment.");
     } finally {
       setBusy("");
     }
@@ -283,7 +369,7 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
   /* ── PERSONAL PROFILE subview (founder, 2026-08-25): her account details, editable.
      Email edits use the same double-blind confirmation as acquisition. The mobile
      (her sign-in) is shown, never editable here. */
-  if (view === "personal") {
+  if (view === "personal" && !onTrial) {
     return <PersonalProfile onSaved={() => { onAccountSaved && onAccountSaved(); setView("home"); }} />;
   }
 
@@ -293,39 +379,39 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
        the status test is only the fallback for an older API. `active` must then EXCLUDE
        lapsed, or a date-expired teacher would read "SUBSCRIBED" here while every write
        of hers is being refused. */
-    const onTrial = ent && ent.enforced && ent.status === "trial";
+    /* `onTrial` is the component-level flag above (it also reads the shell's prop) — not
+       re-derived here, so the subscription card and the hidden cards can never disagree. */
     const lapsed = ent && (ent.lapsed !== undefined
       ? !!ent.lapsed
       : !!(ent.enforced && ent.status === "expired"));
-    const active = ent && ent.enforced && !lapsed
+    /* ★ WHAT SHE HAS DOES NOT DEPEND ON WHETHER THE GATE IS ON (2026-08-26). `active`
+       used to require `ent.enforced`, so with ARUVI_ENTITLEMENT_ENFORCED unset — the
+       DEFAULT, and easy to lose when the API is restarted — a teacher who had really
+       paid saw "Your plan details will appear here" and no Add button. Enforcement
+       decides what is REFUSED, never what is TRUE. `lapsed` still comes from the server
+       (which reports false when the gate is off), so dev mode never shows "Ended". */
+    const active = ent && !lapsed && ent.plan_id !== "trial"
       && (ent.status === "active" || ent.status === "grace");
+    // One record per subscription, latest expiry first — see the block below.
+    const subs = !ent ? [] : (ent.scopes || []).map((scope, i) => {
+      const until = (ent.scope_valid_until || {})[scope] || ent.valid_until || "";
+      const liveList = ent.live_scopes;
+      return {
+        scope, until, i,
+        live: Array.isArray(liveList) ? liveList.includes(scope)
+                                      : !(until && until < todayISO()),
+      };
+    }).sort((a, b) => (b.until || "").localeCompare(a.until || "") || a.i - b.i);
     return (
       <div className="setwrap">
         {back}
-        <h1 className="set-title">Subscription &amp; billing</h1>
+        {/* Frozen: this screen grows a card per subscription, so the heading must stay
+            with the list it names (founder, 2026-08-26). */}
+        <h1 className="set-title set-title-stick">Subscription &amp; billing</h1>
         <div className="set-card set-card-pad">
           {onTrial && (
             <div className="set-plan"><span className="set-pill">Free trial</span>
               <span className="set-plan-txt">{ent.trial_chapters_used} of {ent.trial_chapter_cap} chapters used</span></div>
-          )}
-          {active && (
-            <div className="set-sub-detail">
-              <div className="set-plan"><span className="set-pill set-pill-on">Subscribed</span></div>
-              {(ent.scopes || []).map((scope) => {
-                const r = scopeRows(scope);
-                return (
-                  <div key={scope} className="set-scope-block">
-                    <div className="acct-row"><span className="acct-k">Subject</span><span className="acct-v">{r.subject}</span></div>
-                    <div className="acct-row"><span className="acct-k">Stage</span><span className="acct-v">{r.stage}</span></div>
-                    <div className="acct-row"><span className="acct-k">Class</span><span className="acct-v">{r.classes}</span></div>
-                  </div>
-                );
-              })}
-              {ent.valid_until && (
-                <div className="acct-row"><span className="acct-k">Validity</span>
-                  <span className="acct-v">until {fmtValidity(ent.valid_until)}</span></div>
-              )}
-            </div>
           )}
           {lapsed && (
             <div className="set-plan"><span className="set-pill set-pill-off">Ended</span>
@@ -335,6 +421,61 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
             <div className="set-plan"><span className="set-plan-txt">Your plan details will appear here.</span></div>
           )}
         </div>
+
+        {/* ★ ONE BOX PER SUBSCRIPTION, LATEST FIRST (founder, 2026-08-26 evening).
+            They were rows stacked inside a single card, under one shared "Validity"
+            that could only ever be true of one of them. Each subject-stage is now its
+            own purchase, with its own year and its own end date, so each gets its own
+            box — the card IS the unit of what she bought.
+            ORDER: by expiry, descending. Every term is exactly one year, so the latest
+            expiry IS the latest purchase; a renewal correctly returns to the top. (If
+            terms ever differ, this needs a real purchase date to sort on.) Ties — the
+            ordinary case of several bought in one checkout — keep cart order, which is
+            the order she chose them in.
+            An EXPIRED one is still shown: she owned it, and this row is the explanation
+            for anything she can no longer prepare there. */}
+        {active && subs.map(({ scope, until, live }) => {
+          const r = scopeRows(scope);
+          /* The invoice that bought THIS subscription — the newest one listing this
+             scope (a renewal issues a second invoice for the same scope, and the one
+             that explains today's validity is the latest). */
+          const inv = invoices.find((iv) => (iv.scopes || []).includes(scope));
+          return (
+            <div key={scope} className="set-card set-card-pad set-sub-card">
+              <div className="set-plan">
+                <span className={`set-pill ${live ? "set-pill-on" : "set-pill-off"}`}>
+                  {live ? "Subscribed" : "Ended"}
+                </span>
+              </div>
+              <div className="acct-row"><span className="acct-k">Subject</span><span className="acct-v">{r.subject}</span></div>
+              <div className="acct-row"><span className="acct-k">Stage</span><span className="acct-v">{r.stage}</span></div>
+              <div className="acct-row"><span className="acct-k">Class</span><span className="acct-v">{r.classes}</span></div>
+              {until && (
+                <div className="acct-row"><span className="acct-k">Validity</span>
+                  <span className={`acct-v ${live ? "" : "set-scope-done"}`}>
+                    {live ? "until " : "ended "}{fmtValidity(until)}
+                  </span></div>
+              )}
+              {/* ★ THE INVOICE SITS WITH THE SUBSCRIPTION IT PAID FOR (founder,
+                  2026-08-26). Not a separate billing list to go hunting in: the
+                  question "what did I pay for this?" is asked while looking at the
+                  thing. The number is shown even when the PDF is missing — the
+                  number is the record; the file is a convenience. */}
+              {inv && (
+                <div className="acct-row"><span className="acct-k">Invoice</span>
+                  <span className="acct-v">
+                    {inv.has_pdf ? (
+                      <button type="button" className="fr-link set-inv-dl"
+                        disabled={busy === `inv-${inv.number}`}
+                        onClick={() => downloadInvoice(inv.number)}>
+                        {busy === `inv-${inv.number}` ? "Preparing…" : `${inv.number} ↓`}
+                      </button>
+                    ) : inv.number}
+                  </span></div>
+              )}
+            </div>
+          );
+        })}
         {/* Subscribe from here too (founder, 2026-08-25): on trial or ended, the same
             wizard the paywall and the front door open. */}
         {(onTrial || lapsed) && onSubscribe && (
@@ -342,13 +483,27 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
             Subscribe
           </button>
         )}
-        <p className="set-hint">Billing, payments and invoices will appear here once online
-          payments open.</p>
+        {/* ★ A SUBSCRIBED TEACHER CAN ADD MORE (founder, 2026-08-26). Same wizard, same
+            cart; it opens at the subjects step because her details are already on file,
+            and the chooser omits what she already holds live. Each addition runs a full
+            year from the day she makes it — hence the line below the button. */}
+        {active && !onTrial && onSubscribe && (
+          <>
+            <button className="paywall-subscribe set-subscribe" onClick={onSubscribe}>
+              Add subjects &amp; stages
+            </button>
+            <p className="set-hint">Anything you add runs for a full year from the day you
+              add it, alongside what you already have.</p>
+          </>
+        )}
+        {failMsg && <p className="acct-fail" role="alert">{failMsg}</p>}
+        <p className="set-hint">Online payments open soon. Your invoices are here already —
+          one per purchase, on the subscription it paid for.</p>
       </div>
     );
   }
 
-  if (view === "data") {
+  if (view === "data" && !onTrial) {
     return (
       <div className="setwrap">
         {back}
@@ -402,11 +557,14 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
           (founder: two different-size "Settings" texts were showing). */}
       {/* Two profiles, clearly told apart (founder, 2026-08-25): PERSONAL (who she is —
           account details, editable here) on top, TEACHING (what she teaches) below. */}
+      {/* Personal profile — hidden on trial (see `onTrial` above). */}
+      {!onTrial && (
       <button className="set-bigcard" onClick={() => setView("personal")}>
         <span className="set-bigtext"><span className="set-biglab">Personal profile</span>
           <span className="set-bigsub">Your name, email, role and school details</span></span>
         <span className="set-chev">›</span>
       </button>
+      )}
       <button className="set-bigcard" onClick={() => onOpenProfile && onOpenProfile()}>
         <span className="set-bigtext"><span className="set-biglab">Teaching profile</span>
           <span className="set-bigsub">Subjects, classes, sections and periods you teach</span></span>
@@ -417,11 +575,15 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
           <span className="set-bigsub">Plan, billing &amp; usage</span></span>
         <span className="set-chev">›</span>
       </button>
+      {/* Your data & export — hidden on trial (see `onTrial` above). The delete-account
+          flow below keeps its own download regardless. */}
+      {!onTrial && (
       <button className="set-bigcard" onClick={() => setView("data")}>
         <span className="set-bigtext"><span className="set-biglab">Your data &amp; export</span>
           <span className="set-bigsub">Download your Aruvi data</span></span>
         <span className="set-chev">›</span>
       </button>
+      )}
       <button className="set-bigcard" onClick={() => onAsk && onAsk()}>
         <span className="set-bigtext"><span className="set-biglab">Help</span>
           <span className="set-bigsub">Ask Aruvi guide</span></span>
@@ -501,6 +663,14 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
               Everything — your lesson plans, your teaching profile, your chapter notes and
               your progress — is deleted permanently and cannot be recovered. The download
               is the only copy you can keep.
+            </p>
+            {/* Invoices are the one thing deletion does NOT destroy — they are tax
+                records with a statutory retention (the erasure receipt says so). But
+                she loses the ACCOUNT that reaches them, so the honest thing is to tell
+                her to save them now (2026-08-26). */}
+            <p className="acct-final-p acct-final-inv">
+              Your invoices are kept as tax records, but you will no longer be able to
+              download them here — save any you need from Subscription &amp; billing first.
             </p>
             {!didDownload && (
               <button className="acct-final-dl" disabled={!!busy}

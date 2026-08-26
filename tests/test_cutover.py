@@ -99,26 +99,43 @@ def test_the_whole_june_walk():
     _set_today("2027-04-20")
     y = c.get("/academic-year", headers=h).json()
     assert y["current_year"] == "2026-27" and y["next_year"] == "2027-28"
-    assert y["cutover_due"] is False, "April is not June — nothing on offer yet"
+    assert y["cleanup_due"] is False, "April is not June — the year has not turned"
     assert y["cutover_date"] == "2027-06-01"
-    # And the route is guarded, not just the button.
-    assert c.post("/academic-year/cutover", json={"confirm": True},
-                  headers=h).status_code == 409
 
-    # ── 1 June 2027: the new year is offered ───────────────────────────────────
+    # ── 1 June 2027: ARUVI ROLLS HER YEAR ITSELF (founder, 2026-08-26) ─────────
+    # The year is Aruvi's boundary, not a preference: it turns on the date for everyone.
+    # But her TRACKING is carried across, so nothing breaks mid-chapter.
     _set_today("2027-06-01")
     y = c.get("/academic-year", headers=h).json()
-    assert y["cutover_due"] is True, "on the date itself it must be offered"
-    # Still nothing has changed — cutover is HERS to trigger.
-    assert c.get("/section-state", headers=h).json()["states"], "not moved without asking"
+    assert y["current_year"] == "2027-28", "the year turns on the date, unasked"
+    assert "2026-27" in y["prior_years"]
+    assert y["cleanup_due"] is True, "her carried tracking is waiting on her"
+
+    # Her bindings survived the roll — she can finish what she was part-way through.
+    carried = c.get("/section-state", headers=h).json()["states"]
+    assert carried["social_sciences_ix_9A"]["chapter"] == "ch_01_canonical.json"
+    assert carried["social_sciences_ix_9A"]["unit_index"] == 7, "her place is kept"
+
+    # And her card now says WHICH VERSION she is teaching: prepared last year, not this.
+    plans = c.get("/plans/social_sciences/IX", headers=h).json()["plans"]
+    ch1 = next(p for p in plans if p["filename"] == "ch_01_canonical.json")
+    assert ch1["prepared_source_year"] == "2026-27", "the year stamp is derived"
+    # …and it is NOT this year's work, which is what keeps it in the prior-year folder
+    # instead of this year's list. (Setting prepared=True here once emptied the folder
+    # and pulled every one of last year's lessons back into the main list.)
+    assert ch1["prepared"] is False, "last year's plan belongs to last year's folder"
+
+    # The clean-up is the only thing left, and it is hers alone.
     assert c.post("/academic-year/cutover", json={},
                   headers=h).status_code == 400, "confirmation required"
 
-    # ── She confirms ───────────────────────────────────────────────────────────
+    # ── She confirms the fresh start ───────────────────────────────────────────
     r = c.post("/academic-year/cutover", json={"confirm": True}, headers=h).json()
     assert r["status"] == "cutover"
     assert r["closed_year"] == "2026-27" and r["opened_year"] == "2027-28"
-    assert r["sections_carried"] == 2, "9A and 9B carried"
+    # Only 9A was ever tracked (9B exists in her profile but she never bound a chapter),
+    # and clearing counts TRACKING, not sections owned — her profile is untouched.
+    assert r["sections_cleared"] == 1, "the one tracked section cleared"
     assert r["plans_archived"] == 1
 
     # 1 · Last year's plans stay readable, under their own year.
@@ -144,7 +161,7 @@ def test_the_whole_june_walk():
     y = c.get("/academic-year", headers=h).json()
     assert y["current_year"] == "2027-28"
     assert "2026-27" in y["prior_years"]
-    assert y["cutover_due"] is False, "she has moved; stop asking"
+    assert y["cleanup_due"] is False, "she has started fresh; stop asking"
     print("✓ The June walk: offered on the date, hers to confirm, then last year "
           "readable · this year empty · class list carried · notes left behind")
 
@@ -155,7 +172,10 @@ def test_tapping_twice_is_safe():
     h = {"X-Aruvi-User": uid}
     c, _ = _client("2026-08-01")                 # she joins in 2026-27 (see _client)
     c.post("/readiness", json={"subjects": PROFILE["subjects"]}, headers=h)
+    c.post("/section-state", json={"section_key": "social_sciences_ix_9A",
+                                   "chapter": "ch_01_canonical.json"}, headers=h)
     _set_today("2027-06-10")
+    c.get("/academic-year", headers=h)           # the roll happens here, unasked
     first = c.post("/academic-year/cutover", json={"confirm": True}, headers=h).json()
     assert first["already_done"] is False and first["opened_year"] == "2027-28"
 
@@ -163,12 +183,11 @@ def test_tapping_twice_is_safe():
     c.post("/section-state", json={"section_key": "social_sciences_ix_9A",
                                    "chapter": "ch_02_canonical.json"}, headers=h)
     # ...then taps again.
-    # The second tap lands when the NEXT year (2028-29) is still a year away, so the
-    # date guard would 409 it. It must recognise that she has already moved instead.
+    # THE POINT: she works in the new year, then taps again. A second clear would wipe
+    # the tracking she has just started — so it must report already_done and do nothing.
     second = c.post("/academic-year/cutover", json={"confirm": True}, headers=h).json()
     assert second["already_done"] is True
     assert second["opened_year"] == "2027-28", "no third year invented"
-    # The work she did after cutting over is untouched.
     assert c.get("/section-state", headers=h).json()["states"], "second tap wiped nothing"
     print("✓ Tapping twice reports already_done and destroys nothing")
 

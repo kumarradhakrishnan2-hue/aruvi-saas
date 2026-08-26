@@ -16,7 +16,7 @@ from typing import Any, Dict, List, Optional
 
 from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.responses import JSONResponse, Response, StreamingResponse
 from pydantic import BaseModel
 
 # Register all subjects (import side-effect).
@@ -39,6 +39,7 @@ from aruvi_core.adapters.header_auth_provider import HeaderAuthProvider
 from aruvi_core.adapters.plan_note_repository_file import PlanNoteRepositoryFileImpl
 from aruvi_core.adapters.data_rights_service_file import DataRightsServiceFileImpl
 from aruvi_core.adapters.entitlement_repository_file import EntitlementRepositoryFileImpl
+from aruvi_core.adapters.invoice_repository_file import InvoiceRepositoryFileImpl
 from aruvi_core.adapters.manual_billing_provider import ManualBillingProvider
 from aruvi_core.adapters.erasure_log_file import ErasureLogFileImpl
 from aruvi_core.adapters.year_cutover_file import YearCutoverFileImpl
@@ -46,7 +47,8 @@ from aruvi_core.adapters.file_notifier import FileNotifier
 from aruvi_core.adapters.smtp_notifier import SmtpNotifier
 from aruvi_core.ports import EmailMessage
 from api import mail_templates
-from aruvi_core.ports import Account, AcademicYear, Entitlement, PlanNote, StaleNoteWrite
+from aruvi_core.ports import (Account, AcademicYear, Attachment, Entitlement, Invoice,
+                              InvoiceLine, PlanNote, StaleNoteWrite)
 from aruvi_core.grades import stage_for, UnknownGradeError
 from aruvi_core.report_competency import build_report as build_competency_report
 # NOTE: the PDF/DOCX exporters are imported lazily inside their endpoints (not here)
@@ -134,6 +136,8 @@ data_rights = DataRightsServiceFileImpl(config.STATE_DIR,
 # Enforcement is OFF by default (config.ENTITLEMENT_ENFORCED) so the seam is real but
 # daily dev is undisturbed; the founder operates it via aruvi-scripts/entitlement.py.
 entitlement_repo = EntitlementRepositoryFileImpl(config.STATE_DIR)
+invoice_repo = InvoiceRepositoryFileImpl(config.STATE_DIR, prefix=config.INVOICE_PREFIX,
+                                        start=config.INVOICE_START)
 billing_provider = ManualBillingProvider(entitlement_repo)
 # The one store the erase walk must never traverse — see erasure_log_file.py.
 erasure_log = ErasureLogFileImpl(config.STATE_DIR)
@@ -227,15 +231,75 @@ def _default_academic_year() -> AcademicYear:
     )
 
 
+def _auto_roll_year(tenant_id: str, user_id: str, current: AcademicYear) -> AcademicYear:
+    """★ ARUVI'S OWN CUTOVER (founder, 2026-08-26) — automatic, on the date, for everyone.
+
+    The academic year is Aruvi's boundary, not a preference: come the cutover date, last
+    year's work belongs to last year and new work belongs to the new year. This runs
+    whether or not the teacher has agreed to anything, because the alternative is a folder
+    labelled 2026-27 that quietly fills with 2027-28 content — two curricula under one
+    label, and no way for her to tell which version is in her hand.
+
+    What it does NOT do is interrupt her teaching. Her SECTION BINDINGS ARE CARRIED
+    ACROSS, so on the morning of 1 June her cards look exactly as they did on 31 May and
+    she can finish whatever she is mid-way through. What changes is provenance: those
+    plans were prepared last year, so they now sit in the prior-year folder and her cards
+    stamp them "2026-27 version" — which is precisely the signal that she is teaching last
+    year's material to this year's class.
+
+    `cleanup_pending` records that the carry happened. The teacher-side offer — starting
+    fresh for the new cohort — is the ONLY part that waits for her."""
+    to_year = YearCutoverFileImpl.next_year_id(current.year_id)
+    starts_on, ends_on = YearCutoverFileImpl.year_bounds(to_year)
+    opened = AcademicYear(year_id=to_year, starts_on=starts_on, ends_on=ends_on,
+                          is_current=True, cleanup_pending=True)
+    academic_year_repo.open_year(tenant_id, user_id, opened)
+    academic_year_repo.set_current(tenant_id, user_id, to_year)
+    # Carry her tracking across so nothing breaks mid-chapter. NOTE the shape: this
+    # adapter's load_all returns plain DICTS, not SectionState objects — attribute access
+    # here silently carried nothing at all until it was caught (2026-08-26). Per-row
+    # try/except so one malformed row cannot cost her every other binding; a whole-copy
+    # failure is logged rather than swallowed, because a teacher whose tracking vanished
+    # on 1 June must not be a mystery.
+    try:
+        carried = section_state_repo.load_all(tenant_id, user_id, current.year_id) or {}
+        for skey, st in carried.items():
+            try:
+                section_state_repo.save_one(
+                    tenant_id, user_id, to_year, skey,
+                    st.get("chapter"), st.get("unit_index"), bool(st.get("done")),
+                    st.get("bookmark_unit"), st.get("bookmark_phase"))
+            except Exception as row_err:    # noqa: BLE001
+                print(f"[cutover] could not carry {skey!r} into {to_year}: {row_err}",
+                      flush=True)
+    except Exception as e:                  # noqa: BLE001
+        print(f"[cutover] tracking carry-forward failed for "
+              f"{tenant_id}/{user_id} → {to_year}: {e}", flush=True)
+    return opened
+
+
+def _prior_years_desc(tenant_id: str, user_id: str, current_id: str) -> List[str]:
+    """Her earlier academic years, most recent first. Used to trace where a plan she is
+    still teaching was originally prepared."""
+    years = academic_year_repo.list_years(tenant_id, user_id) or []
+    return sorted([y.year_id for y in years if y.year_id != current_id], reverse=True)
+
+
 def _resolve_year(tenant_id: str, user_id: str, year_id: Optional[str] = None) -> str:
     """The year a teaching-state request addresses: the explicit ?year_id= if given,
-    else the teacher's current year (bootstrapped on first touch)."""
+    else the teacher's current year (bootstrapped on first touch, and rolled forward
+    automatically once Aruvi's cutover date has passed — see _auto_roll_year)."""
     if year_id and year_id.strip():
         return year_id.strip()
     current = academic_year_repo.current(tenant_id, user_id)
     if current is None:
         current = _default_academic_year()
         academic_year_repo.open_year(tenant_id, user_id, current)
+        return current.year_id
+    nxt = YearCutoverFileImpl.next_year_id(current.year_id)
+    due_on = YearCutoverFileImpl.cutover_date(nxt, config.CUTOVER_MONTH_DAY)
+    if nxt != current.year_id and due_on and _today() >= due_on:
+        current = _auto_roll_year(tenant_id, user_id, current)
     return current.year_id
 
 
@@ -260,6 +324,54 @@ def _entitlement_of(tenant_id: str) -> Entitlement:
     return ent
 
 
+def _scope_words(scope: str) -> str:
+    """"science/middle" → "Science · Middle" — a scope is named to the teacher the same
+    way in a 402, in the mail and in the Settings ledger."""
+    return mail_templates.scope_label(scope)
+
+
+def _date_words(iso: str) -> str:
+    return mail_templates.fmt_date(iso)
+
+
+def _scope_until(ent: Entitlement, scope: str) -> str:
+    """When this scope runs to. "" = no time limit. Per-scope date first (2026-08-26),
+    falling back to the entitlement-level one for records written before per-scope dates
+    and for the "*" grants, whose breadth has no per-scope meaning."""
+    return (ent.scope_valid_until or {}).get(scope) or ent.valid_until or ""
+
+
+def _scope_live(ent: Entitlement, scope: str, today: str) -> bool:
+    until = _scope_until(ent, scope)
+    return (not until) or until >= today
+
+
+def _live_scopes(ent: Entitlement, today: str) -> List[str]:
+    """The scopes she can still USE today. The trial's "*" is live by construction — its
+    cap is chapters, not days."""
+    if ent.status == "expired":
+        return []
+    return [s for s in (ent.scopes or []) if _scope_live(ent, s, today)]
+
+
+def _entitlement_lapsed(ent: Optional[Entitlement], today: str) -> bool:
+    """★ LAPSED MEANS NOTHING IS LIVE (founder, 2026-08-26). With per-scope expiry a
+    teacher can hold one live subject and one expired one; she is still a paying
+    customer, and the productivity tools (tracker, profile, notes) are not per-subject,
+    so they stay open while ANY scope is live. Generation is refused per scope — that
+    gate is the one that knows which subject she asked for.
+
+    Revocation (status "expired") still lapses everything at once: it is the founder
+    withdrawing the whole subscription, not a date passing."""
+    if ent is None:
+        return False
+    if ent.status == "trial":
+        return False
+    if ent.status == "expired":
+        return True
+    return not _live_scopes(ent, today)
+
+
 def _check_entitlement(tenant_id: str, subject: str, grade: str,
                        chapter_number: int) -> None:
     """Raise HTTP 402 when generation is not covered. No-op when enforcement is off
@@ -273,18 +385,31 @@ def _check_entitlement(tenant_id: str, subject: str, grade: str,
             return
         if len(ent.trial_chapters) < config.TRIAL_CHAPTER_CAP:
             return
+        # ★ The promise is now CONDITIONAL, because the trial purge made the old
+        #   sentence false (2026-08-26 evening). "Your 3 chapters stay yours" was true
+        #   for a teacher who stayed on the exhausted trial, and false the moment she
+        #   subscribed to a different subject — the one path where she would remember
+        #   having been told otherwise. It says what it can keep instead.
         raise HTTPException(status_code=402, detail=(
             f"Your free trial covers {config.TRIAL_CHAPTER_CAP} chapters, and you have "
-            f"used them. Your {config.TRIAL_CHAPTER_CAP} chapters stay yours — "
-            f"subscribe to prepare new ones."))
+            f"used them. Subscribe to keep preparing — the chapters you made in a "
+            f"subject you subscribe to come with you."))
     if ent.status in ("active", "grace"):
-        if ent.valid_until and ent.valid_until < _today().isoformat():
-            raise HTTPException(status_code=402, detail=(
-                "Your subscription has ended. Renew to keep preparing new chapters — "
-                "everything you made stays yours."))
         stage = stage_for(grade)
-        if "*" in ent.scopes or f"{subject}/{stage}" in ent.scopes:
-            return
+        today = _today().isoformat()
+        scope = f"{subject}/{stage}"
+        # ★ THE DATE TEST IS NOW PER SCOPE (2026-08-26). It used to gate on the
+        #   entitlement-level valid_until, which with per-scope expiry would refuse a
+        #   live subject because a DIFFERENT one had run out — or, worse, allow an
+        #   expired one because a later-bought subject held the top-level date open.
+        for held in ("*", scope):
+            if held in ent.scopes:
+                if _scope_live(ent, held, today):
+                    return
+                raise HTTPException(status_code=402, detail=(
+                    f"Your subscription for {_scope_words(scope)} ended on "
+                    f"{_date_words(_scope_until(ent, held))}. Renew it to keep preparing "
+                    f"its chapters — everything you made stays yours."))
         raise HTTPException(status_code=402, detail=(
             "Your subscription covers a different subject. Add this one to keep "
             "preparing its chapters."))
@@ -309,11 +434,9 @@ def _check_productivity(tenant_id: str) -> None:
     if not config.ENTITLEMENT_ENFORCED:
         return
     ent = entitlement_repo.load(tenant_id)
-    lapsed = ent is not None and (
-        ent.status == "expired"
-        or (ent.status in ("active", "grace")
-            and ent.valid_until and ent.valid_until < _today().isoformat()))
-    if lapsed:
+    # ★ Per-scope expiry (2026-08-26) makes "lapsed" mean NOTHING IS LIVE — see
+    #   _entitlement_lapsed. One live subject keeps the tracker and the profile open.
+    if _entitlement_lapsed(ent, _today().isoformat()):
         raise HTTPException(status_code=402, detail=(
             "Your subscription has ended. Renew to use tracking and profile tools — "
             "your lesson plans stay available to open and export."))
@@ -723,9 +846,31 @@ def get_plans(subject: str, grade: str, year_id: Optional[str] = None,
         if isinstance(prec, dict):
             p["prepared_at"] = prec.get("at")
             p["prepared_periods"] = prec.get("periods")
+            # Set only when she carried this chapter forward from an earlier year.
+            p["prepared_source_year"] = prec.get("source_year")
         else:
             p["prepared_at"] = prec
             p["prepared_periods"] = None
+            p["prepared_source_year"] = None
+        # ★ DERIVED PROVENANCE (founder, 2026-08-26). Aruvi's cutover rolls her year on the
+        # date and carries her BINDINGS across, but not her prepared records — so on 1 June
+        # a chapter she is still teaching is bound in the new year yet prepared only in the
+        # old one. Look back and say so: her card must read "2026-27 version", because she
+        # is teaching last year's material to this year's class and the constitution or the
+        # textbook edition may since have moved. Explicit source_year (she carried it
+        # forward herself) wins; this fills in for everything the roll left behind.
+        # ★ `prepared` STAYS FALSE (founder, 2026-08-26). It answers "is this THIS year's
+        # work?", and the answer is no — which is exactly what puts the plan in the
+        # prior-year folder rather than this year's list. Setting it true here pulled all
+        # of last year's lessons back into the main list and left the folder empty, which
+        # is the opposite of the cutover the founder asked for. Only the STAMP is derived:
+        # a section card finds its plan by filename regardless of this flag, so a chapter
+        # she is still teaching still says which version she holds.
+        if not p.get("prepared") and not p.get("prepared_source_year"):
+            for prior_year in _prior_years_desc(tenant_id, user_id, year):
+                if pkey in (prepared_plans_repo.load_all(tenant_id, user_id, prior_year) or {}):
+                    p["prepared_source_year"] = prior_year
+                    break
         p["total_units"] = None
         try:
             saved = data.load_saved_plan(subject, grade, p["filename"]) or {}
@@ -1022,6 +1167,10 @@ class PlanArchiveRequest(BaseModel):
     # Optional: the teacher's chosen period count for this chapter (PrepareLesson). Only
     # /plans-prepared reads it; archive/restore ignore it. None = don't record/change periods.
     periods: Optional[int] = None
+    # Optional: the academic year this plan was ORIGINALLY prepared in, set when she brings a
+    # previous year's chapter forward from the prior-year folder (founder, 2026-08-26). It
+    # drives the "2026-27 version" stamp on her section card — provenance, not a copy.
+    source_year: Optional[str] = None
 
 
 def _plan_key(subject: str, grade: str, filename: str) -> str:
@@ -1093,7 +1242,7 @@ def mark_plan_prepared(req: PlanArchiveRequest, year_id: Optional[str] = None,
     year = _resolve_year(tenant_id, user_id, year_id)
     key = _plan_key(req.subject, req.grade, req.filename)
     try:
-        prepared_plans_repo.mark(tenant_id, user_id, year, key, req.periods)
+        prepared_plans_repo.mark(tenant_id, user_id, year, key, req.periods, req.source_year)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to mark plan prepared: {str(e)}")
     return {"status": "prepared"}
@@ -1257,17 +1406,23 @@ def get_academic_year(identity: tuple = Depends(_current_identity)) -> Dict[str,
     from her stored current year — never from the browser's clock, which a teacher can
     change and a phone in another timezone gets wrong anyway."""
     tenant_id, user_id = identity
-    current_id = _resolve_year(tenant_id, user_id)
+    current_id = _resolve_year(tenant_id, user_id)      # may roll her forward, by design
     next_id = YearCutoverFileImpl.next_year_id(current_id)
     due_on = YearCutoverFileImpl.cutover_date(next_id, config.CUTOVER_MONTH_DAY)
-    cutover_due = bool(due_on and _today() >= due_on and next_id != current_id)
     years = academic_year_repo.list_years(tenant_id, user_id) or []
     prior = [y.year_id for y in years if y.year_id != current_id]
+    cur = next((y for y in years if y.year_id == current_id), None)
+    # The ONLY thing still waiting on her: last year's tracking was carried into this year
+    # so she could finish mid-chapter, and she has not yet chosen to start fresh.
+    cleanup_due = bool(cur and cur.cleanup_pending)
     return {
         "current_year": current_id,
         "next_year": next_id,
         "prior_years": prior,
-        "cutover_due": cutover_due,
+        # Her carried-forward tracking is waiting to be cleared (the teacher-side half).
+        "cleanup_due": cleanup_due,
+        # Retained for older clients; the year itself is no longer hers to trigger.
+        "cutover_due": cleanup_due,
         "cutover_date": due_on.isoformat() if due_on else None,
         "today": _today().isoformat(),
         "simulated": bool(config.SIMULATED_TODAY),
@@ -1275,55 +1430,56 @@ def get_academic_year(identity: tuple = Depends(_current_identity)) -> Dict[str,
 
 
 class CutoverRequest(BaseModel):
-    """Body for POST /academic-year/cutover. `confirm` must be True — cutover is hers to
-    trigger (§0's pull-never-push rule); nothing rolls a teacher's year on a timer."""
+    """Body for POST /academic-year/cutover. `confirm` must be True — clearing a teacher's
+    tracking is destructive of her place in every chapter, so it is never implicit."""
     confirm: bool = False
 
 
 @app.post("/academic-year/cutover")
 def do_cutover(req: CutoverRequest,
                identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
-    """Move this teacher into the next academic year, on her confirmation.
+    """THE TEACHER-SIDE HALF: start fresh for the new cohort, on her confirmation.
 
-    What she gets: a clean set of section cards, her class list untouched, and last
-    year's plans still readable under their own year. What she does NOT get is anything
-    deleted — see the YearCutover port for why cutover moves nothing at all.
+    The YEAR itself is Aruvi's and rolls automatically on the cutover date
+    (_auto_roll_year) — this route no longer moves it. What is left, and what only she can
+    decide, is whether to CLEAR the tracking that was carried across so she could finish
+    mid-chapter. Clearing it gives her the empty cards a new cohort deserves; her class
+    list, her plans and her notes are untouched either way.
 
-    Idempotent: tapping twice reports `already_done` instead of opening a third year."""
+    Idempotent: with nothing pending, a second tap reports `already_done` and clears
+    nothing (she may have started tracking this year's chapters by then)."""
     if not req.confirm:
         raise HTTPException(status_code=400,
                             detail='Confirmation required: send {"confirm": true}.')
     tenant_id, user_id = identity
     current_id = _resolve_year(tenant_id, user_id)
-    next_id = YearCutoverFileImpl.next_year_id(current_id)
-    due_on = YearCutoverFileImpl.cutover_date(next_id, config.CUTOVER_MONTH_DAY)
-    if due_on and _today() < due_on:
-        # Two different situations look identical from the date alone, and telling them
-        # apart matters (found while testing the double tap):
-        #   · she has ALREADY cut over — her current year is one she moved into, and the
-        #     NEXT one is naturally still months away. A second tap must say so.
-        #   · she has never moved and the new year simply is not open yet.
-        # Her year list distinguishes them: a prior year exists only if she has moved.
-        prior_exists = any(y.year_id != current_id
-                           for y in (academic_year_repo.list_years(tenant_id, user_id) or []))
-        if prior_exists:
-            return {"status": "already_done", "closed_year": current_id,
-                    "opened_year": current_id, "sections_carried": 0,
-                    "plans_archived": 0, "already_done": True}
-        # Guard the route, not just the button: the new year is not on offer yet.
-        raise HTTPException(status_code=409, detail=(
-            f"The {next_id} year opens on {due_on.isoformat()}. "
-            "Nothing has changed."))
+    years = academic_year_repo.list_years(tenant_id, user_id) or []
+    cur = next((y for y in years if y.year_id == current_id), None)
+    prior = [y.year_id for y in years if y.year_id != current_id]
+    if cur is None or not cur.cleanup_pending:
+        return {"status": "already_done", "closed_year": (prior[-1] if prior else current_id),
+                "opened_year": current_id, "sections_cleared": 0,
+                "sections_carried": 0, "plans_archived": 0, "already_done": True}
     try:
-        result = year_cutover.cutover(tenant_id, user_id, current_id, next_id)
+        carried = section_state_repo.load_all(tenant_id, user_id, current_id) or {}
+        cleared = len(carried)
+        section_state_repo.clear_all(tenant_id, user_id, current_id)
+        cur.cleanup_pending = False
+        academic_year_repo.open_year(tenant_id, user_id, cur)   # idempotent in-place update
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Cutover failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Could not start fresh: {str(e)}")
+    closed = prior[-1] if prior else current_id
+    plans_archived = 0
+    try:
+        plans_archived = len(prepared_plans_repo.load_all(tenant_id, user_id, closed) or {})
+    except Exception:                       # noqa: BLE001 — a count must never fail the act
+        pass
     return {
-        "status": "already_done" if result.already_done else "cutover",
-        "closed_year": result.closed_year, "opened_year": result.opened_year,
-        "sections_carried": result.sections_carried,
-        "plans_archived": result.plans_archived,
-        "already_done": result.already_done,
+        "status": "cutover", "closed_year": closed, "opened_year": current_id,
+        "sections_cleared": cleared,
+        # What carried into the new year is her PROFILE, which cutover never touches.
+        "sections_carried": cleared,
+        "plans_archived": plans_archived, "already_done": False,
     }
 
 
@@ -1339,13 +1495,15 @@ def get_entitlement(identity: tuple = Depends(_current_identity)) -> Dict[str, A
     #   2026-08-26: the web half tested `status === "expired"` only, so a subscription
     #   that ran out BY DATE kept its My Classes tab, "+" and edit pen while the server
     #   was already refusing its writes). Revoked OR date-expired — one answer, one place.
-    lapsed = config.ENTITLEMENT_ENFORCED and (
-        ent.status == "expired"
-        or (ent.status in ("active", "grace")
-            and bool(ent.valid_until) and ent.valid_until < _today().isoformat()))
+    #   With per-scope expiry it means NOTHING IS LIVE; `live_scopes` carries the rest,
+    #   so the client never has to compare a date either.
+    today = _today().isoformat()
+    lapsed = config.ENTITLEMENT_ENFORCED and _entitlement_lapsed(ent, today)
     return {
         "plan_id": ent.plan_id, "status": ent.status, "valid_until": ent.valid_until,
         "lapsed": lapsed,
+        "scope_valid_until": ent.scope_valid_until,
+        "live_scopes": _live_scopes(ent, today),
         "source": ent.source, "scopes": ent.scopes,
         "trial_chapters_used": len(ent.trial_chapters),
         "trial_chapter_cap": config.TRIAL_CHAPTER_CAP,
@@ -1394,7 +1552,7 @@ def _guard_email_not_taken(email: str, self_id: str) -> None:
     for other in account_repo.find_all_by_email(needle):
         if other.account_id != self_id:
             raise HTTPException(status_code=409, detail=(
-                "This email is already used by another Aruvi account. "
+                "This email is already in use by another Aruvi account. "
                 "Use a different address, or sign in with that account's mobile number."))
 
 
@@ -1489,15 +1647,9 @@ def _apply_subscription_profile(tenant_id: str, user_id: str,
         added when missing;
       · subjects OUTSIDE every purchased scope are DROPPED (trial test artifacts —
         founder: the subscription overrides the trial profile), and their section
-        pointers are cleared server-side. Their PLANS remain on the server; they
-        reappear if that subject is ever subscribed.
-      · ★ EXCEPT one that she has actually PREPARED PLANS in (founder, 2026-08-26).
-        The paywall promises "Your 3 chapters stay yours" — and dropping her trial
-        subject from the profile broke that promise the moment she paid for a
-        different one: the plans sat on disk with no chooser entry able to reach
-        them. Such a subject is KEPT so she can open, export and print what she
-        made. It is not a licence to prepare more there — genon_make_plan's own gate
-        still answers "Your subscription covers a different subject."
+        pointers are cleared server-side. ★ NO EXCEPTION: a morning rule that kept a
+        subject she had prepared plans in was reversed the same evening (2026-08-26)
+        — see the block below and _purge_trial_artifacts.
     The tour-end "Are these your sections?" prompt is the designed amend moment, so
     defaults are safe. Full-replace save through the same repo the API uses."""
     slugify = lambda name: (name or "").lower().replace(" ", "_")
@@ -1546,20 +1698,14 @@ def _apply_subscription_profile(tenant_id: str, user_id: str,
             "budget": budget,
         })
 
-    # An out-of-scope subject she has PREPARED PLANS in survives untouched, so those
-    # plans stay reachable in My Lessons (founder, 2026-08-26 — see the docstring).
-    # A subject with no plans is a pure trial artifact and still goes.
-    try:
-        prepared = prepared_plans_repo.load_all(tenant_id, user_id, year) or {}
-    except Exception:
-        prepared = {}
-    with_plans = {str(k).split("/")[0].lower() for k in prepared.keys() if "/" in str(k)}
-    bought = set(by_subj.keys())
-    for s in existing:
-        sslug = slugify(s.get("name", ""))
-        if sslug in bought or sslug not in with_plans:
-            continue
-        new_subjects.append(s)          # her own record, exactly as it stood
+    # ★★ REVERSED THE SAME DAY (founder, 2026-08-26 evening). The morning's rule KEPT an
+    # out-of-scope subject she had prepared plans in, so those plans stayed reachable.
+    # Live, that read as clutter, not generosity: *"the {x,y} stands there in My Lessons
+    # with no use, clogging the space for a trial reason that is no longer valid."* A
+    # subject she trialled and then did not subscribe to is finished — she cannot prepare
+    # in it, cannot track it, and every card of it is a door that no longer opens. So
+    # NOTHING out of scope survives the first purchase, and _purge_trial_artifacts
+    # removes the records those subjects left behind.
 
     # Clear section pointers of everything dropped (the plans themselves stay).
     kept_keys = set()
@@ -1587,6 +1733,172 @@ def pretty_subject(slug: str) -> str:
     return " ".join(w.capitalize() for w in (slug or "").split("_"))
 
 
+def _financial_year(d: date) -> str:
+    """Indian FY, April→March: 26 Aug 2026 → "2026-27", 3 Feb 2027 → "2026-27". The same
+    April anchor the academic year already uses, so a teacher's invoice series and her
+    school year turn over together."""
+    y = d.year if d.month >= 4 else d.year - 1
+    return f"{y}-{str(y + 1)[-2:]}"
+
+
+_CLASS_NO = {"iii": "3", "iv": "4", "v": "5", "vi": "6",
+             "vii": "7", "viii": "8", "ix": "9", "x": "10"}
+
+
+def _scope_classes(scope: str) -> str:
+    """★ THE CLASSES THIS SCOPE ACTUALLY COVERS, PER SUBJECT (founder, 2026-08-26).
+
+    An invoice may not say "Class 9 (Class 10 coming soon)". A promise about next year
+    has no business on a document of record, and — the founder's real point — **the
+    answer is per SUBJECT, not per stage**: the day Class 10 lands, it will land for one
+    subject before another, and a stage-wide constant would then be wrong for both (too
+    small for the one that has it, a promise for the one that does not).
+
+    So it is derived from the content that EXISTS: the stage's grades intersected with
+    the grades this subject is actually authored for. Science secondary is `ix` alone
+    today and becomes "Classes 9 and 10" by itself, on the day its Class 10 chapters are
+    added — no constant to remember to edit, and no invoice that was ever untrue.
+    """
+    subject, _, stage = str(scope or "").partition("/")
+    if not subject or scope == "*":
+        return ""
+    try:
+        offered = set(data.list_grades(subject))
+    except Exception:                                  # noqa: BLE001
+        return ""
+    nums = [_CLASS_NO[g] for g in _STAGE_GRADES.get(stage, [])
+            if g in offered and g in _CLASS_NO]
+    if not nums:
+        return ""
+    if len(nums) == 1:
+        return f"Class {nums[0]}"
+    return "Classes " + ", ".join(nums[:-1]) + " and " + nums[-1]
+
+
+def _build_invoice(tenant_id: str, user_id: str, acct: Any, scopes: List[str],
+                   scope_valid_until: Dict[str, str]) -> Optional[Invoice]:
+    """The invoice for ONE purchase — the scopes in THIS cart, never the whole holding.
+
+    An invoice records a transaction, so it lists what was paid for on the day, at the
+    price of the day, with each line's own validity. What she now HOLDS is a different
+    question, answered by the mail's second block and by the Settings page.
+
+    Tax: none while config.GSTIN is unset (founder, 2026-08-26) — the note says so in
+    words. When a GSTIN and rate exist, TAX_INCLUSIVE decides whether the price already
+    contained the tax (split it out, total unchanged) or the tax is added on top.
+    Money is whole rupees throughout; the inclusive split rounds the tax DOWN so
+    subtotal + tax == total exactly, and never invents a paisa.
+    """
+    lines: List[InvoiceLine] = []
+    today = _today().isoformat()
+    for s in scopes:
+        # Label from the shared vocabulary; CLASSES from the content that exists, per
+        # subject (see _scope_classes) — never the stage-wide "(Class 10 coming soon)".
+        classes = _scope_classes(s)
+        label = mail_templates.scope_label(s)
+        lines.append(InvoiceLine(
+            scope=s, description=f"{label} — {classes}" if classes else label,
+            quantity=1, unit_amount=config.PRICE_PER_SUBJECT_STAGE,
+            valid_from=today, valid_until=(scope_valid_until or {}).get(s, "")))
+    if not lines:
+        return None
+    charged = sum(ln.unit_amount * ln.quantity for ln in lines)
+
+    if config.GSTIN and config.TAX_RATE > 0:
+        rate = config.TAX_RATE / 100.0
+        if config.TAX_INCLUSIVE:
+            total = charged
+            subtotal = int(round(total / (1 + rate)))
+            tax = total - subtotal
+        else:
+            subtotal = charged
+            tax = int(round(subtotal * rate))
+            total = subtotal + tax
+        note = (f"Includes {config.TAX_LABEL} at {config.TAX_RATE:g}%."
+                if config.TAX_INCLUSIVE else
+                f"{config.TAX_LABEL} at {config.TAX_RATE:g}% has been added.")
+    else:
+        subtotal = total = charged
+        tax = 0
+        note = "No tax charged — Aruvi is not registered for GST."
+
+    place = ", ".join(p for p in [getattr(acct, "city", ""), getattr(acct, "state", "")] if p)
+    number = invoice_repo.next_number(_financial_year(_today()))
+    return Invoice(
+        number=number, issued_at=datetime.now(timezone.utc).isoformat(),
+        tenant_id=tenant_id, user_id=user_id,
+        bill_to_name=getattr(acct, "display_name", "") or "",
+        bill_to_email=getattr(acct, "email", "") or "",
+        bill_to_phone=getattr(acct, "phone", "") or user_id,
+        bill_to_school=getattr(acct, "school_name", "") or "",
+        bill_to_place=place,
+        lines=lines, subtotal=subtotal, tax_amount=tax, tax_note=note,
+        total=total, amount_paid=total,
+        payment_method="Recorded manually (online payment not yet open)",
+        seller_gstin=config.GSTIN,
+    )
+
+
+def _purge_trial_artifacts(tenant_id: str, user_id: str, scopes: List[str]) -> Dict[str, int]:
+    """★ THE TRIAL PURGE (founder, 2026-08-26 evening).
+
+    A teacher trials subjects {x, y}, spends her three chapters, then subscribes to
+    something else. Her x and y lessons stay in My Lessons for ever after — and every
+    one of them is a door that no longer opens: she cannot prepare in that subject,
+    cannot track it, cannot add sections to it. The founder's words: *"the {x,y} stands
+    there in My Lessons with no use, clogging the space for a trial reason that is no
+    longer valid."* So on her FIRST purchase, everything the trial left behind in a
+    subject she did NOT buy is removed: prepared-plan records, section state, chapter
+    notes.
+
+    Three boundaries:
+      · Only on the FIRST purchase (the prior entitlement was a trial). A later addition
+        never touches anything — by then there are no trial artifacts left.
+      · Only subjects OUTSIDE the purchase. A subject she trialled and then bought keeps
+        every chapter, every pointer and every note: that is the whole reason a trial
+        exists.
+      · The saved PLAN FILES are never touched. They are shared library content in
+        DATA_DIR, not her property to delete — the same file may be served to another
+        teacher a minute later. What is hers, and what goes, are the RECORDS in
+        STATE_DIR that put those plans on her screen.
+
+    Never raises: a purge that fails must not fail an activation she has paid for.
+    """
+    bought = {str(s).split("/")[0].lower() for s in (scopes or []) if s}
+    counts = {"plans": 0, "sections": 0, "notes": 0}
+    try:
+        year = _resolve_year(tenant_id, user_id)
+    except Exception:
+        return counts
+    subj_of = lambda key: str(key).split("/")[0].lower()
+
+    try:
+        for key in list((prepared_plans_repo.load_all(tenant_id, user_id, year) or {})):
+            if "/" in str(key) and subj_of(key) not in bought:
+                prepared_plans_repo.unmark(tenant_id, user_id, year, key)
+                counts["plans"] += 1
+    except Exception:
+        pass
+    # Section keys are "{subject}_{grade}_{tag}", not "/"-separated — the profile drop
+    # above clears most of them, but a section whose subject never made it into the
+    # readiness profile (bound during first run, then edited away) would survive it.
+    try:
+        for key in list((section_state_repo.load_all(tenant_id, user_id, year) or {})):
+            if str(key).split("_")[0].lower() not in bought:
+                section_state_repo.delete_one(tenant_id, user_id, year, key)
+                counts["sections"] += 1
+    except Exception:
+        pass
+    try:
+        for key in list((plan_note_repo.load_all(tenant_id, user_id, year) or {})):
+            if subj_of(key) not in bought:
+                plan_note_repo.delete(tenant_id, user_id, year, key)
+                counts["notes"] += 1
+    except Exception:
+        pass
+    return counts
+
+
 class CheckoutRequest(BaseModel):
     """Body for POST /onboarding/checkout — the subscribe path's final step."""
     scopes: List[str]          # ["social_sciences/middle", ...] — the cart
@@ -1600,7 +1912,12 @@ class CheckoutRequest(BaseModel):
 
 def _send_subscription_confirmation(to: str, name: str, scopes: List[str],
                                     amount_inr: int, valid_until: str,
-                                    mobile: str) -> Dict[str, Any]:
+                                    mobile: str,
+                                    scope_valid_until: Dict[str, str] = None,
+                                    added: List[str] = None,
+                                    invoice: Optional[Invoice] = None,
+                                    invoice_pdf: Optional[bytes] = None
+                                    ) -> Dict[str, Any]:
     """Send the activation confirmation. NEVER raises and never blocks the answer the
     teacher is waiting for: a mail server having a bad minute must not turn a successful
     subscription into an error. Returns the notifier's result for the response body.
@@ -1612,17 +1929,33 @@ def _send_subscription_confirmation(to: str, name: str, scopes: List[str],
         return {"status": "skipped", "reason": "no email on the account"}
     body = mail_templates.subscription_confirmation(
         name=name, scopes=list(scopes or []), amount_inr=amount_inr,
-        valid_until=valid_until, mobile=mobile)
+        valid_until=valid_until, mobile=mobile,
+        scope_valid_until=dict(scope_valid_until or {}),
+        added=list(added) if added is not None else None,
+        invoice_number=(invoice.number if invoice else ""),
+        unit_amount=config.PRICE_PER_SUBJECT_STAGE,
+        has_attachment=bool(invoice is not None and invoice_pdf))
+    # The invoice rides along (2026-08-26). The BODY names the invoice number either
+    # way, so a transport that drops attachments still delivers a complete message —
+    # and she can always fetch the same file again from Settings.
+    attachments = []
+    if invoice is not None and invoice_pdf:
+        attachments.append(Attachment(
+            filename=f"Aruvi-invoice-{invoice.number.replace('/', '-')}.pdf",
+            content=invoice_pdf, mime_type="application/pdf"))
     result = notifier.send(EmailMessage(
         to=to.strip(), subject=body["subject"], text=body["text"],
-        reply_to=config.MAIL_REPLY_TO))
+        html=body.get("html", ""),
+        reply_to=config.MAIL_REPLY_TO, attachments=list(attachments)))
     if config.MAIL_BCC_FOUNDER and config.MAIL_FROM \
             and config.MAIL_FROM.strip().lower() != to.strip().lower():
+        # The founder's copy is a SALES LOG, so it leads with who bought — and stays
+        # plain text on purpose: a log is read as a list, not as a designed page.
         notifier.send(EmailMessage(
             to=config.MAIL_FROM,
             subject=f"[Aruvi] New subscription — {name or mobile}",
             text=f"To: {to}\nMobile: {mobile}\n\n" + body["text"],
-            reply_to=config.MAIL_REPLY_TO))
+            reply_to=config.MAIL_REPLY_TO, attachments=list(attachments)))
     return result
 
 
@@ -1640,6 +1973,18 @@ def onboarding_checkout(req: CheckoutRequest,
     scopes = [s.strip() for s in (req.scopes or []) if s.strip()]
     if not scopes:
         raise HTTPException(status_code=400, detail="Pick at least one subject & stage.")
+    # ★ NOTHING SHE ALREADY HAS, LIVE, MAY BE BOUGHT AGAIN (founder, 2026-08-26). The
+    #   chooser does not offer such a scope; this is the net, and it also states the
+    #   remaining time, which is the only fact that makes the refusal make sense.
+    prior = entitlement_repo.load(tenant_id)
+    today = _today().isoformat()
+    if prior is not None and prior.status != "trial":
+        for s in scopes:
+            if s in prior.scopes and _scope_live(prior, s, today):
+                raise HTTPException(status_code=409, detail=(
+                    f"You already have {_scope_words(s)} until "
+                    f"{_date_words(_scope_until(prior, s))}. You can add it again when "
+                    f"it ends."))
     acct = account_repo.load(tenant_id, user_id)
     if acct is not None:
         if req.name.strip():
@@ -1653,26 +1998,109 @@ def onboarding_checkout(req: CheckoutRequest,
         acct.city = req.city.strip()
         acct.school_name = req.school.strip()
         account_repo.save(acct)
+    # ADDITIVE (founder, 2026-08-26 — reported live: "I purchased science middle and
+    # secondary, then added English middle, and the English addition overwrote the
+    # previous subscriptions"). The provider now merges and stamps each NEW scope with
+    # its own year from today; what she already holds keeps its own dates.
     result = billing_provider.create_subscription(
         tenant_id, "individual_annual", scopes=scopes, source="web")
+    held = result.get("scopes") or scopes
     # Every purchased scope becomes a ready-made profile entry (founder, 2026-08-25);
-    # out-of-scope trial artifacts are dropped. See _apply_subscription_profile.
+    # out-of-scope trial artifacts are dropped. See _apply_subscription_profile. It is
+    # given the FULL held list, not just this cart — passing the cart alone would drop
+    # the subjects she bought last time, the profile-side twin of the overwrite bug.
     try:
-        _apply_subscription_profile(tenant_id, user_id, scopes)
+        _apply_subscription_profile(tenant_id, user_id, held)
     except Exception:
         pass   # a profile hiccup must never fail an activation
-    amount = len(scopes) * config.PRICE_PER_SUBJECT_STAGE
+    # ★ FIRST purchase only: clear what the trial left in subjects she did not buy
+    #   (founder, 2026-08-26 evening — see _purge_trial_artifacts). `prior` was read
+    #   before the grant, so this is the last moment the trial is still visible.
+    purged = {}
+    if prior is None or prior.status == "trial":
+        purged = _purge_trial_artifacts(tenant_id, user_id, held)
+    amount = len(scopes) * config.PRICE_PER_SUBJECT_STAGE     # THIS purchase, not the whole holding
+
+    # ── The invoice (2026-08-26) ──────────────────────────────────────────────
+    # Issued for THIS purchase, stored under her account, attached to the mail and
+    # listed on her subscription page. Wrapped whole: an invoice that fails to render
+    # must not undo a subscription she has paid for — she still gets the mail, the app
+    # still shows the subscription, and the founder can see the failure in the response.
+    invoice = None
+    invoice_pdf = None
+    try:
+        invoice = _build_invoice(tenant_id, user_id, acct, scopes,
+                                 result.get("scope_valid_until") or {})
+        if invoice is not None:
+            from aruvi_core.export_invoice_pdf import export_invoice_pdf
+            invoice_pdf = export_invoice_pdf(invoice)
+            invoice_repo.save(tenant_id, user_id, invoice, invoice_pdf)
+    except Exception:                                  # noqa: BLE001
+        invoice, invoice_pdf = invoice, None           # keep the record if only the PDF failed
+        try:
+            if invoice is not None:
+                invoice_repo.save(tenant_id, user_id, invoice, None)
+        except Exception:                              # noqa: BLE001
+            invoice = None
+
     mail = _send_subscription_confirmation(
         to=(req.email or (acct.email if acct else "") or "").strip(),
         name=(req.name or (acct.display_name if acct else "") or "").strip(),
-        scopes=result.get("scopes") or scopes,
-        amount_inr=amount, valid_until=result.get("valid_until") or "", mobile=user_id)
-    return {"status": "active", "scopes": result.get("scopes"),
+        scopes=held,
+        amount_inr=amount, valid_until=result.get("valid_until") or "", mobile=user_id,
+        scope_valid_until=result.get("scope_valid_until") or {},
+        added=scopes,
+        invoice=invoice, invoice_pdf=invoice_pdf)
+    return {"status": "active", "scopes": held,
             "valid_until": result.get("valid_until"),
+            "scope_valid_until": result.get("scope_valid_until") or {},
+            "added": scopes,
+            "purged": purged,
+            "invoice_number": invoice.number if invoice else "",
             "amount_inr": amount,
             # What happened to the confirmation mail, so the UI can say so honestly
             # rather than promising an email that was never attempted.
             "email_status": mail.get("status", "skipped")}
+
+
+@app.get("/invoices")
+def list_invoices(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Her invoices, newest first — for the Subscription page. Never gated on
+    subscription state: a document recording money she paid must stay reachable after
+    the thing it paid for has ended (the same reasoning as data rights, §2.5)."""
+    tenant_id, user_id = identity
+    out = []
+    for inv in invoice_repo.load_all(tenant_id, user_id):
+        out.append({
+            "number": inv.number, "issued_at": inv.issued_at, "total": inv.total,
+            "currency": inv.currency,
+            "scopes": [ln.scope for ln in inv.lines],
+            "lines": [{"scope": ln.scope, "description": ln.description,
+                       "amount": ln.unit_amount * int(ln.quantity or 1),
+                       "valid_until": ln.valid_until} for ln in inv.lines],
+            # Whether the PDF is actually there — a record can survive a render failure,
+            # and a download link that 404s is worse than no link.
+            "has_pdf": invoice_repo.load_pdf(tenant_id, user_id, inv.number) is not None,
+        })
+    return {"invoices": out}
+
+
+@app.get("/invoices/{number:path}")
+def download_invoice(number: str, identity: tuple = Depends(_current_identity)):
+    """The stored PDF — the exact bytes she was mailed, never a re-render (see the
+    adapter's docstring). `:path` because the number contains slashes (ARV/2026-27/0001)
+    and the adapter's own slugging is what maps it to a filename; a traversal cannot
+    escape, since `_slug` strips every path character on the way in."""
+    tenant_id, user_id = identity
+    num = str(number or "").strip()
+    if num.lower().endswith(".pdf"):
+        num = num[:-4]
+    pdf = invoice_repo.load_pdf(tenant_id, user_id, num)
+    if pdf is None:
+        raise HTTPException(status_code=404, detail="Invoice not found.")
+    fname = f"Aruvi-invoice-{num.replace('/', '-')}.pdf"
+    return Response(content=pdf, media_type="application/pdf", headers={
+        "Content-Disposition": f'attachment; filename="{fname}"'})
 
 
 @app.post("/subjects/{subject}/{grade}/generate")

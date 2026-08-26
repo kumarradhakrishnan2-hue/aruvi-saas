@@ -117,13 +117,54 @@ export async function postJSON(path, body) {
   return r.json();
 }
 
+/* ── "ALREADY IN USE" — one answer for the front door and the profile alike ──
+ * Mobile and email are both CREDENTIALS (A5, 2026-08-26): a second account may never take
+ * one that is already held. `/onboarding/known` answers for either shape and deliberately
+ * creates nothing, so it is safe to ask before she has an account. `selfId` is excluded —
+ * re-saving your OWN address is always fine. A shared address (`ambiguous_email`, >1
+ * holder) is in use too: more so, not less.
+ *
+ * Returns true only on a DEFINITE answer. A network failure returns false and lets the
+ * server's 409 be the authority — this check exists to tell her early, never to be the
+ * thing that decides. */
+export async function idInUse(value, selfId = "") {
+  const v = String(value || "").trim();
+  if (!v) return false;
+  try {
+    const r = await fetch(`${API}/onboarding/known?id=${encodeURIComponent(v)}`);
+    if (!r.ok) return false;
+    const d = await r.json();
+    if (d && d.reason === "ambiguous_email") return true;
+    if (!d || !d.known) return false;
+    return String(d.id || v).toLowerCase() !== String(selfId || "").trim().toLowerCase();
+  } catch {
+    return false;
+  }
+}
+
+/* The server's own sentence for a 4xx, or the caller's fallback — the RAW-FETCH twin of
+ * postJSON's `err.detail` (ARV-D-088, and see the reasoning there). For callers that
+ * cannot use postJSON because they run before sign-in and must set X-Aruvi-User by hand.
+ * 5xx detail is engine talk and is never surfaced. */
+export async function errDetail(r, fallback) {
+  if (r && r.status >= 400 && r.status < 500) {
+    try {
+      const b = await r.json();
+      if (typeof b?.detail === "string" && b.detail.trim()) return b.detail;
+    } catch { /* no JSON body — the fallback is all we have */ }
+  }
+  return fallback;
+}
+
 /* Record a saved plan as PREPARED by this teacher (POST /plans-prepared). Called when she
  * actually generates/attaches a lesson — first-run activation and the everyday PrepareLesson
  * flow — so My Lessons lists only her own work, not the whole shared sample library. Fire-and-
  * forget: the UI never blocks on it, and the flag simply stays false if the write is lost.
  * subject/grade are SLUGS; filename is the saved-plan file. */
-export function markPrepared(subject, grade, filename, periods) {
+export function markPrepared(subject, grade, filename, periods, sourceYear) {
   if (!subject || !grade || !filename) return Promise.resolve();
+  // `sourceYear` (2026-08-26) marks a chapter she carried forward from an earlier academic
+  // year, so her section card can say "2026-27 version". Omitted for a fresh generation.
   // `periods` (optional) is the teacher's chosen period count for this chapter — stored server-
   // side so budget tracking reflects what she allocated, not the served plan's authored length.
   // Returns the (error-swallowed) promise so callers that need the write to land before they
@@ -131,6 +172,7 @@ export function markPrepared(subject, grade, filename, periods) {
   // callers can still ignore the return value.
   const body = { subject, grade, filename };
   if (periods != null) body.periods = periods;
+  if (sourceYear) body.source_year = sourceYear;
   return fetch(`${API}/plans-prepared`, withUser({
     method: "POST",
     headers: { "Content-Type": "application/json" },

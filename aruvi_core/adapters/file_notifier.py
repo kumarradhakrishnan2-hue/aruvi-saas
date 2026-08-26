@@ -53,9 +53,36 @@ class FileNotifier(Notifier):
                 f"Date: {datetime.now(timezone.utc).isoformat()}",
                 "",
             ]
+            # Attachments are written BESIDE the message, not described in it
+            # (2026-08-26): the point of the outbox is that the founder can open
+            # exactly what a teacher would have received, and an invoice he cannot
+            # open is not that.
+            written = []
+            # The HTML part is written as its own .html so the founder can OPEN it in a
+            # browser and see what a teacher will see. An outbox that only ever shows
+            # the plain-text half cannot preview the mail that actually goes out.
+            if (msg.html or "").strip():
+                try:
+                    with open(self.outbox_dir / f"{stamp}-{_slug(msg.to)}.html", "w") as hf:
+                        hf.write(msg.html)
+                    written.append(f"{stamp}-{_slug(msg.to)}.html")
+                except Exception:                    # noqa: BLE001
+                    pass
+            for att in (msg.attachments or []):
+                name = f"{stamp}-{_slug(att.filename or 'attachment')}"
+                try:
+                    with open(self.outbox_dir / name, "wb") as af:
+                        af.write(att.content or b"")
+                    written.append(name)
+                except Exception:                    # noqa: BLE001
+                    pass
             with open(path, "w") as f:
                 f.write("\n".join(h for h in header if h != "") + "\n")
                 f.write(msg.text.rstrip() + "\n")
-            return {"status": "written", "path": str(path)}
+                if written:
+                    f.write("\n--\nWritten beside this message:\n")
+                    for name in written:
+                        f.write(f"  {name}\n")
+            return {"status": "written", "path": str(path), "attachments": written}
         except Exception as e:                       # noqa: BLE001 — never break a caller
             return {"status": "error", "detail": str(e)}

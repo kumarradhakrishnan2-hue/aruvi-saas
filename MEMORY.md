@@ -687,7 +687,351 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-26 (newest) — THE DRIVEN PERSONA RUN: FOUR BUGS THE STATIC PASS COULD NOT
+## 2026-08-26 (newest, evening) — INVOICING: A NUMBERED DOCUMENT PER PURCHASE,
+## STORED, MAILED AND SHOWN BESIDE THE SUBSCRIPTION IT PAID FOR
+
+Founder brief, with a Stripe/Anthropic receipt mail as the reference: *"create a
+professional mail output as shown here. Create an invoice format similar that gets loaded
+onto the account folder for the tenant/user and gets sent along as pdf. This also gets
+uploaded onto the client subscription page with each respective subscription. The mail
+sends the latest invoice along."*
+
+**Two decisions taken first, because they are legal, not aesthetic.**
+- **No tax, no GSTIN.** Aruvi is not GST-registered, so the document says *"No tax charged
+  — Aruvi is not registered for GST."* **in words** rather than printing a ₹0.00 tax row,
+  which reads like a rate that happens to be zero rather than a seller who does not charge
+  it. `ARUVI_GSTIN` / `ARUVI_TAX_RATE` / `ARUVI_TAX_INCLUSIVE` exist and are honoured, so
+  registering is a config change and one template branch — not a schema migration.
+  TAX_INCLUSIVE is explicit because the answer changes what she PAYS.
+- **One gapless per-financial-year series**, `ARV/2026-27/0001`, April→March — the same
+  anchor the academic year already uses, so her invoice series and her school year turn
+  over together. Assigned once at issue and **never reused even if the purchase is later
+  revoked**: a numbered series with holes in it is worse than useless.
+
+**Three design points that will matter later:**
+1. **The counter lives OUTSIDE any tenant folder** (`invoices/_series/{fy}.json`). Erasure
+   walks a teacher's tree; a series stored inside one would take the seller's books with
+   it and the next invoice would reuse a number already issued to someone else. A test
+   erases a tenant and asserts the numbers never rewind. (`_series` is unreachable as a
+   tenant slug — `_slug` strips the leading underscore.)
+2. **The PDF is STORED, not re-rendered on download.** A document she may show an
+   accountant must not change because a template did; re-rendering would quietly reissue
+   history every time the house style moves. A test asserts the download equals the stored
+   bytes.
+3. **An invoice can never cost her the subscription.** The whole build-render-store block
+   is wrapped; a render failure keeps the record if it can, drops the invoice if it
+   cannot, and the activation stands. Tested by making `_build_invoice` raise.
+
+**The mail** now carries the PDF as an attachment (new `Attachment` on `EmailMessage`;
+`SmtpNotifier` moved to the stdlib `EmailMessage` so it degrades to plain text/plain when
+there is nothing to attach; `FileNotifier` writes attachments BESIDE the message, because
+an outbox the founder cannot open is not a preview). **The invoice number is in the BODY
+as well** — an attachment can be stripped, blocked or lost, and the number is how she
+refers to the purchase in any question she ever asks about it.
+
+**On screen**, the invoice sits in the card of the subscription it paid for — not in a
+separate billing list to go hunting in. "What did I pay for this?" is asked while looking
+at the thing. The number shows even when the PDF is missing: the number is the record, the
+file is a convenience.
+
+**One consequence worth stating:** the erasure receipt has always promised that tax records
+outlive the account (§2.6), and invoices are exactly that — so deletion does NOT destroy
+them, and `invoices/` is deliberately absent from the erase walk. But she loses the ACCOUNT
+that reaches them, so the last delete window now tells her to save any she needs first.
+
+**Two founder edits on first sight of the document, both with reasons worth keeping:**
+- **The big "AMOUNT PAID" band belongs on the INVOICE and not in the EMAIL.** *"Remove
+  the amount paid row where it is shaded and big font"* was read as being about the
+  document on screen — the invoice — and applied there; the correction came back as *"in
+  the email body alone (not the invoice)"*, and the band was restored on the PDF and
+  struck from the mail. **The two documents want opposite things**, which is the part
+  worth keeping: the mail's job is to say WHAT is now hers and for how long, so the
+  amount is one line of its ledger; the invoice IS the document about the money, so the
+  amount is its headline. ★ Lesson for the next ambiguous instruction of this kind: when
+  one sentence could apply to two artifacts on screen at once, ASK which — a wrong guess
+  costs a round trip either way, and a guess that reads as "he'll tell me" is the more
+  expensive of the two.
+- **No "(Class 10 coming soon)" on an invoice, and classes are derived PER SUBJECT.**
+  His reasoning is the valuable part: *"tomorrow, one subject may be in and another out
+  in Class 10."* A promise about next year has no place on a document of record, and a
+  stage-wide constant would be wrong for BOTH subjects the day Class 10 lands for one of
+  them — too small for the one that has it, a promise for the one that does not. So
+  `_scope_classes` intersects the stage's grades with the grades the subject is actually
+  AUTHORED for: science·secondary reads "Class 9" today and becomes "Classes 9 and 10"
+  by itself when its class-10 chapters exist. No constant to remember to edit, and no
+  invoice that was ever untrue. The test asserts the derivation, not the values.
+
+**HTML mail (same session).** The confirmation is now multipart/alternative — a designed
+HTML part beside the plain text, with the text as a true equal: every fact appears in
+both, asserted by a test, so a client that refuses HTML loses styling and nothing else.
+Built for MAIL CLIENTS, which is an older craft than web layout: tables (Outlook has no
+flexbox), every style INLINE (Gmail strips `<style>` blocks), no web fonts (Georgia +
+Helvetica exist everywhere and are the house pairing anyway), 600px. FileNotifier writes
+the `.html` beside the `.txt` so the outbox can actually preview what she will see. The
+founder's BCC stays plain text on purpose: a sales log is read as a list.
+
+**Files.** `aruvi_core/ports.py` (`Attachment`, `Invoice`, `InvoiceLine`,
+`InvoiceRepository`), `adapters/invoice_repository_file.py` (new),
+`export_invoice_pdf.py` (new — house style, Indian digit grouping), both notifiers,
+`api/config.py` (tax seam), `api/main.py` (`_financial_year`, `_build_invoice`, checkout
+wiring, `GET /invoices`, `GET /invoices/{number:path}`), `api/mail_templates.py`,
+`web/app/components/Settings.jsx`, `globals.css`, `tests/test_invoice.py` (7 cases).
+**Verified:** two purchases → 0001 and 0002, listed newest first, download byte-identical
+to storage, another tenant 404s, mail carries both PDF and number, render failure leaves
+the subscription intact. 12 suites green including py39-compat. **Live pass owed.**
+
+---
+
+## 2026-08-26 (evening) — THE TRIAL PURGE, ONE BOX PER SUBSCRIPTION,
+## AND A PROMISE WITHDRAWN THE SAME DAY IT WAS BUILT
+
+**★ The reversal worth remembering.** This morning (PART B1 of the persona run) an
+out-of-scope subject she had prepared plans in was deliberately KEPT after she
+subscribed, so the paywall's *"Your 3 chapters stay yours"* would not be broken. By
+evening the founder had seen it live and struck it: *"the {x,y} stands there in My
+Lessons with no use, clogging the space for a trial reason that is no longer valid."*
+
+Both readings were right about different things, and that is the lesson. The morning
+argued from the PROMISE; the evening argued from the SCREEN. A subject she trialled and
+did not buy cannot be prepared in, tracked, or given sections — **every card of it is a
+door that no longer opens**, and a shelf of dead doors is not a kindness. When a promise
+and a screen disagree, the screen is the thing she experiences; **change the promise.**
+So the 402 no longer says the chapters stay hers. It says: *"Subscribe to keep preparing
+— the chapters you made in a subject you subscribe to come with you."* True on both
+paths, and it says what it can keep rather than what it takes.
+
+**The purge** (`_purge_trial_artifacts`, called from checkout when the prior entitlement
+was a trial). Three boundaries, each load-bearing:
+- **First purchase only.** A later addition purges nothing — there is nothing left by
+  then, and a teacher adding her fourth subject must never fear for her third.
+- **Only subjects outside the purchase.** A subject she trialled and BOUGHT keeps every
+  chapter, pointer and note. That is what a trial is for, and it is the half the paywall
+  still promises.
+- **Never the plan FILES.** Saved plans are shared library content in DATA_DIR; the same
+  file may be served to another teacher a minute later. What is hers — and what goes —
+  are the records in STATE_DIR that put those plans on her screen: prepared-plan marks
+  (new `unmark` on the repo + port), section state, chapter notes.
+
+**Told before the money, not after.** The Pay screen names the subjects that will be
+cleared (`droppedTrial`, derived from `trial_chapters`, which `GET /entitlement` already
+returns — nothing new is fetched). It sits on the one screen where she can still change
+the cart. Named, because "some trial lessons" would send her hunting for which.
+
+**One box per subscription, latest first.** They had been rows inside a single card under
+one shared "Validity" — which, once each scope carried its own date, could only ever be
+true of one of them. Each subject-stage is its own purchase with its own year, so each
+gets its own card. **Order is by expiry descending, and that is only correct because
+every term is exactly one year** — latest expiry IS latest purchase, and a renewal
+correctly returns to the top. If terms ever differ, this needs a real purchase date to
+sort on; the comment in Settings.jsx says so. Ties (bought in one checkout) keep cart
+order. An expired one is still listed, in clay, as "ended" — she owned it, and that row
+is the explanation for anything she can no longer prepare there.
+
+**Also fixed: the Add button that never appeared.** `active` required `ent.enforced`, so
+with `ARUVI_ENTITLEMENT_ENFORCED` unset — the DEFAULT, and easy to lose on an API restart
+— a teacher who had really paid saw "Your plan details will appear here" and no button.
+**Enforcement decides what is REFUSED, never what is TRUE.**
+
+**Files.** `api/main.py` (purge, reworded 402, B1 block removed), `aruvi_core/ports.py` +
+`prepared_plans_repository_file.py` (`unmark`), `web/app/components/Settings.jsx`,
+`SubscribeFlow.jsx`, `globals.css`, `tests/test_entitlement.py` (10 cases now),
+`docs/persona_test_checklist.md`.
+**Verified:** the purge test asserts both halves (un-bought subject's plans/sections/notes
+gone, bought subject's untouched, a later addition purging nothing); 10 suites green. Web
+half babel-parse clean, CSS balanced — **live pass owed**.
+
+---
+
+## 2026-08-26 — SUBSCRIPTIONS ADD INSTEAD OF OVERWRITING, AND EACH
+## SUBJECT·STAGE CARRIES ITS OWN EXPIRY
+
+**The bug, reported live by the founder:** *"English was there in trial. I first
+purchased science middle and science secondary. Then I added English middle through My
+Lessons. The English addition overwrote the previous subscriptions."* Exactly what a
+TestClient run against a copy of live state had shown an hour earlier:
+
+```
+buy SS/middle        → ['social_sciences/middle']
+then buy English/mid → ['english/middle']       ← the first purchase is GONE
+```
+
+`ManualBillingProvider.create_subscription` wrote a WHOLE NEW `Entitlement` from the
+cart, and checkout passed the cart alone. **She paid ₹500 and lost two subjects.** The
+same call also passed the cart to `_apply_subscription_profile`, so her teaching profile
+lost them too — the same bug twice, in two layers.
+
+**The founder's feature request came with the fix's shape:** *"for subscribed accounts
+too, 'add subjects and stages' should be there. it will have separate expiry of its own
+based on date of subscription."* A subject added in November runs to the following
+November, so **one date for the whole entitlement cannot describe her**.
+
+**Model.** `Entitlement.scope_valid_until: Dict[scope, ISO date]` is now the authority;
+`valid_until` survives as the LATEST of them — derived, for display and for readers that
+predate the field. **A scope with no entry falls back to `valid_until`, so there is no
+migration script: the fallback IS the migration**, and the next grant stamps real dates.
+A test pins that legacy path so it cannot be optimised away.
+
+**Two decisions the founder took** (both change what the code had to be):
+- **Lapsed means NOTHING is live.** One live subject keeps the tracker, the profile and
+  notes open — she is still a paying customer, and those tools are not per-subject.
+  Generation is refused per scope; that gate is the one that knows which subject she
+  asked for. Revocation still lapses everything at once (it is a withdrawal, not a date).
+- **A live scope is not offered again.** Renewal is for something that has ENDED; selling
+  her a year she already owns is not a renewal. The chooser omits it ("· you have this"),
+  and checkout 409s with the date it runs to. So a re-stamp only ever happens after
+  expiry, which is why the arithmetic stays "a year from today" and never has to stack.
+
+**Where it landed.** `ports.Entitlement` + file adapter (per-scope map, tolerant load) ·
+`ManualBillingProvider.create_subscription` **additive by default**, `replace=True` for
+the CLI's deliberate wipe · `api/main.py` helpers `_scope_until` / `_scope_live` /
+`_live_scopes` / `_entitlement_lapsed`, both gates rebuilt on them, checkout's
+prior-holding guard, `_apply_subscription_profile` given the FULL held list ·
+`GET /entitlement` gains `scope_valid_until` + **`live_scopes`** so the client never
+compares a date (the A3 rule: one rule, one place — and only the server honours
+`ARUVI_TODAY`) · Settings shows validity INSIDE each subscription block, an expired one
+still listed in clay with "ended" · **"Add subjects & stages"** button for an active
+teacher, opening the same wizard at the cart · `paidScopes` is now the LIVE scopes.
+
+**One bug the tests caught in the fix itself:** the first cut skipped `"*"` when stamping
+per-scope dates, so an enterprise `"*"` granted on top of an old expired scope inherited
+THAT scope's past date through the derived top-level field — **a grant that was dead the
+moment it was written**. `"*"` is now dated like any other scope.
+
+**Mail (founder, same session): every purchase reports the whole holding.** Additive
+subscriptions with independent dates mean a mail about the one subject she just bought
+would leave no statement anywhere of what she owns or when each part ends. It now says
+what she just added (with the amount she paid), then *"Everything you have with Aruvi
+now"* with each scope's own date. On a first purchase the second block is omitted rather
+than printing the list twice.
+
+**Verified** against a copy of live state: add keeps prior scopes · per-scope dates
+correct · one expired scope → live list shrinks, `lapsed` false, its own generation 402s
+naming *"English · Middle ended on 01-Jan-2025"* while science still serves 200 · all
+expired → `lapsed` true and readiness writes 402 · re-buying a live scope 409s · mail
+renders both shapes. `test_entitlement.py` 9/9 with two new cases; account, api,
+year-scope, cutover, migration, plan-notes, academic-year, notifier all green. Web half
+babel-parse clean, CSS balanced — **live pass owed**.
+
+**Founder's own account still needs repair:** `1000000000` holds only `english/middle`.
+`python3 aruvi-scripts/entitlement.py grant 1000000000 --scopes science/middle,science/secondary`
+now ADDS (it would have wiped English before this change).
+
+---
+
+## 2026-08-26 — "ALREADY IN USE" IS SAID OUT LOUD, AT THE FIELD, NOT AT
+## THE TILL — AND A SUBJECT·STAGE MAY BE BOUGHT ONCE
+
+**How it surfaced.** Testing `1000000000`: choose subject & stage → Pay → *"Couldn't
+complete the activation. Try again in a moment."* Reproduced against a copy of live
+state (`ARUVI_STATE_DIR=/tmp/st`, TestClient): checkout **409s on a taken email and
+200s on any free one**. The on-disk evidence agreed exactly — her account record still
+had empty name/role/state and her entitlement was still `trial`, and
+`_guard_email_not_taken` sits precisely between the in-memory field assignment and
+`account_repo.save`, so a 409 there leaves both stores untouched.
+
+**★ The defect was not the refusal — it was that the refusal could not be heard.** The
+server had sent a sentence written for her (*"already used by another Aruvi account…"*)
+and `SubscribeFlow.doCheckout` threw the response body away and printed *"Try again in a
+moment"* — **advice that can never work for a deterministic 409**. `PersonalProfile.save`
+swallowed it the same way. So the entire teacher-facing half of this morning's A5 fix
+had never been visible on any screen: the persona run verified that 409 **by curl**, and
+curl is not a user. A correct server behaviour looked like a broken product for an hour.
+
+**Three places, one rule.**
+1. **The 409 is now shown.** New `errDetail(response, fallback)` in format.js — the
+   raw-fetch twin of `postJSON`'s `err.detail`. Note what this means: **the fix already
+   existed in the codebase** (ARV-D-088, 2026-08-10, same lesson, same words) and these
+   two callers had simply hand-rolled `fetch` and bypassed it. `postJSON` could not be
+   used here because checkout runs BEFORE sign-in and sets `X-Aruvi-User` by hand.
+2. **She is told at the FIELD, not at the till.** New `idInUse(value, selfId)` asks
+   `/onboarding/known` (which answers for mobile AND email, and creates nothing) at the
+   moment she confirms an email — checkout and Personal profile both. Arriving at the
+   end of a checkout was what made the 409 useless: she had chosen subjects and pressed
+   Pay before anything told her. A shared address (`ambiguous_email`) counts as in use —
+   more so, not less. A network failure returns false: this check exists to tell her
+   early, never to be the thing that decides. The server stays the authority.
+3. **A registered MOBILE cannot create a second sign-in.** That screen's button says
+   "Create sign in" and the mobile IS the account id, so a number already in the tenant
+   database is not a new teacher — it is her, at the wrong door. Checked before the OTP
+   is sent. **Copy settled the same day:** *"This mobile number is already in use. Create
+   using a different number."* — and nothing else. The first cut added a "Sign in →" link
+   carrying her number across; the founder struck it. **A screen that creates a sign-in
+   keeps its refusal inside that job**: the instruction at the create door is to create,
+   and the sign-in door is already reachable from the choose screen behind her.
+
+**And the cart may not hold the same pair twice** (founder, same session). The billing
+unit is subject × stage; `cartScopes` de-dupes, so two identical rows meant **two rows
+shown and one charged** — a discrepancy that reads as a bug whichever way she notices
+it. Not validated after the fact: **the choice is not offered**. A pair taken by another
+row is `disabled` and says *"· already added"*; a subject whose every stage is spoken for
+is disabled whole; "+ Add another" dies when nothing is left. A row never disables its
+OWN value, or changing your mind would strand the select on a dead option.
+
+**Copy lives in two places by necessity** — `EMAIL_TAKEN`/`MOBILE_TAKEN` in
+SubscribeFlow.jsx and `_guard_email_not_taken` in api/main.py — because the early check
+has no sentence of its own to return. Both say "already in use"; reword one, reword both.
+
+**Files.** `api/main.py` (wording), `web/app/lib/format.js` (`idInUse`, `errDetail`),
+`web/app/components/SubscribeFlow.jsx`, `Login.jsx`, `Settings.jsx`, `globals.css`.
+**Verified** server-side against a copy of live state: taken email → 409 with the new
+wording on both routes · her OWN address → 200 · `/onboarding/known` answers correctly
+for mobile, unique email and shared email. Duplicate-guard logic unit-checked. Web half
+babel-parse clean, CSS balanced 2139/2139 — **live pass owed** (a parse check is not a
+render check).
+
+**Field note, worth keeping:** while diagnosing this, `1234567899`'s account.json
+vanished mid-session — the founder had erased it on the suggestion above. The erase
+left the directory in place because a Mac `.DS_Store` sits in it, so the "empty ancestor
+folders are removed" behaviour is silently defeated on macOS. Harmless (`find_all_by_email`
+globs `*/*/account.json`), but it means an erased id looks half-present on disk.
+
+---
+
+## 2026-08-26 — TRIAL SETTINGS ARE NARROWER: NO PERSONAL PROFILE,
+## NO "YOUR DATA & EXPORT"
+
+Founder decision taken straight after the persona run above: **while the free trial runs,
+Settings offers neither "Personal profile" nor "Your data & export".** The trial is a look
+at the TEACHING product; the account around it — her details, her export — belongs to a
+teacher who has one. Both cards return whole the moment she subscribes.
+
+**Two boundaries deliberately not crossed, and both matter more than the change itself:**
+
+1. **This is UI, not a gate.** `POST /account` and `/data-rights/*` stay open. Gating
+   them would have been the tidy-looking move (A3's "one rule, one place"), and it is
+   wrong here for two independent reasons: **checkout itself writes the account record**,
+   so a trial-time `/account` refusal would break the path OUT of the trial; and §2.5's
+   "data rights are never gated on subscription state, ever" is a promise about the
+   ROUTES. What Settings chooses to SHOW is a product decision; what the server refuses is
+   a rights decision. A3's lesson is that a rule must not be *derived* in two places — not
+   that every UI hide needs a 402 behind it.
+2. **Delete my account keeps its download.** G3's last window ("Have you downloaded your
+   Aruvi data?") still offers "Download my data first" on trial, and it is now the ONLY
+   export door a trial teacher has. Deletion is irreversible and the export is the only
+   copy she can keep — hiding the card must never mean destroying her work with no copy.
+
+**Where the flag lives, and why not in Settings.** `entTrial` is held in `page.jsx`'s
+entitlement sync (beside `entLapsed`, same TDZ-safe position) and passed down as `trial`.
+Settings keeps its own `ent` fetch as the fallback, so a state change landing while
+Settings is open is still caught — but the shell has already synced by the time the gear
+is pressed, so the cards are never drawn and then withdrawn. **Two cards appearing for a
+beat and then vanishing is worse than either state**; the same reasoning as A3's derive-once
+rule, applied to timing rather than logic. The subscription subview no longer re-derives
+`onTrial` either — one flag, one place.
+
+Also guarded: `view === "personal"` / `view === "data"` render only when not on trial, and
+an effect snaps `view` home if the trial answer lands while she is standing in one of them.
+
+**Files.** `web/app/page.jsx`, `web/app/components/Settings.jsx`.
+**STATIC ONLY** — babel-parse clean on both, no surviving entry point to either subview
+(the Settings home cards are the only doors; the header person icon was retired 2026-08-24).
+**A parse check is not a render check** (H4.4): a live pass on a trial identity is OWED —
+confirm the two cards are absent, the remaining five keep their order, and the delete
+flow's download still works.
+
+---
+
+## 2026-08-26 — THE DRIVEN PERSONA RUN: FOUR BUGS THE STATIC PASS COULD NOT
 ## SEE, PLUS THE Notifier PORT (SUBSCRIPTION CONFIRMATION MAIL)
 
 The first time the persona checklist was actually DRIVEN (Claude in Chrome against the
@@ -790,8 +1134,16 @@ readiness un-scoped, so opening the next year and pointing her at it yields all 
 promises for free (new year's folders empty → clean cards + cleared pointers; old folders
 untouched → last year readable; notes stay in the closed year; profile carries). New:
 `CutoverResult`/`YearCutover` in ports, `year_cutover_file.py`, `GET /academic-year` +
-`POST /academic-year/cutover` (idempotent), the ochre offer on My Classes, the collapsed
-prior-year folder in My Lessons AND in the "+" attach picker (the founder caught the
+`POST /academic-year/cutover` (idempotent), the ochre offer on My Classes (with TWO real defer controls — an ✕ top-right and a
+"Not yet" beside Start; the first build's "Not now" was a plain `<span>` that looked like
+a choice and did nothing, caught by the founder on sight — and **dismissal is session-only,
+never persisted**, since a stored "don't ask again" would strand her in last year), the collapsed
+prior-year folder in My Lessons (founder polish the same day: **the SAME `.sc-card`
+markup the current year uses — not a row list** — status line "Taught in {year}"; the same
+"lessons you prepared last year" sentence as the picker; **always closed by default**,
+never persisted and re-closed on any subject/class change; and **anything already brought
+back into this year is excluded**, after his screenshot caught one chapter showing twice
+on one screen) AND in the "+" attach picker (the founder caught the
 omission same-day; his spec had always said she should see the old folder when ADDING a
 plan — attaching a prior-year lesson marks it prepared in the CURRENT year first, because
 teaching it again makes it this year's work and the tracker cannot show a plan the year
