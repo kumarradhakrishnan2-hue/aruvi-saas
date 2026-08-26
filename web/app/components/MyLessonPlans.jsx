@@ -276,7 +276,8 @@ function ProposedCard({ preparing, onDismiss }) {
 }
 
 export default function MyLessonPlans({ readiness, onAllocate, tourStep, preparing,
-                                        onStartTour, tourActive, onDismissPrepareError, lapsed }) {
+                                        onStartTour, tourActive, onDismissPrepareError, lapsed,
+                                        yearInfo }) {
   const LS_SUBJECT = userKey("mylessons_subject");
   const LS_CLASS = userKey("mylessons_class");
   const LS_PANE = userKey("mylessons_pane");
@@ -306,6 +307,11 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
   });
   // Plans keyed `${subjectSlug}/${gradeSlug}` -> array (or undefined while loading).
   const [plansByKey, setPlansByKey] = useState({});
+  /* Prior academic years (cutover part A, 2026-08-26): which folder is open, and that
+     year's prepared plans for the CURRENT subject·class once fetched. Lazy — a teacher
+     who never opens the folder never pays for the call. */
+  const [openPrior, setOpenPrior] = useState(null);
+  const [priorPlans, setPriorPlans] = useState({});
   const [openPlan, setOpenPlan] = useState(null);   // { view }
   const [opening, setOpening] = useState(false);
   const [, setTick] = useState(0);                  // bumped after a section-state sync → re-read
@@ -459,6 +465,33 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
       setOpenPlan({ view, plan: p });
     } finally { setOpening(false); }
   };
+  // A prior year's plan opens through the SAME path: the plan asset is shared library
+  // content and is not year-scoped — only her attachment to it ever was.
+  const openPlanView = (p) => openLesson(p);
+
+  /* Prior-year folders for this subject·class. `yearInfo.prior_years` comes from the
+     server; the plans themselves are fetched only when a folder is opened, and are
+     filtered to what she actually PREPARED that year (the library is shared, so an
+     unfiltered list would show her every sample plan Aruvi owns). */
+  const priorYears = useMemo(
+    () => ((yearInfo && yearInfo.prior_years) || []).slice().sort().reverse(),
+    [yearInfo]);
+  useEffect(() => {
+    if (!openPrior || !key) return;
+    const cacheKey = `${openPrior}|${key}`;
+    if (priorPlans[openPrior] !== undefined && priorPlans._for === cacheKey) return;
+    let live = true;
+    setPriorPlans({ _for: cacheKey });          // undefined for openPrior → "Loading…"
+    getJSON(`/plans/${sSlug}/${gSlug}?year_id=${encodeURIComponent(openPrior)}`)
+      .then((d) => {
+        if (!live) return;
+        const mine = (d.plans || []).filter((p) => p.prepared);
+        setPriorPlans({ _for: cacheKey, [openPrior]: mine });
+      })
+      .catch(() => { if (live) setPriorPlans({ _for: cacheKey, [openPrior]: [] }); });
+    return () => { live = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openPrior, key, sSlug, gSlug]);
 
   // Guided-tour orchestration (steps 3–7 live on this view: 3 the lesson row, 4 the report button,
   // 5 the archive button, 6 "open the lesson" — same card as 3, hand on it — and 7 the open
@@ -853,6 +886,57 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
       )}
 
       {prepareCTA}
+
+      {/* ★ LAST YEAR'S FOLDER (founder, 2026-08-26 — cutover part A). After a cutover the
+          current year starts empty, which would look like loss if her old plans were not
+          visibly SOMEWHERE. They sit here, below the current list and below the prepare
+          bar: present, findable, and out of the way of this year's work. Collapsed by
+          default — she is living in the new year. Read-only by nature: a prior year's
+          plans open and export exactly as they always did, but nothing attaches them to
+          a section, because sections belong to the year she is in now. */}
+      {priorYears.map((yid) => (
+        <div className="mlp-prior" key={yid}>
+          <button className="mlp-prior-head" aria-expanded={openPrior === yid}
+            onClick={() => setOpenPrior(openPrior === yid ? null : yid)}>
+            <span className="mlp-prior-caret" aria-hidden="true">
+              {openPrior === yid ? "▾" : "▸"}
+            </span>
+            <span className="mlp-prior-yr">{yid}</span>
+            <span className="mlp-prior-count">
+              {priorPlans[yid] === undefined
+                ? "…"
+                : `${priorPlans[yid].length} lesson${priorPlans[yid].length === 1 ? "" : "s"}`}
+            </span>
+          </button>
+          {openPrior === yid && (
+            priorPlans[yid] === undefined ? (
+              <div className="mlp-prior-empty">Loading…</div>
+            ) : priorPlans[yid].length === 0 ? (
+              <div className="mlp-prior-empty">
+                No lessons were prepared for this class in {yid}.
+              </div>
+            ) : (
+              <div className="mlp-prior-list">
+                {priorPlans[yid].map((p) => (
+                  <button className="mlp-prior-row" key={p.filename}
+                    onClick={() => openPlanView(p)}>
+                    <span className="mlp-prior-n">
+                      {String(p.chapter_number ?? "").padStart(2, "0")}
+                    </span>
+                    <span className="mlp-prior-t">
+                      {p.chapter_title}
+                      {p.duration_label
+                        ? <span className="mlp-prior-dur">{p.duration_label}</span>
+                        : null}
+                    </span>
+                    <span className="mlp-prior-go" aria-hidden="true">→</span>
+                  </button>
+                ))}
+              </div>
+            )
+          )}
+        </div>
+      ))}
 
       {/* ★ The tour offer, BELOW her lesson (founder, 2026-08-21). First run now lands here
           rather than on My Classes, so this is the first shell screen she ever sees: her lesson

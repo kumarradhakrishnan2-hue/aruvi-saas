@@ -73,7 +73,9 @@ function PersonalProfile({ onSaved }) {
         body: JSON.stringify({ name, email, role, state: stateName, city, school }),
       }));
       if (!r.ok) throw new Error(String(r.status));
-      onSaved && onSaved();          // back to the Settings cards (founder, 2026-08-26)
+      // Back to the Settings cards (founder, 2026-08-26) AND tell the shell to re-read
+      // the account, so a changed name lands on the bar/greeting without a reload.
+      onSaved && onSaved();
       return;
     } catch {
       setNote("Couldn't save right now — try again.");
@@ -197,13 +199,19 @@ const scopeRows = (scope) => {
  * button is hierarchical — subview → home → origin — so the shell must know which
  * level is showing). Values: home | subscription | data | support | about. */
 export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOut,
-                                   onSubscribe, syncTick = 0 }) {
+                                   onSubscribe, onAccountSaved, syncTick = 0 }) {
   const [ent, setEnt] = useState(null);
   const [busy, setBusy] = useState("");        // "docx" | "pdf" | "erase" | ""
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmText, setConfirmText] = useState("");
   const [failMsg, setFailMsg] = useState("");
   const [receipt, setReceipt] = useState(null);
+  // The LAST window: "have you downloaded your data?" (founder, 2026-08-26).
+  const [finalOpen, setFinalOpen] = useState(false);
+  const [downloadConfirmed, setDownloadConfirmed] = useState(false);
+  // Did she actually download in this session? Used only to word the question honestly —
+  // the confirmation is HERS to give either way (she may have exported last week).
+  const [didDownload, setDidDownload] = useState(false);
 
   // Re-fetch when the shell signals a subscription change (in-app subscribe done).
   useEffect(() => { fetchEntitlement().then(setEnt); }, [syncTick]);
@@ -221,6 +229,7 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
       document.body.appendChild(a);
       a.click();
       a.remove();
+      setDidDownload(true);        // only to word the final question honestly
       setTimeout(() => URL.revokeObjectURL(url), 30000);
     } catch {
       setFailMsg("Couldn't prepare your download right now. Try again in a moment.");
@@ -229,14 +238,19 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
     }
   };
 
+  /* Typing "erase" no longer deletes — it opens the LAST window (founder, 2026-08-26).
+     Deletion is irreversible and the export is the only copy she can keep, so she has to
+     state that she has it. Her answer is recorded server-side, tenant/user wise, in a log
+     that outlives the erasure. */
   const erase = async () => {
     if (confirmText.trim().toLowerCase() !== "erase") return;
+    if (!downloadConfirmed) { setFinalOpen(true); return; }
     setBusy("erase"); setFailMsg("");
     try {
       const r = await fetch(`${API}/data-rights/erase`, withUser({
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ confirm: "erase" }),
+        body: JSON.stringify({ confirm: "erase", downloaded_confirmed: true }),
       }));
       if (!r.ok) throw new Error(String(r.status));
       setReceipt(await r.json());
@@ -270,14 +284,21 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
      Email edits use the same double-blind confirmation as acquisition. The mobile
      (her sign-in) is shown, never editable here. */
   if (view === "personal") {
-    return <PersonalProfile onSaved={() => setView("home")} />;
+    return <PersonalProfile onSaved={() => { onAccountSaved && onAccountSaved(); setView("home"); }} />;
   }
 
   /* ── subviews ── */
   if (view === "subscription") {
+    /* `lapsed` is the SERVER's derived answer — revoked OR run out by date (2026-08-26);
+       the status test is only the fallback for an older API. `active` must then EXCLUDE
+       lapsed, or a date-expired teacher would read "SUBSCRIBED" here while every write
+       of hers is being refused. */
     const onTrial = ent && ent.enforced && ent.status === "trial";
-    const active = ent && ent.enforced && (ent.status === "active" || ent.status === "grace");
-    const lapsed = ent && ent.enforced && ent.status === "expired";
+    const lapsed = ent && (ent.lapsed !== undefined
+      ? !!ent.lapsed
+      : !!(ent.enforced && ent.status === "expired"));
+    const active = ent && ent.enforced && !lapsed
+      && (ent.status === "active" || ent.status === "grace");
     return (
       <div className="setwrap">
         {back}
@@ -443,9 +464,9 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
       {confirmOpen && (
         <div className="acct-del">
           <p className="acct-del-warn">
-            This permanently deletes your account and all your data. We suggest
-            downloading your data first — it cannot be recovered afterwards. Type
-            <b> erase</b> to confirm.
+            This permanently deletes your account and all your data — it cannot be
+            recovered afterwards. Type <b>erase</b> to continue; we&rsquo;ll ask you to
+            confirm you have your data before anything is deleted.
           </p>
           <div className="acct-del-row">
             <input className="acct-del-input" value={confirmText} autoFocus
@@ -454,12 +475,58 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
             <button className="acct-del-go"
               disabled={busy === "erase" || confirmText.trim().toLowerCase() !== "erase"}
               onClick={erase}>
-              {busy === "erase" ? "Deleting…" : "Delete forever"}
+              Continue →
             </button>
             <button className="acct-del-cancel"
               onClick={() => { setConfirmOpen(false); setConfirmText(""); }}>
               Cancel
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* ★ THE LAST WINDOW (founder, 2026-08-26). Typing "erase" states intent; this
+          states that she HAS HER DATA. Deletion is irreversible and the export is the
+          only copy she can keep, so the download stops being a suggestion and becomes a
+          question she must answer. Her answer is recorded server-side, tenant/user wise,
+          in a log that survives the erasure — until now nothing evidenced that she ever
+          confirmed. Deliberately a separate window, not a checkbox beside the input: the
+          two confirmations mean different things and should not be given in one glance. */}
+      {finalOpen && (
+        <div className="acct-final-bg" onClick={() => setFinalOpen(false)}>
+          <div className="acct-final" onClick={(e) => e.stopPropagation()}>
+            <div className="kicker kicker-soft">Last step</div>
+            <h2 className="acct-final-t">Have you downloaded your Aruvi data?</h2>
+            <p className="acct-final-p">
+              Everything — your lesson plans, your teaching profile, your chapter notes and
+              your progress — is deleted permanently and cannot be recovered. The download
+              is the only copy you can keep.
+            </p>
+            {!didDownload && (
+              <button className="acct-final-dl" disabled={!!busy}
+                onClick={() => download("docx")}>
+                {busy === "docx" ? "Preparing…" : "Download my data first (Word)"}
+              </button>
+            )}
+            <label className="acct-final-check">
+              <input type="checkbox" checked={downloadConfirmed}
+                onChange={(e) => setDownloadConfirmed(e.target.checked)} />
+              <span>I confirm I have downloaded my Aruvi data.</span>
+            </label>
+            <p className="acct-final-note">
+              Your confirmation is recorded against your account.
+            </p>
+            <div className="acct-final-row">
+              <button className="acct-del-go"
+                disabled={!downloadConfirmed || busy === "erase"}
+                onClick={erase}>
+                {busy === "erase" ? "Deleting…" : "Delete forever"}
+              </button>
+              <button className="acct-del-cancel"
+                onClick={() => { setFinalOpen(false); setDownloadConfirmed(false); }}>
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       )}

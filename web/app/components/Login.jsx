@@ -203,6 +203,11 @@ export default function Login({ onEnter }) {
     try {
       const d = await getJSON(`/onboarding/known?id=${encodeURIComponent(trimmed)}`);
       if (d && d.known) { enter(d.id || trimmed); return; }
+      if (d && d.reason === "ambiguous_email") {
+        // More than one account carries this address — only the mobile identifies her.
+        setSigninErr("More than one Aruvi account uses this email. Please sign in with your mobile number.");
+        return;
+      }
       setSigninErr("We don't recognise this mobile or email yet — tap “New to Aruvi? Get started” below to create your sign in.");
     } catch {
       setSigninErr("Couldn't reach Aruvi right now. Try again in a moment.");

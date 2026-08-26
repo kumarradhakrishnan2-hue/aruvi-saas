@@ -96,10 +96,39 @@ def test_jit_identity_creates_account():
     print("✓ Identity JIT-creates a durable account exactly once")
 
 
+def test_email_lookup_and_ambiguity():
+    """Email is a SIGN-IN CREDENTIAL (2026-08-26), so a shared address must identify
+    NOBODY rather than an arbitrary winner — otherwise a teacher signs into someone
+    else's data, or one who mistyped her second mobile's address splits herself in two."""
+    import tempfile
+    with tempfile.TemporaryDirectory() as d:
+        repo = AccountRepositoryFileImpl(d)
+        repo.save(Account(account_id="9111111111", tenant_id="9111111111",
+                          display_name="A", email="one@example.com"))
+        repo.save(Account(account_id="9222222222", tenant_id="9222222222",
+                          display_name="B", email="shared@example.com"))
+        repo.save(Account(account_id="9333333333", tenant_id="9333333333",
+                          display_name="C", email="shared@example.com"))
+
+        found = repo.find_by_email("one@example.com")
+        assert found is not None and found.account_id == "9111111111"
+        # case-insensitive
+        assert repo.find_by_email("ONE@Example.COM").account_id == "9111111111"
+        # unknown / empty
+        assert repo.find_by_email("nobody@example.com") is None
+        assert repo.find_by_email("") is None
+        # ★ ambiguous → None, never "the first file on disk"
+        assert repo.find_by_email("shared@example.com") is None
+        assert len(repo.find_all_by_email("shared@example.com")) == 2
+        assert len(repo.find_all_by_email("one@example.com")) == 1
+    print("✓ email lookup resolves one account, and refuses to guess when shared")
+
+
 if __name__ == "__main__":
     test_save_load_roundtrip()
     test_tenant_and_user_are_separate_values()
     test_find_by_email()
+    test_email_lookup_and_ambiguity()
     test_delete()
     test_header_auth_provider()
     test_jit_identity_creates_account()

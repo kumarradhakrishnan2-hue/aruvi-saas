@@ -59,3 +59,35 @@ TRIAL_CHAPTER_CAP = int(os.environ.get("ARUVI_TRIAL_CHAPTERS", "3"))
 # discussion (§0 — ₹500 pending the field test). Config, never code; the onboarding
 # cart reads it via GET /entitlement.
 PRICE_PER_SUBJECT_STAGE = int(os.environ.get("ARUVI_PRICE_PER_SUBJECT_STAGE", "500"))
+
+# ── Outbound mail (administrative architecture Step 6 — the Notifier port) ──────
+# Credentials NEVER live in the repo. With SMTP_HOST/USER/PASSWORD all set, main.py
+# installs SmtpNotifier and confirmations really send; otherwise FileNotifier writes
+# them to STATE_DIR/outbox/ and nothing leaves the machine. For Gmail, PASSWORD must
+# be an APP PASSWORD (2-step verification on) — the account password is refused.
+SMTP_HOST = os.environ.get("ARUVI_SMTP_HOST", "").strip()
+SMTP_PORT = int(os.environ.get("ARUVI_SMTP_PORT", "587"))
+SMTP_USER = os.environ.get("ARUVI_SMTP_USER", "").strip()
+SMTP_PASSWORD = os.environ.get("ARUVI_SMTP_PASSWORD", "")
+# The address teachers see as sender / reply-to. The founder's own mail id for now
+# (founder, 2026-08-26); a support@ address replaces it without touching code.
+MAIL_FROM = os.environ.get("ARUVI_MAIL_FROM", "").strip() or SMTP_USER or "kumar.radhakrishnan2@gmail.com"
+MAIL_REPLY_TO = os.environ.get("ARUVI_MAIL_REPLY_TO", "").strip() or MAIL_FROM
+# Send the founder a copy of every subscription confirmation (his own sales log).
+MAIL_BCC_FOUNDER = os.environ.get("ARUVI_MAIL_BCC_FOUNDER", "1").strip().lower() in (
+    "1", "true", "yes", "on")
+
+# ── Academic-year cutover (administrative architecture Step 2) ──────────────────
+# CUTOVER_MONTH_DAY: the date each year on which Aruvi starts OFFERING the new academic
+# year. June 1 by default — Indian schools reopen late May/early June, and a teacher
+# still finishing a chapter in April must not be cut over out from under her. Config,
+# never code: boards differ and the founder will move this after the first June.
+CUTOVER_MONTH_DAY = os.environ.get("ARUVI_CUTOVER_MONTH_DAY", "06-01").strip()
+
+# SIMULATED_TODAY: pretend it is this date (ISO, e.g. "2027-06-01"). ★ TESTING ONLY —
+# cutover's whole behaviour hangs on the calendar, and waiting until June to find out it
+# is wrong is not a test strategy. Every date decision in api/main.py goes through
+# _today(), so setting this makes the WHOLE system agree about what day it is
+# (entitlement expiry included) rather than only the piece under test. Unset in
+# production; the server logs a warning when it is set.
+SIMULATED_TODAY = os.environ.get("ARUVI_TODAY", "").strip()

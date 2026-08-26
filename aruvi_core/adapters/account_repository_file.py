@@ -70,15 +70,29 @@ class AccountRepositoryFileImpl(AccountRepository):
     def find_by_email(self, email: str) -> Optional[Account]:
         """Look an account up by email (case-insensitive), or None.
 
+        ★ AMBIGUITY IS None, NOT "the first one" (2026-08-26). Email sign-in resolves an
+        address to the account it belongs to, so returning an arbitrary winner when two
+        accounts share an address would sign a teacher into SOMEONE ELSE'S data. Nothing
+        enforces email uniqueness at the file layer (two mobiles can register the same
+        address, deliberately or by typo), so a duplicate is a real state — and the only
+        safe answer to "whose account is this?" is "I cannot tell". Callers fall back to
+        the mobile, which is always unambiguous.
+        """
+        matches = self.find_all_by_email(email)
+        return matches[0] if len(matches) == 1 else None
+
+    def find_all_by_email(self, email: str) -> list:
+        """Every account carrying this email (case-insensitive). Ordinarily 0 or 1; a
+        longer list means the address is shared and cannot identify anyone on its own.
+
         Empty emails never match — dev accounts have no email. A linear scan over the
         account files is fine for the reference adapter; the partner's DB adapter does
-        this with an index.
+        this with an index (and can enforce a UNIQUE constraint the file store cannot).
         """
         needle = (email or "").strip().lower()
-        if not needle:
-            return None
-        if not self.accounts_dir.exists():
-            return None
+        if not needle or not self.accounts_dir.exists():
+            return []
+        found = []
         for path in sorted(self.accounts_dir.glob("*/*/account.json")):
             try:
                 with open(path, "r") as f:
@@ -86,8 +100,8 @@ class AccountRepositoryFileImpl(AccountRepository):
             except (json.JSONDecodeError, IOError):
                 continue  # one corrupt record must not break lookup for everyone
             if str(raw.get("email", "")).strip().lower() == needle:
-                return self._from_raw(raw)
-        return None
+                found.append(self._from_raw(raw))
+        return found
 
     def delete(self, tenant_id: str, user_id: str) -> None:
         """Remove the account record (administrative_architecture.md §2.6 — only the

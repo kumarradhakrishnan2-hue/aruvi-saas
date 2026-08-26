@@ -40,6 +40,12 @@ from aruvi_core.adapters.plan_note_repository_file import PlanNoteRepositoryFile
 from aruvi_core.adapters.data_rights_service_file import DataRightsServiceFileImpl
 from aruvi_core.adapters.entitlement_repository_file import EntitlementRepositoryFileImpl
 from aruvi_core.adapters.manual_billing_provider import ManualBillingProvider
+from aruvi_core.adapters.erasure_log_file import ErasureLogFileImpl
+from aruvi_core.adapters.year_cutover_file import YearCutoverFileImpl
+from aruvi_core.adapters.file_notifier import FileNotifier
+from aruvi_core.adapters.smtp_notifier import SmtpNotifier
+from aruvi_core.ports import EmailMessage
+from api import mail_templates
 from aruvi_core.ports import Account, AcademicYear, Entitlement, PlanNote, StaleNoteWrite
 from aruvi_core.grades import stage_for, UnknownGradeError
 from aruvi_core.report_competency import build_report as build_competency_report
@@ -129,6 +135,17 @@ data_rights = DataRightsServiceFileImpl(config.STATE_DIR,
 # daily dev is undisturbed; the founder operates it via aruvi-scripts/entitlement.py.
 entitlement_repo = EntitlementRepositoryFileImpl(config.STATE_DIR)
 billing_provider = ManualBillingProvider(entitlement_repo)
+# The one store the erase walk must never traverse — see erasure_log_file.py.
+erasure_log = ErasureLogFileImpl(config.STATE_DIR)
+
+# The Notifier: real SMTP only when the founder has set all three credentials in the
+# environment; otherwise the file outbox, so the preview never needs a mail account and
+# no credential ever enters the repo. One decision, made once, at the seam.
+if config.SMTP_HOST and config.SMTP_USER and config.SMTP_PASSWORD:
+    notifier = SmtpNotifier(config.SMTP_HOST, config.SMTP_PORT, config.SMTP_USER,
+                            config.SMTP_PASSWORD, from_addr=config.MAIL_FROM)
+else:
+    notifier = FileNotifier(config.STATE_DIR, from_addr=config.MAIL_FROM)
 
 # Account + tenant record (administrative architecture Step 0) — the durable record that
 # billing, privacy, notifications and the institutional tier all hang off. NOT year-scoped
@@ -139,6 +156,11 @@ account_repo = AccountRepositoryFileImpl(config.STATE_DIR)
 # which is current. Every piece of TEACHING state below is filed under the current year;
 # the account and the teaching profile deliberately are not. STATE_DIR (data/academic_years/).
 academic_year_repo = AcademicYearRepositoryFileImpl(config.STATE_DIR)
+
+# Cutover (Step 2) — composed from repositories that already exist, because it MOVES
+# NOTHING: year-scoped paths mean opening the next year is the whole operation.
+year_cutover = YearCutoverFileImpl(academic_year_repo, readiness_repo,
+                                   prepared_plans_repo, section_state_repo)
 
 # Identity provider behind the AuthProvider port. The reference impl treats the raw
 # X-Aruvi-User header value as the credential (no password — dev). A partner's IdP adapter
@@ -177,9 +199,25 @@ def _current_identity(x_aruvi_user: Optional[str] = Header(default=None)) -> tup
 # on first touch so no request ever lacks a year in its address. The default follows the
 # CBSE April–March calendar; a teacher on a June–May state board edits her year record
 # later (Step 2's cutover UI) — the LABEL is what addressing needs, not the exact dates.
+def _today() -> date:
+    """Today — or the simulated date, if ARUVI_TODAY is set.
+
+    ★ ONE seam for the whole service (2026-08-26). Cutover's entire behaviour hangs on
+    the calendar, and "wait until June to find out" is not a test strategy. Every date
+    decision goes through here, so a simulated date makes the WHOLE system agree about
+    what day it is — entitlement expiry included — instead of only the piece under test,
+    which is how you get a coherent June to walk through in August."""
+    if config.SIMULATED_TODAY:
+        try:
+            return date.fromisoformat(config.SIMULATED_TODAY)
+        except ValueError:
+            pass          # a malformed override is ignored, never fatal
+    return date.today()
+
+
 def _default_academic_year() -> AcademicYear:
     """The academic year today's date falls in, April-anchored ("2026-27")."""
-    today = date.today()
+    today = _today()
     start_year = today.year if today.month >= 4 else today.year - 1
     return AcademicYear(
         year_id=f"{start_year}-{str(start_year + 1)[-2:]}",
@@ -240,7 +278,7 @@ def _check_entitlement(tenant_id: str, subject: str, grade: str,
             f"used them. Your {config.TRIAL_CHAPTER_CAP} chapters stay yours — "
             f"subscribe to prepare new ones."))
     if ent.status in ("active", "grace"):
-        if ent.valid_until and ent.valid_until < date.today().isoformat():
+        if ent.valid_until and ent.valid_until < _today().isoformat():
             raise HTTPException(status_code=402, detail=(
                 "Your subscription has ended. Renew to keep preparing new chapters — "
                 "everything you made stays yours."))
@@ -259,12 +297,23 @@ def _check_productivity(tenant_id: str) -> None:
     """The LAPSED lockout (§2.5 as amended; founder 2026-08-24 persona pass): an
     expired subscription keeps her PLANS — open, export, print, archive, notes — but
     loses the productivity tools: profile changes (sections/classes/subjects) and
-    section tracking. Trial and active/grace pass freely; only a positively-expired
-    entitlement blocks. No-op when enforcement is off. Raises 402 in plain words."""
+    section tracking. Trial and a LIVE active/grace pass freely.
+
+    ★ "Expired" means either of two things, and it must mean both here (bug found in
+    the 2026-08-26 persona run): a manually REVOKED entitlement (status "expired") OR
+    one whose VALID_UNTIL has passed while the status still literally reads "active".
+    Only the first was checked, so a subscription that lapsed BY DATE — which is how
+    every real lapse will happen once payments are live; manual revocation is the rare
+    case — kept its profile editing and tracker while generation was already 402ing.
+    `_check_entitlement` had the date test all along; the two gates now agree."""
     if not config.ENTITLEMENT_ENFORCED:
         return
     ent = entitlement_repo.load(tenant_id)
-    if ent is not None and ent.status == "expired":
+    lapsed = ent is not None and (
+        ent.status == "expired"
+        or (ent.status in ("active", "grace")
+            and ent.valid_until and ent.valid_until < _today().isoformat()))
+    if lapsed:
         raise HTTPException(status_code=402, detail=(
             "Your subscription has ended. Renew to use tracking and profile tools — "
             "your lesson plans stay available to open and export."))
@@ -1098,8 +1147,16 @@ def save_plan_note(req: PlanNoteRequest, year_id: Optional[str] = None,
                    identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
     """Upsert one chapter's note (empty text deletes it — the everyday edit flow IS the
     delete flow, §2.4). Returns 409 with the server's newer copy when the write is stale,
-    so a stale device shows the fresher note instead of clobbering it."""
+    so a stale device shows the fresher note instead of clobbering it.
+
+    ★ LAPSED LOCKS NOTES TOO (founder, 2026-08-26, closing checklist test 49). Writing
+    notes was left open on the argument that a note is her own writing rather than a
+    productivity tool; the founder ruled the other way — note-taking belongs to the
+    working half of Aruvi, alongside the tracker and the profile. READING stays open
+    (GET is ungated), so nothing she has already written is taken away: her notes
+    export with her plans and come back the day she renews."""
     tenant_id, user_id = identity
+    _check_productivity(tenant_id)     # lapsed: notes are read-only (§2.5 amended)
     year = _resolve_year(tenant_id, user_id, year_id)
     key = _note_key(req.subject, req.grade, req.chapter)
     try:
@@ -1148,9 +1205,17 @@ def data_rights_export(format: str = "docx",
 
 
 class EraseRequest(BaseModel):
-    """Body for POST /data-rights/erase. `confirm` must be the literal string "erase":
-    a typed confirmation, so no stray client call can destroy an account."""
+    """Body for POST /data-rights/erase.
+
+    TWO confirmations, because the two say different things (founder, 2026-08-26):
+      · `confirm` must be the literal string "erase" — a typed act of intent, so no
+        stray client call can destroy an account;
+      · `downloaded_confirmed` must be True — she states she has her data. Deletion is
+        irreversible and the export is the only copy she will ever get; the old screen
+        merely SUGGESTED downloading first, which is advice, not a safeguard.
+    Both are recorded in the erasure log before anything is destroyed."""
     confirm: str = ""
+    downloaded_confirmed: bool = False
 
 
 @app.post("/data-rights/erase")
@@ -1162,14 +1227,104 @@ def data_rights_erase(req: EraseRequest,
     if (req.confirm or "").strip().lower() != "erase":
         raise HTTPException(status_code=400,
                             detail='Confirmation required: send {"confirm": "erase"}.')
+    if not req.downloaded_confirmed:
+        raise HTTPException(status_code=400, detail=(
+            "Please confirm you have downloaded your Aruvi data. Deletion cannot be "
+            "undone and the download is the only copy you can keep."))
     tenant_id, user_id = identity
+    # Record the consent BEFORE destroying anything: written after the fact it could be
+    # lost to the very failure it exists to document. The log lives outside the erase
+    # walk and carries identifiers and timestamps only — never personal data.
+    consent = erasure_log.record(tenant_id, user_id, True)
     try:
         receipt = data_rights.erase(tenant_id, user_id)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erase failed: {str(e)}")
     return {"status": "erased" if receipt.erased else "nothing_to_erase",
             "erased": receipt.erased, "kept": receipt.kept,
-            "erased_at": receipt.erased_at}
+            "erased_at": receipt.erased_at,
+            "confirmation_recorded": bool(consent.get("logged")),
+            "confirmed_at": consent.get("confirmed_at")}
+
+
+# ── Academic year + cutover (administrative architecture Step 2) ────────────────
+@app.get("/academic-year")
+def get_academic_year(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Her year, her past years, and whether the next one is on offer.
+
+    `cutover_due` is the ONLY signal the UI needs: true once the calendar has reached the
+    cutover date for the next year and she has not moved yet. It is computed server-side
+    from her stored current year — never from the browser's clock, which a teacher can
+    change and a phone in another timezone gets wrong anyway."""
+    tenant_id, user_id = identity
+    current_id = _resolve_year(tenant_id, user_id)
+    next_id = YearCutoverFileImpl.next_year_id(current_id)
+    due_on = YearCutoverFileImpl.cutover_date(next_id, config.CUTOVER_MONTH_DAY)
+    cutover_due = bool(due_on and _today() >= due_on and next_id != current_id)
+    years = academic_year_repo.list_years(tenant_id, user_id) or []
+    prior = [y.year_id for y in years if y.year_id != current_id]
+    return {
+        "current_year": current_id,
+        "next_year": next_id,
+        "prior_years": prior,
+        "cutover_due": cutover_due,
+        "cutover_date": due_on.isoformat() if due_on else None,
+        "today": _today().isoformat(),
+        "simulated": bool(config.SIMULATED_TODAY),
+    }
+
+
+class CutoverRequest(BaseModel):
+    """Body for POST /academic-year/cutover. `confirm` must be True — cutover is hers to
+    trigger (§0's pull-never-push rule); nothing rolls a teacher's year on a timer."""
+    confirm: bool = False
+
+
+@app.post("/academic-year/cutover")
+def do_cutover(req: CutoverRequest,
+               identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Move this teacher into the next academic year, on her confirmation.
+
+    What she gets: a clean set of section cards, her class list untouched, and last
+    year's plans still readable under their own year. What she does NOT get is anything
+    deleted — see the YearCutover port for why cutover moves nothing at all.
+
+    Idempotent: tapping twice reports `already_done` instead of opening a third year."""
+    if not req.confirm:
+        raise HTTPException(status_code=400,
+                            detail='Confirmation required: send {"confirm": true}.')
+    tenant_id, user_id = identity
+    current_id = _resolve_year(tenant_id, user_id)
+    next_id = YearCutoverFileImpl.next_year_id(current_id)
+    due_on = YearCutoverFileImpl.cutover_date(next_id, config.CUTOVER_MONTH_DAY)
+    if due_on and _today() < due_on:
+        # Two different situations look identical from the date alone, and telling them
+        # apart matters (found while testing the double tap):
+        #   · she has ALREADY cut over — her current year is one she moved into, and the
+        #     NEXT one is naturally still months away. A second tap must say so.
+        #   · she has never moved and the new year simply is not open yet.
+        # Her year list distinguishes them: a prior year exists only if she has moved.
+        prior_exists = any(y.year_id != current_id
+                           for y in (academic_year_repo.list_years(tenant_id, user_id) or []))
+        if prior_exists:
+            return {"status": "already_done", "closed_year": current_id,
+                    "opened_year": current_id, "sections_carried": 0,
+                    "plans_archived": 0, "already_done": True}
+        # Guard the route, not just the button: the new year is not on offer yet.
+        raise HTTPException(status_code=409, detail=(
+            f"The {next_id} year opens on {due_on.isoformat()}. "
+            "Nothing has changed."))
+    try:
+        result = year_cutover.cutover(tenant_id, user_id, current_id, next_id)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Cutover failed: {str(e)}")
+    return {
+        "status": "already_done" if result.already_done else "cutover",
+        "closed_year": result.closed_year, "opened_year": result.opened_year,
+        "sections_carried": result.sections_carried,
+        "plans_archived": result.plans_archived,
+        "already_done": result.already_done,
+    }
 
 
 @app.get("/entitlement")
@@ -1180,8 +1335,17 @@ def get_entitlement(identity: tuple = Depends(_current_identity)) -> Dict[str, A
     the client whether the gate is live at all (dev default: off)."""
     tenant_id, _user_id = identity
     ent = _entitlement_of(tenant_id)
+    # ★ `lapsed` is DERIVED here so the client never re-implements the rule (bug found
+    #   2026-08-26: the web half tested `status === "expired"` only, so a subscription
+    #   that ran out BY DATE kept its My Classes tab, "+" and edit pen while the server
+    #   was already refusing its writes). Revoked OR date-expired — one answer, one place.
+    lapsed = config.ENTITLEMENT_ENFORCED and (
+        ent.status == "expired"
+        or (ent.status in ("active", "grace")
+            and bool(ent.valid_until) and ent.valid_until < _today().isoformat()))
     return {
         "plan_id": ent.plan_id, "status": ent.status, "valid_until": ent.valid_until,
+        "lapsed": lapsed,
         "source": ent.source, "scopes": ent.scopes,
         "trial_chapters_used": len(ent.trial_chapters),
         "trial_chapter_cap": config.TRIAL_CHAPTER_CAP,
@@ -1215,6 +1379,25 @@ def get_account(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
             "school_name": a.school_name, "created_at": a.created_at}
 
 
+def _guard_email_not_taken(email: str, self_id: str) -> None:
+    """Refuse an address that already belongs to a DIFFERENT account (2026-08-26).
+
+    Email became a sign-in credential the day sign-in started accepting it, and a
+    credential that points at two accounts points at neither: whoever typed it would land
+    in someone else's data, or — more likely in the field — a teacher who mistyped her
+    second mobile's address would quietly split herself in two. Prevention lives here so
+    duplicates cannot arise; find_by_email's ambiguity guard is the net for records that
+    already exist. Re-saving your OWN address is always fine."""
+    needle = (email or "").strip()
+    if not needle:
+        return
+    for other in account_repo.find_all_by_email(needle):
+        if other.account_id != self_id:
+            raise HTTPException(status_code=409, detail=(
+                "This email is already used by another Aruvi account. "
+                "Use a different address, or sign in with that account's mobile number."))
+
+
 @app.post("/account")
 def update_account(req: AccountUpdate,
                    identity: tuple = Depends(_current_identity)) -> Dict[str, str]:
@@ -1226,6 +1409,7 @@ def update_account(req: AccountUpdate,
     if req.name is not None:
         a.display_name = req.name.strip() or a.display_name
     if req.email is not None:
+        _guard_email_not_taken(req.email, a.account_id)
         a.email = req.email.strip()
     if req.role is not None:
         a.role = req.role.strip()
@@ -1251,10 +1435,14 @@ def onboarding_known(id: str = "") -> Dict[str, Any]:
         return {"known": False}
     # Email sign-in (founder, 2026-08-26): resolve the email to its account and hand
     # the CANONICAL id (the mobile) back — the session always runs under the mobile.
+    # A SHARED address identifies nobody, so say so and send her to her mobile rather
+    # than guessing (find_by_email returns None on ambiguity, by design).
     if "@" in uid:
-        acct = account_repo.find_by_email(uid)
-        if acct:
-            return {"known": True, "id": acct.account_id}
+        matches = account_repo.find_all_by_email(uid)
+        if len(matches) == 1:
+            return {"known": True, "id": matches[0].account_id}
+        if len(matches) > 1:
+            return {"known": False, "reason": "ambiguous_email"}
         return {"known": False}
     return {"known": account_repo.load(uid, uid) is not None, "id": uid}
 
@@ -1303,6 +1491,13 @@ def _apply_subscription_profile(tenant_id: str, user_id: str,
         founder: the subscription overrides the trial profile), and their section
         pointers are cleared server-side. Their PLANS remain on the server; they
         reappear if that subject is ever subscribed.
+      · ★ EXCEPT one that she has actually PREPARED PLANS in (founder, 2026-08-26).
+        The paywall promises "Your 3 chapters stay yours" — and dropping her trial
+        subject from the profile broke that promise the moment she paid for a
+        different one: the plans sat on disk with no chooser entry able to reach
+        them. Such a subject is KEPT so she can open, export and print what she
+        made. It is not a licence to prepare more there — genon_make_plan's own gate
+        still answers "Your subscription covers a different subject."
     The tour-end "Are these your sections?" prompt is the designed amend moment, so
     defaults are safe. Full-replace save through the same repo the API uses."""
     slugify = lambda name: (name or "").lower().replace(" ", "_")
@@ -1351,6 +1546,21 @@ def _apply_subscription_profile(tenant_id: str, user_id: str,
             "budget": budget,
         })
 
+    # An out-of-scope subject she has PREPARED PLANS in survives untouched, so those
+    # plans stay reachable in My Lessons (founder, 2026-08-26 — see the docstring).
+    # A subject with no plans is a pure trial artifact and still goes.
+    try:
+        prepared = prepared_plans_repo.load_all(tenant_id, user_id, year) or {}
+    except Exception:
+        prepared = {}
+    with_plans = {str(k).split("/")[0].lower() for k in prepared.keys() if "/" in str(k)}
+    bought = set(by_subj.keys())
+    for s in existing:
+        sslug = slugify(s.get("name", ""))
+        if sslug in bought or sslug not in with_plans:
+            continue
+        new_subjects.append(s)          # her own record, exactly as it stood
+
     # Clear section pointers of everything dropped (the plans themselves stay).
     kept_keys = set()
     for s in new_subjects:
@@ -1388,6 +1598,34 @@ class CheckoutRequest(BaseModel):
     school: str = ""
 
 
+def _send_subscription_confirmation(to: str, name: str, scopes: List[str],
+                                    amount_inr: int, valid_until: str,
+                                    mobile: str) -> Dict[str, Any]:
+    """Send the activation confirmation. NEVER raises and never blocks the answer the
+    teacher is waiting for: a mail server having a bad minute must not turn a successful
+    subscription into an error. Returns the notifier's result for the response body.
+
+    A teacher who gave no email simply gets no mail — the app already shows her the
+    subscription on screen. With MAIL_BCC_FOUNDER on, the founder gets his own copy,
+    which is his sales log until invoicing exists."""
+    if not (to or "").strip():
+        return {"status": "skipped", "reason": "no email on the account"}
+    body = mail_templates.subscription_confirmation(
+        name=name, scopes=list(scopes or []), amount_inr=amount_inr,
+        valid_until=valid_until, mobile=mobile)
+    result = notifier.send(EmailMessage(
+        to=to.strip(), subject=body["subject"], text=body["text"],
+        reply_to=config.MAIL_REPLY_TO))
+    if config.MAIL_BCC_FOUNDER and config.MAIL_FROM \
+            and config.MAIL_FROM.strip().lower() != to.strip().lower():
+        notifier.send(EmailMessage(
+            to=config.MAIL_FROM,
+            subject=f"[Aruvi] New subscription — {name or mobile}",
+            text=f"To: {to}\nMobile: {mobile}\n\n" + body["text"],
+            reply_to=config.MAIL_REPLY_TO))
+    return result
+
+
 @app.post("/onboarding/checkout")
 def onboarding_checkout(req: CheckoutRequest,
                         identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
@@ -1408,6 +1646,7 @@ def onboarding_checkout(req: CheckoutRequest,
             acct.display_name = req.name.strip()
         acct.phone = user_id                     # mobile IS the id on this path
         if req.email.strip():
+            _guard_email_not_taken(req.email, acct.account_id)   # email is a credential
             acct.email = req.email.strip()
         acct.role = req.role.strip()
         acct.state = req.state.strip()
@@ -1422,9 +1661,18 @@ def onboarding_checkout(req: CheckoutRequest,
         _apply_subscription_profile(tenant_id, user_id, scopes)
     except Exception:
         pass   # a profile hiccup must never fail an activation
+    amount = len(scopes) * config.PRICE_PER_SUBJECT_STAGE
+    mail = _send_subscription_confirmation(
+        to=(req.email or (acct.email if acct else "") or "").strip(),
+        name=(req.name or (acct.display_name if acct else "") or "").strip(),
+        scopes=result.get("scopes") or scopes,
+        amount_inr=amount, valid_until=result.get("valid_until") or "", mobile=user_id)
     return {"status": "active", "scopes": result.get("scopes"),
             "valid_until": result.get("valid_until"),
-            "amount_inr": len(scopes) * config.PRICE_PER_SUBJECT_STAGE}
+            "amount_inr": amount,
+            # What happened to the confirmation mail, so the UI can say so honestly
+            # rather than promising an email that was never attempted.
+            "email_status": mail.get("status", "skipped")}
 
 
 @app.post("/subjects/{subject}/{grade}/generate")

@@ -183,14 +183,66 @@ def test_routes_and_fresh_start():
     assert c.get("/data-rights/export?format=xls", headers=h).status_code == 400
     # No/wrong confirmation → refused.
     assert c.post("/data-rights/erase", json={}, headers=h).status_code == 400
-    r = c.post("/data-rights/erase", json={"confirm": "erase"}, headers=h)
+    # ★ The typed word alone is no longer enough (founder 2026-08-26): she must also
+    #   state she has her data, because the download is the only copy she can keep.
+    assert c.post("/data-rights/erase", json={"confirm": "erase"},
+                  headers=h).status_code == 400, "download confirmation is required"
+    r = c.post("/data-rights/erase",
+               json={"confirm": "erase", "downloaded_confirmed": True}, headers=h)
     body = r.json()
+    assert body["confirmation_recorded"] is True, "consent must be logged"
+    assert body.get("confirmed_at"), "the log stamps when she confirmed"
     assert body["status"] == "erased" and "account record" in body["erased"]
     # Fresh start: same ID, brand-new empty account, no old data.
     assert c.get("/plan-notes", headers=h).json()["notes"] == {}
     acct = api_main.account_repo.load("EraseKumar", "EraseKumar")
     assert acct is not None, "JIT re-created on the post-erase request"
     print("✓ Routes: export download, confirm-guarded erase, fresh start after")
+
+
+def test_erasure_consent_log_survives_the_erasure():
+    """★ The ONE record that must outlive an erasure (founder, 2026-08-26).
+
+    Everything else about her is destroyed — that is the point — which is exactly why,
+    until now, an erased account left no evidence she had ever confirmed. The log lives
+    outside the erase walk. It must (a) still be there afterwards, (b) hold her
+    confirmation, and (c) carry NO personal data: identifiers and timestamps only, or it
+    would quietly reintroduce what she asked to have destroyed."""
+    from fastapi.testclient import TestClient
+    from api import main as api_main
+
+    c = TestClient(api_main.app)
+    uid = "ConsentKumar"
+    h = {"X-Aruvi-User": uid}
+    c.post("/plan-notes", json={"subject": "science", "grade": "vii", "chapter": "1",
+                                "text": "Ravi struggled with fractions today",
+                                "updated_at": "2026-08-26T10:00:00+00:00"}, headers=h)
+    c.post("/account", json={"name": "Priya Nair", "email": "priya.nair@example.com"},
+           headers=h)
+
+    r = c.post("/data-rights/erase",
+               json={"confirm": "erase", "downloaded_confirmed": True}, headers=h)
+    assert r.status_code == 200 and r.json()["confirmation_recorded"] is True
+
+    entries = api_main.erasure_log.for_tenant(uid)
+    assert len(entries) == 1, "exactly one record for one deletion"
+    e = entries[0]
+    assert e["tenant_id"] == uid and e["user_id"] == uid   # tenant/user wise
+    assert e["confirmed_downloaded"] is True
+    assert e["confirmed_at"]
+
+    # (c) NO personal data may appear anywhere in the log.
+    import json as _json
+    blob = _json.dumps(entries).lower()
+    for forbidden in ("priya", "nair", "priya.nair@example.com", "ravi", "fractions"):
+        assert forbidden not in blob, f"the consent log leaked {forbidden!r}"
+
+    # A second deletion appends rather than replacing — the log is a history.
+    c.get("/plan-notes", headers=h)                    # JIT-recreate the account
+    c.post("/data-rights/erase",
+           json={"confirm": "erase", "downloaded_confirmed": True}, headers=h)
+    assert len(api_main.erasure_log.for_tenant(uid)) == 2, "append-only"
+    print("✓ Erasure consent is recorded tenant/user wise, survives, and leaks nothing")
 
 
 if __name__ == "__main__":
@@ -200,4 +252,5 @@ if __name__ == "__main__":
     test_export_excludes_shared_library()
     test_erase_walks_everything_and_receipts()
     test_routes_and_fresh_start()
+    test_erasure_consent_log_survives_the_erasure()
     print("\n✅ All data-rights tests passed!")

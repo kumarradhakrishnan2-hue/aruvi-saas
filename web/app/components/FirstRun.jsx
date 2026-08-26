@@ -116,6 +116,20 @@ const classNum = (g) => {
 
 export default function FirstRun({ user, onComplete, onPrepared, onPrepareError, onExit, onSignOut }) {
   const [step, setStep] = useState("welcome");
+  /* Her first name for the bar (founder, 2026-08-26) — see <Brand/>. Read once; a
+     failure just leaves the id showing, which is what it did before. */
+  const [firstName, setFirstName] = useState("");
+  useEffect(() => {
+    if (!user) { setFirstName(""); return; }
+    let live = true;
+    getJSON("/account").then((a) => {
+      if (!live || !a) return;
+      const nm = (a.display_name || "").trim();
+      const one = nm && !/^\d+$/.test(nm) ? nm.split(/\s+/)[0] : "";
+      setFirstName(one ? one.charAt(0).toUpperCase() + one.slice(1) : "");
+    }).catch(() => {});
+    return () => { live = false; };
+  }, [user]);
   // welcome | subject | grade | chapter   — that is the whole flow (2026-08-21)
 
   const [subjects, setSubjects] = useState([]);
@@ -505,7 +519,11 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
               met the stale toggle here on the subscribed-entry test). */}
           {user && (
             <div className="hdr-user-id">
-              <span className="hdr-user-name">{user}</span>
+              {/* Her FIRST NAME once the account has one (founder, 2026-08-26): a
+                  direct subscriber types her name at checkout and then met her raw
+                  mobile on the very next screen. Same rule as the shell's bar — a
+                  numeric display_name is the JIT default, not a name. */}
+              <span className="hdr-user-name">{firstName || user}</span>
               {onSignOut && <button className="hdr-user-logout" onClick={onSignOut}>Log out</button>}
             </div>
           )}

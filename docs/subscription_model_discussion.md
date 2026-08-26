@@ -7,6 +7,59 @@ work on entitlement UI, pricing pages, or the partner brief's billing sections. 
 
 ---
 
+## ★★ 0-bis. BULK / SCHOOL PURCHASE — DEFERRED, AND WHY (founder, 2026-08-26)
+
+**Decision: no bulk-purchase flow until the website exists. Until then tenant == user,
+one teacher = one tenant, and Aruvi sells to individuals only.**
+
+The session that produced this walked the whole design and then abandoned it, which is
+worth recording so it is not re-derived from scratch:
+
+1. **The arbitrage is real and cannot be priced away.** Any SKU granting unlimited SCOPE
+   to one account is a licence to run an LP printing press: one person generates the
+   school's chapters, exports Word/PDF, hands them round. Documents travel; entitlements
+   do not follow them.
+2. **The fence on mobile is not the price — it is the PHONE.** OTP binds the account to a
+   handset, the handset is personal, and the recurring value (tracker, bookmarks, notes)
+   is worthless to anyone else. This is why individual = mobile-only works.
+3. **Therefore the billing unit must stay `subject-stage × teacher` on EVERY channel.**
+   Enterprises must not get full-Aruvi access that individuals are refused; a seat that
+   grants unlimited scope re-creates the vending machine at a different price point. The
+   degraded exploit that survives — 11 scopes on one mobile, ₹5,500, LP generation with
+   no section cards, no tracker, no notes — is ACCEPTED: it cannot be prevented and it
+   sells a visibly worse product.
+4. **A price formula is not a fence.** "Scope × teachers" only binds if buying 8 units
+   provisions 8 teacher slots each activated by a real mobile. Otherwise the multiplier
+   is a promise the school can ignore.
+5. **Aggregation should be self-enforcing.** A dashboard that shows what REGISTERED
+   teachers covered needs no policing: a school that bought 11 scopes on one mobile sees
+   a dashboard with one teacher in it and discovers the degradation itself.
+
+**Why it was nonetheless deferred (the founder's call, and the correct one):** the bulk
+flow has **no natural home on a phone**. Schools do not purchase on mobile; nobody types
+25 teacher mobile numbers into a handset; and asking "whose mobile authenticates the
+school?" invents an identity that does not exist in the real world — the purchaser is an
+institution, often represented by non-teaching staff who may leave. Every attempted fix
+(emailed password for the admin, a licences-count field, an authorized-not-authenticated
+mobile list, a reassignment path for typos, GSTIN capture for invoicing) added a
+mechanism whose real home is a website. **The feature is waiting on the website, not on a
+cleverer mobile design.** Build the website first, unify mobile + web identity there, then
+bulk purchase becomes a screen rather than an architecture.
+
+**Ideas worth keeping when it is picked up again:** "authorized (not authenticated)" —
+a pre-provisioned entitlement keyed to a mobile that has not signed in yet, converted on
+first successful OTP (`claimed_at`); reassignment permitted until claimed, never after;
+an authorization for a mobile that already has an account MERGES (adds scopes, supersedes
+a trial) and never wipes her plans; email OTP rather than an emailed password (same
+security, none of the password surface); GSTIN + legal name + billing address are the
+actual reason a school comes through this door.
+
+**Platform-fee note:** bulk-on-web incurs only the gateway's ~2%, not Apple/Google's
+15–30% (which applies to purchases made INSIDE the app). What must be avoided is the
+individual iOS flow linking out to web checkout — Apple polices that specifically.
+
+---
+
 ## ★ 0. THE CURRENT MODEL (founder, 2026-08-22 second session) — supersedes §5's
 ## price-anchor hypothesis; §§1–4 and 6–7 below still stand as analysis
 

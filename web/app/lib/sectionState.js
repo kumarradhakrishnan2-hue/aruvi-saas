@@ -142,6 +142,33 @@ export function pushSectionState(sectionKey) {
   } catch {}
 }
 
+/* ★ CUTOVER'S ONE EXCEPTION (founder, 2026-08-26). `pullSectionState` below deliberately
+ * ADOPTS NOTHING and DELETES NOTHING when the server returns a wholesale-empty payload,
+ * because that is far more likely a transient/corrupt read than a teacher having untracked
+ * every class — a guard added after a corrupt state.json flashed every card back to "pick a
+ * chapter". An academic-year cutover is the one moment when empty genuinely means empty:
+ * the new year's folder has no rows because she has not taught in it yet. Found live —
+ * after cutting over, My Classes still read "Teaching now Ch 5" from the browser's cache.
+ *
+ * So cutover clears the cache EXPLICITLY rather than by weakening the guard, which still
+ * protects the failure mode it was written for. Nothing on the server is touched; only this
+ * device's optimistic copy, which the next reconcile would rebuild from server truth anyway.
+ */
+export function clearLocalSectionCache() {
+  if (typeof window === "undefined") return 0;
+  const prefixes = ["current_chapter_", "lu_pointer_", "lu_done_", "lu_bookmark_"];
+  let removed = 0;
+  try {
+    const doomed = [];
+    for (let i = 0; i < window.localStorage.length; i += 1) {
+      const k = window.localStorage.key(i);
+      if (k && prefixes.some((p) => k.startsWith(p))) doomed.push(k);
+    }
+    doomed.forEach((k) => { window.localStorage.removeItem(k); removed += 1; });
+  } catch { /* private mode / storage disabled — the server is the authority regardless */ }
+  return removed;
+}
+
 /* Authoritative reconcile on load: pull every tracked section from the server and rewrite
  * the localStorage cache to match. For each KNOWN section key (from the readiness profile),
  * apply the server row, or clear the local cache if the server has none — so a device that

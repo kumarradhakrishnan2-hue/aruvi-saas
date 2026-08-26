@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { pushSectionState, readLocalBookmark, writeLocalBookmark } from "../lib/sectionState";
-import { userKey, boldMarks, fetchPlanNotes, savePlanNote, planNoteKey } from "../lib/format";
+import { userKey, boldMarks, fetchPlanNotes, savePlanNote, planNoteKey, fetchEntitlement } from "../lib/format";
 
 /* ───────── Lesson view (Screen 3) + assessment artifact (Screen 3b) ─────────
  * A COMPLETION surface, not a navigation one (2026-06-29 redesign). The plan's periods
@@ -1264,10 +1264,16 @@ function cnSubjectGrade(lp) {
   return [subj, grade].filter(Boolean).join(" · ");
 }
 
-function ChapterNotesModal({ chapterTitle, subjectGrade, initial, onSave, onClose }) {
+/* `readOnly` = her subscription has lapsed (founder, 2026-08-26). She can still READ
+   every note she wrote — nothing is taken away, and they export with her plans — but
+   note-taking is part of Aruvi's working half, alongside the tracker and the profile,
+   so it stops until she renews. The server refuses the write regardless; this just
+   makes the UI say so instead of failing silently. */
+function ChapterNotesModal({ chapterTitle, subjectGrade, initial, onSave, onClose,
+                             readOnly = false }) {
   const [text, setText] = useState(initial || "");
   const taRef = useRef(null);
-  useEffect(() => { taRef.current?.focus(); }, []);
+  useEffect(() => { if (!readOnly) taRef.current?.focus(); }, [readOnly]);
   const wc = cnWordCount(text);
   // Hard cap: block input that would push past 400 words; deletions/edits still allowed
   // (only reject when the new value grows the count beyond the cap).
@@ -1288,6 +1294,14 @@ function ChapterNotesModal({ chapterTitle, subjectGrade, initial, onSave, onClos
             {/* Disclosure (admin architecture Step 3): holding her notes server-side is
                 legitimate because she is TOLD — "done when … she is told that they do". */}
             <div className="cn-scope">Saved to your account · opens on any device you sign in from</div>
+            {/* CHILD-PRIVACY WARNING (founder, 2026-08-26). Notes are free text a teacher
+                writes right after class, which is exactly the moment she might name a
+                child. Aruvi holds these on the server, so the boundary has to be stated
+                where she types, not buried in a policy page. Wording is the founder's. */}
+            <div className="cn-scope cn-warn">
+              Private data like name, age of child must not be recorded. Aruvi reserves
+              right to delete if entered.
+            </div>
           </div>
           <button className="cn-x" aria-label="Close" onClick={onClose}>✕</button>
         </div>
@@ -1297,8 +1311,17 @@ function ChapterNotesModal({ chapterTitle, subjectGrade, initial, onSave, onClos
           spellCheck={false}
           value={text}
           onChange={changeText}
-          placeholder={CN_GUIDE}
+          readOnly={readOnly}
+          placeholder={readOnly ? "No notes were written for this chapter." : CN_GUIDE}
         />
+        {readOnly ? (
+          <div className="cn-foot">
+            <div className="cn-foot-l">
+              <span className="cn-count">Renew to write notes — what you wrote stays yours.</span>
+            </div>
+            <button className="cn-save" onClick={onClose}>Close</button>
+          </div>
+        ) : (
         <div className="cn-foot">
           <div className="cn-foot-l">
             <button className="cn-speak" onClick={() => taRef.current?.focus()}>
@@ -1315,6 +1338,7 @@ function ChapterNotesModal({ chapterTitle, subjectGrade, initial, onSave, onClos
           </div>
           <button className="cn-save" onClick={() => onSave(text)}>Save</button>
         </div>
+        )}
       </div>
     </div>
   );
@@ -1552,6 +1576,17 @@ function SSFlowBody({ units, pointer, doneAll, onOpenUnit, gapNote }) {
  * dividers from the plugin's Group tree. Tapping a card is NAVIGATION, never pointer
  * movement. `pointer` is the live unit index, or null (preview — no place-marker). */
 function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour }) {
+  /* Notes lock when the subscription lapses (founder, 2026-08-26). Asked here rather
+     than threaded down as a prop: LessonView is reached from two surfaces by different
+     routes, and the entitlement is one cheap cached read. Unknown → not locked; the
+     server is the authority either way. */
+  const [notesLocked, setNotesLocked] = useState(false);
+  useEffect(() => {
+    let live = true;
+    fetchEntitlement().then((e) => { if (live && e) setNotesLocked(!!e.lapsed); })
+      .catch(() => {});
+    return () => { live = false; };
+  }, []);
   // Chapter Notes state — asset-keyed (NOT the per-section pointer key), so preview and
   // tracking, and every section, read/write ONE shared note (arch-plan §I-bis).
   // Per-user scope (userKey appends _{user}) so chapter notes never bleed across teachers on
@@ -1898,6 +1933,7 @@ function ChapterOrg({ lp, units, pointer, doneAll, onOpenUnit, onBack, backTour 
           subjectGrade={cnSubjectGrade(lp)}
           initial={noteText}
           onSave={saveNote}
+          readOnly={notesLocked}
           onClose={() => setNotesOpen(false)}
         />
       ) : null}

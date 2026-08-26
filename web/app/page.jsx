@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { getJSON, pretty, gradeUp, ROMAN, projectReadiness, API, withUser, getUser, setUser, clearUser, fetchEntitlement } from "./lib/format";
+import { getJSON, postJSON, pretty, gradeUp, ROMAN, projectReadiness, API, withUser, getUser, setUser, clearUser, fetchEntitlement } from "./lib/format";
 import { verifiedWrite, readinessFingerprint } from "./lib/verify";
-import { setSectionMismatchHandler, pullSectionState } from "./lib/sectionState";
+import { setSectionMismatchHandler, pullSectionState, clearLocalSectionCache } from "./lib/sectionState";
 import GenerateTab from "./components/GenerateTab";
 import MyPlans from "./components/MyPlans";
 import Login from "./components/Login";
@@ -112,7 +112,15 @@ export default function Home() {
     return () => { live = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, user]);
-  const tourOnOffer = tourEligible === true && !tourDismissed;
+  /* Declared HERE, far above the effect that fills it, because `tourOnOffer` on the very
+     next line reads it — a `const` used before its declaration is a TDZ ReferenceError
+     that white-screens the whole app, and it is invisible to babel-parse. (Found live,
+     2026-08-26, the day the lapsed-tour rule was added.) */
+  const [entLapsed, setEntLapsed] = useState(false);
+  /* A LAPSED teacher is never offered the tour (founder, 2026-08-26): it walks her
+     through attaching, tracking and preparing — every one of which her subscription
+     has just taken away. Offering it would teach her the shape of a locked door. */
+  const tourOnOffer = tourEligible === true && !tourDismissed && !entLapsed;
   // Also closes Ask Aruvi: Skip can be pressed on step 18 while the panel is open, and the
   // tour must never leave the shell in a state it opened.
   /* ★ Ending the tour asks her to check her sections (founder, 2026-08-21). First run no longer
@@ -256,17 +264,42 @@ export default function Home() {
      Completing it (or any generation) ends the condition forever. Unknown (fetch
      failed) → never force first run on a veteran. */
   const [firstGenNeeded, setFirstGenNeeded] = useState(false);
+  /* ★ THE ONE-SHOT LATCH (bug found in the 2026-08-26 persona run). Completing first
+     run flips `ready` false→true, which RE-RUNS this effect — and at that instant the
+     serve fired by `prepareAndHandOff` is still in flight, so the server truthfully
+     answers "nothing prepared, nothing bound" and the heuristic re-armed first run,
+     bouncing the teacher back to the welcome screen seconds after her first success.
+     Her plan was fine on disk; only a reload escaped. The heuristic answers "has she
+     EVER generated?" — once this session has watched her do it, the answer can never
+     revert, so latch it and never ask again. */
+  const everGeneratedRef = useRef(false);
+  const latchUserRef = useRef(null);   // whose latch it is — sign-out must not inherit it
   useEffect(() => {
+    // The latch belongs to ONE teacher. Signing out and in as someone else does not
+    // remount page.jsx, so without this a veteran's latch would suppress the NEXT
+    // teacher's first run (found 2026-08-26: a direct subscriber landed in the shell
+    // because the previous session's teacher had generated).
+    if (latchUserRef.current !== user) { latchUserRef.current = user; everGeneratedRef.current = false; }
     if (!ready || !user) { setFirstGenNeeded(false); return; }
+    if (everGeneratedRef.current) { setFirstGenNeeded(false); return; }
     let live = true;
     Promise.all([
       getJSON("/plans-prepared").catch(() => null),
       getJSON("/section-state").catch(() => null),
-    ]).then(([p, s]) => {
-      if (!live || !p || !s) return;
+      /* ★ AND HER YEAR HISTORY (cutover, 2026-08-26). Both reads above are YEAR-SCOPED,
+         so the morning after a teacher cuts over they answer "nothing prepared, nothing
+         bound" — truthfully, because the new year is empty — and a ten-year veteran was
+         thrown into the guided first run. Found live in the June simulation. A PRIOR
+         YEAR is proof she has been here before; the question the heuristic asks is "has
+         she ever generated?", and last year's folder answers it. */
+      getJSON("/academic-year").catch(() => null),
+    ]).then(([p, s, y]) => {
+      if (!live || !p || !s || everGeneratedRef.current) return;
+      const veteran = !!(y && (y.prior_years || []).length > 0);
       const prepared = Object.keys((p && p.prepared) || {}).length > 0;
       const bound = Object.values((s && s.states) || {}).some((st) => st && st.chapter);
-      setFirstGenNeeded(!prepared && !bound);
+      if (prepared || bound || veteran) everGeneratedRef.current = true;
+      setFirstGenNeeded(!prepared && !bound && !veteran);
     });
     return () => { live = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -274,6 +307,9 @@ export default function Home() {
 
   const onFirstRunComplete = (payload, preparing) => {
     const subs = (payload && payload.subjects) || [];
+    // latch: she just generated — never re-arm for HER (2026-08-26)
+    latchUserRef.current = user;
+    everGeneratedRef.current = true;
     setFirstGenNeeded(false);
     if (subs.length) {
       /* MERGE with the checkout-created defaults, never replace (founder,
@@ -523,8 +559,10 @@ export default function Home() {
   /* Her NAME on the bar once captured (founder, 2026-08-26): the account's
      display_name replaces the raw mobile/id top-right (and in the greeting) as soon
      as checkout / Personal profile captures it. A numeric display_name is the JIT
-     default, not a name — keep showing the id then. Re-checked on entitlement sync so
-     an in-app subscribe updates it live. */
+     default, not a name — keep showing the id then. Re-checked on `entSyncTick`, which
+     an in-app subscribe bumps — and which Settings' Personal profile ALSO bumps on save
+     (bug found 2026-08-26: renaming yourself left the old first name on the bar and in
+     the greeting until a reload, because nothing re-fetched the account). */
   const [displayName, setDisplayName] = useState("");
   useEffect(() => {
     if (!user) { setDisplayName(""); return; }
@@ -537,7 +575,59 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, entSyncTick]);
 
-  const [entLapsed, setEntLapsed] = useState(false);
+  /* ── Academic-year cutover (Step 2, founder 2026-08-26) ────────────────────────
+     `yearInfo.cutover_due` is computed SERVER-side from her stored current year — never
+     from the browser clock, which a teacher can change and a phone in another timezone
+     gets wrong. Re-read on the same rhythm as the entitlement (focus/visibility) so a
+     teacher who leaves the tab open across midnight on 1 June is offered it without a
+     reload. Completing it re-reads readiness and the section state, because both are
+     year-scoped and have just changed underneath her. */
+  const [yearInfo, setYearInfo] = useState(null);
+  const [cutoverBusy, setCutoverBusy] = useState(false);
+  const [cutoverResult, setCutoverResult] = useState(null);
+  useEffect(() => {
+    if (!ready || !user) { setYearInfo(null); return; }
+    let live = true;
+    const read = () => getJSON("/academic-year")
+      .then((y) => { if (live && y) setYearInfo(y); })
+      .catch(() => {});
+    read();
+    const onWake = () => { if (document.visibilityState !== "hidden") read(); };
+    window.addEventListener("focus", onWake);
+    document.addEventListener("visibilitychange", onWake);
+    return () => {
+      live = false;
+      window.removeEventListener("focus", onWake);
+      document.removeEventListener("visibilitychange", onWake);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, user]);
+
+  const runCutover = () => {
+    setCutoverBusy(true);
+    postJSON("/academic-year/cutover", { confirm: true })
+      .then((res) => {
+        setCutoverResult(res || null);
+        /* Her year changed, so every year-scoped read is stale. The local section cache
+           must be cleared EXPLICITLY: pullSectionState refuses to delete on a wholesale-
+           empty server response (its anti-corruption guard), and after a cutover the new
+           year is legitimately empty — without this, My Classes keeps reading "Teaching
+           now Ch 5" out of the browser while the server has no such row. Found live. */
+        clearLocalSectionCache();
+        // She has just emptied her current year on purpose — she is emphatically not a
+        // new teacher, so the first-gen heuristic must never re-arm on the way out.
+        everGeneratedRef.current = true;
+        latchUserRef.current = user;
+        setFirstGenNeeded(false);
+        return Promise.all([
+          pullSectionState().catch(() => {}),
+          getJSON("/academic-year").then((y) => y && setYearInfo(y)).catch(() => {}),
+        ]);
+      })
+      .catch(() => setCutoverResult(null))
+      .finally(() => setCutoverBusy(false));
+  };
+
   /* paidScopes: the PAID teacher's subject-stage scopes (["social_sciences/middle"]),
      null when not paid / gate off / trial — TeachingProfile's choosers filter to these
      (§0: post-trial, only paid options are offered; the upsell line sits below the
@@ -548,8 +638,13 @@ export default function Home() {
     let live = true;
     const sync = () => fetchEntitlement().then((e) => {
       if (!live || !e) return;
-      setEntLapsed(!!(e.enforced && e.status === "expired"));
-      setPaidScopes((e.enforced && (e.status === "active" || e.status === "grace"))
+      /* `lapsed` comes from the SERVER (2026-08-26) — revoked OR run out by date, one
+         rule in one place. The status fallback keeps an older API honest. */
+      const isLapsed = e.lapsed !== undefined
+        ? !!e.lapsed
+        : !!(e.enforced && e.status === "expired");
+      setEntLapsed(isLapsed);
+      setPaidScopes((e.enforced && !isLapsed && (e.status === "active" || e.status === "grace"))
         ? (e.scopes || []) : null);
     });
     sync();
@@ -749,7 +844,7 @@ export default function Home() {
             /* My Lessons — the plan repository (subject → grade → chapter). */
             <div className="editflow">
               <MyLessonPlans readiness={readiness} onAllocate={onAllocateScoped} onOpenSection={onOpenSection}
-                tourStep={tour} preparing={preparingCard} lapsed={entLapsed}
+                tourStep={tour} preparing={preparingCard} lapsed={entLapsed} yearInfo={yearInfo}
                 onStartTour={tourOnOffer ? startTour : undefined} tourActive={!!tour}
                 onDismissPrepareError={onDismissPrepareError} />
             </div>
@@ -771,6 +866,7 @@ export default function Home() {
           ) : (editFlow === "settings" && ready) ? (
             <div className="editflow">
               <Settings view={settingsView} setView={setSettingsView}
+                onAccountSaved={() => setEntSyncTick((n) => n + 1)}
                 onOpenProfile={openProfileFromSettings} syncTick={entSyncTick}
                 onSubscribe={() => setSubscribeOpen(true)}
                 onAsk={() => setAskOpen(true)} onSignOut={onSignOut} />
@@ -789,6 +885,8 @@ export default function Home() {
               onStartTour={tourOnOffer ? startTour : undefined}
               tourActive={!!tour} tourStep={tour}
               onTourInfo={setTourInfo} onProfilePortal={onProfilePortal} onOpenProfile={goProfile}
+              yearInfo={yearInfo} onCutover={runCutover} cutoverBusy={cutoverBusy}
+              cutoverResult={cutoverResult} onDismissCutoverResult={() => setCutoverResult(null)}
               sectionCheck={sectionCheck} onSectionCheckDone={() => setSectionCheck(false)} />}
         </main>
       </div>

@@ -687,7 +687,157 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-25/26 (newest) — STEP 6 LIVE-ITERATED ON THE FOUNDER'S PHONE: FRONT DOOR,
+## 2026-08-26 (newest) — THE DRIVEN PERSONA RUN: FOUR BUGS THE STATIC PASS COULD NOT
+## SEE, PLUS THE Notifier PORT (SUBSCRIPTION CONFIRMATION MAIL)
+
+The first time the persona checklist was actually DRIVEN (Claude in Chrome against the
+live pair, enforcement on, throwaway mobiles 1234567890-98, erase between personas).
+Everything below was found by walking the product, not by reading it — and every one of
+the four had passed babel-parse, the unit suites and a human's own phone testing.
+
+**★ The lesson worth keeping: three of the four were RACES OR STALE STATE, the exact
+class of defect static verification cannot reach, and two of them were invisible on the
+happy path a developer walks.** §11's "verified statically only" caveat is not a
+formality; drive the flows.
+
+1. **First run bounced back to the welcome screen after the first successful
+   generation.** `firstGenNeeded` asks the server "has she ever generated?"; completing
+   first run flips `ready`, re-running the effect while `prepareAndHandOff`'s serve is
+   STILL IN FLIGHT, so the server truthfully said "nothing prepared" and the heuristic
+   re-armed first run. Her plan was fine on disk; only a reload escaped. Fix: a one-shot
+   `everGeneratedRef` latch.
+2. **…and the latch then leaked ACROSS TEACHERS.** Sign-out does not remount page.jsx,
+   so the previous teacher's latch suppressed the next one's first run — which is
+   exactly the founder's earlier "direct subscriber went straight to My Lessons", blamed
+   at the time on a stale environment. It was real. Fix: `latchUserRef` — the latch
+   belongs to one user and clears on identity change. **Corollary: any ref that caches a
+   per-teacher answer must be keyed to the teacher, because sign-out is not a remount.**
+3. **A subscription that ran out BY DATE kept its productivity tools.**
+   `_check_entitlement` tested `valid_until`; `_check_productivity` and the whole web
+   half tested only `status == "expired"`. So a revoked teacher was locked out correctly
+   while a date-lapsed one — **which is how every real lapse will happen once payments
+   are live; manual revocation is the founder-only rarity** — kept her My Classes tab,
+   "+", edit pen and tracker, and read "SUBSCRIBED" in Settings, while generation was
+   already 402ing her. Fix: `GET /entitlement` now DERIVES `lapsed` (revoked OR date
+   passed) and page.jsx + Settings consume it; `active` explicitly excludes lapsed. One
+   rule, one place — the duplication was the bug.
+4. **Renaming yourself did not change the name on screen.** The account is fetched on
+   `[user, entSyncTick]` and a profile save bumped neither. Settings now bumps the tick.
+5. **A shared email signed you into the WRONG account.** `find_by_email` did a linear scan
+   and returned the FIRST match, so two accounts carrying one address meant an arbitrary
+   winner. **Email became a CREDENTIAL the moment sign-in started accepting it, and a
+   credential that points at two accounts points at neither** — the likely field case is
+   not two teachers sharing an address but ONE teacher registering a second mobile with
+   the same email and silently splitting herself in two. Fixed at both ends: prevention
+   (`_guard_email_not_taken` 409s an address held by a different account, on checkout AND
+   Personal-profile save; re-saving your own is fine) and a safety net (`find_by_email`
+   returns None on ambiguity — never a guess — and sign-in says "More than one Aruvi
+   account uses this email. Please sign in with your mobile number", the mobile being
+   always unambiguous). New `find_all_by_email` on the adapter + port. **The partner's DB
+   adapter should add a UNIQUE constraint on email when Supabase lands** — the file store
+   cannot enforce it.
+
+Founder decisions taken the same session (all three built):
+- **Trial plans stay reachable.** The paywall promises "Your 3 chapters stay yours", but
+  `_apply_subscription_profile` dropped the out-of-scope subject, leaving the plans on
+  disk with no chooser entry able to reach them. Now an out-of-scope subject she has
+  PREPARED PLANS in survives untouched; one with no plans is still a trial artifact and
+  still goes. Not a licence to prepare more there — the generation gate still answers
+  "covers a different subject" (verified live: english 402, social_sciences 200).
+- **No tour offer when lapsed** (it teaches attaching/tracking/preparing — all removed).
+- **First run greets her by first name** (she types it at checkout, then met her raw
+  mobile on the very next screen).
+- **Notes LOCK when lapsed** (checklist test 49, ruled the same day). They had been left
+  writable on the argument that a note is her own writing; the founder placed them in
+  Aruvi's working half instead, alongside the tracker and the profile. `_check_productivity`
+  now guards POST /plan-notes; GET stays ungated, so every note she wrote is still
+  readable and still exports. The modal opens READ-ONLY with "Renew to write notes —
+  what you wrote stays yours." `ChapterOrg` asks `fetchEntitlement()` for `lapsed`
+  itself rather than threading a prop from two different calling surfaces.
+
+**NEW: the `Notifier` port + subscription confirmation mail** (founder: send from
+kumar.radhakrishnan2@gmail.com). `EmailMessage`/`Notifier` in ports.py; `FileNotifier`
+writes to `STATE_DIR/outbox/` (the notification twin of ManualBillingProvider — the whole
+flow runs with NO vendor and no credential in the repo), `SmtpNotifier` sends for real
+when ARUVI_SMTP_HOST/USER/PASSWORD are all set (Gmail needs an APP password); main.py
+picks one at startup. Copy lives in `api/mail_templates.py`, never in routing or the
+adapter. `_send_subscription_confirmation` NEVER raises — **a mail server having a bad
+minute must not turn a successful subscription into an error** — and checkout returns
+`email_status` so the UI can be honest. MAIL_BCC_FOUNDER (default on) copies every sale
+to the founder: his sales log until invoicing exists. tests/test_notifier.py (7) green.
+Standing note: personal Gmail is a stop-gap — daily caps and deliverability mean a
+transactional provider (SES/Postmark/Resend) belongs behind this same port before scale.
+
+**Late-session additions (the founder's four items).** (a) **Chapter notes carry a
+child-privacy rule** — "Private data like name, age of child must not be recorded. Aruvi
+reserves right to delete if entered." — clay, hairline above, stated WHERE SHE TYPES
+because notes are free text written right after class. (b) **Deletion now takes two
+windows**: type "erase" (intent) → a modal asking whether she has downloaded her data
+(possession). Server refuses `{"confirm":"erase"}` alone. **The confirmation is written
+BEFORE anything is destroyed, into `STATE_DIR/erasure_log/{tenant}.json` — the ONE store
+outside the erase walk, so it survives the erasure it records.** Identifiers and
+timestamps only; a test asserts no name/email/note text can leak in, since that would
+reintroduce what she asked to have destroyed. (c) **Bulk/school purchase DEFERRED** with
+tenant == user standing — full reasoning in `subscription_model_discussion.md` §0-bis; the
+short version is that the bulk flow **has no natural home on a phone** and every attempted
+fix invented a mechanism whose real home is a website. (d) **Cutover remains unbuilt** and
+is blocked on one product decision (offered vs automatic in June), not on code.
+
+**★ ACADEMIC-YEAR CUTOVER BUILT (Step 2) and walked through a simulated 1 June 2027.**
+Founder: offered, never automatic. **The design that made it small: cutover MOVES NOTHING
+AND DELETES NOTHING** — Step 1 had year-scoped every teaching store by path while leaving
+readiness un-scoped, so opening the next year and pointing her at it yields all four
+promises for free (new year's folders empty → clean cards + cleared pointers; old folders
+untouched → last year readable; notes stay in the closed year; profile carries). New:
+`CutoverResult`/`YearCutover` in ports, `year_cutover_file.py`, `GET /academic-year` +
+`POST /academic-year/cutover` (idempotent), the ochre offer on My Classes, the collapsed
+prior-year folder in My Lessons AND in the "+" attach picker (the founder caught the
+omission same-day; his spec had always said she should see the old folder when ADDING a
+plan — attaching a prior-year lesson marks it prepared in the CURRENT year first, because
+teaching it again makes it this year's work and the tracker cannot show a plan the year
+does not hold), `tests/test_cutover.py` (5). `ARUVI_CUTOVER_MONTH_DAY`
+(default 06-01) is config; **`ARUVI_TODAY` is a TESTING-ONLY seam routed through ONE
+`_today()` so a simulated date makes the whole service agree what day it is** — remove it
+before ordinary testing. **Four bugs the live June walk caught, none visible to
+babel-parse or unit tests:** (1) the second tap returned "the 2028-29 year opens on…"
+instead of already_done — now distinguished by whether a prior year exists; (2) section
+cards still read "Teaching now Ch 5" because `pullSectionState` deliberately deletes
+nothing on a wholesale-empty response (its anti-corruption guard) — **cutover is the one
+moment when empty genuinely means empty**, fixed with an explicit `clearLocalSectionCache()`
+rather than by weakening the guard; (3) **a ten-year veteran was thrown into the guided
+FIRST RUN**, because `firstGenNeeded` reads year-scoped stores and the morning after
+cutover they truthfully say "nothing prepared, nothing bound" — it now also reads her year
+history, since **a prior year is proof she has been here before**; (4) a **TDZ
+ReferenceError white-screened the entire app** (`entLapsed` used in `tourOnOffer` above its
+own `useState`) — **a parse check is not a render check; load the page.** Latent hazard
+noted, not fixed: prepared-plan keys are CASE-SENSITIVE (`…/IX/…` ≠ `…/ix/…`); the app
+always writes lowercase, but `_plan_key` should normalise.
+
+**★ PYTHON 3.9 IS THE FOUNDER'S RUNTIME.** `Dict[str,int] | None` in a new adapter shipped
+green (sandbox = 3.10) and refused to boot on his Mac — PEP 604 unions are evaluated at
+def time on 3.9. `tests/test_py39_compat.py` now guards both the union rule (unless the
+module defers annotations) and the 3.9 grammar, and was verified to catch the exact line
+that broke. New runtime modules should carry `from __future__ import annotations`.
+
+Verified passing in the same run: front door Z1–Z13 (choose page, four-box OTP with real
+auto-advance, registered-only sign-in now MOBILE-OR-EMAIL with free-form ids refused,
+double-blind email end to end, cart-of-dropdown-rows, honest Pay, default profile per
+scope, scope-filtered first run, first-name display, ledger); trial mechanics 14–22
+(re-serve free, 4th chapter → popup with no ghost card, paywall Subscribe opens the
+in-app wizard); lapsed 30–34; renewal 35; settings 36–39; enterprise 46; multi-scope 47;
+date-expiry 48; tour = 20 steps, step 12 = `phase-bookmark` place "above", hands absent
+from 4/5/6/12/16/18 (verified against the steps array). OPEN: notes stay writable while
+lapsed (49) — confirmed as current behaviour, founder to rule.
+
+**Tooling note for the next driven run:** the Chrome side panel pins the tab viewport at
+~222px wide and `resize_window` cannot move it, so LAYOUT verdicts (test 51, the visual
+half of 1/6) still need a human at a real phone width. Everything functional is
+reachable; drive the wheels by scrolling `.fr-wheel` by one row height rather than
+clicking the ▲▼ buttons, whose handlers do not always take from a synthetic click.
+
+---
+
+## 2026-08-25/26 — STEP 6 LIVE-ITERATED ON THE FOUNDER'S PHONE: FRONT DOOR,
 ## SETTINGS SUITE, PERSONAL PROFILE, TOUR 20-STEP, SIGN-IN MOBILE/EMAIL-ONLY
 
 Two marathon live sessions after Step 5. Everything below is BUILT and static-verified;

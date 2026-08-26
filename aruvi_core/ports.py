@@ -144,7 +144,15 @@ class AccountRepository(Protocol):
 
     def find_by_email(self, email: str) -> Optional["Account"]:
         """Look an account up by email (case-insensitive), or None. Empty emails never
-        match — dev accounts have no email."""
+        match — dev accounts have no email. A SHARED address must return None, not an
+        arbitrary winner: email is a sign-in credential, and one that points at two
+        accounts points at neither (see find_all_by_email)."""
+        ...
+
+    def find_all_by_email(self, email: str) -> list:
+        """Every account carrying this email. Ordinarily 0 or 1; a longer list means the
+        address cannot identify anyone on its own. Used to detect that ambiguity and to
+        refuse an address already taken by a different account."""
         ...
 
     def delete(self, tenant_id: str, user_id: str) -> None:
@@ -176,8 +184,12 @@ class AcademicYearRepository(Protocol):
     tenant_id + user_id.
 
     File-based (JSON) implementation for now (adapters/academic_year_repository_file.py
-    at STATE_DIR/academic_years/{tenant}/{user}/years.json). Step 2 (cutover) extends
-    this port with close_year(); do not add it speculatively.
+    at STATE_DIR/academic_years/{tenant}/{user}/years.json).
+
+    Cutover (Step 2, built 2026-08-26) did NOT need a close_year() here in the end — see
+    YearCutover below. Because every teaching store is year-scoped by PATH, moving a
+    teacher to a new year is `open_year` + `set_current`; the old year's folders are left
+    exactly as they are, which is what makes last year readable and this year empty.
     """
     def current(self, tenant_id: str, user_id: str) -> Optional["AcademicYear"]:
         """The teacher's current academic year, or None if none has been opened yet.
@@ -200,6 +212,44 @@ class AcademicYearRepository(Protocol):
         """Mark one existing year current (clearing the others). Raise ValueError if
         the year_id has never been opened."""
         ...
+
+
+# ── Academic-year cutover (administrative_architecture.md Step 2) ───────────────
+@dataclass
+class CutoverResult:
+    """What one teacher's cutover did. Returned to the UI so the confirmation screen
+    states facts rather than promises."""
+    closed_year: str           # the year she was in, e.g. "2026-27"
+    opened_year: str           # the year she is in now, e.g. "2027-28"
+    sections_carried: int      # class list / sections carried forward unchanged
+    plans_archived: int        # her plans now living under the closed year's folder
+    already_done: bool = False # she had already cut over — a second tap changes nothing
+
+
+@runtime_checkable
+class YearCutover(Protocol):
+    """Moves ONE teacher from her current academic year into the next.
+
+    ★ The design that made this small: every TEACHING store is year-scoped by path
+    ({kind}/{tenant}/{user}/{year}/…) while READINESS is not (the class list carries
+    across years, §2.7). So cutover neither copies nor deletes anything — it opens the
+    next year and points her at it. The old year's folders stay untouched, which is
+    precisely why last year stays readable and this year starts empty:
+
+      · prepared plans      → new year's folder is empty  → My Lessons starts clean,
+                              last year available as a folder below
+      · section state       → new year's folder is empty  → attachments and pointers
+                              cleared, which is the "fresh start" she is confirming
+      · plan notes          → stay in the closed year     → notes travel with the plans
+                              they were written against
+      · readiness (profile) → not year-scoped             → subjects, classes, sections
+                              and periods carry forward untouched
+
+    MUST be idempotent: a teacher will tap twice, and a second tap must report
+    `already_done` rather than opening a third year or wiping the year she just started.
+    """
+    def cutover(self, tenant_id: str, user_id: str,
+                from_year: str, to_year: str) -> "CutoverResult": ...
 
 
 # ── Chapter notes (administrative architecture Step 3 — the last data gap) ──────
@@ -367,6 +417,35 @@ class BillingProvider(Protocol):
     def verify_webhook(self, payload: bytes, signature: str) -> Dict[str, Any]: ...
     def cancel(self, tenant_id: str) -> Dict[str, Any]: ...
     def fetch_status(self, tenant_id: str) -> Dict[str, Any]: ...
+
+
+# ── Notifications (email today; SMS/push later behind the same port) ───────────
+@dataclass
+class EmailMessage:
+    """One outbound message. `text` is the canonical body; `html` is optional and a
+    plain-text-only transport may ignore it. `reply_to` exists because Aruvi's sender
+    address and the address a teacher should WRITE to may diverge later."""
+    to: str
+    subject: str
+    text: str
+    html: str = ""
+    reply_to: str = ""
+
+
+@runtime_checkable
+class Notifier(Protocol):
+    """Port over outbound teacher notifications (administrative_architecture.md §6).
+
+    Reference implementation: FileNotifier (adapters/file_notifier.py) — writes each
+    message to disk instead of sending, so the whole flow is exercised with NO vendor
+    and no credentials. SmtpNotifier sends for real when the founder sets the SMTP env
+    vars; the partner's transactional-email adapter (SES/Postmark/Resend) implements
+    this same Protocol later and nothing above the port changes.
+
+    `send` MUST NOT raise on a transport failure — a teacher's subscription must never
+    fail because a mail server was slow. It returns a result dict describing what
+    happened ({"status": "sent"|"written"|"skipped"|"error", ...}) and callers log it."""
+    def send(self, msg: EmailMessage) -> Dict[str, Any]: ...
 
 
 # ── Allocation persistence (Persistent Annual Allocation Register) ──────────────

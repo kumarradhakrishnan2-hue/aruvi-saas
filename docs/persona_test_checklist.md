@@ -191,8 +191,11 @@ Report against the numbers. Setup for every pass:
     subjects; after first run BOTH subjects' default profiles exist (Z10).
 48. **Expired-by-date**: `grant <id> --until 2025-01-01` → same lapsed behavior as
     revoked.
-49. **Notes while lapsed**: chapter notes still writable — CONFIRM this is the rule
-    you want (her writing vs productivity tool); tell me if notes should lock too.
+49. **Notes while lapsed**: the notes modal opens READ-ONLY — her existing notes are
+    all still readable (and still export), the textarea is not editable, the footer
+    reads "Renew to write notes — what you wrote stays yours." and the only button
+    is Close. Server refuses the write too (402). Founder ruled 2026-08-26: notes
+    belong to Aruvi's working half, alongside the tracker and profile.
 50. **Dark mode**: choose page, OTP boxes, About-you fields (lighter field tone still
     reads lighter than the card), cart dropdowns, welcome card, paywall popup,
     Settings — all legible.
