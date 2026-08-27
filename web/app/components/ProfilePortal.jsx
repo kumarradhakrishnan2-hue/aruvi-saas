@@ -60,8 +60,22 @@ const ROWS = [
   { kind: "budget", label: "Annual period budget" },
 ];
 
-export default function ProfilePortal({ mode = "change", sub, onPick, onClose, onOpenProfile }) {
+/* ★ `values` — the CURRENT setting for each row, shown in the CHECK mood only (founder,
+   2026-08-27: "values only for first time including when new subject stage added, not during
+   'what would you like to change' rounds").
+
+   The window's title asks whether her set-up is right, and four bare nouns cannot be checked —
+   she had to open every row to discover what Aruvi had chosen, four round trips to answer one
+   glance-sized question. A value is NOT the sub-line this file struck above: it is short and it
+   sits right-aligned on the SAME line, so the "one line each" rule and the 360px fold both
+   stand. The "+" mood keeps bare names — it is unscoped by nature, so "6, 7, 8" against Class
+   would be noise on a row she is only using to navigate.
+
+   A missing value renders NOTHING. Never a dash, never a zero, never a guess: a window asking
+   whether Aruvi got her record right must not invent an answer about it. */
+export default function ProfilePortal({ mode = "change", sub, values, onPick, onClose, onOpenProfile }) {
   const check = mode === "check";
+  const val = (kind) => (check && values && values[kind]) || null;
   return (
     <div className="ap-overlay" onClick={onClose}>
       <div className="ap-modal ap-grow" onClick={(e) => e.stopPropagation()}>
@@ -83,6 +97,7 @@ export default function ProfilePortal({ mode = "change", sub, onPick, onClose, o
           {ROWS.map((r) => (
             <button key={r.kind} className="ap-row ap-row-line" onClick={() => onPick && onPick(r.kind)}>
               <span className="ap-row-label">{r.label}</span>
+              {val(r.kind) ? <span className="ap-row-val">{val(r.kind)}</span> : null}
               <span className="ch-go" aria-hidden="true">›</span>
             </button>
           ))}
@@ -143,4 +158,21 @@ export function takeSetupCheck(key) {
   if (!have.includes(key)) return false;
   write(have.filter((k) => k !== key));
   return true;
+}
+
+/* Drop anything queued that is no longer a subject·class she teaches (2026-08-27). A queued key
+ * is only ever SPENT when My Lessons scopes to it, and My Lessons offers only classes in her
+ * profile — so a key for something she does not teach can never be spent and would sit in the
+ * queue forever. That is harmless on its own, but it makes the queue un-auditable, and during
+ * live testing this store was once found holding seven keys for classes she already had plus two
+ * for classes she has never taught, which no controlled repeat could reproduce. Whatever wrote
+ * them, a queue that self-heals against the profile cannot carry them for long.
+ * Deliberately NOT called on the baseline read: a transient shrink in readiness must not be read
+ * as "she stopped teaching this". Costs at most one un-asked question, and this is a prompt, not
+ * a record. */
+export function pruneSetupCheck(validKeys) {
+  const have = read();
+  if (!have.length) return;
+  const ok = have.filter((k) => validKeys.includes(k));
+  if (ok.length !== have.length) write(ok);
 }

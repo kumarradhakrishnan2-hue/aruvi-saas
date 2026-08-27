@@ -914,6 +914,141 @@ really does lead to the next. STATIC-verified only (babel-parse clean on page.js
 / ProfilePortal.jsx / MyPlans.jsx / MyLessonPlans.jsx / TeachingProfile.jsx, CSS braces
 2273/2273) — live + mobile pass owed.
 
+**ONE BUDGET METHOD, A DERIVED PERIODS/WEEK, AND A PROFILE THAT IS A VIEW (2026-08-27).** Closes
+`administrative_architecture.md §7`'s periods/week item, whose own premise was wrong twice: ppw
+is displayed in SIX places (not "nothing reads it"), and `setMethod` **replaced** the annual total
+with a fresh default rather than converting it — so a first-run teacher on a calibrated 245 who
+merely tapped "weeks" silently got 180, **reproducing the 19→14 defect of 2026-08-21 through a
+second door**. Measured: a flat `DEFAULT_PPW = 6` contradicted the master plan's own annual figure
+for **18 of 25 subject·grades**, and the profile printed both on one line — "≈ 245 periods for the
+year, at 6 a week" = 40.8 weeks, which is not a school year.
+★ **THE FOUR BUDGET METHODS ARE NOW ONE — the annual period count** (founder). They existed
+because Aruvi could not say what a year should be; the calibrated master plan ended that, so she
+DISAGREES with a number ("I say 245, you say 215") rather than constructing one from weeks, days
+or a count. They also manufactured inconsistency — founder's own example: at 7 a week, "200
+periods" implies 28.6 weeks, "170 working days" 24, "220" 31, three inputs for one year with
+nothing reconciling them. Collapsing also kills a CIRCULAR definition: with weeks/days/auto gone
+from the WRITER, budget never derives from ppw, so ppw can be derived from the standard without
+the two defining each other. ⚠️ **The READER still understands all four shapes and must keep
+doing so** — teachers have saved weeks/days/auto records and retiring the reader would move their
+years; only the writer collapsed. `normalizeBudget` is the ONE place a stored record becomes the
+editable count, and it reads `{method:"auto", value:0}` as **not set** (that is what
+`finalizeSubject` writes for an unanswered class, and reading it as a real figure is why the
+calibrated year was never consulted on that path — every such class landed on 180 while Aruvi's
+own answer was 245).
+★ **A SENSE-CHECK REPLACES THE METHODS**: "Based on **8 periods a week** ✎ for this subject, **245
+periods** is about **31 teaching weeks**." It gives her the weeks READING those methods were
+clumsily providing, without a second input that can contradict the first — and it is **advisory
+only**: Aruvi adjusts neither number, or the silent overwrite is back. The pencil goes to ppw for
+when that is the side that looks wrong.
+★ **ppw IS DERIVED FROM `annual_budget_periods`, THE API FIELD — never from the stored budget
+record**, which is itself `ppw × 30` when there is no master-plan row: `round(ppw×30/30) = ppw`, a
+fixed point that justifies whatever it already held. `ppwFromAnnual` / `weeksFromAnnual` /
+`ESTIMATE_WEEKS` live ONCE in `lib/format.js` — 30 is not a new assumption, it was already
+hardcoded in three places.
+★ **THERE ARE THREE SEEDING PATHS AND ALL THREE HAD TO CHANGE** (the third found live, founder,
+account 1000000001): FirstRun · `TeachingProfile.applyManageClasses` (fetches per added class,
+since the calibrated total is per subject·CLASS) · and **`api/main._default_grade_record`, the
+SERVER path a subscriber takes**. The first fix missed the third, so buying SS·secondary still
+provisioned "245 periods for the year, at 6 a week" — 41 teaching weeks, which the new
+sense-check then reported to her in words. `api/main.ppw_from_annual` mirrors the JS helper
+across the language boundary (no seam between them — move one, move the other) and falls back to
+6 only where the master plan has no row. **When a default is seeded in more than one place,
+count the places before declaring it fixed.**
+★ `aruvi-scripts/repair_ppw.py` re-derives the records already written, ALWAYS from the
+calibrated standard and never from the stored budget (which is itself ppw × 30 for an unset
+record and would hand back the value being replaced). Conservative by default: it rewrites ppw
+only where the stored value is exactly the flat 6, only where a standard exists, and it **never
+touches a budget** — a wrong-looking total is reported and left alone, because the annual figure
+is the number she is invited to disagree with and silently rewriting it is the very defect this
+work removed. `--all` drops the flat-6 guard (founder: "amend all the periods per week in
+existing records — these are test records only"); ⚠️ against live data it overwrites deliberate
+answers. Multi-duration classes are always skipped — their `ppw_by_duration` is a distribution
+the script has no basis to redistribute. **Ran `--all` 2026-08-27: 26 values across 13 profiles;
+the estate now has 73 grade records agreeing with the standard and 0 disagreeing.** The write
+falls back from atomic-rename to in-place because some mounts refuse the `.tmp` sidecar, and a
+repair that dies half way through the estate is worse than one that writes in place.
+★ **THE TEACHING PROFILE IS A VIEW.** Every pencil went — class, section, ppw, budget all live in
+the "+" portal, and two doors onto one record is how they drift. The ONE exception is **removing a
+subject**, which the portal deliberately cannot do (adding one is a purchase, so removal would be
+its only working half, one tap from a window opened to add a section). It stays behind the master
+toggle, now labelled for that single act (a control promising editing and delivering only deletion
+is a trap), with a **DOUBLE confirmation**: step 1 names what goes AND what does not — lesson plans
+are shared library content and survive, and a teacher who thinks she is deleting her plans will
+not read the rest — step 2 asks her to mean it. Deleted with the methods: `METHODS`,
+`METHOD_ORDER`, `defaultValueFor`, `setMethod`, `estimateSubLine`, FirstRun's dead copies, and the
+`.tp-methods`/`.tp-method`/`.tp-total`/`.fr-bud-row`/`.fr-bud-detail` CSS. Unit-verified on 10
+budget shapes (legacy weeks/days/auto records read back UNMOVED; unset → the calibrated year; a
+calibrated total cannot be silently recomputed at any ppw); babel-parse clean on all touched JSX,
+CSS braces 2276/2276, backend suite unchanged at 37. Live + 360px pass owed.
+
+**The check window SHOWS its values — a set-up you can actually check (2026-08-27).** Closes
+`administrative_architecture.md §5 Step 6`'s second rule ("disclose the assumptions"). The window
+is titled "Would you like to check your set-up?" and offered four bare nouns — so checking meant
+opening every row in turn, four round trips to answer one glance-sized question. Each row now
+carries its CURRENT value: `Class 9 · Section 9A · Periods a week 6 · Annual period budget 245
+periods`. ★ **A value is not the sub-line struck earlier the same day** — that decision (rows are
+NAMES ONLY, because five sub-lines turned a glanceable list into a page and pushed the last row
+below the 360px fold) stands untouched, because the value is short and sits RIGHT-ALIGNED on the
+row's existing single line. `.ap-row-label` gained `flex: 1` so the value and the chevron pack
+right — with three children, the row's own `justify-content: space-between` would otherwise
+strand the value mid-line, reading as a second label; `.ap-row-val` is `flex: none` + `nowrap` so
+it can never wrap into the two-line row the `.ap-row-line` bug already cost a fix. ★ **CHECK MOOD
+ONLY** (founder: "values only for first time including when new subject stage added, not during
+'what would you like to change' rounds") — the "+" window is unscoped by nature, so "6, 7, 8"
+against Class would be noise on a row she is using to navigate. ★ **The budget reads through
+`annualBudgetPeriods`** — the same function Year Plan displays from — not off `subject.budget[gi]`
+directly, which holds a method (periods|weeks|days) and is ABSENT while the budget is still the
+auto estimate: a direct read would show nothing for most teachers and a raw week-count for some,
+and two screens quoting different annual totals for one class is worse than silence. Where scoped
+classes disagree the row shows nothing; a missing value renders NOTHING — never a dash, a zero or
+a guess (the Support `metaErr` rule: a screen may say it does not know, it may never invent an
+answer about her record). Unit-verified on 5 profile shapes (tour end · added subject-stage
+correctly scoped to IX/X leaving settled VI/VII alone · disagreeing budgets · no budget set →
+the estimate · "+" mood → null). ★ Still open BY DECISION (founder: "ignore"): first run itself
+names neither periods/week nor the budget — the tour-end window is the disclosure moment.
+STATIC + unit-verified; live + 360px pass owed.
+
+**The annual budget is edited WHERE ITS NUMBER IS — Year Plan's pencil (2026-08-27).** Closes
+`docs/administrative_architecture.md §5 Step 6`'s own first rule, the last of that step's three
+gaps to have gone untouched by the ProfilePortal work. The distinction that made it worth
+building even though the "+"/check window ALREADY has a budget row: a portal row reaches the
+same screen from a WINDOW — she changes the total blind, comes back, looks. Here she is looking
+at the chapter split when she decides the total is wrong (Ch 4 given 19 periods, her year is
+smaller than that), and the control is beside the figure she is judging. `YearPlan.onEditBudget`
+→ `MyLessonPlans` (binds the pane's own `current.name` + `activeGrade` — the DISPLAY name and
+Roman class the profile keys on, not the slugs YearPlan fetches with) → `page.jsx
+onEditYearBudget` → `TeachingProfile` `editNums` budget step. ★ **It travels as an `exact`
+portal scope** — a deliberate exception to the 2026-08-27 rule "the scope narrows the subject,
+never the class". That rule protects the teacher who just bought a STAGE and may teach several
+classes in it; Year Plan is the opposite case, already standing in one subject·class, so both
+pick screens would re-ask what the pane has answered. Written as a narrower FILTER inside
+`portalGradeIdxs` rather than a second routing branch, so the single-index case falls through
+`portalPickClass`'s existing "straight in when only ONE class is in play" and the skip test
+cannot drift from the screen; a named class since removed falls back to the stage filter.
+`win: null` in `portalOriginRef` (she came from a page, not a window), and the return to the
+PLAN pane is free because My Lessons persists `pane` under `LS_PANE` — ⚠️ **if that persistence
+ever goes, the pencil becomes the one-way door the portal rows were just fixed for.**
+★ **WHERE IT ENDED UP, after three placements (founder, live).** First beside the "a budget of
+N periods" sentence — which labels the number in words, and was wrong: that sentence sits in the
+"Your plan" note, which defaulted CLOSED, so the control was invisible on arrival ("cant see
+pencil"). **A control is only as reachable as its number.** The note therefore moved BELOW the
+totals row and now defaults OPEN (it can, there: below the table it pushes no chapter rows down,
+and the chevron became a "hide this" rather than a "reveal this"). The pencil itself sits on the
+**TOTAL PERIODS row**, in the LABEL cell — the `1fr` column, so `.yp-tot`'s two numeric columns
+stay aligned with the chapter rows keyed to the same 3-column grid. Its CSS has to respect that
+grid: `vertical-align` puts it on the label's baseline (the grid is `align-items: baseline`, so a
+misaligned glyph drags the row's numbers with it) and a negative margin-block hands back the
+padding that gives it a phone-sized tap target, so the button cannot grow the row. Pine against
+the label's `--ink-soft` is the affordance. ONE pencil — the sentence below stays plain prose.
+`.yp-tot` also gained a **hairline `border-bottom`**: the 2px rule opens the total, the hairline
+closes it, and it is load-bearing now that prose follows the row — without it the figures and the
+note read as one block and the numbers stop being the end of the table (a hairline, not a second
+2px: two heavy rules fence the row off as a box instead of finishing a column of numbers).
+Unit-verified (6 cases on the exact/stage/no-scope filter, incl. the unchanged added-a-subject
+behaviour), babel-parse clean on all four touched JSX files, CSS braces 2275/2275 — live +
+360px pass owed.
+
 **The lesson-plan library is foldered by EDITION YEAR, and the year is a LABEL (2026-08-27).**
 Spec: `docs/administrative_architecture.md §2.2` (rewritten the same day; its status header was
 stale and now carries a per-step table). ★ **Two different years live in this system and

@@ -44,13 +44,31 @@ import { annualBudgetPeriods, getJSON, largestRemainder, pad } from "../lib/form
 // than re-deriving its suggestion with a per-chapter Math.round (ARV-D-142). The method is
 // unchanged; this screen was already the correct one.
 
-export default function YearPlan({ subjectName, sSlug, gSlug, readiness, onAllocate }) {
+// Pencil (edit) — the SAME glyph the teaching profile uses (TeachingProfile.jsx `Pencil`).
+// Duplicated rather than shared because the two files have no common component module and a
+// four-line SVG is not worth one; if a third copy ever appears, lift it to lib/ instead.
+const Pencil = ({ size = 13 }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor"
+    strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M4 20h4L18.5 9.5a1.5 1.5 0 0 0 0-2.12l-1.88-1.88a1.5 1.5 0 0 0-2.12 0L4 16v4z" />
+    <path d="M13.5 6.5l4 4" />
+  </svg>
+);
+
+export default function YearPlan({ subjectName, sSlug, gSlug, readiness, onAllocate,
+                                   onEditBudget }) {
   const [chapters, setChapters] = useState(null); // null = loading, [] = none
   const [plans, setPlans] = useState([]);
   const [err, setErr] = useState(false);
-  // The "Plan" summary is collapsible (like teacher notes): available to read, but collapsed by
-  // default so it doesn't eat the frozen head on every visit.
-  const [showPlan, setShowPlan] = useState(false);
+  /* ★ THE "PLAN" SUMMARY IS NO LONGER A DISCLOSURE AT ALL (founder, 2026-08-27, in three steps).
+     It used to open under the column header and default CLOSED, so it would not eat the frozen
+     head on arrival — sound while the note was only an explanation. It stopped being sound once
+     the note carried the annual-budget figure: a number behind a disclosure cannot be judged,
+     and the pencil beside it could not be found. So the note moved BELOW the totals row (where
+     defaulting open pushes no chapter rows down), then opened by default, and then lost its
+     chevron — because an arrow that reveals something already on screen is only a way to hide
+     the explanation, which nobody wants. `showPlan` and `setShowPlan` are gone with it; the
+     note simply renders. `.yp-hbtn` / `.yp-chev` in globals.css are now dead rules. */
 
   // Scoped fetch: chapters (weights + NCF estimate) and this teacher's prepared plans (for the
   // committed periods). Both are small, single calls per combo. Reset on subject/class change.
@@ -152,34 +170,17 @@ export default function YearPlan({ subjectName, sSlug, gSlug, readiness, onAlloc
       <div className="yp-head">
       {/* Column header — the last frozen line (its bottom border is "the line below the row").
           The standalone "Plan" row that used to sit above this was removed (2026-08-06): it was a
-          second, competing header for a table that already has one. Its explanatory copy now hangs
-          off the "Your plan" column itself — the arrow sits with the words it explains, and the
-          note opens directly beneath this line. */}
+          second, competing header for a table that already has one.
+          ★ 2026-08-27: the disclosure CHEVRON is gone too, and with it the toggle. Its copy now
+          sits below the totals and always shows, so the arrow was pointing at something already
+          on screen — a control whose only remaining job was to take the explanation away. All
+          three columns are now plain labels, which is what a column header should be. */}
       <div className="yp-colhd">
         <div className="yp-c chap">Chapter</div>
         <div className="yp-c">Suggested periods</div>
-        <div className="yp-c yp-c-plan">
-          <button type="button" className="yp-hbtn" onClick={() => setShowPlan((v) => !v)}
-            aria-expanded={showPlan}
-            aria-label={showPlan ? "Hide what this table shows" : "What does this table show?"}>
-            <span className="yp-hlbl">Your<br />plan</span>
-            <span className={`yp-chev${showPlan ? " open" : ""}`} aria-hidden="true">⌄</span>
-          </button>
-        </div>
+        <div className="yp-c yp-c-plan"><span className="yp-hlbl">Your<br />plan</span></div>
       </div>
       </div>{/* /yp-head */}
-
-      {/* The note opens UNDER the column-header line and scrolls away with the chapter rows —
-          deliberately outside .yp-head, so an open note never freezes at the top of the screen. */}
-      {showPlan && (
-        <p className="yp-note">
-          Your teaching year at a glance — how{budget != null ? <> a budget of <b>{budget} periods</b></> : <> your periods</>} spread
-          across all {rows.length} chapters. <b>Suggested periods</b> is Aruvi&rsquo;s proposal, giving heavier chapters more
-          room. Each time you prepare a lesson you set your own periods for that chapter; those appear
-          in <b>Your plan</b>, beside the suggestion, so you can see where you&rsquo;ve adjusted and how much of
-          the year you&rsquo;ve committed. To know how Aruvi suggests, refer to Ask Aruvi time allocation section.
-        </p>
-      )}
 
       {/* Chapter rows (scroll beneath the frozen head) */}
       <div className="yp-rows">
@@ -207,10 +208,44 @@ export default function YearPlan({ subjectName, sSlug, gSlug, readiness, onAlloc
 
       {/* Totals */}
       <div className="yp-tot">
-        <span className="yp-tot-l">Total periods</span>
+        {/* ★ THE BUDGET PENCIL SITS ON THIS ROW (founder, 2026-08-27). It began beside the
+            "a budget of N periods" sentence in the note below — which labels the number in
+            words — but this is the row a teacher is actually reading when she judges her
+            year, and the label is the last thing her eye passes before the figures. One
+            pencil only; the sentence below stays plain prose.
+            It goes in the LABEL cell (the 1fr column) so the two numeric columns stay aligned
+            with the chapter rows above — .yp-tot is a 3-column grid keyed to those. */}
+        <span className="yp-tot-l">
+          Total periods
+          {onEditBudget ? (
+            <button type="button" className="yp-budget-edit" onClick={onEditBudget}
+              title="Change your annual periods"
+              aria-label={`Change your annual period budget for ${subjectName}`}>
+              <Pencil />
+            </button>
+          ) : null}
+        </span>
         <span className="yp-tot-n sug">{sugTotal}</span>
         <span className="yp-tot-n plan">{committedTotal}</span>
       </div>
+
+      {/* ★ THE NOTE SITS BELOW THE TOTALS AND ALWAYS SHOWS (founder, 2026-08-27 — "put text
+          below the total row with default open", then "no drop down needed").
+          It explains the figures directly above it, so it reads in the order the eye moves:
+          table, total, then what the total means and how to change it. It was a collapsed
+          disclosure under the column header, which is why the budget figure — and for a while
+          its pencil — could not be found. Still outside .yp-head, so it never freezes at the
+          top; it simply scrolls in at the end of the pane. */}
+      <p className="yp-note">
+        {/* Plain prose — the pencil is on the Total periods row above, not here. This sentence
+            names the number in words, which is why the control started here, but two pencils
+            for one action is clutter and the totals row is where she is looking. */}
+        Your teaching year at a glance — how{budget != null ? <> a budget of <b>{budget} periods</b></> : <> your periods</>} spread
+        across all {rows.length} chapters. <b>Suggested periods</b> is Aruvi&rsquo;s proposal, giving heavier chapters more
+        room. Each time you prepare a lesson you set your own periods for that chapter; those appear
+        in <b>Your plan</b>, beside the suggestion, so you can see where you&rsquo;ve adjusted and how much of
+        the year you&rsquo;ve committed. To know how Aruvi suggests, refer to Ask Aruvi time allocation section.
+      </p>
     </div>
   );
 }

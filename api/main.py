@@ -1984,18 +1984,48 @@ _STAGE_GRADES = {"preparatory": ["iii", "iv", "v"], "middle": ["vi", "vii", "vii
                  "secondary": ["ix", "x"]}
 
 
+ESTIMATE_WEEKS = 30          # mirrors web/app/lib/format.js — see ppw_from_annual below
+
+
+def ppw_from_annual(annual: Optional[int]) -> Optional[int]:
+    """Periods a week implied by a CALIBRATED annual total, over a 30-week year.
+
+    ★ Mirrors `ppwFromAnnual` in web/app/lib/format.js, and 30 mirrors its ESTIMATE_WEEKS.
+    Duplicated across the language boundary rather than shared, because there is no seam
+    between them — if one moves, move the other.
+
+    ⚠️ Derive ONLY from a calibrated figure (data.master_annual_budget). Deriving from a
+    STORED budget record is circular: with no master-plan row that record is itself
+    ppw × 30, so round(ppw × 30 / 30) = ppw — a fixed point that silently justifies
+    whatever it already held.
+    """
+    if not annual or annual <= 0:
+        return None
+    return max(1, round(annual / ESTIMATE_WEEKS))
+
+
 def _default_grade_record(subject_slug: str, grade_slug: str) -> Dict[str, Any]:
     """One canonical grade record with the calibrated defaults — mirrors what first
-    run's activation seeds (section A, standard duration, 6 periods/week)."""
+    run's activation seeds (section A, standard duration, calibrated periods/week).
+
+    ★ PERIODS/WEEK IS DERIVED, NOT A FLAT 6 (founder, 2026-08-27, reported live on
+    account 1000000001). This function set 6 while `_apply_subscription_profile` below
+    set the budget from the master plan — so buying social_sciences·secondary produced a
+    profile reading "245 periods for the year, at 6 a week", i.e. 41 teaching weeks, and
+    the budget screen's sense-check then told her so. Same contradiction the client-side
+    seeds were fixed for the same day; this was the third seeding path and the one a
+    SUBSCRIBER actually takes. Falls back to 6 only where the master plan has no row.
+    """
     dur = data.standard_duration_minutes(grade_slug, subject_slug)
     n = {"iii": 3, "iv": 4, "v": 5, "vi": 6, "vii": 7, "viii": 8, "ix": 9, "x": 10}.get(
         grade_slug, 0)
+    ppw = ppw_from_annual(data.master_annual_budget(subject_slug, grade_slug)) or 6
     return {"grade": grade_slug.upper(),
             "sections": [{"tag": f"{n}A", "sec": "A"}],
             "durations": [dur],
-            "ppw_by_duration": {str(dur): 6},
+            "ppw_by_duration": {str(dur): ppw},
             "ppw_anchor": dur,
-            "periods_per_week": 6}
+            "periods_per_week": ppw}
 
 
 def _apply_subscription_profile(tenant_id: str, user_id: str,

@@ -278,7 +278,7 @@ function ProposedCard({ preparing, onDismiss }) {
 
 export default function MyLessonPlans({ readiness, onAllocate, tourStep, preparing,
                                         onStartTour, tourActive, onDismissPrepareError, lapsed,
-                                        yearInfo, onScope }) {
+                                        yearInfo, onScope, onEditYearBudget }) {
   const LS_SUBJECT = userKey("mylessons_subject");
   const LS_CLASS = userKey("mylessons_class");
   const LS_PANE = userKey("mylessons_pane");
@@ -845,7 +845,13 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
       </div>
 
       {pane === "plan" ? (
-        <YearPlan subjectName={current.name} sSlug={sSlug} gSlug={gSlug} readiness={readiness} onAllocate={onAllocate} />
+        <YearPlan subjectName={current.name} sSlug={sSlug} gSlug={gSlug} readiness={readiness}
+          onAllocate={onAllocate}
+          /* The pencil beside the budget figure. Bound to the pane's OWN subject·class — the
+             display name and Roman class the profile keys on, not the slugs YearPlan fetches
+             with, since the scope is matched against `s.name` / `g.grade` in TeachingProfile. */
+          onEditBudget={onEditYearBudget
+            ? () => onEditYearBudget(current.name, activeGrade) : undefined} />
       ) : (
       <>
       {plans === undefined ? (

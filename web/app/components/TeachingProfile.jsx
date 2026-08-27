@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { getJSON, pretty, ROMAN, stageOfGrade, projectReadiness, API, withUser } from "../lib/format";
+import { getJSON, pretty, ROMAN, stageOfGrade, projectReadiness, API, withUser,
+         ESTIMATE_WEEKS, weeksFromAnnual, ppwFromAnnual } from "../lib/format";
 import { verifiedWrite, readinessFingerprint } from "../lib/verify";
 import { pushSectionState } from "../lib/sectionState";
 import { RollWheel, PickWheel, PpwTotalWheel, PpwSplitCell, normPpw, ppwMapSum, ppwAnchor,
@@ -48,23 +49,60 @@ const GOAL_WORD = {
   class: "classes", section: "sections",
   ppw: "periods a week", budget: "annual period budget",
 };
-const ESTIMATE_WEEKS = 30;
-
-const METHODS = {
-  weeks:   { label: "I know my teaching weeks",   unit: "weeks",          step: 1 },
-  periods: { label: "I know my period count",     unit: "periods / year", step: 1 },
-  days:    { label: "I know my working days",     unit: "working days",   step: 1 },
-  auto:    { label: "I’m not sure — estimate it", unit: "",               step: 0 },
-};
-const METHOD_ORDER = ["weeks", "periods", "days", "auto"];
-const defaultValueFor = (method, ppw) =>
-  method === "weeks" ? 30 : method === "periods" ? ppw * 30 : method === "days" ? 180 : 0;
+/* ★ ONE METHOD — THE ANNUAL PERIOD COUNT (founder, 2026-08-27). ────────────────────────────
+ * There used to be four: "I know my teaching weeks" | "my period count" | "my working days" |
+ * "estimate it". They were four ways to CONSTRUCT a number, and they existed because Aruvi
+ * could not tell her what her year should be. The calibrated master plan ended that: Aruvi
+ * knows (245 for social_sciences·ix). She is no longer building a budget from raw materials,
+ * she is DISAGREEING with one — "I say 245, you say 215" — and that needs one input, not four.
+ *
+ * They also actively manufactured inconsistency. Three of the four multiplied by periods-a-week,
+ * so a wrong ppw corrupted the money; and the founder's own worked example: at 7 a week, "200
+ * periods" implies 28.6 teaching weeks, "170 working days" implies 24, "220" implies 31 — three
+ * inputs describing one year with nothing reconciling them. Worse, `setMethod` REPLACED the
+ * value with a fresh default instead of converting it, so a first-run teacher sitting on a
+ * calibrated 245 who merely tapped "weeks" silently got 6 × 30 = 180 — the 19→14 defect of
+ * 2026-08-21 (CLAUDE.md) reachable through a second door.
+ *
+ * Collapsing also removes a circular definition: with `weeks`/`days`/`auto` gone from the
+ * WRITER, budget never derives from ppw, so ppw can be derived from the standard without the
+ * two defining each other.
+ *
+ * ★ THE READER BELOW STILL UNDERSTANDS ALL FOUR, and must keep doing so. Teachers have saved
+ * weeks/days/auto records; retiring the writer is safe, retiring the reader would silently move
+ * their years. Nothing new is ever written in those shapes.
+ */
 const budgetPeriods = (ppw, b) => {
   if (!b) return null;
-  if (b.method === "weeks") return ppw * b.value;
-  if (b.method === "periods") return b.value;
-  if (b.method === "days") return Math.round(ppw * b.value / DAYS_IN_WEEK);
-  return b.value ? b.value : ppw * ESTIMATE_WEEKS; // auto: NCF total when resolved, else flat fallback
+  if (b.method === "weeks") return ppw * b.value;               // legacy record
+  if (b.method === "periods") return b.value;                   // the only shape written now
+  if (b.method === "days") return Math.round(ppw * b.value / DAYS_IN_WEEK);  // legacy
+  return b.value ? b.value : ppw * ESTIMATE_WEEKS;              // legacy "auto"
+};
+
+/* ★ THE ONE PLACE a stored budget becomes the editable period count. Whatever shape is on disk
+   — a legacy weeks/days/auto record, or nothing at all — the editor opens on the ANNUAL TOTAL
+   it evaluates to, and saves it back as `periods`. So a teacher who once answered in weeks
+   sees the same year she has always had, and it simply stops being expressed as a multiplier.
+   That is the conversion `setMethod` never did: it replaced the value with a fresh default,
+   which is how a calibrated 245 silently became 180.
+
+   With NO record at all, Aruvi's calibrated figure leads (`rec`); the ppw-based estimate is the
+   last resort, for a subject·class the master plan has no row for. */
+const normalizeBudget = (stored, ppw, rec) => {
+  /* ★ `{method:"auto", value:0}` IS "no budget set", not a budget of ppw × 30. That is the
+     record `finalizeSubject` writes for any class she has not answered for, and reading it as
+     a real figure is what kept the calibrated year from ever being consulted on that path —
+     every such class silently landed on 180 while Aruvi's own answer for it was 245.
+     `budgetPeriods` must keep resolving it to a number (Year Plan and the class cards have to
+     print something), so the distinction is drawn HERE, where the question is "has she
+     actually chosen?" rather than "what does this evaluate to?". */
+  const unset = !stored || (stored.method === "auto" && !stored.value);
+  const evaluated = unset ? null : budgetPeriods(ppw, stored);
+  const value = evaluated && evaluated > 0
+    ? evaluated
+    : (rec && rec > 0 ? rec : Math.max(1, ppw * ESTIMATE_WEEKS));
+  return { method: "periods", value };
 };
 
 const classNum = (g) => {
@@ -172,6 +210,15 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
   const [portalGoal, setPortalGoal] = useState(null);
   const [portalSi, setPortalSi] = useState(null);       // portal: chosen subject index (section goal)
   const [subConfirm, setSubConfirm] = useState(null);   // { removes:[names], adds:[names] } — manage-subjects warning
+  /* ★ The DOUBLE confirmation for removing a subject (founder, 2026-08-27: "ok to suggestion on
+     master edit to remove subject with double strong warning now before it is done").
+     { si, name, step } — step 1 states exactly what goes; step 2 asks her to mean it. Two steps
+     rather than one because this is now the ONLY destructive act left on this screen and it is
+     unrecoverable: her classes, sections, bookmarks and chapter bindings for that subject go
+     with it. The lesson PLANS survive — they are shared library content, never per-teacher
+     copies (CLOUD_DATA_MODEL §2.3) — and step 1 says so, because a teacher who thinks she is
+     about to delete her lesson plans will not read the rest of the warning. */
+  const [removeSubject, setRemoveSubject] = useState(null);
   const [classConfirm, setClassConfirm] = useState(null); // { removes:[romans], adds:[romans] } — manage-classes warning
   const [fromPortal, setFromPortal] = useState(false);  // visit began at My Classes' "+" → every exit returns there
   // Back links still route through setScreen("view"); on a portal visit the bounce effect
@@ -428,11 +475,28 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
      visit — only the purchased STAGE's, since the settled stage's classes are not what this
      window is about. Falls back to all if the filter leaves nothing (a scope whose stage she has
      since emptied), so a pick screen is never rendered blank. ONE definition, used by both the
-     skip-the-screen test below and the screen itself, or the two could disagree. */
+     skip-the-screen test below and the screen itself, or the two could disagree.
+
+     ★ `exact` (2026-08-27) — the scope names the CLASS, not just its stage. This is the
+     deliberate exception to "the scope narrows the subject, never the class": that rule exists
+     because a teacher who just bought a STAGE may teach several classes in it, so which one she
+     means is a real question. Year Plan's budget pencil is the opposite case — she is standing
+     IN one subject·class looking at its chapter split, so asking is re-asking something the
+     screen has already answered. Expressed as a narrower FILTER rather than a second routing
+     branch, so the single-index case falls through portalPickClass's existing "straight in when
+     only ONE class is in play" and the skip test cannot drift from the screen. */
   const portalGradeIdxs = (si) => {
     const sub = canon[si]; const grades = (sub && sub.grades) || [];
-    const st = portalScope && portalScope.grade && sub && portalScope.subject === sub.name
-      ? stageOfRoman(portalScope.grade) : null;
+    const scoped = portalScope && portalScope.grade && sub && portalScope.subject === sub.name;
+    if (scoped && portalScope.exact) {
+      const want = String(portalScope.grade).toLowerCase();
+      const one = grades.map((g, gi) => (String(g.grade).toLowerCase() === want ? gi : -1))
+        .filter((i) => i >= 0);
+      if (one.length) return one;
+      // The named class is gone (removed since the pencil was drawn) — fall through to the
+      // stage filter below rather than opening on a class she no longer teaches.
+    }
+    const st = scoped ? stageOfRoman(portalScope.grade) : null;
     if (!st) return grades.map((_, gi) => gi);
     const hit = grades.map((g, gi) => (stageOfRoman(g.grade) === st ? gi : -1)).filter((i) => i >= 0);
     return hit.length ? hit : grades.map((_, gi) => gi);
@@ -452,6 +516,24 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
     if (!adds.length && !removes.length) { setScreen("view"); return; }
     if (removes.length) setSubConfirm({ removes, adds });
     else startSubjectAdds(adds);
+  };
+  /* Remove ONE subject, from the accordion's dustbin, after both confirmations. Clears the same
+     per-section teaching state `applySubjectChanges` clears — one subject's worth — so a removal
+     from here and a removal from the manage screen leave the profile in the same condition.
+     ★ Removing the LAST subject is allowed (the keep-≥1 rule was retired 2026-08-24): an emptied
+     profile shows the empty state's "+ add a subject" in-session, and lands on first run after a
+     fresh sign-in. Warned, never blocked — the profile's standing rule. */
+  const applyRemoveSubject = () => {
+    const name = removeSubject && removeSubject.name;
+    const next = deepCopy(canon).filter((s) => {
+      if (s.name !== name) return true;
+      (s.grades || []).forEach((g) => (g.sections || []).forEach((x) =>
+        clearSectionState(s.name, g.grade, `${classNum(g.grade)}${secLetter(x)}`)));
+      return false;
+    });
+    persist(next);
+    setRemoveSubject(null);
+    setEditing(false);          // the one act edit mode exists for is done
   };
   const applySubjectChanges = () => {
     const { removes, adds } = subConfirm;
@@ -532,16 +614,36 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
    * Applies to `manage` mode only (both portal windows AND the accordion's class pencil, which
    * is the same tick-to-add/untick-to-remove screen). The green "+ add a class" button keeps its
    * conversational run: there she is building something new and has asked to be asked. */
-  const applyManageClasses = (keep, adds) => {
-    const all = [...keep, ...adds.map((roman) => ({
-      grade: roman,
-      sections: ["A"],                                   // first run's own rule — start her on {n}A
-      durations: [DEFAULT_DURATION],
-      ppw_by_duration: { [DEFAULT_DURATION]: DEFAULT_PPW },
-      ppw_anchor: DEFAULT_DURATION,
-      periods_per_week: DEFAULT_PPW,
-      budget: null,                                      // finalizeSubject → { method:"auto" }
-    }))].sort((a, b) => byRoman(a.grade, b.grade));
+  /* ★ SEEDED FROM THE CALIBRATED STANDARD, like first run (2026-08-27). This path adds a class
+     WITHOUT asking anything, so whatever it seeds is what she will be shown — and a flat
+     DEFAULT_PPW of 6 beside a calibrated year of 245 is the contradiction this day's work
+     exists to end (the profile printed both on one line: "245 periods for the year, at 6 a
+     week" = 40.8 weeks). The check window raised for a newly added class shows these very
+     figures, so they have to agree the moment they are written, not after she corrects them.
+
+     Fetched per added class because the calibrated total is per subject·CLASS. Failure is
+     harmless and silent: `null` leaves the old flat defaults, which is exactly where this
+     path stood before. */
+  const applyManageClasses = async (keep, adds) => {
+    const totals = await Promise.all(adds.map((roman) =>
+      getJSON(`/subjects/${subjectSlugOf(draft.name)}/${roman.toLowerCase()}/ncf-periods`)
+        .then((d) => (d && d.recommended_total_periods) || null)
+        .catch(() => null)));
+    const all = [...keep, ...adds.map((roman, i) => {
+      const annual = totals[i];
+      const ppw = (annual && ppwFromAnnual(annual)) || DEFAULT_PPW;
+      return {
+        grade: roman,
+        sections: ["A"],                                 // first run's own rule — start her on {n}A
+        durations: [DEFAULT_DURATION],
+        ppw_by_duration: { [DEFAULT_DURATION]: ppw },
+        ppw_anchor: DEFAULT_DURATION,
+        periods_per_week: ppw,
+        // The calibrated year when Aruvi has one; null falls through to finalizeSubject's
+        // legacy auto record, which the budget step now normalizes on open.
+        budget: annual ? { method: "periods", value: annual } : null,
+      };
+    })].sort((a, b) => byRoman(a.grade, b.grade));
     finalizeSubject({ ...draft, grades: all });
     setScreen("view");
   };
@@ -601,18 +703,65 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
     return () => { live = false; };
   }, [budgetSubject, budgetGrade]);
 
-  /* The "I'm not sure — estimate it" sub-line. Aruvi's calibrated annual budget for this
-     subject·class leads; the published NCF norm sits in brackets behind it when it differs.
-     Rendered in two places (class set-up and the numbers editor) — one helper, one wording. */
-  const estimateSubLine = () => {
-    const parts = ["based on a 30-week year"];
+  /* Aruvi's own recommendation for this subject·class, shown under the input she is about to
+     disagree with. The calibrated master-plan figure leads; the published NCF norm sits in
+     brackets behind it when it differs. */
+  const recommendSubLine = () => {
     if (recTotal != null) {
-      parts.push(`Aruvi recommends ${recTotal} periods a year for this class`
-        + (ncfTotal != null && ncfTotal !== recTotal ? ` (NCF norm: ${ncfTotal})` : ""));
-    } else if (ncfTotal != null) {
-      parts.push(`as per NCF, this class requires ${ncfTotal} periods`);
+      return `Aruvi recommends ${recTotal} periods a year for this class`
+        + (ncfTotal != null && ncfTotal !== recTotal ? ` (NCF norm: ${ncfTotal}).` : ".");
     }
-    return `(${parts.join(". ")}.)`;
+    if (ncfTotal != null) return `As per NCF, this class requires ${ncfTotal} periods.`;
+    return null;
+  };
+
+  /* ════════════ THE BUDGET STEP — ONE renderer, TWO callers ════════════
+   * Class set-up and the numbers editor showed byte-identical budget screens, which is how the
+   * four-method version came to need the same fix twice. One function now, so they cannot drift.
+   *
+   * The sentence under the input is the whole reason the other three methods could go: it gives
+   * her the WEEKS READING those methods were clumsily trying to provide, without a second input
+   * to contradict the first. She types 215, Aruvi says "at 8 a week, about 27 teaching weeks" —
+   * and she can tell at once whether that is her year. If the weeks look wrong because the ppw
+   * is wrong, the pencil goes and fixes that side. Aruvi adjusts NOTHING on her behalf.
+   */
+  const renderBudgetStep = ({ kicker, heading, ppw, b, setValue, stepValue,
+                              onPpwPencil, footer }) => {
+    const annual = budgetPeriods(ppw, b);
+    const weeks = weeksFromAnnual(annual, ppw);
+    const rec = recommendSubLine();
+    return (
+      <div className="tp">
+        <div className="kicker kicker-ochre">{kicker}</div>
+        <h1 className="fr-q">{heading}</h1>
+        {/* No sub-hint here (founder, 2026-08-27). It restated the heading in longer words —
+            "How many periods for the year?" / "How many periods do you have for this subject
+            over the year?" — and the screen already answers it twice more below: Aruvi's
+            recommendation, then the implied-weeks sense-check. */}
+        <div className="tp-val-row tp-val-solo">
+          <button type="button" className="tp-val-btn" onClick={() => stepValue(-1)} aria-label="Fewer periods">−</button>
+          <input type="number" className="tp-val-input" min="1" value={b.value}
+            onChange={(e) => setValue(parseInt(e.target.value, 10) || 0)}
+            aria-label="Annual period budget" />
+          <button type="button" className="tp-val-btn" onClick={() => stepValue(1)} aria-label="More periods">+</button>
+          <span className="tp-val-unit">periods / year</span>
+        </div>
+        {rec ? <p className="tp-estimate-sub">{rec}</p> : null}
+        {/* The sense-check. Advisory, never corrective — see the note above. */}
+        {annual > 0 && ppw > 0 ? (
+          <p className="tp-implies">
+            Based on <b>{ppw} periods a week</b>
+            {onPpwPencil ? (
+              <button type="button" className="tp-implies-edit" onClick={onPpwPencil}
+                title="Change periods a week"
+                aria-label="Change periods a week for this class"><Pencil size={13} /></button>
+            ) : null} for this subject, <b>{annual} periods</b> is about
+            {" "}<b>{weeks} teaching weeks</b>.
+          </p>
+        ) : null}
+        {footer}
+      </div>
+    );
   };
 
   // finalize the draft into a canonical record and persist (upsert by name)
@@ -1043,61 +1192,29 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
       );
     }
 
-    /* budget */
+    /* budget — ONE input, the annual period count. See the METHODS note at the top of the file
+       for why the other three went. The value opens on Aruvi's calibrated figure when she has
+       not set one; `recTotal` is already in state from the /ncf-periods effect. */
     const ppw = g.periods_per_week || DEFAULT_PPW;
-    const rawB = g.budget || { method: "weeks", value: defaultValueFor("weeks", ppw) };
-    const b = rawB.method === "auto"
-      ? { method: "auto", value: ppw * ESTIMATE_WEEKS }
-      : rawB;
-    const setMethod = (m) => updGrade({ budget: { method: m, value: defaultValueFor(m, ppw) } });
+    const b = normalizeBudget(g.budget, ppw, recTotal);
     // Floor the entered figure at 1 (B3, 2026-07-06) — a 0-period year is never valid.
     const stepValue = (delta) => updGrade({ budget: { ...b, value: Math.max(1, b.value + delta) } });
     const setValue = (v) => updGrade({ budget: { ...b, value: Math.max(1, v || 0) } });
     const isLast = pi + 1 >= pendingIdxs.length;
-    return (
-      <div className="tp">
-        <div className="kicker kicker-ochre">{kicker}</div>
-        <h1 className="fr-q">How long is your teaching year for Class {classNum(g.grade)}?</h1>
-        <p className="fr-hint">Pick one method below based on what you know.</p>
-        {/* Value shown inline under the selected method (2026-07-08), matching first run —
-            no longer parked deep below the whole list. Other methods stay prominent. */}
-        <div className="tp-methods">
-          {METHOD_ORDER.map((m) => {
-            const on = b.method === m;
-            return (
-              <div key={m} className="fr-bud-row">
-                <button type="button" className={`tp-method ${on ? "on" : ""}`} onClick={() => setMethod(m)}>
-                  {METHODS[m].label}
-                </button>
-                {on && (
-                  <div className="fr-bud-detail">
-                    {m !== "auto" && (
-                      <div className="tp-val-row">
-                        <button type="button" className="tp-val-btn" onClick={() => stepValue(-METHODS[m].step)} aria-label="Less">−</button>
-                        <input type="number" className="tp-val-input" min="1" value={b.value}
-                          onChange={(e) => setValue(parseInt(e.target.value, 10) || 0)} aria-label={METHODS[m].unit} />
-                        <button type="button" className="tp-val-btn" onClick={() => stepValue(METHODS[m].step)} aria-label="More">+</button>
-                        <span className="tp-val-unit">{METHODS[m].unit}</span>
-                      </div>
-                    )}
-                    <p className="tp-total">≈ {budgetPeriods(ppw, b)} periods for the year, at {ppw} a week</p>
-                    {m === "auto" && (
-                      <p className="tp-estimate-sub">{estimateSubLine()}</p>
-                    )}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+    return renderBudgetStep({
+      kicker,
+      heading: `How many periods for Class ${classNum(g.grade)} this year?`,
+      ppw, b, setValue, stepValue,
+      onPpwPencil: () => setClassStep("ppw"),
+      footer: (
         <div className="fr-foot">
           <button className="primary fr-cta" onClick={() => { updGrade({ budget: b }); onClassDone(); }}>
             {isLast ? "Save ✓" : "Next class →"}
           </button>
           <button className="fr-link" onClick={() => setClassStep("durations")}>← Back</button>
         </div>
-      </div>
-    );
+      ),
+    });
   }
 
   if (screen === "subjectDone") {
@@ -1250,55 +1367,24 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
     }
 
     const ppw = g.periods_per_week || DEFAULT_PPW;
-    const rawB = g.budget || { method: "weeks", value: defaultValueFor("weeks", ppw) };
-    const b = rawB.method === "auto"
-      ? { method: "auto", value: ppw * ESTIMATE_WEEKS }
-      : rawB;
-    const setMethod = (m) => updNum({ budget: { method: m, value: defaultValueFor(m, ppw) } });
+    const b = normalizeBudget(g.budget, ppw, recTotal);
     // Floor the entered figure at 1 (B3, 2026-07-06) — a 0-period year is never valid.
     const stepValue = (delta) => updNum({ budget: { ...b, value: Math.max(1, b.value + delta) } });
     const setValue = (v) => updNum({ budget: { ...b, value: Math.max(1, v || 0) } });
-    return (
-      <div className="tp">
-        <div className="kicker kicker-ochre">{kicker} · annual budget</div>
-        <h1 className="fr-q">How long is the teaching year?</h1>
-        <p className="fr-hint">Pick one method below based on what you know.</p>
-        {/* Value shown inline under the selected method (2026-07-08), matching first run. */}
-        <div className="tp-methods">
-          {METHOD_ORDER.map((m) => {
-            const on = b.method === m;
-            return (
-              <div key={m} className="fr-bud-row">
-                <button type="button" className={`tp-method ${on ? "on" : ""}`} onClick={() => setMethod(m)}>
-                  {METHODS[m].label}
-                </button>
-                {on && (
-                  <div className="fr-bud-detail">
-                    {m !== "auto" && (
-                      <div className="tp-val-row">
-                        <button type="button" className="tp-val-btn" onClick={() => stepValue(-METHODS[m].step)} aria-label="Less">−</button>
-                        <input type="number" className="tp-val-input" min="1" value={b.value}
-                          onChange={(e) => setValue(parseInt(e.target.value, 10) || 0)} aria-label={METHODS[m].unit} />
-                        <button type="button" className="tp-val-btn" onClick={() => stepValue(METHODS[m].step)} aria-label="More">+</button>
-                        <span className="tp-val-unit">{METHODS[m].unit}</span>
-                      </div>
-                    )}
-                    <p className="tp-total">≈ {budgetPeriods(ppw, b)} periods for the year, at {ppw} a week</p>
-                    {m === "auto" && (
-                      <p className="tp-estimate-sub">{estimateSubLine()}</p>
-                    )}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+    return renderBudgetStep({
+      kicker: `${kicker} · annual budget`,
+      heading: "How many periods for the year?",
+      ppw, b, setValue, stepValue,
+      // The pencil stays INSIDE this editor — she is one step from the periods-a-week wheel,
+      // and coming back lands her on this same budget screen with her figure intact.
+      onPpwPencil: () => setNumCtx((c) => ({ ...c, step: "ppw" })),
+      footer: (
         <div className="fr-foot">
           <button className="primary fr-cta" onClick={() => saveEditNums(b)}>Save</button>
           <button className="fr-link" onClick={() => setScreen("view")}>Cancel</button>
         </div>
-      </div>
-    );
+      ),
+    });
   }
 
   /* ════════════════════ VIEW — the accordion ════════════════════ */
@@ -1337,18 +1423,22 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
             <h1 className="lvl-title">Your teaching profile</h1>
             <div className="tp-hd-spacer" aria-hidden="true"></div>
           </div>
-          {/* The big pen — right end of the title row (founder, 2026-08-24 final):
-              one green pen to enter edit mode, Done to leave. In edit mode every
-              dimension carries its own small pen. */}
-          {/* `!lapsed`: an expired subscription makes the profile READ-ONLY — she keeps
-              seeing what she taught, but the edit pen hides (§2.5 as amended; the
-              server refuses the writes regardless). */}
+          {/* ★ THE TOGGLE NOW HAS EXACTLY ONE JOB (founder, 2026-08-27): revealing the
+              per-subject dustbin. Every other pencil on this screen is gone — the "+" portal
+              owns class, section, periods a week and the annual budget, and two doors onto one
+              record is how they drift. So this is no longer "edit profile"; it is "remove a
+              subject", and it says so, because a control that promises editing and delivers
+              only deletion is a trap.
+              `!lapsed`: an expired subscription makes the profile READ-ONLY — she keeps seeing
+              what she taught, but this hides (§2.5 as amended; the server refuses writes
+              regardless). */}
           {canon.length > 0 && !lapsed && (
             editing ? (
-              <button className="tp-edit-toggle on" onClick={() => setEditing(false)} aria-label="Done editing">Done</button>
+              <button className="tp-edit-toggle on" onClick={() => setEditing(false)} aria-label="Done">Done</button>
             ) : (
-              <button className="tp-edit-pencil" onClick={() => setEditing(true)} aria-label="Edit profile" title="Edit profile">
-                <Pencil size={22} />
+              <button className="tp-edit-pencil" onClick={() => setEditing(true)}
+                aria-label="Remove a subject" title="Remove a subject">
+                <Bin />
               </button>
             )
           )}
@@ -1376,14 +1466,24 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
             <div className="tp-sub-hd" onClick={() => setOpenSubject(open ? null : s.name)}>
               <span className="tp-sub-left">
                 <span className="tp-sub-name">{s.name}</span>
-                {/* ONE idiom in edit mode (founder, 2026-08-24): a pen per dimension,
-                    each opening the FULL choice list with enrolled options pre-ticked —
-                    unticking removes behind the usual scoped warning, ticking adds via
-                    the usual flows. The red dustbins and green "+ add" buttons are
-                    retired: too many verbs on one screen. */}
+                {/* ★ THE PROFILE IS A VIEW NOW, WITH ONE EXCEPTION (founder, 2026-08-27).
+                    Every other pencil on this screen is gone — class, section, periods a week,
+                    annual budget. Those all live in the "+" portal, which reaches the same
+                    screens in fewer taps, and two doors onto one record is how the two drift.
+
+                    REMOVING A SUBJECT is what could not go with them. The portal deliberately
+                    has NO Subject row (adding one is a purchase, so removal would have been its
+                    only working half, one tap from a window opened to add a section). So the
+                    master EDIT toggle survives for this single act, which is also the most
+                    destructive thing a teacher can do here — it takes her classes, sections,
+                    bookmarks and chapter bindings with it. Hence the DOUBLE confirmation in
+                    `subConfirm`: the first states what goes, the second asks her to mean it. */}
                 {editing && open && (
-                  <button className="tp-icon-btn" aria-label={`Edit subjects`}
-                    onClick={(e) => { e.stopPropagation(); startManageSubjects(); }}><Pencil /></button>
+                  <button className="tp-icon-btn tp-icon-danger" aria-label={`Remove ${s.name}`}
+                    title={`Remove ${s.name} from your teaching profile`}
+                    onClick={(e) => { e.stopPropagation(); setRemoveSubject({ si, name: s.name, step: 1 }); }}>
+                    <Bin />
+                  </button>
                 )}
               </span>
               <span className="tp-sub-side">
@@ -1412,10 +1512,6 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
                   <div className="tp-cc-hd">
                     <span className="tp-cc-left">
                       <span className="tp-cc-name">Class {classNum(g.grade)}</span>
-                      {editing && (
-                        <button className="tp-icon-btn" aria-label={`Edit classes of ${s.name}`}
-                          onClick={() => startManageClasses(si)}><Pencil /></button>
-                      )}
                     </span>
                     <div className="tp-cc-right">
                       <span className="tp-cc-seclbl">Sections</span>
@@ -1427,28 +1523,16 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
                           );
                         })}
                       </div>
-                      {editing && (
-                        <button className="tp-icon-btn" aria-label={`Edit sections of Class ${classNum(g.grade)}`}
-                          onClick={() => startEditSections(si, gi)}><Pencil /></button>
-                      )}
                     </div>
                   </div>
                   <div className="tp-cc-cols">
                     <div className="tp-cc-col tp-cc-col--center">
                       <div className="tp-cc-col-l">Periods / week
-                        {editing && (
-                          <button className="tp-icon-btn tp-icon-xs" aria-label={`Edit periods per week of Class ${classNum(g.grade)}`}
-                            onClick={() => startEditNums(si, gi, "ppw")}><Pencil size={12} /></button>
-                        )}
                       </div>
                       <div className="tp-cc-col-v">{perWeek || (ppw ? `${ppw} a week` : "—")}</div>
                     </div>
                     <div className="tp-cc-col">
                       <div className="tp-cc-col-l">Annual budget
-                        {editing && (
-                          <button className="tp-icon-btn tp-icon-xs" aria-label={`Edit annual budget of Class ${classNum(g.grade)}`}
-                            onClick={() => startEditNums(si, gi, "budget")}><Pencil size={12} /></button>
-                        )}
                       </div>
                       <div className="tp-cc-col-v">{total ? `${total} periods` : "—"}</div>
                     </div>
@@ -1467,6 +1551,59 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
       {canon.length === 0 && (
         <button className="tp-add tp-add-subject" onClick={startAddSubject}>+ add a subject</button>
       )}
+
+      {/* ★ REMOVE A SUBJECT — TWO CONFIRMATIONS (founder, 2026-08-27). This is the only
+          destructive act left on the profile, and it is unrecoverable. The steps do different
+          jobs on purpose: STEP 1 tells her exactly what goes and, just as importantly, what
+          does NOT — a teacher who believes she is about to lose her lesson plans will not read
+          any further. STEP 2 asks her to mean it, naming the subject again so a mis-tap on a
+          phone cannot carry through two screens. Cancel is the plain, easy exit at both. */}
+      {removeSubject && (() => {
+        const s = canon[removeSubject.si];
+        const classes = s ? (s.grades || []).map((g) => `Class ${classNum(g.grade)}`).join(", ") : "";
+        const secCount = s ? (s.grades || []).reduce((n, g) => n + ((g.sections || []).length), 0) : 0;
+        const first = removeSubject.step === 1;
+        return (
+          <div className="fr-modal-bg"
+            onClick={(e) => { if (e.currentTarget === e.target) setRemoveSubject(null); }}>
+            <div className="fr-modal">
+              <h2 className="fr-q">
+                {first ? <>Remove {removeSubject.name}?</> : <>Are you sure?</>}
+              </h2>
+              {first ? (
+                <>
+                  <p className="fr-hint">
+                    {classes || "Its classes"}
+                    {secCount ? ` — ${secCount} section${secCount === 1 ? "" : "s"}` : ""} will be
+                    removed from your teaching profile, along with every bookmark and chapter
+                    binding in them. This cannot be undone.
+                  </p>
+                  <p className="fr-hint tp-rm-keep">
+                    Your <b>lesson plans stay in the library</b> — removing a subject never
+                    deletes a plan.
+                  </p>
+                  <button type="button" className="tp-remove-confirm"
+                    onClick={() => setRemoveSubject((r) => ({ ...r, step: 2 }))}>
+                    Continue
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p className="fr-hint">
+                    This removes <b>{removeSubject.name}</b> and everything you have set up
+                    inside it. There is no way back.
+                  </p>
+                  <button type="button" className="tp-remove-confirm" onClick={applyRemoveSubject}>
+                    Yes, remove {removeSubject.name}
+                  </button>
+                </>
+              )}
+              <button type="button" className="fr-link fr-center"
+                onClick={() => setRemoveSubject(null)}>Cancel</button>
+            </div>
+          </div>
+        );
+      })()}
 
       {confirm && (() => {
         const c = confirmCopy();

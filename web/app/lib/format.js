@@ -303,6 +303,26 @@ export function largestRemainder(total, weights) {
  *   estimate/auto/none → weeklyPeriods×30. weeklyPeriods = grid cells for that grade ÷ #sections,
  *   falling back to the grade's periods_per_week (post calendar-purge profiles). null when the
  *   subject·grade isn't in the profile or no basis can be derived. */
+/* ★ The weeks Aruvi assumes in a teaching year, and the two readings derived from it
+   (2026-08-27). ONE definition, here, because three screens need it — first run seeds
+   periods-a-week from it, the profile's budget step shows the implied weeks, and the check
+   window displays the ppw. It was about to become a fourth byte-identical copy, which is the
+   trap `stageOfGrade` was lifted out of earlier the same day (CLAUDE.md §3: nobody
+   re-implements the mapping).
+
+   30 is not a new assumption — it is the one already hardcoded in annualBudgetPeriods below,
+   in TeachingProfile's ESTIMATE_WEEKS and in api/main.py's provisioning fallback. Naming it
+   makes it honest rather than introducing it.
+
+   ⚠️ Derive ppw from a CALIBRATED annual figure (the master plan's annual_budget_periods),
+   never from a stored budget record: with no master-plan row the record is itself ppw × 30, so
+   round(ppw × 30 / 30) = ppw — a fixed point that silently justifies whatever it already held. */
+export const ESTIMATE_WEEKS = 30;
+export const ppwFromAnnual = (annual) =>
+  annual > 0 ? Math.max(1, Math.round(annual / ESTIMATE_WEEKS)) : null;
+export const weeksFromAnnual = (annual, ppw) =>
+  annual > 0 && ppw > 0 ? Math.round(annual / ppw) : null;
+
 export function annualBudgetPeriods(readiness, subjectSlugArg, gradeSlugArg) {
   const subs = (readiness && readiness.subjects) || [];
   const slugify = (n) => (n || "").toLowerCase().replace(/ /g, "_");

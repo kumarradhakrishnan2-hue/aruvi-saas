@@ -550,12 +550,36 @@ partner's work is to implement `BillingProvider` and populate `source`.
 > 1. **Notification preferences: not built.** `Account.notify` exists in ports.py and is
 >    round-tripped by the file adapter, but no route writes it and no screen reads it —
 >    zero references in `web/app/components/` or `api/main.py`. A field nothing can set.
-> 2. **The annual budget is still read-only prose in Year Plan** (`YearPlan.jsx:176`),
->    which is this step's *own* first rule ("put each control where its number is used")
->    going unhonoured. Editing still lives in `TeachingProfile.jsx`'s budget step.
-> 3. **"Disclose the assumptions" is a code comment, not a screen.** `FirstRun.jsx:433`
->    notes that periods/week is assumed; nothing tells the teacher that her section,
->    periods/week and annual budget were chosen for her.
+> 2. ~~**The annual budget is still read-only prose in Year Plan**~~ — **CLOSED 2026-08-27**
+>    (founder: "keep pencil edit icon next, clicking takes her to that subject annual period
+>    amend screen"). A pencil sits beside the `a budget of N periods` figure and opens that
+>    subject·class's amend screen directly. The routing detail worth keeping: it travels as an
+>    **`exact` portal scope**, a deliberate exception to "the scope narrows the subject, never
+>    the class" — that rule protects a teacher who just bought a STAGE and may teach several
+>    classes in it, whereas Year Plan is already standing in ONE subject·class, so both pick
+>    screens would re-ask what the pane has answered. Expressed as a narrower filter inside
+>    `portalGradeIdxs` (still the single definition both the skip test and the screen read),
+>    so the one-index case falls through the existing "straight in" path. Return is free:
+>    My Lessons persists its open pane under `LS_PANE`, so `goPortalHome` lands back on Year
+>    Plan — ⚠️ if that persistence goes, the pencil silently becomes a one-way door.
+>    ⚠️ **Open sub-point:** the budget figure lives inside the COLLAPSED "Your plan" note
+>    (`showPlan` defaults false), so the pencil is one tap behind a disclosure. Deliberate for
+>    now — the figure was already there — but the control is only as reachable as the number.
+> 3. **"Disclose the assumptions"** — **LARGELY CLOSED 2026-08-27.** The check window now
+>    SHOWS each row's current value (`ProfilePortal` `values`), so "Would you like to check
+>    your set-up?" can be answered at a glance instead of by opening four rows in turn:
+>    `Class 9 · Section 9A · Periods a week 6 · Annual period budget 245 periods`. Values are
+>    right-aligned on the row's existing single line — deliberately NOT the sub-line struck
+>    earlier that day, so the 360px fold is untouched — and appear in the **check mood only**
+>    (founder: "values only for first time including when new subject stage added, not during
+>    'what would you like to change' rounds"), because the "+" window is unscoped and a value
+>    there would be noise on a row used for navigation. The budget reads through
+>    `annualBudgetPeriods`, the same function Year Plan displays from, so the two screens
+>    cannot quote different totals; where scoped classes disagree the row stays silent rather
+>    than picking one. **Still open by explicit founder decision ("ignore"):** first run itself
+>    names neither periods/week nor the annual budget on screen — the check window at the
+>    tour's end is the disclosure moment instead. `FirstRun.jsx:435` (was `:433`) remains a
+>    code comment only.
 
 Last, deliberately. Account, subscription, privacy, notifications, support, and the year-plan
 budget control.
@@ -616,9 +640,39 @@ implementation and nothing above the port changes.
   foldering: 4 empty-stem assessment items in 13,115 (`test_normalized_item`), 8 plans whose
   units are re-ordered by their subject port (`test_unit_order`), and one `test_unitize`
   string corruption. **These are unfixed and are real findings, not test noise.**
-- **Periods/week** — nothing reads it while the budget is stored as `{method: "periods"}`, but
-  it becomes load-bearing the moment she switches to the weeks method in her profile. Derive it
-  (`round(budget / 30)`) rather than seeding a flat guess.
+- ~~**Periods/week**~~ — **RESOLVED 2026-08-27**, and the item's own premise was wrong twice.
+  (a) "Nothing reads it" was false: ppw is displayed in six places and multiplied the annual
+  budget under three of the four budget methods. (b) "It becomes load-bearing when she switches
+  to the weeks method" understated it — `setMethod` *replaced* the total with a fresh default
+  rather than converting it, so a first-run teacher on a calibrated 245 who merely tapped
+  "weeks" silently got 180, reproducing the 19→14 defect of 2026-08-21 through a second door.
+  Measured scope: a flat `DEFAULT_PPW = 6` contradicted the master plan's own annual figure for
+  **18 of 25 subject·grades**, and the profile printed both on one line ("≈ 245 periods for the
+  year, at 6 a week" = 40.8 weeks).
+  Fixed by (1) deriving the seed from `annual_budget_periods` — the API field, never the stored
+  budget record, which is itself `ppw × 30` when there is no master-plan row and would give a
+  circular fixed point; (2) retiring three of the four budget methods (next item); (3) seeding
+  profile-added classes from the calibrated figure they already fetch. `ppwFromAnnual` /
+  `weeksFromAnnual` / `ESTIMATE_WEEKS` live once, in `web/app/lib/format.js`.
+- **The annual budget has ONE method now — the period count** (founder, 2026-08-27). The four
+  ("teaching weeks | period count | working days | estimate it") existed because Aruvi could not
+  say what a year should be; the calibrated master plan ended that, so she is *disagreeing with*
+  a number rather than constructing one. They also manufactured inconsistency: at 7 a week, "200
+  periods" implies 28.6 weeks, "170 working days" 24, "220" 31 — three inputs for one year with
+  nothing reconciling them. A sentence under the input now carries the weeks reading they were
+  clumsily providing ("Based on 8 periods a week for this subject, 245 periods is about 31
+  teaching weeks") — **advisory only; Aruvi adjusts neither number**. ⚠️ The READER
+  (`budgetPeriods`, `annualBudgetPeriods`) still understands all four shapes and must keep doing
+  so — teachers have saved weeks/days/auto records, and retiring the reader would move their
+  years. Only the writer collapsed. `{method:"auto", value:0}` is read as "not set" so the
+  calibrated year leads, which is what that path never did before.
+- **The teaching profile is a VIEW** (founder, 2026-08-27) — the "+" portal owns class, section,
+  periods a week and the annual budget, and two doors onto one record is how they drift. The one
+  exception is **removing a subject**, which the portal deliberately cannot do (adding one is a
+  purchase, so removal would be its only working half, one tap from a window opened to add a
+  section). It stays behind the master toggle — now labelled for that single act — with a
+  **double confirmation**: the first names what goes *and what does not* (lesson plans are shared
+  library content and survive), the second asks her to mean it.
 - **Institutional tier** — not built, but Step 0's tenant/user split is what keeps it cheap.
 
 ---

@@ -2607,7 +2607,23 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 }
 .ap-row.ap-row-line .ap-row-label {
   font-family: var(--f-body); font-size: 15px; line-height: 1.2; color: var(--ink);
+  /* Takes the slack so the value and the chevron pack together on the RIGHT. Without it the
+     row's `justify-content: space-between` would strand a three-child row's value in the
+     middle of the line, reading as a second label rather than as this row's answer. */
+  flex: 1 1 auto; min-width: 0;
 }
+/* The CURRENT VALUE, check mood only (ProfilePortal `values`). Mono, smaller and soft, because
+   the NAME is what she is choosing between and the value is what she is checking — the row must
+   still scan as a list of things to open, not as a table. `flex: none` + nowrap keeps it on the
+   name's line whatever it says: a value that wrapped would re-create the two-line row this
+   file's note above spent a bug fixing. Long lists are elided at source (page.jsx `list()`),
+   never here, so this can never silently hide part of an answer. */
+.ap-row.ap-row-line .ap-row-val {
+  flex: none; white-space: nowrap;
+  font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .02em;
+  color: var(--ink-soft);
+}
+.ap-row:hover .ap-row-val { color: var(--ink); }
 /* The footer — "Want to see your full teaching profile?" It must NOT read as a sixth row: the
    rows above are spot edits with card chrome, this is the panorama. So it is a hairline-topped
    line of text, flex: none so it never joins .ap-list's scroll.
@@ -2826,15 +2842,16 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
   font-family: var(--f-display); font-weight: 500; font-size: 14.5px; cursor: pointer;
 }
 .tp-remove-confirm:hover { background: #f9ecea; }
-/* budget estimator — 4 stacked method choices + a value stepper */
-.tp-methods { display: flex; flex-direction: column; gap: 8px; margin: 4px 0 16px; }
-.tp-method {
-  text-align: left; padding: 12px 14px; border-radius: 10px; cursor: pointer;
-  background: var(--paper-2); border: 1.5px solid var(--line);
-  font-family: var(--f-body); font-size: 15px; color: var(--ink);
-}
-.tp-method.on { background: var(--tint-pine-2); border-color: var(--pine); color: var(--pine-d); }
+/* ★ .tp-methods / .tp-method / .tp-total DELETED 2026-08-27 — the four-method budget picker
+   ("I know my teaching weeks | my period count | my working days | estimate it"). There is ONE
+   input now, the annual period count: the calibrated master plan means Aruvi already knows the
+   answer, so she is disagreeing with a number rather than constructing one. See the METHODS
+   note at the top of TeachingProfile.jsx for the full reasoning, including the silent-overwrite
+   bug the picker carried. `.fr-bud-row` / `.fr-bud-detail` below went with them. */
+/* budget — one value stepper */
 .tp-val-row { display: flex; align-items: center; gap: 16px; margin: 0 0 10px; }
+/* The lone input, no method list above it: give it room to be the subject of the screen. */
+.tp-val-solo { margin: 18px 0 12px; }
 .tp-val-btn {
   width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--line);
   background: var(--paper-2); font-size: 20px; color: var(--pine-d); cursor: pointer; line-height: 1;
@@ -2847,11 +2864,38 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .tp-val-unit { font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
 .tp-estimate-tag { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; color: var(--pine-d); margin: 0 0 10px; }
 .tp-estimate-sub { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-soft); margin: 0 0 8px; }
-.tp-total { font-family: var(--f-mono); font-size: 12px; letter-spacing: .04em; color: var(--pine-d); margin: 0 0 8px; }
+/* ★ THE SENSE-CHECK under the budget input (2026-08-27) — "Based on 8 periods a week ✎ for this
+   subject, 245 periods is about 31 teaching weeks." It is what let the other three methods go:
+   it gives her the WEEKS READING they were clumsily providing, without a second input that can
+   contradict the first. Body serif, not the mono of a label, because it is a sentence she reads
+   — and ADVISORY: Aruvi never adjusts either number to make them agree. */
+.tp-implies {
+  font-family: var(--f-body); font-size: 14px; line-height: 1.55; color: var(--ink-soft);
+  margin: 14px 0 4px;
+}
+.tp-implies b { font-weight: 600; color: var(--ink); }
+/* Inline pencil through to periods-a-week — the other side of the sentence, when it is that
+   side that looks wrong. Baseline-aligned with negative block margins so a phone-sized tap
+   target does not open up the line-height of the paragraph it sits in (the .yp-budget-edit
+   idiom, same day). */
+.tp-implies-edit {
+  display: inline-flex; align-items: center; justify-content: center;
+  vertical-align: -3px; margin: -10px 2px -10px 4px; padding: 10px 6px;
+  background: none; border: none; cursor: pointer; color: var(--pine-d); opacity: .8;
+}
+.tp-implies-edit:hover { opacity: 1; color: var(--clay); }
+.tp-implies-edit:focus-visible { outline: 2px solid var(--pine); outline-offset: 1px; border-radius: 6px; }
 
-/* first-run budget step: each method carries its own result below it; non-selected methods dim */
-.fr-bud-row { display: flex; flex-direction: column; }
-.fr-bud-detail { margin: 8px 0 2px; }
+/* The reassurance line in the remove-a-subject warning. A teacher who thinks she is about to
+   delete her lesson plans will not read the rest of the warning, so this is set apart from the
+   consequences above it rather than buried in the same paragraph. */
+.tp-rm-keep { margin-top: 10px; color: var(--pine-d); }
+
+/* The accordion's ONE destructive control — the per-subject dustbin, revealed by the master
+   toggle. Clay, because it is the only thing on this screen that removes anything. */
+.tp-icon-danger { color: var(--clay); }
+.tp-icon-danger:hover { color: var(--clay); opacity: 1; }
+
 .fr-bud-warn { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; color: var(--clay); margin: 0 0 8px; }
 .fr-dim { opacity: .4; }
 
@@ -4373,22 +4417,38 @@ select option { background-color: var(--field-bg); color: var(--ink); }
    The label breaks over two lines ("Your" / "plan") so the arrow can grow without the column
    growing with it — the header cell is now as tall as two kicker lines either way. */
 .yp-c-plan { display: flex; justify-content: flex-end; }
-.yp-hbtn {
-  display: inline-flex; align-items: center; gap: 8px;
-  margin: 0; padding: 0; background: none; border: 0; cursor: pointer;
-  font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit;
-}
-.yp-hbtn:focus-visible { outline: 2px solid var(--pine); outline-offset: 3px; border-radius: 3px; }
-/* The arrow carries the whole affordance now, so it stays full --ink and runs far above the 8.5px
-   kicker beside it — 16px → 22px (2026-08-06). line-height:0 keeps the glyph from setting the
-   header line's height, so the two-line label alone decides it and "Chapter" / "Suggested periods"
-   stay level. */
+/* ★ .yp-hbtn / .yp-chev DELETED 2026-08-27 — the header's disclosure button and its arrow.
+   The note they toggled now sits below the totals and always shows, so the toggle went with it
+   ("no drop down needed"). All three column headers are plain labels again. The two-line break
+   in .yp-hlbl is KEPT: it was introduced so the arrow could grow without the column growing,
+   but it also keeps this header the same height as it has always been, so "Chapter" and
+   "Suggested periods" stay level with it. */
 .yp-hlbl { text-align: right; line-height: 1.25; }
-.yp-chev { font-size: 22px; line-height: 0; color: var(--ink); transition: transform .15s ease; }
-.yp-chev.open { transform: rotate(180deg); }
 /* The note itself — plain italic body copy under the header rule, no box. */
-.yp-note { margin: 10px 0 2px; font-family: var(--f-body); font-style: italic; font-size: 14px; line-height: 1.62; color: var(--ink); }
+/* Moved BELOW the totals row and open by default (2026-08-27) — it carries the annual-budget
+   figure and its pencil, so it cannot live behind a closed disclosure. Following a rule with a
+   2px ink border it needs more air above than it did when it opened under the column header,
+   and real space below so it does not hug the bottom of the pane on a phone. */
+.yp-note { margin: 16px 0 20px; font-family: var(--f-body); font-style: italic; font-size: 14px; line-height: 1.62; color: var(--ink); }
 .yp-note b { font-style: normal; font-weight: 600; }
+/* The budget pencil — on the TOTAL PERIODS row, beside the label (§5 Step 6 rule 1: put each
+   control where its number is used). It lives in a 10px mono uppercase label inside a grid
+   whose other two columns must stay aligned with the chapter rows above, which sets the rules:
+   · vertical-align sits it on the label's baseline rather than the line box — the grid is
+     align-items:baseline, so a mis-aligned glyph drags the whole row's numbers with it;
+   · a generous padding gives a real tap target on a phone, and a negative margin-block hands
+     that space back so the button cannot grow the totals row's height;
+   · pine against the label's --ink-soft is the affordance — it must read as a control, not as
+     punctuation after the words. */
+.yp-budget-edit {
+  display: inline-flex; align-items: center; justify-content: center;
+  vertical-align: -3px; margin: -10px 0 -10px 6px; padding: 10px 8px;
+  background: none; border: none; cursor: pointer;
+  color: var(--pine-d); opacity: .8;
+}
+.yp-budget-edit:hover { opacity: 1; color: var(--clay); }
+.yp-budget-edit:active { transform: scale(.94); }
+.yp-budget-edit:focus-visible { outline: 2px solid var(--pine); outline-offset: 1px; border-radius: 6px; }
 .yp-help { margin: 14px 2px 0; font-family: var(--f-body); font-size: 12px; line-height: 1.5; color: var(--ink-soft); }
 
 .yp-budget { margin-top: 14px; }
@@ -4425,7 +4485,13 @@ select option { background-color: var(--field-bg); color: var(--ink); }
 .yp-delta { margin-top: 3px; font-family: var(--f-mono); font-size: 9px; letter-spacing: .03em; color: var(--clay); }
 .yp-pend { margin-top: 3px; font-family: var(--f-mono); font-size: 8px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); opacity: .85; }
 
-.yp-tot { display: grid; grid-template-columns: 1fr 54px 68px; gap: 0 6px; align-items: baseline; margin-top: 2px; padding: 12px 0 4px; border-top: 2px solid var(--ink); }
+/* ONE dark rule, BELOW the row (founder, 2026-08-27: "dark line below total row", then "now 2").
+   The row already had a 2px rule ABOVE it; adding one below gave it two heavy lines and fenced
+   the totals off as a box. So the line MOVED rather than multiplied — it now marks the boundary
+   that actually needed drawing, between the figures and the explanatory note beneath them.
+   Nothing is lost above: every chapter row carries its own hairline, so the last one already
+   closes the column. */
+.yp-tot { display: grid; grid-template-columns: 1fr 54px 68px; gap: 0 6px; align-items: baseline; margin-top: 2px; padding: 12px 0 10px; border-bottom: 2px solid var(--ink); }
 .yp-tot-l { font-family: var(--f-mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
 .yp-tot-n { text-align: right; font-family: var(--f-display); font-weight: 600; font-size: 18px; }
 .yp-tot-n.sug { color: var(--ink); }

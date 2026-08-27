@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { getJSON, postJSON, pretty, gradeUp, ROMAN, stageOfGrade, projectReadiness, API, withUser, getUser, setUser, clearUser, fetchEntitlement } from "./lib/format";
+import { getJSON, postJSON, pretty, gradeUp, ROMAN, stageOfGrade, classNum, annualBudgetPeriods, projectReadiness, API, withUser, getUser, setUser, clearUser, fetchEntitlement } from "./lib/format";
 import { verifiedWrite, readinessFingerprint } from "./lib/verify";
 import { setSectionMismatchHandler, pullSectionState, clearLocalSectionCache } from "./lib/sectionState";
 import GenerateTab from "./components/GenerateTab";
@@ -12,7 +12,7 @@ import TeachingProfile from "./components/TeachingProfile";
 import Settings from "./components/Settings";
 import MyLessonPlans from "./components/MyLessonPlans";
 import GuidedTour from "./components/GuidedTour";
-import ProfilePortal, { queueSetupCheck, takeSetupCheck, setupKey } from "./components/ProfilePortal";
+import ProfilePortal, { queueSetupCheck, takeSetupCheck, pruneSetupCheck, setupKey } from "./components/ProfilePortal";
 // ThemeToggle moved into Settings (App › Appearance) — no longer on the shell's bar.
 import AskAruvi from "./ask-aruvi/AskAruvi";
 
@@ -214,6 +214,7 @@ export default function Home() {
     if (!prev) return;                                    // baseline only
     const added = keys.filter((k) => !prev.includes(k));
     if (added.length) queueSetupCheck(added);
+    pruneSetupCheck(keys);   // self-heal: nothing she does not teach stays queued
   }, [ready, readiness, user]);
 
   /* My Lessons scoped itself to a subject·class. If that one was queued above, this is her
@@ -847,6 +848,35 @@ export default function Home() {
     setPortalWin(null);
     setProfileAutoAdd(null); setProfilePortal(kind); setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null);
   };
+  /* ★ THE YEAR PLAN BUDGET PENCIL (founder, 2026-08-27) — the ONE control that had to move to
+     where its number is used (administrative_architecture.md §5 Step 6, rule 1: "the annual
+     budget belongs in Year Plan, beside the sentence that reads 'a budget of N periods' — the
+     only place she has the context to judge it. It is currently read-only prose there").
+
+     The distinction that makes this different from a portal row: the "+"/check window's budget
+     row also reaches this screen, but from a window — she edits the total with no chapter list
+     in front of her, changes it blind, comes back and looks. Here she is LOOKING at the split
+     when she decides the total is wrong, and the pencil is beside the figure she is judging.
+
+     ALWAYS SCOPED, and that is the whole point: Year Plan is already standing in one
+     subject·class, so both pick screens ("In which subject?" / "Which class?") would be asking
+     a question the screen has already answered. `win: null` because she came from a page, not
+     a window — goPortalHome then restores only the tab.
+
+     Coming back to the PLAN PANE is free: MyLessonPlans persists `pane` under LS_PANE, so
+     goLessons() lands on the lens she left. If that persistence ever goes, this returns her to
+     the card list and the pencil becomes a one-way door — the thing the portal rows were just
+     fixed for. */
+  const onEditYearBudget = (subject, grade) => {
+    portalOriginRef.current = { home: editFlow, win: null };
+    // `exact` — narrow to THIS class, not merely its stage (see portalGradeIdxs). Without it a
+    // Science·Middle teacher tapping the pencil on Class 7's year plan would be asked whether
+    // she meant 6, 7 or 8 — from the screen that is already showing 7's chapters.
+    setProfilePortalScope(subject && grade ? { subject, grade, exact: true } : null);
+    setPortalWin(null);
+    setProfileAutoAdd(null); setProfilePortal("budget");
+    setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null);
+  };
   const goPortalHome = () => {
     const o = portalOriginRef.current;
     if (o && o.home === "lessonplans") goLessons(); else goClasses();
@@ -918,6 +948,67 @@ export default function Home() {
       <>Aruvi started you off with {phrase}. You can change any of it — or leave it and
         carry on teaching.</>
     );
+  })();
+
+  /* ★ THE CHECK WINDOW SHOWS ITS CURRENT VALUES (founder, 2026-08-27: "values only for first
+     time including when new subject stage added, not during 'what would you like to change'
+     rounds").
+
+     Why this was missing and why it matters: the window's own title is "Would you like to check
+     your set-up?" — and four bare nouns cannot be checked. She had to open each row to discover
+     what Aruvi had chosen, which is four round trips to answer one glance-sized question.
+
+     ★ NOT a sub-line. The rows deliberately carry no explanatory second line (ProfilePortal's
+     ROWS note: five of them turned a glanceable list into a page and pushed the last row below
+     the fold at 360px). A VALUE is different — it is short, and it sits right-aligned on the
+     SAME line, before the chevron. Zero added height, so that decision stands untouched.
+
+     ★ CHECK MOOD ONLY. The "+" window is unscoped by nature — it is the whole profile — so a
+     teacher with three subjects would see "6, 7, 8" or a blank against Class, which is noise on
+     a row she is using to navigate. In check mood the scope is always known: the tour ending is
+     her single set-up, and the added-a-subject window is filtered to one subject·stage.
+
+     Returns null when there is nothing safe to say — a missing value renders NOTHING rather than
+     a guess or a zero. A window asking whether Aruvi got her set-up right must not itself invent
+     an answer about her record (the Support screen's `metaErr` lesson, 2026-08-27). */
+  const setupCheckValues = (() => {
+    if (!portalWin || portalWin.mode !== "check") return null;
+    const subs = (readiness && readiness.subjects) || [];
+    // Scope: the added-a-subject window names its subject·stage; the tour ending is whatever
+    // single set-up she has. Narrow to one subject when we can, else use the whole profile —
+    // which at the tour ending IS one subject.
+    const scoped = portalWin.reason === "added" && portalWin.subject
+      ? subs.filter((s) => s.name === portalWin.subject) : subs;
+    const stage = portalWin.reason === "added" && portalWin.grade
+      ? stageOfGrade(portalWin.grade) : null;
+    const grades = [];
+    scoped.forEach((s) => (s.grades || []).forEach((g, gi) => {
+      if (!stage || stageOfGrade(g.grade) === stage) grades.push({ s, g, gi });
+    }));
+    if (!grades.length) return null;
+
+    const list = (xs) => (xs.length > 3 ? `${xs.slice(0, 3).join(", ")}…` : xs.join(", "));
+    const uniq = (xs) => [...new Set(xs.filter((x) => x != null && x !== ""))];
+
+    const classes = uniq(grades.map(({ g }) => classNum(g.grade)));
+    const sections = uniq(grades.flatMap(({ g }) => ((g && g.sections) || []).map((x) => x.tag)));
+    const ppws = uniq(grades.map(({ g }) => g.periods_per_week));
+    /* Read through annualBudgetPeriods — the SAME function Year Plan displays from — rather than
+       off `subject.budget[gi]` directly. That record holds a method (periods | weeks | days) and
+       is absent entirely when the budget is still the auto estimate, so a direct read would show
+       nothing for most teachers and a raw week-count for some. Two screens quoting different
+       annual totals for one class is worse than a window that stays quiet. */
+    const budgets = uniq(grades.map(({ s, g }) =>
+      annualBudgetPeriods(readiness, (s.name || "").toLowerCase().replace(/ /g, "_"),
+                          (g.grade || "").toLowerCase())));
+
+    return {
+      class: classes.length ? list(classes) : null,
+      section: sections.length ? list(sections) : null,
+      // One shared figure reads as fact; several classes disagreeing is not a value to show.
+      ppw: ppws.length === 1 ? `${ppws[0]} a week` : null,
+      budget: budgets.length === 1 ? `${budgets[0]} periods` : null,
+    };
   })();
 
   return (
@@ -1037,7 +1128,7 @@ export default function Home() {
               <MyLessonPlans readiness={readiness} onAllocate={onAllocateScoped} onOpenSection={onOpenSection}
                 tourStep={tour} preparing={preparingCard} lapsed={entLapsed} yearInfo={yearInfo}
                 onStartTour={tourOnOffer ? startTour : undefined} tourActive={!!tour}
-                onScope={onLessonsScope}
+                onScope={onLessonsScope} onEditYearBudget={onEditYearBudget}
                 onDismissPrepareError={onDismissPrepareError} />
             </div>
           ) : (editFlow === "profile" && ready) ? (
@@ -1101,7 +1192,7 @@ export default function Home() {
           which hides the growth surfaces altogether (§2.5 as amended — the server 402s
           regardless). */}
       {portalWin && ready && !entLapsed && (
-        <ProfilePortal mode={portalWin.mode} sub={setupCheckSub}
+        <ProfilePortal mode={portalWin.mode} sub={setupCheckSub} values={setupCheckValues}
           onPick={(kind) => onProfilePortal(kind)}
           onClose={() => setPortalWin(null)}
           onOpenProfile={() => { setPortalWin(null); openFullProfile(); }} />

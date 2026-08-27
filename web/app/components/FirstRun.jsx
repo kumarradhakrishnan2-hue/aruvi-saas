@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 // (ThemeToggle import removed 2026-08-24 — Appearance lives in Settings.)
-import { getJSON, postJSON, markPrepared, pretty, gradeUp, ROMAN, stageOfGrade, fetchEntitlement } from "../lib/format";
+import { getJSON, postJSON, markPrepared, pretty, gradeUp, ROMAN, stageOfGrade, fetchEntitlement,
+         ppwFromAnnual } from "../lib/format";
 import { bindSectionChapter, pushSectionState } from "../lib/sectionState";
 import { RollWheel, normPpw, ppwMapSum, lowestDuration, DEFAULT_PPW } from "./wheels";
 
@@ -89,16 +90,11 @@ const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 // (ACQ_STEPS, the four-step rail for the deleted post-lesson set-up, went on 2026-08-21; the
 // only rail left is the real one, Subject · Class · Chapter. METHOD_ORDER and budgetPeriods
 // went with it — the profile and Year Plan own the estimator's UI now.)
-const DAYS_IN_WEEK = 6;
-const ESTIMATE_WEEKS = 30;
-const METHODS = {
-  weeks:   { label: "I know my teaching weeks",   unit: "weeks",          step: 1 },
-  periods: { label: "I know my period count",     unit: "periods / year", step: 1 },
-  days:    { label: "I know my working days",     unit: "working days",   step: 1 },
-  auto:    { label: "I’m not sure — estimate it", unit: "",               step: 0 },
-};
-const defaultValueFor = (method, ppw) =>
-  method === "weeks" ? 30 : method === "periods" ? ppw * 30 : method === "days" ? 180 : 0;
+/* ★ METHODS / defaultValueFor / DAYS_IN_WEEK / ESTIMATE_WEEKS DELETED 2026-08-27. They were
+   already dead here (the comment above records METHOD_ORDER and budgetPeriods going on
+   2026-08-21) and the four budget methods have now been retired product-wide: there is ONE,
+   the annual period count. The weeks constant lives in lib/format.js as ESTIMATE_WEEKS, which
+   is also where ppwFromAnnual reads it — see the import at the top of this file. */
 // Teachers say "Class 7", not "Grade VII" — convert the Roman grade slug to its number
 // for display (ROMAN starts at "iii" → 3). Falls back to the Roman form if unmapped.
 const classNum = (g) => {
@@ -429,15 +425,28 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
       chapterTitle: chosenChapter.chapter_title,
       rows,
     };
-    /* The four screens that used to ask for these are gone. The BUDGET is the calibrated year
-       for this subject·class, not the old 30-weeks guess — see the annual_budget_periods note
-       in the /chapters effect for why that guess made Year Plan contradict the chapter step.
-       Periods/week is still an approximation (DEFAULT_PPW); it drives the weekly split, not any
-       figure she is shown, and the profile lets her correct it. */
+    /* The four screens that used to ask for these are gone, so first run SEEDS them — and both
+       seeds now come from the SAME calibrated figure (2026-08-27).
+
+       ★ PERIODS/WEEK IS DERIVED, NOT GUESSED. It was a flat DEFAULT_PPW (6) while the budget was
+       the master plan's own annual total, and the two disagreed for 18 of 25 subject·grades. The
+       profile printed both on one line — "≈ 245 periods for the year, at 6 a week" for
+       social_sciences·ix — which works out at 40.8 weeks and is not a school year. Deriving it
+       (annual ÷ 30) makes that line read 8 a week, and 8 × 30 ≈ 245.
+
+       ★ DERIVED FROM `annualBudget`, THE API FIELD — never from the stored budget record. The
+       record is itself ppw × 30 whenever there is no master-plan row (the fallback below), so
+       deriving from it would be circular: round(ppw×30/30) = ppw, a fixed point that justifies
+       whatever it already held. The `?:` below is the whole guard — no master-plan figure means
+       no derivation, and DEFAULT_PPW stands as the honest fallback.
+
+       The BUDGET stays the calibrated year — see the annual_budget_periods note in the /chapters
+       effect for why the old 30-weeks guess made Year Plan contradict the chapter step. */
+    const seededPpw = annualBudget ? ppwFromAnnual(annualBudget) : DEFAULT_PPW;
     const over = {
       durations: [durationMin],
-      ppwByDur: { [durationMin]: DEFAULT_PPW },
-      weekTotal: DEFAULT_PPW,
+      ppwByDur: { [durationMin]: seededPpw },
+      weekTotal: seededPpw,
       budget: annualBudget
         ? { method: "periods", value: annualBudget }
         : { method: "weeks", value: 30 },      // no master-plan row for this subject·class
