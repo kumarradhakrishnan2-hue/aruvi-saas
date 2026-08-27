@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 // (ThemeToggle import removed 2026-08-24 — Appearance lives in Settings.)
-import { getJSON, postJSON, markPrepared, pretty, gradeUp, ROMAN, fetchEntitlement } from "../lib/format";
+import { getJSON, postJSON, markPrepared, pretty, gradeUp, ROMAN, stageOfGrade, fetchEntitlement } from "../lib/format";
 import { bindSectionChapter, pushSectionState } from "../lib/sectionState";
 import { RollWheel, normPpw, ppwMapSum, lowestDuration, DEFAULT_PPW } from "./wheels";
 
@@ -541,12 +541,7 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
   const frPaidScopes = (trialInfo && trialInfo.enforced
     && (trialInfo.status === "active" || trialInfo.status === "grace")
     && !(trialInfo.scopes || []).includes("*")) ? trialInfo.scopes : null;
-  const frStageOf = (g) => {
-    const r = (g || "").toLowerCase();
-    if (["iii", "iv", "v"].includes(r)) return "preparatory";
-    if (["vi", "vii", "viii"].includes(r)) return "middle";
-    return "secondary";
-  };
+  const frStageOf = stageOfGrade;   // lib/format is the web's ONE copy of the mapping
   const visibleSubjects = frPaidScopes
     ? subjects.filter((s) => frPaidScopes.some((sc) => sc.split("/")[0] === s))
     : subjects;

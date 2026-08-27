@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { API, getJSON, pretty, idInUse, errDetail } from "../lib/format";
+import { API, getJSON, pretty, stageOfGrade, idInUse, errDetail } from "../lib/format";
 import Agreement from "./Agreement";
 import Dropdown from "./Dropdown";
 import { dateWords as consentDateWords } from "../lib/legalmd";
@@ -65,12 +65,7 @@ export const STATES = ["Andhra Pradesh", "Assam", "Bihar", "Chhattisgarh", "Delh
   "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala",
   "Madhya Pradesh", "Maharashtra", "Odisha", "Punjab", "Rajasthan", "Tamil Nadu",
   "Telangana", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Other"];
-const STAGE_OF = (g) => {
-  const r = (g || "").toLowerCase();
-  if (["iii", "iv", "v"].includes(r)) return "preparatory";
-  if (["vi", "vii", "viii"].includes(r)) return "middle";
-  return "secondary";
-};
+const STAGE_OF = stageOfGrade;   // lib/format is the web's ONE copy of the mapping
 /* Secondary says Class 9 only for now — the Class 10 books are not out yet
  * (founder, 2026-08-25). */
 const STAGE_CLASSES = { preparatory: "Class 3, 4 & 5", middle: "Class 6, 7 & 8",

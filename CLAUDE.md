@@ -828,6 +828,92 @@ know; it may never invent an answer about her record.** Next natural step: a
 "this plan looks wrong" report FROM the lesson, which can carry the plan id and unit
 that Settings cannot.
 
+**ONE window asks "is my set-up right?" and "what do I want to change?" — `ProfilePortal.jsx`
+(2026-08-27).** The standing "+" grow portal and the once-per-tour "Would you like to check your
+set-up?" prompt were the same question at two moments, and the check prompt was the weaker of the
+two: it NAMED the assumptions (a section, periods a week, a year's total) and then handed her a
+generic "open my teaching profile" row to go find them. They are now ONE component; only the
+title and the sub-line differ. **FIVE rows, not three** — `subject` · `class`
+· `section` · **`ppw`** · **`budget`**, because first run asks three things and ASSUMES the other
+three, and a window offering only the structural levels cannot answer the question it poses. The
+two new intents route through TeachingProfile's EXISTING `editNums` screens (`PER_CLASS_GOALS` /
+`GOAL_WORD`; `portalOpen(goal, si, gi)` takes the goal as an ARGUMENT, since the one-subject case
+routes in the same tick the state is set — FirstRun's `finishActivation` rule). Rows are NAMES
+ONLY (founder, same day: five sub-lines turned a glanceable list into a page and pushed the last
+row below the fold at 360px). A footer — "Want to see your full teaching profile?" — opens the
+profile **under Settings**, where she can read it whole and amend directly. **★ SECOND MOMENT:** a
+subscriber who ADDS a subject or a class meets the same three assumptions again, so she gets the
+same question — the first time she OPENS that subject·class in My Lessons, never at the moment
+she adds it (§0's benefit-first rule: no configuration stacked on configuration). Mechanism: ONE
+effect in page.jsx diffs `readiness`'s subject·class keys (every add path is a key that appears
+where none was — no per-door wiring), queues them per user in localStorage, and MyLessonPlans'
+`onScope` spends the key. The first resolved profile only seeds the baseline, and the ref is
+keyed by user so a shared browser never diffs one teacher's profile against another's.
+Consequently the window renders at SHELL level (page.jsx), not inside MyPlans — its second moment
+lands on My Lessons. ★ **AND THE CSS BUG WORTH REMEMBERING (same day, founder, live):** the rows
+rendered with the name on one line and the "›" on the next, doubling the window's height and
+pushing the ✕ off the top of a phone. `.ap-row` is `flex-direction: column` (chapter rows need two
+lines) and the override `.ap-row-line` TIED it on specificity (0,1,0) — but sat 30 lines EARLIER
+in globals.css, so the base rule won on source order and the override was a silent no-op. Fixed as
+`.ap-row.ap-row-line` (0,2,0) AND moved below `.ap-row`. **A same-specificity override placed
+before its base rule does nothing — always check source order in this file.** Two hardening
+changes rode along: the closing "Not now" button went entirely — first shrunk from a
+first-run-sized `.fr-cta` slab to a quiet `.ap-decline` line, then struck in BOTH moods (founder),
+because a whole row restating what the ✕ already offers is the last thing a height-constrained
+window needs — and `.ap-modal`'s cap became `min(82vh, 100%)` — on iOS `vh` counts the area
+behind the browser chrome, so a tall modal overruns at the TOP and takes the absolutely-positioned
+✕ with it; the `100%` term is the overlay's own content box, which is the real ceiling. **And a portal visit exits by the door it came in, which is
+the WINDOW ITSELF** (founder, same day: "back should lead to the window and not to class"). Every
+row used to be a ONE-WAY door — amend the section, land on your cards, go find the window again
+for the periods. `portalOriginRef` now carries `{ home, win }` and `goPortalHome` restores the
+tab and then the window over it, on save AND cancel alike (TeachingProfile funnels both through
+one `setScreen("view")`, and the teacher who just amended one item is the likeliest to want the
+next); the back link reads a plain "← Back". **This is why page.jsx owns the "+" window too** —
+it was `growOpen` inside MyPlans, and a window that says "amend any of these items" must still be
+there for the second item. Copy: the added-a-subject line is three short sentences ("You've added
+X. **Middle stage**. Amend any of these items below.") — it named the CLASS first, which was the
+wrong unit: what she added is a subject-STAGE (the billing unit, and the scope the rows are
+filtered to), and a class is one of three inside it. The last row reads **Annual period budget**.
+★ The stage mapping now lives ONCE, as `stageOfGrade` in `lib/format.js` — the web had FOUR
+byte-identical copies (FirstRun · SubscribeFlow · TeachingProfile, and nearly a fifth here),
+against §3's own "nobody re-implements the mapping"; the components alias it. ★ **And the added-a-subject window is SCOPED**
+(founder, same day): it is about one subject·class, so its rows must not open on "In which
+subject?" listing everything she teaches. `profilePortalScope` `{subject, grade}` travels with
+the intent and TeachingProfile routes straight past BOTH pick screens — resolved against `canon`
+rather than trusted, so a scope naming something since removed falls back to the ordinary
+screens. The scope also carries the STAGE: a Science·Middle teacher who buys
+Science·Secondary is asked about classes 9 and 10, never about the 6/7/8 she settled long ago
+(`portalStage` filters the classes screen; `portalGradeIdxs` the portal class picker). ⚠️ **The
+scope narrows the subject, never the class** — it used to route straight into the class she was
+SEEDED with, so a teacher who added SS·Middle and ticked 6, 7 and 8 tapped Section and landed in
+6's letters, never asked which of the three she meant. The scope's grade is a STAGE marker only;
+which class is a question, and the pick screen asks it — skipped only when the stage leaves one.
+`portalGradeIdxs` is ONE definition used by both the skip test and the screen, or they drift. Safe because
+`startManageClasses` pre-ticks EVERY enrolled grade into `picked` and removals are read off
+`picked`, not off the visible list — a hidden class can never be read as an unticking.
+★ **The `subject` row is GONE FROM BOTH MOODS** (founder, same day, in two steps): from the check
+window because the subject is the one thing Aruvi never guessed (she BOUGHT it — billing unit =
+teacher × subject-stage — or just added it, which is what raised the window), and then from the
+"+" window too because **she cannot add a subject there anyway** (a new subject is a purchase),
+which left REMOVAL as the row's only working half — the most destructive act in the profile, one
+tap from a window opened to add a section. The subject dustbin stays in Settings › profile behind
+the master EDIT toggle. Four rows now: class · section · ppw · budget.
+★ **AND EACH ROW CHANGES ONLY ITSELF — no row runs downstream** (founder, same day). Ticking
+Class 7 in the window used to run 7 through sections · durations · periods · budget, so one row
+asked four questions and her classes split into one that had been interrogated and one that had
+not ("it asks only 7's sections and leaves 6 behind"). `applyManageClasses` now adds a class the
+way FIRST RUN adds one — **Section A**, `DEFAULT_DURATION`, `DEFAULT_PPW`, auto budget — and
+stops; everything else is set from the row that names it, which is why the window comes back after
+every visit. Manage mode only (both windows AND the accordion's class pencil, the same
+tick-to-add/untick-to-remove screen); the green "+ add a class" keeps `continueWithGrades` and its
+conversational run, because there she is building something new and has asked to be asked.
+**The BUTTON says which it is** (founder, same day): manage-classes now reads **Save**, because it
+ends. The only "Continue" left inside a portal visit is periods a week, which continues into the
+period lengths; the per-class run behind "+ add a class" keeps its Continues because each step
+really does lead to the next. STATIC-verified only (babel-parse clean on page.jsx
+/ ProfilePortal.jsx / MyPlans.jsx / MyLessonPlans.jsx / TeachingProfile.jsx, CSS braces
+2273/2273) — live + mobile pass owed.
+
 **The lesson-plan library is foldered by EDITION YEAR, and the year is a LABEL (2026-08-27).**
 Spec: `docs/administrative_architecture.md §2.2` (rewritten the same day; its status header was
 stale and now carries a per-step table). ★ **Two different years live in this system and

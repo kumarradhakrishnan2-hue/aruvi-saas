@@ -2524,7 +2524,11 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
   padding: 20px; background: rgba(31,42,36,.42); backdrop-filter: blur(2px);
 }
 .ap-modal {
-  position: relative; width: 100%; max-width: 460px; max-height: 82vh;
+  /* `min(82vh, 100%)`, not a bare 82vh (2026-08-27): on iOS Safari `vh` counts the area BEHIND
+     the browser chrome, so a tall modal capped at 82vh can still overrun the visible viewport —
+     and it overruns at the TOP, taking the absolutely-positioned ✕ with it. The 100% term is the
+     overlay's own content box (viewport minus its 20px padding), which is the real ceiling. */
+  position: relative; width: 100%; max-width: 460px; max-height: min(82vh, 100%);
   display: flex; flex-direction: column; overflow: hidden;
   background: var(--paper); border: 1px solid var(--line); border-radius: 14px;
   padding: 22px 22px 18px; box-shadow: 0 24px 60px -24px rgba(31,42,36,.5);
@@ -2584,6 +2588,44 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 }
 .ap-row:hover { border-color: var(--pine); background: var(--tint-cream); }
 .ap-row:hover .ch-go { color: var(--pine); }
+
+/* ── The profile portal — a SHORT window (ProfilePortal.jsx, 2026-08-27) ─────────────────────
+   ★ These rules MUST sit after .ap-row above. They were first written beside .sc-metarow, 30
+   lines EARLIER in this file, and `.ap-row-line` ties .ap-row on specificity (0,1,0) — so
+   .ap-row won on source order and kept `flex-direction: column`, which put the name on one line
+   and the "›" on the next. That doubled the window's height, which is what pushed the ✕ off the
+   top on a phone. Belt and braces: the selector is now .ap-row.ap-row-line (0,2,0), so it also
+   survives being moved. A same-specificity override placed before its base rule is a silent
+   no-op — always check source order in this file.
+   Five one-line rows + a footer + a closing button is a lot for a 360px phone, so everything
+   here is deliberately tighter than the chapter picker it borrows its chrome from. */
+.ap-grow .ap-head { margin-bottom: 10px; }
+.ap-grow .ap-list { gap: 6px; }
+.ap-row.ap-row-line {
+  flex-direction: row; align-items: center; justify-content: space-between;
+  gap: 10px; padding: 11px 14px;
+}
+.ap-row.ap-row-line .ap-row-label {
+  font-family: var(--f-body); font-size: 15px; line-height: 1.2; color: var(--ink);
+}
+/* The footer — "Want to see your full teaching profile?" It must NOT read as a sixth row: the
+   rows above are spot edits with card chrome, this is the panorama. So it is a hairline-topped
+   line of text, flex: none so it never joins .ap-list's scroll.
+   ⚠️ `all: unset` resets text-transform and letter-spacing to INHERIT (the Dropdown.jsx trap,
+   2026-08-27) — both are restated below on purpose. */
+.ap-foot {
+  all: unset; box-sizing: border-box; flex: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  width: 100%; margin-top: 8px; padding: 10px 2px 0;
+  border-top: 1px solid var(--line-soft);
+  font-family: var(--f-body); font-size: 13.5px; line-height: 1.3; color: var(--pine);
+  text-transform: none; letter-spacing: normal;
+}
+.ap-foot:hover, .ap-foot:focus-visible { color: var(--pine-d); }
+.ap-foot-go { flex: none; font-size: 17px; line-height: 1; color: var(--ink-soft); }
+.ap-foot:hover .ap-foot-go { color: var(--pine-d); }
+/* (`.ap-decline`, the window's own closing button, stood here until 2026-08-27 — removed with
+   the button: the ✕ and a tap outside are the exit, as in every other ap-modal.) */
 /* History rows live directly in .ap-list (no card chrome) — a hairline separates them. */
 .ap-list .ch-row { display: flex; flex-direction: column; gap: 6px; padding: 10px 2px; }
 .ap-list .ch-row + .ch-row { border-top: 1px solid var(--line-soft); }

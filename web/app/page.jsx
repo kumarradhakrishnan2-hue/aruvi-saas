@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { getJSON, postJSON, pretty, gradeUp, ROMAN, projectReadiness, API, withUser, getUser, setUser, clearUser, fetchEntitlement } from "./lib/format";
+import { getJSON, postJSON, pretty, gradeUp, ROMAN, stageOfGrade, projectReadiness, API, withUser, getUser, setUser, clearUser, fetchEntitlement } from "./lib/format";
 import { verifiedWrite, readinessFingerprint } from "./lib/verify";
 import { setSectionMismatchHandler, pullSectionState, clearLocalSectionCache } from "./lib/sectionState";
 import GenerateTab from "./components/GenerateTab";
@@ -12,6 +12,7 @@ import TeachingProfile from "./components/TeachingProfile";
 import Settings from "./components/Settings";
 import MyLessonPlans from "./components/MyLessonPlans";
 import GuidedTour from "./components/GuidedTour";
+import ProfilePortal, { queueSetupCheck, takeSetupCheck, setupKey } from "./components/ProfilePortal";
 // ThemeToggle moved into Settings (App › Appearance) — no longer on the shell's bar.
 import AskAruvi from "./ask-aruvi/AskAruvi";
 
@@ -156,8 +157,28 @@ export default function Home() {
      of course be wrong, and by the end of the tour she knows exactly what a section is and has
      watched one being tracked — so this is the first moment the question is cheap to answer.
      It rides finishTour, which is the SINGLE exit for both endings: "Done ✓" on the last step
-     and "Skip" from any step. Session-only, like tourDismissed — it is a prompt, not a gate. */
-  const [sectionCheck, setSectionCheck] = useState(false);
+     and "Skip" from any step. Session-only, like tourDismissed — it is a prompt, not a gate.
+
+     ★ AMENDED 2026-08-27 (founder) — it is the SAME WINDOW as the "+" portal, and it has a
+     SECOND moment. Two changes, one idea:
+       (a) the prompt no longer offers a lone "open my teaching profile" row. It renders
+           ProfilePortal in "check" mode: identical rows to the "+" window (subject · class ·
+           section · periods a week · the year's total), only the title, the sub-line and the
+           closing button differ. A window that names what Aruvi assumed and then hands her a
+           generic link to go find it was doing half the job.
+       (b) it also fires when a SUBSCRIBER who has added a subject or a class first opens that
+           subject·class in My Lessons. Aruvi makes the very same assumptions for an added
+           subject as it made for her first one, so she deserves the very same question about it
+           — asked at first USE, not at the moment she adds it (that is one more configuration
+           screen stacked on the one she is standing on; §0's benefit-first rule).
+     State is now a descriptor, not a boolean, and it holds BOTH moods of the one window:
+       { mode:"change" }                                — she pulled the "+" on My Classes
+       { mode:"check", reason:"tour" }                  — the tour just ended
+       { mode:"check", reason:"added", subject, grade } — first use of a subject·class she added
+     page.jsx owns it for both (the "+" state used to live inside MyPlans) because the window has
+     to survive a trip into the profile and come back — see goPortalHome. MyPlans still gets the
+     boolean it needs for its re-bind effect. */
+  const [portalWin, setPortalWin] = useState(null);
   /* EVERY ending lands on My Classes (founder, 2026-08-21). Done, Skip and the ✕ all route
      through here, and none of them used to navigate — so skipping from steps 3–7, which run on
      My Lessons, left her there, and the prompt below (which renders inside MyPlans) had no host
@@ -167,7 +188,45 @@ export default function Home() {
   const finishTour = () => {
     setAskOpen(false); setTour(null); setTourDismissed(true);
     goClasses();
-    setSectionCheck(true);
+    setPortalWin({ mode: "check", reason: "tour" });
+  };
+
+  /* ── The "she just added something" queue (see ProfilePortal.jsx) ────────────────────────
+   * Every subject·class in her profile is watched here, in ONE place, rather than at each of
+   * the several add paths (the profile's + buttons, the "+" portal's manage screens, a
+   * subscribe flow that widens her scope). A key that appears in readiness where it was not
+   * before IS an add, whichever door it came through. My Lessons spends the key on first use.
+   *
+   * The FIRST resolved profile only seeds the baseline and queues nothing: a teacher signing in
+   * with twelve classes must not be handed twelve pending questions, and a brand-new teacher's
+   * first subject is the tour prompt's job, not this one. */
+  // Keyed by USER: a sign-out leaves the baseline behind, and the next teacher on this browser
+  // must never have the previous one's profile diffed against hers.
+  const setupKeysRef = useRef({ user: null, keys: null });
+  useEffect(() => {
+    if (setupKeysRef.current.user !== user) setupKeysRef.current = { user, keys: null };
+    if (!ready || !readiness) return;
+    const keys = [];
+    (readiness.subjects || []).forEach((s) =>
+      (s.grades || []).forEach((g) => keys.push(setupKey(s.name, g.grade))));
+    const prev = setupKeysRef.current.keys;
+    setupKeysRef.current = { user, keys };
+    if (!prev) return;                                    // baseline only
+    const added = keys.filter((k) => !prev.includes(k));
+    if (added.length) queueSetupCheck(added);
+  }, [ready, readiness, user]);
+
+  /* My Lessons scoped itself to a subject·class. If that one was queued above, this is her
+   * first use of it — ask now, and the key is spent for good (takeSetupCheck is idempotent).
+   * Never over the tour, and never while a check window is already open.
+   * takeSetupCheck is called OUTSIDE any state updater on purpose: it mutates localStorage, and
+   * an updater can be invoked twice (StrictMode) — which would spend the key on the run whose
+   * result React then throws away. */
+  const onLessonsScope = (subjectName, grade) => {
+    if (!subjectName || !grade || tour || portalWin) return;
+    if (takeSetupCheck(setupKey(subjectName, grade))) {
+      setPortalWin({ mode: "check", reason: "added", subject: subjectName, grade });
+    }
   };
   /* The tour opens on My Classes. It always did implicitly, because its only entry point was a
      nudge ON My Classes; now that first run lands on My Lessons and the same nudge renders
@@ -571,7 +630,7 @@ export default function Home() {
     else if (tour === 20) setAskOpen(true);   // 20→19: re-open the panel the step rings
     setTour(tour - 1);
   };
-  const goProfile = () => { setProfileViaSettings(false); setProfileAutoAdd(null); setProfilePortal(null); setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null); };
+  const goProfile = () => { setProfileViaSettings(false); setProfileAutoAdd(null); setProfilePortal(null); setProfilePortalScope(null); portalOriginRef.current = null; setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null); };
   /* ── Settings context (founder, 2026-08-24 final) ──
    * The gear opens Settings; the PROFILE is Settings' top card (no separate person
    * icon — fewer buttons). While in Settings (or the profile reached THROUGH it), the
@@ -741,7 +800,7 @@ export default function Home() {
     setEditFlow("settings"); setTab("myplans"); setGenerateEntry(null);
   };
   const openProfileFromSettings = () => {
-    setProfileViaSettings(true); setProfileAutoAdd(null); setProfilePortal(null);
+    setProfileViaSettings(true); setProfileAutoAdd(null); setProfilePortal(null); setProfilePortalScope(null);
     setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null);
   };
   /* ✕ closes Settings ENTIRELY, from anywhere in it — home, a subview, or the profile
@@ -761,10 +820,50 @@ export default function Home() {
   // is permanently null: its idle state, and the same value goProfile/onProfilePortal pass.
   // The state is kept because the auto-add flow it drives is still wired and may be re-used.)
   // From My Classes' standing "+" portal (founder, 2026-07-06): open the teaching profile with a
-  // one-shot intent — "subject" | "class" | "section" — and TeachingProfile launches the matching
-  // manage screen (add AND remove, same flows the gear uses). Consumed once, like profileAutoAdd.
+  // one-shot intent — "subject" | "class" | "section" | "ppw" | "budget" (the last two joined on
+  // 2026-08-27) — and TeachingProfile launches the matching manage/edit screen (add AND remove,
+  // same flows the gear uses). Consumed once, like profileAutoAdd.
+  /* ★ AND IT EXITS BY THE DOOR IT CAME IN — which is the WINDOW (2026-08-27).
+     "A portal visit always ends in My Classes" was written when My Classes was the portal's only
+     door; the rule it encoded is "return her where she was". Two things broke that reading:
+     the check window can now open over My Lessons, and — the founder's note — every row was a
+     ONE-WAY door, so amending the section dropped her on her cards and she had to find the
+     window again for the periods. So the ref remembers the tab AND the window descriptor, and
+     goPortalHome restores both: the tab first, then the window over it. Cleared by goProfile,
+     so a plain settings-gear visit is unaffected. */
+  const portalOriginRef = useRef(null);   // { home: editFlow, win: portalWin } | null
+  /* ★ A SCOPED VISIT (founder, 2026-08-27): "when this window pops up when a new subject is
+     subscribed, only that subject should show — the previously settled subject need not be part
+     of it." The added-a-subject window is ABOUT one subject·class, so its rows must not open on
+     "In which subject?" listing everything she teaches. The scope travels with the intent and
+     TeachingProfile routes straight past both pick screens. The "+" window carries no scope —
+     it is the whole profile by definition — and neither does the tour's check window, which is
+     asking about a set-up she has exactly one of. */
+  const [profilePortalScope, setProfilePortalScope] = useState(null); // { subject, grade } | null
   const onProfilePortal = (kind) => {
+    portalOriginRef.current = { home: editFlow, win: portalWin };
+    setProfilePortalScope(portalWin && portalWin.reason === "added"
+      ? { subject: portalWin.subject, grade: portalWin.grade } : null);
+    setPortalWin(null);
     setProfileAutoAdd(null); setProfilePortal(kind); setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null);
+  };
+  const goPortalHome = () => {
+    const o = portalOriginRef.current;
+    if (o && o.home === "lessonplans") goLessons(); else goClasses();
+    // Restored on EVERY ending, save and cancel alike: TeachingProfile funnels both through the
+    // same setScreen("view"), and a teacher who has just amended one item is exactly the person
+    // most likely to want the next. Closing the window is her explicit act (✕ / "Not now").
+    if (o && o.win) setPortalWin(o.win);
+  };
+  /* The portal window's footer — "want to see your full teaching profile?" (founder, 2026-08-27).
+     The five rows above it are spot edits; this is the panorama, so it opens the profile UNDER
+     SETTINGS (the framed one, with the Settings bar and its ✕) rather than the bare accordion:
+     she asked to SEE that everything is set correctly, and she can amend it directly there.
+     Records the origin first, exactly as goSettings does, so the ✕ returns her to the tab she
+     was standing on — My Lessons included, since this window now opens there too. */
+  const openFullProfile = () => {
+    if (editFlow !== "settings" && !profileViaSettings) settingsOriginRef.current = editFlow;
+    openProfileFromSettings();
   };
   // Which centre tab lights up: My Lessons only when the repository is open; the profile
   // (settings) view lights neither; everything else — home cards, Generate — reads as My Classes.
@@ -786,6 +885,40 @@ export default function Home() {
   // FirstRun has unmounted and must land on the shell's preparing card, not on a dead screen.
   if (!ready || firstGenNeeded) return <FirstRun user={user} onComplete={onFirstRunComplete}
                        onPrepared={onPrepared} onPrepareError={onPrepareError} onSignOut={onSignOut} />;
+
+  /* The check window's sub-line — the ONE thing that differs between its two moments. It names
+     what Aruvi ASSUMED, because that is the whole reason to ask: she never chose a section, a
+     periods-per-week or a year's total, and she cannot check what she does not know was set. */
+  const setupCheckSub = (() => {
+    if (!portalWin || portalWin.mode !== "check") return null;
+    const subs = (readiness && readiness.subjects) || [];
+    /* ★ The added-a-subject line is SHORT, and it names the STAGE (founder, 2026-08-27). It first
+       explained that Aruvi had started this class the way it started her first — a sentence and a
+       half of reasoning above a list that already says what can be amended. Then it named the
+       CLASS, which was the wrong unit: what she added is a subject-STAGE (that is the billing
+       unit, and it is the scope this window's rows are filtered to), and the class is one of
+       three inside it — the Class row exists precisely so she can say which ones she teaches. */
+    if (portalWin.reason === "added") {
+      return (
+        <>You&rsquo;ve added <b>{portalWin.subject}</b>. <b>{pretty(stageOfGrade(portalWin.grade))} stage</b>.
+          Amend any of these items below.</>
+      );
+    }
+    // The tour ending keeps its fuller line: nothing here was ever her choice, so it says so.
+    // "with 0 sections" is never a sentence worth showing — if the profile has moved under us,
+    // fall back to naming the assumption without counting it.
+    const tags = [];
+    subs.forEach((s) => (s.grades || []).forEach((g) =>
+      tags.push(...(((g && g.sections) || []).map((x) => x.tag)))));
+    const phrase = !tags.length ? <>its own suggested set-up</>
+      : tags.length === 1
+        ? <>Section <b>{tags[0]}</b> and its own suggested periods for the year</>
+        : <><b>{tags.length} sections</b> and its own suggested periods for the year</>;
+    return (
+      <>Aruvi started you off with {phrase}. You can change any of it — or leave it and
+        carry on teaching.</>
+    );
+  })();
 
   return (
     <>
@@ -904,6 +1037,7 @@ export default function Home() {
               <MyLessonPlans readiness={readiness} onAllocate={onAllocateScoped} onOpenSection={onOpenSection}
                 tourStep={tour} preparing={preparingCard} lapsed={entLapsed} yearInfo={yearInfo}
                 onStartTour={tourOnOffer ? startTour : undefined} tourActive={!!tour}
+                onScope={onLessonsScope}
                 onDismissPrepareError={onDismissPrepareError} />
             </div>
           ) : (editFlow === "profile" && ready) ? (
@@ -917,9 +1051,10 @@ export default function Home() {
               {/* Profile ONLY — the account/data/app rows live on the gear's Settings
                   screen now (founder, 2026-08-24; AccountPanel dissolved into it). */}
               <TeachingProfile readiness={readiness} onChange={setReadiness}
-                onBack={profileViaSettings ? null : goClasses} lapsed={entLapsed} paidScopes={paidScopes}
+                onBack={profileViaSettings ? null : goPortalHome} lapsed={entLapsed} paidScopes={paidScopes}
                 autoAddClassSubject={profileAutoAdd} onConsumeAutoAdd={() => setProfileAutoAdd(null)}
-                portalIntent={profilePortal} onConsumePortal={() => setProfilePortal(null)} />
+                portalIntent={profilePortal} onConsumePortal={() => setProfilePortal(null)}
+                portalScope={profilePortalScope} />
             </div>
           ) : (editFlow === "settings" && ready) ? (
             <div className="editflow">
@@ -943,11 +1078,11 @@ export default function Home() {
               pendingAttach={pendingAttach} onConsumeAttach={() => setPendingAttach(null)}
               onStartTour={tourOnOffer ? startTour : undefined}
               tourActive={!!tour} tourStep={tour}
-              onTourInfo={setTourInfo} onProfilePortal={onProfilePortal} onOpenProfile={goProfile}
+              onTourInfo={setTourInfo} onOpenPortal={() => setPortalWin({ mode: "change" })}
               yearInfo={yearInfo} onCutover={runCutover} cutoverBusy={cutoverBusy}
               cutoverResult={cutoverResult} onDismissCutoverResult={() => setCutoverResult(null)}
               cutoverDismissed={cutoverDismissed} onDismissCutover={() => setCutoverDismissed(true)}
-              sectionCheck={sectionCheck} onSectionCheckDone={() => setSectionCheck(false)} />}
+              sectionCheck={!!portalWin && portalWin.reason === "tour"} />}
         </main>
       </div>
 
@@ -955,6 +1090,21 @@ export default function Home() {
           Skip closes it for this session. */}
       {tour && (
         <GuidedTour step={tour} info={tourInfo} onNext={tourNext} onBack={tourBack} onSkip={finishTour} />
+      )}
+
+      {/* ★ THE ONE PORTAL WINDOW — "what would you like to change?" (the "+") and "would you
+          like to check your set-up?" (the tour's end, and the first use of a subject·class she
+          has added) are one component in two moods. It renders HERE, at shell level, and not
+          inside MyPlans as the "+" chooser did, for two reasons: its check mood lands on My
+          Lessons, and it must survive a round trip into the profile so every row can come back
+          to it. Never over the tour (all triggers exclude it); never for a lapsed subscription,
+          which hides the growth surfaces altogether (§2.5 as amended — the server 402s
+          regardless). */}
+      {portalWin && ready && !entLapsed && (
+        <ProfilePortal mode={portalWin.mode} sub={setupCheckSub}
+          onPick={(kind) => onProfilePortal(kind)}
+          onClose={() => setPortalWin(null)}
+          onOpenProfile={() => { setPortalWin(null); openFullProfile(); }} />
       )}
 
       {/* Ask Aruvi Q&A — full-screen deterministic helpline (browse + keyword search). */}

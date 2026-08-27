@@ -278,7 +278,7 @@ function ProposedCard({ preparing, onDismiss }) {
 
 export default function MyLessonPlans({ readiness, onAllocate, tourStep, preparing,
                                         onStartTour, tourActive, onDismissPrepareError, lapsed,
-                                        yearInfo }) {
+                                        yearInfo, onScope }) {
   const LS_SUBJECT = userKey("mylessons_subject");
   const LS_CLASS = userKey("mylessons_class");
   const LS_PANE = userKey("mylessons_pane");
@@ -384,6 +384,24 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
       setActiveGrade(g0); lsSet(LS_CLASS, g0);
     }
   }, [subjects, activeSubject, activeGrade]);
+
+  /* ★ REPORT THE SETTLED SCOPE UP (founder, 2026-08-27) — the second moment of the
+   * "check your set-up?" window. A subscriber who has just added a subject or a class meets the
+   * same three assumptions Aruvi made for her first class (a section, a periods-per-week, a
+   * year's total), so she is asked the same question about the new one — the first time she
+   * actually OPENS it here, not at the moment she added it (page.jsx's onLessonsScope holds the
+   * queue; ProfilePortal.jsx explains why first use and not the add).
+   * Deliberately below the validation effect above, so this only ever reports a subject·class
+   * she genuinely teaches — a stale remembered class is snapped back before it is announced.
+   * page.jsx ignores every pair that was not queued, so firing on each wheel turn costs a
+   * localStorage read and nothing else. */
+  useEffect(() => {
+    if (!onScope || !activeSubject || !activeGrade) return;
+    const s = subjects.find((x) => x.name === activeSubject);
+    if (!s || !(s.grades || []).some((g) => g.grade === activeGrade)) return;
+    onScope(activeSubject, activeGrade);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeSubject, activeGrade, subjects]);
 
   /* ── REFETCH WHEN A PREPARE FINISHES (ARV-D-068, 2026-08-07) ─────────────────────
    * The fetch below keys on the subject·class alone, so preparing a lesson changed nothing

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { getJSON, pretty, ROMAN, projectReadiness, API, withUser } from "../lib/format";
+import { getJSON, pretty, ROMAN, stageOfGrade, projectReadiness, API, withUser } from "../lib/format";
 import { verifiedWrite, readinessFingerprint } from "../lib/verify";
 import { pushSectionState } from "../lib/sectionState";
 import { RollWheel, PickWheel, PpwTotalWheel, PpwSplitCell, normPpw, ppwMapSum, ppwAnchor,
@@ -40,6 +40,14 @@ import { RollWheel, PickWheel, PpwTotalWheel, PpwSplitCell, normPpw, ppwMapSum, 
 
 const SECTION_LETTERS = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)); // A…Z
 const DAYS_IN_WEEK = 6;
+/* The My Classes "+" portal intents that resolve to ONE subject·class (ProfilePortal.jsx's rows).
+   "subject" and "class" are not here: they are managed at the level ABOVE a class. The words are
+   the teacher's own, and they are what the two pick screens say aloud. */
+const PER_CLASS_GOALS = ["section", "ppw", "budget"];
+const GOAL_WORD = {
+  class: "classes", section: "sections",
+  ppw: "periods a week", budget: "annual period budget",
+};
 const ESTIMATE_WEEKS = 30;
 
 const METHODS = {
@@ -133,14 +141,9 @@ const gradeDraftFrom = (rec) => {
 
 /* Stage of a roman grade (client copy of grades.stage_for — the scope unit is
  * "{subject}/{stage}"). */
-const stageOfRoman = (roman) => {
-  const r = (roman || "").toLowerCase();
-  if (["iii", "iv", "v"].includes(r)) return "preparatory";
-  if (["vi", "vii", "viii"].includes(r)) return "middle";
-  return "secondary";
-};
+const stageOfRoman = stageOfGrade;   // lib/format is the web's ONE copy of the mapping
 
-export default function TeachingProfile({ readiness, onChange, onBack, lapsed, paidScopes, autoAddClassSubject, onConsumeAutoAdd, portalIntent, onConsumePortal }) {
+export default function TeachingProfile({ readiness, onChange, onBack, lapsed, paidScopes, autoAddClassSubject, onConsumeAutoAdd, portalIntent, onConsumePortal, portalScope }) {
   // SINGLE SOURCE OF TRUTH: the profile lives in the parent's `readiness` prop. Derive the
   // canonical subjects[] straight from it — no mirrored local copy. That way an edit (which
   // routes through persist → onChange → setReadiness) re-renders THIS view and every other
@@ -163,14 +166,21 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
   // warning the dustbins use — warned, never blocked, since mid-year reassignments are real).
   const [pickMode, setPickMode] = useState("add");      // pickSubjects screen
   const [classMode, setClassMode] = useState("add");    // classes screen
-  const [portalGoal, setPortalGoal] = useState(null);   // "class" | "section" — what the portal pick leads to
+  // "class" | "section" | "ppw" | "budget" — what the portal pick leads to once the subject
+  // (and, where needed, the class) is known. ppw/budget joined on 2026-08-27: the "+" window
+  // now offers all FIVE things first run assumes, not just the three structural levels.
+  const [portalGoal, setPortalGoal] = useState(null);
   const [portalSi, setPortalSi] = useState(null);       // portal: chosen subject index (section goal)
   const [subConfirm, setSubConfirm] = useState(null);   // { removes:[names], adds:[names] } — manage-subjects warning
   const [classConfirm, setClassConfirm] = useState(null); // { removes:[romans], adds:[romans] } — manage-classes warning
   const [fromPortal, setFromPortal] = useState(false);  // visit began at My Classes' "+" → every exit returns there
   // Back links still route through setScreen("view"); on a portal visit the bounce effect
   // (below) forwards that to My Classes, so the label says where she'll actually land.
-  const backLabel = fromPortal ? "← Back to My Classes" : "← Back to profile";
+  // A portal visit is launched from the ONE portal window, and every exit re-opens it
+  // (founder, 2026-08-27: "back should lead to the window and not to class") — so the label is
+  // a plain "← Back". It said "← Back to My Classes" while the window's rows were a one-way
+  // door: each amendment dropped her on her cards and she had to reopen the window per item.
+  const backLabel = fromPortal ? "← Back" : "← Back to profile";
   const [catalogue, setCatalogue] = useState([]);        // all offerable subject display names
   const [queue, setQueue] = useState([]); const [qi, setQi] = useState(0); // addSubject queue
   const [picked, setPicked] = useState([]);              // generic multi-pick buffer
@@ -240,21 +250,43 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
     if (!portalIntent || portalDoneRef.current || !canon.length) return;
     portalDoneRef.current = true;
     setFromPortal(true);
-    if (portalIntent === "subject") startManageSubjects();
-    else if (portalIntent === "class") {
-      if (canon.length === 1) startManageClasses(0);
+    /* ★ A SCOPED visit names the SUBJECT up front — the added-a-subject window is about one new
+       thing, so asking "in which subject?" over her whole profile is asking her a question she
+       has already answered (founder, 2026-08-27). Resolved against `canon` rather than trusted,
+       so a scope naming something she has since removed falls back to the ordinary pick screens.
+       ★ IT DOES NOT NAME THE CLASS (founder, same day — the bug): the scope carries the grade
+       she was SEEDED with, and this used to route straight into that one class's sections. So a
+       teacher who added SS·Middle and then ticked 6, 7 and 8 tapped Section and landed in 6's
+       section letters, never asked which of the three she meant. The scope's grade is only ever
+       a STAGE marker here (see portalGradeIdxs); which class is a question, and the pick screen
+       asks it — skipped only when the stage leaves exactly one. */
+    const sSi = portalScope ? canon.findIndex((s) => s.name === portalScope.subject) : -1;
+    if (portalIntent === "subject") {
+      // Never scoped in practice — neither window has a Subject row any more (ProfilePortal's
+      // ROWS). Whole-profile by nature in any case: this is the add/remove-a-subject chooser.
+      startManageSubjects();
+    } else if (portalIntent === "class") {
+      if (sSi >= 0) startManageClasses(sSi);
+      else if (canon.length === 1) startManageClasses(0);
       else { setPortalGoal("class"); setScreen("portalSubject"); }
-    } else if (portalIntent === "section") {
-      if (canon.length === 1) portalPickClass(0);
-      else { setPortalGoal("section"); setScreen("portalSubject"); }
+    } else if (PER_CLASS_GOALS.includes(portalIntent)) {
+      // section | ppw | budget — all per subject·class. Set the goal for the pick screens AND
+      // pass it along, since the direct cases route before that state has settled.
+      setPortalGoal(portalIntent);
+      if (sSi >= 0) portalPickClass(portalIntent, sSi);
+      else if (canon.length === 1) portalPickClass(portalIntent, 0);
+      else setScreen("portalSubject");
     }
     onConsumePortal && onConsumePortal();
   }, [portalIntent, canon]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // A portal-initiated visit ALWAYS ends in My Classes, never on the profile accordion
-  // (founder, 2026-07-06): she came from her cards, so every exit — completing the flow,
-  // cancelling, or any "back" link — returns her there. Every flow ending funnels through
-  // setScreen("view"), so this one bounce covers them all. onBack is page.jsx's goClasses.
+  // A portal-initiated visit ALWAYS ends where it BEGAN, never on the profile accordion
+  // (founder, 2026-07-06): every exit — completing the flow, cancelling, or any "back" link —
+  // returns her to the door she came in by. Every flow ending funnels through setScreen("view"),
+  // so this one bounce covers them all. onBack is page.jsx's goPortalHome, which was plain
+  // goClasses until 2026-08-27: the door is now the PORTAL WINDOW itself (restored over the tab
+  // she was on), because a window that says "amend any of these items" must still be there for
+  // the second item.
   useEffect(() => {
     if (fromPortal && screen === "view") onBack && onBack();
   }, [fromPortal, screen]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -382,11 +414,33 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
     beginSubjectRun(canon[si].name);
     setPicked((canon[si].grades || []).map((g) => g.grade)); // pre-tick enrolled (beginSubjectRun clears picked)
   };
-  // Section goal: subject chosen → straight to editSections when the subject has one class,
-  // else ask which class first.
-  const portalPickClass = (si) => {
-    const sub = canon[si];
-    if ((sub.grades || []).length === 1) startEditSections(si, 0);
+  // ── Per-CLASS portal goals (section · periods a week · the year's total) ──
+  // All three are edits to ONE subject·class, so they share the same two pick screens and differ
+  // only in the screen they land on. `goal` is passed explicitly rather than read off portalGoal
+  // state, because the intent effect below chooses and routes in the SAME tick (state would still
+  // hold the previous render's value) — the same argument-not-state rule FirstRun's
+  // finishActivation follows.
+  const portalOpen = (goal, si, gi) => {
+    if (goal === "section") startEditSections(si, gi);
+    else startEditNums(si, gi, goal === "budget" ? "budget" : "ppw");
+  };
+  /* The class indices a portal goal may act on for subject `si`: all of them, or — on a scoped
+     visit — only the purchased STAGE's, since the settled stage's classes are not what this
+     window is about. Falls back to all if the filter leaves nothing (a scope whose stage she has
+     since emptied), so a pick screen is never rendered blank. ONE definition, used by both the
+     skip-the-screen test below and the screen itself, or the two could disagree. */
+  const portalGradeIdxs = (si) => {
+    const sub = canon[si]; const grades = (sub && sub.grades) || [];
+    const st = portalScope && portalScope.grade && sub && portalScope.subject === sub.name
+      ? stageOfRoman(portalScope.grade) : null;
+    if (!st) return grades.map((_, gi) => gi);
+    const hit = grades.map((g, gi) => (stageOfRoman(g.grade) === st ? gi : -1)).filter((i) => i >= 0);
+    return hit.length ? hit : grades.map((_, gi) => gi);
+  };
+  // Subject chosen → straight in when only ONE class is in play, else ask which class first.
+  const portalPickClass = (goal, si) => {
+    const idxs = portalGradeIdxs(si);
+    if (idxs.length === 1) portalOpen(goal, si, idxs[0]);
     else { setPortalSi(si); setScreen("portalClass"); }
   };
 
@@ -466,13 +520,38 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
   };
   // Manage-classes continue: unticked enrolled classes = removals (warned first); newly ticked
   // ones queue the usual per-class questions afterwards.
+  /* ★ MANAGE-MODE ADDS ARE APPLIED WITH DEFAULTS — NO DOWNSTREAM RUN (founder, 2026-08-27).
+   * The bug: a teacher who bought Science·Middle and was started on 6A opens the window, ticks
+   * Class 7, and is then walked through 7's sections · durations · periods · budget — "it asks
+   * only 7's sections and leaves 6 behind". Two things were wrong with that. It made ONE row of
+   * the window ask four questions, when the window's own promise is that each item changes only
+   * itself; and it silently divided her classes into one that had been interrogated and one that
+   * had not. So a class added HERE is added the way first run adds one: **Section A**, the
+   * default period length, the default periods a week, and the auto budget. She sets the rest,
+   * per class, through the window's OTHER rows — which is what they are for.
+   * Applies to `manage` mode only (both portal windows AND the accordion's class pencil, which
+   * is the same tick-to-add/untick-to-remove screen). The green "+ add a class" button keeps its
+   * conversational run: there she is building something new and has asked to be asked. */
+  const applyManageClasses = (keep, adds) => {
+    const all = [...keep, ...adds.map((roman) => ({
+      grade: roman,
+      sections: ["A"],                                   // first run's own rule — start her on {n}A
+      durations: [DEFAULT_DURATION],
+      ppw_by_duration: { [DEFAULT_DURATION]: DEFAULT_PPW },
+      ppw_anchor: DEFAULT_DURATION,
+      periods_per_week: DEFAULT_PPW,
+      budget: null,                                      // finalizeSubject → { method:"auto" }
+    }))].sort((a, b) => byRoman(a.grade, b.grade));
+    finalizeSubject({ ...draft, grades: all });
+    setScreen("view");
+  };
   const onManageClassesContinue = () => {
     const have = draft.grades.map((g) => g.grade);
     const adds = picked.filter((g) => !have.includes(g));
     const removes = have.filter((g) => !picked.includes(g));
     if (!adds.length && !removes.length) { setScreen("view"); return; }
     if (removes.length) setClassConfirm({ removes, adds });
-    else continueWithGrades(draft.grades, adds);
+    else applyManageClasses(draft.grades, adds);
   };
   const applyClassChanges = () => {
     const { removes, adds } = classConfirm;
@@ -483,7 +562,9 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
     });
     const keep = draft.grades.filter((g) => !removes.includes(g.grade));
     setClassConfirm(null);
-    if (adds.length) continueWithGrades(keep, adds);
+    // Only ever reached from manage mode (classConfirm is set nowhere else), so adds are applied
+    // with defaults here too — see applyManageClasses.
+    if (adds.length) applyManageClasses(keep, adds);
     else if (keep.length) { finalizeSubject({ ...draft, grades: keep }); setScreen("view"); }
     else {
       // last class taken away and nothing added — the subject goes with it (warned in the confirm)
@@ -643,17 +724,18 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
 
   // Portal pick screens — the "+" chose Class or Section; ask which subject (and class) first.
   if (screen === "portalSubject") {
+    const what = GOAL_WORD[portalGoal] || "sections";
     return (
       <div className="tp">
-        <div className="kicker kicker-ochre">Your teaching · {portalGoal === "class" ? "classes" : "sections"}</div>
+        <div className="kicker kicker-ochre">Your teaching · {what}</div>
         <h1 className="fr-q">In which subject?</h1>
         <p className="fr-hint">{portalGoal === "class"
           ? "Pick the subject whose classes you want to change."
-          : "Pick the subject, then the class whose sections you want to change."}</p>
+          : `Pick the subject, then the class whose ${what} you want to change.`}</p>
         <div className="tp-portal-list">
           {canon.map((s, si) => (
             <button key={s.name} type="button" className="tp-portal-row"
-              onClick={() => (portalGoal === "class" ? startManageClasses(si) : portalPickClass(si))}>
+              onClick={() => (portalGoal === "class" ? startManageClasses(si) : portalPickClass(portalGoal, si))}>
               <span>{s.name}</span><span className="tp-portal-go" aria-hidden="true">›</span>
             </button>
           ))}
@@ -666,18 +748,26 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
   if (screen === "portalClass") {
     const sub = canon[portalSi];
     if (!sub) return null;
+    const what = GOAL_WORD[portalGoal] || "sections";
     return (
       <div className="tp">
-        <div className="kicker kicker-ochre">{sub.name} · sections</div>
+        <div className="kicker kicker-ochre">{sub.name} · {what}</div>
         <h1 className="fr-q">Which class?</h1>
-        <p className="fr-hint">Pick the class whose sections you want to change.</p>
+        <p className="fr-hint">Pick the class whose {what} you want to change.</p>
+        {/* Rendered from portalGradeIdxs — the SAME list portalPickClass counted when it decided
+            whether to show this screen at all, so the two can never disagree. On a scoped visit
+            that is the purchased stage's classes only; the settled stage's are not what this
+            window is about. */}
         <div className="tp-portal-list">
-          {sub.grades.map((g, gi) => (
-            <button key={g.grade} type="button" className="tp-portal-row"
-              onClick={() => startEditSections(portalSi, gi)}>
-              <span>Class {classNum(g.grade)}</span><span className="tp-portal-go" aria-hidden="true">›</span>
-            </button>
-          ))}
+          {portalGradeIdxs(portalSi).map((gi) => {
+            const g = sub.grades[gi];
+            return (
+              <button key={g.grade} type="button" className="tp-portal-row"
+                onClick={() => portalOpen(portalGoal, portalSi, gi)}>
+                <span>Class {classNum(g.grade)}</span><span className="tp-portal-go" aria-hidden="true">›</span>
+              </button>
+            );
+          })}
         </div>
         <button className="fr-link" onClick={() => setScreen("view")}>{backLabel}</button>
       </div>
@@ -776,8 +866,19 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
       ? new Set(paidScopes.filter((s) => s.split("/")[0] === subjectSlugOf(draft.name))
           .map((s) => s.split("/")[1]))
       : null;
+    /* ★ A SCOPED portal visit shows ONLY the newly-purchased STAGE's classes (founder,
+       2026-08-27: "only classes relevant to the stage purchased should show — the previously
+       existing stage classes are a settled matter"). A Science·Middle teacher who buys
+       Science·Secondary is asked about 9 and 10, not about the 6/7/8 she settled long ago.
+       SAFE because `startManageClasses` pre-ticks EVERY enrolled grade into `picked`, including
+       the ones this hides — `onManageClassesContinue` reads removals off `picked`, not off the
+       visible list, so a hidden class can never be read as an unticking. Removing a settled
+       class is still possible, through the "+" portal, which carries no scope. */
+    const portalStage = (portalScope && portalScope.grade && portalScope.subject === draft.name)
+      ? stageOfRoman(portalScope.grade) : null;
     const options = (manageC ? gradeOptions : gradeOptions.filter((g) => !have.includes(g)))
-      .filter((g) => !allowedStages || allowedStages.has(stageOfRoman(g)) || have.includes(g));
+      .filter((g) => !allowedStages || allowedStages.has(stageOfRoman(g)) || have.includes(g))
+      .filter((g) => !portalStage || stageOfRoman(g) === portalStage);
     const toggle = (roman) => setPicked((a) => (a.includes(roman) ? a.filter((x) => x !== roman) : [...a, roman]));
     const adding = have.length > 0; // add-a-class on an existing subject vs a brand-new subject
     return (
@@ -785,11 +886,15 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
         <div className="kicker kicker-ochre">{manageC ? `${draft.name} · classes` : `${draft.name}${queue.length > 1 ? ` · subject ${qi + 1} of ${queue.length}` : ""}`}</div>
         <h1 className="fr-q">{manageC ? `Which classes do you teach ${draft.name} to?`
           : adding ? `Which classes are you adding for ${draft.name}?` : `Which classes do you teach ${draft.name} to?`}</h1>
-        {manageC && <p className="fr-hint">Tick a class to add it — untick one to remove it.</p>}
+        {/* Says what an added class ARRIVES as, because this screen no longer asks (see
+            applyManageClasses) — and points at the row that changes it. */}
+        {manageC && <p className="fr-hint">Tick a class to add it — untick one to remove it.
+          A new class starts with Section A; change that under Section.</p>}
         {!manageC && adding && <p className="fr-hint">Your current classes stay as they are — pick only the new ones.</p>}
         {gradeOptions.length === 0 && <div className="fr-loading">Loading classes…</div>}
         {gradeOptions.length > 0 && options.length === 0 && (
-          <p className="fr-hint">Every class Aruvi offers for {draft.name} is already in your profile.</p>
+          <p className="fr-hint">Every class Aruvi offers for {draft.name}
+            {portalStage ? " at this stage" : ""} is already in your profile.</p>
         )}
         {/* Same mode rule as the subject wheel. Adding (including the add-subject run, where the
             list starts empty) clusters; managing does not, because it pre-ticks the enrolled classes
@@ -798,9 +903,15 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
         {options.length > 0 && (
           <PickWheel options={options} selected={picked} onToggle={toggle} cluster={!manageC}
             ariaLabel={`Classes for ${draft.name}`} labelFor={(g) => `Class ${classNum(g)}`}>
+            {/* ★ "Save", not "Continue", in manage mode (founder, 2026-08-27): the word states
+                whether anything follows. Manage ENDS here now — the tick applies and the window
+                comes back (applyManageClasses). Adding a class from the profile's green button
+                genuinely continues, into that class's sections · duration · periods · budget, so
+                it keeps "Continue". The only "Continue" left inside a portal visit is periods a
+                week, which continues into the period lengths. */}
             <button type="button" className="primary fr-cta" disabled={manageC ? false : !picked.length}
               onClick={manageC ? onManageClassesContinue : onClassesContinue}>
-              Continue
+              {manageC ? "Save" : "Continue"}
             </button>
           </PickWheel>
         )}

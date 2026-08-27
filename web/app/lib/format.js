@@ -16,6 +16,18 @@ export const classNum = (g) => {
   const idx = ROMAN.indexOf((g || "").toLowerCase());
   return idx >= 0 ? idx + 3 : (g || "").toUpperCase();
 };
+/* Grade → NCF stage. The web had FOUR byte-identical copies of this mapping (FirstRun,
+   SubscribeFlow, TeachingProfile, and nearly a fifth in page.jsx) — against CLAUDE.md §3's own
+   rule, "stage is derived from grade, never a separate input; everyone calls it, nobody
+   re-implements the mapping" (the engine's single source is aruvi_core/grades.stage_for).
+   This is the web's one copy; the components alias it. Accepts the Roman grade slug in any case.
+   The stage matters more than it looks: it is the BILLING UNIT (teacher × subject-stage). */
+export const stageOfGrade = (g) => {
+  const r = (g || "").toLowerCase();
+  if (["iii", "iv", "v"].includes(r)) return "preparatory";
+  if (["vi", "vii", "viii"].includes(r)) return "middle";
+  return "secondary";
+};
 export const kickerOf = (t) => (t || "").replace(/_/g, " ").toUpperCase();
 export const pad = (n) => String(n ?? "").padStart(2, "0");
 

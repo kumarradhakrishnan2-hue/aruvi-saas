@@ -101,11 +101,10 @@ function classesFromReadiness(readiness) {
   return out;
 }
 
-export default function MyPlans({ subject, grade, ready, readiness, onReady, onNavigate, onEnterGenerate, user, onSignOut, lapsed, pendingOpen, onConsumePending, pendingAttach, onConsumeAttach, onStartTour, tourActive, tourStep, onTourInfo, onProfilePortal, onOpenProfile, sectionCheck, onSectionCheckDone, yearInfo, onCutover, cutoverBusy, cutoverResult, onDismissCutoverResult, cutoverDismissed, onDismissCutover }) {
+export default function MyPlans({ subject, grade, ready, readiness, onReady, onNavigate, onEnterGenerate, user, onSignOut, lapsed, pendingOpen, onConsumePending, pendingAttach, onConsumeAttach, onStartTour, tourActive, tourStep, onTourInfo, onOpenPortal, sectionCheck, yearInfo, onCutover, cutoverBusy, cutoverResult, onDismissCutoverResult, cutoverDismissed, onDismissCutover }) {
   const [openPlan, setOpenPlan] = useState(null);  // { view, sectionKey } for LessonView
   const [loading, setLoading] = useState(false);
   const [setupStarted, setSetupStarted] = useState(false); // 2a welcome → grid flow gate
-  const [growOpen, setGrowOpen] = useState(false); // the standing "+" portal's Subject·Class·Section chooser
   const [attachFor, setAttachFor] = useState(null); // { c, sectionKey } — "+" track-a-chapter picker
   const [untrackFor, setUntrackFor] = useState(null); // { c, sectionKey, plan } — "−" untrack confirm
   const [historyFor, setHistoryFor] = useState(null); // { c, sectionKey } — chapter-history popup
@@ -159,7 +158,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
   // though the tour is active.
   // `!lapsed`: an expired subscription hides the growth portal — profile changes are
   // productivity tools she lets go of (§2.5 as amended; the server 402s regardless).
-  const plusShow = !!onProfilePortal && ready && !lapsed && (tourStep === 16 || !tourActive);
+  const plusShow = !!onOpenPortal && ready && !lapsed && (tourStep === 16 || !tourActive);
 
   /* ★ RE-ASSERT THE BINDING WHEN THE TOUR ENDS (founder, 2026-08-21: "all actions should end up
    * with LP being loaded onto the default section"). First run binds the lesson to her section
@@ -828,7 +827,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
           </div>
           {plusShow && (
             <button className="sc-grow" data-tour="grow-add" aria-label="Add or change subjects, classes, or sections"
-              title="Add or change what you teach" onClick={() => setGrowOpen(true)}>{GrowIcon}</button>
+              title="Add or change what you teach" onClick={() => onOpenPortal()}>{GrowIcon}</button>
           )}
         </div>
       )}
@@ -850,7 +849,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
           </div>
           {plusShow && (
             <button className="sc-grow" data-tour="grow-add" aria-label="Add or change subjects, classes, or sections"
-              title="Add or change what you teach" onClick={() => setGrowOpen(true)}>{GrowIcon}</button>
+              title="Add or change what you teach" onClick={() => onOpenPortal()}>{GrowIcon}</button>
           )}
         </div>
       )}
@@ -1083,80 +1082,11 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
           2026-08-21 — removed with its storage keys; see the plusShow note above. All growth
           is now PULL, via the standing "+" portal.) */}
 
-      {/* ★ "Would you like to check your set-up?" — once, when the tour ends (founder, 2026-08-21).
-          First run asks THREE things (subject · class · chapter) and assumes the rest on her
-          behalf: the section, the periods-per-week, and the calibrated annual budget that Year
-          Plan is then built on. A sections-only prompt (the first cut of this) covered one of
-          three, which is why it read as insufficient. So it now offers the whole subject profile
-          — and it can, because she has just watched the tour explain what all of it is. That is
-          the entire argument for putting it HERE rather than in first run: before the tour these
-          words mean nothing to her; after it they mean something.
-          Declining is a real answer and is therefore the primary button: her set-up already
-          works, the lesson is attached, and nothing here is a gate. */}
-      {sectionCheck && classes.length > 0 && (
-        <div className="ap-overlay" onClick={onSectionCheckDone}>
-          <div className="ap-modal ap-confirm" onClick={(e) => e.stopPropagation()}>
-            <button className="ap-close" aria-label="Close" onClick={onSectionCheckDone}>✕</button>
-            <div className="ap-head">
-              <div className="ap-kicker">Your teaching</div>
-              <div className="ap-title">Would you like to check your set-up?</div>
-              <div className="ap-sub">
-                Aruvi started you off with {classes.length === 1
-                  ? <>Section <b>{classes[0].sectionTag}</b></>
-                  : <><b>{classes.length} sections</b></>} and its own suggested periods for the
-                year. You can change any of it — or leave it and carry on teaching.
-              </div>
-            </div>
-            <div className="ap-list">
-              {/* onOpenProfile (page.jsx `goProfile`), NOT onProfilePortal("subject"). The portal
-                  intents each launch a MANAGE screen — "subject" runs startManageSubjects(), the
-                  pick-what-you-teach chooser — which is why this kept landing her in a
-                  change-sections-style window instead of her profile. `goProfile` opens the plain
-                  accordion for the subject she just created, where the master EDIT toggle reveals
-                  the pencils and dustbins. That is the surface the tour has just explained. */}
-              <button className="ap-row" onClick={() => { onSectionCheckDone(); onOpenProfile && onOpenProfile(); }}>
-                <span className="ch-meta"><span className="ch-meta-tx"><b>Open my teaching profile</b></span><span className="ch-go" aria-hidden="true">›</span></span>
-                <span className="ch-name">Sections, class durations, periods and the year&rsquo;s total</span>
-              </button>
-            </div>
-            <button type="button" className="primary fr-cta" onClick={onSectionCheckDone}>
-              Not now &mdash; take me to my classes
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* The "+" portal chooser — Subject · Class · Section. Each routes into the teaching-
-          profile flows (page.jsx opens the profile view with a one-shot intent; TeachingProfile
-          launches the matching screen), where she can ADD or — behind the same scoped warnings
-          the profile's dustbins use — REMOVE. Warned, never blocked: mid-year reassignments
-          are real. */}
-      {growOpen && (
-        <div className="ap-overlay" onClick={() => setGrowOpen(false)}>
-          <div className="ap-modal ap-grow" onClick={(e) => e.stopPropagation()}>
-            <button className="ap-close" aria-label="Close" onClick={() => setGrowOpen(false)}>✕</button>
-            <div className="ap-head">
-              <div className="ap-kicker">Your teaching</div>
-              <div className="ap-title">What would you like to change?</div>
-              <div className="ap-sub">Add — or remove — at any level. Your lessons always stay in the library.</div>
-            </div>
-            <div className="ap-list">
-              <button className="ap-row" onClick={() => { setGrowOpen(false); onProfilePortal("subject"); }}>
-                <span className="ch-meta"><span className="ch-meta-tx"><b>Subject</b></span><span className="ch-go" aria-hidden="true">›</span></span>
-                <span className="ch-name">Teach another subject — or drop one</span>
-              </button>
-              <button className="ap-row" onClick={() => { setGrowOpen(false); onProfilePortal("class"); }}>
-                <span className="ch-meta"><span className="ch-meta-tx"><b>Class</b></span><span className="ch-go" aria-hidden="true">›</span></span>
-                <span className="ch-name">Add or remove a class in a subject</span>
-              </button>
-              <button className="ap-row" onClick={() => { setGrowOpen(false); onProfilePortal("section"); }}>
-                <span className="ch-meta"><span className="ch-meta-tx"><b>Section</b></span><span className="ch-go" aria-hidden="true">›</span></span>
-                <span className="ch-name">Add or remove a section in a class</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* (Both the "Would you like to check your set-up?" prompt and the "+" portal chooser stood
+          here until 2026-08-27. They are ONE window now — ProfilePortal.jsx — owned by page.jsx,
+          because the check mood also opens over My Lessons and because every row has to be able
+          to come back to it after a trip through the teaching profile. The "+" below just asks
+          for it.) */}
 
       {attachModal}
       {untrackModal}
