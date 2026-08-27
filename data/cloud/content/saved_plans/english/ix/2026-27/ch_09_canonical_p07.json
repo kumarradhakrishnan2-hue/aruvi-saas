@@ -1,0 +1,1087 @@
+{
+  "filename": "ch_09_canonical_p07.json",
+  "saved_at": "2026-08-14T13:49:58",
+  "plan_status": "canonical",
+  "chapter_number": 9,
+  "chapter_title": "The World of Limitless Possibilities (The World of Limitless Possibilities)",
+  "grade": "Grade IX",
+  "subject": "English",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 50,
+      "count": 7
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 7 periods = 350 minutes\nTotal: 7 periods · 5h 50min",
+  "genon_canonical": {
+    "generated": "2026-08-14",
+    "schedule": "7x50",
+    "constitution": "LP v1.2 / assessment v1.6",
+    "source": "generate_canonical.py one english ix 9",
+    "ledger_ts": "20260814_121627_eng_ix_09_p07",
+    "validation": "clean",
+    "repairs": [
+      {
+        "tool": "amend_item_options.py",
+        "kind": "authored_option_set",
+        "at": "2026-08-14T14:31:51",
+        "why": "A sub-question shipped with no option set. Options AUTHORED from the listening transcript (quoted in the tool's declaration); labels regrouped 1A–1D / 2A–2D. This is a teaching change, not a repair — it needs the founder's reading, not just a passing certification.",
+        "items": [
+          {
+            "item_id": "Q-LST-A-1",
+            "regrouped": {
+              "A": "1A",
+              "B": "1B",
+              "C": "1C",
+              "D": "1D"
+            },
+            "options_added": [
+              "2A",
+              "2B",
+              "2C",
+              "2D"
+            ],
+            "correct_added": [
+              "2B"
+            ],
+            "diagnostics_added": [
+              "2A",
+              "2C",
+              "2D"
+            ]
+          }
+        ]
+      },
+      {
+        "tool": "amend_missing_questions.py",
+        "kind": "authored_questions",
+        "at": "2026-08-14T17:15:23",
+        "why": "The item's stem promised questions and carried none, while its teacher_guide carried a full mark scheme. Questions AUTHORED from that mark scheme and from the NCERT Critical Reflection questions the chapter summary records for the same extract. Every expected_element is asserted to be claimed by at least one question.",
+        "items": [
+          {
+            "item_id": "Q-RFC-A-1",
+            "questions_added": 4,
+            "elements_covered": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "coverage": {
+              "Q1": [
+                0
+              ],
+              "Q2": [
+                1
+              ],
+              "Q3": [
+                2,
+                4
+              ],
+              "Q4": [
+                3
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "tool": "repair_stem_direction.py",
+        "kind": "stem_direction",
+        "at": "2026-08-14T17:24:32",
+        "why": "EXTRACT_ANALYSIS routes its stimulus to `passage`, which every renderer places BEFORE the stem. The stems said 'the following passage' / 'the passage below'. Only the passage-facing direction was changed; 'the questions below' and 'the questions that follow' are correct and untouched.",
+        "items": [
+          {
+            "item_id": "Q-RFC-A-1",
+            "before": "Read the following passage and answer the questions below.",
+            "after": "Read the passage above and answer the questions below."
+          }
+        ]
+      },
+      {
+        "tool": "repair_passage_fidelity.py",
+        "kind": "passage_fidelity",
+        "at": "2026-08-14T18:03:34",
+        "why": "Founder ruling 2026-08-14 after visual clearance of docs/batch_evidence/english_ix_passage_transcriptions.md: textbook content is set in inverted commas with its page; where it claimed to be the book and was not, it was replaced with the hand-transcribed text.",
+        "items": [
+          {
+            "item_id": "Q-RFC-A-1",
+            "mode": "replace",
+            "source": "From the interview (p.139):",
+            "words_before": 89,
+            "words_after": 66,
+            "question_edited": true
+          }
+        ]
+      },
+      {
+        "tool": "repair_question_residue.py",
+        "kind": "question_residue",
+        "at": "2026-08-14T18:16:45",
+        "why": "Questions and mark-scheme elements were left pointing at text the passage-fidelity pass had removed. A passage and its questions are one object; editing the passage alone leaves the questions quoting nothing.",
+        "items": [
+          {
+            "item_id": "Q-RFC-A-1",
+            "stimulus_extended": {
+              "from": 70,
+              "to": 131
+            },
+            "elements_edited": [
+              0
+            ]
+          }
+        ]
+      }
+    ],
+    "academic_year": "2026-27"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "The World of Limitless Possibilities",
+          "spines_taught": [
+            "reading_for_comprehension"
+          ],
+          "activity_title": "Entering the World of Para-Athletics: Pre-Reading and Text Exploration",
+          "pedagogical_methods": {
+            "reading_for_comprehension": "shared-reading"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 0,
+              "task_brief": "Reflect and Respond (p.137): observe picture of Sheetal Devi, share observations, explain inspiration, write caption"
+            },
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 1,
+              "task_brief": "Reflect and Respond (p.138): complete KWL table on Paralympics, discuss with class"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Teacher invites students to look at the image of Sheetal Devi on p.137 and share what they notice about her posture, gear, and expression. Students respond orally and offer captions for the picture."
+            },
+            {
+              "minutes": "10–20",
+              "activity": "Students individually complete the KWL table on p.138, noting what they already know about Paralympics and what they wish to know. Pairs share responses before a brief whole-class discussion."
+            },
+            {
+              "minutes": "20–45",
+              "activity": "Teacher reads the interview with Dr. Deepa Malik aloud (pp.138–142), students following in their textbooks. Teacher pauses at key moments — Dr. Malik's diagnosis, her surgery, and her shot-put victory — to allow students to process the narrative."
+            },
+            {
+              "minutes": "45–50",
+              "activity": "Students write one sentence summarising the most surprising fact they encountered in the text. Two or three volunteers share aloud to close the unit."
+            }
+          ],
+          "teacher_notes": "The interview opens with Dr. Malik describing two stark choices after her paralysis — squandering life in remorse or transforming it; use this fork as the emotional entry point for discussion. Students unfamiliar with para-athletics may conflate it with the Olympics; clarify the distinction using the text's own explanation of the Paralympic Games. The unit leaves fact-file and extract analysis tasks unanchored — these are addressed in the next reading unit.",
+          "materials": [
+            "Textbook pp.137–152 (student copies)"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "The World of Limitless Possibilities",
+          "spines_taught": [
+            "reading_for_comprehension"
+          ],
+          "activity_title": "Close Reading: Facts, Opinions, Causes, and Dr. Malik's Voice",
+          "pedagogical_methods": {
+            "reading_for_comprehension": "close-reading"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 2,
+              "task_brief": "Reading for Meaning (p.143): fill in fact table about Dr. Malik's diagnosis, surgery, awards, and firsts"
+            },
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 3,
+              "task_brief": "Check Your Understanding (p.143–144): identify fact-opinion vs cause-effect in two sentence sets"
+            },
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 4,
+              "task_brief": "Check Your Understanding (p.144): identify cause-effect or fact-opinion in two paired sentences, write 1 or 2"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students re-read pp.140–143 silently and complete the seven-point fact table about Dr. Malik (Reading for Meaning, p.143). Pairs compare answers; teacher confirms key facts — diagnosis age, surgery outcome, IPC recognition, Rio silver, awards — from the text."
+            },
+            {
+              "minutes": "12–30",
+              "activity": "Teacher presents the concept of fact vs opinion and cause vs effect using the two sentence sets on pp.143–144. Students identify the relationship in each set and explain their reasoning aloud in pairs before the class agrees on answers."
+            },
+            {
+              "minutes": "30–45",
+              "activity": "Students work in pairs on the second cause-effect or fact-opinion activity (p.144), writing 1 or 2 in the boxes. Teacher circulates, probing students to articulate why a sentence is a statement of fact rather than opinion, or why one event caused another."
+            },
+            {
+              "minutes": "45–50",
+              "activity": "Quick whole-class debrief: teacher asks students to state one cause-effect relationship and one fact-opinion pair from the interview in their own words, consolidating the analytical lens built in this unit."
+            }
+          ],
+          "teacher_notes": "Having read the interview aloud in the previous unit, students now engage analytically with specific sentences and facts. A common pitfall is treating any evaluative sentence as an opinion — remind students that a sentence like 'Paralympics showcases incredible talent' edges toward opinion through the word 'incredible', while a sentence naming Dr. Malik's committee role is a verifiable fact. The extended Critical Reflection questions (p.145–147) are held for the next reading unit where longer thinking time is available.",
+          "materials": [
+            "Textbook pp.137–152 (student copies)"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "The World of Limitless Possibilities",
+          "spines_taught": [
+            "reading_for_comprehension"
+          ],
+          "activity_title": "Critical Reflection: Extract Analysis and Evaluative Discussion",
+          "pedagogical_methods": {
+            "reading_for_comprehension": "critical-reading"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 5,
+              "task_brief": "Critical Reflection (p.145): Extract 1 — caterpillar analogy, para-athletics switch, breakthrough moment, hindsight, changing perceptions"
+            },
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 6,
+              "task_brief": "Critical Reflection (p.146): Extract 2 — tone identification, analogy completion, true/false on stereotypes, push boundaries, life-transformation phrase"
+            }
+          ],
+          "homework": [
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 7,
+              "task_brief": "Answer the following questions (p.146–147): choose two ECR questions on Dr. Malik's societal impact and the title's appropriateness"
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–5",
+              "activity": "Teacher reads Extract 1 (p.145) aloud; students follow in their textbooks. Teacher briefly frames the critical question: how does language reveal the speaker's inner journey?"
+            },
+            {
+              "minutes": "5–25",
+              "activity": "Students work through the five sub-questions for Extract 1 (Critical Reflection, p.145) — the caterpillar transformation analogy, the reason Dr. Malik could switch sports, the breakthrough moment, the meaning of 'in hindsight', and what perception was changed. Pairs discuss; teacher facilitates whole-class responses."
+            },
+            {
+              "minutes": "25–45",
+              "activity": "Teacher reads Extract 2 (p.146) aloud. Students tackle the five sub-questions: tone identification, analogy completion ('preconceived notions' as the answer), true/false on the stereotypes claim, what 'push boundaries' reveals, and identifying the life-transformation phrase. Teacher draws out why 'appreciative and optimistic' captures the tone better than 'moralistic'."
+            },
+            {
+              "minutes": "45–50",
+              "activity": "Students write a single sentence capturing Dr. Malik's central philosophy as they now understand it from both extracts. Two volunteers share; teacher affirms or refines the phrasing."
+            }
+          ],
+          "teacher_notes": "Having worked through factual recall in the previous unit, students are ready for interpretive and evaluative work on the two extracts. The caterpillar metaphor in Extract 1 is student-generated reasoning, not stated in the text — prompt students to connect Dr. Malik's transformation to the metaphor's logic rather than just label it. For Extract 2, students may over-select 'determined' for the tone; guide them to distinguish mood conveyed from attitude displayed. The seven evaluative ECR questions on pp.146–147 are cognitively demanding; two are assigned as homework and the rest are self-study pointers for interested students.",
+          "materials": [
+            "Textbook pp.137–152 (student copies)"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "The World of Limitless Possibilities",
+          "spines_taught": [
+            "vocabulary_grammar"
+          ],
+          "activity_title": "Phrases, Modals, and Reported Speech: Language in the Interview",
+          "pedagogical_methods": {
+            "vocabulary_grammar": "grammar-in-writing"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "vocabulary_grammar",
+              "task_index": 0,
+              "task_brief": "Vocabulary and Structures in Context (p.147): match five interview phrases to meanings in Column 2"
+            },
+            {
+              "spine": "vocabulary_grammar",
+              "task_index": 2,
+              "task_brief": "Vocabulary and Structures in Context (p.148): match modal verbs from interview sentences to their grammatical functions"
+            },
+            {
+              "spine": "vocabulary_grammar",
+              "task_index": 4,
+              "task_brief": "Vocabulary and Structures in Context (p.149–150): identify direct/reported speech, identify sentence type, note three sets of changes in Column 3"
+            }
+          ],
+          "homework": [
+            {
+              "spine": "vocabulary_grammar",
+              "task_index": 5,
+              "task_brief": "Vocabulary and Structures in Context (p.151): convert the Siya–Tarun conversation to reported speech (four blanks)"
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "Pairs match the five interview phrases from Column 1 (p.147) — such as 'defy the odds', 'a new lease of life', and 'breakthrough moment' — to their meanings in Column 2, then each writes one original sentence using a chosen phrase."
+            },
+            {
+              "minutes": "15–28",
+              "activity": "Teacher reads the four interview sentences on p.148 containing modal verbs ('could hear', 'couldn't be helped', 'should give', 'would win'). Students match each modal to its grammatical function — past ability, impossibility, obligation, prediction — using the table."
+            },
+            {
+              "minutes": "28–45",
+              "activity": "Teacher introduces the direct-to-reported speech shift using the textbook's Column 1 → Column 2 examples (pp.149–150). Students identify the speech type and sentence type, then note the three sets of changes in Column 3, with teacher modelling the first entry."
+            },
+            {
+              "minutes": "45–50",
+              "activity": "Quick check: teacher reads a direct-speech sentence from the interview; students orally convert it to reported speech, applying the changes noted in Column 3. Homework on the Siya–Tarun conversation (p.151) is set."
+            }
+          ],
+          "teacher_notes": "The word-cline task (p.148) and the modal-sentence production task (p.149) are not anchored in this unit due to the time budget — the word-cline task can be assigned as self-study for students who find movement vocabulary interesting. When teaching reported speech changes, anchor examples to Dr. Malik's own interview sentences to maintain thematic coherence; students often forget to change the pronoun and the tense together.",
+          "materials": [
+            "Textbook pp.137–152 (student copies)"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "The World of Limitless Possibilities",
+          "spines_taught": [
+            "listening",
+            "speaking"
+          ],
+          "activity_title": "Listening to an Announcement and Conducting Interviews",
+          "pedagogical_methods": {
+            "listening": "listen-and-respond",
+            "speaking": "interview"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "listening",
+              "task_index": 0,
+              "task_brief": "Listen and Respond (p.152): fill five blanks from school-announcement audio — venue, club, dance themes, discussion type, closing event"
+            },
+            {
+              "spine": "speaking",
+              "task_index": 0,
+              "task_brief": "Speaking Activity (p.152–153): conduct informal interview of Sports Captain and formal interview of Sports Coach in pairs, then swap roles"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–5",
+              "activity": "Teacher sets the listening context: students will hear a school announcement about a World Inclusion Day assembly and must fill five blanks on p.152 with one or two exact words. Students read the blanks silently to orient themselves."
+            },
+            {
+              "minutes": "5–18",
+              "activity": "Teacher reads the announcement transcript aloud at a steady pace (a second reading may follow). Students fill in the five blanks individually; teacher then confirms answers — school auditorium, Interact Club, diversity and acceptance, panel discussion, song."
+            },
+            {
+              "minutes": "18–28",
+              "activity": "Teacher briefly contrasts informal and formal register, drawing on the interview with Dr. Malik as a model of formal speech. Pairs are assigned roles — one as Sports Captain, one as interviewer — and given the informal prompts from p.152 to prepare."
+            },
+            {
+              "minutes": "28–45",
+              "activity": "Pairs conduct the informal interview using the Sports Captain prompts, then swap roles for the formal Sports Coach interview using p.153 prompts. Teacher circulates, coaching students on register shift — informal questions use 'Tell me', formal ones use 'Could you tell me'."
+            },
+            {
+              "minutes": "45–50",
+              "activity": "Two pairs briefly share one exchange each — one informal, one formal. Class identifies what made the register different. Teacher affirms key markers: direct address vs polite distancing, contracted vs full forms."
+            }
+          ],
+          "teacher_notes": "The listening task is built on a school-announcement transcript (p.268) about a World Inclusion Day assembly — thematically continuous with Dr. Malik's advocacy work discussed in the reading units. Students may write near-synonyms for blank 3 (e.g. 'inclusion' instead of 'diversity and acceptance'); accept only the exact phrasing from the transcript for this fill-in task. For the speaking task, remind students that formal register is not about longer sentences but about word choice and questioning style.",
+          "materials": [
+            "Textbook pp.137–155 (student copies)",
+            "Transcript p.268 (teacher copy)"
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "The World of Limitless Possibilities",
+          "spines_taught": [
+            "writing"
+          ],
+          "activity_title": "Drafting a Notice: Functional Writing for a School Athletic Meet",
+          "pedagogical_methods": {
+            "writing": "functional-writing"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "writing",
+              "task_index": 0,
+              "task_brief": "Writing Task (p.154): draft a boxed notice (max 50 words) for Inter-school Athletic Meet with all required structural elements"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Teacher displays the notice format table from p.154 on the board, naming all required elements: organisation name, NOTICE header, date, heading, body details, signature, name, and designation. Students annotate their textbooks as the teacher explains the purpose of each element."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Teacher models one weak notice draft (missing the date or designation) and invites students to spot what is wrong. Students then plan their own notice in rough, keeping the 50-word limit in mind — teacher reminds them that concision is a feature of the notice genre, not a constraint."
+            },
+            {
+              "minutes": "22–40",
+              "activity": "Students draft their notices independently, drawing a box around the complete text. Teacher circulates and gives brief formative feedback on register, word count, and structural completeness — checking that each notice includes an event name, date, venue, and call to action."
+            },
+            {
+              "minutes": "40–50",
+              "activity": "Three students read their notices aloud. Class evaluates each against the structural checklist — are all elements present, is the language suitably formal, does it fit within the word limit? Students revise their drafts in the final two minutes."
+            }
+          ],
+          "teacher_notes": "The Sports Club athletic meet context in the writing task connects naturally to the chapter's theme of sporting achievement and inclusion. Students frequently omit the date or write in an informal register — a quick checklist on the board before drafting prevents both. Because drafting, peer feedback, and revision all happen within this unit, no written work needs to carry over.",
+          "materials": [
+            "Textbook pp.137–155 (student copies)",
+            "Rough paper or notebooks"
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "The World of Limitless Possibilities",
+          "spines_taught": [
+            "beyond_text"
+          ],
+          "activity_title": "Research and Present: Para-Sports and Paralympians of India",
+          "pedagogical_methods": {
+            "beyond_text": "project-work"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "beyond_text",
+              "task_index": 1,
+              "task_brief": "Learning Beyond the Text (p.154): group presentation on two lesser-known Paralympic sports or two Indian Paralympians — plan, prepare, and present slides in class"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Teacher shares the 'Did you know?' passage about the origins of Paralympics — Sir Ludwig Guttmann, the 1948 Stoke Mandeville Games, and Rome 1960 — to provide a historical anchor for the project. Students choose their topic: two lesser-known Paralympic sports or two Indian Paralympians."
+            },
+            {
+              "minutes": "8–25",
+              "activity": "Groups of four research their chosen topic using textbook references, class notes, and any available print resources. Each group maps their slide structure on paper: one introductory slide, two history slides, four to five content slides on the chosen topic, one concluding slide."
+            },
+            {
+              "minutes": "25–45",
+              "activity": "Groups present in turn, each member taking at least one slide. Audience groups listen and prepare one question per presentation. Teacher coaches on balance between text and image description, and on confident turn-taking within the group."
+            },
+            {
+              "minutes": "45–50",
+              "activity": "Teacher facilitates a brief reflection: what aspect of Paralympic history or an individual Paralympian's story most challenged students' assumptions? Two or three students respond, connecting their answers to Dr. Malik's philosophy of 'ability beyond disability'."
+            }
+          ],
+          "teacher_notes": "The group presentation here is entirely planned and presented within this unit — groups work from publicly available information and the textbook's 'Did you know?' section rather than from any artefact prepared in an earlier unit. If digital slides are not available, a structured oral presentation with a hand-drawn outline on paper serves the same outcome. Students who chose Indian Paralympians may mention Dr. Deepa Malik herself; encourage them to bring in at least one other athlete to broaden the chapter's reach.",
+          "materials": [
+            "Textbook pp.137–155 (student copies)",
+            "Rough paper for slide planning",
+            "Reference books or printed resources if available"
+          ]
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "period_duration_minutes": 50,
+        "period_count": 7
+      }
+    ],
+    "coverage_handoff": {
+      "reading_for_comprehension": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "The World of Limitless Possibilities",
+            "section_type": "informational",
+            "implied_lo": "Student analyses author perspective, evaluates evidence, and interprets language effects using an informational interview as the vehicle.",
+            "section_context": "Dr. Deepa Malik's choices after paralysis, her Rio silver medal, and her advocacy for disability rights.",
+            "tasks_anchored": [
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 0,
+                "task_brief": "Reflect and Respond (p.137): observe Sheetal Devi image, share observations, explain inspiration, write caption"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 1,
+                "task_brief": "Reflect and Respond (p.138): complete KWL table on Paralympics, discuss with class"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 2,
+                "task_brief": "Reading for Meaning (p.143): fill in fact table — diagnosis, surgery, recognition, awards, firsts"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 3,
+                "task_brief": "Check Your Understanding (p.143–144): identify fact-opinion vs cause-effect in two sentence sets"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 4,
+                "task_brief": "Check Your Understanding (p.144): identify cause-effect or fact-opinion in two paired sentences"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 5,
+                "task_brief": "Critical Reflection (p.145): Extract 1 — transformation analogy, switch to para-athletics, breakthrough, hindsight, perceptions"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 6,
+                "task_brief": "Critical Reflection (p.146): Extract 2 — tone, analogy, true/false, push boundaries, transformation phrase"
+              }
+            ]
+          }
+        ]
+      },
+      "listening": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "The World of Limitless Possibilities",
+            "section_type": "informational",
+            "implied_lo": "Student demonstrates focused listening and accurate detail retrieval from a spoken announcement using an audio transcript as the vehicle.",
+            "section_context": "School announcement for a World Inclusion Day assembly — venue, programme sequence, and closing event.",
+            "tasks_anchored": [
+              {
+                "spine": "listening",
+                "task_index": 0,
+                "task_brief": "Listen and Respond (p.152): fill five blanks from announcement — venue, presenting club, dance themes, discussion type, closing event"
+              }
+            ]
+          }
+        ]
+      },
+      "speaking": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "The World of Limitless Possibilities",
+            "section_type": "informational",
+            "implied_lo": "Student conducts and participates in both formal and informal interview exchanges, adjusting register and question framing appropriately using role-play as the vehicle.",
+            "section_context": "Pair interviews as Sports Captain (informal) and Sports Coach (formal), using chapter-provided prompts.",
+            "tasks_anchored": [
+              {
+                "spine": "speaking",
+                "task_index": 0,
+                "task_brief": "Speaking Activity (p.152–153): pair interviews — informal Sports Captain role then formal Sports Coach role, swapping"
+              }
+            ]
+          }
+        ]
+      },
+      "writing": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "The World of Limitless Possibilities",
+            "section_type": "informational",
+            "implied_lo": "Student produces a concise, correctly structured functional notice using formal register and prescribed format conventions as the vehicle.",
+            "section_context": "A school community initiative promoting student participation in a public health awareness event.",
+            "tasks_anchored": [
+              {
+                "spine": "writing",
+                "task_index": 0,
+                "task_brief": "Writing Task (p.154): draft a boxed notice (max 50 words) for Inter-school Athletic Meet with all required structural elements"
+              }
+            ]
+          }
+        ]
+      },
+      "vocabulary_grammar": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "The World of Limitless Possibilities",
+            "section_type": "informational",
+            "implied_lo": "Student identifies and applies modal auxiliaries and reported-speech transformations, and interprets idiomatic phrases in context using an informational interview as the vehicle.",
+            "section_context": "Interview phrases from Dr. Malik's account, modal verbs in interview sentences, and direct-to-reported speech shifts.",
+            "tasks_anchored": [
+              {
+                "spine": "vocabulary_grammar",
+                "task_index": 0,
+                "task_brief": "Vocabulary and Structures in Context (p.147): match five interview phrases to meanings in Column 2"
+              },
+              {
+                "spine": "vocabulary_grammar",
+                "task_index": 2,
+                "task_brief": "Vocabulary and Structures in Context (p.148): match modal verbs from interview sentences to grammatical functions"
+              },
+              {
+                "spine": "vocabulary_grammar",
+                "task_index": 4,
+                "task_brief": "Vocabulary and Structures in Context (p.149–150): identify speech type, sentence type, note three sets of changes in Column 3"
+              }
+            ]
+          }
+        ]
+      },
+      "beyond_text": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "The World of Limitless Possibilities",
+            "section_type": "informational",
+            "implied_lo": "Student researches, organises, and presents information about Paralympic history and athletes using collaborative project-work as the vehicle.",
+            "section_context": "History and origins of the Paralympic movement and the achievements of Indian or lesser-known para-athletes globally.",
+            "tasks_anchored": [
+              {
+                "spine": "beyond_text",
+                "task_index": 1,
+                "task_brief": "Learning Beyond the Text (p.154): group presentation on two lesser-known Paralympic sports or two Indian Paralympians"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "spine_code": "reading_for_comprehension",
+        "spine_title": "Reading for Comprehension",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-RFC-A-1",
+            "source_section_id": "A",
+            "source_section_title": "The World of Limitless Possibilities",
+            "source_section_type": "informational",
+            "source_spine": "reading_for_comprehension",
+            "source_lo": "Student analyses author perspective, evaluates evidence, and interprets language effects using an informational interview as the vehicle.",
+            "source_context": "Dr. Deepa Malik's choices after paralysis, her Rio silver medal, and her advocacy for disability rights.",
+            "item_stem": "Read the passage above and answer the questions below.\n\n1. Dr. Malik says she ‘had two choices—squander my life in remorse or transform it to a world of limitless possibilities’. What does framing her situation as a choice reveal about how she wants it to be understood?\n2. Why was she able to switch to para-athletics rather than to some other pursuit? Answer using a detail from the passage.\n3. She calls the 2016 Rio silver medal her “breakthrough”. Explain what it broke through — both in her own life and in the way others see disability.\n4. How would you describe the speaker’s tone in this passage? Support your answer with one phrase from it.",
+            "question_type": "EXTRACT_ANALYSIS",
+            "options": [],
+            "visual_stimulus": "From the interview (pp.139–140):\n“I was 29, an awful tragedy struck me when I was diagnosed with spine tumour. I underwent a surgery, but misfortune raised its ugly head again. The doctors declared that I would be bound to a wheelchair for the rest of my life, as I was paralysed waist down. I had two choices—squander my life in remorse or transform it to a world of limitless possibilities. I love sports and had been a swimmer too, so I decided to switch to para-athletics. This is how my Paralympics journey began. My breakthrough moment came in the 2016 Rio Paralympic Games, when I secured the silver medal in the shot-put event. In hindsight, I feel it was a moment of personal victory and a step forward in changing perceptions.”",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Identifies the framing as a CHOICE — 'I had two choices' — as signalling agency rather than victimhood.",
+                "Links pre-existing love of swimming to her ability to transition to para-athletics.",
+                "Explains 'breakthrough' as a shift in both personal and public perception of disability.",
+                "Notes that the speaker's tone is reflective and purposeful rather than self-pitying.",
+                "Connects the silver medal to the text's broader argument that physical limits do not define potential."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-RFC-A-2",
+            "source_section_id": "A",
+            "source_section_title": "The World of Limitless Possibilities",
+            "source_section_type": "informational",
+            "source_spine": "reading_for_comprehension",
+            "source_lo": "Student analyses author perspective, evaluates evidence, and interprets language effects using an informational interview as the vehicle.",
+            "source_context": "Dr. Deepa Malik's choices after paralysis, her Rio silver medal, and her advocacy for disability rights.",
+            "item_stem": "Dr. Deepa Malik states that she was 'named as one of the 10 most inspirational para-athletes globally' by the International Paralympic Committee, and she holds the distinctions of being India's first female Paralympic medallist and the first Indian female para-athlete to win an Asian Games medal in athletics. Evaluate the claim that these 'firsts' carry significance beyond sport. In your response, consider how such recognition contributes to changing societal attitudes towards both disability and gender in competitive athletics.",
+            "question_type": "ECR",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Acknowledges that 'firsts' set visible benchmarks, inspiring others to follow.",
+                "Links global IPC recognition to legitimising para-athletics as a serious discipline.",
+                "Addresses the gender dimension — first female medallist challenges male-dominated narrative.",
+                "Uses evidence from Dr. Malik's advocacy work to support the 'beyond sport' claim.",
+                "Evaluates how recognition challenges preconceived notions about disability and capability."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "spine_code": "listening",
+        "spine_title": "Listening",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-LST-A-1",
+            "source_section_id": "A",
+            "source_section_title": "The World of Limitless Possibilities",
+            "source_section_type": "informational",
+            "source_spine": "listening",
+            "source_lo": "Student demonstrates focused listening and accurate detail retrieval from a spoken announcement using an audio transcript as the vehicle.",
+            "source_context": "School announcement for a World Inclusion Day assembly — venue, programme sequence, and closing event.",
+            "item_stem": "Listen to the school announcement about the World Inclusion Day assembly. Choose the correct option for each question.\n1. Where will the special assembly be held?\n2. Which group will stage a presentation on inclusion?",
+            "question_type": "MCQ",
+            "options": [
+              {
+                "label": "1A",
+                "text": "The school auditorium",
+                "is_correct": true
+              },
+              {
+                "label": "1B",
+                "text": "The school canteen",
+                "is_correct": false
+              },
+              {
+                "label": "1C",
+                "text": "The school library",
+                "is_correct": false
+              },
+              {
+                "label": "1D",
+                "text": "The school sports ground",
+                "is_correct": false
+              },
+              {
+                "label": "2A",
+                "text": "Guest speakers at the panel discussion",
+                "is_correct": false
+              },
+              {
+                "label": "2B",
+                "text": "Interact Club",
+                "is_correct": true
+              },
+              {
+                "label": "2C",
+                "text": "Principal",
+                "is_correct": false
+              },
+              {
+                "label": "2D",
+                "text": "School's dance team",
+                "is_correct": false
+              }
+            ],
+            "visual_stimulus": "",
+            "transcript_ref": "p. 268",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [],
+              "answer_key": [],
+              "what_each_option_reveals": {
+                "1B": "Student likely guessed without locating the specific detail in the announcement.",
+                "1C": "Student may have confused 'library' with a school venue mentioned in a different context.",
+                "1D": "Student may associate an inclusion event with an outdoor sports setting rather than a formal auditorium.",
+                "2A": "Student has reached past the staging to a later item on the programme — the guest speakers hold the panel discussion, which comes after the performances.",
+                "2C": "Student has taken the assembly's opening — the Principal gives the welcome speech that the staging FOLLOWS, not the staging itself.",
+                "2D": "The closest distractor, and the one worth discussing: the dance team does perform, on diversity and acceptance, but the announcement assigns the 'staging on inclusion' to the Interact Club."
+              },
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-LST-A-2",
+            "source_section_id": "A",
+            "source_section_title": "The World of Limitless Possibilities",
+            "source_section_type": "informational",
+            "source_spine": "listening",
+            "source_lo": "Student demonstrates focused listening and accurate detail retrieval from a spoken announcement using an audio transcript as the vehicle.",
+            "source_context": "School announcement for a World Inclusion Day assembly — venue, programme sequence, and closing event.",
+            "item_stem": "After listening to the World Inclusion Day assembly announcement, answer the following questions in 2–3 sentences: (1) What two themes does the dance performance highlight? (2) What is the purpose of the song that concludes the assembly?",
+            "question_type": "SCR",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "p. 268",
+            "teacher_guide": {
+              "suggested_answer": "The dance performance highlights the themes of diversity and acceptance. The concluding song is presented by students to nurture inclusive practices and encourage collaboration among all members of the school community.",
+              "expected_elements": [],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "spine_code": "speaking",
+        "spine_title": "Speaking",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-SPK-A-1",
+            "source_section_id": "A",
+            "source_section_title": "The World of Limitless Possibilities",
+            "source_section_type": "informational",
+            "source_spine": "speaking",
+            "source_lo": "Student conducts and participates in both formal and informal interview exchanges, adjusting register and question framing appropriately using role-play as the vehicle.",
+            "source_context": "Pair interviews as Sports Captain (informal) and Sports Coach (formal), using chapter-provided prompts.",
+            "item_stem": "You are interviewing a classmate who is playing the role of your school's Sports Captain. Conduct a brief informal interview. Ask about their journey in sport, one challenge they overcame, and one piece of advice for junior students. Use a friendly, conversational register throughout.",
+            "question_type": "ORAL_PROMPT",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Uses informal question forms ('Tell me…', 'What was it like…') throughout.",
+                "Listens actively and builds a follow-up question on the interviewee's response.",
+                "Covers all three areas: journey, challenge, and advice for juniors.",
+                "Maintains a warm, conversational tone without being disrespectful or overly casual.",
+                "Interviewee responds in character with relevant, coherent answers."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-SPK-A-2",
+            "source_section_id": "A",
+            "source_section_title": "The World of Limitless Possibilities",
+            "source_section_type": "informational",
+            "source_spine": "speaking",
+            "source_lo": "Student conducts and participates in both formal and informal interview exchanges, adjusting register and question framing appropriately using role-play as the vehicle.",
+            "source_context": "Pair interviews as Sports Captain (informal) and Sports Coach (formal), using chapter-provided prompts.",
+            "item_stem": "Your school is considering whether to introduce para-sports as a formal part of the Physical Education programme. Argue for or against this proposal. Give at least two reasons to support your position, respond to one counter-argument, and use formal language appropriate to a school-level debate.",
+            "question_type": "ORAL_PROMPT",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "States a clear position at the outset in formal register.",
+                "Provides at least two distinct, reasoned arguments supporting the position.",
+                "Acknowledges and responds to at least one counter-argument.",
+                "Uses evidence or examples from the chapter's content (Dr. Malik, Paralympic values).",
+                "Maintains formal language throughout — no contractions, polite hedging where appropriate."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "spine_code": "writing",
+        "spine_title": "Writing",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-WRT-A-1",
+            "source_section_id": "A",
+            "source_section_title": "The World of Limitless Possibilities",
+            "source_section_type": "informational",
+            "source_spine": "writing",
+            "source_lo": "Student produces a concise, correctly structured functional notice using formal register and prescribed format conventions as the vehicle.",
+            "source_context": "A school community initiative promoting student participation in a public health awareness event.",
+            "item_stem": "The Wellness Club of your school is organising a Health Awareness Walk on World Health Day. As the Club Secretary, draft a notice in not more than 50 words inviting students to participate. Include all essential elements of a notice format and draw a box around your notice.",
+            "question_type": "WRITING_TASK",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Includes all required elements: organisation, NOTICE header, date, heading, body, signature, designation.",
+                "Body is concise and informative — names the event, date, venue, and how to participate.",
+                "Formal register maintained throughout; no contractions or colloquial phrasing.",
+                "Word count does not exceed 50 words in the body of the notice.",
+                "Notice is enclosed in a clearly drawn box."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-WRT-A-2",
+            "source_section_id": "A",
+            "source_section_title": "The World of Limitless Possibilities",
+            "source_section_type": "informational",
+            "source_spine": "writing",
+            "source_lo": "Student produces a concise, correctly structured functional notice using formal register and prescribed format conventions as the vehicle.",
+            "source_context": "A school community initiative promoting student participation in a public health awareness event.",
+            "item_stem": "Your school magazine is inviting submissions on the theme 'Breaking Barriers'. Write a letter to the editor (100–120 words) arguing that schools should do more to celebrate the achievements of differently abled individuals. Support your argument with a reasoned example and use an appropriate formal letter format.",
+            "question_type": "WRITING_TASK",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Follows formal letter-to-editor format: sender address, date, salutation, body, sign-off.",
+                "States a clear central argument in the opening paragraph.",
+                "Provides a specific, reasoned example illustrating the need to celebrate differently abled achievement.",
+                "Uses formal, persuasive language — no slang; hedging and emphasis used appropriately.",
+                "Concludes with a call to action or a recommendation addressed to the editorial or school community."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "spine_code": "vocabulary_grammar",
+        "spine_title": "Vocabulary and Grammar",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-VGR-A-1",
+            "source_section_id": "A",
+            "source_section_title": "The World of Limitless Possibilities",
+            "source_section_type": "informational",
+            "source_spine": "vocabulary_grammar",
+            "source_lo": "Student identifies and applies modal auxiliaries and reported-speech transformations, and interprets idiomatic phrases in context using an informational interview as the vehicle.",
+            "source_context": "Interview phrases from Dr. Malik's account, modal verbs in interview sentences, and direct-to-reported speech shifts.",
+            "item_stem": "Match each phrase from Dr. Deepa Malik's interview in Column A with its correct meaning in Column B.",
+            "question_type": "MATCH",
+            "options": [],
+            "visual_stimulus": "Column A | Column B\ndefy the odds | (i) to look back and understand something after it has happened\na new lease of life | (ii) a time of significant development or achievement\nin hindsight | (iii) to succeed when most people think failure is likely\nbreakthrough moment | (iv) to overcome difficulties and use them as opportunities\nturn obstacles into stepping stones | (v) renewed energy and enthusiasm for life",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "defy the odds – (iii); a new lease of life – (v); in hindsight – (i); breakthrough moment – (ii); turn obstacles into stepping stones – (iv).",
+              "expected_elements": [],
+              "answer_key": [
+                {
+                  "left": "defy the odds",
+                  "right": "(iii) to succeed when most people think failure is likely"
+                },
+                {
+                  "left": "a new lease of life",
+                  "right": "(v) renewed energy and enthusiasm for life"
+                },
+                {
+                  "left": "in hindsight",
+                  "right": "(i) to look back and understand something after it has happened"
+                },
+                {
+                  "left": "breakthrough moment",
+                  "right": "(ii) a time of significant development or achievement"
+                },
+                {
+                  "left": "turn obstacles into stepping stones",
+                  "right": "(iv) to overcome difficulties and use them as opportunities"
+                }
+              ],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-VGR-A-2",
+            "source_section_id": "A",
+            "source_section_title": "The World of Limitless Possibilities",
+            "source_section_type": "informational",
+            "source_spine": "vocabulary_grammar",
+            "source_lo": "Student identifies and applies modal auxiliaries and reported-speech transformations, and interprets idiomatic phrases in context using an informational interview as the vehicle.",
+            "source_context": "Interview phrases from Dr. Malik's account, modal verbs in interview sentences, and direct-to-reported speech shifts.",
+            "item_stem": "The sentences below are in direct speech from Dr. Deepa Malik's interview. Rewrite each sentence in reported speech, making all necessary changes to pronouns, tense, and reporting verb. (1) Dr. Malik said, \"I love sports and had been a swimmer too.\" (2) The interviewer said, \"Your story is indeed a testament to human resilience.\" (3) Dr. Malik said, \"I believe youth is the voice of tomorrow.\"",
+            "question_type": "SCR",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "(1) Dr. Malik said that she loved sports and had been a swimmer too. (2) The interviewer said that her story was indeed a testament to human resilience. (3) Dr. Malik said that she believed youth was the voice of tomorrow.",
+              "expected_elements": [],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "spine_code": "beyond_text",
+        "spine_title": "Beyond the Text",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-BTX-A-1",
+            "source_section_id": "A",
+            "source_section_title": "The World of Limitless Possibilities",
+            "source_section_type": "informational",
+            "source_spine": "beyond_text",
+            "source_lo": "Student researches, organises, and presents information about Paralympic history and athletes using collaborative project-work as the vehicle.",
+            "source_context": "History and origins of the Paralympic movement and the achievements of Indian or lesser-known para-athletes globally.",
+            "item_stem": "The first Paralympic Games open to international athletes were held in Rome in 1960, growing from Sir Ludwig Guttmann's rehabilitation sports programme at Stoke Mandeville in 1948. Since the late twentieth century, the Games have been hosted in the same city as the Olympic Games. In 3–4 sentences, explain how the shift from a rehabilitation exercise to a global competitive event reflects a change in society's understanding of disability.",
+            "question_type": "ECR",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Identifies early purpose of Stoke Mandeville Games as medical rehabilitation, not competition.",
+                "Notes that global expansion signals recognition of disabled athletes' competitive ability.",
+                "Links the Olympic co-hosting decision to mainstream acceptance of para-sports.",
+                "Connects this historical arc to Dr. Malik's argument that ability transcends disability.",
+                "Uses at least one concrete historical detail to support the claim about shifting perceptions."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-BTX-A-2",
+            "source_section_id": "A",
+            "source_section_title": "The World of Limitless Possibilities",
+            "source_section_type": "informational",
+            "source_spine": "beyond_text",
+            "source_lo": "Student researches, organises, and presents information about Paralympic history and athletes using collaborative project-work as the vehicle.",
+            "source_context": "History and origins of the Paralympic movement and the achievements of Indian or lesser-known para-athletes globally.",
+            "item_stem": "Working in a group of four, prepare a structured presentation on ONE of the following topics: (a) Two lesser-known Paralympic sports (such as para equestrian or para rowing) — cover their origins, rules, and what makes them distinctive. (b) Two Indian Paralympians (other than Dr. Deepa Malik) — cover their sport, key achievement, and what their story contributes to India's Paralympic legacy. Your presentation must include: one introductory slide, two slides on Paralympic history relevant to your topic, four to five slides on your chosen subject, and one concluding slide. Each group member must present at least one slide.",
+            "question_type": "PROJECT",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Slide structure follows the prescribed outline — intro, history, content, conclusion.",
+                "Content is accurate, research-based, and specific to the chosen topic.",
+                "Each group member presents at least one slide with confidence and clarity.",
+                "Visual design balances text and images; slides are not overcrowded.",
+                "Concluding slide connects the chosen topic to the chapter's theme of ability beyond disability."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

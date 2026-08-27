@@ -79,7 +79,11 @@ if live is None:
     print("SKIP  live-canonical checks (no ch 5 canonical on disk)")
 else:
     lk = data.genon_plan_filename(5, [(50, 16)], live)
-    check("live canonical keys cleanly", lk.startswith("ch_05_50m16_e10_c") and lk.endswith(".json"), lk)
+    # Read the engine version rather than hardcoding it: this assertion said "e10" while
+    # the engine had moved to e19, so it had been failing on the live canonical for nine
+    # engine bumps. The thing under test is the SHAPE of the key, not the number in it.
+    check("live canonical keys cleanly",
+          lk.startswith(f"ch_05_50m16_e{data.GENON_ENGINE_VERSION}_c") and lk.endswith(".json"), lk)
     check("key is deterministic across calls",
           lk == data.genon_plan_filename(5, [(50, 16)], live))
 
@@ -93,7 +97,11 @@ else:
             check("cache hit: load returns the entry",
                   (data.load_saved_plan("social_sciences", "ix", lk) or {}).get("filename") == lk)
             data.save_generated_plan("social_sciences", "ix", copy.deepcopy(plan), filename=lk)
-            n = len(os.listdir(os.path.join(tmp, "saved_plans", "social_sciences", "ix")))
+            # Count FILES, recursively. The library is foldered by edition year (§2.2),
+            # so a flat listdir here returns the year DIRECTORY — one entry, which made
+            # this assertion pass for the wrong reason no matter how many plans were in it.
+            n = sum(len(fs) for _, _, fs in
+                    os.walk(os.path.join(tmp, "saved_plans", "social_sciences", "ix")))
             check("re-saving the same key does not add a file", n == 1, f"{n} files")
             legacy = data.save_generated_plan("social_sciences", "ix", copy.deepcopy(plan))
             check("legacy timestamp path still works", legacy.startswith("ch_05_2") and legacy != lk, legacy)
@@ -171,7 +179,14 @@ def test_regenerating_a_canonical_purges_its_derived_plans():
 
     import tempfile, json as _j
     with tempfile.TemporaryDirectory() as tmp:
+        # ★ Redirect LIB_ROOT and BACKUP_ROOT, not REPO. install_canonical writes into
+        # the LIVE library, and reassigning REPO stopped redirecting it the day its path
+        # moved onto config.DATA_DIR — this test then reached for the real english/ix
+        # ch 7 and tried to archive it into a temp dir. If you add another root to
+        # generate_canonical, redirect it here too.
         gc.REPO = _p.Path(tmp)
+        gc.LIB_ROOT = _p.Path(tmp) / "saved_plans"
+        gc.BACKUP_ROOT = _p.Path(tmp) / "backup" / "saved_plans"
         parsed = {"lesson_plan": {"periods": []}, "coverage_handoff": {},
                   "assessment_items": []}
         gc.install_canonical(parsed, "english", "ix", 7, "20260812_154258", 50, 17,

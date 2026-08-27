@@ -1,0 +1,812 @@
+{
+  "filename": "ch_08_canonical_p04.json",
+  "saved_at": "2026-08-12T18:48:12",
+  "plan_status": "canonical",
+  "chapter_number": 8,
+  "chapter_title": "Building Blocks in Economics: The Problem of Choice",
+  "grade": "Grade IX",
+  "subject": "Social Science",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 50,
+      "count": 4
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 4 periods = 200 minutes\nTotal: 4 periods · 3h 20min",
+  "genon_canonical": {
+    "generated": "2026-08-12",
+    "schedule": "4x50",
+    "constitution": "LP v1.10 / assessment v1.7",
+    "source": "generate_canonical.py one social_sciences ix 8",
+    "ledger_ts": "20260812_165329_ss_ix_08_p04",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-12T20:01:17",
+        "tool": "genon/repair_anchors.py v1.0",
+        "reason": "V2 section-anchor joiner repair (';' read as one opaque registry section; corrupted the derived registry, falsely quarantined p10, and mis-served X=8/X=9)",
+        "edits": [
+          {
+            "unit": 4,
+            "field": "section_anchor",
+            "rule": "V2/registry-omission",
+            "removed": "Economic Systems and How Choices are Made / Planned Economy / Mixed Economy",
+            "replaced_with": "Economic Systems and How Choices are Made / Planned Economy / Market Economy / Mixed Economy",
+            "note": "Market Economy inserted in registry order (7 / 8 / 9 / 10) as the brief requires; the unit already teaches it in band 10-27"
+          }
+        ]
+      },
+      {
+        "at": "2026-08-12T20:02:18",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 1,
+            "field": "band:0",
+            "rule": "register/calendar",
+            "removed": "students individually list three things their parents bought this month, then classify",
+            "replaced_with": "students individually list three things their parents bought, then classify",
+            "note": "the standard's U1 breach, reproduced independently by the compact from the same LET'S EXPLORE. Struck for consistency with the standard; the same dissent is recorded there"
+          },
+          {
+            "unit": 2,
+            "field": "band:3",
+            "rule": "register/clock",
+            "removed": "Students work individually for four minutes, then share in pairs",
+            "replaced_with": "Students work individually, then share in pairs",
+            "note": "garment-factory analytical task"
+          },
+          {
+            "unit": 3,
+            "field": "band:1",
+            "rule": "register/clock",
+            "removed": "Students discuss in pairs for three minutes, then two pairs share their reasoning",
+            "replaced_with": "Students discuss in pairs, then two pairs share their reasoning",
+            "note": "THINK ABOUT IT inside the what/for-whom unit; 'two pairs share' is the output and is scale-free"
+          }
+        ],
+        "ban_hits_before": 3,
+        "ban_hits_after": 0
+      }
+    ],
+    "academic_year": "2026-27"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 50,
+          "activity_title": "Unlimited Wants, Limited Resources, and the Cost of Every Choice",
+          "section_anchor": "The Big Questions / Choices and Limited Resources",
+          "materials": [
+            "Blackboard or whiteboard",
+            "Chapter textbook or printout",
+            "Blank paper for student lists"
+          ],
+          "visual_aids": "Fig. 8.1 (bicycle → motorbike → car wants ladder); Fig. 8.2 (alternative uses of steel); Fig. 8.3 (Production Possibility Curve — barley and wheat combinations A to E)",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Open with the LET'S EXPLORE prompt from the chapter: students individually list three things their parents bought, then classify each as a need (food, water, shelter) or a want (gadget, vacation, luxury). Ask two or three students to share — do their families agree on what counts as a need? Introduce the chapter's frame: these everyday dilemmas — snacks vs. shoes, a farmer choosing a crop, a government choosing between highways and hospitals — are not random but are the raw material of economics."
+            },
+            {
+              "minutes": "10-22",
+              "activity": "Direct students to Fig. 8.1 and walk through the bicycle → motorbike → car sequence to show that human wants are unlimited and keep changing. Then draw the distinction between needs and wants on the board and ask: 'Does having too many wants create problems?' — the chapter's own LET'S EXPLORE question. Take three or four student responses, then pivot to scarcity: because resources (water, coal, capital, technology) are limited yet have many alternative uses, every choice involves giving something up. Display Fig. 8.2 (steel used in medical equipment, aircraft, and refrigerators) and ask students to name another resource that has multiple competing uses in their own lives."
+            },
+            {
+              "minutes": "22-38",
+              "activity": "Introduce opportunity cost through the farmer's dilemma: limited land, choice between barley and wheat. Write the five combinations (A through E) from the chapter's table on the board — the amounts of barley and wheat the farmer can produce with the same land and resources. Ask students: 'As we move from combination A to E, what happens to barley output? What happens to wheat output? What does the farmer give up each time?' Guide them to see that choosing more of one crop means forgoing the other — that forgone value is the opportunity cost. Then sketch the downward-sloping Production Possibility Curve (Fig. 8.3) and explain what a point on the curve, inside it, and beyond it each represent — efficient use, waste, and the impossible."
+            },
+            {
+              "minutes": "38-50",
+              "activity": "Consolidate through the second LET'S EXPLORE: students pair up and identify the opportunity cost of one real decision — either from the farmer example or from the chapter's pocket-money and government examples. Each pair states: what was chosen, what was given up, and why the trade-off matters. Take four or five responses whole-class. Close by asking whether time is a scarce resource and how students decide to spend it — the chapter's own closing question for this section — leaving the answer open as the productive tension economics begins with."
+            }
+          ],
+          "section_context": "Bicycle-to-car wants ladder, steel's alternative uses, barley-wheat PPC table A-E",
+          "pedagogical_approaches": [
+            "Inquiry",
+            "Issues-based learning"
+          ],
+          "teacher_notes": "This unit opens the chapter's central argument — that unlimited wants colliding with limited resources is not a personal failing but the founding condition of economics. A common confusion is treating opportunity cost as a monetary price; stress that it is the value of the best forgone alternative, not a rupee figure. The PPC combinations table is the chapter's own data, so ground every inference in those five rows rather than abstract definitions.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-7.1",
+              "cg": "CG-7",
+              "weight": 3,
+              "competency_text": "Analyse production and distribution decisions and the factors that influence them, including demand, prices, and technology.",
+              "implied_lo": "Students can construct and interpret a production possibilities trade-off to explain how opportunity cost shapes decisions about resource allocation.",
+              "cognitive_demand": "Analysis"
+            },
+            {
+              "c_code": "C-8.5",
+              "cg": "CG-8",
+              "weight": 1,
+              "competency_text": "Evaluate trade-offs between economic development and long-term environmental and social well-being.",
+              "implied_lo": "Students can identify what is sacrificed in a resource-use decision and articulate why that forgone value matters beyond immediate economic gain.",
+              "cognitive_demand": "Evaluation"
+            }
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 50,
+          "activity_title": "What Economics Studies: Data, Decision-Makers, and the Economic Survey",
+          "section_anchor": "What does Economics Deal with?",
+          "materials": [
+            "Textbook or printout",
+            "Blackboard or whiteboard",
+            "Printed or projected extract from Economic Survey scope description in chapter"
+          ],
+          "visual_aids": "Fig. 8.4 (scope of economists' work — policymaking, business consulting, research and education, finance)",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Write the word 'oikonomia' on the board and ask students what language it looks like. Reveal that it comes from Greek oikos ('household') and nemein ('management'), so economics originally meant household management. Ask: 'If a household has limited income and many needs and wants, what does good management look like?' Take three responses, then extend the logic: nations face exactly the same problem on a larger scale — this is the chapter's definition of economics as the study of how choices are made by optimising the use of limited resources."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Walk through Fig. 8.4's four domains — policymaking, business consulting, research and education, and finance — naming one concrete activity economists do in each. Then introduce the economic entities the chapter names: consumers, producers, governments, and financial institutions. Ask students to match each entity to one domain in Fig. 8.4 and explain why data matters for that entity's decisions: families allocate money across essentials, non-essentials, and savings; governments plan expenditure from tax revenue; enterprises study market trends. The chapter's point is that good decisions rely on data and analysis, not guesswork — ask students for one decision they or their family made recently that would have been different with better information."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Introduce the Economic Survey of India: an annual document prepared by the Ministry of Finance, presented in Parliament before the Union Budget, reviewing economic performance and analysing agriculture, industry, services, employment, inflation, education, health, and infrastructure. Ask: 'Who is the Survey's audience — policymakers, citizens, or both? How does it help each group differently?' Students write two sentences in their notebooks: one explaining what the Survey reviews, one explaining how it functions as a blueprint for the Union Budget. Two or three students read their sentences aloud and the class refines the phrasing together."
+            },
+            {
+              "minutes": "38-50",
+              "activity": "Pose a small analytical task: 'A garment enterprise wants to open a new factory. Which two economic entities from the chapter's list would most affect its decisions, and what information from the Economic Survey would it look for?' Students work individually, then share in pairs. Draw out that producers depend on government policy data, consumer income trends, and labour and capital availability — all data categories the Survey covers. This grounds the abstract definition of economics in a concrete decision-making scenario the chapter's own framing supports."
+            }
+          ],
+          "section_context": "Greek etymology of economics, Fig. 8.4 scope, Economic Survey of India",
+          "pedagogical_approaches": [
+            "Inquiry",
+            "Issues-based learning"
+          ],
+          "teacher_notes": "Having traced how unlimited wants and scarce resources create the founding tension of economics, this unit grounds the discipline's definition in its Greek origin and its real institutional output — the Economic Survey. A common confusion is treating 'economy' and 'economics' as synonyms; the margin definitions in the chapter distinguish them, and it is worth pausing on that. Fig. 8.4 is the chapter's own visual inventory of what economists actually do — use it as the anchor for student matching rather than a free list.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-7.1",
+              "cg": "CG-7",
+              "weight": 3,
+              "competency_text": "Analyse production and distribution decisions and the factors that influence them, including demand, prices, and technology.",
+              "implied_lo": "Students can explain how economic entities use data and analysis to make production, distribution, and policy decisions.",
+              "cognitive_demand": "Understanding"
+            }
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 50,
+          "activity_title": "Three Questions Every Economy Must Answer: What, How, and For Whom to Produce",
+          "section_anchor": "Key Questions in Economics / What to Produce and for Whom? / How to Produce?",
+          "materials": [
+            "Textbook or printout",
+            "Blackboard or whiteboard",
+            "Blank paper for student analysis"
+          ],
+          "visual_aids": "Fig. 8.5 (scarcity → choices → three key questions); Fig. 8.6 (factors of production — land, labour, capital, technology)",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Draw Fig. 8.5's logic chain on the board: unlimited wants + limited resources = scarcity → choices → three questions. Introduce the three: What to produce? How to produce? For whom to produce? Ask students which question they think is hardest to answer and why — take three brief responses without resolving the debate. This sets up the next two bands as an investigation, not a lecture."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Unpack 'What to produce and for whom?' using the chapter's two examples. First: sugarcane and paddy versus millets and pulses — sugarcane earns high short-term profits but consumes more water and degrades soil health; millets save water and improve soil but earn less immediately. Ask: 'What is the opportunity cost of choosing sugarcane?' Then use the THINK ABOUT IT prompt: 'Should the government allocate more funds to healthcare and education or to defence and space exploration, and why?' Students discuss in pairs, then two pairs share their reasoning. Second: shoes for different consumer groups — school shoes, formal office shoes, sports shoes, affordable slippers — and how the target consumer (their income, needs, lifestyle) shapes materials used: leather for high-income office-goers, rubber or synthetic for affordable durable footwear. Draw out that 'for whom' is not just distribution but shapes what is made and how."
+            },
+            {
+              "minutes": "25-40",
+              "activity": "Address 'How to produce?' using Fig. 8.6's four factors — land, labour, capital, and technology. Contrast labour-intensive production (more workers, less machinery: agriculture, handicrafts) with capital-intensive production (more machines and technology: steel, automobiles). Then use the garment manufacturer example from the chapter: ask students to identify which of the five determining factors — cost of capital, level of technology, nature of the product, relative cost and availability of labour, government laws and regulations — would push a manufacturer towards skilled labour for designer clothes versus machines for mass-produced garments. Students write their reasoning in two sentences."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Synthesis task: each student selects one real product they know — a food item, a piece of clothing, a vehicle — and answers all three questions for it in their notebook: What is produced and for whom? How is it produced, and is it labour- or capital-intensive? What is one opportunity cost of producing it this way? Four students share their product and one answer each. Close by returning to Fig. 8.5: these three questions are not abstract — every producer, consumer, and government faces them constantly."
+            }
+          ],
+          "section_context": "Scarcity-to-three-questions chain, sugarcane vs. millets trade-off, shoes for different groups, factors of production Fig. 8.6",
+          "pedagogical_approaches": [
+            "Issues-based learning",
+            "Inquiry"
+          ],
+          "teacher_notes": "Having established that economics is the study of choices under scarcity, this unit moves to the three operational questions that channel that study. A common confusion is treating 'for whom to produce' as solely about distribution after production; the shoe examples show it also determines what materials and methods are chosen before production begins. The sugarcane-versus-millets example carries the chapter's environmental sustainability argument — take care to draw out both the economic and ecological dimensions of that trade-off.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-7.1",
+              "cg": "CG-7",
+              "weight": 3,
+              "competency_text": "Analyse production and distribution decisions and the factors that influence them, including demand, prices, and technology.",
+              "implied_lo": "Students can apply the what/how/for-whom framework to analyse how production methods and distribution targets are determined by cost, technology, consumer need, and policy.",
+              "cognitive_demand": "Application"
+            },
+            {
+              "c_code": "C-8.5",
+              "cg": "CG-8",
+              "weight": 1,
+              "competency_text": "Evaluate trade-offs between economic development and long-term environmental and social well-being.",
+              "implied_lo": "Students can evaluate a production choice by weighing short-term economic gains against long-term environmental costs such as water use and soil health.",
+              "cognitive_demand": "Evaluation"
+            }
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 50,
+          "activity_title": "How Economies Organise Answers: Planned, Market, and Mixed Systems",
+          "section_anchor": "Economic Systems and How Choices are Made / Planned Economy / Market Economy / Mixed Economy",
+          "materials": [
+            "Textbook or printout",
+            "Blackboard or whiteboard",
+            "Comparison table template (blank, drawn by teacher on board or distributed as a hand-drawn sheet)"
+          ],
+          "visual_aids": "Fig. 8.7 (market economy countries and government-as-referee image); Fig. 8.8 (mixed economy blend diagram)",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Pose the organising question: 'If every economy must answer what, how, and for whom to produce — who actually makes those decisions?' Write three labels on the board: Government, Market Forces, Both. Ask students to predict, before any explanation, which label fits India, the United States, and North Korea. Record predictions — return to them at the end. Introduce the chapter's definition: the economic system of a country is the system that governs the mechanisms for production, consumption, and distribution of goods, services, and resources."
+            },
+            {
+              "minutes": "10-27",
+              "activity": "Teach the planned economy: a central planning authority makes all major decisions — what, how much, how, for whom, and at what price. The government owns most resources: land, factories, banks, transport. Private ownership is limited; enterprises follow the central authority's targets rather than market demand; permits and licenses restrict competition and reduce motivation to innovate. Examples: the former Soviet Union, North Korea, Cuba. Then shift to the market economy: demand and supply settle what, how, and how much to produce; the government acts like a referee — ensuring safety and law and order without controlling prices or production. Private individuals and companies own factories, shops, and land; many producers offering similar products encourages better quality, lower prices, and innovation. Examples: the United States, Japan, Hong Kong. Ask: 'What is one advantage of the planned economy that the market economy lacks? What is one advantage of the market economy the planned economy lacks?' — students respond in pairs."
+            },
+            {
+              "minutes": "27-40",
+              "activity": "Introduce the mixed economy: it combines features of both — private individuals, enterprises, and the government all play important roles; large public sector companies operate alongside private ownership under some degree of government regulation (Fig. 8.8). Use the DON'T MISS OUT box to trace India's own arc: state-led approach after Independence (government controlling industries, allocating resources, dominating banking, transport, heavy industry), then the serious economic difficulties of 1991 prompting major reforms — reduced regulation, encouraged private enterprise, opened economy to global trade and investment, shift toward market-orientation while retaining government role. Ask: 'Why did India not become a pure market economy after 1991?' Students write one sentence. Examples: India post-1991, China post-1978, Germany, Sweden, and note that even the United States and Singapore have significant government involvement."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Return to the opening predictions and ask students to revise them with reasons drawn from the three system descriptions. Then pose the LET'S EXPLORE question from the Market Economy section: 'Should the government completely stay out of enterprise decisions? Think of one example where government action helped or harmed an industry or sector.' Students write one example and one-sentence justification. Take three responses whole-class. Close with the chapter's own synthesis: economics is about making choices in a world of scarce resources and unlimited wants; the three key questions capture those choices; different economic systems answer them differently; most modern economies combine market and planned elements — and India's 1991 story is exactly that combination at work."
+            }
+          ],
+          "section_context": "Planned economy (Soviet Union, North Korea), market economy (USA, Japan), India's 1991 reforms, mixed economy Fig. 8.8",
+          "pedagogical_approaches": [
+            "Issues-based learning",
+            "Inquiry"
+          ],
+          "teacher_notes": "Having worked through the three key economic questions, this unit examines the institutional architectures — planned, market, and mixed — that different countries use to answer them. A common confusion is treating mixed economy as a perfect 50-50 split; stress that real mixed economies vary widely in their balance, as the India, China, Germany, and Sweden examples show. The DON'T MISS OUT box on India's 1991 reforms is the chapter's primary evidence for how and why a country shifts its economic system — use it as the analytical centrepiece rather than background reading.",
+          "homework": [
+            "Find one news headline from the past month where the Indian government intervened in an economic decision (such as setting a minimum support price, banning an export, or regulating a digital platform). Write two sentences: what decision was made, and whether it resembles a planned, market, or mixed economy move — and why."
+          ],
+          "competency_edges": [
+            {
+              "c_code": "C-8.2",
+              "cg": "CG-8",
+              "weight": 2,
+              "competency_text": "Analyse the range of economic systems from free market to entirely state-controlled markets and the practice of these systems.",
+              "implied_lo": "Students can compare planned, market, and mixed economic systems by analysing who controls resource allocation decisions and what consequences follow for competition, innovation, and distribution.",
+              "cognitive_demand": "Analysis"
+            }
+          ]
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 50,
+        "count": 4
+      }
+    ],
+    "coverage_handoff": {
+      "C-7.1": {
+        "cg": "CG-7",
+        "weight": 3,
+        "competency_text": "Analyse production and distribution decisions and the factors that influence them, including demand, prices, and technology.",
+        "los": [
+          {
+            "period_number": 1,
+            "section_anchor": "The Big Questions / Choices and Limited Resources",
+            "section_context": "Bicycle-to-car wants ladder, steel's alternative uses, barley-wheat PPC table A-E",
+            "implied_lo": "Students can construct and interpret a production possibilities trade-off to explain how opportunity cost shapes decisions about resource allocation.",
+            "cognitive_demand": "Analysis"
+          },
+          {
+            "period_number": 2,
+            "section_anchor": "What does Economics Deal with?",
+            "section_context": "Greek etymology of economics, Fig. 8.4 scope, Economic Survey of India",
+            "implied_lo": "Students can explain how economic entities use data and analysis to make production, distribution, and policy decisions.",
+            "cognitive_demand": "Understanding"
+          },
+          {
+            "period_number": 3,
+            "section_anchor": "Key Questions in Economics / What to Produce and for Whom? / How to Produce?",
+            "section_context": "Scarcity-to-three-questions chain, sugarcane vs. millets trade-off, shoes for different groups, factors of production Fig. 8.6",
+            "implied_lo": "Students can apply the what/how/for-whom framework to analyse how production methods and distribution targets are determined by cost, technology, consumer need, and policy.",
+            "cognitive_demand": "Application"
+          }
+        ]
+      },
+      "C-8.2": {
+        "cg": "CG-8",
+        "weight": 2,
+        "competency_text": "Analyse the range of economic systems from free market to entirely state-controlled markets and the practice of these systems.",
+        "los": [
+          {
+            "period_number": 4,
+            "section_anchor": "Economic Systems and How Choices are Made / Planned Economy / Mixed Economy",
+            "section_context": "Planned economy (Soviet Union, North Korea), market economy (USA, Japan), India's 1991 reforms, mixed economy Fig. 8.8",
+            "implied_lo": "Students can compare planned, market, and mixed economic systems by analysing who controls resource allocation decisions and what consequences follow for competition, innovation, and distribution.",
+            "cognitive_demand": "Analysis"
+          }
+        ]
+      },
+      "C-8.5": {
+        "cg": "CG-8",
+        "weight": 1,
+        "competency_text": "Evaluate trade-offs between economic development and long-term environmental and social well-being.",
+        "los": [
+          {
+            "period_number": 1,
+            "section_anchor": "The Big Questions / Choices and Limited Resources",
+            "section_context": "Bicycle-to-car wants ladder, steel's alternative uses, barley-wheat PPC table A-E",
+            "implied_lo": "Students can identify what is sacrificed in a resource-use decision and articulate why that forgone value matters beyond immediate economic gain.",
+            "cognitive_demand": "Evaluation"
+          },
+          {
+            "period_number": 3,
+            "section_anchor": "Key Questions in Economics / What to Produce and for Whom? / How to Produce?",
+            "section_context": "Scarcity-to-three-questions chain, sugarcane vs. millets trade-off, shoes for different groups, factors of production Fig. 8.6",
+            "implied_lo": "Students can evaluate a production choice by weighing short-term economic gains against long-term environmental costs such as water use and soil health.",
+            "cognitive_demand": "Evaluation"
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "question_type": "MCQ",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-7.1",
+          "cg": "CG-7",
+          "competency_text": "Analyse production and distribution decisions and the factors that influence them, including demand, prices, and technology."
+        },
+        "implied_lo": "Students can construct and interpret a production possibilities trade-off to explain how opportunity cost shapes decisions about resource allocation.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          1
+        ],
+        "chapter_section": "Choices and Limited Resources",
+        "question_text": "A farmer's land can produce a maximum of 100 kg of barley (and no wheat) or 80 kg of wheat (and no barley), or combinations between them shown on the Production Possibility Curve. The farmer currently produces 60 kg of barley and 50 kg of wheat — a point inside the curve. What does this situation most accurately indicate?",
+        "options": [
+          {
+            "label": "A",
+            "text": "The farmer has exceeded the land's productive capacity and is overusing resources.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The farmer has found the ideal balance between barley and wheat production and faces no opportunity cost.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The farmer is using resources inefficiently; more of one or both crops could be produced with the same land and resources.",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "The opportunity cost of producing barley is zero because the farmer still produces some wheat.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "Read the scenario aloud before students begin; allow students who need it to draw the curve on paper rather than reason purely from the text.",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "A": "Confuses a point inside the PPC with a point beyond it — the student has inverted the logic of the curve's boundary.",
+              "B": "Mistakes an inefficient combination for an optimal one, and wrongly believes opportunity cost disappears when both goods are produced.",
+              "D": "Misunderstands opportunity cost as applying only when one good has zero output, missing that every movement along the curve involves a trade-off."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "SCR",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-7.1",
+          "cg": "CG-7",
+          "competency_text": "Analyse production and distribution decisions and the factors that influence them, including demand, prices, and technology."
+        },
+        "implied_lo": "Students can apply the what/how/for-whom framework to analyse how production methods and distribution targets are determined by cost, technology, consumer need, and policy.",
+        "cognitive_demand": "Application",
+        "period_ref": [
+          3
+        ],
+        "chapter_section": "How to Produce?",
+        "question_text": "A garment manufacturer is deciding whether to produce designer custom clothes or mass-produced school uniforms. Using the chapter's factors that determine 'how to produce', identify two factors that would push the manufacturer toward labour-intensive production for designer clothes and two factors that would push toward capital-intensive production for school uniforms.",
+        "options": [],
+        "expected_elements": [
+          "One factor pushing toward labour-intensive for designer clothes: the nature of the product (customised, requires skilled human craftsmanship that machines cannot replicate).",
+          "A second factor pushing toward labour-intensive: the relative cost and availability of labour (if skilled labour is cheaper or more available than specialised machinery for small-batch designer production).",
+          "One factor pushing toward capital-intensive for school uniforms: the nature of the product (standardised, mass-produced, suited to mechanised repetition).",
+          "A second factor pushing toward capital-intensive: cost of capital (if machinery reduces per-unit cost significantly at high volume) or government incentives for machinery."
+        ],
+        "look_for": [],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "Students may respond in bullet points; a bilingual student may label factors in their home language if they explain the economic reasoning in English.",
+        "guide": {
+          "SCR": {
+            "expected_elements": [
+              "One factor pushing toward labour-intensive for designer clothes: the nature of the product (customised, requires skilled human craftsmanship that machines cannot replicate).",
+              "A second factor pushing toward labour-intensive: the relative cost and availability of labour (if skilled labour is cheaper or more available than specialised machinery for small-batch designer production).",
+              "One factor pushing toward capital-intensive for school uniforms: the nature of the product (standardised, mass-produced, suited to mechanised repetition).",
+              "A second factor pushing toward capital-intensive: cost of capital (if machinery reduces per-unit cost significantly at high volume) or government incentives for machinery."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "SOURCE_INTERPRETATION",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-7.1",
+          "cg": "CG-7",
+          "competency_text": "Analyse production and distribution decisions and the factors that influence them, including demand, prices, and technology."
+        },
+        "implied_lo": "Students can construct and interpret a production possibilities trade-off to explain how opportunity cost shapes decisions about resource allocation.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          1
+        ],
+        "chapter_section": "Choices and Limited Resources",
+        "question_text": "Study the table provided, which shows five combinations of barley and wheat a farmer can produce on limited land with no wastage.",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [],
+        "sub_questions": [
+          {
+            "label": "a",
+            "text": "State what happens to barley output as the farmer moves from Combination A to Combination E.",
+            "demand": "Recall"
+          },
+          {
+            "label": "b",
+            "text": "At Combination C the farmer produces 60 units of barley and 40 units of wheat. If the farmer moves to Combination D, what is the opportunity cost of producing the additional wheat? Explain your reasoning.",
+            "demand": "Understanding"
+          },
+          {
+            "label": "c",
+            "text": "A government planner argues that a combination beyond E — say, 20 units of barley AND 80 units of wheat — should be targeted to feed more people. Using the Production Possibility Curve concept, analyse whether this target is achievable with current resources and what the planner should do instead.",
+            "demand": "Analysis"
+          }
+        ],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": {
+          "type": "table",
+          "payload": "Combination | Barley (units) | Wheat (units)\nA | 80 | 0\nB | 60 | 20\nC | 40 | 40\nD | 20 | 60\nE | 0 | 80"
+        },
+        "inclusivity": "Allow students to sketch the curve from the table if visual representation helps their reasoning; sub-question (a) is accessible to students still building analytical language.",
+        "guide": {
+          "SOURCE_INTERPRETATION": {
+            "stimulus_rationale": "The chapter's own five-combination barley-wheat table is the direct evidence base for the Production Possibility Curve — it is the data from which the PPC is derived, making it the natural and section-authentic stimulus for testing interpretation of trade-offs and opportunity cost.",
+            "sub_question_expectations": [
+              "(a) Students should read that barley output decreases from 80 to 0 units as the farmer moves from A to E — a direct read from the table.",
+              "(b) Students should identify that moving from C (40 barley, 40 wheat) to D (20 barley, 60 wheat) gains 20 units of wheat but sacrifices 20 units of barley; the opportunity cost is those 20 units of barley. A strong response names both what is gained and what is given up.",
+              "(c) Students should recognise that a point of 20 barley AND 80 wheat lies beyond the PPC (the maximum wheat when barley is 20 is 60 units, from combination D), making it currently unachievable. A strong response recommends either improving technology/resource efficiency to shift the curve outward, or accepting a trade-off within the current curve rather than targeting an impossible combination."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "ECR",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-7.1",
+          "cg": "CG-7",
+          "competency_text": "Analyse production and distribution decisions and the factors that influence them, including demand, prices, and technology."
+        },
+        "implied_lo": "Students can apply the what/how/for-whom framework to analyse how production methods and distribution targets are determined by cost, technology, consumer need, and policy.",
+        "cognitive_demand": "Application",
+        "period_ref": [
+          3
+        ],
+        "chapter_section": "Key Questions in Economics / What to Produce and for Whom? / How to Produce?",
+        "question_text": "A state government is deciding whether to support large sugar mills (using capital-intensive methods to process water-intensive sugarcane) or small cooperatives of millet farmers (using labour-intensive methods). Using the three key questions in economics — what to produce, how to produce, and for whom to produce — analyse the government's decision. Your response should address all three questions and refer to at least one opportunity cost.",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [
+          "Clear identification of 'what to produce': sugarcane/sugar versus millets, with recognition that both are legitimate goods serving different consumer groups and purposes.",
+          "Analysis of 'how to produce': distinguishes capital-intensive sugar mills (more machinery, less labour) from labour-intensive millet cooperatives (more workers, suited to smallholder agriculture), referencing factors such as technology, cost, and the nature of the product.",
+          "Engagement with 'for whom to produce': sugar serves processors, exporters, and higher-income consumers; millets serve local food security, lower-income consumers, and health-conscious markets.",
+          "Explicit identification of at least one opportunity cost: e.g., choosing sugar mills forgoes employment for rural labour; choosing millet cooperatives forgoes higher export revenue or industrial development.",
+          "A reasoned, not merely descriptive, conclusion — the student takes a position or identifies the trade-off the government must consciously accept."
+        ],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "Students may use a structured paragraph per question (what/how/for whom) if a flowing essay is difficult; accept responses that demonstrate reasoning even where formal economic vocabulary is partial.",
+        "guide": {
+          "ECR": {
+            "look_for": [
+              "Clear identification of 'what to produce': sugarcane/sugar versus millets, with recognition that both are legitimate goods serving different consumer groups and purposes.",
+              "Analysis of 'how to produce': distinguishes capital-intensive sugar mills (more machinery, less labour) from labour-intensive millet cooperatives (more workers, suited to smallholder agriculture), referencing factors such as technology, cost, and the nature of the product.",
+              "Engagement with 'for whom to produce': sugar serves processors, exporters, and higher-income consumers; millets serve local food security, lower-income consumers, and health-conscious markets.",
+              "Explicit identification of at least one opportunity cost: e.g., choosing sugar mills forgoes employment for rural labour; choosing millet cooperatives forgoes higher export revenue or industrial development.",
+              "A reasoned, not merely descriptive, conclusion — the student takes a position or identifies the trade-off the government must consciously accept."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "OPEN_TASK",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-7.1",
+          "cg": "CG-7",
+          "competency_text": "Analyse production and distribution decisions and the factors that influence them, including demand, prices, and technology."
+        },
+        "implied_lo": "Students can construct and interpret a production possibilities trade-off to explain how opportunity cost shapes decisions about resource allocation.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          1
+        ],
+        "chapter_section": "Choices and Limited Resources",
+        "question_text": "",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [],
+        "sub_questions": [],
+        "task": "A municipal corporation has a fixed annual budget and must allocate it between two competing uses: building new roads or expanding public hospitals. Create a cause-effect map that shows (i) what happens if most of the budget goes to roads, (ii) what happens if most goes to hospitals, and (iii) the opportunity cost in each case. Your map should include at least three cause-effect links for each choice and name who benefits and who loses out in each scenario.",
+        "scaffold": "Start by writing the two choices at the top of your map: 'More budget → Roads' and 'More budget → Hospitals'. For each choice, draw arrows to show at least three effects — economic, social, and distributional. Then add a box labelled 'Opportunity Cost' under each choice and name what is given up. Finally, add a box labelled 'Who benefits?' and 'Who loses?' for each path. You do not need to argue for one choice — the map should show the trade-off clearly.",
+        "format_of_output": [
+          "A hand-drawn or written cause-effect map with labelled boxes and arrows, covering both choices, their effects, opportunity costs, and distribution of benefits and losses."
+        ],
+        "visual_stimulus": "",
+        "inclusivity": "Students may use their home language to label boxes if English labels are added; students who find spatial diagrams difficult may produce a two-column written comparison using the same headings as the scaffold.",
+        "guide": {
+          "OPEN_TASK": {
+            "what_this_demonstrates": "This task demonstrates whether students can apply the Production Possibility and opportunity cost logic to a real public resource-allocation decision, tracing multi-step cause-effect chains and identifying who bears the cost of each choice — moving beyond the chapter's farmer example to a governance context.",
+            "reading_the_scaffold": "The scaffold's three-part structure (effects of choice A, effects of choice B, opportunity cost of each) mirrors the chapter's PPC logic directly. A student who completes all three parts with specific effects — not generic ones — is working at Analysis. Watch for students who list effects without connecting them causally or who name 'opportunity cost' without specifying what is forgone.",
+            "strong_vs_weak_markers": "Strong: specific, linked cause-effect chains (e.g., 'more roads → reduced travel time → lower transport costs for goods → lower prices for consumers'); named opportunity costs (e.g., 'opportunity cost of choosing roads = delayed hospital expansion = longer patient waiting times'); explicit identification of differentiated beneficiaries (e.g., 'vehicle owners and traders benefit; patients in underserved areas lose out'). Weak: vague effects ('things will improve'), opportunity cost named as money rather than forgone output, no distributional analysis.",
+            "format_type": "Cause-effect map",
+            "format_rationale": "A cause-effect map is the most natural demonstration vehicle for tracing multi-step consequences of resource allocation choices and making opportunity cost visible as a structural feature of the decision — directly mirroring the PPC's logic of trade-offs between two desirable outputs. The teacher may substitute any other format from the Open Task menu (comparison table, annotated diagram, structured discussion with written output, source analysis task) if it better suits the class."
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Substantive",
+        "competency": {
+          "c_code": "C-8.2",
+          "cg": "CG-8",
+          "competency_text": "Analyse the range of economic systems from free market to entirely state-controlled markets and the practice of these systems."
+        },
+        "implied_lo": "Students can compare planned, market, and mixed economic systems by analysing who controls resource allocation decisions and what consequences follow for competition, innovation, and distribution.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          4
+        ],
+        "chapter_section": "Economic Systems and How Choices are Made / Planned Economy / Mixed Economy",
+        "question_text": "In a planned economy, enterprises follow the central authority's production targets rather than responding to consumer demand, and the government owns most resources. Which of the following best explains why this arrangement tends to reduce the motivation to improve quality or innovate?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Because enterprises must meet state targets regardless of consumer response and face no competition from alternative producers, there is little reward for improving quality or creating new products.",
+            "is_correct": true
+          },
+          {
+            "label": "B",
+            "text": "Enterprises cannot make a profit in a planned economy, so they have no funds to invest in research or new technology.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The government sets very high quality standards through permits and licenses, leaving no room for enterprises to innovate beyond what is prescribed.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Workers in a planned economy are not allowed to use new technology because the government controls all patents and intellectual property.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "B": "Conflates absence of competition with absence of profit — the chapter does not say enterprises make no profit, only that they follow targets; this distractor reveals a common over-simplification of how planned economies function.",
+              "C": "Inverts the chapter's logic — permits and licenses restrict competition and external entry, not internal quality standards set by the government; the student has confused the mechanism of control with its effect.",
+              "D": "Fabricates a mechanism not in the chapter (government control of patents) — the student is importing an idea from outside the text rather than reasoning from the chapter's own account of planned economies."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "SCR",
+        "weight_label": "Substantive",
+        "competency": {
+          "c_code": "C-8.2",
+          "cg": "CG-8",
+          "competency_text": "Analyse the range of economic systems from free market to entirely state-controlled markets and the practice of these systems."
+        },
+        "implied_lo": "Students can compare planned, market, and mixed economic systems by analysing who controls resource allocation decisions and what consequences follow for competition, innovation, and distribution.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          4
+        ],
+        "chapter_section": "Economic Systems and How Choices are Made / Planned Economy / Mixed Economy",
+        "question_text": "The chapter describes India's economic system before 1991 as state-led, with the government controlling industries, allocating resources, and dominating key sectors. After 1991, India moved toward a more market-oriented system while retaining an important government role. Using this shift, identify two specific changes that occurred and explain why India is described as a mixed economy rather than a pure market economy even after 1991.",
+        "options": [],
+        "expected_elements": [
+          "Identification of two changes after 1991: any two of — reduced regulation, encouragement of private enterprise, opening of the economy to global trade and investment, shift toward market-oriented resource allocation.",
+          "Explanation of why India is still mixed and not a pure market economy: the government retained an important role — public sector companies continue to operate, government regulates key sectors, and public goods are still provided — so the economy combines both market forces and government control rather than leaving all decisions to demand and supply alone."
+        ],
+        "look_for": [],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "Students may respond in two clearly labelled parts (Changes / Why still mixed) if continuous prose is difficult.",
+        "guide": {
+          "SCR": {
+            "expected_elements": [
+              "Identification of two changes after 1991: any two of — reduced regulation, encouragement of private enterprise, opening of the economy to global trade and investment, shift toward market-oriented resource allocation.",
+              "Explanation of why India is still mixed and not a pure market economy: the government retained an important role — public sector companies continue to operate, government regulates key sectors, and public goods are still provided — so the economy combines both market forces and government control rather than leaving all decisions to demand and supply alone."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "ECR",
+        "weight_label": "Substantive",
+        "competency": {
+          "c_code": "C-8.2",
+          "cg": "CG-8",
+          "competency_text": "Analyse the range of economic systems from free market to entirely state-controlled markets and the practice of these systems."
+        },
+        "implied_lo": "Students can compare planned, market, and mixed economic systems by analysing who controls resource allocation decisions and what consequences follow for competition, innovation, and distribution.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          4
+        ],
+        "chapter_section": "Economic Systems and How Choices are Made / Planned Economy / Mixed Economy",
+        "question_text": "The chapter states that pure planned and pure market economies rarely exist, and that most real economies are mixed. Using the examples of at least two countries from the chapter — one that shifted from a more planned approach and one typically associated with a market economy — analyse why even market economies retain significant government involvement. What does this pattern suggest about the limitations of a pure market economy?",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [
+          "Reference to at least two countries from the chapter with accurate characterisation: e.g., India (shifted from planned to mixed post-1991), China (post-1978 reforms), or the United States/Singapore (market economies with significant government involvement).",
+          "Analysis of why market economies retain government: identifies at least one substantive reason — provision of public goods (roads, police, basic education) that private producers will not supply, maintaining law and order (the 'referee' function), addressing market failures such as inequality or under-provision of essential services.",
+          "A reasoned inference about the limitations of a pure market economy: e.g., demand and supply alone may not ensure provision of goods needed by low-income groups, may not prevent monopoly, or may not deliver public infrastructure — so some government role remains necessary.",
+          "Avoidance of vague claims: the student should ground their reasoning in the chapter's examples and mechanisms, not general assertions."
+        ],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "Accept responses that use one extended example well rather than two superficial ones; the quality of reasoning matters more than the number of countries cited.",
+        "guide": {
+          "ECR": {
+            "look_for": [
+              "Reference to at least two countries from the chapter with accurate characterisation: e.g., India (shifted from planned to mixed post-1991), China (post-1978 reforms), or the United States/Singapore (market economies with significant government involvement).",
+              "Analysis of why market economies retain government: identifies at least one substantive reason — provision of public goods (roads, police, basic education) that private producers will not supply, maintaining law and order (the 'referee' function), addressing market failures such as inequality or under-provision of essential services.",
+              "A reasoned inference about the limitations of a pure market economy: e.g., demand and supply alone may not ensure provision of goods needed by low-income groups, may not prevent monopoly, or may not deliver public infrastructure — so some government role remains necessary.",
+              "Avoidance of vague claims: the student should ground their reasoning in the chapter's examples and mechanisms, not general assertions."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Present",
+        "competency": {
+          "c_code": "C-8.5",
+          "cg": "CG-8",
+          "competency_text": "Evaluate trade-offs between economic development and long-term environmental and social well-being."
+        },
+        "implied_lo": "Students can evaluate a production choice by weighing short-term economic gains against long-term environmental costs such as water use and soil health.",
+        "cognitive_demand": "Evaluation",
+        "period_ref": [
+          3
+        ],
+        "chapter_section": "What to Produce and for Whom?",
+        "question_text": "The chapter explains that growing sugarcane offers high short-term profits but consumes more water and degrades soil health, while growing millets saves water and improves soil health but earns less immediately. A farmer argues: 'I will grow sugarcane every year because the profit is certain, and I can fix the soil later.' Which of the following best evaluates the farmer's reasoning?",
+        "options": [
+          {
+            "label": "A",
+            "text": "The farmer is correct that soil can be restored easily, so the environmental trade-off is not a significant concern.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The farmer's reasoning is flawed only because millets are more profitable than sugarcane in international markets.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The farmer's reasoning is sound because short-term profit is always the primary goal of agricultural production.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The farmer's reasoning overlooks the opportunity cost — the forgone long-term soil health and water conservation — making the choice less sustainable than it appears.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "C": "Accepts the farmer's short-term logic uncritically, revealing the student has not engaged with the chapter's argument that opportunity cost includes forgone environmental value — not just forgone revenue.",
+              "B": "Misidentifies the basis of the critique as a profitability comparison between crops rather than the sustainability trade-off the chapter develops; the student is substituting a market-price argument for the chapter's environmental one.",
+              "A": "Contradicts the chapter's explicit claim that sugarcane degrades soil health; the student is dismissing the environmental cost the chapter treats as real and significant."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "SCR",
+        "weight_label": "Present",
+        "competency": {
+          "c_code": "C-8.5",
+          "cg": "CG-8",
+          "competency_text": "Evaluate trade-offs between economic development and long-term environmental and social well-being."
+        },
+        "implied_lo": "Students can identify what is sacrificed in a resource-use decision and articulate why that forgone value matters beyond immediate economic gain.",
+        "cognitive_demand": "Evaluation",
+        "period_ref": [
+          1
+        ],
+        "chapter_section": "The Big Questions / Choices and Limited Resources",
+        "question_text": "The chapter uses steel's alternative uses — in medical equipment, aircraft manufacturing, and refrigerator manufacturing — to show that resources have many competing uses and that choosing one means giving up another. A government decides to allocate all available domestic steel to aircraft manufacturing for defence. Identify the opportunity cost of this decision and explain in one or two sentences why that forgone value matters for the well-being of the population.",
+        "options": [],
+        "expected_elements": [
+          "Identification of a specific opportunity cost: the steel not used for medical equipment (or refrigerators) — the student must name what is forgone, not just say 'other uses are lost'.",
+          "An explanation of why the forgone value matters for well-being: e.g., less steel for medical equipment means fewer hospitals or medical devices can be built or manufactured, reducing healthcare availability; or fewer refrigerators means less food preservation capacity, affecting food security and daily living standards — the response must connect the forgone good to a human or social consequence, not stay at the level of the resource."
+        ],
+        "look_for": [],
+        "sub_questions": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "A student may choose either forgone use (medical equipment or refrigerators); both are equally valid. Accept responses that demonstrate the logic of opportunity cost even if economic vocabulary is imprecise.",
+        "guide": {
+          "SCR": {
+            "expected_elements": [
+              "Identification of a specific opportunity cost: the steel not used for medical equipment (or refrigerators) — the student must name what is forgone, not just say 'other uses are lost'.",
+              "An explanation of why the forgone value matters for well-being: e.g., less steel for medical equipment means fewer hospitals or medical devices can be built or manufactured, reducing healthcare availability; or fewer refrigerators means less food preservation capacity, affecting food security and daily living standards — the response must connect the forgone good to a human or social consequence, not stay at the level of the resource."
+            ]
+          }
+        }
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

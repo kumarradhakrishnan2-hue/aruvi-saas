@@ -6,11 +6,88 @@ import json
 import os
 from typing import Any, Dict, List, Optional
 
-from .config import DATA_DIR
+from .config import DATA_DIR, LP_YEAR
 
 
 def _isdir(*parts) -> bool:
     return os.path.isdir(os.path.join(DATA_DIR, *parts))
+
+
+# ── The lesson-plan library, foldered by EDITION YEAR (§2.2, 2026-08-27) ────────
+# saved_plans/{subject}/{grade}/{lp_year}/ch_NN_*.json
+#
+# Read config.LP_YEAR's comment first — it says which of Aruvi's two "years" this is
+# (the LIBRARY's edition, Bucket A) and why the year is a label and never a cache key.
+#
+# ONE function puts the year in the path. Every other reader in this file goes through
+# it, so an edition bump is a config change, not a search-and-replace across eight call
+# sites — which is what the flat layout had become by the time it held 961 files.
+
+def lp_library_dir(subject: str, grade: str, year: Optional[str] = None) -> str:
+    """The folder holding one subject·grade's plan library for one edition year.
+
+    Falls back to the LEGACY FLAT path (saved_plans/{subject}/{grade}) when the year
+    folder does not exist but the flat one does. That fallback is not decoration: it
+    keeps a half-migrated tree, an un-migrated clone and every test fixture that builds
+    a flat folder all working. It costs one isdir() per call on a path the OS has
+    cached, and it is what makes migrate_lp_year.py safe to run in stages rather than
+    as one irreversible move.
+
+    Delete the fallback only once no flat tree exists anywhere — and note that "anywhere"
+    includes a partner's checkout, not just this machine.
+    """
+    y = (year or LP_YEAR).strip()
+    base = os.path.join(DATA_DIR, "saved_plans", subject, grade)
+    dated = os.path.join(base, y)
+    if os.path.isdir(dated):
+        return dated
+    # Migrated tree that simply has nothing for this subject·grade yet → still answer
+    # with the dated path, so a WRITE lands in the right edition rather than recreating
+    # the flat layout underneath it.
+    if os.path.isdir(base) and any(
+            os.path.isdir(os.path.join(base, e)) for e in _safe_listdir(base)):
+        return dated
+    if os.path.isdir(base):
+        return base          # legacy flat tree, pre-migration
+    return dated             # nothing exists yet → new writes are foldered
+
+
+def _safe_listdir(d: str) -> List[str]:
+    try:
+        return os.listdir(d)
+    except OSError:
+        return []
+
+
+def lp_library_years(subject: str, grade: str) -> List[str]:
+    """Edition years present for this subject·grade, newest first. A flat legacy tree
+    reports no years at all — it is un-editioned, not year zero."""
+    base = os.path.join(DATA_DIR, "saved_plans", subject, grade)
+    out = [e for e in _safe_listdir(base)
+           if os.path.isdir(os.path.join(base, e)) and _looks_like_year(e)]
+    return sorted(out, reverse=True)
+
+
+def _looks_like_year(name: str) -> bool:
+    """"2026-27" — the AcademicYear.year_id shape, reused so the two years are at least
+    written the same way even though they mean different things."""
+    parts = str(name).split("-")
+    return (len(parts) == 2 and len(parts[0]) == 4 and len(parts[1]) == 2
+            and parts[0].isdigit() and parts[1].isdigit())
+
+
+def plan_lp_year(saved: Dict[str, Any]) -> Optional[str]:
+    """The edition a saved plan came from, or None for a pre-stamp file.
+
+    Canonicals carry it in their genon_canonical block; served plans inherit it into
+    their own `genon` block at serve time. None means "authored before the stamp
+    existed", which the UI must render as silence — never as a guess.
+    """
+    for block in ("genon_canonical", "genon"):
+        b = saved.get(block)
+        if isinstance(b, dict) and b.get("academic_year"):
+            return str(b["academic_year"])
+    return None
 
 
 _ncf_norms_cache: Optional[Dict[str, Any]] = None
@@ -142,8 +219,9 @@ def _flatten_descriptions(doc: Dict[str, Any]) -> Dict[str, str]:
     return out
 
 
-def list_saved_plans(subject: str, grade: str) -> List[Dict[str, Any]]:
-    d = os.path.join(DATA_DIR, "saved_plans", subject, grade)
+def list_saved_plans(subject: str, grade: str,
+                     year: Optional[str] = None) -> List[Dict[str, Any]]:
+    d = lp_library_dir(subject, grade, year)
     out: List[Dict[str, Any]] = []
     if os.path.isdir(d):
         for f in sorted(os.listdir(d)):
@@ -153,6 +231,7 @@ def list_saved_plans(subject: str, grade: str) -> List[Dict[str, Any]]:
                     out.append({"filename": f, "chapter_number": s.get("chapter_number"),
                                 "chapter_title": s.get("chapter_title"), "saved_at": s.get("saved_at"),
                                 "is_canonical": s.get("plan_status") == "canonical",
+                                "lp_year": plan_lp_year(s),
                                 "duration_label": duration_label(s)})
                 except Exception:
                     pass
@@ -160,14 +239,24 @@ def list_saved_plans(subject: str, grade: str) -> List[Dict[str, Any]]:
     return out
 
 
-def load_saved_plan(subject: str, grade: str, filename: str) -> Optional[Dict[str, Any]]:
+def load_saved_plan(subject: str, grade: str, filename: str,
+                    year: Optional[str] = None) -> Optional[Dict[str, Any]]:
     # guard against path traversal
     if "/" in filename or "\\" in filename or ".." in filename:
         return None
-    p = os.path.join(DATA_DIR, "saved_plans", subject, grade, filename)
-    if not os.path.isfile(p):
-        return None
-    return json.load(open(p))
+    p = os.path.join(lp_library_dir(subject, grade, year), filename)
+    if os.path.isfile(p):
+        return json.load(open(p))
+    # A plan she is still teaching may belong to an EARLIER edition (§2.3: a plan
+    # attached to a section is immutable for the life of that attachment). Opening it
+    # must not depend on it being the current edition, so look back through the years
+    # before giving up. Newest first — an identical filename in two editions means the
+    # chapter was carried, and the current edition's copy is the right answer.
+    for y in lp_library_years(subject, grade):
+        p = os.path.join(DATA_DIR, "saved_plans", subject, grade, y, filename)
+        if os.path.isfile(p):
+            return json.load(open(p))
+    return None
 
 
 # ── master allocation plan (2026-07-25) ─────────────────────────────────────────
@@ -318,8 +407,9 @@ def duration_label(saved: Dict[str, Any]) -> Optional[str]:
         return None
 
 
-def _canonical_path(subject: str, grade: str, chapter_number: int) -> str:
-    return os.path.join(DATA_DIR, "saved_plans", subject, grade,
+def _canonical_path(subject: str, grade: str, chapter_number: int,
+                    year: Optional[str] = None) -> str:
+    return os.path.join(lp_library_dir(subject, grade, year),
                         f"ch_{int(chapter_number):02d}_canonical.json")
 
 
@@ -549,9 +639,10 @@ def genon_plan_filename(chapter_number, matrix, canonical: Dict[str, Any]) -> st
             f"_e{GENON_ENGINE_VERSION}_c{canonical_version(canonical)}.json")
 
 
-def genon_chapters(subject: str, grade: str) -> List[int]:
-    """Chapter numbers with a certified canonical for this subject·grade."""
-    d = os.path.join(DATA_DIR, "saved_plans", subject, grade)
+def genon_chapters(subject: str, grade: str, year: Optional[str] = None) -> List[int]:
+    """Chapter numbers with a certified canonical for this subject·grade, in the
+    current edition (or `year`)."""
+    d = lp_library_dir(subject, grade, year)
     out: List[int] = []
     if os.path.isdir(d):
         for f in sorted(os.listdir(d)):
@@ -563,20 +654,26 @@ def genon_chapters(subject: str, grade: str) -> List[int]:
     return out
 
 
-def load_genon_canonical(subject: str, grade: str, chapter_number: int) -> Optional[Dict[str, Any]]:
-    p = _canonical_path(subject, grade, chapter_number)
+def load_genon_canonical(subject: str, grade: str, chapter_number: int,
+                         year: Optional[str] = None) -> Optional[Dict[str, Any]]:
+    p = _canonical_path(subject, grade, chapter_number, year)
     if not os.path.isfile(p):
         return None
     return json.load(open(p))
 
 
-def load_genon_library(subject: str, grade: str, chapter_number: int) -> List[Dict[str, Any]]:
+def load_genon_library(subject: str, grade: str, chapter_number: int,
+                       year: Optional[str] = None) -> List[Dict[str, Any]]:
     """The chapter's VARIANT LIBRARY: the top canonical (ch_NN_canonical.json) plus
     any compact variants (ch_NN_canonical_pKK.json — the same section list authored
-    at KK periods). Sorted by period count, richest first. Empty when no canonical."""
-    d = os.path.join(DATA_DIR, "saved_plans", subject, grade)
+    at KK periods). Sorted by period count, richest first. Empty when no canonical.
+
+    Scoped to ONE edition: a chapter's library is the set of counts authored together
+    against one constitution, so mixing editions here would let the serve engine borrow
+    an Xth unit across a version boundary (variant_canonical_architecture §0.4)."""
+    d = lp_library_dir(subject, grade, year)
     out: List[Dict[str, Any]] = []
-    top = load_genon_canonical(subject, grade, chapter_number)
+    top = load_genon_canonical(subject, grade, chapter_number, year)
     if top is not None:
         out.append(top)
     prefix = f"ch_{int(chapter_number):02d}_canonical_p"
@@ -599,11 +696,12 @@ def load_genon_library(subject: str, grade: str, chapter_number: int) -> List[Di
 _stream_cache: Dict[str, Any] = {}   # path -> (mtime, stream)
 
 
-def load_genon_stream(subject: str, grade: str, chapter_number: int) -> Optional[Dict[str, Any]]:
+def load_genon_stream(subject: str, grade: str, chapter_number: int,
+                      year: Optional[str] = None) -> Optional[Dict[str, Any]]:
     """The top canonical's phase stream, compiled (strict, declared-only).
     Memo-cached per file mtime, so the millisecond serve path never pays the
     compile twice for an unchanged canonical."""
-    p = _canonical_path(subject, grade, chapter_number)
+    p = _canonical_path(subject, grade, chapter_number, year)
     return _compiled(p)
 
 
@@ -620,11 +718,13 @@ def _compiled(p: str) -> Optional[Dict[str, Any]]:
     return stream
 
 
-def load_genon_streams(subject: str, grade: str, chapter_number: int) -> List[Dict[str, Any]]:
+def load_genon_streams(subject: str, grade: str, chapter_number: int,
+                       year: Optional[str] = None) -> List[Dict[str, Any]]:
     """Compiled streams for the chapter's whole variant library, richest first.
-    Empty list when the chapter has no canonical at all."""
-    d = os.path.join(DATA_DIR, "saved_plans", subject, grade)
-    paths = [_canonical_path(subject, grade, chapter_number)]
+    Empty list when the chapter has no canonical at all. One edition only — see
+    load_genon_library."""
+    d = lp_library_dir(subject, grade, year)
+    paths = [_canonical_path(subject, grade, chapter_number, year)]
     prefix = f"ch_{int(chapter_number):02d}_canonical_p"
     if os.path.isdir(d):
         for f in sorted(os.listdir(d)):
@@ -647,7 +747,9 @@ def save_generated_plan(subject: str, grade: str, plan: Dict[str, Any],
     one, the legacy timestamp naming applies.
     """
     from datetime import datetime
-    d = os.path.join(DATA_DIR, "saved_plans", subject, grade)
+    # Writes always land in the CURRENT edition: a served plan is derived from the
+    # canonical the teacher was just given, and that is by definition the current one.
+    d = lp_library_dir(subject, grade)
     os.makedirs(d, exist_ok=True)
     if not filename:
         nn = f"{int(plan.get('chapter_number') or 0):02d}"

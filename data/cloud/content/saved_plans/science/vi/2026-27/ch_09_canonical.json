@@ -1,0 +1,1914 @@
+{
+  "filename": "ch_09_canonical.json",
+  "saved_at": "2026-08-17T11:54:19",
+  "plan_status": "canonical",
+  "chapter_number": 9,
+  "chapter_title": "Methods of Separation in Everyday Life",
+  "grade": "Grade VI",
+  "subject": "Science",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 40,
+      "count": 20
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 20 periods = 800 minutes\nTotal: 20 periods · 13h 20min",
+  "genon_canonical": {
+    "generated": "2026-08-17",
+    "schedule": "20x40",
+    "constitution": "LP v2.2 / assessment v1.5",
+    "source": "generate_canonical.py one science vi 9",
+    "ledger_ts": "20260817_113057_sci_vi_09_top",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-17T12:04:39",
+        "tool": "genon/repair_meta_leak.py v1.0",
+        "reason": "the serve contract narrated into teacher-facing text — found at F1 (C8 across the TWAU batch), 2026-08-13; founder instruction to fix all 29 corpus-wide",
+        "edits": [
+          {
+            "unit": 20,
+            "field": "teacher_notes",
+            "rule": "register/meta-leak",
+            "removed": "This synthesis unit is designed to travel — it assumes that students have covered the chapter's content and reached the ability to reason from properties to methods, but it does not assume any particular sequence of activities or stage labels.",
+            "replaced_with": "This synthesis unit assumes that students have covered the chapter's content and reached the ability to reason from properties to methods.",
+            "note": "'assumes the chapter's content' is about the CHAPTER and stays (SS·IX ch 2 precedent); the travel framing and 'stage labels' go"
+          },
+          {
+            "unit": 20,
+            "field": "teacher_notes",
+            "rule": "register/meta-leak",
+            "removed": "that holds regardless of the arc that preceded it",
+            "replaced_with": "",
+            "note": "'drawing the chapter to a conceptual close' stands on its own"
+          }
+        ]
+      },
+      {
+        "tool": "genon/repair_approach_labels.py v1.0",
+        "at": "2026-08-18T13:16:33",
+        "reason": "resynth wrote essay-length pedagogical_approach into a 2-word label field (founder, 2026-08-18); label read from the essay's own first device, full old text archived here",
+        "edits": [
+          {
+            "unit": 20,
+            "field": "pedagogical_approach",
+            "removed": "Problem-based learning: students move from reading an unfamiliar situation through property analysis to a sequenced plan, then shift to critical evaluation of a flawed version of the same plan. The vehicle — written plan construction followed by error diagnosis on a peer scenario — is distinct from matching games, design tasks, procedure correction alone, group presentation, and independent problem-card work used in the shorter plans.",
+            "replaced_with": "Problem-based Learning"
+          }
+        ]
+      },
+      {
+        "tool": "genon/repair_prose_tables.py v1.0",
+        "at": "2026-08-19T10:24:35",
+        "reason": "founder direction 2026-08-19: enumerable card/event/scene content flattened into dense prose visual aids becomes typed tables (records → rows, field labels → columns, content moved verbatim); scene-setting stays as caption or companion prose",
+        "edits": [
+          {
+            "unit": 20,
+            "field": "visual_aids[1]",
+            "removed": {
+              "type": "prose",
+              "title": "Neighbour's flawed sequence — error-analysis card",
+              "text": "A neighbouring mill owner attempted the same separation in this order: Step 1 — Winnowed the dry portion to remove loose husk (the dry heap was spread out and air was blown across it). Step 2 — Added water to the remaining heap to dissolve the salt, creating a wet slurry. Step 3 — Filtered the slurry through a cloth to remove pebbles and wheat grains. Step 4 — Attempted magnetic separation on the wet iron bolt fragments in the residue; found the process very difficult and concluded that the magnet had 'stopped working', so abandoned this step. Step 5 — Evaporated the filtrate (the salty water that passed through the cloth) to recover the salt as a solid residue. Your tasks: (i) Identify which step caused the neighbour to struggle and explain why, naming the property issue precisely. (ii) Write a corrected version of only the flawed portion of the sequence. (iii) Name the physical change that occurs at Step 5 and state what is produced."
+            },
+            "replaced_with": [
+              "[table] Neighbour's flawed sequence — error-analysis card",
+              "[prose] Error-analysis tasks"
+            ]
+          }
+        ]
+      }
+    ],
+    "synthesis_reauthor": {
+      "spec": "science_middle_stage_serve.md §6 v1.3",
+      "at": "2026-08-18T08:14:04",
+      "ledger_ts": "20260817_203333_sci_vi_09_resynth",
+      "model": "claude-sonnet-4-6",
+      "compacts_read": {
+        "ch_09_canonical_p18.json": "2026-08-17T12:38:00",
+        "ch_09_canonical_p16.json": "2026-08-17T12:38:00",
+        "ch_09_canonical_p14.json": "2026-08-17T12:37:59",
+        "ch_09_canonical_p12.json": "2026-08-17T12:37:59"
+      },
+      "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+    },
+    "synthesis_polish": {
+      "spec": "density + typed visual_aids (founder, 2026-08-18)",
+      "at": "2026-08-18T12:09:59",
+      "ledger_ts": "20260818_120452_sci_vi_09_polish",
+      "model": "claude-sonnet-4-6",
+      "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+    },
+    "academic_year": "2026-27"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 40,
+          "progression_stage": 1,
+          "stage_label": "Observe and describe mixtures",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "What is in this mixture?",
+          "activity_description": "Students examine three prepared mixtures — stones mixed with rice, salt dissolved in water, and iron nails mixed with sawdust — and describe what they observe using their senses. They record which components can be seen, felt, or distinguished, and note what makes each component identifiable.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Sets out the three mixtures, poses the opening question about what a mixture is, and circulates to prompt careful observation."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Examine each mixture, record descriptions of each component's observable features, and share initial observations with the class."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher introduces the chapter's journey by presenting the three mixtures and asking students why separating them might matter in everyday life."
+            },
+            {
+              "minutes": "8-28",
+              "activity": "Groups examine each mixture in turn, recording what they can observe — colour, size, shape, feel — for each component without yet attempting separation."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Groups share their descriptions; teacher guides a brief whole-class discussion consolidating the idea that a mixture contains two or more substances that retain their own observable features."
+            }
+          ],
+          "teacher_notes": "This opening unit establishes the chapter's foundational concept — that mixtures contain components with distinct observable properties — which every later unit builds on. Watch for students who say the salt solution is not a mixture because they cannot see the salt; prompt them to taste a drop safely or think about what would happen if the water dried up. A useful checkpoint is whether students can name at least one observable property for each component in each mixture before the unit closes.",
+          "materials": [
+            "Small bowl of rice with a few stones mixed in",
+            "A cup of salt dissolved in water",
+            "A small tray of sawdust mixed with iron nails",
+            "Observation recording sheets",
+            "Pencils"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 40,
+          "progression_stage": 1,
+          "stage_label": "Observe and describe mixtures",
+          "pedagogical_approach": "Discovery approach",
+          "activity_title": "The property trail",
+          "activity_description": "Students sort the observable properties they recorded in the previous unit into categories — size, colour, shape, density or weight, magnetic character, solubility — and discuss which properties make a component stand out in its mixture. They discover that each separation challenge is really a property difference in disguise.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Provides a set of property cards and guides students to match each observation from the previous unit to a named property category."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Review their own observation notes and independently sort each observation onto the property trail chart before comparing with a partner."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Combine individual sorts into a group consensus chart and present one example of each property category to the class."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher briefly revisits the three mixtures from the previous unit and introduces the idea that every observable difference is a physical property that can be named."
+            },
+            {
+              "minutes": "6-20",
+              "activity": "Students individually revisit their observation notes and sort each described feature — large, small, heavy, light, shiny, attracted to magnet, dissolves — onto a property trail chart under size, colour, shape, density, magnetic character, or solubility."
+            },
+            {
+              "minutes": "20-32",
+              "activity": "Groups compare individual charts, reconcile differences, and produce a consensus trail chart with one example per property category drawn from the mixtures they examined."
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Two or three groups share their trail chart; teacher consolidates by writing the six property categories on the board and affirming that these are the differences separation methods exploit."
+            }
+          ],
+          "teacher_notes": "In the previous unit students described what they saw; this unit asks them to name and categorise those descriptions as physical properties, which is the cognitive step that makes the rest of the chapter coherent. A common error is conflating density with size — students may say the stone is heavy because it is big; press them to consider a tiny metal ball versus a large styrofoam block to separate the two ideas. If groups finish the chart quickly, ask them to add a fourth mixture of their own invention and identify which property category it exploits.",
+          "materials": [
+            "Students' observation recording sheets from previous unit",
+            "Property trail chart (pre-drawn with six labelled columns)",
+            "Property label cards (size, colour, shape, density/weight, magnetic character, solubility)",
+            "Pencils or markers"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 40,
+          "progression_stage": 2,
+          "stage_label": "Classify methods by the property each exploits",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Handpicking, threshing, and winnowing — differences you can see and feel",
+          "activity_description": "Students perform handpicking on a grain-and-stones mixture, simulate threshing by striking a seed head against a surface, and carry out Activity 9.1 by rubbing peanuts and blowing away the skin. They identify which observable property difference each method uses.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Demonstrates the threshing action and sets up the peanut rubbing activity, then asks probing questions to link each method to its underlying property."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Perform all three separation actions, record which component is removed and by what means, and identify the property difference that makes each method work."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-5",
+              "activity": "Teacher connects this unit to the property trail from the previous unit, asking which property — size, colour, shape — would let you pick a component out by eye and hand."
+            },
+            {
+              "minutes": "5-15",
+              "activity": "Groups handpick stones from a rice-and-stones mixture, noting that differences in size, colour, and shape make the stones easy to distinguish and remove one by one."
+            },
+            {
+              "minutes": "15-25",
+              "activity": "Students simulate threshing by striking a small dried grass stem or a seed head against the edge of a book so seeds fall free, observing that the grains detach because the stalk and grain are joined loosely."
+            },
+            {
+              "minutes": "25-37",
+              "activity": "Students carry out Activity 9.1 — rubbing peanuts between palms and blowing gently — observing that lighter skin flies away while heavier peanut kernels fall, identifying density and weight difference as the property winnowing uses."
+            },
+            {
+              "minutes": "37-40",
+              "activity": "Quick whole-class share: each group states the property each method exploits; teacher records the three method–property pairs on the board."
+            }
+          ],
+          "teacher_notes": "This unit opens the classification work of Stage 2 by giving students direct physical experience of three methods before asking them to classify. Watch for the common misconception that winnowing works because the skin is thin, not because it is lighter — redirect attention to what happens if you try to blow the heavy kernel and why it does not move. The board record of method–property pairs begun here will be extended across the next several units.",
+          "materials": [
+            "Small quantity of rice mixed with a few small stones",
+            "Peanuts in shell (whole) or peanuts with loose skin",
+            "Dried grass stems or a small dried seed head (e.g. dried millet sprig)",
+            "Observation recording sheets",
+            "Pencils"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 40,
+          "progression_stage": 2,
+          "stage_label": "Classify methods by the property each exploits",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Sieving — size decides what passes",
+          "activity_description": "Students sieve a mixture of coarse and fine particles — such as sand mixed with small pebbles, or bran mixed with flour — using a mesh strainer. They observe which component passes through and which is retained, and articulate that particle size is the operative property.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Sets up sieving stations with two different mesh sizes and poses the question of what would change if the mesh holes were larger or smaller."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Sieve the mixture through each mesh size, record what passes and what remains, and explain in writing why sieving only works when components differ in particle size."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-5",
+              "activity": "Teacher connects to the board record from the previous unit and asks: which property from the trail chart has not yet appeared as the basis of a method?"
+            },
+            {
+              "minutes": "5-18",
+              "activity": "Groups sieve a sand-and-pebble mixture through a coarse sieve, recording which particles pass through and which do not, then predict what would happen with a finer mesh."
+            },
+            {
+              "minutes": "18-28",
+              "activity": "Groups repeat the sieve step using a finer sieve on a flour-and-bran mixture (or a mixture with finer particles), confirming that fine particles pass through while larger ones are retained regardless of colour or weight."
+            },
+            {
+              "minutes": "28-38",
+              "activity": "Groups write one sentence explaining the property sieving exploits and predict whether sieving could separate salt from sand — discussing why or why not."
+            },
+            {
+              "minutes": "38-40",
+              "activity": "Teacher adds sieving to the board method–property record and briefly notes the chapter's example of bran being sieved from wheat flour before dough is kneaded."
+            }
+          ],
+          "teacher_notes": "This unit extends the method–property classification chart to sieving, which is the clearest demonstration that particle size alone determines whether a method works. A persistent error is students predicting that sieving could separate salt from sand because salt crystals are small — they are right that salt passes through a coarse sieve, but guide them to ask what happens when salt dissolves and whether sieving retrieves it then. If groups finish early, ask them to predict the minimum property difference required for sieving to be effective.",
+          "materials": [
+            "Coarse mesh sieve or kitchen strainer",
+            "Fine mesh sieve",
+            "Sand mixed with small pebbles",
+            "Flour mixed with bran (or semolina mixed with flour)",
+            "Plates or bowls to collect sieved material",
+            "Observation recording sheets"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 40,
+          "progression_stage": 2,
+          "stage_label": "Classify methods by the property each exploits",
+          "pedagogical_approach": "Demonstration",
+          "activity_title": "Sedimentation and decantation — gravity does the work",
+          "activity_description": "Teacher demonstrates sedimentation by adding a spoonful of soil to a beaker of water and allowing it to settle, then decants the clear water into a second beaker. Students observe, predict how complete the separation is, and identify density difference as the property the method uses.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Performs the sedimentation and decantation demonstration, pausing at each stage to ask students to predict what will happen next and why."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Record observations at each stage of the demonstration, identify the property that causes the soil to settle, and note the limitation that decantation does not remove all particles."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher introduces sedimentation through the chapter's tea-making scene — asking why, if you leave muddy water undisturbed, the water above becomes clearer over time."
+            },
+            {
+              "minutes": "6-18",
+              "activity": "Teacher stirs a spoonful of soil into a transparent beaker of water, and students observe and sketch the mixture immediately, noting that heavier particles begin to settle to the bottom because of their greater density."
+            },
+            {
+              "minutes": "18-30",
+              "activity": "After sediment has settled, teacher slowly tilts and pours the upper clear liquid into a second beaker, demonstrating decantation; students note that some fine particles remain and the sediment retains some water."
+            },
+            {
+              "minutes": "30-38",
+              "activity": "Teacher adds a layer of oil on top of water in a third beaker and demonstrates decantation of the two liquid layers, connecting to the chapter's note that oil and water can also be separated this way."
+            },
+            {
+              "minutes": "38-40",
+              "activity": "Students add the method–property pair for sedimentation and decantation to their board record: density difference allows heavier components to settle."
+            }
+          ],
+          "teacher_notes": "This unit introduces the first method that relies on a density difference between a solid and a liquid rather than between solid components, which is a new kind of property relationship for students. The key misconception to address is that decantation fully separates the mixture — students often assume the poured liquid is completely clean; the demonstration of residual fine particles in the decanted liquid is critical. Ask students after the oil-water demonstration: why does the oil always float on top and never the other way round?",
+          "materials": [
+            "Two transparent glass beakers",
+            "Soil or garden mud",
+            "Water",
+            "Spoon or stirring rod",
+            "A small quantity of cooking oil",
+            "Third transparent beaker or glass"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 40,
+          "progression_stage": 2,
+          "stage_label": "Classify methods by the property each exploits",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Filtration — the strainer and the funnel",
+          "activity_description": "Students perform Activity 9.4 — setting up laboratory filtration with a folded filter paper in a funnel over a conical flask, pouring muddy water through, and collecting the filtrate. They compare filtration with decantation and identify why filtration removes more particles.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Demonstrates the correct folding of filter paper into a cone and placement in the funnel, then circulates to check each group's setup before they pour."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Assemble the filtration apparatus, pour muddy water through, observe the filtrate and residue, and record a written comparison of filtration with decantation from the previous unit."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher connects to the previous unit's demonstration: decantation left fine particles behind — students are asked what additional physical barrier might remove them."
+            },
+            {
+              "minutes": "7-20",
+              "activity": "Teacher demonstrates folding filter paper into a cone; groups fold their own paper, place it in the funnel, and set up the apparatus over a conical flask or beaker."
+            },
+            {
+              "minutes": "20-32",
+              "activity": "Groups pour muddy water through the filter paper in small quantities, observing the clear filtrate collecting below and the mud residue remaining on the paper."
+            },
+            {
+              "minutes": "32-38",
+              "activity": "Groups write a two-column comparison: decantation versus filtration — what each removes, what it leaves behind, and why filtration is more complete."
+            },
+            {
+              "minutes": "38-40",
+              "activity": "Teacher adds filtration to the board method–property record, noting that pore size in the filter medium determines which particles are trapped."
+            }
+          ],
+          "teacher_notes": "This unit builds directly on the previous unit's decantation demonstration by giving students a method that addresses its limitation, creating a natural comparative moment. A common procedural error is overfilling the filter paper cone so that liquid spills around the outside; remind students to fill only to about two-thirds of the paper. Watch for students who describe filtration as working because of gravity — redirect to the role of the physical barrier: the filter paper's pores, not gravity alone, do the separating work.",
+          "materials": [
+            "Filter paper (circular)",
+            "Funnel",
+            "Conical flask or large beaker",
+            "Ring stand or support for funnel",
+            "Muddy water",
+            "Small beaker for pouring",
+            "Observation recording sheets"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 40,
+          "progression_stage": 2,
+          "stage_label": "Classify methods by the property each exploits",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Design a water filter — Activity 9.5",
+          "activity_description": "Students design and build a simple working water filter from low-cost materials — layers of cotton, sand, and charcoal in a cut plastic bottle — pour muddy water through it, and record the clarity of the output. They explain which layer removes which size of particle.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Presents the design challenge, makes available the filtering materials, and guides students to think about how particle size relates to the gap between filter material grains."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Plan their layer sequence, assemble the filter, test it with muddy water, observe the output, and explain in writing why their chosen layer order works."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher poses the design challenge: using cotton, sand, and charcoal, can you build a filter that produces clearer water than the filter paper setup from the previous unit — or at least as clear?"
+            },
+            {
+              "minutes": "6-20",
+              "activity": "Groups plan their layer sequence on paper, reasoning about which material has the largest gaps (cotton), intermediate gaps (coarse sand), and smallest effective gaps (charcoal and fine sand) for trapping particles of different sizes."
+            },
+            {
+              "minutes": "20-34",
+              "activity": "Groups assemble their filter in a cut plastic bottle with a small hole at the cap end, pour muddy water through, and collect and observe the output compared with unfiltered water."
+            },
+            {
+              "minutes": "34-40",
+              "activity": "Groups report their output clarity and explain which layer they believe did most of the coarse separation and which handled finer particles, connecting back to the pore-size principle from Activity 9.4."
+            }
+          ],
+          "teacher_notes": "This unit extends the filtration concept from the structured Activity 9.4 into an inquiry design task, asking students to reason about pore size across multiple filter materials — cotton, sand, and charcoal. Watch for groups who believe more layers always produce cleaner water regardless of order; push them to justify why a coarser layer should come before a finer one. The chapter notes that sand and charcoal can serve as filters, so this design exercise is firmly grounded in the chapter's content.",
+          "materials": [
+            "Cut plastic bottles (1.5 L, top and bottom portions)",
+            "Cotton wool",
+            "Coarse sand",
+            "Fine sand or gravel",
+            "Charcoal pieces (small)",
+            "Muddy water",
+            "Clear collection beakers",
+            "Rubber bands or tape to hold filter layers"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 40,
+          "progression_stage": 2,
+          "stage_label": "Classify methods by the property each exploits",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Churning and magnetic separation — density and attraction",
+          "activity_description": "Students simulate churning by shaking a small jar of full-cream milk or curd and skimming off the fat layer that rises, then pass a magnet through an iron-nails-and-sawdust mixture and collect the nails. They identify the contrasting properties — density difference and magnetic character — that make these two methods possible.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Sets up both stations, explains the industrial context of magnetic separation for scrap iron recycling, and asks students to compare how the two methods differ in the force they use."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Perform both separation actions, record the property exploited by each, and produce a completed method–property entry for the board record for churning and magnetic separation."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-5",
+              "activity": "Teacher connects to the chapter's narrative: Malli and Valli encounter butter being made at a dhaba and iron nails retrieved in Shillong — two very different separation problems."
+            },
+            {
+              "minutes": "5-18",
+              "activity": "Groups shake a small sealed jar containing a tablespoon of cream or full-cream milk for an extended period, observe fat beginning to clump and rise, and record that lighter fat floats because its density is lower than the surrounding buttermilk."
+            },
+            {
+              "minutes": "18-32",
+              "activity": "Groups pass a bar magnet slowly through a tray of iron nails mixed with sawdust, observe all nails attaching to the magnet while sawdust is unaffected, and record that magnetic character — not size or density — is the operative property."
+            },
+            {
+              "minutes": "32-38",
+              "activity": "Groups complete the board method–property record for churning and magnetic separation and write one sentence explaining how the force used in magnetic separation (magnetic attraction) differs from the force used in churning (rotation creating density-based separation)."
+            },
+            {
+              "minutes": "38-40",
+              "activity": "Teacher briefly notes industrial magnetic separation — crane-mounted magnets separating scrap iron from industrial waste — extending the chapter's own example."
+            }
+          ],
+          "teacher_notes": "This unit completes the classification sweep of Stage 2 by covering the two remaining methods — churning and magnetic separation — which exploit properties not yet encountered in this arc: density difference within a liquid and magnetic character. A frequent misconception is that churning works because the mathni breaks the butter into smaller pieces; redirect students to notice that butter floats and ask why — its lower density means it rises, then collects and can be skimmed. The contrast between the two methods in this unit (mechanical force versus magnetic force) is a productive discussion point.",
+          "materials": [
+            "Small sealed jars or containers",
+            "Full-cream milk or cream (a few tablespoons)",
+            "Bar magnets (one per group)",
+            "Iron nails (small, a handful)",
+            "Sawdust or fine wood shavings",
+            "Flat tray or plate",
+            "Observation recording sheets"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 40,
+          "progression_stage": 2,
+          "stage_label": "Classify methods by the property each exploits",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "Evaporation — converting a liquid to separate a dissolved solid",
+          "activity_description": "Teacher explains evaporation using the chapter's seawater-salt example, then students carry out Activity 9.2 by spreading salt solution on dark paper and observing the salt residue after the water evaporates. The class identifies that evaporation works because one component changes state while the other cannot.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Explains the definition of evaporation and the seawater salt-production context, then sets up Activity 9.2 and guides students to connect the observed residue to the concept of physical change of state."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Spread salt solution on dark paper, observe and record the appearance of salt crystals as the water evaporates, and explain in one sentence what property difference makes evaporation effective for this mixture."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher explains evaporation — the conversion of a liquid into its vapour — through the chapter's example of seawater in shallow coastal pits exposed to sunlight and air, clarifying that the water changes state while the dissolved salt does not."
+            },
+            {
+              "minutes": "8-22",
+              "activity": "Groups spread a few drops of salt solution on a piece of dark paper, leave it undisturbed, and observe the gradual appearance of white salt crystals as the water evaporates into the air — recording the change at intervals."
+            },
+            {
+              "minutes": "22-34",
+              "activity": "Teacher extends the discussion to Activity 9.3's heating method — using a spirit lamp to boil away water from a salt solution in a china dish — and describes the salt residue that remains, connecting faster evaporation to higher temperature."
+            },
+            {
+              "minutes": "34-40",
+              "activity": "Students add evaporation to the board method–property record, identifying solubility and state change as the operative properties, and note that evaporation is the only method in the chapter that works because a component changes physical state."
+            }
+          ],
+          "teacher_notes": "This unit introduces evaporation as the chapter's only method based on a physical change of state, which distinguishes it conceptually from all earlier methods and directly addresses the C-1.2 competency strand. A common error is students saying that evaporation removes the salt — clarify that it is the water that leaves (as vapour), and the salt that stays behind as residue. The Activity 9.2 dark-paper observation is especially useful because the white salt crystals are strikingly visible against the dark background, making the state change tangible.",
+          "materials": [
+            "Salt",
+            "Water",
+            "Dark construction paper or black card",
+            "Droppers or small spoons",
+            "A china dish (for the teacher's Activity 9.3 description reference)",
+            "Observation recording sheets"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 40,
+          "progression_stage": 2,
+          "stage_label": "Classify methods by the property each exploits",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "Evaporation by heating — Activity 9.3",
+          "activity_description": "Students heat a salt solution in a china dish over a spirit lamp, observing the water boiling away and salt crystals forming as residue. They connect the accelerated evaporation to the state-change mechanism and compare this heated evaporation with the slow natural evaporation from Activity 9.2.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Supervises the spirit lamp use, manages safety, and guides students to articulate the connection between heat, faster evaporation, and the unchanged nature of the remaining salt."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Heat the salt solution carefully, observe and record the stages from boiling liquid to dry salt residue, and write a comparison between the heated and natural evaporation methods."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher revisits the previous unit's dark-paper observation and asks: what would happen if we heated the solution — would the same residue form, only faster?"
+            },
+            {
+              "minutes": "6-24",
+              "activity": "Under teacher supervision, groups heat a small amount of salt solution in a china dish over a spirit lamp, observing the water beginning to bubble and steam and the liquid level dropping until only dry salt crystals remain in the dish."
+            },
+            {
+              "minutes": "24-34",
+              "activity": "Groups record the sequence of observations and write a comparison: natural evaporation in Activity 9.2 versus heated evaporation in Activity 9.3 — same result, different rate, same property (state change of water) doing the work."
+            },
+            {
+              "minutes": "34-40",
+              "activity": "Teacher consolidates by confirming that the salt in the dish is the same salt that was dissolved — evaporation changed only the water's state, not the salt's chemical nature — reinforcing evaporation as a physical change."
+            }
+          ],
+          "teacher_notes": "This unit extends the evaporation concept from the slow natural observation in the previous unit to the active heating investigation of Activity 9.3, giving students direct evidence that heat accelerates the same physical process. A misconception to address is that heating burns away the salt or changes it — the salt that crystallises in the dish is chemically identical to what was dissolved. Ensure all safety precautions for spirit lamp use are in place before groups begin, and remind students not to taste the residue.",
+          "materials": [
+            "China dishes (one per group)",
+            "Salt solution (pre-made)",
+            "Spirit lamps",
+            "Tripod stands",
+            "Wire gauze",
+            "Matchsticks",
+            "Safety gloves or tongs",
+            "Observation recording sheets"
+          ],
+          "homework": [
+            "Sketch the sequence of observations from Activity 9.3 — the solution before heating, at the boiling stage, and after the water has fully evaporated — and label what is happening to the water at each stage."
+          ]
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 40,
+          "progression_stage": 3,
+          "stage_label": "Explain the mechanism — why each property makes a method effective",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Why does this method work? Causal reasoning across methods",
+          "activity_description": "Students revisit the completed method–property board record and for each of the nine methods write a causal explanation: not just which property is used, but why that property difference causes the separation to happen. Groups compare explanations and identify where their reasoning differs.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Poses the central causal question for each method and probes explanations that state correlation rather than mechanism, pushing students toward cause-and-effect language."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Draft causal explanations for each method, compare drafts within the group, and revise any explanation that describes what happens without explaining why."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher explains the difference between describing what happens during separation and explaining why the property difference causes it — giving one example: 'sieving retains large particles because they are too large to pass through the holes; the hole size is the cause, not just the size of the particle.'"
+            },
+            {
+              "minutes": "6-24",
+              "activity": "Groups write causal explanations for all nine methods — for each, they state the property difference and then complete the sentence: 'this causes separation because…' — working through the full board record systematically."
+            },
+            {
+              "minutes": "24-36",
+              "activity": "Groups swap their written explanations with another group, identify one explanation in the other group's set that describes rather than explains, and write a suggested revision using causal language."
+            },
+            {
+              "minutes": "36-40",
+              "activity": "Teacher takes two contrasting examples from the class — one strong causal explanation and one descriptive one — and models the revision, establishing the causal-reasoning standard for this stage."
+            }
+          ],
+          "teacher_notes": "This unit opens Stage 3 by shifting the cognitive demand from classification to causal explanation — students must now say not just which property each method uses but why that property difference produces separation. This is the most common place where students plateau: they describe the event ('the magnet picks up the nails') without explaining the mechanism ('iron is attracted to a magnet while sawdust has no magnetic character, so the magnetic force acts selectively'). The group-swap revision step is particularly useful for surfacing this gap.",
+          "materials": [
+            "Students' completed method–property board record or individual copies",
+            "Writing paper",
+            "Pencils or pens"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 40,
+          "progression_stage": 3,
+          "stage_label": "Explain the mechanism — why each property makes a method effective",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Activity 9.6 — the separation matching game",
+          "activity_description": "Students play the chapter's Activity 9.6 consolidation game, matching twelve separation scenarios to the correct method and then writing a one-sentence causal justification for each match — explaining why the chosen method works for that scenario's specific property difference.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Facilitates the game, introduces two or three ambiguous scenarios where more than one method might be proposed, and challenges groups to defend their choice using causal language from the previous unit."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Match scenarios to methods, discuss disagreements within the group, and write causal justifications that name the property difference and explain why it makes the chosen method effective."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-5",
+              "activity": "Teacher introduces the game: each scenario card describes a mixture and asks which method should be used — groups must also write why, not just which."
+            },
+            {
+              "minutes": "5-25",
+              "activity": "Groups work through all scenario cards — including separating small stones from pulses, salt from salt solution, oil from water, iron filings from sand, and bran from flour — matching each to a method and drafting a causal justification."
+            },
+            {
+              "minutes": "25-36",
+              "activity": "Teacher presents two or three ambiguous scenarios where students in different groups chose different methods, and facilitates a class discussion: which method is more effective and why — is there more than one valid method?"
+            },
+            {
+              "minutes": "36-40",
+              "activity": "Class agrees on a canonical match for each ambiguous case, with teacher confirming that some mixtures can be separated by more than one method if the mixture contains the necessary property difference."
+            }
+          ],
+          "teacher_notes": "This unit applies the causal reasoning developed in the previous unit directly to the chapter's own Activity 9.6 consolidation scenarios, so every scenario is grounded in chapter content. Watch for groups who match by pattern-matching to the chapter's own examples rather than reasoning from the property; the ambiguous scenarios are specifically designed to break this shortcut. A productive challenge: ask what would happen if you tried winnowing to separate salt from sand — would it work, and why not?",
+          "materials": [
+            "Activity 9.6 scenario cards (printed or written on slips: e.g. separating small stones from pulses, salt from salt solution, oil from water, iron nails from sawdust, bran from flour, grains from husk, butter from curd — all from the chapter)",
+            "Answer recording sheets",
+            "Pencils"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 13,
+          "period_duration_minutes": 40,
+          "progression_stage": 3,
+          "stage_label": "Explain the mechanism — why each property makes a method effective",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "What makes filtration better than decantation? A targeted comparison",
+          "activity_description": "Students design and carry out a direct comparison between decantation and filtration on the same muddy-water sample, measure the difference in clarity of each output, and write a causal explanation for why filtration removes what decantation cannot.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Frames the inquiry question and asks students to predict the outcome before testing, then presses them to explain the mechanism — pore size as a physical barrier — not just the observed result."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Decant one portion of muddy water and filter another through filter paper, compare the two outputs visually, and write a causal explanation linking pore size to the completeness of separation."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher asks: from the scenario matching game, both decantation and filtration separated muddy water — but are they equally effective? Students make a written prediction before testing."
+            },
+            {
+              "minutes": "6-22",
+              "activity": "Groups pour the same muddy-water sample into two beakers — decanting one carefully into a clean beaker and filtering the other through filter paper — collecting both outputs side by side."
+            },
+            {
+              "minutes": "22-34",
+              "activity": "Groups compare the clarity of both outputs by holding them up to the light or against white paper, and write a causal explanation: decantation relies on gravity and density to settle particles, but fine particles remain suspended; filtration's physical pore barrier captures even fine particles."
+            },
+            {
+              "minutes": "34-40",
+              "activity": "Class shares explanations; teacher identifies which explanations correctly locate the cause in the pore-size mechanism rather than simply saying filtration is better."
+            }
+          ],
+          "teacher_notes": "This unit builds directly on the comparison task students encountered in the filtration unit by now requiring them to test the claim causally rather than accept it on description. The common error here is circular reasoning — students write that filtration is better because it filters more; push them to identify the structural feature (pore size of filter paper versus no barrier in decantation) that explains the difference. This unit pairs naturally with the design-filter unit earlier, completing the arc from hands-on to causal explanation for filtration.",
+          "materials": [
+            "Muddy water (same sample split into equal portions for each group)",
+            "Two clear beakers per group",
+            "Filter paper",
+            "Funnel",
+            "Support stand or funnel holder",
+            "White paper for comparison background",
+            "Observation recording sheets"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 14,
+          "period_duration_minutes": 40,
+          "progression_stage": 4,
+          "stage_label": "Apply: select the right method for an unfamiliar mixture",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "Reading the mixture — a property-first decision framework",
+          "activity_description": "Teacher introduces a structured property-first decision framework: before selecting a method, identify which properties the mixture's components differ in, then ask which method exploits that property. Students practice applying the framework to three teacher-posed unfamiliar mixtures.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Introduces the decision framework explicitly, models it step by step on one unfamiliar mixture, and then poses two further mixtures for students to work through individually."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Apply the property-first framework to the two teacher-posed mixtures, writing out each step — property difference identified, method selected, causal justification — before comparing with a partner."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher models the full framework on the unfamiliar example of separating whole peppercorns from powdered pepper: step one — identify property differences (size); step two — ask which method exploits size difference (sieving); step three — justify causally (peppercorns are too large to pass through a fine sieve's holes, powder passes through)."
+            },
+            {
+              "minutes": "10-26",
+              "activity": "Students individually apply the framework to two new mixtures: (1) a mixture of iron pins and aluminum foil strips — students must identify whether magnetic character is the operative property and whether magnetic separation applies; (2) a mixture of salt and fine sand — students must decide whether size or solubility is the useful property and which method it points to."
+            },
+            {
+              "minutes": "26-36",
+              "activity": "Students compare their framework write-ups with a partner, identify any step where they reached a different answer, and discuss the difference — particularly whether both properties they identified are real differences in the mixture."
+            },
+            {
+              "minutes": "36-40",
+              "activity": "Teacher takes the two contested cases and works through them with the class, emphasising that iron but not aluminum is magnetic (extending the chapter's magnetic-character concept) and that salt dissolves but sand does not (grounding the solubility distinction)."
+            }
+          ],
+          "teacher_notes": "This unit opens Stage 4 by giving students an explicit framework for the application task — property-first reasoning — rather than letting them pattern-match by memory. Watch for students who identify a property difference but then select a method that does not actually exploit it (e.g. identifying a size difference but choosing magnetic separation); the framework's step-two question 'which method exploits this property?' is the check. The iron-pins-versus-aluminum case is a deliberate extension beyond the chapter's own iron-sawdust example to test whether students have understood magnetic character as a property rather than memorised a single example.",
+          "materials": [
+            "Whiteboard or blackboard for modelling",
+            "Writing paper for students",
+            "Pencils",
+            "Optional: a small sample of whole peppercorns and powdered pepper to display as the model mixture"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 15,
+          "period_duration_minutes": 40,
+          "progression_stage": 4,
+          "stage_label": "Apply: select the right method for an unfamiliar mixture",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Three-mixture challenge — choose and justify",
+          "activity_description": "Each group receives three unfamiliar prepared mixtures not directly named in the chapter and must identify the operative property difference, select the appropriate separation method, carry out the separation, and evaluate whether the output matches their prediction.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Prepares the three unfamiliar mixtures, circulates to ask groups to articulate their framework reasoning before they begin the physical separation, and challenges any group whose selection does not follow from their property identification."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Apply the property-first framework to each mixture, carry out the chosen separation, record whether the output matches their prediction, and revise their causal explanation if the result was unexpected."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-5",
+              "activity": "Teacher distributes the three mixture trays and instructs groups to complete step one and two of the framework in writing before touching the materials."
+            },
+            {
+              "minutes": "5-25",
+              "activity": "Groups work through all three mixtures in sequence: for each, they record the property difference, select and justify the method, carry out the separation using available materials, and record the output."
+            },
+            {
+              "minutes": "25-36",
+              "activity": "Groups write a reflection on any case where the output did not match their prediction — identifying whether their property identification was wrong, their method selection was wrong, or their technique was flawed."
+            },
+            {
+              "minutes": "36-40",
+              "activity": "One group per mixture presents their property identification and method selection; class discusses any cases where different groups chose different methods for the same mixture and evaluates which is more effective."
+            }
+          ],
+          "teacher_notes": "This unit is the practical application test of the framework introduced in the previous unit — students must now use it without a model being demonstrated first. A useful set of three mixtures: (1) a mixture of rice and lentils (same rough size but slightly different size variation — sieving with a specific mesh size), (2) a mixture of sugar and sand (solubility — evaporation or water-dissolve-and-evaporate), and (3) a mixture of iron filings and rice (magnetic separation). Ensure the reflection step happens even when predictions were correct — asking why the method worked reinforces causal reasoning rather than just successful procedure.",
+          "materials": [
+            "Tray 1: rice mixed with lentils and a sieve with appropriate mesh",
+            "Tray 2: sugar mixed with sand, water, beaker, filter paper, and china dish",
+            "Tray 3: iron filings mixed with rice and a bar magnet",
+            "Framework recording sheets",
+            "Pencils"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 16,
+          "period_duration_minutes": 40,
+          "progression_stage": 4,
+          "stage_label": "Apply: select the right method for an unfamiliar mixture",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Multi-step separation — a mixture with more than one problem",
+          "activity_description": "Students receive a complex mixture containing sand, salt, and iron filings, and must plan and carry out a two-step separation sequence — magnetic separation first, then filtration or evaporation — justifying the order of steps and the reason each method is needed.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Introduces the multi-step challenge and asks students to plan their step sequence in writing before beginning, probing whether they recognise that order matters."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Plan the two-step sequence with written justification, carry out both steps, record the products of each step, and evaluate whether each step was necessary and well-ordered."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher presents the mixture — sand, salt, and iron filings — and asks: can one method separate all three? Students discuss and quickly establish that no single method works for all three components simultaneously."
+            },
+            {
+              "minutes": "8-20",
+              "activity": "Groups plan their step sequence: step one removes iron filings using magnetic separation (because the magnet is selective for iron and does not interfere with the salt or sand); step two separates salt from sand using water dissolution, filtration to remove sand, and then evaporation to recover the salt."
+            },
+            {
+              "minutes": "20-34",
+              "activity": "Groups carry out their planned sequence, recording the product of each step and noting whether the iron filings, sand, and salt are each successfully isolated."
+            },
+            {
+              "minutes": "34-40",
+              "activity": "Groups evaluate their written plan against their actual results: did the order of steps matter? What would happen if they had tried to evaporate first, before removing the iron filings?"
+            }
+          ],
+          "teacher_notes": "This unit extends application from single-step to multi-step separation, which is the chapter's highest practical demand. The key reasoning challenge is the order of steps: if students attempt to add water to dissolve salt before removing iron filings, the iron filings become wet and harder to retrieve by magnet — push students to reason about whether the order they chose is the only valid order or just one valid order. This unit naturally draws on all the method knowledge from Stage 2 and the causal reasoning from Stage 3, so it is an organic synthesis of both preceding stages.",
+          "materials": [
+            "Sand",
+            "Table salt",
+            "Iron filings",
+            "Mixing tray",
+            "Bar magnet",
+            "Water",
+            "Beaker",
+            "Filter paper and funnel",
+            "China dish",
+            "Spirit lamp and tripod (optional, for evaporation step)",
+            "Recording sheets"
+          ],
+          "homework": [
+            "Describe a two-step separation challenge from your own kitchen or home — name the mixture, the two components to be separated, the property difference you would use for each step, and the method you would choose, giving a causal justification for each step."
+          ]
+        },
+        {
+          "period_number": 17,
+          "period_duration_minutes": 40,
+          "progression_stage": 4,
+          "stage_label": "Apply: select the right method for an unfamiliar mixture",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Evaluating methods — when does a method fail?",
+          "activity_description": "Students are presented with four scenarios where the wrong method was used for a given mixture and must identify what went wrong — which property difference was ignored — and propose the correct method. They explain why the chosen method failed in causal terms.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Presents the four failure scenarios and asks students to diagnose the failure by tracing back to the property identification step of the framework, not just naming the right method."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Independently diagnose each failure scenario, identify the step in the framework where reasoning broke down, and write a corrected framework application for each case."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher introduces four failure scenarios: (1) trying to separate a salt solution by sieving — why does it fail? (2) trying to separate husk from grain by filtration — why does it fail? (3) trying to separate oil from water by evaporation — why does it fail? (4) trying to separate iron nails from sawdust by winnowing — whether it could partially work and why."
+            },
+            {
+              "minutes": "6-24",
+              "activity": "Students work individually on each scenario, writing a diagnosis: which property difference does this mixture have, which property does the chosen method exploit, and why are these mismatched — the failure is always a property mismatch."
+            },
+            {
+              "minutes": "24-34",
+              "activity": "Students share diagnoses with a partner and together identify one scenario where the wrong method might have partially worked by accident and one where it would completely fail — distinguishing partial from complete failure."
+            },
+            {
+              "minutes": "34-40",
+              "activity": "Teacher consolidates: every separation method failure is a property mismatch — the method requires a property difference the mixture does not have, or has the wrong kind. This is the chapter's core principle stated explicitly."
+            }
+          ],
+          "teacher_notes": "This unit deliberately presents failure cases to build robust understanding — students who can diagnose why a method fails understand the mechanism more deeply than those who only know when it succeeds. The scenario of trying to separate iron nails from sawdust by winnowing is the most productive: sawdust is lighter, so winnowing might remove some sawdust but the iron nails are heavy and would also fall with the heavier fraction — ask students whether this is a complete failure or only a partial one. Failure scenario analysis is grounded entirely in the chapter's own method descriptions.",
+          "materials": [
+            "Failure scenario cards (four printed or written scenarios as described)",
+            "Framework recording sheets or blank paper",
+            "Pencils"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 18,
+          "period_duration_minutes": 40,
+          "progression_stage": 4,
+          "stage_label": "Apply: select the right method for an unfamiliar mixture",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "Evaporation as physical change — connecting state change to separation",
+          "activity_description": "Students explicitly connect the evaporation mechanism to the broader concept of physical change: water changes state (liquid to vapour) while the dissolved salt does not, and this state-change difference is what makes the separation possible. They classify evaporation as both a separation method and a physical change.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Leads a structured explanation connecting evaporation as a separation method (from the classification stage) to evaporation as a physical change (state change of water), and asks students to explain why no other method in the chapter involves a state change."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Write a structured comparison: evaporation versus all other chapter methods — identifying which property each method uses and confirming that evaporation alone involves a physical change of state as the separation mechanism."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher explains the distinction: every other method in the chapter separates components without changing either component's physical state — sieving, filtration, decantation, magnetic separation, churning, and winnowing all leave their components as they were. Evaporation is different because water undergoes a physical change of state from liquid to vapour, and that change is the mechanism."
+            },
+            {
+              "minutes": "10-24",
+              "activity": "Students write a structured comparison table: for each of the nine methods, they record the property used and whether either component undergoes a physical change of state — confirming that evaporation is the only method in the chapter where a state change is the mechanism."
+            },
+            {
+              "minutes": "24-36",
+              "activity": "Students write two to three sentences explaining why evaporation can separate a dissolved solid from a liquid when no physical barrier (like a filter) exists: the solid cannot evaporate under these conditions, so only the liquid leaves."
+            },
+            {
+              "minutes": "36-40",
+              "activity": "Teacher briefly consolidates: this unit prepares the class for the synthesis unit by making explicit that the chapter's two co-central ideas — classifying by property and understanding evaporation as physical change — are both present in the single method of evaporation."
+            }
+          ],
+          "teacher_notes": "This unit makes the conceptual link that the chapter's two competency strands — property-based classification and physical change — converge at the evaporation method, and it is important to state this explicitly because students may have treated the two strands as unrelated. A common difficulty is students saying that evaporation 'removes' the water rather than that the water changes state and leaves — the state-change framing is the one the chapter uses and the one that connects to C-1.2. The comparison table in this unit draws together all nine methods from Stage 2, so it also serves as a review before the synthesis unit.",
+          "materials": [
+            "Blank comparison table (columns: method, property used, state change involved — yes/no, which component)",
+            "Pencils or pens"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 19,
+          "period_duration_minutes": 40,
+          "progression_stage": 4,
+          "stage_label": "Apply: select the right method for an unfamiliar mixture",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Separation fair — present, justify, and challenge",
+          "activity_description": "Groups each prepare a one-minute explanation of one assigned method, presenting the property it exploits, the mechanism that causes separation, and an unfamiliar mixture (not from the chapter) where it could be applied. Other groups ask one challenge question after each presentation.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Assigns one method per group, circulates during preparation to ensure presentations include property identification, causal mechanism, and an unfamiliar application, and facilitates the challenge questions."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Prepare and deliver a presentation on their assigned method meeting all three required elements, and ask one challenge question of another group's presentation."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Groups are assigned their method and prepare their presentation — drafting a property identification statement, a causal mechanism sentence, and identifying an unfamiliar application mixture not directly described in the chapter."
+            },
+            {
+              "minutes": "10-34",
+              "activity": "Groups deliver their presentations in turn — each covering the assigned method, the property it exploits, the mechanism, and the unfamiliar application — while other groups listen and prepare one challenge question."
+            },
+            {
+              "minutes": "34-40",
+              "activity": "Two or three challenge questions are asked and answered; teacher highlights any answer that demonstrates strong causal reasoning across the two co-central ideas — property classification and physical change — as a preview of the synthesis unit."
+            }
+          ],
+          "teacher_notes": "This unit completes Stage 4's application work and consolidates the full method set before the synthesis unit, which is the next and final unit of this plan. Assign evaporation to a group and ask them specifically to include the state-change mechanism in their presentation, as this will be the group whose answer most directly models the synthesis reasoning. The challenge-question round is where misconceptions surface most reliably — if a group claims that decantation and filtration are interchangeable, the challenge question from another group is the best venue to correct that claim. This unit requires no physical separation materials — it is a prepare-and-present unit.",
+          "materials": [
+            "Assignment slips (one method per group)",
+            "Paper or mini whiteboards for preparation notes",
+            "Pencils or markers"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 20,
+          "period_duration_minutes": 40,
+          "progression_stage": 5,
+          "stage_label": "Whole-chapter synthesis: classify by property and select the method",
+          "synthesis": true,
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Distributes the challenge set, circulates without providing answers, and asks probing questions to ensure students reason from property to method rather than from memory of chapter examples."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Work independently through all six challenges, writing a property identification, a method selection, and a causal justification for each, then compare their answers with a partner for the two-step case."
+            }
+          ],
+          "activity_title": "The Grain-Mill Mystery: Reading a Mixture and Planning the Work",
+          "activity_description": "Students receive a set of situation cards describing a small flour-mill operator who has ended up with a single unwanted heap containing: wheat grains mixed with small pebbles, loose husk, iron bolt fragments (dropped during a repair), and a bag of spilled salt that dissolved in rainwater that soaked the heap. Students must read the heap as a set of property differences, decide which methods can be applied and in what order, justify each step by naming the physical property it exploits, identify where a physical change of state occurs, and produce a written separation plan. The plan is then tested against a class error-analysis card that describes a neighbour's attempted — but flawed — sequence, which the students must diagnose and correct. The task itself performs the synthesis: every concept from the chapter is called on by the properties of this single unfamiliar heap.",
+          "teacher_notes": "This closing application requires every separation method from the chapter — magnetic separation, winnowing, sieving/handpicking, and evaporation — all demanded by a single unfamiliar heap; the highest-demand move is ordering, since students must see that dry-phase separations must precede any water-based step (see material: 'Error-analysis card'). Circulate during plan-writing without correcting ordering errors aloud, saving them for the error-analysis card; when students diagnose the neighbour's magnetic-separation struggle, press them to confirm that the magnetic property of iron is unchanged by water, so the lesson is about practical sequencing, not property loss. The property reference chart builds live on the board in the opening exchange (see material: 'Class property reference chart').",
+          "materials": [
+            "Situation card, one per pair (see visual aid: 'Grain-mill situation card')",
+            "Error-analysis card, one per pair (see visual aid: 'Neighbour's flawed sequence — error-analysis card')",
+            "Blank paper or notebooks for the written separation plan",
+            "Pencils or pens",
+            "Class property reference chart drawn on the board before the period (see visual aid: 'Class property reference chart')"
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher places the situation card in front of each pair and reads it aloud once: a flour-mill owner has a heap that is a mixture of wheat grains, small pebbles, loose husk, iron bolt fragments, and rainwater that has dissolved a spilled bag of salt into the heap. The question is simple and immediate: 'Before you plan anything, tell your partner every difference you can observe between any two things in this heap.' Pairs talk; teacher takes three or four responses aloud and writes the properties named on the board — size, weight relative to air, magnetic character, solubility in water, whether something is solid or dissolved — building the property column of the reference chart live."
+            },
+            {
+              "minutes": "7-22",
+              "activity": "Pairs write their separation plan. For each step they must write: (a) the component being separated, (b) the property that makes separation possible at this step, (c) the method name, and (d) one sentence explaining why this step must come before or after an adjacent step. Teacher circulates and asks pairs who finish early to check whether their plan would still work if they swapped any two consecutive steps. The teacher listens for — and does not correct aloud — errors in ordering, saving those for the error-analysis card."
+            },
+            {
+              "minutes": "22-30",
+              "activity": "Teacher distributes the error-analysis card. Pairs read the neighbour's flawed sequence: the neighbour winnows the dry portion first (correct), then adds water to dissolve the salt, then tries to filter the slurry to remove pebbles (partially correct), then attempts magnetic separation on the wet iron fragments (physically possible but the neighbour abandons it, thinking the magnet 'stopped working'), then evaporates the filtrate to recover salt (correct). Pairs must write: (i) which step caused the neighbour to struggle and why, naming the property issue; (ii) a corrected version of just the flawed portion; (iii) the name of the physical change that occurs at the evaporation step and what is produced."
+            },
+            {
+              "minutes": "30-38",
+              "activity": "Whole-class discussion. Teacher asks one pair to read their diagnosis of the neighbour's error. Class agrees or challenges. Teacher presses: 'Does the magnetic property of iron change when it is wet?' — students conclude no, the property is unchanged but the practical execution is harder, and the real lesson is that dissolving the salt before completing dry-phase separations creates unnecessary difficulty. A second pair reads their description of the evaporation step; teacher asks the class to name the state change (liquid water to water vapour) and the component recovered (salt as solid residue). Teacher adds the method and physical-change columns to the board chart, completing it."
+            },
+            {
+              "minutes": "38-40",
+              "activity": "Teacher closes the unit without summarising each method individually. Instead: 'Every step in your plan worked because of a physical difference that was already in the heap — you did not put the difference there, you read it. That is what this chapter has been about.' The board chart — property, method, physical change — stays visible as the chapter's final image."
+            }
+          ],
+          "homework": [],
+          "pedagogical_approach": "Problem-based Learning",
+          "visual_aids": [
+            {
+              "type": "prose",
+              "title": "Grain-mill situation card",
+              "text": "A flour-mill operator has ended up with a single unwanted heap containing: wheat grains mixed with small pebbles, loose husk, iron bolt fragments dropped during a repair, and rainwater that soaked the heap and dissolved a spilled bag of salt into it. Your tasks: (1) List every observable difference between any two components in this heap. (2) Write a step-by-step separation plan. For each step write — (a) the component being separated, (b) the property that makes separation possible at this step, (c) the method name, and (d) one sentence explaining why this step must come before or after the adjacent step. (3) Identify where a physical change of state occurs in your plan and name what is produced."
+            },
+            {
+              "type": "table",
+              "title": "Neighbour's flawed sequence — error-analysis card",
+              "table": "A neighbouring mill owner attempted the same separation in this order\nStep | What the neighbour did\n1 | Winnowed the dry portion to remove loose husk (the dry heap was spread out and air was blown across it)\n2 | Added water to the remaining heap to dissolve the salt, creating a wet slurry\n3 | Filtered the slurry through a cloth to remove pebbles and wheat grains\n4 | Attempted magnetic separation on the wet iron bolt fragments in the residue; found the process very difficult and concluded that the magnet had 'stopped working', so abandoned this step\n5 | Evaporated the filtrate (the salty water that passed through the cloth) to recover the salt as a solid residue"
+            },
+            {
+              "type": "prose",
+              "title": "Error-analysis tasks",
+              "text": "Your tasks: (i) Identify which step caused the neighbour to struggle and explain why, naming the property issue precisely. (ii) Write a corrected version of only the flawed portion of the sequence. (iii) Name the physical change that occurs at Step 5 and state what is produced."
+            },
+            {
+              "type": "table",
+              "title": "Class property reference chart",
+              "table": "Component | Key property | Method that uses it | Physical change involved\nLoose husk | Light relative to air (low density); carried by wind | Winnowing | None\nSmall pebbles | Larger particle size than grain (or manually distinguishable) | Sieving or handpicking | None\nIron bolt fragments | Attracted to a magnet (magnetic character) | Magnetic separation | None\nSalt (dissolved in rainwater) | Soluble in water; water evaporates at lower temperature than salt decomposes | Evaporation | Liquid water → water vapour; salt remains as solid residue\nWheat grains | Retained after husk, pebbles, iron, and salt are removed | Remaining component after all steps | None"
+            }
+          ]
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 40,
+        "count": 20
+      }
+    ],
+    "coverage_handoff": [
+      {
+        "stage_number": 1,
+        "stage_label": "Observe and describe mixtures",
+        "total_stages": 5,
+        "period_numbers": [
+          1,
+          2
+        ],
+        "period_duration_minutes": 40,
+        "activity_summary": "Students examine a range of mixtures and categorise the observable physical properties — size, colour, shape, density, magnetic character, solubility — that distinguish each component.",
+        "implied_lo": "Students can identify and name at least four observable physical properties of the components in a given mixture and explain why those properties make the components distinguishable.",
+        "cg": "CG-1",
+        "c_code": "C-1.1",
+        "co_central": true
+      },
+      {
+        "stage_number": 2,
+        "stage_label": "Classify methods by the property each exploits",
+        "total_stages": 5,
+        "period_numbers": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "period_duration_minutes": 40,
+        "activity_summary": "Students perform or observe all nine separation methods — handpicking, threshing, winnowing, sieving, sedimentation and decantation, filtration, churning, magnetic separation, and evaporation — and for each identify and record the specific physical property difference that makes the method possible.",
+        "implied_lo": "Students can match each of the nine separation methods to the physical property it exploits and produce a completed method–property record that correctly pairs all nine methods with the appropriate property.",
+        "cg": "CG-1",
+        "c_code": "C-1.1",
+        "co_central": true
+      },
+      {
+        "stage_number": 3,
+        "stage_label": "Explain the mechanism — why each property makes a method effective",
+        "total_stages": 5,
+        "period_numbers": [
+          11,
+          12,
+          13
+        ],
+        "period_duration_minutes": 40,
+        "activity_summary": "Students move from classification to causal explanation, writing mechanism-level justifications for why each property difference causes each method to work, and diagnosing where a descriptive account lacks causal force.",
+        "implied_lo": "Students can write a causal explanation for at least six of the nine separation methods, stating both the property difference and the mechanism by which that difference produces the separation.",
+        "cg": "CG-1",
+        "c_code": "C-1.2",
+        "co_central": true
+      },
+      {
+        "stage_number": 4,
+        "stage_label": "Apply: select the right method for an unfamiliar mixture",
+        "total_stages": 5,
+        "period_numbers": [
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "period_duration_minutes": 40,
+        "activity_summary": "Students apply a property-first decision framework to unfamiliar mixtures — including multi-step separation challenges — to select the appropriate method, carry out the separation, evaluate failures caused by property mismatch, and connect evaporation explicitly to physical change of state as a separation mechanism.",
+        "implied_lo": "Students can select and justify the appropriate separation method for an unfamiliar mixture by identifying its operative physical property difference, carry out a two-step separation for a mixture with two independent property differences, and explain why evaporation involves a physical change of state while all other chapter methods do not.",
+        "cg": "CG-1",
+        "c_code": "C-1.2",
+        "co_central": true
+      },
+      {
+        "stage_number": 5,
+        "stage_label": "Whole-chapter synthesis: classify by property and select the method",
+        "total_stages": 5,
+        "period_numbers": [
+          20
+        ],
+        "period_duration_minutes": 40,
+        "activity_summary": "Students independently reason from observable physical property descriptions to method selection and causal justification across six unfamiliar challenges, including a two-step case, drawing together both the classification and the physical-change strands of the chapter.",
+        "implied_lo": "Students can classify the components of an unfamiliar mixture by their observable physical properties and select and causally justify the appropriate separation method — or sequence of methods — including identifying when evaporation's state-change mechanism is the operative one.",
+        "cg": "CG-1",
+        "c_code": "C-1.1",
+        "co_central": true
+      }
+    ],
+    "assessment_items": [
+      {
+        "progression_stage": 1,
+        "stage_label": "Observe and describe mixtures",
+        "implied_lo_assessed": "Students can identify and name at least four observable physical properties of the components in a given mixture and explain why those properties make the components distinguishable.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classification of matter by observable physical characteristics"
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "A student mixes iron nails, table salt, and sawdust in a bowl. Which of the following correctly lists the observable physical properties that make the three components distinguishable from one another?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Colour, smell, and reactivity with water",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Magnetic character, density, and boiling point",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Magnetic character, hardness, and electrical conductivity",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Magnetic character, solubility in water, and appearance (colour and texture)",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 1
+            },
+            "what_each_option_reveals": {
+              "B": "Selects density and boiling point — both may be real differences but boiling point is not directly observable by a student examining the mixture; this indicates confusion between observable physical properties and measured or inferred properties.",
+              "A": "Includes reactivity with water — a chemical property, not an observable physical property — showing confusion between physical and chemical properties, which the chapter does not introduce.",
+              "C": "Selects hardness and electrical conductivity — neither is directly observable by the eye or hand during a simple mixture examination, revealing that the student has not distinguished directly observable from instrument-dependent properties."
+            },
+            "inclusivity": "Students who struggle with the word 'distinguishable' can be asked to approach this as: if you had to pick out just one type of component with your hand or a simple tool, how would you know which one to pick? Students who need visual support can be shown the three-component mixture from the hands-on unit."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 1,
+        "stage_label": "Observe and describe mixtures",
+        "implied_lo_assessed": "Students can identify and name at least four observable physical properties of the components in a given mixture and explain why those properties make the components distinguishable.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classification of matter by observable physical characteristics"
+        },
+        "cognitive_demand": "Recall",
+        "visual_stimulus": null,
+        "question_text": "Which of the following is the best description of a mixture as used in the context of separation methods?",
+        "options": [
+          {
+            "label": "A",
+            "text": "A single substance that can be dissolved in water to produce a clear solution",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Two or more substances combined together, each retaining its own observable properties",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "Two or more substances that have reacted chemically to form a new substance with new properties",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Two substances combined so thoroughly that they cannot be separated by any physical method",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 1
+            },
+            "what_each_option_reveals": {
+              "C": "Describes a chemical reaction rather than a mixture — the student conflates mixing with reacting, a classic alternative conception the chapter addresses by showing that each component retains its own properties.",
+              "A": "Describes a single dissolved substance rather than a mixture — the student may be overgeneralising the salt-solution example and equating all mixtures with solutions.",
+              "D": "States that mixtures cannot be physically separated — the direct opposite of the chapter's premise, indicating the student has not engaged with the foundational definition."
+            },
+            "inclusivity": "Students who find the formal language difficult can be asked to describe in their own words what they observed when they examined the rice-and-stones mixture in class; this provides an experiential anchor for the definition."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Classify methods by the property each exploits",
+        "implied_lo_assessed": "Students can match each of the nine separation methods to the physical property it exploits and produce a completed method–property record that correctly pairs all nine methods with the appropriate property.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classification of matter by observable physical characteristics"
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": "Method | Property it exploits\nWinnowing | ?\nSieving | ?\nMagnetic separation | ?\nEvaporation | ?",
+        "question_text": "Refer to the table provided. A student is completing the method–property record for the chapter. Which row in the table has the correct property matched to the method?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Evaporation — difference in colour between the dissolved solid and the liquid",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Magnetic separation — magnetic character of one component",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "Sieving — difference in density between components",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Winnowing — difference in particle size between components",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "what_each_option_reveals": {
+              "C": "Assigns density difference to sieving — the student confuses the property that sieving exploits (particle size) with the property that winnowing or decantation exploits (density or weight difference).",
+              "D": "Assigns particle size to winnowing — the student has confused the two most commonly mixed-up methods; winnowing exploits weight/density difference, not particle size.",
+              "A": "Assigns colour difference to evaporation — the student has not engaged with the mechanism of evaporation and is guessing based on a visible surface feature rather than the solubility and state-change basis of the method."
+            },
+            "inclusivity": "Students who find the table format challenging can be asked to explain verbally what happens during each method and which feature of the component the method 'notices'; a peer scribe can record their reasoning if writing is a barrier."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Classify methods by the property each exploits",
+        "implied_lo_assessed": "Students can match each of the nine separation methods to the physical property it exploits and produce a completed method–property record that correctly pairs all nine methods with the appropriate property.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classification of matter by observable physical characteristics"
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "In the chapter, butter is separated from curd by churning. A student says churning works because the mathni breaks the butter into smaller pieces that can be seen. What is wrong with this explanation, and what is the correct basis for the separation?",
+        "options": [
+          {
+            "label": "A",
+            "text": "The explanation is correct — churning does break the butter into smaller pieces, and that is what causes the separation",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The explanation is wrong because churning works because butter dissolves in the curd and can only be recovered by evaporation",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The explanation is wrong because churning works because butter has a lower density than buttermilk, so it rises and can be skimmed off",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "The explanation is wrong because churning works by filtering the buttermilk through the butter using the mathni as a strainer",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "what_each_option_reveals": {
+              "A": "Accepts the misconception — the student has not connected churning to the density-difference property and believes the mechanical action of breaking is the cause rather than the density-based rise of fat.",
+              "D": "Confuses churning with filtration — the student applies the pore/strainer mechanism from filtration to a method where no physical barrier is used, indicating incomplete differentiation between methods.",
+              "B": "Confuses churning with evaporation — the student believes butter dissolves, showing a fundamental misunderstanding of why butter and buttermilk are separable."
+            },
+            "inclusivity": "Students who are uncertain can be directed to recall the hands-on churning simulation and asked: which component rose to the top — and what property of the butter causes it to rise rather than sink?"
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Classify methods by the property each exploits",
+        "implied_lo_assessed": "Students can match each of the nine separation methods to the physical property it exploits and produce a completed method–property record that correctly pairs all nine methods with the appropriate property.",
+        "question_type": "SCR",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classification of matter by observable physical characteristics"
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "A farmer has a mixture of wheat grains and husk after harvesting. She first uses threshing and then winnowing. For each method, name the physical property of the components that makes the method effective.",
+        "options": [],
+        "expected_elements": [
+          "Threshing — the grains are weakly attached to the stalks (connected by a loose physical bond), so beating detaches them; the relevant property is that the grain and stalk are joined loosely enough that mechanical force can separate them.",
+          "Winnowing — the husk is lighter (lower density or weight) than the grain, so air or wind carries the husk away while the heavier grain falls; the relevant property is the difference in weight or density between the two components."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "inclusivity": "Students who struggle to express the property in formal terms can be credited for describing it functionally — for example, 'the husk flies away because it is light and the grain does not because it is heavy' demonstrates the key understanding even without the word density. Oral responses are equally valid if the student can articulate both properties."
+          },
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Explain the mechanism — why each property makes a method effective",
+        "implied_lo_assessed": "Students can write a causal explanation for at least six of the nine separation methods, stating both the property difference and the mechanism by which that difference produces the separation.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classification of matter by observable physical characteristics"
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "A student pours muddy water through a cloth filter and finds that the water coming out is still slightly cloudy. Which of the following is the most precise causal explanation for why some particles passed through?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Filtration only works with filter paper, not with cloth, so the cloth did not separate any particles at all",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The cloth was not thick enough, so the water flowed through too quickly for any particles to settle",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The mud particles dissolved in the water when they hit the cloth, making them too small to be visible but still present",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The pores between the woven threads of the cloth were larger than the smallest mud particles, so those particles passed through without being trapped",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "what_each_option_reveals": {
+              "B": "Attributes the failure to flow speed rather than pore size — the student has not grasped that it is the physical size of the pore relative to the particle, not the speed of the liquid, that determines which particles are trapped.",
+              "C": "Introduces dissolution as the mechanism — a significant misconception where the student confuses filtration (a physical separation by size) with dissolution (a chemical interaction); mud does not dissolve in water.",
+              "A": "Overgeneralises from the lab filtration activity by concluding that cloth cannot filter at all — the chapter explicitly states that cloth with fine pores can act as a filter, so this reveals incomplete reading of the chapter's content."
+            },
+            "inclusivity": "Students who found the causal-language work challenging can approach this question by asking: if the pore were smaller, would the result be different? This counterfactual framing is a scaffold toward identifying pore size as the causal variable."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Explain the mechanism — why each property makes a method effective",
+        "implied_lo_assessed": "Students can write a causal explanation for at least six of the nine separation methods, stating both the property difference and the mechanism by which that difference produces the separation.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.2",
+          "competency_text": "Description of physical changes in matter"
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "A student heats a salt solution in a china dish until all the liquid disappears and only a white solid remains. Another student says the white solid is a new substance formed by the heat. Which statement gives the correct causal explanation and correctly identifies whether a physical or chemical change occurred?",
+        "options": [
+          {
+            "label": "A",
+            "text": "The water evaporated and the salt evaporated too, then the salt recondensed on the cool dish as a new solid form",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The white solid is a new substance because heating always produces a chemical change when a liquid is removed from a solution",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The white solid is the same salt, but it changed chemically because the heat broke the bonds between salt and water molecules",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The white solid is the same salt that was dissolved; the water changed state from liquid to vapour and left the dish, which is a physical change — no new substance was formed",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "what_each_option_reveals": {
+              "B": "Conflates physical and chemical change — the student applies an overgeneralisation that any heating process produces a chemical change, which is a common alternative conception the chapter implicitly challenges by defining evaporation as a physical change.",
+              "C": "Introduces bond-breaking language from chemistry that is beyond the chapter's scope and incorrectly categorises the process as chemical — the student has knowledge from another context and misapplied it.",
+              "A": "Misapplies evaporation to the salt — salt does not evaporate under the conditions described; this reveals confusion about which component undergoes the state change."
+            },
+            "inclusivity": "Students who struggle with the physical/chemical distinction can be directed to one concrete test from the chapter: if you re-dissolved the white solid in water, would you get salt water again? The answer yes confirms no new substance was formed."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Explain the mechanism — why each property makes a method effective",
+        "implied_lo_assessed": "Students can write a causal explanation for at least six of the nine separation methods, stating both the property difference and the mechanism by which that difference produces the separation.",
+        "question_type": "SCR",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classification of matter by observable physical characteristics"
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "A student tries to separate iron filings from sawdust by sieving. The sieve has very fine holes. Explain causally why sieving is not the most effective method for this mixture and name the property difference that a better method would exploit.",
+        "options": [],
+        "expected_elements": [
+          "Sieving works by exploiting a difference in particle size — fine particles pass through the holes while larger ones do not. If the iron filings and sawdust particles are similar in size, neither will pass through a fine sieve, so sieving cannot separate them effectively.",
+          "The property difference that a better method exploits is magnetic character — iron is attracted to a magnet while sawdust is not. Magnetic separation would selectively pull the iron filings out of the mixture regardless of particle size."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "inclusivity": "Students who have difficulty writing can be credited for a diagram showing the sieve with both filings and sawdust particles on top (same size, neither passes through) paired with a sketch of a magnet picking up filings — the visual demonstrates the same causal understanding as a written explanation."
+          },
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Apply: select the right method for an unfamiliar mixture",
+        "implied_lo_assessed": "Students can select and justify the appropriate separation method for an unfamiliar mixture by identifying its operative physical property difference, carry out a two-step separation for a mixture with two independent property differences, and explain why evaporation involves a physical change of state while all other chapter methods do not.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classification of matter by observable physical characteristics"
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": null,
+        "question_text": "A mixture contains copper coins, sugar, and sand. A student wants to recover all three components separately. Which sequence of steps correctly separates all three, and what property does each step exploit?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Step 1 — handpick the copper coins (size and appearance difference); Step 2 — add water to dissolve the sugar, filter to remove the sand, then evaporate the filtrate to recover the sugar (solubility difference and state change of water)",
+            "is_correct": true
+          },
+          {
+            "label": "B",
+            "text": "Step 1 — sieve out the copper coins (size difference); Step 2 — use magnetic separation to separate sugar from sand (magnetic character of sugar)",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Step 1 — use evaporation to remove the water from the mixture; Step 2 — use filtration to separate the copper coins from the sugar and sand residue",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Step 1 — winnow the mixture to separate the lighter sugar from the heavier copper and sand; Step 2 — handpick the copper coins from the sand",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "what_each_option_reveals": {
+              "B": "Assigns magnetic character to sugar — the student has not identified that neither sugar nor sand is magnetic and is applying the magnetic separation method without verifying that the operative property exists in this mixture.",
+              "C": "Attempts to evaporate a dry mixture — there is no liquid present for evaporation to act on; this reveals that the student has not understood that evaporation requires a dissolved solid in a liquid, not a dry mixture.",
+              "D": "Applies winnowing incorrectly — winnowing relies on a significant weight difference; sugar granules, copper coins, and sand are not so different in weight relative to air flow that winnowing would cleanly separate them, and this reveals a property-mismatch error."
+            },
+            "inclusivity": "Students who are uncertain about multi-step sequencing can be asked to write the properties present in the mixture first, then ask for each: which method in the chapter uses exactly that property? The two distinct properties (visible difference for coins; solubility for sugar) each point to their own step independently."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Apply: select the right method for an unfamiliar mixture",
+        "implied_lo_assessed": "Students can select and justify the appropriate separation method for an unfamiliar mixture by identifying its operative physical property difference, carry out a two-step separation for a mixture with two independent property differences, and explain why evaporation involves a physical change of state while all other chapter methods do not.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.2",
+          "competency_text": "Description of physical changes in matter"
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "A student compares all nine separation methods from the chapter and says: 'Evaporation is the only method where one component changes its physical state during the separation process.' Which of the following correctly evaluates this claim?",
+        "options": [
+          {
+            "label": "A",
+            "text": "The claim is correct — in evaporation the water changes from liquid to vapour (a physical change of state) while the dissolved solid remains unchanged; no other chapter method involves a change of state",
+            "is_correct": true
+          },
+          {
+            "label": "B",
+            "text": "The claim is correct but incomplete — both evaporation and winnowing involve a change of state because the husk is converted from solid to air during winnowing",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The claim is wrong because decantation also involves a state change — the sediment changes from a suspended state to a settled solid state",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The claim is wrong because filtration also involves a physical change of state when the water passes through the filter paper",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "what_each_option_reveals": {
+              "D": "Confuses filtration with a state-change process — the student may be thinking that water flowing through a filter is doing something different to its state, when in fact it remains liquid throughout; this reveals an incomplete understanding of what a state change means.",
+              "C": "Misidentifies settling during sedimentation as a state change — the sediment moves position but remains solid throughout; this reveals confusion between a change of physical state and a change of physical location or form.",
+              "B": "Applies state-change language to winnowing incorrectly — the husk remains solid throughout winnowing and is carried by air movement, not converted to air; this is a category error showing the student has not grasped what 'change of state' means."
+            },
+            "inclusivity": "Students who are uncertain can be guided to ask a single diagnostic question for each method: does any component change from solid to liquid, liquid to gas, or gas to liquid during this method? Only evaporation produces a yes answer in this chapter."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Apply: select the right method for an unfamiliar mixture",
+        "implied_lo_assessed": "Students can select and justify the appropriate separation method for an unfamiliar mixture by identifying its operative physical property difference, carry out a two-step separation for a mixture with two independent property differences, and explain why evaporation involves a physical change of state while all other chapter methods do not.",
+        "question_type": "ECR",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classification of matter by observable physical characteristics"
+        },
+        "cognitive_demand": "Evaluation",
+        "visual_stimulus": null,
+        "question_text": "A student is given a mixture of salt, sand, and iron filings and is told to recover all three components in pure form. She decides to carry out the steps in this order: Step 1 — add water and stir; Step 2 — filter; Step 3 — evaporate; Step 4 — use a magnet on whatever is left on the filter paper. Evaluate this plan: identify one step that may cause a problem, explain causally why the problem arises, and propose a revised step order that avoids the problem.",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [
+          "Identification of the problematic step: adding water (Step 1) before magnetic separation means the iron filings become wet, making them harder to retrieve cleanly with a magnet, and any rust or wet clumping reduces the purity of the iron recovered.",
+          "Causal explanation: the magnet attracts iron regardless of whether it is wet, but wet iron filings may clump with the sand on the filter paper, making the magnetic separation at Step 4 less clean — the property (magnetic character) still works but the practical effectiveness is reduced.",
+          "Revised order: Step 1 — magnetic separation of dry mixture to remove iron filings cleanly; Step 2 — add water to dissolve salt from remaining sand; Step 3 — filter to separate sand as residue; Step 4 — evaporate the filtrate to recover salt.",
+          "Justification referencing properties: iron filings are removed first because magnetic character operates on the dry mixture; salt is then separated from sand by exploiting solubility (salt dissolves, sand does not); evaporation then exploits the state-change property of water to recover salt."
+        ],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": null,
+          "ECR": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "inclusivity": "Students who struggle with extended writing can respond using a numbered step list with one causal sentence per step rather than continuous prose — the reasoning demonstrated is identical. Students who identify the problem but cannot propose the full revised sequence can be partially credited for the diagnostic component."
+          },
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 5,
+        "stage_label": "Whole-chapter synthesis: classify by property and select the method",
+        "implied_lo_assessed": "Students can classify the components of an unfamiliar mixture by their observable physical properties and select and causally justify the appropriate separation method — or sequence of methods — including identifying when evaporation's state-change mechanism is the operative one.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classification of matter by observable physical characteristics"
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "A worker in a food-processing unit finds a mixture of mustard seeds, turmeric powder, and a few iron filings (from a broken machine part). She needs to recover the mustard seeds and the turmeric powder safely, removing all iron. Which method correctly addresses the most critical first step and explains why it must come first?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Evaporation first — dissolve the mixture in water and evaporate to remove the iron filings as a residue",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Magnetic separation first — iron filings must be removed before any other step because their magnetic character is the only property that selectively removes iron without disturbing the mustard seeds or turmeric powder",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "Sieving first — pass the mixture through a fine sieve to separate the fine turmeric powder from the larger mustard seeds and iron filings together",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Winnowing first — blow air through the mixture to carry away the lighter turmeric powder, leaving the iron filings and mustard seeds behind",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 5
+            },
+            "what_each_option_reveals": {
+              "C": "Proposes sieving as the first step — sieving can separate by particle size, which might partially separate turmeric powder from larger seeds and filings, but it cannot remove the iron filings selectively; the student has not applied the property-first framework to identify that magnetic character is the unique property for iron removal.",
+              "D": "Proposes winnowing — the student is using the chapter's light-versus-heavy logic, but turmeric powder and iron filings are both denser relative to a gentle air stream and neither would cleanly separate from the mustard seeds this way; this reflects over-application of winnowing beyond its effective property range.",
+              "A": "Proposes evaporation — iron filings do not dissolve in water and would not be removed by evaporation; the student has misapplied the evaporation mechanism, which requires one component to dissolve and the other to remain as a solid residue."
+            },
+            "inclusivity": "Students who are uncertain about step order can be asked: which method in the chapter acts on only one component regardless of what else is in the mixture — and only one method (magnetic separation) meets that description for iron; this framing helps students isolate the property without needing to compare all options simultaneously."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 5,
+        "stage_label": "Whole-chapter synthesis: classify by property and select the method",
+        "implied_lo_assessed": "Students can classify the components of an unfamiliar mixture by their observable physical properties and select and causally justify the appropriate separation method — or sequence of methods — including identifying when evaporation's state-change mechanism is the operative one.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.2",
+          "competency_text": "Description of physical changes in matter"
+        },
+        "cognitive_demand": "Evaluation",
+        "visual_stimulus": null,
+        "question_text": "A coastal salt farmer uses shallow pits exposed to sunlight to produce salt from seawater. A student visits and says: 'The farmer is using evaporation, which is just like filtration — both remove the water and leave the solid behind.' Evaluate this claim using both the property basis and the mechanism of the two methods.",
+        "options": [
+          {
+            "label": "A",
+            "text": "The claim is correct — both methods leave a solid residue behind when the water is removed, so they work on the same principle",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The claim is partially correct — evaporation is a type of filtration where sunlight acts as the filter medium that holds back the salt",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The claim is wrong — evaporation removes the salt and leaves the water behind, which is the opposite of filtration",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The claim is wrong — filtration uses a physical barrier (pore size) to trap solid particles that are already present in the liquid, while evaporation uses the physical change of state of the water from liquid to vapour to leave behind a dissolved solid that cannot evaporate; they exploit entirely different properties",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 5
+            },
+            "what_each_option_reveals": {
+              "A": "Accepts the claim on the basis of surface similarity — both leave a solid residue — without examining the mechanism; the student has not distinguished property-based classification (which property each method uses) from outcome similarity (both leave something solid).",
+              "B": "Introduces a confused hybrid category where sunlight acts as a filter — the student has not understood that filtration requires a physical pore-based barrier; this is a significant mechanistic misconception combining the two methods incorrectly.",
+              "C": "Reverses the components in evaporation — the student believes salt leaves with the vapour and water stays, which is the opposite of what happens; this is a fundamental misreading of the evaporation mechanism."
+            },
+            "inclusivity": "Students who are strong on mechanism but weak on comparative language can be asked to answer in two separate parts: first describe what filtration does and why, then describe what evaporation does and why — and then state whether they are the same; this scaffolds the comparison without simplifying the cognitive demand."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 5,
+        "stage_label": "Whole-chapter synthesis: classify by property and select the method",
+        "implied_lo_assessed": "Students can classify the components of an unfamiliar mixture by their observable physical properties and select and causally justify the appropriate separation method — or sequence of methods — including identifying when evaporation's state-change mechanism is the operative one.",
+        "question_type": "ECR",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classification of matter by observable physical characteristics"
+        },
+        "cognitive_demand": "Evaluation",
+        "visual_stimulus": null,
+        "question_text": "A recycling facility receives a pile of mixed waste containing iron scraps, aluminium foil pieces, sawdust, and dissolved salt in water pooled at the bottom. The facility wants to recover each component separately. Design a complete separation plan: for each step, name the method, identify the physical property it exploits, and justify causally why that step comes in the position you have placed it.",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [
+          "Correct identification that aluminium is not magnetic while iron is — the plan should not attempt to use magnetic separation to remove both metals together; it should use magnetic separation only for iron and propose a different method or acknowledge that aluminium cannot be separated by this approach from the remaining dry mixture (handpicking by appearance is the chapter-grounded option).",
+          "Correct sequencing: dry-mixture separation steps (magnetic for iron, handpicking for aluminium from sawdust if warranted) before steps involving the salt water — because adding water to the dry mixture would complicate dry-method steps.",
+          "Correct identification of evaporation as the method for recovering dissolved salt from the pooled water, with a causal explanation that the water undergoes a physical change of state to vapour while the salt, which cannot evaporate under these conditions, remains as residue.",
+          "Causal justification for each step naming the specific property: magnetic character (iron vs non-magnetic), appearance/size difference (aluminium foil vs sawdust by handpicking), and solubility combined with state change (salt dissolved in water, water evaporates).",
+          "Recognition that the salt water is a separate sub-mixture from the dry waste pile and that mixing them before dry-separation steps would make the dry steps less effective or impossible."
+        ],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": null,
+          "ECR": {
+            "learning_outcome": {
+              "stage": 5
+            },
+            "inclusivity": "Students who find open-ended planning difficult can be offered a partially completed step table with the components listed in one column and blank rows for method, property, and justification — this scaffolds the format without reducing the cognitive demand of identifying the correct method and its property basis. Students who do not identify the aluminium-is-not-magnetic distinction can still receive partial credit for correct iron, sawdust, and salt steps."
+          },
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 5,
+        "stage_label": "Whole-chapter synthesis: classify by property and select the method",
+        "implied_lo_assessed": "Students can classify the components of an unfamiliar mixture by their observable physical properties and select and causally justify the appropriate separation method — or sequence of methods — including identifying when evaporation's state-change mechanism is the operative one.",
+        "question_type": "OPEN_TASK",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classification of matter by observable physical characteristics"
+        },
+        "cognitive_demand": "Evaluation",
+        "visual_stimulus": "Mixture | Component A | Component B | Property difference between A and B | Method selected | Why this method works (causal explanation)\nRice and lentils (lentils are smaller) | Rice | Lentils | | |\nSalt dissolved in water | Salt | Water | | |\nIron filings and sawdust | Iron filings | Sawdust | | |\nOil floating on water | Oil | Water | | |\nWhole peppercorns and pepper powder | Peppercorns | Pepper powder | | |\nMixture of sand, salt, and iron filings (two-step case) | Iron filings | Sand and salt | | |",
+        "question_text": "",
+        "task": "Refer to the table provided. For each mixture: (1) identify the physical property difference between the two components that makes separation possible, (2) select the most effective separation method from the methods covered in this chapter, and (3) write one causal sentence explaining why that property difference makes your chosen method effective. For the two-step case in the final row, describe both steps in the causal explanation column.",
+        "scaffold": "Begin with the property difference column before choosing the method. Ask yourself: what is different between A and B that you could observe or test without any equipment? Then ask: which separation method in this chapter exploits exactly that type of difference? Finally, explain why: complete the sentence 'this causes separation because…'",
+        "format_of_output": [
+          "Completed table with all five columns filled for all six rows",
+          "For the two-step case, the causal explanation column contains two sentences — one per step"
+        ],
+        "guide": {
+          "MCQ": null,
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": {
+            "learning_outcome": {
+              "stage": 5
+            },
+            "format_type": "Classification or sorting task with justification",
+            "format_rationale": "The final stage's convergent implied LO requires students to simultaneously classify mixtures by observable physical properties and select and causally justify the appropriate separation method — a classification-with-justification table is the most direct demonstration vehicle for both operations at once.",
+            "what_this_demonstrates": "A complete response demonstrates that the student can move from observable property identification through method selection to causal mechanism in a single integrated reasoning chain, and can apply this across diverse mixture types including a two-step case requiring reasoning about step order.",
+            "reading_the_scaffold": "The scaffold directs students to complete the property column before the method column — this is intentional and mirrors the property-first framework from the application stage. Teachers should watch whether students comply with this order or jump directly to the method column by memory; the former indicates framework-level reasoning, the latter indicates pattern-matching from chapter examples.",
+            "strong_vs_weak_markers": "Strong responses name the specific property (e.g. 'density difference — oil is less dense than water') rather than a generic descriptor ('they are different'), select the method that matches that property, and write a causal sentence that names the mechanism (e.g. 'oil floats because its density is lower, so it forms a separate layer that can be decanted'). Weak responses name the method without a property basis, or write a descriptive sentence ('decantation pours off the top layer') without explaining why the layer forms. The two-step case is the strongest discriminator: students who correctly sequence magnetic separation before dissolution-filtration-evaporation and justify the order demonstrate the highest level of integration.",
+            "inclusivity": "Students who struggle with written causal sentences can speak their explanation aloud to the teacher or a peer scribe who records it. Students with strong reasoning but limited writing fluency can use a labelled diagram showing the separation process in place of a written causal sentence — the classification and method selection columns must still be completed in writing."
+          }
+        }
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

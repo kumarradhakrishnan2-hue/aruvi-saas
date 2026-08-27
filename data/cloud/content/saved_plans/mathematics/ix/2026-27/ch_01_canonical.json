@@ -1,0 +1,1080 @@
+{
+  "filename": "ch_01_canonical.json",
+  "saved_at": "2026-08-18T15:52:11",
+  "plan_status": "canonical",
+  "chapter_number": 1,
+  "chapter_title": "Orienting Yourself: The Use of Coordinates",
+  "grade": "Grade IX",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 50,
+      "count": 10
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 10 periods = 500 minutes\nTotal: 10 periods · 8h 20min",
+  "genon_canonical": {
+    "generated": "2026-08-18",
+    "schedule": "10x50",
+    "constitution": "LP v1.3 / assessment v1.2",
+    "source": "generate_canonical.py one mathematics ix 1",
+    "ledger_ts": "20260818_154309_math_ix_01_top",
+    "validation": "clean",
+    "academic_year": "2026-27"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 50,
+          "activity_title": "Grids and Location: The Historical Root of Coordinates",
+          "section_anchor": "1.1",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook (Chapter 1)",
+            "Blackboard and chalk"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Open with a quick challenge: ask students to describe, in words only, exactly where a specific desk in the classroom is located so that someone entering the room blindfolded could find it. Collect two or three responses and surface the difficulty — words alone are imprecise. Introduce the unit's question: how do numbers fix a location exactly?"
+            },
+            {
+              "minutes": "10-30",
+              "activity": "Walk through the prose of Section 1.1 together: the idea of a structured grid as a framework that lets numbers describe exact physical locations. Trace the historical narrative — grid-based thinking in Bharat, transmission through Arabic and European traditions, and Brahmagupta's formalisation of zero and negative numbers. Pause at each milestone and ask students to identify what problem each development solved."
+            },
+            {
+              "minutes": "30-45",
+              "activity": "Students work in pairs: they discuss why negative numbers are necessary before a four-quadrant coordinate plane is possible. Each pair produces a two-sentence written answer. Select three pairs to read their answers aloud; the class identifies the most precise reasoning."
+            },
+            {
+              "minutes": "45-50",
+              "activity": "Close by connecting the historical narrative to the chapter's goal: the tools the class will build over the chapter rest on the number system whose history they have just traced. Take any remaining questions on the historical account."
+            }
+          ],
+          "teacher_notes": "This opening unit is the chapter's entry point: Section 1.1 is deliberately historical and conceptual, not computational, so the cognitive work here is analytical reading and written reasoning. Watch for students who conflate Brahmagupta's contribution with the invention of the coordinate plane itself — the section distinguishes formalising negative numbers from building the four-quadrant plane, and that distinction matters. Students who finish early can read the opening paragraph of Section 1.2 as a preview.",
+          "homework": []
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 50,
+          "activity_title": "From Room to Grid: Reiaan's Informal Coordinate Map",
+          "section_anchor": "1.2",
+          "pedagogical_method": "Discovery/Inquiry",
+          "materials": [
+            "Textbook (Chapter 1)",
+            "Squared/graph paper (one sheet per student)",
+            "Ruler",
+            "Pencil"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Read the Reiaan and Shalini narrative in Section 1.2 aloud together. Ask students: what problem are Reiaan and Shalini trying to solve, and what tool do they invent to solve it? Establish that they are making a scaled rectangular grid to record where things are — before any axis or coordinate vocabulary appears."
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Students each sketch their own classroom or bedroom on squared paper using a chosen scale (e.g. 1 cm : 1 ft or 1 cm : 0.5 m). They mark at least four key points — door, windows, a piece of furniture — as pins, mimicking Reiaan's procedure. No axis labels or coordinate notation yet; the focus is on consistent scale and the idea that a grid fixes position."
+            },
+            {
+              "minutes": "25-40",
+              "activity": "Pairs compare sketches. Discussion questions: could someone else use your sketch to find the door without asking you? What happens if two people choose different scales? Lead students to articulate that a grid is only useful when the scale and the reference point are shared — this is the informal statement of what coordinates will formalise."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Whole-class share-out: one student explains what information their sketch needs to carry for it to be unambiguous. Record on the board the agreed list — scale, a fixed reference point, direction. These become the motivating gaps that Section 1.3 will close."
+            }
+          ],
+          "teacher_notes": "The Reiaan-and-Shalini narrative is the textbook's deliberate bridge from everyday spatial reasoning to formal coordinates, so resist naming 'x-axis' or 'quadrant' here — that vocabulary belongs to Section 1.3 and its introduction too early flattens the discovery arc this unit is designed to produce. A common slip is for students to mark positions informally (e.g. 'near the window') rather than at a precise grid intersection; redirect by asking 'could you give that position as a number of squares from the corner?' The city-grid exercise End of Chapter Q14 (Exercise Set 1.2 Q14, p.13) draws on exactly this scaled-grid idea and can be pointed to as a self-study challenge for early finishers.",
+          "homework": []
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 50,
+          "activity_title": "Axes, Origin, and the Four Quadrants: Formalising the Plane",
+          "section_anchor": "1.3",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook (Chapter 1)",
+            "Blackboard and chalk",
+            "Rulers"
+          ],
+          "visual_aids": "Board diagram: two perpendicular axes, origin O, four quadrants labelled with sign patterns (+,+), (-,+), (-,-), (+,-)",
+          "textbook_items_in_class": [
+            {
+              "id": "E-6",
+              "type": "exercise",
+              "source_section": "1.3",
+              "book_ref": "End of Chapter Q1, p.12",
+              "description": "State the x-coordinate and y-coordinate of the point of intersection of the two axes."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Introduce the x-axis and y-axis as two perpendicular number lines intersecting at the origin O = (0, 0). Draw the diagram on the board, label the positive and negative directions on each axis, and state the sign convention: right and up are positive, left and down are negative. Define a point on each axis: any point on the x-axis has the form (x, 0) and any point on the y-axis has the form (0, y)."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Introduce the four quadrants by labelling the sign pattern in each — Quadrant I: (+, +); II: (−, +); III: (−, −); IV: (+, −). Explain the coordinate (x, y) of any point: x is the perpendicular distance from the y-axis (signed), y is the perpendicular distance from the x-axis (signed). Plot four examples on the board, one per quadrant, and have students name the quadrant and read off the sign before the numerical value is announced."
+            },
+            {
+              "minutes": "28-38",
+              "activity": "Think-and-Reflect (from Section 1.3): pose the two questions — 'Must a point on an axis have a zero coordinate?' and 'Does swapping a point's coordinates ever give the same point?' Students write a one-sentence answer to each, then compare with a neighbour. Take responses; establish that on the x-axis y = 0 always, and that (a, b) = (b, a) only when a = b."
+            },
+            {
+              "minutes": "38-50",
+              "activity": "Students answer End of Chapter Q1, p.12 individually: state the x-coordinate and y-coordinate of the origin. Brief whole-class verification. Then pose two or three additional oral questions: 'A point has x-coordinate 0 — where is it?' and 'A point is in Quadrant III — what do you know about the signs of its coordinates?' to consolidate the sign convention."
+            }
+          ],
+          "teacher_notes": "Building on the informal grid idea from Reiaan's room, this unit formalises the axes and sign convention that give coordinates their power. The most persistent error at this stage is confusing which coordinate is x and which is y — students read (3, 5) as 'go up 3, across 5' rather than 'across 3, up 5'; drilling the spoken form 'x first, y second' during the oral questions helps. Students who want to consolidate can read the room-plan examples in Section 1.3 on their own to see how the formal definitions apply to Reiaan's floor plan.",
+          "homework": []
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 50,
+          "activity_title": "Coordinates in the Room Plan: Exercise Set 1.1",
+          "section_anchor": "1.3",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook (Chapter 1)",
+            "Graph paper",
+            "Ruler",
+            "Pencil"
+          ],
+          "visual_aids": "Fig. 1.3 from the textbook (Reiaan's room with corners O, A, B, C and doors D1R1, B1B2 marked)",
+          "textbook_items_in_class": [
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "1.3",
+              "book_ref": "Exercise Set 1.1 (i)-(iv), p.5",
+              "description": "Using Fig. 1.3, find the distance of door D1R1 from the y-axis and x-axis, state the coordinates of D1, find the door's width given R1 = (11.5, 0), and compare the bathroom door width with the room door's width."
+            },
+            {
+              "id": "E-7",
+              "type": "exercise",
+              "source_section": "1.3",
+              "book_ref": "End of Chapter Q2, p.12",
+              "description": "Given point W with x-coordinate −5, predict the coordinates of point H on the line through W parallel to the y-axis, and state which quadrants H can lie in."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Direct students to Fig. 1.3 in the textbook — Reiaan's room with corners O, A, B, C and the two doors marked. Ask two quick recall questions: what is the form of a point on the x-axis, and how do you read perpendicular distance from the y-axis? This activates the coordinate definitions before applied work begins."
+            },
+            {
+              "minutes": "8-32",
+              "activity": "Students work through Exercise Set 1.1 (i)–(iv), p.5 individually, writing answers with clear reasoning. Part (i): identify the coordinates of D1 by reading its perpendicular distances from both axes. Part (ii): confirm D1's x-distance from the y-axis equals its x-coordinate. Part (iii): compute the door width D1R1 as the difference in x-coordinates. Part (iv): compare with the bathroom door width from B1 = (0, 1.5) to B2 = (0, 4)."
+            },
+            {
+              "minutes": "32-44",
+              "activity": "Discuss answers as a class, asking students to justify each step by pointing to the axis or quadrant definition used. Then students attempt End of Chapter Q2, p.12 individually: given W has x-coordinate −5, state all possible coordinates for H on the vertical line through W and name the quadrants H can occupy."
+            },
+            {
+              "minutes": "44-50",
+              "activity": "Consolidation: students write one sentence explaining why a negative x-coordinate guarantees a point lies in Quadrant II or III. Collect two responses orally to close the unit."
+            }
+          ],
+          "teacher_notes": "The room-plan exercises are the chapter's primary application context for Section 1.3, and a frequent error is computing door width as a y-coordinate difference rather than an x-coordinate difference when the door lies on the x-axis — make explicit that width along the x-axis means the x-coordinates change while y stays 0. End of Chapter Q2 extends the quadrant sign-pattern idea and is included to deepen reasoning beyond the room-plan context. For independent reading, students can look at End of Chapter Q3, p.12 to preview how quadrant reasoning extends to a multi-point figure.",
+          "homework": []
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 50,
+          "activity_title": "Furniture, Bathroom, and Dining Room: Exercise Set 1.2",
+          "section_anchor": "1.3",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook (Chapter 1)",
+            "Graph paper",
+            "Ruler",
+            "Pencil"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [
+            {
+              "id": "E-2",
+              "type": "exercise",
+              "source_section": "1.3",
+              "book_ref": "Exercise Set 1.2 Q1, p.8",
+              "description": "Given three feet of a rectangular study table at (8,9), (11,9), (11,7), find the fourth foot's coordinates, judge whether the spot is suitable, and state the table's width and length."
+            },
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "1.3",
+              "book_ref": "Exercise Set 1.2 Q2, p.8",
+              "description": "Given the bathroom door hinge at B1, determine whether opening the door would hit the wardrobe, and suggest changes if the door were made wider."
+            },
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "1.3",
+              "book_ref": "Exercise Set 1.2 Q3, p.8",
+              "description": "State the coordinates of bathroom corners O, F, R, P; identify the showering area SHWR and its corners; mark off washbasin and toilet spaces and give their corner coordinates."
+            },
+            {
+              "id": "E-5",
+              "type": "exercise",
+              "source_section": "1.3",
+              "book_ref": "Exercise Set 1.2 Q4, p.8",
+              "description": "Sketch an 18 ft x 15 ft dining room from P to A, mark corner coordinates, place a 5x3 ft dining table at the centre, and give the coordinates of the table's feet."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-5",
+              "activity": "Remind students that coordinates name a point's perpendicular distances from each axis (signed). On the board, quickly demonstrate finding the fourth vertex of a rectangle when three vertices are given — using the fact that opposite sides are equal and parallel — as a warm-up for Exercise Set 1.2 Q1."
+            },
+            {
+              "minutes": "5-25",
+              "activity": "Students work through Exercise Set 1.2 Q1 (p.8) and Q2 (p.8). For Q1: find the fourth foot of the study table by reasoning about which x- or y-coordinate must match which existing foot, then state the table's width and length as coordinate differences. For Q2: trace the arc of the bathroom door from its hinge coordinate and decide whether it clears the wardrobe."
+            },
+            {
+              "minutes": "25-42",
+              "activity": "Students continue with Exercise Set 1.2 Q3 and Q4 (p.8). For Q3: plot the bathroom corners, identify the rectangular showering area by its coordinates, and partition the remaining floor space into the two sub-rectangles (washbasin and toilet) with their corner coordinates stated explicitly. For Q4: sketch the dining room starting at P, label all corners, locate the table's centre at the room's centre, and derive the four feet coordinates."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Pairs compare their dining room sketches from Q4 and check that the table's feet coordinates are symmetric about the room's centre. Class discussion: what constraint on the coordinates guarantees the table is centred?"
+            }
+          ],
+          "teacher_notes": "These four exercises all use the coordinate system developed in Section 1.3, applying it to planning realistic room layouts. A common error in Q1 is placing the fourth table foot at the wrong corner — students sometimes add the wrong coordinate pair; emphasise that a rectangle's fourth vertex shares one coordinate with each of two existing vertices. In Q4 the table's centre being the room's centre means its coordinates are the averages of the room's corner coordinates, a useful pattern to surface explicitly. Students who complete all four questions quickly can attempt End of Chapter Q5, p.12 as a reflective challenge.",
+          "homework": []
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 50,
+          "activity_title": "City Grid and Coordinate Convention: End of Chapter Q14",
+          "section_anchor": "1.3",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook (Chapter 1)",
+            "Graph paper (large sheet, 1 cm grid)",
+            "Ruler",
+            "Pencil",
+            "Coloured pens"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [
+            {
+              "id": "E-11",
+              "type": "exercise",
+              "source_section": "1.3",
+              "book_ref": "End of Chapter Q14, p.13",
+              "description": "For a city grid of 10 streets in each direction spaced 200 m apart, draw a 1 cm = 200 m model and find how many intersections can be labelled (4,3) and how many can be labelled (3,4).",
+              "source_sections": [
+                "1.2",
+                "1.3"
+              ]
+            },
+            {
+              "id": "E-10",
+              "type": "exercise",
+              "source_section": "1.3",
+              "book_ref": "End of Chapter Q5, p.12",
+              "description": "Discuss what a coordinate system would be like without negative numbers, and whether such a system could locate all points on a 2-D plane.",
+              "source_sections": [
+                "1.1",
+                "1.3"
+              ]
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Read End of Chapter Q14, p.13 together. Clarify the setup: a 10×10 city grid, streets numbered 1–10 in each direction, 200 m apart, drawn at 1 cm = 200 m. Ask students to predict: how many squares wide and tall will the drawn grid be? Establish the answer (9 cm × 9 cm, covering streets 1–10 in both directions) before drawing begins."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Students draw the 10×10 grid on graph paper. They then work on the core question: how many intersections can be labelled (4, 3) — using the (N-S street number, E-W street number) convention — and how many can be labelled (3, 4)? Students must argue carefully: with the stated convention, (4, 3) and (3, 4) each name exactly one intersection, so the answer is one for each. Pairs discuss and justify in writing."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Class discussion: why does the order of the two numbers matter? Connect to the Section 1.3 Think-and-Reflect result — (x, y) ≠ (y, x) unless x = y. Then students attempt End of Chapter Q5, p.12: if negative numbers did not exist, only Quadrant I could be named; points to the left of or below the origin would have no coordinate description. Students write a three-sentence response."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Two or three students share their Q5 responses. Consolidate: the ordered-pair convention and the sign system together make the full four-quadrant plane work. Take questions on either exercise."
+            }
+          ],
+          "teacher_notes": "End of Chapter Q14 is a practical application of the ordered-pair convention and the scaled-grid idea from Reiaan's room, and it specifically targets the error of treating (4, 3) and (3, 4) as the same location — students who confuse the order of coordinates will say 'two intersections share the label (4, 3)' rather than 'only one'. End of Chapter Q5 ties back to the Brahmagupta historical thread from Section 1.1 and reveals the sign convention's structural necessity rather than treating it as a mere notational convenience. Students who want a further challenge can read the screen-coordinate problem End of Chapter Q15, p.14 as a preview of how distance and coordinate bounds interact.",
+          "homework": []
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 50,
+          "activity_title": "Distance Along an Axis and the Right-Triangle Setup",
+          "section_anchor": "1.4",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook (Chapter 1)",
+            "Blackboard and chalk",
+            "Graph paper",
+            "Ruler"
+          ],
+          "visual_aids": "Board diagram: two points on the x-axis, then two points on a line parallel to the x-axis, then a right triangle ADM with labelled legs",
+          "textbook_items_in_class": [],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Begin with two specific points on the x-axis, say P(2, 0) and Q(7, 0). Ask: how far apart are they? Students answer '5' immediately. Formalise: when two points share a y-coordinate, their distance equals the absolute difference of their x-coordinates. Repeat for two points sharing an x-coordinate. State this as the axis-distance rule."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Now pose the harder question: what is the distance between A(1, 2) and M(4, 6)? Walk through Section 1.4's construction on the board: drop a perpendicular from A to a horizontal through M, creating right-angle point D. Label the horizontal leg AD = |x₂ − x₁| and the vertical leg DM = |y₂ − y₁|. The hypotenuse AM is the distance sought. State that the Baudhayana-Pythagoras theorem gives AM² = AD² + DM². Let students compute the numerical value for this example."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Think-and-Reflect from Section 1.4: how do the horizontal and vertical shifts between two plotted points relate to the straight-line distance? Students write the general formula: distance = √((x₂−x₁)² + (y₂−y₁)²). Then: what stays the same and what changes in a triangle's side lengths when the triangle is reflected in an axis? Students discuss in pairs and record their reasoning."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Students choose two points themselves — one pair in Quadrant I, one pair spanning two quadrants — and apply the distance formula to each. They verify by checking that their right-triangle legs have lengths equal to the absolute coordinate differences."
+            }
+          ],
+          "teacher_notes": "Having established the coordinate meanings of x and y in Section 1.3, this unit derives the distance formula — the chapter's single major result — by connecting those coordinate differences to the legs of a right triangle. The most common error is omitting the square root or squaring only one term: (x₂−x₁)+(y₂−y₁) instead of √((x₂−x₁)²+(y₂−y₁)²); a quick dimensional check (distance must be a length, not a sum of lengths) helps students catch this. Students ready for independent extension can read Section 1.4's account of the reflected-triangle case, which confirms that negative coordinates do not change the formula.",
+          "homework": []
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 50,
+          "activity_title": "Deriving the General Distance Formula with Signed Coordinates",
+          "section_anchor": "1.4",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook (Chapter 1)",
+            "Blackboard and chalk",
+            "Graph paper",
+            "Ruler"
+          ],
+          "visual_aids": "Board diagram: the reflected triangle from Section 1.4, with at least one point in a negative-coordinate quadrant, showing that the legs equal |x₂−x₁| and |y₂−y₁| regardless of sign",
+          "textbook_items_in_class": [
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "1.4",
+              "book_ref": "End of Chapter Q4, p.12",
+              "description": "Plot point Z(5,−6), construct a right-angled triangle IZN, and find the lengths of its three sides.",
+              "source_sections": [
+                "1.3",
+                "1.4"
+              ]
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "On the board, draw the triangle from Section 1.4 reflected into negative-coordinate regions — place one vertex at, say, (−3, −1) and another at (2, 4). Restate the right-triangle construction: horizontal leg = |x₂−x₁|, vertical leg = |y₂−y₁|. Verify that squaring removes the absolute-value signs: (x₂−x₁)² is the same whether the difference is positive or negative. Confirm the formula holds."
+            },
+            {
+              "minutes": "12-30",
+              "activity": "Work through End of Chapter Q4, p.12 together on the board: plot Z(5,−6) on graph paper, choose I on the x-axis directly above Z (i.e. I = (5, 0)) and N at the origin (0, 0). Students calculate IZ = distance from (5,0) to (5,−6) = 6 using the axis-distance rule; ZN = distance from (5,−6) to (0,0) using the general formula = √(25+36) = √61; and IN = distance from (5,0) to (0,0) = 5 using the axis rule. Verify: IZ² + IN² = 36 + 25 = 61 = ZN²."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Students attempt a parallel exercise independently: given two points in different quadrants of their own choice (at least one coordinate negative), construct the right triangle, label the three vertices, and compute all three side lengths using the appropriate rule (axis-difference or full formula)."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Pairs exchange their work and verify each other's calculations by substituting back: check that the two legs satisfy the Baudhayana-Pythagoras relation with the hypotenuse. Class discusses: does the formula change for points in Quadrant IV versus Quadrant II? Establish the answer — no, squaring eliminates sign."
+            }
+          ],
+          "teacher_notes": "This unit completes the derivation arc of Section 1.4 by demonstrating that the formula is sign-invariant, which is the section's own emphasis. A frequent error when points lie in different quadrants is computing the leg length as x₂−x₁ without absolute value and obtaining a negative 'distance' — the board derivation explicitly shows why squaring removes this problem. End of Chapter Q13, p.14 (plotting A(2,1), B(−1,2), C(−2,−1), D(1,−2) and proving ABCD is a square) is a good independent-reading challenge for students who finish quickly.",
+          "homework": []
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 50,
+          "activity_title": "Distance Formula Applied: Screen Circles and a Coordinate Square",
+          "section_anchor": "1.4",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook (Chapter 1)",
+            "Graph paper",
+            "Ruler",
+            "Pencil",
+            "Calculator (optional)"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [
+            {
+              "id": "E-12",
+              "type": "exercise",
+              "source_section": "1.4",
+              "book_ref": "End of Chapter Q15, p.14",
+              "description": "On an 800×600 pixel screen with origin at the bottom-left, determine whether circles centred at A(100,150) radius 80 and B(250,230) radius 100 extend beyond the screen, and whether the circles intersect.",
+              "source_sections": [
+                "1.3",
+                "1.4"
+              ]
+            },
+            {
+              "id": "E-13",
+              "type": "exercise",
+              "source_section": "1.4",
+              "book_ref": "End of Chapter Q16, p.14",
+              "description": "Plot A(2,1), B(−1,2), C(−2,−1), D(1,−2); determine whether ABCD is a square, explain why, and find its area.",
+              "source_sections": [
+                "1.3",
+                "1.4"
+              ]
+            },
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "1.3",
+              "book_ref": "End of Chapter Q3, p.12",
+              "description": "Given R(3,0), A(0,−2), M(−5,−2), P(−5,2) as quadrilateral RAMP, predict two perpendicular sides, one side parallel to an axis, and two mirror-image points; then plot and verify.",
+              "source_sections": [
+                "1.3",
+                "1.4"
+              ]
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Students work on End of Chapter Q15, p.14 individually. Part (i): compare each circle's centre x-coordinate minus radius with 0, centre x plus radius with 800, centre y minus radius with 0, centre y plus radius with 600 — these are pure coordinate comparisons using the Section 1.3 idea that a coordinate measures distance from an axis. Part (ii): compute the distance AB = √((250−100)²+(230−150)²) = √(22500+6400) = √28900 = 170, and compare with 80+100 = 180; since AB < sum of radii, the circles intersect."
+            },
+            {
+              "minutes": "15-32",
+              "activity": "Students work on End of Chapter Q16, p.14: plot A(2,1), B(−1,2), C(−2,−1), D(1,−2) on graph paper. Compute all four side lengths using the distance formula: AB = BC = CD = DA = √(9+1) = √10. Compute the two diagonals: AC = √(16+4) = √20 and BD = √(4+16) = √20. Equal sides and equal diagonals confirm a square. Area = (diagonal)²/2 = 20/2 = 10 square units."
+            },
+            {
+              "minutes": "32-45",
+              "activity": "Students attempt End of Chapter Q3, p.12: given R(3,0), A(0,−2), M(−5,−2), P(−5,2), predict before plotting which sides are perpendicular, which is axis-parallel, and which two points are mirror images. Students justify predictions using coordinate reasoning, then plot and verify. Axis-parallel: MA is horizontal (shared y = −2). Mirror images: M(−5,−2) and P(−5,2) reflect in the x-axis."
+            },
+            {
+              "minutes": "45-50",
+              "activity": "Quick class debrief: which of the three exercises used only Section 1.3 coordinate reading, which required the distance formula, and which required both? Students identify the demand of each exercise aloud to consolidate the distinction between plotting and computing."
+            }
+          ],
+          "teacher_notes": "These three exercises integrate coordinate reading (Section 1.3) with the distance formula (Section 1.4) and represent the chapter's most complex application work. In End of Chapter Q15 the most common error is confusing whether the circle exceeds the screen — students check only the rightward direction and miss the leftward or downward; prompt a systematic four-direction check. For End of Chapter Q16, students sometimes prove equal side lengths and stop, forgetting to check the diagonals — both conditions are needed to distinguish a square from a rhombus. End of Chapter Q3 is included here as it uses both section 1.3 and 1.4 content in a prediction-then-verify format that consolidates the chapter's two main tools.",
+          "homework": []
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 50,
+          "activity_title": "Chapter Synthesis: Coordinates, Distance, and Spatial Reasoning Together",
+          "section_anchor": "synthesis",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook (Chapter 1)",
+            "Graph paper",
+            "Ruler",
+            "Pencil"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Begin with a whole-class map activity: on graph paper, each student marks four points of their choice — one per quadrant — and labels each with its coordinates. Students exchange with a neighbour, who must (a) identify the quadrant of each point by checking the sign pattern and (b) compute the distance between two specified points using the distance formula. This activates both main tools of the chapter side by side."
+            },
+            {
+              "minutes": "10-30",
+              "activity": "Present a synthesis problem: a designer places four furniture corners at W(−3, 4), X(5, 4), Y(5, −2), Z(−3, −2). Students must (a) plot all four points, (b) identify the shape WXYZ and justify it using coordinate reasoning (equal opposite sides, right angles from shared coordinates), (c) compute the side lengths WX, XY, YZ, ZW using the distance formula or axis-distance rule as appropriate, and (d) state the perimeter. Students work independently, showing all reasoning."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Pose a second synthesis question drawing on the historical thread: the designer now wants to place a fifth point V at the centre of WXYZ. Students compute V's coordinates as the average of opposite vertices' coordinates (a reasoning step, not a formula they have been given), place V on the grid, and verify that the distance from V to each corner is equal. This connects the coordinate system's measurement power to a genuine spatial decision."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Class discussion: what two tools from the chapter did every question in this unit use? Students name them — the coordinate system (axes, origin, quadrant sign convention) and the distance formula — and articulate how each tool depends on the other: the distance formula's legs are just coordinate differences, so coordinates are the foundation. Close by inviting students to state one thing they can now do with coordinates that they could not do without negative numbers."
+            }
+          ],
+          "teacher_notes": "This synthesis unit draws on the Cartesian coordinate system defined in Section 1.3 and the distance formula derived in Section 1.4 — both working together in a single spatial planning task. Watch for students who correctly identify the rectangle WXYZ by visual inspection alone without stating the coordinate-based justification (shared coordinates proving parallel sides, right angles at each vertex); require the written reasoning, not just the shape name. The centre-point calculation in the second synthesis question previews the midpoint idea students will meet in later chapters and is a natural extension for curious students to pursue on their own.",
+          "homework": []
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 50,
+        "count": 10
+      }
+    ],
+    "coverage_handoff": [
+      {
+        "section_number": 1,
+        "section_ref": "1.1",
+        "section_title": "Introduction",
+        "total_sections": 4,
+        "period_numbers": [
+          1
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can explain why negative numbers are a necessary precondition for a four-quadrant coordinate system, drawing on the historical development of grid-based mathematics in Bharat through Brahmagupta."
+        ],
+        "section_context": "Historical grid frameworks, Brahmagupta, zero and negative numbers as coordinate prerequisites",
+        "c_code": "C-4.5",
+        "co_central": false
+      },
+      {
+        "section_number": 2,
+        "section_ref": "1.2",
+        "section_title": "Settling In",
+        "total_sections": 4,
+        "period_numbers": [
+          2
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can represent a real space on a rectangular grid at a chosen scale, identifying the key information — scale, reference point, direction — that makes such a grid an unambiguous record of location."
+        ],
+        "section_context": "Reiaan and Shalini's room-plan grid, scaled representation of real space before formal coordinates",
+        "c_code": "C-4.5",
+        "co_central": false
+      },
+      {
+        "section_number": 3,
+        "section_ref": "1.3",
+        "section_title": "The 2-D Cartesian Coordinate System",
+        "total_sections": 4,
+        "period_numbers": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can locate a point in the 2-D Cartesian plane by reading or assigning its coordinates (x, y), applying the axis definitions, sign convention, and quadrant sign patterns.",
+          "Students can use the ordered-pair coordinate convention to identify the unique location named by (x, y) and distinguish it from (y, x), and can determine which quadrant(s) a point occupies from the signs of its coordinates."
+        ],
+        "section_context": "x-axis, y-axis, origin, four quadrants, sign convention, ordered-pair coordinates of points and room-plan locations",
+        "c_code": "C-4.5",
+        "co_central": false
+      },
+      {
+        "section_number": 4,
+        "section_ref": "1.4",
+        "section_title": "Distance Between Two Points in the 2-D Plane",
+        "total_sections": 4,
+        "period_numbers": [
+          7,
+          8,
+          9
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can derive and apply the distance formula d = √((x₂−x₁)²+(y₂−y₁)²) to find the straight-line distance between any two points in the coordinate plane, including points in different quadrants."
+        ],
+        "section_context": "Right-triangle construction from coordinate differences, Baudhayana-Pythagoras, distance formula for signed coordinates",
+        "c_code": "C-4.5",
+        "co_central": false
+      },
+      {
+        "section_number": 5,
+        "section_ref": "synthesis",
+        "section_title": "synthesis",
+        "total_sections": 4,
+        "period_numbers": [
+          10
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can solve a multi-step spatial problem by selecting between coordinate reading, quadrant reasoning, and the distance formula as required, and justify geometric properties of a figure using coordinate evidence."
+        ],
+        "section_context": "Integrated use of Cartesian coordinates, quadrant sign patterns, and distance formula in spatial planning tasks",
+        "c_code": "C-4.5",
+        "co_central": false
+      }
+    ],
+    "assessment_items": {
+      "grade": "Grade IX",
+      "subject": "mathematics",
+      "stage": "secondary",
+      "chapter_number": 1,
+      "chapter_title": "Orienting Yourself: The Use of Coordinates",
+      "chapter_cg": "CG-4",
+      "reasoning_floor_lift_applied": true,
+      "questions": [
+        {
+          "section_number": 1,
+          "section_ref": "1.1",
+          "section_title": "Introduction",
+          "total_sections": 4,
+          "implied_lo_assessed": "Students can explain why negative numbers are a necessary precondition for a four-quadrant coordinate system, drawing on the historical development of grid-based mathematics in Bharat through Brahmagupta.",
+          "section_context": "Historical grid frameworks, Brahmagupta, zero and negative numbers as coordinate prerequisites",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-4.5",
+            "competency_text": "Specifying locations and describing spatial relationships using coordinate geometry."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Brahmagupta's formalisation of zero and negative numbers was a necessary step before the four-quadrant Cartesian coordinate plane could be constructed. Which statement best explains why?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Without Brahmagupta's work, the ordered-pair notation (x, y) could not have been invented, so locations cannot be written down.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "Without negative numbers, only points to the right of and above the origin can be assigned coordinates, so three of the four quadrants cannot be named.",
+              "is_correct": true
+            },
+            {
+              "label": "C",
+              "text": "Without negative numbers, the distance formula gives incorrect results because squared differences would always be positive.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "Without zero, the origin cannot be defined, so the axes have no intersection point and the plane has no centre.",
+              "is_correct": false
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "what_each_option_reveals": {
+                "D": "Conflates the role of zero (defining the origin) with the role of negative numbers (enabling the three quadrants left of and below the origin); zero does define the origin, but the four-quadrant issue is specifically about negative coordinates.",
+                "C": "Confuses a property of the distance formula (which works correctly with negative coordinates precisely because they are squared) with a claim that negative numbers are needed for the formula — the formula post-dates, rather than motivates, the need for negatives.",
+                "A": "Locates the necessity of negative numbers in notation rather than in the mathematical structure of the plane; ordered-pair notation is a convention, not the reason three quadrants require negative values."
+              },
+              "inclusivity": "Students who find the conceptual explanation difficult can first draw a number line and mark which numbers disappear if negatives are removed, then extend the argument to two dimensions as a support. Students ready for a challenge can consider what a one-quadrant coordinate system (positive x and y only) could and could not express — for example, whether temperature below zero or a point to the left of a reference could be recorded."
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 2,
+          "section_ref": "1.2",
+          "section_title": "Settling In",
+          "total_sections": 4,
+          "implied_lo_assessed": "Students can represent a real space on a rectangular grid at a chosen scale, identifying the key information — scale, reference point, direction — that makes such a grid an unambiguous record of location.",
+          "section_context": "Reiaan and Shalini's room-plan grid, scaled representation of real space before formal coordinates",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-4.5",
+            "competency_text": "Specifying locations and describing spatial relationships using coordinate geometry."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Reiaan draws his bedroom on squared paper at a scale of 1 cm = 1 ft, placing the bottom-left corner of the room at the bottom-left corner of the grid. His friend Priya looks at the sketch and cannot tell which edge of the room is the wall with the window. Which piece of information is missing that would make the sketch an unambiguous record of location?",
+          "options": [
+            {
+              "label": "A",
+              "text": "The scale chosen (1 cm = 1 ft) is too simple; a more complex scale would remove the ambiguity.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "The sketch does not indicate which direction (north, south, east, west, or 'left', 'right', 'up', 'down') corresponds to which grid direction.",
+              "is_correct": true
+            },
+            {
+              "label": "C",
+              "text": "The sketch does not show axes with tick marks at every centimetre.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "The sketch does not use coordinate notation (x, y) to label the corners.",
+              "is_correct": false
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "what_each_option_reveals": {
+                "D": "Confuses the later formalism of coordinate notation with the prior requirement of an unambiguous direction convention; coordinates label positions but do not by themselves tell you which physical direction is 'up' on the grid.",
+                "C": "Identifies a presentational feature (axis tick marks) rather than the structural requirement of knowing which grid direction maps to which real-world direction; a grid without tick marks but with a compass arrow would be sufficient.",
+                "A": "Misidentifies the source of ambiguity as the scale's simplicity rather than the absence of a direction key; changing the scale cannot resolve a directional ambiguity."
+              },
+              "inclusivity": "Students who struggle can be asked to draw two versions of the same simple grid — one with a north arrow, one without — and explain which version a stranger could use without asking questions. Students ready for extension can consider how the choice of reference corner (bottom-left vs. centre) interacts with the direction convention and whether either choice alone is sufficient."
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 3,
+          "section_ref": "1.3",
+          "section_title": "The 2-D Cartesian Coordinate System",
+          "total_sections": 4,
+          "implied_lo_assessed": "Students can locate a point in the 2-D Cartesian plane by reading or assigning its coordinates (x, y), applying the axis definitions, sign convention, and quadrant sign patterns.",
+          "section_context": "x-axis, y-axis, origin, four quadrants, sign convention, ordered-pair coordinates of points and room-plan locations",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-4.5",
+            "competency_text": "Specifying locations and describing spatial relationships using coordinate geometry."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A rectangular room has its bottom-left corner at the origin O. Three corners of a study table inside the room have coordinates (6, 8), (9, 8), and (9, 5). (a) Write down the coordinates of the fourth corner of the table. (b) State the length and width of the table. (c) The table is to be placed so that each foot is at least 1 unit from any wall. The room corners are at O(0, 0), (14, 0), (14, 12), and (0, 12). Does the table fit within the required clearance? Show your reasoning using coordinates.",
+          "options": [],
+          "expected_answer": "(a) Fourth corner: (6, 5). (b) Length (horizontal side) = 9 − 6 = 3 units; width (vertical side) = 8 − 5 = 3 units; the table is a 3×3 square. (c) Clearance check: left wall x = 0, table's leftmost x = 6 ≥ 1 ✓; right wall x = 14, table's rightmost x = 9 ≤ 13 ✓; bottom wall y = 0, table's lowest y = 5 ≥ 1 ✓; top wall y = 12, table's highest y = 8 ≤ 11 ✓. All four clearances satisfied; the table fits.",
+          "method_one_line": "Identify the fourth vertex of the rectangle by matching the x-coordinate of the left column and the y-coordinate of the bottom row; compute dimensions as coordinate differences; check all four clearances by comparing table-edge coordinates with wall-coordinate ± 1.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": "Students who find part (c) difficult can first answer: 'what are the x- and y-coordinates of all four table corners?' and then check each against the nearest wall one at a time as a scaffolded support. Students ready for extension can investigate whether rotating the table 90° inside the room would change any clearance, justifying their answer using coordinates."
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 3,
+          "section_ref": "1.3",
+          "section_title": "The 2-D Cartesian Coordinate System",
+          "total_sections": 4,
+          "implied_lo_assessed": "Students can use the ordered-pair coordinate convention to identify the unique location named by (x, y) and distinguish it from (y, x), and can determine which quadrant(s) a point occupies from the signs of its coordinates.",
+          "section_context": "x-axis, y-axis, origin, four quadrants, sign convention, ordered-pair coordinates of points and room-plan locations",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-4.5",
+            "competency_text": "Specifying locations and describing spatial relationships using coordinate geometry."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Point P has coordinates (−4, 7). Point Q is obtained by swapping P's coordinates. In which quadrant does Q lie, and is Q the same point as P?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Q lies in Quadrant I, and Q is a different point from P.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "Q lies in Quadrant II, and Q is a different point from P.",
+              "is_correct": true
+            },
+            {
+              "label": "C",
+              "text": "Q lies in Quadrant II, and Q is the same point as P because the distance from the origin is unchanged.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "Q lies in Quadrant IV, and Q is a different point from P.",
+              "is_correct": false
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "what_each_option_reveals": {
+                "D": "Correctly identifies Q as a different point from P but misreads the quadrant — Q = (7, −4) has positive x and negative y, placing it in Quadrant IV, not II; the student likely forgot that the swapped coordinates are (7, −4) and re-examined signs incorrectly.",
+                "C": "Correctly identifies Quadrant II for Q but claims Q equals P because the distance from the origin is the same; this confuses equal distance from the origin (which is true: √(16+49) = √(49+16)) with being the same point, ignoring that the ordered-pair convention makes (−4, 7) and (7, −4) distinct locations.",
+                "A": "Assigns Q to Quadrant I, suggesting the student took both coordinates of Q as positive — a sign-reading error on the swapped pair (7, −4) where the negative sign on −4 was overlooked."
+              },
+              "inclusivity": "Students uncertain about quadrant signs can draw the four quadrants and label the sign pattern in each, then locate Q = (7, −4) by checking the sign of the first coordinate (positive → right) and the second (negative → down) as a step-by-step support. Students ready for extension can find all points (a, b) for which swapping coordinates yields the same point, and state the geometric description of that set."
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 4,
+          "section_ref": "1.4",
+          "section_title": "Distance Between Two Points in the 2-D Plane",
+          "total_sections": 4,
+          "implied_lo_assessed": "Students can derive and apply the distance formula d = √((x₂−x₁)²+(y₂−y₁)²) to find the straight-line distance between any two points in the coordinate plane, including points in different quadrants.",
+          "section_context": "Right-triangle construction from coordinate differences, Baudhayana-Pythagoras, distance formula for signed coordinates",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-4.5",
+            "competency_text": "Specifying locations and describing spatial relationships using coordinate geometry."
+          },
+          "cognitive_demand": "Evaluation",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Arjun claims: 'To find the distance between two points in the coordinate plane, I just add the horizontal gap and the vertical gap: distance = |x₂ − x₁| + |y₂ − y₁|.' (a) Test Arjun's method on the pair of points K(1, 1) and L(4, 5). Show your working for both Arjun's method and the correct method. (b) Explain, using the geometry of the right triangle constructed in Section 1.4, exactly where Arjun's reasoning goes wrong and why the correct formula uses squares and a square root instead.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [
+            "Arjun's method gives |4−1| + |5−1| = 3 + 4 = 7 for KL.",
+            "Correct method: KL = √((4−1)² + (5−1)²) = √(9 + 16) = √25 = 5; since 7 ≠ 5 the claim is false.",
+            "Geometric explanation names the right triangle with horizontal leg 3 and vertical leg 4; the hypotenuse KL is not the sum of the legs but is related to them by the Baudhayana-Pythagoras theorem: KL² = 3² + 4².",
+            "Student articulates that Arjun is computing the sum of the two legs (the 'taxicab' or 'Manhattan' distance along the axes), not the straight-line distance across the hypotenuse.",
+            "Student states or implies that the sum of two sides of a triangle is always greater than the third side (here 3 + 4 > 5), confirming the correct distance is smaller than Arjun's answer.",
+            "The explanation uses the chapter's own language: right triangle, horizontal leg = |x₂−x₁|, vertical leg = |y₂−y₁|, hypotenuse, Baudhayana-Pythagoras theorem."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": "Students who find the geometric argument difficult can first draw the right triangle for K(1,1) and L(4,5) on graph paper, label the three sides, and measure each with a ruler to see that the hypotenuse is shorter than the sum of the legs — this concrete observation supports the written explanation. Students ready for extension can generalise: describe all pairs of points for which Arjun's formula and the correct formula give the same numerical answer, and explain geometrically what is special about those pairs. Note: this item carries a Rule 6 reasoning-floor lift — the implied_lo 'derive and apply the distance formula' was at Application level, but because no other section in this chapter reaches Analysis or Evaluation, this item was lifted to ECR (Evaluation) to satisfy the floor requirement; the lift is recorded here."
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "format_type": "",
+              "format_rationale": "",
+              "what_this_demonstrates": "",
+              "reading_the_scaffold": "",
+              "strong_vs_weak_markers": "",
+              "inclusivity": ""
+            }
+          }
+        },
+        {
+          "section_number": 5,
+          "section_ref": "synthesis",
+          "section_title": "synthesis",
+          "total_sections": 4,
+          "implied_lo_assessed": "Students can solve a multi-step spatial problem by selecting between coordinate reading, quadrant reasoning, and the distance formula as required, and justify geometric properties of a figure using coordinate evidence.",
+          "section_context": "Integrated use of Cartesian coordinates, quadrant sign patterns, and distance formula in spatial planning tasks",
+          "question_type": "OPEN_TASK",
+          "competency": {
+            "c_code": "C-4.5",
+            "competency_text": "Specifying locations and describing spatial relationships using coordinate geometry."
+          },
+          "cognitive_demand": "Analysis",
+          "visual_stimulus": null,
+          "graph_paper": true,
+          "question_text": "",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "A landscape architect places four fountain jets at points A(3, 5), B(−3, 5), C(−3, −5), and D(3, −5) in a city square whose coordinate system has the centre fountain at the origin. She wants to install a circular walkway — a circle centred at the origin — that passes exactly through all four jets. (a) Plot all four points on the coordinate plane provided. (b) Show, using the distance formula, that all four points are equidistant from the origin, and state that common distance. (c) State the quadrant of each point and verify that the sign pattern of each point's coordinates matches the quadrant rule. (d) The architect adds a fifth jet at E(0, k) for some positive number k. For the jet E to also lie on the same circular walkway, what must k equal? Justify your answer using the distance from the origin.",
+          "scaffold": "Part (a): Plot each point on the green grid provided, labelling it with its letter and coordinates. Part (b): Use d = √(x² + y²) for each point (since the origin is (0,0), x₁ = y₁ = 0). Part (c): Check: positive x and positive y → Quadrant I; negative x, positive y → Quadrant II; and so on. Part (d): E is on the y-axis, so its distance from the origin is |k|; set this equal to the radius found in (b).",
+          "format_of_output": [
+            "Labelled coordinate-plane plot (part a)",
+            "Worked distance calculations for all four points (part b)",
+            "Quadrant identification with sign justification for all four points (part c)",
+            "Value of k with written justification (part d)"
+          ],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "what_each_option_reveals": {},
+              "inclusivity": ""
+            },
+            "NUM": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": ""
+            },
+            "SCR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": ""
+            },
+            "ECR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": ""
+            },
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "format_type": "Model-and-solve",
+              "format_rationale": "The task translates a spatial planning scenario (fountain jets on a circular walkway) into coordinate work, then requires the student to compute, verify, and extend — integrating all three chapter tools in one problem.",
+              "what_this_demonstrates": "The task integrates coordinate plotting, quadrant sign-pattern verification, and the distance formula in a single spatial problem, demonstrating the student's ability to select and apply tools from the chapter's two main sections as required by a novel scenario.",
+              "reading_the_scaffold": "Part (a) grounds the task concretely before any formula is used; parts (b) and (c) isolate the two Chapter 1.3 and 1.4 tools separately; part (d) requires the student to reverse the formula — given the distance, find the coordinate — which tests genuine understanding beyond direct application.",
+              "strong_vs_weak_markers": "Strong responses compute OA, OB, OC, OD correctly as √34 each (verified: 3²+5²=9+25=34), state the radius as √34, identify all four quadrants by sign correctly (A: I, B: II, C: III, D: IV), and give k = √34 with an explicit distance-from-origin justification. Weak responses compute only one or two distances and assume the rest by symmetry without calculation, or assign quadrants by visual inspection without citing the sign rule, or give k = 5 by reading the y-axis value of A rather than computing the radius.",
+              "inclusivity": "Students who find part (d) challenging can first answer: 'if E = (0, 6) what is its distance from the origin?' and compare with √34 to see whether 6 is too large or too small — this narrows the search to a comparison and estimation strategy. Students ready for extension can explore how many points on the y-axis lie on the same circle as A, B, C, D (answer: two, (0, √34) and (0, −√34)), justifying why there are exactly two using the equation x = 0 in the circle equation x² + y² = 34."
+            }
+          }
+        }
+      ]
+    },
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

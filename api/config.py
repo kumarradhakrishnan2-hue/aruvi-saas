@@ -127,3 +127,32 @@ CUTOVER_MONTH_DAY = os.environ.get("ARUVI_CUTOVER_MONTH_DAY", "06-01").strip()
 # (entitlement expiry included) rather than only the piece under test. Unset in
 # production; the server logs a warning when it is set.
 SIMULATED_TODAY = os.environ.get("ARUVI_TODAY", "").strip()
+
+# ── The lesson-plan library year (administrative architecture §2.2, 2026-08-27) ──
+# ★ TWO DIFFERENT YEARS LIVE IN THIS SYSTEM AND CONFLATING THEM IS THE BUG §2.2 EXISTS
+# TO PREVENT.
+#
+#   · the TEACHER's academic year  — AcademicYear/{year_id}, per teacher, Bucket B,
+#     the year she is TEACHING in. Step 1 scopes her state by it.
+#   · the LIBRARY's year (this)    — which authored edition a lesson plan came from,
+#     Bucket A, the same for everybody.
+#
+# They are independent: a teacher can teach one 2026-27 plan for several years running,
+# and two teachers in different years can be served the same edition. My Lessons already
+# shows her PRIOR-YEAR FOLDER — that is her year, not the plan's, and once a second
+# edition exists, showing one while she assumes the other is exactly the confusion the
+# stamp is for.
+#
+# LP_YEAR is the edition CURRENTLY BEING SERVED: the folder new generation reads from and
+# writes into (saved_plans/{subject}/{grade}/{LP_YEAR}/), and the value stamped into every
+# canonical's genon_canonical block. Bump it when a new edition is published — the January
+# re-authoring batch (§2.1: the new canonicals must exist by roughly January, before the
+# March–June peak).
+#
+# ★ The stamp is a LABEL, never a cache key. Derived plans stay keyed by
+# (engine, constitution-run) — see data.genon_plan_filename. That is what lets a carried
+# chapter keep its whole variant cache across an edition bump instead of re-paying to
+# regenerate content that did not change. aruvi-scripts/carry_over_year.py copies the
+# canonical AND its derived plans, rewriting only this field. Put the year in the key and
+# you buy the entire library again every June, at peak load.
+LP_YEAR = os.environ.get("ARUVI_LP_YEAR", "2026-27").strip() or "2026-27"

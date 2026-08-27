@@ -1,0 +1,1042 @@
+{
+  "filename": "ch_06_canonical_p11.json",
+  "saved_at": "2026-08-12T14:57:36",
+  "plan_status": "canonical",
+  "chapter_number": 6,
+  "chapter_title": "Happy and Healthy Living",
+  "grade": "Grade IV",
+  "subject": "The World Around Us",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 40,
+      "count": 11
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 11 periods = 440 minutes\nTotal: 11 periods · 7h 20min",
+  "genon_canonical": {
+    "generated": "2026-08-12",
+    "schedule": "11x40",
+    "constitution": "LP v1.5 / assessment v1.5",
+    "source": "generate_canonical.py one the_world_around_us iv 6",
+    "ledger_ts": "20260812_142656_twau_iv_06_p11",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-12T15:10:46",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 5,
+            "field": "band:0",
+            "rule": "register/clock",
+            "removed": "for a quiet two minutes",
+            "replaced_with": "",
+            "note": "'observe the park scene picture without talking' keeps the quiet instruction and drops only the quantity"
+          }
+        ],
+        "ban_hits_before": 1,
+        "ban_hits_after": 0
+      },
+      {
+        "at": "2026-08-13T17:55:58",
+        "tool": "genon/repair_meta_leak.py v1.0",
+        "reason": "the serve contract narrated into teacher-facing text — found at F1 (C8 across the TWAU batch), 2026-08-13; founder instruction to fix all 29 corpus-wide",
+        "edits": [
+          {
+            "unit": 10,
+            "field": "band:0",
+            "rule": "register/meta-leak",
+            "removed": "Teacher recalls (without naming any unit):",
+            "replaced_with": "Teacher recalls:",
+            "note": "BAND text; a parenthetical addressed to the pipeline, mid-script"
+          }
+        ]
+      }
+    ],
+    "academic_year": "2026-27"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "activity_title": "Tracing the Grain's Journey — Picture Sequence Walk",
+          "section_ref": "Journey of the Grains",
+          "dominant_mode": "O&R",
+          "textbook_anchor": "Journey of the Grains — Observe the pictures and tick the elements that assist a grain in its journey (p. 88)",
+          "materials": [
+            "Textbook",
+            "Pencil",
+            "Notebook"
+          ],
+          "visual_aids": "12-step picture sequence in the textbook (pp. 86–88)",
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "The teacher holds up the textbook and asks children to look at the 12-step picture sequence on Textbook pp. 86–88 without reading any captions. Students name aloud what they notice in each picture — who or what is present, what seems to be happening."
+            },
+            {
+              "minutes": "7-20",
+              "activity": "Students open Textbook p. 88 and work individually on the observation activity: they put a tick on each element from the list (Soil, Stone, Air, Wood, Water, Tiger, Farmer, Earthworm, Hills, Fire, Insect, Bat) that helps the grain on its journey. Teacher circulates, asking children to point to the picture step that tells them their answer."
+            },
+            {
+              "minutes": "20-30",
+              "activity": "Pairs compare their ticked lists and discuss any differences. Teacher draws a simple table on the board with two columns — 'Natural helpers' and 'Human helpers' — and invites students to sort their ticked elements into it, coming up to the board one at a time."
+            },
+            {
+              "minutes": "30-40",
+              "activity": "Students copy the completed two-column table into their notebooks. Teacher closes with an open question: 'If just one of these helpers were missing, what do you think might happen to the grain?' Students give one-word or one-sentence oral responses."
+            }
+          ],
+          "implied_lo": "Students can sort the contributors to a natural-human system into natural and human categories based on observation.",
+          "section_context": "12-step grain journey picture sequence; elements list: Soil, Stone, Air, Wood, Water, Tiger, Farmer, Earthworm, Hills, Fire, Insect, Bat; natural vs human helper sorting.",
+          "teacher_facilitation_note": "Ask: 'Which of these helpers did you notice first in the pictures, and why?' Encourage quieter children to share by asking them to point to a picture rather than speak at length. Keep the board sorting unhurried — let children move elements if they change their minds."
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "activity_title": "From Farm to Plate — Connecting Food to Its Makers",
+          "section_ref": "Journey of the Grains",
+          "dominant_mode": "D&C",
+          "textbook_anchor": "Journey of the Grains — Connect the food items shown below with the ingredients used to make them (p. 85)",
+          "materials": [
+            "Textbook",
+            "Pencil",
+            "Notebook"
+          ],
+          "visual_aids": "Food-items matching activity on Textbook p. 85",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher asks: 'Think of one food you ate this morning. Where did the main ingredient come from — a field, a garden, an animal?' Students share briefly in pairs, then a few pairs report to the class. Teacher notes the ingredients named on the board."
+            },
+            {
+              "minutes": "8-22",
+              "activity": "Students open Textbook p. 85 and complete the matching activity — drawing lines connecting each food item to the ingredients used to make it. Teacher circulates and prompts children to think about which step in the journey they read about previously produced each ingredient."
+            },
+            {
+              "minutes": "22-32",
+              "activity": "Whole-class discussion: Teacher asks students to name every person — from farmer to cook — who contributed to one of the matched food items. Students extend the list to include contributors from their own families and communities: 'Who else helped bring this food to your home?' The 'Do you know?' box about harvest festivals (Makar Sankranti, Onam, Lohri, Akshay Tritya, Raja Utsav) is read aloud, and students are asked whether their family celebrates any festival connected to harvests or new grain."
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Students write a short 'Thank You' list in their notebooks (Textbook p. 89 prompt): they name at least three contributors — natural or human — they most want to thank, and one sentence explaining why. Two or three volunteers share aloud."
+            }
+          ],
+          "implied_lo": "Students can trace the human and natural contributions embedded in a familiar food item and articulate gratitude toward those contributors.",
+          "section_context": "Food-items matching activity; contributors from farm to plate; harvest festivals Makar Sankranti, Onam, Lohri, Akshay Tritya, Raja Utsav; Thank You list.",
+          "teacher_facilitation_note": "Invite children to name harvest or food-gratitude festivals from their own region or family — all answers are welcome and correct. Ask: 'Why do you think people celebrate when the first grain of the season arrives?' to draw out the cultural connection naturally."
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "activity_title": "Eating with All Five Senses — Mindful Peanut Experience",
+          "section_ref": "Mindful Eating",
+          "dominant_mode": "HI",
+          "textbook_anchor": "Mindful Eating — What role does your tongue play in this process? (p. 92)",
+          "materials": [
+            "A small handful of roasted peanuts (or any available whole food — a raisin, a grain of puffed rice)",
+            "Textbook",
+            "Pencil",
+            "Notebook"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-5",
+              "activity": "Teacher distributes one peanut (or equivalent) to each student and asks everyone to place it on their palm without eating it yet. Students look at it, smell it, and feel its texture — and whisper one describing word to themselves."
+            },
+            {
+              "minutes": "5-18",
+              "activity": "Teacher guides the mindful eating sequence slowly: eyes closed, place the food on the tongue, notice the texture, begin chewing slowly, notice the taste and smell as it changes, swallow, and then sit quietly for a moment. After opening eyes, students discuss Textbook p. 92 questions in pairs: What did your tongue do? What did your teeth do? What happened inside your mouth during this process?"
+            },
+            {
+              "minutes": "18-30",
+              "activity": "Whole-class share: Teacher draws three columns on the board — Tongue / Teeth / Inside the mouth — and students contribute observations. Teacher uses the discussion to reinforce that slowing down helps us notice more. Students compare eating this peanut mindfully with how they usually eat a snack quickly."
+            },
+            {
+              "minutes": "30-40",
+              "activity": "Students write three sentences in their notebooks: one about what their tongue noticed, one about what their teeth did, and one about how eating slowly felt different from eating quickly. Teacher reads two or three aloud."
+            }
+          ],
+          "implied_lo": "Students can describe sensory observations made during a structured eating experience and connect slowing down to noticing more.",
+          "section_context": "Mindful eating of a peanut; role of tongue, teeth, and mouth during chewing; sensory observations of texture, taste, and smell.",
+          "teacher_facilitation_note": "Ask: 'Did you notice something about the peanut that you had never noticed before?' Keep the eating phase genuinely unhurried — that is the inquiry itself. Check for any nut allergies before the unit and substitute with puffed rice or a raisin if needed."
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "activity_title": "Every Grain Counts — Food Tracking and Valuing Decisions",
+          "section_ref": "Valuing Food",
+          "dominant_mode": "R&A",
+          "textbook_anchor": "Valuing Food — For a week, keep a record of the food you eat for breakfast, lunch and dinner (p. 93)",
+          "materials": [
+            "Textbook",
+            "Pencil",
+            "Ruler",
+            "Notebook"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher tells a brief story: 'Imagine you worked in a field all day under the sun to grow rice. Then you learned that half of it was thrown away at someone's home.' Asks: 'How would that feel?' Students respond orally. Teacher connects back to the journey traced earlier in the chapter: every discarded grain erases the work of every contributor in that chain."
+            },
+            {
+              "minutes": "8-22",
+              "activity": "Students open Textbook p. 93 and set up the week-long food tracking table in their notebooks (Day / Breakfast / Lunch / Dinner / Ate everything? Yes☺ / No☹). Teacher explains how to complete it after each meal at home over the coming days. Students then respond in writing to the two reflection prompts on Textbook p. 93: What would you do if someone offers you food more than you need? What would you do if you do not like a food item on your plate?"
+            },
+            {
+              "minutes": "22-35",
+              "activity": "Small groups of four discuss their written responses and try to agree on two polite, respectful strategies — one for excess food, one for disliked food — that avoid waste and avoid hurting the cook's feelings. Each group shares their two strategies with the class."
+            },
+            {
+              "minutes": "35-40",
+              "activity": "Teacher closes with the open question: 'Is valuing food only about not wasting it, or does it mean something more?' Students give one-sentence responses. Teacher affirms that valuing food also means gratitude and mindfulness — connecting to the previous unit's content about the journey and the mindful experience."
+            }
+          ],
+          "implied_lo": "Students can plan considerate, waste-reducing responses to real food situations and articulate why reducing food waste reflects respect for others' effort.",
+          "section_context": "Week-long food tracking table (breakfast, lunch, dinner); responses to excess-food and disliked-food situations; discussion of polite waste-reducing strategies.",
+          "teacher_facilitation_note": "Ask: 'Has anyone in your family ever reminded you not to waste food? What did they say?' This often surfaces culturally rooted food-respect practices. Affirm all regional and family food customs — the goal is reflection, not a single correct answer."
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "activity_title": "Spotting Physical Activity — Park Scene and Our Own Lives",
+          "section_ref": "Enjoy Sports",
+          "dominant_mode": "O&R",
+          "textbook_anchor": "Enjoy Sports — Look at the picture below. Identify the activities people are engaged in (p. 94)",
+          "materials": [
+            "Textbook",
+            "Pencil",
+            "Notebook"
+          ],
+          "visual_aids": "Park scene picture on Textbook p. 94",
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Students open Textbook p. 94 and observe the park scene picture without talking. Teacher then asks: 'How many different physical activities can you spot?' Students call out answers while teacher lists them on the board."
+            },
+            {
+              "minutes": "7-20",
+              "activity": "Students write the activity list from the board into their notebooks and then add a second column: 'Do I do this? Yes / No / Sometimes.' They tick each row individually. Teacher circulates and notes the range of activities students report."
+            },
+            {
+              "minutes": "20-32",
+              "activity": "Class discussion using Textbook p. 95 prompts: Which physical activities do you do in your daily life? How do you feel on a day when you play a lot? Students share in a circle — each child names one activity and one feeling word. Teacher adds any traditional Indian games (from Textbook p. 95 pictures) to the board list if not already mentioned and asks if anyone can name them."
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Students write three sentences in their notebooks: one activity they saw in the park picture, one they do themselves, and one they would like to try. Teacher asks two volunteers to read aloud, then asks the class: 'Why do you think the body feels good after playing?'"
+            }
+          ],
+          "implied_lo": "Students can identify a range of physical activities from a visual scene and connect observed activities to their own daily physical experiences.",
+          "section_context": "Park scene picture (Textbook p. 94); physical activities identified; traditional Indian games (Textbook p. 95 pictures); daily physical activity self-report.",
+          "teacher_facilitation_note": "Ask: 'Are there any games your grandparents or older relatives play or played that are not in the park picture?' This draws out traditional regional games naturally. Group the board list into 'outdoor games', 'yoga/exercise', and 'traditional games' with student input."
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "activity_title": "Yoga Practice and Observation Record",
+          "section_ref": "Enjoy Sports",
+          "dominant_mode": "HI",
+          "textbook_anchor": "Enjoy Sports — With your teacher's guidance, practice the easy yoga poses given below for a week, and record your observations (p. 95)",
+          "materials": [
+            "Textbook",
+            "Open floor space or cleared desks",
+            "Pencil",
+            "Notebook"
+          ],
+          "visual_aids": "Yoga pose illustrations on Textbook p. 95",
+          "time_bands": [
+            {
+              "minutes": "0-5",
+              "activity": "Teacher opens Textbook p. 95 and shows the yoga pose illustrations. Students look at each pose and predict: 'Which part of the body do you think this pose stretches or strengthens?' A few children share predictions aloud."
+            },
+            {
+              "minutes": "5-25",
+              "activity": "Teacher leads the class through the easy yoga poses shown on Textbook p. 95, one at a time. Students follow along in the open floor space. After each pose, teacher asks: 'Where do you feel the stretch? Does it feel easy, medium, or challenging?' Students note one word per pose."
+            },
+            {
+              "minutes": "25-35",
+              "activity": "Students return to their seats and set up the week-long yoga observation record in their notebooks: columns for Day, Poses practised, and How I felt after. Teacher explains that students will try to practise the same poses at home over the coming days and fill in the table each day."
+            },
+            {
+              "minutes": "35-40",
+              "activity": "Brief class discussion: 'Do you think practising the same pose every day would change how it feels? Why?' Students give one-sentence predictions, which become their informal hypothesis for the week-long observation."
+            }
+          ],
+          "implied_lo": "Students can perform a structured observation by practising a repeated physical activity and recording how their body responds over time.",
+          "section_context": "Easy yoga poses (Textbook p. 95 illustrations); in-class practice; week-long yoga observation table (Day, Poses practised, How I felt after); body response predictions.",
+          "teacher_facilitation_note": "Model each pose yourself before students try it — safety and comfort come first. Ask: 'Has anyone seen yoga being practised at home or in your neighbourhood?' This brings in the everyday cultural familiarity of yoga without labelling it separately."
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "activity_title": "Sleep Tracking — Recording Rest and How It Feels",
+          "section_ref": "Sleep Well too!",
+          "dominant_mode": "HI",
+          "textbook_anchor": "Sleep Well too! — Fill the table given below recording sleep timings and how you felt during the day (p. 97)",
+          "materials": [
+            "Textbook",
+            "Pencil",
+            "Ruler",
+            "Notebook"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher opens with a show-of-hands: 'Who woke up this morning feeling really fresh and ready? Who woke up feeling tired or sleepy?' Students raise hands. Teacher asks a few children on each side: 'What time did you sleep last night?' Responses are noted informally on the board."
+            },
+            {
+              "minutes": "8-20",
+              "activity": "Students open Textbook p. 97 and set up the three-day sleep tracking table in their notebooks (Day / When did you sleep? / When did you get up? / Duration of sleep / How you felt: a-Fresh, b-Lazy, c-Sleepy). Teacher models filling in one row using a fictional example on the board. Students fill in whatever they remember from last night as Day 1."
+            },
+            {
+              "minutes": "20-32",
+              "activity": "Class discusses the Textbook p. 97 questions: Why do you think our body needs rest? Do you think it is important to rest after a busy day of exercise and play? Why? Students share in pairs first, then three or four pairs report to the class. Teacher notes key ideas on the board: 'body repairs itself', 'brain sorts memories', 'energy recharges'."
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Students write a short personal conclusion in their notebooks: 'Based on last night's sleep, I think my body got [enough / not enough] rest because...' Teacher asks: 'Do you think the way you spent your day affects how well you sleep?' — connecting sleep to the physical activity discussed in the previous section."
+            }
+          ],
+          "implied_lo": "Students can collect and interpret personal data about sleep patterns and connect sleep duration to how the body feels the next day.",
+          "section_context": "Three-day sleep tracking table (sleep time, wake time, duration, wellbeing rating a/b/c); reasons why the body needs rest; connection between exercise and sleep quality.",
+          "teacher_facilitation_note": "Ask: 'Does anyone in your family have a bedtime routine — something they do every night before sleeping?' This surfaces cultural practices around rest and winds the discussion toward habits naturally. Keep the data-filling phase genuinely calm and personal — it is self-observation, not a test."
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "activity_title": "Safe and Unsafe Touch — Picture Classification and Speaking Up",
+          "section_ref": "Feeling Safe",
+          "dominant_mode": "D&C",
+          "textbook_anchor": "Feeling Safe — Look at the pictures of different situations. Put a tick for comfortable and a cross for uncomfortable (p. 98)",
+          "materials": [
+            "Textbook",
+            "Pencil",
+            "Notebook"
+          ],
+          "visual_aids": "Situation pictures on Textbook p. 98",
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher creates a calm, trust-building opening: 'We are going to talk about something very important today — feeling safe. There are no wrong feelings. Everything we share here stays in our classroom.' Students are reminded they can write instead of speaking aloud if they prefer."
+            },
+            {
+              "minutes": "7-20",
+              "activity": "Students open Textbook p. 98 and look at the pictures of different situations. Individually, they put a tick (✓) beside pictures where the child would feel comfortable and a cross (✗) beside pictures where the child would feel uncomfortable. Teacher circulates without commenting on individual choices yet."
+            },
+            {
+              "minutes": "20-32",
+              "activity": "Whole-class discussion: Teacher goes through each picture one by one, asking: 'What did most of us choose here?' Where there is agreement, teacher affirms it. Where there is uncertainty, teacher draws out the key idea: a touch that makes you feel scared, confused, or uneasy — even from someone you know — is an unsafe touch. Students write the key distinction in their notebooks: safe touch / unsafe touch — in their own words."
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Students respond in writing to three prompts from Textbook p. 99: What would you do if someone's touch made you feel uncomfortable? Who would you tell if you faced an unsafe situation? Write two situations where you would firmly say 'No'. Teacher emphasises: saying 'No' is always right, and telling a trusted adult is always the right step."
+            }
+          ],
+          "implied_lo": "Students can distinguish between safe and unsafe touch situations using given picture scenarios and describe at least one action they would take to seek help.",
+          "section_context": "Safe vs unsafe touch picture classification (Textbook p. 98); written responses on what to do if uncomfortable; naming a trusted adult to tell; two 'No' situations.",
+          "teacher_facilitation_note": "Keep the tone steady and matter-of-fact — not alarming. Ask: 'Is there anyone in your school or home you completely trust and feel safe talking to?' Help students name that person concretely. If any child seems distressed, follow the school's safeguarding protocol after the unit."
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "activity_title": "What Would Happen? — Reasoning About the Food Chain",
+          "section_ref": "Let us reflect",
+          "dominant_mode": "D&C",
+          "textbook_anchor": "Let us reflect — If the following are missing, what would happen to a food grain? (p. 100)",
+          "materials": [
+            "Textbook",
+            "Pencil",
+            "Notebook"
+          ],
+          "visual_aids": "Board list of elements: Soil, Water, Sunlight, Cattle, Earthworm, Farmer, Shopkeeper, Cook",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher writes the eight elements on the board: Soil, Water, Sunlight, Cattle, Earthworm, Farmer, Shopkeeper, Cook. Students are given a moment to think silently: 'If you had to remove just one of these from the journey, which would cause the most harm?' Each student writes their choice and a one-sentence reason."
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Students open Textbook p. 100 and work through the reflection question systematically, writing one sentence for each missing element: 'If ___ were missing, the food grain would...' Teacher circulates and prompts children who are stuck by asking: 'What exactly does this element do in the journey? What would stop without it?'"
+            },
+            {
+              "minutes": "25-35",
+              "activity": "Small group discussion: each group of three compares their answers for two or three elements and tries to agree on the most important consequence. Groups share with the class. Teacher draws out the idea that natural and human contributions are equally necessary — removing either breaks the chain."
+            },
+            {
+              "minutes": "35-40",
+              "activity": "Quick whole-class oral round: Teacher calls out an element, students give the consequence in one word or phrase. Pace is brisk. Teacher closes: 'Every part of this chain deserves our care and our gratitude.'"
+            }
+          ],
+          "implied_lo": "Students can reason about the consequences of removing a single component from an interdependent system and explain why each part is necessary.",
+          "section_context": "Missing elements reasoning: Soil, Water, Sunlight, Cattle, Earthworm, Farmer, Shopkeeper, Cook; consequence sentences; interdependence of natural and human contributions.",
+          "teacher_facilitation_note": "Ask: 'Which missing element surprised you most in terms of its impact?' to push beyond the obvious. Encourage children to refer back to the picture sequence they observed — naming the content already explored anchors the reasoning in evidence they have already built."
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "activity_title": "Designing My Balanced Plate — Breakfast, Lunch, and Dinner",
+          "section_ref": "Let us reflect",
+          "dominant_mode": "C&E",
+          "textbook_anchor": "Let us reflect — Design your own favourite plate of balanced diet with the food items you like (p. 100)",
+          "materials": [
+            "Textbook",
+            "Pencil or crayons",
+            "Notebook or plain paper"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher recalls: 'We have thought about where food comes from, how to eat it mindfully, and how to value it. Now you get to plan your own meals.' Students are shown the three-plate design task on Textbook p. 100. Teacher sets one ground rule: 'Remember — we should not waste food, so only plan what you would actually eat.'"
+            },
+            {
+              "minutes": "7-25",
+              "activity": "Students draw and label three plates in their notebooks or on plain paper — Breakfast, Lunch, Dinner — filling each with their chosen food items. They can draw the food or write the names, or both. Teacher circulates and asks each student: 'Is this a balanced plate? What do the different things in your plate give your body?'"
+            },
+            {
+              "minutes": "25-35",
+              "activity": "Gallery walk: Students place their plates on their desks. The class walks around and uses sticky dots or pencil ticks to mark one plate they find most balanced and one dish they would like to try. Students may quietly ask each other why they included a particular food."
+            },
+            {
+              "minutes": "35-40",
+              "activity": "Whole-class share: Teacher asks two or three students to explain one food choice from their lunch plate. Discussion closes with: 'Is there any food on your plate that you know a farmer worked hard to grow?' — reconnecting the creative task to the food journey explored earlier in the chapter."
+            }
+          ],
+          "implied_lo": "Students can design a balanced meal plan using familiar food choices and explain the nutritional reasoning behind at least one selection.",
+          "section_context": "Three balanced-diet plate designs (Breakfast, Lunch, Dinner); food items chosen by students; gallery walk peer review; connection between food choices and nutritional value.",
+          "teacher_facilitation_note": "Affirm all regional and home foods — dosa, roti, dal, poha, idli, and local staples are all valid. Ask: 'Did you include something grown near your home or in your region?' to surface local food knowledge without prescribing it."
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "activity_title": "My Well-Being Plan — Habits for a Healthy Life",
+          "section_ref": "Let us reflect",
+          "dominant_mode": "R&A",
+          "textbook_anchor": "Let us reflect — Which habits would you practice daily? Indicate your plans (p. 101)",
+          "materials": [
+            "Textbook",
+            "Pencil or crayons",
+            "Notebook"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher opens with a reflective question: 'Thinking about everything you have done in this chapter — food, eating, sport, sleep, and safety — what is one thing you would like to do differently starting tomorrow?' Students write one sentence privately before anyone speaks aloud."
+            },
+            {
+              "minutes": "8-22",
+              "activity": "Students open Textbook p. 101 and complete three tasks: (a) Write which exercises and games they would practise to keep their body strong. (b) Write which activities they enjoyed during their mindful eating experience. (c) Complete the daily habits plan table — Wake up early, Yoga and exercises, Eat a balanced diet on time, Exercise and play, Less use of TV and mobile, Read a book, Sleep peacefully — writing their own plan for each."
+            },
+            {
+              "minutes": "22-32",
+              "activity": "Students share their habit plans in groups of four: each person reads one habit they most want to build and explains one reason why. Groups notice where their plans overlap and where they differ. Teacher circulates and asks: 'Is any habit on your list something you have already started? How does it feel?'"
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Each student writes a personal well-being commitment — two to three sentences — addressed to themselves: 'I will... because...' They may decorate the border of the page if time allows. Teacher closes: 'A healthy life is built one small choice at a time. You have just made yours.' No further tasks are promised."
+            }
+          ],
+          "implied_lo": "Students can identify and articulate personal well-being habits across food, physical activity, and sleep, and connect each habit to its benefit for the body.",
+          "section_context": "Daily habits plan table (Wake up early, Yoga and exercises, Balanced diet on time, Exercise and play, Less screen time, Read a book, Sleep peacefully); exercises and games list; mindful eating reflection; personal well-being commitment.",
+          "teacher_facilitation_note": "Ask: 'Is there a habit in this list that someone in your family already follows?' to connect personal planning to existing home practices. Keep the commitment-writing phase calm and personal — it is a self-promise, not a performance."
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 40,
+        "count": 11
+      }
+    ],
+    "coverage_handoff": [
+      {
+        "period_number": 1,
+        "period_duration_minutes": 40,
+        "section_ref": "Journey of the Grains",
+        "dominant_mode": "O&R",
+        "implied_lo": "Students can sort the contributors to a natural-human system into natural and human categories based on observation.",
+        "section_context": "12-step grain journey picture sequence; elements list: Soil, Stone, Air, Wood, Water, Tiger, Farmer, Earthworm, Hills, Fire, Insect, Bat; natural vs human helper sorting.",
+        "textbook_anchor": "Journey of the Grains — Observe the pictures and tick the elements that assist a grain in its journey (p. 88)",
+        "activity_summary": "Students observe the 12-step grain journey picture sequence, tick the elements that help the grain, and sort them into natural and human helper columns on the board."
+      },
+      {
+        "period_number": 2,
+        "period_duration_minutes": 40,
+        "section_ref": "Journey of the Grains",
+        "dominant_mode": "D&C",
+        "implied_lo": "Students can trace the human and natural contributions embedded in a familiar food item and articulate gratitude toward those contributors.",
+        "section_context": "Food-items matching activity; contributors from farm to plate; harvest festivals Makar Sankranti, Onam, Lohri, Akshay Tritya, Raja Utsav; Thank You list.",
+        "textbook_anchor": "Journey of the Grains — Connect the food items shown below with the ingredients used to make them (p. 85)",
+        "activity_summary": "Students complete the food-ingredient matching activity, discuss every contributor from farmer to cook, explore harvest festival traditions, and write a personal Thank You list."
+      },
+      {
+        "period_number": 3,
+        "period_duration_minutes": 40,
+        "section_ref": "Mindful Eating",
+        "dominant_mode": "HI",
+        "implied_lo": "Students can describe sensory observations made during a structured eating experience and connect slowing down to noticing more.",
+        "section_context": "Mindful eating of a peanut; role of tongue, teeth, and mouth during chewing; sensory observations of texture, taste, and smell.",
+        "textbook_anchor": "Mindful Eating — What role does your tongue play in this process? (p. 92)",
+        "activity_summary": "Students eat a peanut mindfully with eyes closed, discuss the roles of tongue, teeth, and mouth, and write three observation sentences comparing mindful to hurried eating."
+      },
+      {
+        "period_number": 4,
+        "period_duration_minutes": 40,
+        "section_ref": "Valuing Food",
+        "dominant_mode": "R&A",
+        "implied_lo": "Students can plan considerate, waste-reducing responses to real food situations and articulate why reducing food waste reflects respect for others' effort.",
+        "section_context": "Week-long food tracking table (breakfast, lunch, dinner); responses to excess-food and disliked-food situations; discussion of polite waste-reducing strategies.",
+        "textbook_anchor": "Valuing Food — For a week, keep a record of the food you eat for breakfast, lunch and dinner (p. 93)",
+        "activity_summary": "Students set up a week-long food tracking table and write and discuss considerate responses to excess-food and disliked-food situations."
+      },
+      {
+        "period_number": 5,
+        "period_duration_minutes": 40,
+        "section_ref": "Enjoy Sports",
+        "dominant_mode": "O&R",
+        "implied_lo": "Students can identify a range of physical activities from a visual scene and connect observed activities to their own daily physical experiences.",
+        "section_context": "Park scene picture (Textbook p. 94); physical activities identified; traditional Indian games (Textbook p. 95 pictures); daily physical activity self-report.",
+        "textbook_anchor": "Enjoy Sports — Look at the picture below. Identify the activities people are engaged in (p. 94)",
+        "activity_summary": "Students observe the park scene, list physical activities spotted, self-report their own activity, and discuss traditional games and how playing makes them feel."
+      },
+      {
+        "period_number": 6,
+        "period_duration_minutes": 40,
+        "section_ref": "Enjoy Sports",
+        "dominant_mode": "HI",
+        "implied_lo": "Students can perform a structured observation by practising a repeated physical activity and recording how their body responds over time.",
+        "section_context": "Easy yoga poses (Textbook p. 95 illustrations); in-class practice; week-long yoga observation table (Day, Poses practised, How I felt after); body response predictions.",
+        "textbook_anchor": "Enjoy Sports — With your teacher's guidance, practice the easy yoga poses given below for a week, and record your observations (p. 95)",
+        "activity_summary": "Students practise easy yoga poses from the textbook, set up a week-long observation table, and record body-response predictions as informal hypotheses."
+      },
+      {
+        "period_number": 7,
+        "period_duration_minutes": 40,
+        "section_ref": "Sleep Well too!",
+        "dominant_mode": "HI",
+        "implied_lo": "Students can collect and interpret personal data about sleep patterns and connect sleep duration to how the body feels the next day.",
+        "section_context": "Three-day sleep tracking table (sleep time, wake time, duration, wellbeing rating a/b/c); reasons why the body needs rest; connection between exercise and sleep quality.",
+        "textbook_anchor": "Sleep Well too! — Fill the table given below recording sleep timings and how you felt during the day (p. 97)",
+        "activity_summary": "Students set up and begin filling a three-day sleep tracking table, discuss why the body needs rest, and write a personal conclusion about last night's sleep."
+      },
+      {
+        "period_number": 8,
+        "period_duration_minutes": 40,
+        "section_ref": "Feeling Safe",
+        "dominant_mode": "D&C",
+        "implied_lo": "Students can distinguish between safe and unsafe touch situations using given picture scenarios and describe at least one action they would take to seek help.",
+        "section_context": "Safe vs unsafe touch picture classification (Textbook p. 98); written responses on what to do if uncomfortable; naming a trusted adult to tell; two 'No' situations.",
+        "textbook_anchor": "Feeling Safe — Look at the pictures of different situations. Put a tick for comfortable and a cross for uncomfortable (p. 98)",
+        "activity_summary": "Students classify situation pictures as safe or unsafe touch, discuss the key distinction, and write responses about what to do and who to tell in an unsafe situation."
+      },
+      {
+        "period_number": 9,
+        "period_duration_minutes": 40,
+        "section_ref": "Let us reflect",
+        "dominant_mode": "D&C",
+        "implied_lo": "Students can reason about the consequences of removing a single component from an interdependent system and explain why each part is necessary.",
+        "section_context": "Missing elements reasoning: Soil, Water, Sunlight, Cattle, Earthworm, Farmer, Shopkeeper, Cook; consequence sentences; interdependence of natural and human contributions.",
+        "textbook_anchor": "Let us reflect — If the following are missing, what would happen to a food grain? (p. 100)",
+        "activity_summary": "Students reason through what would happen if each of eight elements were missing from the food grain journey and discuss the interdependence of natural and human contributions."
+      },
+      {
+        "period_number": 10,
+        "period_duration_minutes": 40,
+        "section_ref": "Let us reflect",
+        "dominant_mode": "C&E",
+        "implied_lo": "Students can design a balanced meal plan using familiar food choices and explain the nutritional reasoning behind at least one selection.",
+        "section_context": "Three balanced-diet plate designs (Breakfast, Lunch, Dinner); food items chosen by students; gallery walk peer review; connection between food choices and nutritional value.",
+        "textbook_anchor": "Let us reflect — Design your own favourite plate of balanced diet with the food items you like (p. 100)",
+        "activity_summary": "Students draw and label three balanced-diet plates for breakfast, lunch, and dinner, conduct a gallery walk peer review, and explain their food choices."
+      },
+      {
+        "period_number": 11,
+        "period_duration_minutes": 40,
+        "section_ref": "Let us reflect",
+        "dominant_mode": "R&A",
+        "implied_lo": "Students can identify and articulate personal well-being habits across food, physical activity, and sleep, and connect each habit to its benefit for the body.",
+        "section_context": "Daily habits plan table (Wake up early, Yoga and exercises, Balanced diet on time, Exercise and play, Less screen time, Read a book, Sleep peacefully); exercises and games list; mindful eating reflection; personal well-being commitment.",
+        "textbook_anchor": "Let us reflect — Which habits would you practice daily? Indicate your plans (p. 101)",
+        "activity_summary": "Students complete the daily habits plan table, list exercises and games they would practise, and write a personal well-being commitment connecting food, activity, and sleep."
+      }
+    ],
+    "assessment_items": [
+      {
+        "question_type": "MCQ",
+        "question_text": "A student is sorting the helpers in a grain's journey into two groups: natural helpers and human helpers. Which of the following is correctly placed in the 'natural helpers' group?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Cook",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Earthworm",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "Mill worker",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Shopkeeper",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "performance_task": false,
+        "visual_stimulus": "",
+        "annotation": "Correct answer: A. The earthworm is a natural contributor to soil health, directly featured in the picture sequence. Option B, C, and D are all human contributors — choosing any of them reveals confusion between natural and human agents in the food system.",
+        "cognitive_demand": "Understanding",
+        "period_ref": [
+          1
+        ],
+        "chapter_section": "Journey of the Grains",
+        "implied_lo": "Students can sort the contributors to a natural-human system into natural and human categories based on observation.",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Identifies natural and humanmade systems that support their lives (water supply, water cycle, river flow systems, seasons, life cycle of plants and animals, food, household items, transport, communication, electricity in the home)"
+        },
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "C": "The student may be recalling a contributor from the journey but has not distinguished between natural agents and human workers — mill worker is a human contributor.",
+              "D": "The student is confusing a marketplace human agent (shopkeeper) with a natural helper, indicating the natural/human sorting concept has not settled.",
+              "A": "The student associates the cook with the food chain but has not applied the natural/human category distinction correctly."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "SCR",
+        "question_text": "A student says: 'I only need to thank the farmer for the food on my plate — no one else matters.' Do you agree? Name two other contributors — one natural and one human — and explain what each one does in the journey of a grain.",
+        "options": [],
+        "expected_elements": [
+          "States disagreement or partial disagreement with the claim that only the farmer matters.",
+          "Names one natural contributor (e.g. soil, water, sunlight, earthworm) and describes its role in the grain's journey.",
+          "Names one human contributor other than the farmer (e.g. mill worker, shopkeeper, cook) and describes their role.",
+          "Implicitly or explicitly connects both contributors to the grain reaching the plate."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "performance_task": false,
+        "visual_stimulus": "",
+        "annotation": "Award full credit when the student names one natural and one human contributor (other than the farmer) and gives a role for each. Partial credit for naming both without explaining roles, or explaining one role only. Regional or local contributors (e.g. local water source, a neighbourhood seller) are valid and should be accepted.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          2
+        ],
+        "chapter_section": "Journey of the Grains",
+        "implied_lo": "Students can trace the human and natural contributions embedded in a familiar food item and articulate gratitude toward those contributors.",
+        "competency": {
+          "c_code": "C-2.2",
+          "competency_text": "Describes the relationship between the natural environment and cultural practices in their immediate environment (nature of work, food, festivals, traditions)"
+        },
+        "guide": {
+          "SCR": {
+            "expected_elements": [
+              "States disagreement or partial disagreement with the claim that only the farmer matters.",
+              "Names one natural contributor (e.g. soil, water, sunlight, earthworm) and describes its role in the grain's journey.",
+              "Names one human contributor other than the farmer (e.g. mill worker, shopkeeper, cook) and describes their role.",
+              "Implicitly or explicitly connects both contributors to the grain reaching the plate."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "SCR",
+        "question_text": "During a mindful eating activity, a student eats a peanut very slowly with eyes closed. She notices things she had never noticed before. What are two things she could observe using her senses of taste and touch, and how does slowing down help her notice them?",
+        "options": [],
+        "expected_elements": [
+          "Names one observation related to taste (e.g. salty, slightly sweet, nutty flavour that develops as chewing continues).",
+          "Names one observation related to touch or texture (e.g. hard shell, smooth or rough surface, soft and crumbly as it breaks down).",
+          "Explains that slowing down allows the senses more time to notice details that are missed when eating quickly."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "performance_task": false,
+        "visual_stimulus": "",
+        "annotation": "Accept any sensory observation that is plausible for a peanut or the food substitute used in class. The explanation of how slowing down helps is the key higher-order element — reward it even if the sensory descriptions are simple.",
+        "cognitive_demand": "Understanding",
+        "period_ref": [
+          3
+        ],
+        "chapter_section": "Mindful Eating",
+        "implied_lo": "Students can describe sensory observations made during a structured eating experience and connect slowing down to noticing more.",
+        "competency": {
+          "c_code": "C-6.1",
+          "competency_text": "Performs simple inquiry related to specific questions independently or in groups"
+        },
+        "guide": {
+          "SCR": {
+            "expected_elements": [
+              "Names one observation related to taste (e.g. salty, slightly sweet, nutty flavour that develops as chewing continues).",
+              "Names one observation related to touch or texture (e.g. hard shell, smooth or rough surface, soft and crumbly as it breaks down).",
+              "Explains that slowing down allows the senses more time to notice details that are missed when eating quickly."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "OPEN_TASK",
+        "question_text": "",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "At lunch today, someone puts more rice on your plate than you can eat. You do not want to waste it, but you also cannot eat it all. Write or draw what you would do and say. Then write one sentence explaining why you made that choice.",
+        "scaffold": "Think about: What would you say to the person who served you? What would you do with the extra food? Why does it matter?",
+        "format_of_output": [
+          "A short written response (2–3 sentences) or a labelled drawing showing what the student would do and say.",
+          "One sentence explaining the reason for the choice."
+        ],
+        "performance_task": false,
+        "visual_stimulus": "",
+        "annotation": "Accept any response that shows a considered, non-wasteful strategy (e.g. politely asking for less next time, sharing the extra with someone, telling the person kindly). The explanation sentence is the key evidence of the implied_lo — it should link the choice to respect for the food or for the people who made it. Regionally varied responses are acceptable and correct: in some homes, leaving a little food is customary; in others, finishing everything is the norm — both reflect genuine cultural practice.",
+        "cognitive_demand": "Application",
+        "period_ref": [
+          4
+        ],
+        "chapter_section": "Valuing Food",
+        "implied_lo": "Students can plan considerate, waste-reducing responses to real food situations and articulate why reducing food waste reflects respect for others' effort.",
+        "competency": {
+          "c_code": "C-4.7",
+          "competency_text": "Learns about basic social and behavioural norms, values, and dispositions that benefit our social and natural environments and that help our society function smoothly (using dustbins, standing in queues, conserving water, using public transportation, keeping one's environment clean, always helping others in need regardless of background)"
+        },
+        "guide": {
+          "OPEN_TASK": {
+            "what_this_demonstrates": "Whether the student can apply the value of not wasting food to a realistic social situation and articulate the reasoning behind a considerate choice.",
+            "reading_the_scaffold": "The scaffold guides students to think about three things: what to say, what to do, and why — ensuring the response goes beyond just a strategy to include a reason rooted in valuing food.",
+            "strong_vs_weak_markers": "Strong: student names a specific, polite action (e.g. 'I would say please give me less next time' or 'I would offer it to a classmate') and the explanation connects to respect for effort or avoiding waste. Weak: student says 'I will eat it all' without reasoning, or 'throw it away' with no awareness of waste.",
+            "inclusivity": "Students who find writing difficult may draw the scene with labels. Students who prefer may write in their home language alongside English. Both formats carry equal validity.",
+            "format_type": "Written response or labelled drawing plus one explanatory sentence.",
+            "format_rationale": "Real-life scenario tasks allow students to show applied values in a concrete context, making the response observable and assessable without requiring abstract reasoning."
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "question_text": "A student looks at a park scene and sees children running, skipping, cycling, and playing a traditional game. She says, 'All of these count as physical activity.' Which statement best explains why she is correct?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Cycling is the only real physical activity in the picture because it uses a machine.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Physical activity means any movement that makes the body work and stay strong, whether it is a modern sport, a traditional game, or simple play.",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "Physical activity only counts if it is done in a proper sports ground with equipment.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Traditional games are not physical activity because they are played for fun, not for fitness.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "performance_task": false,
+        "visual_stimulus": "",
+        "annotation": "Correct answer: A. Options B, C, and D each reflect a misconception about what counts as physical activity — that equipment, a formal setting, or a specific type of movement is required.",
+        "cognitive_demand": "Understanding",
+        "period_ref": [
+          5
+        ],
+        "chapter_section": "Enjoy Sports",
+        "implied_lo": "Students can identify a range of physical activities from a visual scene and connect observed activities to their own daily physical experiences.",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Identifies natural and humanmade systems that support their lives (water supply, water cycle, river flow systems, seasons, life cycle of plants and animals, food, household items, transport, communication, electricity in the home)"
+        },
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "C": "The student holds a narrow, equipment-based view of physical activity and has not generalised the concept from the observed park scene to include informal play.",
+              "D": "The student has incorrectly separated 'fun' from 'fitness', failing to recognise that traditional games serve both purposes and count as physical activity.",
+              "A": "The student has focused on a single activity in the picture and applied an irrelevant criterion (use of a machine), indicating the broad concept of physical activity has not been grasped."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "SCR",
+        "question_text": "A student practises three yoga poses every day for a week and records how her body feels after each session. On Day 1 she writes 'very hard to balance'. By Day 5 she writes 'much easier, I can hold it longer'. What does this change in her record tell us? What can we conclude from observing and recording an activity over several days?",
+        "options": [],
+        "expected_elements": [
+          "Identifies that the change (from 'hard' to 'easier') shows improvement or the body adapting with repeated practice.",
+          "States that recording observations over several days helps track change or progress that a single attempt would not reveal.",
+          "Connects the finding to the broader idea that regular practice affects how the body responds — linking observation to a conclusion about physical activity."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "performance_task": false,
+        "visual_stimulus": "",
+        "annotation": "Award full credit when the student interprets the change as evidence of improvement and draws a conclusion about the value of repeated observation. Partial credit for identifying the change without drawing a conclusion. Accept any phrasing that shows the student understands that the body improves with practice.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          6
+        ],
+        "chapter_section": "Enjoy Sports",
+        "implied_lo": "Students can perform a structured observation by practising a repeated physical activity and recording how their body responds over time.",
+        "competency": {
+          "c_code": "C-6.1",
+          "competency_text": "Performs simple inquiry related to specific questions independently or in groups"
+        },
+        "guide": {
+          "SCR": {
+            "expected_elements": [
+              "Identifies that the change (from 'hard' to 'easier') shows improvement or the body adapting with repeated practice.",
+              "States that recording observations over several days helps track change or progress that a single attempt would not reveal.",
+              "Connects the finding to the broader idea that regular practice affects how the body responds — linking observation to a conclusion about physical activity."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "SCR",
+        "question_text": "A student filled in her sleep table for three days. On the day she slept for a short time, she wrote 'c — Sleepy' the next day. On the day she slept for a longer time, she wrote 'a — Felt fresh'. What does this data tell her about the relationship between sleep and how the body feels? What conclusion can she draw?",
+        "options": [],
+        "expected_elements": [
+          "States that longer sleep was followed by feeling fresh, and shorter sleep was followed by feeling sleepy or tired.",
+          "Draws the conclusion that the amount of sleep affects how energetic or rested the body feels the next day.",
+          "Explains or implies that the body needs adequate rest to function well — connecting data to the idea of sleep as a physical need."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "performance_task": false,
+        "visual_stimulus": "",
+        "annotation": "Award full credit when the student interprets both data points (short sleep → tired; long sleep → fresh) and draws a conclusion linking sleep duration to bodily wellbeing. Partial credit for identifying one data point without drawing a conclusion.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          7
+        ],
+        "chapter_section": "Sleep Well too!",
+        "implied_lo": "Students can collect and interpret personal data about sleep patterns and connect sleep duration to how the body feels the next day.",
+        "competency": {
+          "c_code": "C-6.1",
+          "competency_text": "Performs simple inquiry related to specific questions independently or in groups"
+        },
+        "guide": {
+          "SCR": {
+            "expected_elements": [
+              "States that longer sleep was followed by feeling fresh, and shorter sleep was followed by feeling sleepy or tired.",
+              "Draws the conclusion that the amount of sleep affects how energetic or rested the body feels the next day.",
+              "Explains or implies that the body needs adequate rest to function well — connecting data to the idea of sleep as a physical need."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "ECR",
+        "question_text": "Read the situation: A child is alone at a relative's house. An adult family friend pats the child on the head (which feels fine), but then the same person tries to hug the child in a way that makes the child feel uneasy and confused. The child is not sure what to do because the person is known to the family. What should the child do, and why? In your answer, explain what makes a touch safe or unsafe, and what a child can do when they feel uncomfortable.",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [
+          "Explains that a touch is unsafe if it makes a child feel scared, uneasy, or confused — even if the person is known to the family.",
+          "States clearly that the child has the right to say 'No' to a touch that feels uncomfortable.",
+          "Identifies that the child should tell a trusted adult (parent, teacher, or another trusted family member) about the situation.",
+          "Shows understanding that the child should not feel guilty or confused about speaking up.",
+          "Writes in a way that shows empathy for the child's situation and confidence in the protective actions available."
+        ],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "performance_task": false,
+        "visual_stimulus": "",
+        "annotation": "This is a sensitive item. Handle student responses with care. A strong response names the right to say No, the importance of telling a trusted adult, and the idea that discomfort from a known person is still valid. Do not penalise students who describe their own trusted adult — regional and family variations in naming trusted people are all valid. Avoid marking down responses that show cultural deference to elders, but look for whether the student still asserts the right to speak up.",
+        "cognitive_demand": "Evaluation",
+        "period_ref": [
+          8
+        ],
+        "chapter_section": "Feeling Safe",
+        "implied_lo": "Students can distinguish between safe and unsafe touch situations using given picture scenarios and describe at least one action they would take to seek help.",
+        "competency": {
+          "c_code": "C-3.1",
+          "competency_text": "Describes the basic safety needs and protection (health and hygiene, food, water, shelter, precautions, awareness of emergency situations, abuse, and unsafe situations) of humans, birds, and animals"
+        },
+        "guide": {
+          "ECR": {
+            "look_for": [
+              "Explains that a touch is unsafe if it makes a child feel scared, uneasy, or confused — even if the person is known to the family.",
+              "States clearly that the child has the right to say 'No' to a touch that feels uncomfortable.",
+              "Identifies that the child should tell a trusted adult (parent, teacher, or another trusted family member) about the situation.",
+              "Shows understanding that the child should not feel guilty or confused about speaking up.",
+              "Writes in a way that shows empathy for the child's situation and confidence in the protective actions available."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "question_text": "A student is asked: 'What would happen to a food grain if there were no earthworms in the soil?' She chooses the best answer from the options below.",
+        "options": [
+          {
+            "label": "A",
+            "text": "Nothing would change, because the farmer can replace whatever earthworms do with tools.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The grain would grow faster because earthworms slow down the soil.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The grain would still grow because sunlight and water are the only things it really needs.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The soil would be less healthy and the grain would not grow well, because earthworms help make the soil rich and loose.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "performance_task": false,
+        "visual_stimulus": "",
+        "annotation": "Correct answer: A. The item tests whether students can reason about the consequence of removing a specific natural component from the food system — the central skill of the reflection task.",
+        "cognitive_demand": "Application",
+        "period_ref": [
+          9
+        ],
+        "chapter_section": "Let us reflect",
+        "implied_lo": "Students can reason about the consequences of removing a single component from an interdependent system and explain why each part is necessary.",
+        "competency": {
+          "c_code": "C-2.1",
+          "competency_text": "Identifies natural and humanmade systems that support their lives (water supply, water cycle, river flow systems, seasons, life cycle of plants and animals, food, household items, transport, communication, electricity in the home)"
+        },
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "A": "The student underestimates the earthworm's natural role and overestimates the ability of human tools to substitute for natural processes — indicating the interdependence concept has not been applied.",
+              "C": "The student has recalled two important natural helpers (sunlight and water) but has not recognised that the soil's health — which earthworms support — is also essential, showing partial rather than full understanding of the system.",
+              "B": "The student holds a misconception that earthworms hinder rather than help growth, reversing the role described in the grain journey content."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "OPEN_TASK",
+        "question_text": "",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "Design your balanced meal plate for ONE meal — breakfast, lunch, or dinner — by drawing and labelling the foods you would include. Choose the meal you find most interesting to plan. Then write one sentence explaining why you think this plate is balanced.",
+        "scaffold": "Think about: What foods give you energy? What foods help your body grow? What foods keep you healthy? Try to include more than one kind of food in your plate.",
+        "format_of_output": [
+          "A drawn and labelled plate showing the student's chosen meal with at least two different food items.",
+          "One sentence explaining why the plate is balanced."
+        ],
+        "performance_task": false,
+        "visual_stimulus": "",
+        "annotation": "Accept any regional or home foods — all culturally familiar foods are valid. A strong response includes at least two food items and a sentence that mentions variety or what different foods do for the body. Do not penalise for artistic skill — the labels and the explanation sentence are the assessable elements. Regional food choices are valid and correct: idli and sambar, dal-roti, poha, curd-rice, and all local staples are equally acceptable as bread and vegetables.",
+        "cognitive_demand": "Application",
+        "period_ref": [
+          10
+        ],
+        "chapter_section": "Let us reflect",
+        "implied_lo": "Students can design a balanced meal plan using familiar food choices and explain the nutritional reasoning behind at least one selection.",
+        "competency": {
+          "c_code": "C-4.7",
+          "competency_text": "Learns about basic social and behavioural norms, values, and dispositions that benefit our social and natural environments and that help our society function smoothly (using dustbins, standing in queues, conserving water, using public transportation, keeping one's environment clean, always helping others in need regardless of background)"
+        },
+        "guide": {
+          "OPEN_TASK": {
+            "what_this_demonstrates": "Whether the student can apply the concept of a balanced diet to a personal food choice context and articulate even a simple nutritional rationale.",
+            "reading_the_scaffold": "The scaffold prompts students to think across food categories — energy, growth, health — without naming specific nutrients, keeping it age-appropriate and rooted in everyday food knowledge.",
+            "strong_vs_weak_markers": "Strong: plate includes two or more different food types and the explanation mentions variety or a specific benefit ('dal gives protein', 'fruits keep me healthy', 'I included rice for energy'). Weak: plate has a single food item only or the explanation is 'because I like it' with no nutritional reasoning.",
+            "inclusivity": "Students who find drawing difficult may write a list of foods instead of drawing. Students may use home-language food names. Both formats are valid.",
+            "format_type": "Drawn and labelled plate plus one written sentence.",
+            "format_rationale": "Drawing a plate is a concrete, creative task accessible to all Grade IV students; the sentence shifts the task from creation to explanation, making both strands of the implied_lo visible."
+          }
+        }
+      },
+      {
+        "question_type": "OPEN_TASK",
+        "question_text": "",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "Choose THREE habits from the list below that you think are most important for staying healthy. For each habit, write one sentence saying what you would do and one sentence saying what benefit it gives your body. Habits: Wake up early / Yoga and exercises / Eat a balanced diet on time / Exercise and play / Less use of TV and mobile / Read a book / Sleep peacefully.",
+        "scaffold": "For each habit you choose, complete these two sentences: 'I will... ' and 'This helps my body because...'",
+        "format_of_output": [
+          "Three habits selected from the provided list.",
+          "For each habit: one sentence describing the action ('I will...') and one sentence explaining the body benefit ('This helps my body because...').",
+          "Total: six sentences (two per habit)."
+        ],
+        "performance_task": false,
+        "visual_stimulus": "",
+        "annotation": "Accept any three habits from the list. Reward responses where the benefit sentence is specific and connected to the habit (e.g. 'Sleeping peacefully helps my body because it gives my muscles time to rest and my brain time to sort memories'). Accept culturally specific practices — early rising tied to prayer, yoga practised as a family tradition, local physical games — as equally valid habit descriptions.",
+        "cognitive_demand": "Application",
+        "period_ref": [
+          11
+        ],
+        "chapter_section": "Let us reflect",
+        "implied_lo": "Students can identify and articulate personal well-being habits across food, physical activity, and sleep, and connect each habit to its benefit for the body.",
+        "competency": {
+          "c_code": "C-4.7",
+          "competency_text": "Learns about basic social and behavioural norms, values, and dispositions that benefit our social and natural environments and that help our society function smoothly (using dustbins, standing in queues, conserving water, using public transportation, keeping one's environment clean, always helping others in need regardless of background)"
+        },
+        "guide": {
+          "OPEN_TASK": {
+            "what_this_demonstrates": "Whether the student can articulate a personal well-being plan by connecting specific habits to their bodily benefits — the capstone of the chapter's healthy living theme.",
+            "reading_the_scaffold": "The two-sentence scaffold ('I will...' / 'This helps my body because...') separates action from reasoning, making both components visible and separately assessable.",
+            "strong_vs_weak_markers": "Strong: habit descriptions are specific and actionable ('I will sleep by 9 pm every night') and benefit sentences mention a concrete effect on the body ('because my brain needs rest to learn well the next day'). Weak: generic responses ('I will be healthy') or benefit sentences that restate the habit without explaining the mechanism.",
+            "inclusivity": "Students who find six sentences challenging may draw their three habits with labels and write shorter benefit phrases. Students may name habits in any language. All culturally grounded routines (prayer at dawn, community sports, traditional games) are valid.",
+            "format_type": "Six written sentences (two per habit) or equivalent labelled drawing with short phrases.",
+            "format_rationale": "The structured sentence format makes reasoning visible without requiring extended writing, keeping the task executable within a single classroom session and assessable by the teacher immediately."
+          }
+        }
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

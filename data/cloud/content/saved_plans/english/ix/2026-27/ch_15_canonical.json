@@ -1,0 +1,1038 @@
+{
+  "filename": "ch_15_canonical.json",
+  "saved_at": "2026-08-14T11:03:12",
+  "plan_status": "canonical",
+  "chapter_number": 15,
+  "chapter_title": "Follow That Dream (Follow That Dream)",
+  "grade": "Grade IX",
+  "subject": "English",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 50,
+      "count": 9
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 9 periods = 450 minutes\nTotal: 9 periods · 7h 30min",
+  "genon_canonical": {
+    "generated": "2026-08-14",
+    "schedule": "9x50",
+    "constitution": "LP v1.2 / assessment v1.6",
+    "source": "generate_canonical.py one english ix 15",
+    "ledger_ts": "20260813_193359_eng_ix_15_top",
+    "validation": "clean",
+    "repairs": [
+      {
+        "tool": "repair_stem_option_echo.py",
+        "kind": "stem_option_echo",
+        "at": "2026-08-14T11:34:24",
+        "why": "The stem repeated the item's own options as an A–D list. After STEP 6 sorted and relabelled options[], that echo named a different letter as the answer. Deleted; options[] is the single source of truth. Every removed line was a verbatim echo of an option on disk.",
+        "items": [
+          {
+            "item_id": "Q-RFC-A-1",
+            "removed": [
+              "A. To discourage Ming from pursuing an unrealistic ",
+              "B. To establish that greatness requires sustained e",
+              "C. To compare Ming's dream with those of Academy Aw",
+              "D. To show that financial investment matters more t"
+            ]
+          }
+        ]
+      },
+      {
+        "at": "2026-08-14T11:50:27",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 8,
+            "field": "band:0",
+            "rule": "register/completion",
+            "removed": "working through all five sections:",
+            "replaced_with": "working through the sections:",
+            "note": "'all five' asserts a completion the band cannot guarantee once its 0–25 is rescaled to a shorter sitting. The five are named immediately after the colon, so nothing is lost — only the promise that every one gets done"
+          }
+        ],
+        "ban_hits_before": 1,
+        "ban_hits_after": 0
+      },
+      {
+        "tool": "repair_stem_direction.py",
+        "kind": "stem_direction",
+        "at": "2026-08-14T17:24:32",
+        "why": "EXTRACT_ANALYSIS routes its stimulus to `passage`, which every renderer places BEFORE the stem. The stems said 'the following passage' / 'the passage below'. Only the passage-facing direction was changed; 'the questions below' and 'the questions that follow' are correct and untouched.",
+        "items": [
+          {
+            "item_id": "Q-RFC-A-2",
+            "before": "Read the passage below and answer the questions that follow.",
+            "after": "Read the passage above and answer the questions that follow."
+          }
+        ]
+      }
+    ],
+    "academic_year": "2026-27"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Follow That Dream",
+          "spines_taught": [
+            "reading_for_comprehension"
+          ],
+          "activity_title": "Opening the Letter: Dreams, Conviction, and the Uphill Road",
+          "pedagogical_methods": {
+            "reading_for_comprehension": "shared-reading"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 0,
+              "task_brief": "Reflect and Respond (p.231): four oral warm-up questions on dreams and inspiration"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Teacher leads a quick paired exchange using the Reflect and Respond prompts (p.231): students share their own dreams and who inspires them. Two or three pairs offer responses aloud to the class."
+            },
+            {
+              "minutes": "10–35",
+              "activity": "Teacher reads the letter aloud from p.231–236, students following in their books. Teacher pauses at key turns — the ten-year mastery claim, the Academy Award example, and the World War II references — inviting brief oral reactions before reading on."
+            },
+            {
+              "minutes": "35–50",
+              "activity": "Teacher re-reads the opening paragraph and the 'passion → conviction → reckoning of costs' sequence. Class discusses what distinguishes a dream from wishful thinking, drawing on the mother's own framing in the letter."
+            }
+          ],
+          "teacher_notes": "The letter's conversational structure — blending personal anecdote, rhetorical questions, and direct address — can feel deceptively simple; encourage students to notice how the mother builds her argument step by step rather than all at once. The ten-year mastery claim and the World War II derailment examples are the letter's two most concrete anchors and are worth dwelling on. Students who find the pre-reading questions easy may be steered toward the Abdul Kalam quotation for a richer discussion.",
+          "materials": [
+            "Textbook p.231–236"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Follow That Dream",
+          "spines_taught": [
+            "reading_for_comprehension"
+          ],
+          "activity_title": "Weighing the Dream: True/False Comprehension and Web Chart",
+          "pedagogical_methods": {
+            "reading_for_comprehension": "comprehension-discussion"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 3,
+              "task_brief": "Check Your Understanding (p.234): seven true/false statements on effort, sacrifice, and dreams"
+            },
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 2,
+              "task_brief": "Reading for Meaning (p.234): complete web chart — reasons it is important to follow a dream"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–5",
+              "activity": "Brief recall: teacher asks two students to state in one sentence what the mother's main advice to Ming is, grounding the class in the letter's argument before moving to exercises."
+            },
+            {
+              "minutes": "5–25",
+              "activity": "Students work individually on the seven true/false statements from Check Your Understanding (p.234), then compare with a partner. Teacher facilitates whole-class verification, asking students to cite the line in the letter that justifies each verdict."
+            },
+            {
+              "minutes": "25–50",
+              "activity": "Class completes the web chart (Reading for Meaning, p.234) collaboratively on the board, with teacher scribing. Groups compete to add the most distinct reasons, drawing on the letter's examples of sacrifice, community support, and the evolution of dreams over time."
+            }
+          ],
+          "teacher_notes": "A common stumble is the statement about support networks being a 'hurdle' — students sometimes confuse the mother's positive view of community with a complicating factor; the Academy Award passage makes her position clear. The web chart works best when students are pushed beyond obvious answers ('hard work') to the letter's more nuanced points — evolving dreams, financial cost, historical derailment. Unanchored task: the open prompt on parental and community roles (Reading for Meaning) may be flagged for self-study reflection.",
+          "materials": [
+            "Textbook p.234",
+            "Blackboard or chart paper for web chart"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Follow That Dream",
+          "spines_taught": [
+            "reading_for_comprehension"
+          ],
+          "activity_title": "Close Reading of Extracts: Passion, Conviction, and Evolving Dreams",
+          "pedagogical_methods": {
+            "reading_for_comprehension": "close-reading"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 4,
+              "task_brief": "Critical Reflection (p.235): Extract 1 — five questions on passion, conviction, and intrinsic motivation"
+            },
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 5,
+              "task_brief": "Critical Reflection (p.236): Extract 2 — five questions on evolving dreams and authorial tone"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–25",
+              "activity": "Teacher displays Extract 1 (p.235) and leads close-reading discussion: students work through the analogy question, the MCQ on realistic assessment, the word 'plunge', the intrinsic-motivation SCR, and the stamina question — each addressed orally before students write their responses."
+            },
+            {
+              "minutes": "25–50",
+              "activity": "Teacher moves to Extract 2 (p.236): students read the passage and answer the five questions on evolving dreams, the mother's publishing aspiration, and the tone MCQ. Teacher invites two or three students to read their 'complex and challenging journey' phrase identification aloud, comparing choices."
+            }
+          ],
+          "teacher_notes": "Extract 1's intrinsic-motivation question is the conceptually deepest item here — students often produce thin answers ('because you love it'); prompt them to connect loving the work with sustained stamina as the mother frames it. The tone MCQ in Extract 2 is a good diagnostic: students who choose 'appreciative and celebratory' have read the extract in isolation; the letter's consistent warmth-with-realism makes 'optimistic and encouraging' the defensible choice. Both extracts should be read aloud before discussion begins.",
+          "materials": [
+            "Textbook p.235–236"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Follow That Dream",
+          "spines_taught": [
+            "reading_for_comprehension"
+          ],
+          "activity_title": "Analytical Questions: Achievers, Persuasion, and Contemporary Relevance",
+          "pedagogical_methods": {
+            "reading_for_comprehension": "critical-reading"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 6,
+              "task_brief": "Check Your Understanding / Answer the Following (p.236–237): seven questions including ECR on persuasion and contemporary relevance"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Teacher reads the opening line 'By all means follow that dream' aloud and invites speculation: what might Ming have written to prompt this reply? Students share briefly in pairs before the class converges on two or three plausible possibilities."
+            },
+            {
+              "minutes": "10–30",
+              "activity": "Students work through the factual and analytical SCR questions — attaining international skill, and the distinction between mere dreamers and actual achievers — writing responses individually, then sharing with a partner for peer comment."
+            },
+            {
+              "minutes": "30–50",
+              "activity": "Class tackles the two ECR questions together: how the mother uses rhetorical questions and personal anecdotes to persuade, and how she balances encouragement with caution. Teacher models one well-structured paragraph, then students draft their own for the contemporary relevance ECR, sharing two or three responses aloud."
+            }
+          ],
+          "teacher_notes": "The 'mere dreamers vs. actual achievers' question is central to the letter's argument — the distinction rests on the mother's claim that many people never move beyond wishful thinking; students should be guided to name the specific obstacles she cites (war, poverty, family obligation). The contemporary relevance ECR is genuinely open-ended: students may argue either way, but the response must engage with the letter's specific claims, not merely assert a general view. The oral prompt on personal costs is left for self-study reflection.",
+          "materials": [
+            "Textbook p.236–237"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Follow That Dream",
+          "spines_taught": [
+            "listening",
+            "speaking"
+          ],
+          "activity_title": "Listening to an Announcement; Role-Play on Pursuing a Dream",
+          "pedagogical_methods": {
+            "listening": "listen-and-respond",
+            "speaking": "role-play"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "listening",
+              "task_index": 0,
+              "task_brief": "Listen and Respond (p.241): fill in six blanks from a school announcement on vocational courses"
+            },
+            {
+              "spine": "speaking",
+              "task_index": 0,
+              "task_brief": "Speaking Activity (p.241–242): four-role group role-play — Dreamer, Parent, Mentor, Friend/Sibling"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–20",
+              "activity": "Teacher reads the vocational-courses announcement aloud twice (p.241, transcript p.275). On the first listening students simply follow; on the second they fill in the six blanks. Teacher then elicits answers and discusses any words or phrases students found difficult to catch."
+            },
+            {
+              "minutes": "20–50",
+              "activity": "Students form groups of four and take up the role-play roles from the Speaking Activity (p.241–242): Dreamer, Parent, Mentor, Friend/Sibling. Groups prepare their lines using the sentence prompts, then perform. Two groups present to the class; teacher facilitates brief feedback on how well each role balanced its stance."
+            }
+          ],
+          "teacher_notes": "For the listening task, the announcement's specific details — registration dates (04–08 April), the one-course-per-student rule, and preference for early applicants — are the likely sticking points; read those sections at natural conversational pace, not slowly. For the role-play, watch for students cast as the Parent defaulting to pure opposition: the sentence prompts model measured concern, not blanket rejection, and that nuance connects directly to how Ming's mother herself writes.",
+          "materials": [
+            "Textbook p.241–242",
+            "Transcript text (p.275 of textbook / Unit 8 of transcript appendix)"
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Follow That Dream",
+          "spines_taught": [
+            "writing"
+          ],
+          "activity_title": "Writing a Formal Email to a Design Institute",
+          "pedagogical_methods": {
+            "writing": "functional-writing"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "writing",
+              "task_index": 0,
+              "task_brief": "Writing Task (p.242): formal email to a design institute director enquiring about a summer workshop"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Teacher briefly models the structural elements of a formal email — header, subject line, formal salutation, body paragraphs (introduction, enquiry, conclusion), and complementary close — using a skeleton on the board. Class identifies what makes a tone 'formal' versus conversational."
+            },
+            {
+              "minutes": "10–35",
+              "activity": "Students plan and draft their email (Writing Task, p.242) individually, addressed to the Director of a reputed design institute, enquiring about a summer workshop and expressing interest. Teacher circulates, offering formative prompts on register, completeness of the header, and clarity of the enquiry."
+            },
+            {
+              "minutes": "35–50",
+              "activity": "Students exchange drafts with a partner who reads for formal register, correct structure, and absence of abbreviations. Two or three volunteers read their emails aloud; class and teacher give brief verbal feedback, focusing on the subject line and the opening sentence of the body as the two most commonly weak points."
+            }
+          ],
+          "teacher_notes": "The most frequent errors are an informal subject line ('Hi, I want to know about your workshop') and the use of contractions in the body; a quick reminder before drafting begins saves revision time. The task connects naturally to the letter's theme — a student writing to pursue a design dream mirrors Ming's own situation — but do not make this explicit in a way that shifts the focus from the writing craft. Students who finish early may redraft their subject line and opening sentence for greater precision.",
+          "materials": [
+            "Textbook p.242",
+            "Writing paper or notebooks"
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Follow That Dream",
+          "spines_taught": [
+            "vocabulary_grammar"
+          ],
+          "activity_title": "'-Scape' Words, Idiomatic Expressions, and First Conditional",
+          "pedagogical_methods": {
+            "vocabulary_grammar": "linguistic-aspects-in-context"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "vocabulary_grammar",
+              "task_index": 0,
+              "task_brief": "Vocabulary and Structures in Context (p.237): '-scape' compound words — dictionary look-up and dialogue fill-in"
+            },
+            {
+              "spine": "vocabulary_grammar",
+              "task_index": 1,
+              "task_brief": "Vocabulary and Structures in Context (p.238): six idiomatic expressions — choose correct meaning and use in a sentence"
+            },
+            {
+              "spine": "vocabulary_grammar",
+              "task_index": 2,
+              "task_brief": "Vocabulary and Structures in Context (p.239): first conditional sentences — complete using imperatives"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "Teacher introduces the '-scape' suffix from the letter's 'dreamscape' (p.237). Students use dictionaries to find meanings of mindscape, seascape, landscape, and cityscape, then fill in the four-blank Sneha–Kiran dialogue. Pairs compare answers before class verification."
+            },
+            {
+              "minutes": "15–30",
+              "activity": "Teacher presents the six idiomatic expressions from p.238 ('burn in her blood', 'uphill task', 'buoyed up', 'wishful thinking', 'wet blanket', 'coursing through her veins'). Students choose the correct meaning for each, then use any two expressions in sentences of their own, shared aloud."
+            },
+            {
+              "minutes": "30–50",
+              "activity": "Teacher introduces the first conditional structure using the model sentence from p.239. Students complete the five 'If…' sentence frames using imperatives, then share with a partner. Teacher highlights how the conditional frames real possibility — connecting it to the mother's own conditional challenge to Ming in the letter."
+            }
+          ],
+          "teacher_notes": "The '-scape' activity works best when students encounter the words cold in the dictionary before the dialogue; resist the temptation to pre-teach meanings. For the idiomatic expressions, 'wet blanket' and 'buoyed up' generate the most confusion — the former because students try to interpret it literally, and the latter because all four options sound plausible; encourage students to test each option by substituting it back into a sample sentence. Unanchored tasks — the 'could' matching and usage tasks (p.239–240) and the grammatical forms passage (p.240) — are flagged for self-study.",
+          "materials": [
+            "Textbook p.237–239",
+            "Dictionaries (class set or digital)"
+          ]
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Follow That Dream",
+          "spines_taught": [
+            "beyond_text"
+          ],
+          "activity_title": "Vision Board and Local Dream-Makers: Project Work",
+          "pedagogical_methods": {
+            "beyond_text": "project-work"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "beyond_text",
+              "task_index": 0,
+              "task_brief": "Learning Beyond the Text (p.243–244): create a personal Vision Board across five sections"
+            },
+            {
+              "spine": "beyond_text",
+              "task_index": 1,
+              "task_brief": "Learning Beyond the Text (p.244–257): research a local personality inspired by parental support; prepare a short class presentation"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–25",
+              "activity": "Students create their Vision Board (Learning Beyond the Text, p.243–244) on A4 or chart paper, working through the sections: My Dreams, I Want to Try, Goals, Places I Will Go, and Inspiration. Teacher circulates and encourages visual representation alongside writing."
+            },
+            {
+              "minutes": "25–40",
+              "activity": "Teacher introduces the second beyond-text task (p.244–257): brief profiles of Chhatrapati Shivaji, Queen Madalasa, and Dr APJ Abdul Kalam as examples of parental inspiration. Students brainstorm a local personality from their village, town, or state who fits the same pattern and plan a two-minute presentation outline."
+            },
+            {
+              "minutes": "40–50",
+              "activity": "Two or three students volunteer the personality they have chosen and share a sentence or two about that person's story. Teacher notes the names on the board and encourages the class to gather further details on their own so they can present the full story."
+            }
+          ],
+          "teacher_notes": "The Vision Board is most effective when students are encouraged to make it personal and specific rather than generic ('be successful'); prompting with 'what exactly does that look like in five years?' generates richer entries. The local-personality research task assumes students have some knowledge of regional figures; if the class is unfamiliar, the three textbook examples serve as scaffolding and students may present on one of them with added research detail. Both the Vision Board and the research outline begin and finish within this unit.",
+          "materials": [
+            "Textbook p.243–244, p.257",
+            "A4 paper or chart paper",
+            "Coloured pens or markers"
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 50,
+          "synthesis": true,
+          "section_id": "A",
+          "section_title": "Follow That Dream",
+          "spines_taught": [
+            "reading_for_comprehension",
+            "speaking"
+          ],
+          "activity_title": "Whole-Chapter Synthesis: From Ming's Letter to Your Own Argument",
+          "pedagogical_methods": {
+            "reading_for_comprehension": "critical-reading",
+            "speaking": "expressing-agreement-disagreement-with-reasons"
+          },
+          "tasks_in_class": [],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Teacher poses a synthesis question on the board: 'Ming's mother says that without sustained effort, sacrifice, and financial investment, a dream remains wishful thinking. Do you agree?' Students take two minutes to note their position and two or three supporting reasons before any discussion begins."
+            },
+            {
+              "minutes": "10–30",
+              "activity": "Structured whole-class dialogue: students express agreement or disagreement with reasons, citing the letter's arguments — the ten-year mastery claim, the wartime derailment examples, the Academy Award support network, and the mother's own evolving publishing dream — as evidence for or against. Teacher facilitates, drawing in quieter voices and pressing students who agree or disagree without grounding their view in the text."
+            },
+            {
+              "minutes": "30–45",
+              "activity": "Teacher draws together the chapter's key threads on the board: passion → conviction → honest reckoning of costs → sustained effort → community → evolving dreams. Students are invited to identify where the letter's argument is strongest and where they find it least persuasive, connecting back to the vocabulary of aspiration explored across the chapter ('burn in her blood', 'uphill task', 'dreamscape', 'coursing through your veins')."
+            },
+            {
+              "minutes": "45–50",
+              "activity": "Each student writes two sentences: one that captures the mother's core message in their own words, and one that states their own position on whether that message holds in the world they inhabit. Two or three students share aloud, closing the chapter on a personal note."
+            }
+          ],
+          "teacher_notes": "This synthesis draws on the letter's content across all the spines the chapter covered — the mother's argument, the idiomatic vocabulary, the letter's formal-yet-warm register, and the beyond-text reflections on local role models — without requiring that any particular activity actually happened. Students who found the contemporary-relevance ECR challenging earlier will benefit from hearing peers articulate both sides of the argument; the structured dialogue format gives them a model. The two-sentence closing write is intentionally brief so every student completes it within the time available.",
+          "materials": [
+            "Textbook p.231–243 (reference)",
+            "Blackboard"
+          ]
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "period_duration_minutes": 50,
+        "period_count": 9
+      }
+    ],
+    "coverage_handoff": {
+      "reading_for_comprehension": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "Follow That Dream",
+            "section_type": "informational",
+            "implied_lo": "Student analyses authorial argument, character perspective, and persuasive technique using an informational letter as the vehicle.",
+            "section_context": "A mother's letter to daughter Ming on dreams, sacrifice, and the ten-year mastery claim.",
+            "tasks_anchored": [
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 0,
+                "task_brief": "Reflect and Respond (p.231): four oral warm-up questions on dreams and inspiration"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 3,
+                "task_brief": "Check Your Understanding (p.234): seven true/false statements on effort, sacrifice, and dreams"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 2,
+                "task_brief": "Reading for Meaning (p.234): complete web chart — reasons it is important to follow a dream"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 4,
+                "task_brief": "Critical Reflection (p.235): Extract 1 — five questions on passion, conviction, and intrinsic motivation"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 5,
+                "task_brief": "Critical Reflection (p.236): Extract 2 — five questions on evolving dreams and authorial tone"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 6,
+                "task_brief": "Check Your Understanding / Answer the Following (p.236–237): seven questions including ECR on persuasion and contemporary relevance"
+              }
+            ]
+          }
+        ]
+      },
+      "listening": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "Follow That Dream",
+            "section_type": "informational",
+            "implied_lo": "Student retrieves specific details and reflects on real-world implications by listening to an informational announcement.",
+            "section_context": "A school announcement about new vocational courses — Graphic Design, Coding, AI, Entrepreneurship — with registration details.",
+            "tasks_anchored": [
+              {
+                "spine": "listening",
+                "task_index": 0,
+                "task_brief": "Listen and Respond (p.241): fill in six blanks from a school announcement on vocational courses"
+              }
+            ]
+          }
+        ]
+      },
+      "speaking": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "Follow That Dream",
+            "section_type": "informational",
+            "implied_lo": "Student articulates a position and negotiates competing perspectives using role-play and structured oral argument as the vehicle.",
+            "section_context": "A four-role group role-play on a student's dream of becoming a trekking guide, with Parent, Mentor, and Friend voices.",
+            "tasks_anchored": [
+              {
+                "spine": "speaking",
+                "task_index": 0,
+                "task_brief": "Speaking Activity (p.241–242): four-role group role-play — Dreamer, Parent, Mentor, Friend/Sibling"
+              }
+            ]
+          }
+        ]
+      },
+      "writing": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "Follow That Dream",
+            "section_type": "informational",
+            "implied_lo": "Student produces a formal transactional piece of writing using appropriate register, structure, and purpose as the vehicle.",
+            "section_context": "A young person writing to a community learning centre to enquire about an upcoming skill-development programme.",
+            "tasks_anchored": [
+              {
+                "spine": "writing",
+                "task_index": 0,
+                "task_brief": "Writing Task (p.242): formal email to a design institute director enquiring about a summer workshop"
+              }
+            ]
+          }
+        ]
+      },
+      "vocabulary_grammar": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "Follow That Dream",
+            "section_type": "informational",
+            "implied_lo": "Student interprets idiomatic and compound vocabulary in context and applies conditional grammar structures using an informational text as the vehicle.",
+            "section_context": "Compound '-scape' words, dream-and-aspiration idioms, and first conditional structures drawn from the letter's language.",
+            "tasks_anchored": [
+              {
+                "spine": "vocabulary_grammar",
+                "task_index": 0,
+                "task_brief": "Vocabulary and Structures in Context (p.237): '-scape' compound words — dictionary look-up and dialogue fill-in"
+              },
+              {
+                "spine": "vocabulary_grammar",
+                "task_index": 1,
+                "task_brief": "Vocabulary and Structures in Context (p.238): six idiomatic expressions — choose correct meaning and use in a sentence"
+              },
+              {
+                "spine": "vocabulary_grammar",
+                "task_index": 2,
+                "task_brief": "Vocabulary and Structures in Context (p.239): first conditional sentences — complete using imperatives"
+              }
+            ]
+          }
+        ]
+      },
+      "beyond_text": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "Follow That Dream",
+            "section_type": "informational",
+            "implied_lo": "Student connects textual themes to personal aspiration and cultural heritage through visual and research-based project work.",
+            "section_context": "A personal Vision Board of goals and inspirations; research on a local personality shaped by parental encouragement.",
+            "tasks_anchored": [
+              {
+                "spine": "beyond_text",
+                "task_index": 0,
+                "task_brief": "Learning Beyond the Text (p.243–244): create a personal Vision Board across five sections"
+              },
+              {
+                "spine": "beyond_text",
+                "task_index": 1,
+                "task_brief": "Learning Beyond the Text (p.244–257): research a local personality inspired by parental support; prepare a short class presentation"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "spine_code": "reading_for_comprehension",
+        "spine_title": "Reading for Comprehension",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-RFC-A-1",
+            "source_section_id": "A",
+            "source_section_title": "Follow That Dream",
+            "source_section_type": "informational",
+            "source_spine": "reading_for_comprehension",
+            "source_lo": "Student analyses authorial argument, character perspective, and persuasive technique using an informational letter as the vehicle.",
+            "source_context": "A mother's letter to daughter Ming on dreams, sacrifice, and the ten-year mastery claim.",
+            "item_stem": "In her letter to Ming, the mother states that world-class mastery in any field demands at least ten years of singular, intensive pursuit. Which of the following best explains why she includes this claim at the opening of her argument?",
+            "question_type": "MCQ",
+            "options": [
+              {
+                "label": "A",
+                "text": "To compare Ming's dream with those of Academy Award winners",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "To discourage Ming from pursuing an unrealistic ambition",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "To establish that greatness requires sustained effort, not passion alone",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "To show that financial investment matters more than dedication",
+                "is_correct": false
+              }
+            ],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [],
+              "answer_key": [],
+              "what_each_option_reveals": {
+                "B": "Student misreads the mother's tone as discouraging; she explicitly opens with 'By all means follow that dream' before introducing effort.",
+                "A": "Student confuses the sequence of the argument; the Academy Award example appears later, as a point about community support, not mastery.",
+                "D": "Student over-weights the financial strand of the mother's argument, which she presents as one cost among several, not the dominant one."
+              },
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-RFC-A-2",
+            "source_section_id": "A",
+            "source_section_title": "Follow That Dream",
+            "source_section_type": "informational",
+            "source_spine": "reading_for_comprehension",
+            "source_lo": "Student analyses authorial argument, character perspective, and persuasive technique using an informational letter as the vehicle.",
+            "source_context": "A mother's letter to daughter Ming on dreams, sacrifice, and the ten-year mastery claim.",
+            "item_stem": "Read the passage above and answer the questions that follow.\n\n1. The mother references people whose aspirations to attend Raffles College were destroyed by the Japanese invasion, and others who sacrificed their own schooling to support siblings financially. What do these two examples, taken together, reveal about the mother's attitude toward unfulfilled dreams?\n2. The letter is addressed directly to Ming yet draws on the mother's own publishing dream as evidence. Analyse how this use of personal anecdote strengthens the mother's persuasive purpose — and where, if anywhere, it might weaken it.",
+            "question_type": "EXTRACT_ANALYSIS",
+            "options": [],
+            "visual_stimulus": "The mother's letter opens with warm, direct encouragement — 'By all means follow that dream' — before pivoting to a measured inventory of what pursuing any dream truly costs: sustained effort, financial investment, and years of sacrifice. She acknowledges that many people never move beyond wishful thinking, and that for entire generations, circumstances beyond individual control — war, poverty, family obligation — derailed ambitions entirely. Yet she does not offer these realities as reasons to abandon the dream; instead, she asks Ming to weigh them honestly and, if conviction still courses through her veins, to act. The letter closes with the mother's own story: a dream of publishing a book that evolved over a decade before it was realised.",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Question 1: Mother treats external obstacles as real, not as excuses or personal failures.",
+                "Question 1: Juxtaposing war and family obligation shows dreams can be derailed by forces beyond one's control.",
+                "Question 2: The mother's own publishing story makes the advice experiential and credible, not abstract.",
+                "Question 2: Possible weakness — her dream succeeded, which may not fully represent those who failed despite effort.",
+                "Question 2: Personal anecdote shifts the letter from advice to shared testimony, deepening intimacy."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "spine_code": "listening",
+        "spine_title": "Listening",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-LIS-A-1",
+            "source_section_id": "A",
+            "source_section_title": "Follow That Dream",
+            "source_section_type": "informational",
+            "source_spine": "listening",
+            "source_lo": "Student retrieves specific details and reflects on real-world implications by listening to an informational announcement.",
+            "source_context": "A school announcement about new vocational courses — Graphic Design, Coding, AI, Entrepreneurship — with registration details.",
+            "item_stem": "Listen to the school announcement about new vocational courses and decide whether the following statements are true or false. Write T for True or F for False.\n(1) Students from Grades 9 to 12 are eligible to register for the vocational courses.\n(2) Each student may enrol in as many courses as they wish.\n(3) Registration forms will be available at the school office from Monday, 04 April.\n(4) The courses will be taught by the school's regular subject teachers.",
+            "question_type": "TRUE_FALSE",
+            "options": [
+              {
+                "label": "1",
+                "text": "Each student may enrol in as many courses as they wish.",
+                "is_correct": false
+              },
+              {
+                "label": "2",
+                "text": "Registration forms will be available at the school office from Monday, 04 April.",
+                "is_correct": true
+              },
+              {
+                "label": "3",
+                "text": "Students from Grades 9 to 12 are eligible to register for the vocational courses.",
+                "is_correct": true
+              },
+              {
+                "label": "4",
+                "text": "The courses will be taught by the school's regular subject teachers.",
+                "is_correct": false
+              }
+            ],
+            "visual_stimulus": "",
+            "transcript_ref": "p. 275",
+            "teacher_guide": {
+              "suggested_answer": "1 — T (the announcement specifies Grades 9 to 12); 2 — F (each student may choose only one course); 3 — T (registration forms available from Monday, 04 April at the school office); 4 — F (courses will be conducted by trained professionals, not regular school teachers).",
+              "expected_elements": [],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-LIS-A-2",
+            "source_section_id": "A",
+            "source_section_title": "Follow That Dream",
+            "source_section_type": "informational",
+            "source_spine": "listening",
+            "source_lo": "Student retrieves specific details and reflects on real-world implications by listening to an informational announcement.",
+            "source_context": "A school announcement about new vocational courses — Graphic Design, Coding, AI, Entrepreneurship — with registration details.",
+            "item_stem": "The school announcement states that 'preference will be given to early applicants' and that 'seats are limited.' In two to three sentences, explain what a student who hears this announcement should do immediately, and why the announcement's phrasing of 'real-world skills beyond the textbook' makes these courses relevant to the chapter's theme of following a dream.",
+            "question_type": "SCR",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "p. 275",
+            "teacher_guide": {
+              "suggested_answer": "The student should collect a registration form from the school office by Monday, 04 April and submit it before Friday, 08 April, choosing one course carefully since each student is limited to a single enrolment. The phrase 'real-world skills beyond the textbook' echoes the chapter's argument that moving from wishful thinking to actual achievement requires deliberate, practical commitment — exactly the step the mother urges Ming to take.",
+              "expected_elements": [],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "spine_code": "speaking",
+        "spine_title": "Speaking",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-SPK-A-1",
+            "source_section_id": "A",
+            "source_section_title": "Follow That Dream",
+            "source_section_type": "informational",
+            "source_spine": "speaking",
+            "source_lo": "Student articulates a position and negotiates competing perspectives using role-play and structured oral argument as the vehicle.",
+            "source_context": "A four-role group role-play on a student's dream of becoming a trekking guide, with Parent, Mentor, and Friend voices.",
+            "item_stem": "You are the 'Dreamer' in the role-play scenario where you wish to become a professional wildlife photographer instead of following a conventional career path. In three to four sentences, describe your dream to the group and explain one concrete step you are already taking or planning to take to pursue it.",
+            "question_type": "ORAL_PROMPT",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "States the dream clearly and specifically, not in vague terms.",
+                "Acknowledges that the path is unconventional without abandoning it.",
+                "Names at least one concrete, realistic step toward the dream.",
+                "Uses vocabulary of conviction and persistence drawn from the letter's register."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-SPK-A-2",
+            "source_section_id": "A",
+            "source_section_title": "Follow That Dream",
+            "source_section_type": "informational",
+            "source_spine": "speaking",
+            "source_lo": "Student articulates a position and negotiates competing perspectives using role-play and structured oral argument as the vehicle.",
+            "source_context": "A four-role group role-play on a student's dream of becoming a trekking guide, with Parent, Mentor, and Friend voices.",
+            "item_stem": "Ming's mother argues that the prospect of success provides momentum when stamina runs out. Do you agree that external goals — success, recognition, financial reward — are sufficient to sustain someone through years of difficulty? Argue your position clearly, using at least one example from the letter and one from your own knowledge or experience. You have two minutes to prepare before speaking.",
+            "question_type": "ORAL_PROMPT",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "States a clear position — agreement, disagreement, or a qualified view.",
+                "References the mother's letter accurately (e.g. stamina, support network, Academy Award example).",
+                "Offers a second example from personal experience or general knowledge.",
+                "Addresses a counterargument without dismissing it.",
+                "Maintains formal spoken register appropriate to a structured argument."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "spine_code": "writing",
+        "spine_title": "Writing",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-WRT-A-1",
+            "source_section_id": "A",
+            "source_section_title": "Follow That Dream",
+            "source_section_type": "informational",
+            "source_spine": "writing",
+            "source_lo": "Student produces a formal transactional piece of writing using appropriate register, structure, and purpose as the vehicle.",
+            "source_context": "A young person writing to a community learning centre to enquire about an upcoming skill-development programme.",
+            "item_stem": "Your local public library is launching a six-week reading and creative-writing programme for secondary school students during the winter holidays. Write a formal letter to the Head Librarian requesting detailed information about the programme — its schedule, eligibility, any fees involved, and how to register. Use appropriate formal letter format (sender's address, date, salutation, body with introduction/enquiry/conclusion, and complementary close).",
+            "question_type": "WRITING_TASK",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Complete formal letter format: address, date, salutation, complementary close.",
+                "Introduction states identity and purpose without unnecessary preamble.",
+                "Body raises specific, relevant enquiries: schedule, eligibility, fees, registration.",
+                "Formal register maintained throughout — no contractions, abbreviations, or colloquial phrasing.",
+                "Conclusion is courteous and anticipates a reply."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-WRT-A-2",
+            "source_section_id": "A",
+            "source_section_title": "Follow That Dream",
+            "source_section_type": "informational",
+            "source_spine": "writing",
+            "source_lo": "Student produces a formal transactional piece of writing using appropriate register, structure, and purpose as the vehicle.",
+            "source_context": "A young person writing to a community learning centre to enquire about an upcoming skill-development programme.",
+            "item_stem": "A student in your school wrote a letter to the editor of the school magazine arguing that the curriculum gives students no space to explore unconventional careers, and that this drives talented young people toward 'safe' choices out of fear rather than conviction. Write a letter to the editor responding to this view. You may agree, disagree, or present a more nuanced position — but your letter must be persuasive, formally structured, and supported by at least two specific reasons or examples.",
+            "question_type": "WRITING_TASK",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Letter-to-editor format: 'To the Editor', clear subject, formal salutation and close.",
+                "Position stated clearly in the opening paragraph without hedging.",
+                "Two or more specific reasons or examples supporting the position.",
+                "Acknowledges the opposing view and addresses it rather than ignoring it.",
+                "Formal persuasive register: no slang, reasoned argument not emotional appeal alone."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "spine_code": "vocabulary_grammar",
+        "spine_title": "Vocabulary and Grammar",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-VGR-A-1",
+            "source_section_id": "A",
+            "source_section_title": "Follow That Dream",
+            "source_section_type": "informational",
+            "source_spine": "vocabulary_grammar",
+            "source_lo": "Student interprets idiomatic and compound vocabulary in context and applies conditional grammar structures using an informational text as the vehicle.",
+            "source_context": "Compound '-scape' words, dream-and-aspiration idioms, and first conditional structures drawn from the letter's language.",
+            "item_stem": "Match each expression from the letter with its correct meaning.",
+            "question_type": "MATCH",
+            "options": [],
+            "visual_stimulus": "| Expression | Meaning |\n|---|---|\n| coursing through your veins | a tough challenge |\n| wishful thinking | flowing powerfully through your body |\n| uphill task | a hopeful belief that is unlikely to be realised |\n| buoyed up | lifted in spirit by something encouraging |\n| dreamscape | the imagined landscape of one's aspirations |",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "1-b, 2-c, 3-a, 4-d, 5-e",
+              "expected_elements": [],
+              "answer_key": [
+                {
+                  "left": "coursing through your veins",
+                  "right": "flowing powerfully through your body"
+                },
+                {
+                  "left": "wishful thinking",
+                  "right": "a hopeful belief that is unlikely to be realised"
+                },
+                {
+                  "left": "uphill task",
+                  "right": "a tough challenge"
+                },
+                {
+                  "left": "buoyed up",
+                  "right": "lifted in spirit by something encouraging"
+                },
+                {
+                  "left": "dreamscape",
+                  "right": "the imagined landscape of one's aspirations"
+                }
+              ],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-VGR-A-2",
+            "source_section_id": "A",
+            "source_section_title": "Follow That Dream",
+            "source_section_type": "informational",
+            "source_spine": "vocabulary_grammar",
+            "source_lo": "Student interprets idiomatic and compound vocabulary in context and applies conditional grammar structures using an informational text as the vehicle.",
+            "source_context": "Compound '-scape' words, dream-and-aspiration idioms, and first conditional structures drawn from the letter's language.",
+            "item_stem": "The mother writes: 'After all the obstacles are considered, if the burning conviction is still coursing through your veins, then go ahead and do something about it.' This sentence uses the first conditional to describe a real or possible future situation.\n\nRewrite the following pairs of sentences as single first conditional sentences, using the structure 'If [condition], [imperative or result].' Change the wording where necessary, but keep the meaning.\n\n(a) You have a burning conviction about your dream. You should act on it without delay.\n(b) The uphill task feels too hard. You should seek out people in your dreamscape — those who share your goal.",
+            "question_type": "SCR",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "(a) If you have a burning conviction about your dream, act on it without delay. (b) If the uphill task feels too hard, seek out the people in your dreamscape — those who share your goal.",
+              "expected_elements": [],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "spine_code": "beyond_text",
+        "spine_title": "Beyond the Text",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-BTX-A-1",
+            "source_section_id": "A",
+            "source_section_title": "Follow That Dream",
+            "source_section_type": "informational",
+            "source_spine": "beyond_text",
+            "source_lo": "Student connects textual themes to personal aspiration and cultural heritage through visual and research-based project work.",
+            "source_context": "A personal Vision Board of goals and inspirations; research on a local personality shaped by parental encouragement.",
+            "item_stem": "Ming's mother reflects that her own dream — publishing a book — evolved over a decade before it was realised, and that 'life itself may change a person's dreams.' In a paragraph of six to eight sentences, describe how the theme of evolving dreams connects to the idea of a Vision Board: why is a Vision Board a living document rather than a fixed plan, and what makes revising it an act of growth rather than failure?",
+            "question_type": "ECR",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Connects the mother's evolving publishing dream to the concept of adaptive goal-setting.",
+                "Explains that a Vision Board reflects current priorities, which legitimately shift over time.",
+                "Distinguishes revision of a dream from abandonment of aspiration.",
+                "Uses at least one specific section of the Vision Board (e.g. 'Goals' or 'Inspiration') as illustration.",
+                "Argues that updating goals is itself an act of self-knowledge, not weakness."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-BTX-A-2",
+            "source_section_id": "A",
+            "source_section_title": "Follow That Dream",
+            "source_section_type": "informational",
+            "source_spine": "beyond_text",
+            "source_lo": "Student connects textual themes to personal aspiration and cultural heritage through visual and research-based project work.",
+            "source_context": "A personal Vision Board of goals and inspirations; research on a local personality shaped by parental encouragement.",
+            "item_stem": "The chapter profiles historical figures — Chhatrapati Shivaji, Queen Madalasa, and Dr APJ Abdul Kalam — as examples of individuals whose dreams were shaped by parental inspiration. Design a project plan (not the project itself) in which you research ONE personality from your own region, village, town, or state who overcame significant obstacles to achieve a notable goal, and whose story reflects at least one idea from Ming's mother's letter. Your plan must specify: (a) the personality and why you chose them, (b) two sources you would use to research them, (c) the format in which you would present their story to the class, and (d) which specific idea from the letter their journey best illustrates.",
+            "question_type": "PROJECT",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Names a specific, real local personality with a brief justification for the choice.",
+                "Identifies two credible, named sources (e.g. biography, newspaper archive, interview, documentary).",
+                "Specifies a clear presentation format (oral presentation, poster, short written profile, etc.).",
+                "Links the personality's journey explicitly to one idea from the letter (e.g. ten-year mastery, community support, evolving dreams, obstacles beyond one's control).",
+                "Plan is coherent and actionable, not vague or generic."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

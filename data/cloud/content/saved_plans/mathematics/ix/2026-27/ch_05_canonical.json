@@ -1,0 +1,1737 @@
+{
+  "filename": "ch_05_canonical.json",
+  "saved_at": "2026-08-18T15:52:11",
+  "plan_status": "canonical",
+  "chapter_number": 5,
+  "chapter_title": "I'm Up and Down, and Round and Round",
+  "grade": "Grade IX",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 50,
+      "count": 15
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 15 periods = 750 minutes\nTotal: 15 periods · 12h 30min",
+  "genon_canonical": {
+    "generated": "2026-08-18",
+    "schedule": "15x50",
+    "constitution": "LP v1.3 / assessment v1.2",
+    "source": "generate_canonical.py one mathematics ix 5",
+    "ledger_ts": "20260818_154309_math_ix_05_top",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-18T16:17:26",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 8,
+            "field": "teacher_notes",
+            "rule": "register/forward",
+            "removed": "Students may benefit from reading the opening definitions in Section 5.7 independently before the next unit.",
+            "replaced_with": "",
+            "note": "the minor/major-arc confusion is the note's teaching content and stays whole. The struck clause sets pre-reading for a sitting that may never be served"
+          }
+        ],
+        "ban_hits_before": 1,
+        "ban_hits_after": 0
+      }
+    ],
+    "academic_year": "2026-27"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 50,
+          "activity_title": "Defining the Circle: Centre, Radius, Chord, Diameter",
+          "section_anchor": "5.1",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Compass",
+            "Ruler",
+            "Blank paper"
+          ],
+          "visual_aids": "Board diagram showing a circle with centre, radius, chord, and diameter labelled",
+          "textbook_items_in_class": [],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Open by presenting the locus definition of a circle: every point on the circle is at the same fixed distance (the radius) from a fixed point (the centre). Ask students to state what changes and what stays fixed when different circles are drawn from the same centre, establishing that radius determines size."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Formally define radius, chord, and diameter using the board diagram. Derive that the diameter equals twice the radius and that the diameter is the longest chord. Students write their own definitions in mathematical language, then compare with a partner."
+            },
+            {
+              "minutes": "25-40",
+              "activity": "Present the think-and-reflect prompt from Section 5.1: how might Amina locate the centre of a circular piece of paper? Students reason individually, then share: folding the paper twice along two different diameters gives the centre as their intersection, linking back to the locus definition."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Students use compass and ruler to draw a circle, mark its centre, draw two different chords, and verify with a ruler that the diameter they draw is the longest chord. They write one sentence justifying this using the locus definition."
+            }
+          ],
+          "teacher_notes": "This unit establishes the foundational vocabulary the entire chapter builds on: locus, centre, radius, chord, and diameter. Watch for the common conflation of radius with diameter — students may halve or double values incorrectly in later calculations. Example 4, p.19 is not present in this chapter, but teachers may direct students to re-read the opening page of Section 5.1 independently for additional grounding.",
+          "homework": []
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 50,
+          "activity_title": "Rotational and Reflection Symmetries of a Circle",
+          "section_anchor": "5.2",
+          "pedagogical_method": "Discovery/Inquiry",
+          "materials": [
+            "Textbook",
+            "Circular pieces of paper (one per student)",
+            "Ruler"
+          ],
+          "visual_aids": "Board diagram showing a circle with several diameters as fold lines",
+          "textbook_items_in_class": [],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Each student folds their circular piece of paper in half along one diameter, then unfolds and folds again along a different diameter. Ask: does the circle look the same after each fold? Students observe that the two halves coincide every time, prompting the conjecture about reflection symmetry."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Formalise from the paper-folding observation: every diameter is a line of reflection symmetry of the circle, and there are infinitely many such lines. Then present the rotational symmetry argument: rotating the circle about its centre by any angle maps it to itself, because all points remain at the same radius. Students justify this in writing."
+            },
+            {
+              "minutes": "25-40",
+              "activity": "Think-and-reflect discussion from Section 5.2: students identify how many lines of reflection symmetry a square, regular pentagon, and regular hexagon each have, comparing with the circle's infinite symmetry. They also reason about which chord is longest (the diameter, at the centre) and which is shortest (approaching a point), using the locus definition from Section 5.1."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Students describe in their own words the locus of points equidistant from two given points, drawing a diagram and stating that this locus is the perpendicular bisector — a result they will use in the next section's argument about circles through multiple points."
+            }
+          ],
+          "teacher_notes": "Having established the locus definition of a circle and the meaning of radius, this unit uses paper-folding to make the symmetry results feel inevitable rather than arbitrary. A common misconception is that only two or four fold lines exist (as with a square); press students to articulate why the fold can happen along any diameter, citing the equal-radius property. The locus of equidistant points introduced here will carry directly into the Section 5.3 argument.",
+          "homework": []
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 50,
+          "activity_title": "How Many Circles Pass Through Two or Three Points?",
+          "section_anchor": "5.3",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Compass",
+            "Ruler",
+            "Blank paper"
+          ],
+          "visual_aids": "Board diagram showing two points A and B with several circles passing through both, and their centres on the perpendicular bisector of AB",
+          "textbook_items_in_class": [
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "5.3",
+              "book_ref": "Exercise Set 5.1 Q4, p.98",
+              "description": "Find the least possible radius of a circle through two given points A and B."
+            },
+            {
+              "id": "E-5",
+              "type": "exercise",
+              "source_section": "5.3",
+              "book_ref": "Think, Draw and Infer Q1, p.98",
+              "description": "For three collinear points A, B, C, investigate whether a point P exists with PA = PB = PC; examine the perpendicular bisectors of AB and BC, show they are parallel, and decide whether a circle can pass through collinear points or whether a line can cut a circle in three points."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Present the question: how many circles pass through two given points A and B? Students sketch several, noting that the centres all lie on the perpendicular bisector of AB. Formalise this using the symmetry result from Section 5.2: a circle through A and B must have its centre equidistant from both, placing it on the perpendicular bisector."
+            },
+            {
+              "minutes": "15-30",
+              "activity": "Extend to three non-collinear points: the centre must lie on the perpendicular bisector of AB and also on the perpendicular bisector of BC. Two non-parallel lines meet in exactly one point, so exactly one circle — the circumcircle — passes through three non-collinear points (Theorem 1). Discuss where the circumcentre lies for acute, obtuse, and right-angled triangles."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Students work on Exercise Set 5.1 Q4, p.98 (finding the least possible radius for a circle through A and B) and Think, Draw and Infer Q1, p.98 (showing that no circle passes through three collinear points, since the perpendicular bisectors of AB and BC are parallel and do not meet)."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Think-and-reflect discussion: how does the curvature of circles through A and B change as the centre moves along the perpendicular bisector toward and away from the segment? Students articulate that smaller radius gives a more sharply curved arc, larger radius gives a flatter one."
+            }
+          ],
+          "teacher_notes": "Having established that every point equidistant from two given points lies on their perpendicular bisector (Section 5.2), this unit uses that result as the engine for Theorem 1. A frequent error is claiming that a circle can pass through three collinear points; the parallel-perpendicular-bisectors argument in Think, Draw and Infer Q1 (p.98) directly addresses this. Students may also confuse circumcentre with centroid — clarify that the circumcentre is equidistant from vertices, not from sides.",
+          "homework": [
+            "Exercise Set 5.1 Q1 and Q2, p.98: draw the circumcircle of two given triangles and state whether the circumcentre lies inside or outside each."
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 50,
+          "activity_title": "Equal Chords and the Central Angles They Subtend",
+          "section_anchor": "5.4",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Compass",
+            "Ruler",
+            "Blank paper"
+          ],
+          "visual_aids": "Board diagram showing two equal chords AB and CD in a circle with centre O, and the isosceles triangles OAB and OCD",
+          "textbook_items_in_class": [
+            {
+              "id": "E-10",
+              "type": "exercise",
+              "source_section": "5.4",
+              "book_ref": "Exercise Set 5.2 Q1, p.100",
+              "description": "Show that the triangle formed by a chord and the centre of the circle is isosceles."
+            },
+            {
+              "id": "E-11",
+              "type": "exercise",
+              "source_section": "5.4",
+              "book_ref": "Exercise Set 5.2 Q2, p.100",
+              "description": "Show that two such isosceles triangles with equal base length are congruent to each other."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Draw a chord AB in a circle with centre O. Students establish that OA = OB (both radii), making triangle OAB isosceles. Ask: what does this say about angles OAB and OBA? Students identify the base angles as equal, preparing the congruence argument."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Present the proof of Theorem 2: if AB = CD, then triangles OAB and OCD are congruent by SSS (OA = OC, OB = OD as radii, AB = CD by hypothesis), so the central angles are equal. Then present Theorem 3's converse: if the central angles are equal, use SAS to show the triangles are congruent and therefore the chords are equal."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Students work on Exercise Set 5.2 Q1 and Q2, p.100: first showing that the chord-centre triangle is isosceles, then showing that two such triangles with equal bases are congruent. Circulate and check that students cite radii as equal sides and state the congruence criterion used."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Consolidate the bidirectional relationship: longer chord ↔ larger central angle. Students state both Theorem 2 and Theorem 3 in their own words and write the logical structure (if–then and converse) explicitly."
+            }
+          ],
+          "teacher_notes": "Having established the circumcircle and circumcentre structure in Section 5.3, this unit now uses the equal-radius property of the circle in a congruence argument for the first time. Watch for students applying SSS when the hypothesis gives equal chords — they must name all three pairs of equal sides, not just the chord pair. Exercise Set 5.2 Q2 (p.100) confirms the congruence of the two isosceles triangles and is a natural follow-on for independent reading.",
+          "homework": []
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 50,
+          "activity_title": "Perpendicular from Centre to a Chord Bisects It",
+          "section_anchor": "5.5",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Compass",
+            "Ruler",
+            "Blank paper"
+          ],
+          "visual_aids": "Board diagram showing chord PQ with centre O and perpendicular OM, marking M as the midpoint",
+          "textbook_items_in_class": [
+            {
+              "id": "E-7",
+              "type": "exercise",
+              "source_section": "5.5",
+              "book_ref": "Exercise Set 5.3 Q1, p.101",
+              "description": "Explain why the converse of Theorem 4 is true: the perpendicular from the centre of a circle to a chord bisects the chord."
+            },
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "5.5",
+              "book_ref": "Exercise Set 5.3 Q2, p.101",
+              "description": "For isosceles triangle ABC inscribed in a circle with AB = AC, show that the altitude from A to BC passes through the centre."
+            },
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "5.5",
+              "book_ref": "Exercise Set 5.3 Q3, p.101",
+              "description": "Two parallel chords of lengths 6 cm and 8 cm lie on opposite sides of the centre of a circle of radius 5 cm; find the distance between the midpoints of the chords."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Present Theorem 4: the line joining the centre to the midpoint of a chord is perpendicular to the chord. Proof — let M be the midpoint of chord PQ and O the centre. Triangles OMP and OMQ share OM, have OP = OQ (radii), and PM = QM (M is midpoint), so they are congruent by SSS, giving angle OMP = angle OMQ = 90 degrees."
+            },
+            {
+              "minutes": "15-28",
+              "activity": "State Theorem 5 (the converse) and work through Exercise Set 5.3 Q1, p.101 as a class: students construct the converse argument using the same isosceles-triangle logic, showing that the perpendicular from O to a chord must land on the midpoint."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Students work on Exercise Set 5.3 Q2 (p.101) — showing the altitude from A in an isosceles inscribed triangle passes through O — and Exercise Set 5.3 Q3 (p.101) — finding the distance between midpoints of two parallel chords on opposite sides of the centre using the Pythagoras theorem and Theorem 5."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Summarise: the perpendicular from the centre and the line to the midpoint coincide. Students state Theorem 4 and Theorem 5 together, emphasising that the result works in both directions, and write the logical connective 'if and only if' connecting midpoint and perpendicularity."
+            }
+          ],
+          "teacher_notes": "Having proved that equal chords subtend equal angles (Section 5.4), this unit establishes the perpendicular-bisector relationship that links a chord's midpoint to the centre — a result used in every distance calculation that follows. A common slip is treating Theorem 4 and Theorem 5 as a single theorem rather than a theorem and its converse; ensure students can state the hypothesis and conclusion of each separately. Exercise Set 5.3 Q3 (p.101) is a good independent challenge connecting this unit's results to a numerical calculation.",
+          "homework": [
+            "End of Chapter Q5, p.114: prove that the perpendicular bisector of a chord passes through the centre of the circle."
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 50,
+          "activity_title": "Equal Chords Are Equidistant from the Centre",
+          "section_anchor": "5.6",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Tracing paper",
+            "Compass",
+            "Ruler"
+          ],
+          "visual_aids": "Board diagram showing two chords AB and GF with equal perpendicular distances CE and CH from centre O",
+          "textbook_items_in_class": [
+            {
+              "id": "E-12",
+              "type": "exercise",
+              "source_section": "5.6",
+              "book_ref": "Exercise Set 5.4 Q1, p.104",
+              "description": "Use the Baudhayana-Pythagoras theorem to show why Theorem 6 must be true."
+            },
+            {
+              "id": "E-13",
+              "type": "exercise",
+              "source_section": "5.6",
+              "book_ref": "Exercise Set 5.4 Q2, p.104",
+              "description": "Given CE perpendicular to AB, CH perpendicular to GH, and CE = CH, show that AB = GF."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Use a paper-folding and tracing-paper activity: fold the circle so that chord AB coincides with chord GF. Students observe that the centre maps to itself and the perpendicular distances are equal. This motivates Theorem 6 before the formal proof."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Present the formal proof of Theorem 6 (equal chords are equidistant from the centre) using two independent congruence arguments: triangles OCE and OHF are congruent by RHS (right angle at E and H, equal hypotenuses OE = OF as radii, equal halves of the chords by Theorem 5). Then present Theorem 7 (the converse: equidistant chords are equal in length) via RHS congruence in the same configuration."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Students work on Exercise Set 5.4 Q1 (p.104) — showing Theorem 6 holds using the Baudhayana-Pythagoras theorem — and Exercise Set 5.4 Q2 (p.104) — proving that equal perpendicular distances imply equal chord lengths (Theorem 7). Encourage students to name the congruence criterion used in each step."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Consolidate: students state the bidirectional result — chord length determines distance from centre and distance determines chord length — and relate it back to the earlier chain (midpoint, perpendicular, right triangle, Pythagoras). A quick individual calculation: given r = 10 and chord length 16, find the distance from centre."
+            }
+          ],
+          "teacher_notes": "Having established that the perpendicular from the centre bisects the chord (Section 5.5), this unit adds the distance dimension: equal chords sit at equal distances. A frequent error in the proof is omitting the bisection step — students must first halve the chord using Theorem 5 before applying Pythagoras. Exercise Set 5.4 Q3 (p.104) provides a second Pythagoras-route proof of Theorem 7 that students could read independently.",
+          "homework": []
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 50,
+          "activity_title": "Longer Chord Lies Closer to the Centre",
+          "section_anchor": "5.6.1",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Compass",
+            "Ruler",
+            "Blank paper"
+          ],
+          "visual_aids": "Board diagram showing two unequal chords AB and CD in a circle with their perpendicular distances from centre O marked",
+          "textbook_items_in_class": [
+            {
+              "id": "E-15",
+              "type": "exercise",
+              "source_section": "5.6.1",
+              "book_ref": "Exercise Set 5.5 Q1, p.105",
+              "description": "Find the length of a chord of a circle with radius 7 cm and perpendicular distance 6 cm from the centre."
+            },
+            {
+              "id": "E-16",
+              "type": "exercise",
+              "source_section": "5.6.1",
+              "book_ref": "Exercise Set 5.5 Q2, p.105",
+              "description": "Explain why the chord length formula 2 times square root of (r squared minus d squared) holds for perpendicular distance d and radius r."
+            },
+            {
+              "id": "E-22",
+              "type": "exercise",
+              "source_section": "5.6",
+              "source_sections": [
+                "5.5",
+                "5.6",
+                "5.6.1"
+              ],
+              "book_ref": "End of Chapter Q1, p.114",
+              "description": "In a circle, a chord is 5 cm from the centre; if the radius is 13 cm, find the chord length."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Present Theorem 8: of two unequal chords, the longer one lies closer to the centre. Proof uses the Baudhayana-Pythagoras theorem: if AB > CD and their perpendicular distances from O are d₁ and d₂, then r² − (AB/2)² < r² − (CD/2)², so d₁² < d₂², giving d₁ < d₂. Walk through each algebraic step carefully."
+            },
+            {
+              "minutes": "15-25",
+              "activity": "Discuss the two limiting cases: the diameter is the chord nearest the centre (distance 0), and as a chord shrinks toward a point, its distance from the centre approaches the radius. Note the comment in Section 5.6.1 that connects these extremes to the general formula."
+            },
+            {
+              "minutes": "25-42",
+              "activity": "Students work on Exercise Set 5.5 Q1 (p.105) — finding chord length from radius 7 and distance 6 — and Q2 (p.105) — justifying the general formula chord = 2√(r² − d²). Then attempt End of Chapter Q1 (p.114): radius 13, distance 5, find chord length."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "A quick discussion: in Exercise Set 5.5 Q1, students verify their answer by substituting back into the formula. Ask: if the chord were a diameter, what would d be? Reinforces understanding that the formula works at both extremes."
+            }
+          ],
+          "teacher_notes": "Having proved that equal chords are equidistant from the centre (Section 5.6), this unit extends the result to the comparison of unequal chords. The most common algebraic slip is reversing the inequality when comparing d₁² and d₂²; watch students carefully when they move from AB > CD to (AB/2)² > (CD/2)². End of Chapter Q3 and Q4 (p.114) are additional numerical exercises students can attempt independently.",
+          "homework": [
+            "End of Chapter Q3, p.114 and End of Chapter Q4, p.114: find the distance from the centre to a chord, and find a chord length given radius and distance."
+          ]
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 50,
+          "activity_title": "Arcs: Major, Minor, and the Angle at the Centre",
+          "section_anchor": "5.7",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Compass",
+            "Ruler",
+            "Protractor"
+          ],
+          "visual_aids": "Board diagram showing a circle with two points A and B, labelling the minor arc AKB, major arc ALB, and the central angle AOB",
+          "textbook_items_in_class": [
+            {
+              "id": "E-17",
+              "type": "exercise",
+              "source_section": "5.7",
+              "book_ref": "Exercise, p.107",
+              "description": "Measure the angles subtended by arc AKB and arc CLD at centre O and state whether each is a minor or major arc."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Define arc: the portion of a circle between two points. For two points A and B on a circle, there are exactly two arcs — the minor arc (shorter) and the major arc (longer). Define the angle subtended by an arc at the centre as the central angle swept via the minor arc, and note that the angle swept via the major arc is 360° minus the central angle for the minor arc."
+            },
+            {
+              "minutes": "15-30",
+              "activity": "Present the think-and-reflect prompts: students identify rotational and reflection symmetries of regular polygons (square, pentagon, hexagon), comparing each polygon's symmetry count with the circle's infinite symmetry. Then students distinguish the minor and major arcs for several configurations on the board."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Students work on Exercise p.107: using a protractor, they measure the angles subtended by arc AKB and arc CLD at centre O, classify each as minor or major, and verify that the two central angles for the same chord sum to 360°."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Consolidate: students write a precise definition of 'angle subtended by an arc at the centre', emphasising that naming the arc specifies which of the two possible angles is meant. Discuss: if the arc is a semicircle, what is the central angle? (180°.)"
+            }
+          ],
+          "teacher_notes": "Having built the chord-distance relationships of Sections 5.5–5.6.1, this unit pivots to arcs and prepares the central-angle framework for Theorem 9 in Section 5.7.1. A common confusion is between the angle subtended by the minor arc and the reflex angle subtended by the major arc; the definition of 'angle subtended by the arc' must specify which arc, not just which chord.",
+          "homework": []
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 50,
+          "activity_title": "Central Angle Is Double the Inscribed Angle",
+          "section_anchor": "5.7.1",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Compass",
+            "Ruler",
+            "Protractor",
+            "Blank paper"
+          ],
+          "visual_aids": "Board diagram showing arc AB with centre O and a point P on the major arc, with angles AOB at centre and APB at circumference marked",
+          "textbook_items_in_class": [
+            {
+              "id": "E-18",
+              "type": "exercise",
+              "source_section": "5.7.1",
+              "book_ref": "Exercise Set 5.6 Q1, p.110",
+              "description": "In a circle with centre O, the central angle AOB is 60 degrees and the radius is 12 cm; find the length of chord AB."
+            },
+            {
+              "id": "E-23",
+              "type": "exercise",
+              "source_section": "5.7.1",
+              "source_sections": [
+                "5.7",
+                "5.7.1"
+              ],
+              "book_ref": "End of Chapter Q2, p.114",
+              "description": "An arc subtends 70 degrees at the centre; find the angle the arc subtends at a point on the circle."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-20",
+              "activity": "Present the proof of Theorem 9 in two cases using the exterior-angle property of isosceles triangles. Case 1: O lies inside angle APB — join PO and extend to Q; both triangles OPA and OPB are isosceles (equal radii), so the exterior angles at O in each triangle equal the sum of the base angles, giving angle AOQ = 2·angle APQ and angle BOQ = 2·angle BPQ, which sum to angle AOB = 2·angle APB. Case 2: O lies outside angle APB — same argument with subtraction rather than addition."
+            },
+            {
+              "minutes": "20-30",
+              "activity": "Derive the corollary: when AB is a diameter, the central angle is 180°, so the inscribed angle APB = 90°. State formally: the angle subtended by a diameter at any point on the circle is 90°. Students also establish that all inscribed angles subtending the same arc are equal, since each equals half the fixed central angle."
+            },
+            {
+              "minutes": "30-42",
+              "activity": "Students work on Exercise Set 5.6 Q1 (p.110) — using central angle 60° and radius 12 to find chord AB via the isosceles triangle — and End of Chapter Q2 (p.114) — halving a 70° central angle to find the inscribed angle of 35°."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Quick class discussion: if two points P and Q are on the same side of chord AB and both subtend equal angles, what does Theorem 9 say about their position? Students reason that they both lie on the same arc — setting up the concyclicity result of Section 5.8."
+            }
+          ],
+          "teacher_notes": "Having defined the angle subtended by an arc at the centre in Section 5.7, this unit proves the central result that governs all subsequent angle work. The two-case structure of the proof is critical: students often prove only Case 1 and assume the other case is symmetric, but the exterior-angle argument differs in direction. Exercise Set 5.6 Q2 and Q3 (p.111) provide further practice and can be assigned for independent reading.",
+          "homework": [
+            "End of Chapter Q6, p.114: AB is a diameter and C is on the circumference; find the measure of angle ACB and explain the reasoning."
+          ]
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 50,
+          "activity_title": "Equal Inscribed Angles and the Concyclicity of Four Points",
+          "section_anchor": "5.8",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Compass",
+            "Ruler",
+            "Blank paper"
+          ],
+          "visual_aids": "Board diagram showing segment AB with points C and D on the same side subtending equal angles, and the circumcircle through A, B, C with D on or off it",
+          "textbook_items_in_class": [
+            {
+              "id": "E-21",
+              "type": "exercise",
+              "source_section": "5.8",
+              "book_ref": "Exercise, p.113",
+              "description": "A cyclic quadrilateral has angles A = 80 degrees, B = 110 degrees, C = 100 degrees, D = 70 degrees; determine whether such a quadrilateral can be drawn and explain why."
+            },
+            {
+              "id": "E-28",
+              "type": "exercise",
+              "source_section": "5.8",
+              "book_ref": "End of Chapter Q7, p.114",
+              "description": "ABCD is a cyclic quadrilateral with angle A = 75 degrees; find angle C, and with angle B = 110 degrees, find angle D."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-18",
+              "activity": "Present Theorem 10: if segment AB subtends equal angles at points C and D on the same side of AB, then A, B, C, D are concyclic. Proof by contradiction: suppose D lies outside the circle through A, B, C; the circle meets AD at D', and since A, B, C, D' are concyclic, angle AD'B = angle ACB = angle ADB, which forces D = D' — contradiction. State the definition of a cyclic quadrilateral."
+            },
+            {
+              "minutes": "18-33",
+              "activity": "Present Theorem 11: opposite angles of a cyclic quadrilateral sum to 180°. Proof — the two arcs (major and minor) cut off by diagonal AC each subtend angles at the remaining vertices; by Theorem 9, angle B = (1/2)·(reflex angle AOC) and angle D = (1/2)·(angle AOC), and these two central angles sum to 360°, giving angle B + angle D = 180°. Apply similarly to angle A + angle C."
+            },
+            {
+              "minutes": "33-44",
+              "activity": "Students work on Exercise p.113 — checking whether the given angle set 80°, 110°, 100°, 70° satisfies the opposite-angle condition — and End of Chapter Q7 (p.114) — applying Theorem 11 to find the remaining angles of a cyclic quadrilateral."
+            },
+            {
+              "minutes": "44-50",
+              "activity": "State Theorem 12 (the converse of Theorem 11): if the opposite angles of a quadrilateral sum to 180°, the quadrilateral is cyclic. Proof sketch by contradiction. Students write the logical structure of Theorems 10, 11, and 12 as a connected chain."
+            }
+          ],
+          "teacher_notes": "Having established that equal inscribed angles subtend the same arc (Section 5.7.1), this unit applies that result to prove concyclicity and the cyclic-quadrilateral angle sum. A frequent error in Theorem 11 is applying Theorem 9 to the wrong arc — students must track which arc gives the central angle at O and which arc gives the inscribed angle at the remaining vertex. End of Chapter Q8 (p.114) provides algebraic practice with unknown angles in cyclic quadrilaterals.",
+          "homework": [
+            "End of Chapter Q8, p.114: find x and the angles of a cyclic quadrilateral with algebraic angle expressions."
+          ]
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 50,
+          "activity_title": "Constructing Circumcircles and Applying Theorem 1",
+          "section_anchor": "5.3",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Compass",
+            "Ruler",
+            "Protractor",
+            "Blank paper"
+          ],
+          "visual_aids": "Board diagram showing the perpendicular bisector construction for a triangle's circumcircle",
+          "textbook_items_in_class": [
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "5.3",
+              "book_ref": "Exercise Set 5.1 Q1, p.98",
+              "description": "Draw triangle ABC with AB = 5 cm, angle A = 70 degrees, angle B = 60 degrees; draw its circumcircle and state whether the centre lies inside or outside the triangle."
+            },
+            {
+              "id": "E-2",
+              "type": "exercise",
+              "source_section": "5.3",
+              "book_ref": "Exercise Set 5.1 Q2, p.98",
+              "description": "Draw triangle ABC with AB = 5 cm, angle A = 100 degrees, AC = 4 cm; draw its circumcircle and state whether the centre lies inside or outside the triangle."
+            },
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "5.3",
+              "book_ref": "Exercise Set 5.1 Q3, p.98",
+              "description": "Draw triangle ABC with AB = 6 cm, BC = 7 cm, CA = 7 cm; draw the circumcircle, mark circumcentre O, and measure OA, OB, OC."
+            },
+            {
+              "id": "E-6",
+              "type": "exercise",
+              "source_section": "5.3",
+              "book_ref": "Think, Draw and Infer Q2, p.98",
+              "description": "Given the circumcircle of triangle ABC, determine whether other triangles congruent to ABC can share the same circumcircle."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Briefly recall the proof of Theorem 1 from Section 5.3: three non-collinear points have a unique circumcircle, whose centre is the intersection of the perpendicular bisectors of any two sides. Connect this to the construction procedure students will now carry out."
+            },
+            {
+              "minutes": "10-35",
+              "activity": "Students work through Exercise Set 5.1 Q1 (p.98), Q2 (p.98), and Q3 (p.98) in sequence: constructing the circumcircle of three given triangles using the perpendicular-bisector method, and in Q3 measuring OA, OB, OC to verify they equal the circumradius. They record whether the circumcentre falls inside (acute triangle), outside (obtuse), or on the hypotenuse (right-angled)."
+            },
+            {
+              "minutes": "35-44",
+              "activity": "Students discuss Think, Draw and Infer Q2 (p.98): given the circumcircle of triangle ABC, can other triangles congruent to ABC be inscribed in the same circumcircle? Students draw rotated versions of the same triangle on the same circle and observe that infinitely many congruent triangles share one circumcircle."
+            },
+            {
+              "minutes": "44-50",
+              "activity": "Brief consolidation: students state in writing the connection between circumcircle position (inside/outside) and the triangle type (acute/obtuse/right), and explain the reasoning using the perpendicular-bisector intersection."
+            }
+          ],
+          "teacher_notes": "The circumcircle construction established in Section 5.3 is the target of this problem-solving unit, which turns the theorem into a hands-on construction task. A common error in Q3 is drawing the perpendicular bisector of only one side and assuming it suffices; students must construct at least two and verify convergence. Think, Draw and Infer Q2 (p.98) is an excellent open-ended task for students who finish early.",
+          "homework": []
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 50,
+          "activity_title": "Applying the Chord-Distance Formula to Problem Sets",
+          "section_anchor": "5.6",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Ruler",
+            "Blank paper"
+          ],
+          "visual_aids": "Board diagram showing a circle with two parallel chords and perpendicular distances from centre labelled",
+          "textbook_items_in_class": [
+            {
+              "id": "E-24",
+              "type": "exercise",
+              "source_section": "5.6",
+              "source_sections": [
+                "5.5",
+                "5.6",
+                "5.6.1"
+              ],
+              "book_ref": "End of Chapter Q3, p.114",
+              "description": "The diameter of a circle is 26 cm and a chord of length 24 cm is drawn; find the distance from the centre to the chord."
+            },
+            {
+              "id": "E-25",
+              "type": "exercise",
+              "source_section": "5.6",
+              "source_sections": [
+                "5.5",
+                "5.6",
+                "5.6.1"
+              ],
+              "book_ref": "End of Chapter Q4, p.114",
+              "description": "A circle of radius 15 cm has a chord at distance 9 cm from the centre; find the chord length."
+            },
+            {
+              "id": "E-30",
+              "type": "exercise",
+              "source_section": "5.6",
+              "source_sections": [
+                "5.5",
+                "5.6",
+                "5.6.1"
+              ],
+              "book_ref": "End of Chapter Q9, p.114",
+              "description": "A chord of length 16 cm is 6 cm from the centre; find the radius of the circle."
+            },
+            {
+              "id": "E-32",
+              "type": "exercise",
+              "source_section": "5.6",
+              "source_sections": [
+                "5.5",
+                "5.6",
+                "5.6.1"
+              ],
+              "book_ref": "End of Chapter Q18, p.115",
+              "description": "Two parallel chords of lengths 10 cm and 24 cm lie on the same side of the centre, 7 cm apart; find the radius of the circle."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Recall the chord-length formula chord = 2√(r² − d²) established in Section 5.6.1. Remind students that Theorem 5 (Section 5.5) guarantees the perpendicular from the centre bisects the chord, so the right triangle has hypotenuse r, one leg d (distance from centre), and other leg half the chord."
+            },
+            {
+              "minutes": "8-28",
+              "activity": "Students work on End of Chapter Q3 (p.114) and Q4 (p.114) individually, applying the formula to find distance and chord length respectively. Circulate to check that students identify which quantity is unknown, draw the right triangle, and show working."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Students tackle End of Chapter Q9 (p.114) — solving for the radius — and the more demanding End of Chapter Q18 (p.115) — two parallel chords on the same side of the centre, requiring simultaneous application of the formula to both chords and using the given separation of 7 cm to set up a system."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Pair comparison: students swap papers for Q18 and check each other's right-triangle diagram and algebra. Class discussion of the setup: does the answer change if the chords are on opposite sides of the centre? Students reason about this using the formula."
+            }
+          ],
+          "teacher_notes": "The chord-distance results from Sections 5.5–5.6.1 form the computational backbone of the chapter, and this problem-solving unit provides concentrated practice with all three unknowns (d, chord length, radius). The most common error in Q18 is assigning the same distance variable d to both chords on the same side, missing that the distances are d and d+7; encourage students to draw a careful diagram before writing equations. End of Chapter Q9 (p.114) is a good verification exercise since the answer can be checked by substituting back.",
+          "homework": []
+        },
+        {
+          "period_number": 13,
+          "period_duration_minutes": 50,
+          "activity_title": "Applying Theorems 9, 10, and 11 to Cyclic Angle Problems",
+          "section_anchor": "5.8",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Compass",
+            "Ruler",
+            "Protractor",
+            "Blank paper"
+          ],
+          "visual_aids": "Board diagram of a cyclic quadrilateral ABCD with diagonal drawn and central angles marked",
+          "textbook_items_in_class": [
+            {
+              "id": "E-20",
+              "type": "exercise",
+              "source_section": "5.7.1",
+              "book_ref": "Exercise Set 5.6 Q3, p.111",
+              "description": "Find x in the given figure where a cyclic-type angle configuration has one angle of 100 degrees."
+            },
+            {
+              "id": "E-29",
+              "type": "exercise",
+              "source_section": "5.8",
+              "book_ref": "End of Chapter Q8, p.114",
+              "description": "Quadrilateral PQRS is inscribed in a circle with angle P = (2x+10) degrees and angle R = (3x-20) degrees; find x and the measures of angle P and angle R."
+            },
+            {
+              "id": "E-34",
+              "type": "exercise",
+              "source_section": "5.8",
+              "book_ref": "End of Chapter Q21, p.115",
+              "description": "For cyclic quadrilateral ABCD, explain why the exterior angle at any vertex equals the interior opposite angle."
+            },
+            {
+              "id": "E-33",
+              "type": "exercise",
+              "source_section": "5.7.1",
+              "source_sections": [
+                "5.7.1",
+                "5.8"
+              ],
+              "book_ref": "End of Chapter Q20, p.115",
+              "description": "Quadrilateral MNOP is inscribed in a circle with MN a diameter; state and explain what can be said about angles MOP and MNP."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Briefly recapitulate the three angle results needed: Theorem 9 (central angle = 2 × inscribed angle), the corollary (angle in semicircle = 90°), and Theorem 11 (opposite angles of cyclic quadrilateral sum to 180°). Students state each from memory before opening their textbooks."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Students work on Exercise Set 5.6 Q3 (p.111) — finding x in a cyclic angle figure — and End of Chapter Q8 (p.114) — setting up and solving the linear equation from the opposite-angle property of a cyclic quadrilateral. Check that students write the equation angle P + angle R = 180° before solving."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Students work on End of Chapter Q20 (p.115) — reasoning about angles MOP and MNP in a quadrilateral with a diameter — and End of Chapter Q21 (p.115) — explaining why the exterior angle of a cyclic quadrilateral equals the opposite interior angle, using Theorem 11 and the straight-angle property."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Class share-out of Q21: students present the logical chain — angle A + angle C = 180° (Theorem 11), exterior angle at C = 180° − angle C (straight angle) = angle A. Discuss how the exterior-angle result follows as a corollary of Theorem 11 rather than a new proof."
+            }
+          ],
+          "teacher_notes": "Having proved Theorems 9, 10, 11, and 12 across Sections 5.7.1 and 5.8, this problem-solving unit builds fluency with their application. A common error in Q8 is setting up angle P + angle R = 90° rather than 180°; insist students state the theorem in full before writing the equation. End of Chapter Q20 (p.115) is a rich item that combines the semicircle corollary with the inscribed-angle theorem and makes a good independent challenge for stronger students.",
+          "homework": []
+        },
+        {
+          "period_number": 14,
+          "period_duration_minutes": 50,
+          "activity_title": "Proof Practice: Concyclicity, Chord Bisectors, and Cyclic Properties",
+          "section_anchor": "5.8",
+          "pedagogical_method": "Deductive",
+          "materials": [
+            "Textbook",
+            "Ruler",
+            "Blank paper"
+          ],
+          "visual_aids": null,
+          "textbook_items_in_class": [
+            {
+              "id": "E-26",
+              "type": "exercise",
+              "source_section": "5.5",
+              "source_sections": [
+                "5.3",
+                "5.5"
+              ],
+              "book_ref": "End of Chapter Q5, p.114",
+              "description": "Prove that the perpendicular bisector of a chord passes through the centre of the circle."
+            },
+            {
+              "id": "E-35",
+              "type": "exercise",
+              "source_section": "5.7.1",
+              "source_sections": [
+                "5.1",
+                "5.7.1"
+              ],
+              "book_ref": "End of Chapter Q24, p.116",
+              "description": "Use the given figure to justify that the angle in a semicircle is 90 degrees."
+            },
+            {
+              "id": "E-36",
+              "type": "exercise",
+              "source_section": "5.8",
+              "source_sections": [
+                "5.7.1",
+                "5.8"
+              ],
+              "book_ref": "End of Chapter Q26, p.116",
+              "description": "Use the given figure to justify that the sum of opposite angles of a cyclic quadrilateral is 180 degrees."
+            },
+            {
+              "id": "E-31",
+              "type": "exercise",
+              "source_section": "5.8",
+              "source_sections": [
+                "5.7.1",
+                "5.8"
+              ],
+              "book_ref": "End of Chapter Q10, p.114",
+              "description": "A cyclic quadrilateral has sides 5, 5, 12, 12 units; find its area."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-15",
+              "activity": "Students write a full proof of End of Chapter Q5 (p.114): the perpendicular bisector of a chord passes through the centre. Two routes are available — either use the locus of equidistant points from Section 5.3, or use Theorem 4 from Section 5.5 (the line joining centre to midpoint is perpendicular to the chord). Students choose one route and write it completely."
+            },
+            {
+              "minutes": "15-28",
+              "activity": "Students work on End of Chapter Q24 (p.116): using the figure with point C on the circle and AB as diameter, label the two sub-angles at C, note OA = OB = OC (radii), and show from the angle-sum in the large triangle that the sub-angles sum to 90°, giving the semicircle result without invoking Theorem 9."
+            },
+            {
+              "minutes": "28-42",
+              "activity": "Students work on End of Chapter Q26 (p.116): joining the centre O and labelling the arcs, they apply Theorem 9 to show the central angles sum to 360°, derive that the two inscribed-angle pairs sum to 180°, completing the proof of Theorem 11 from the figure. Then students attempt End of Chapter Q10 (p.114): using the cyclic-kite argument (Theorem 11 forces two angles to be 90°, the diagonal is a diameter, area = two right triangles)."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students compare their proofs for Q26 with the Theorem 11 proof in the textbook, identifying any gaps or missing steps. Class discussion: in how many ways can Theorem 11 be proved? Students note the central-angle route (Q26) and any alternative they found."
+            }
+          ],
+          "teacher_notes": "This unit consolidates the chapter's proof structure by revisiting key results as student-written proofs rather than teacher-presented demonstrations. A frequent gap in Q5 is citing only one perpendicular-bisector argument without checking which direction the implication runs; students must be clear about whether they are proving the centre lies on the bisector or the bisector passes through the centre — they are the same claim, but the direction of the argument matters for clarity. End of Chapter Q10 (p.114) is a multi-step problem that rewards students who recognise the cyclic-kite structure early.",
+          "homework": []
+        },
+        {
+          "period_number": 15,
+          "period_duration_minutes": 50,
+          "activity_title": "Whole-Chapter Synthesis: Connecting Circle Theorems",
+          "section_anchor": "synthesis",
+          "pedagogical_method": "Problem solving",
+          "materials": [
+            "Textbook",
+            "Compass",
+            "Ruler",
+            "Protractor",
+            "Blank paper"
+          ],
+          "visual_aids": "Board diagram showing a circle with a cyclic quadrilateral inscribed, one side as a diameter, and both perpendicular distances and inscribed angles marked",
+          "textbook_items_in_class": [
+            {
+              "id": "E-19",
+              "type": "exercise",
+              "source_section": "5.7.1",
+              "book_ref": "Exercise Set 5.6 Q2, p.111",
+              "description": "For two points A, B on a circle with centre O, investigate whether points X, Y on the same side of AB can subtend different angles AXB and AYB, whether equal subtended angles imply X and Y are on the same side, and whether the circle through A, B, X also passes through Y when angles are equal."
+            },
+            {
+              "id": "E-27",
+              "type": "exercise",
+              "source_section": "5.7.1",
+              "source_sections": [
+                "5.7",
+                "5.7.1"
+              ],
+              "book_ref": "End of Chapter Q6, p.114",
+              "description": "AB is a diameter and C is on the circumference; find the measure of angle ACB and explain the reasoning."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Present a synthesis scenario: a circle has a cyclic quadrilateral ABCD inscribed in it, with AB a diameter. Students identify, from the chapter's theorems, every angle relationship they can: angle ACB = 90° (semicircle corollary, Section 5.7.1), angle A + angle C = 180° (Theorem 11, Section 5.8), the central angle for any arc is double the inscribed angle (Theorem 9), and equal chords lie at equal distances from the centre (Theorem 6, Section 5.6)."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Students work on Exercise Set 5.6 Q2 (p.111): investigating whether X and Y on the same side of AB can subtend different inscribed angles, and reasoning through the concyclicity consequence. This connects Theorem 9's equal-inscribed-angle result to Theorem 10's concyclicity result in a single exploration."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Students construct a fresh problem: given a circle of radius 10 cm with a chord of length 12 cm and an inscribed angle subtending the same chord from the major arc, find (a) the distance of the chord from the centre using Section 5.6's formula, (b) the central angle using Theorem 2, and (c) the inscribed angle using Theorem 9. Students show all steps and state which theorem they invoke at each stage."
+            },
+            {
+              "minutes": "40-50",
+              "activity": "Class discussion: trace the logical dependencies of the chapter — locus definition (5.1) → symmetry (5.2) → circumcircle uniqueness (5.3) → chord-angle (5.4) → perpendicular bisector (5.5) → chord-distance (5.6, 5.6.1) → arc and central angle (5.7) → inscribed angle (5.7.1) → concyclicity and cyclic quadrilateral (5.8). Students draw this dependency chain on paper and identify which theorem they found most surprising or useful."
+            }
+          ],
+          "teacher_notes": "This closing unit draws together the full chain of the chapter's theorems — from the locus definition through to cyclic quadrilateral properties — in a single interconnected problem and synthesis discussion. A common gap at this stage is treating the theorems as isolated facts rather than a deductive chain; press students to name the theorem they use at each step and to trace why it holds back to an earlier result. Students who finish the construction problem early can attempt End of Chapter Q6 (p.114) or Q24 (p.116) as additional synthesis items.",
+          "homework": []
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 50,
+        "count": 15
+      }
+    ],
+    "coverage_handoff": [
+      {
+        "section_number": 1,
+        "section_ref": "5.1",
+        "section_title": "Definitions",
+        "total_sections": 10,
+        "period_numbers": [
+          1
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can state the locus definition of a circle and identify radius, chord, and diameter in a given circle diagram."
+        ],
+        "section_context": "Circle as locus; radius, chord, diameter definitions and relationships",
+        "c_code": "C-4.3",
+        "co_central": false
+      },
+      {
+        "section_number": 2,
+        "section_ref": "5.2",
+        "section_title": "Symmetries of a Circle",
+        "total_sections": 10,
+        "period_numbers": [
+          2
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can justify the complete rotational and infinite reflection symmetry of a circle using the equal-radius property."
+        ],
+        "section_context": "Rotational symmetry about centre; every diameter as reflection axis",
+        "c_code": "C-4.3",
+        "co_central": false
+      },
+      {
+        "section_number": 3,
+        "section_ref": "5.3",
+        "section_title": "How Many Circles?",
+        "total_sections": 10,
+        "period_numbers": [
+          3,
+          11
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can prove that exactly one circle passes through three non-collinear points and construct the circumcircle of a triangle.",
+          "Students can determine whether the circumcentre of a triangle lies inside, outside, or on the triangle based on its angle type."
+        ],
+        "section_context": "Circumcircle uniqueness via perpendicular bisectors; circumcentre location for acute, obtuse, right triangles",
+        "c_code": "C-4.3",
+        "co_central": false
+      },
+      {
+        "section_number": 4,
+        "section_ref": "5.4",
+        "section_title": "Chords and the Angles They Subtend",
+        "total_sections": 10,
+        "period_numbers": [
+          4
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can prove that equal chords subtend equal central angles and conversely, using triangle congruence."
+        ],
+        "section_context": "Equal chords ↔ equal central angles; SSS and SAS congruence of chord-centre triangles",
+        "c_code": "C-4.3",
+        "co_central": false
+      },
+      {
+        "section_number": 5,
+        "section_ref": "5.5",
+        "section_title": "Midpoints and Perpendicular Bisectors of Chords",
+        "total_sections": 10,
+        "period_numbers": [
+          5
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can prove that the line from the centre to the midpoint of a chord is perpendicular to the chord, and apply this to compute distances in circle configurations."
+        ],
+        "section_context": "Centre-to-midpoint line perpendicular to chord; perpendicular from centre bisects chord",
+        "c_code": "C-4.3",
+        "co_central": false
+      },
+      {
+        "section_number": 6,
+        "section_ref": "5.6",
+        "section_title": "Distance of Chords from the Centre",
+        "total_sections": 10,
+        "period_numbers": [
+          6,
+          12
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can prove that equal chords are equidistant from the centre and conversely, using RHS congruence.",
+          "Students can find the distance of a chord from the centre or the chord length given radius and the remaining measurement, using the formula derived from the Baudhayana-Pythagoras theorem."
+        ],
+        "section_context": "Equal chords ↔ equal distances from centre; RHS congruence proof; chord-distance formula",
+        "c_code": "C-4.3",
+        "co_central": false
+      },
+      {
+        "section_number": 7,
+        "section_ref": "5.6.1",
+        "section_title": "Which of the two unequal chords is farther from the centre?",
+        "total_sections": 10,
+        "period_numbers": [
+          7
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can prove that the longer of two unequal chords lies closer to the centre, using the Baudhayana-Pythagoras theorem and inequality reasoning."
+        ],
+        "section_context": "Longer chord closer to centre; inequality proof via Pythagoras; chord-length formula 2√(r²−d²)",
+        "c_code": "C-4.3",
+        "co_central": false
+      },
+      {
+        "section_number": 8,
+        "section_ref": "5.7",
+        "section_title": "Angles Subtended by an Arc",
+        "total_sections": 10,
+        "period_numbers": [
+          8
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can define minor arc, major arc, and the angle subtended by an arc at the centre, and distinguish the central angles corresponding to each arc."
+        ],
+        "section_context": "Minor arc, major arc; central angle swept by minor vs major arc; complementary angle to 360°",
+        "c_code": "C-4.3",
+        "co_central": false
+      },
+      {
+        "section_number": 9,
+        "section_ref": "5.7.1",
+        "section_title": "Angle subtended by an arc at a point on the circle outside the arc",
+        "total_sections": 10,
+        "period_numbers": [
+          9
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can prove that the angle subtended by an arc at the centre is double the angle it subtends at any point on the circle outside the arc, and derive the corollary that the angle in a semicircle is 90°."
+        ],
+        "section_context": "Central angle double inscribed angle; two-case isosceles-triangle proof; semicircle corollary; equal inscribed angles on same arc",
+        "c_code": "C-7.3",
+        "co_central": false
+      },
+      {
+        "section_number": 10,
+        "section_ref": "5.8",
+        "section_title": "Concyclicity of Points",
+        "total_sections": 10,
+        "period_numbers": [
+          10
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can prove that equal inscribed angles on the same side imply concyclicity (Theorem 10), and that the opposite angles of a cyclic quadrilateral sum to 180° (Theorem 11), using the central-angle relationship."
+        ],
+        "section_context": "Concyclicity proof by contradiction; cyclic quadrilateral; opposite angles sum to 180°; Theorem 12 converse",
+        "c_code": "C-7.3",
+        "co_central": false
+      },
+      {
+        "section_number": 11,
+        "section_ref": "synthesis",
+        "section_title": "synthesis",
+        "total_sections": 10,
+        "period_numbers": [
+          15
+        ],
+        "period_duration_minutes": 50,
+        "implied_lo": [
+          "Students can connect and apply the chapter's circle theorems — chord-distance relationships, the central-angle and inscribed-angle results, and cyclic-quadrilateral properties — in a multi-step problem requiring selection among theorems."
+        ],
+        "section_context": "Multi-theorem synthesis: chord distance, central angle, inscribed angle, cyclic quadrilateral",
+        "c_code": "C-4.3",
+        "co_central": false
+      }
+    ],
+    "assessment_items": {
+      "grade": "Grade IX",
+      "subject": "mathematics",
+      "stage": "secondary",
+      "chapter_number": 5,
+      "chapter_title": "I'm Up and Down, and Round and Round",
+      "chapter_cg": "CG-4",
+      "reasoning_floor_lift_applied": false,
+      "questions": [
+        {
+          "section_number": 1,
+          "section_ref": "5.1",
+          "section_title": "Definitions",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can state the locus definition of a circle and identify radius, chord, and diameter in a given circle diagram.",
+          "section_context": "Circle as locus; radius, chord, diameter definitions and relationships",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-4.3",
+            "competency_text": "Prove and apply properties of circles including chord, subtended-angle, and inscribed-polygon relationships."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A circle has centre O and radius 5 cm. Points P and Q lie on the circle such that PQ passes through O. Which of the following correctly describes PQ?",
+          "options": [
+            {
+              "label": "A",
+              "text": "PQ is a chord of length 5 cm.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "PQ is a chord of length 5 cm that does not pass through the centre.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "PQ is a diameter of length 10 cm.",
+              "is_correct": true
+            },
+            {
+              "label": "D",
+              "text": "PQ is a radius of length 5 cm.",
+              "is_correct": false
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "what_each_option_reveals": {
+                "A": "Confuses diameter with radius: takes the length of PQ as the radius (5 cm) rather than twice the radius, misreading 'passes through O' as defining a chord equal to r.",
+                "D": "Conflates radius and diameter: labels PQ as a radius even though it joins two points on the circle, not one point to the centre.",
+                "B": "Correctly identifies PQ as a chord but contradicts the given condition that PQ passes through O, showing a disconnect between the definition of diameter and the chord category."
+              },
+              "inclusivity": "Students who struggle may re-read the locus definition and test each option against 'every point on the circle is equidistant from O'; students who find this immediate can be challenged to state how many diameters a given circle contains and justify their answer."
+            },
+            "NUM": null,
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 2,
+          "section_ref": "5.2",
+          "section_title": "Symmetries of a Circle",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can justify the complete rotational and infinite reflection symmetry of a circle using the equal-radius property.",
+          "section_context": "Rotational symmetry about centre; every diameter as reflection axis",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-4.3",
+            "competency_text": "Prove and apply properties of circles including chord, subtended-angle, and inscribed-polygon relationships."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "A student claims: 'A circle has exactly two lines of reflection symmetry — the horizontal diameter and the vertical diameter.' Which of the following best explains why this claim is incorrect?",
+          "options": [
+            {
+              "label": "A",
+              "text": "A circle has exactly four lines of reflection symmetry, one for each quadrant.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "A circle has no lines of reflection symmetry because rotating it does not change its appearance.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "Every diameter is a line of reflection symmetry, so a circle has infinitely many such lines.",
+              "is_correct": true
+            },
+            {
+              "label": "D",
+              "text": "Only diameters that are perpendicular to a chord are lines of reflection symmetry.",
+              "is_correct": false
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "what_each_option_reveals": {
+                "B": "Confuses rotational symmetry with reflection symmetry; the student dismisses reflection on the grounds that rotation works, not recognising they are different types of symmetry.",
+                "A": "Anchors the symmetry count to the four quadrants of a Cartesian grid rather than to the definition of a diameter; shows a finite-quadrant rather than infinite-diameter understanding.",
+                "D": "Introduces a false condition (perpendicularity to a chord) not present in the definition; the student may be conflating the perpendicular-bisector theorem with the symmetry argument."
+              },
+              "inclusivity": "Students who are unsure may fold a paper circle along several different diameters to observe that both halves coincide each time; students who answer quickly can be asked to explain why a rectangle has exactly two lines of symmetry while a circle has infinitely many, tracing both arguments to the equal-distance property."
+            },
+            "NUM": null,
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 3,
+          "section_ref": "5.3",
+          "section_title": "How Many Circles?",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can prove that exactly one circle passes through three non-collinear points and construct the circumcircle of a triangle.",
+          "section_context": "Circumcircle uniqueness via perpendicular bisectors; circumcentre location for acute, obtuse, right triangles",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-4.3",
+            "competency_text": "Prove and apply properties of circles including chord, subtended-angle, and inscribed-polygon relationships."
+          },
+          "cognitive_demand": "Evaluation",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Prove that exactly one circle passes through three non-collinear points A, B, and C. Your proof should identify where the centre of any such circle must lie, explain why that location is unique, and explain why the argument fails when A, B, and C are collinear.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [
+            "States that any circle through A and B has its centre on the perpendicular bisector of AB, justified by the equal-distance (locus) property.",
+            "States that any circle through B and C has its centre on the perpendicular bisector of BC.",
+            "Argues that two distinct non-parallel lines meet in exactly one point, so the centre is unique — and therefore the circle is unique.",
+            "Explains the collinear failure: the perpendicular bisectors of AB and BC are parallel when A, B, C are collinear, so they do not meet, and no such centre exists."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": null,
+            "SCR": null,
+            "ECR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": "Students who find the full proof difficult may begin by drawing two circles through A and B and observing where their centres sit, then work toward the general argument; students who complete the proof quickly can be challenged to argue why the circumcentre lies inside an acute triangle but outside an obtuse one, using the same perpendicular-bisector logic."
+            },
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 3,
+          "section_ref": "5.3",
+          "section_title": "How Many Circles?",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can determine whether the circumcentre of a triangle lies inside, outside, or on the triangle based on its angle type.",
+          "section_context": "Circumcircle uniqueness via perpendicular bisectors; circumcentre location for acute, obtuse, right triangles",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-4.3",
+            "competency_text": "Prove and apply properties of circles including chord, subtended-angle, and inscribed-polygon relationships."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Triangle PQR has angle P = 110°. Where does the circumcentre of triangle PQR lie?",
+          "options": [
+            {
+              "label": "A",
+              "text": "At the midpoint of the longest side, because the perpendicular bisectors meet there.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "Inside the triangle, because the largest angle is less than 180°.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "On the hypotenuse, because one angle is obtuse.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "Outside the triangle, on the opposite side of the longest side from the obtuse angle.",
+              "is_correct": true
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "what_each_option_reveals": {
+                "B": "Applies the acute-triangle rule (circumcentre inside) without recognising that the presence of an obtuse angle changes the configuration; shows a recall error about the condition for inside placement.",
+                "C": "Conflates the right-triangle rule (circumcentre on the hypotenuse) with the obtuse-triangle case; the student may be recalling the right-angle condition without checking whether this triangle is right-angled.",
+                "A": "Confuses the circumcentre with the midpoint of the longest side; may be misremembering the construction as a midpoint rather than as an intersection of perpendicular bisectors."
+              },
+              "inclusivity": "Students who are unsure may draw a rough triangle with an obtuse angle and sketch the perpendicular bisectors to observe that they meet outside; students who answer quickly can be challenged to determine exactly on which side of the longest side the circumcentre falls and to explain why using the perpendicular-bisector argument."
+            },
+            "NUM": null,
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 4,
+          "section_ref": "5.4",
+          "section_title": "Chords and the Angles They Subtend",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can prove that equal chords subtend equal central angles and conversely, using triangle congruence.",
+          "section_context": "Equal chords ↔ equal central angles; SSS and SAS congruence of chord-centre triangles",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-4.3",
+            "competency_text": "Prove and apply properties of circles including chord, subtended-angle, and inscribed-polygon relationships."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "In a circle with centre O, two chords AB and CD have equal length. Prove that angle AOB = angle COD. State clearly the congruence criterion you use and identify all three pairs of equal sides.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [
+            "States OA = OC and OB = OD (both pairs are radii of the same circle).",
+            "States AB = CD (given).",
+            "Concludes triangles OAB and OCD are congruent by SSS.",
+            "Derives angle AOB = angle COD as corresponding angles of congruent triangles.",
+            "Uses correct notation and does not confuse SSS with SAS."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": null,
+            "SCR": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "inclusivity": "Students who are unsure where to start may be prompted to draw the two triangles OAB and OCD separately and list what they know about each side; students who complete the proof quickly can be asked to write the converse — if angle AOB = angle COD, prove AB = CD — and identify which congruence criterion applies in that direction (SAS)."
+            },
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 5,
+          "section_ref": "5.5",
+          "section_title": "Midpoints and Perpendicular Bisectors of Chords",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can prove that the line from the centre to the midpoint of a chord is perpendicular to the chord, and apply this to compute distances in circle configurations.",
+          "section_context": "Centre-to-midpoint line perpendicular to chord; perpendicular from centre bisects chord",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-4.3",
+            "competency_text": "Prove and apply properties of circles including chord, subtended-angle, and inscribed-polygon relationships."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "In a circle with centre O and radius 13 cm, two parallel chords PQ and RS lie on opposite sides of the centre. PQ has length 10 cm and RS has length 24 cm. Find the distance between the two chords.",
+          "options": [],
+          "expected_answer": "17 cm",
+          "method_one_line": "Drop perpendiculars from O to each chord (bisecting them by Theorem 5), apply the Baudhayana-Pythagoras theorem to find each perpendicular distance, then add the two distances since the chords are on opposite sides of O.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": "Students who are unsure may be prompted to draw the diagram and label the half-chord lengths (5 cm and 12 cm) before applying Pythagoras; students who finish quickly can be asked what the distance between the chords would be if they were on the same side of the centre, and whether the answer is larger or smaller — reinforcing the addition vs subtraction of the two perpendicular distances."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 6,
+          "section_ref": "5.6",
+          "section_title": "Distance of Chords from the Centre",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can prove that equal chords are equidistant from the centre and conversely, using RHS congruence.",
+          "section_context": "Equal chords ↔ equal distances from centre; RHS congruence proof; chord-distance formula",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-4.3",
+            "competency_text": "Prove and apply properties of circles including chord, subtended-angle, and inscribed-polygon relationships."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "In a circle with centre O, chord AB = chord GF. Let M be the midpoint of AB and N be the midpoint of GF, so that OM ⊥ AB and ON ⊥ GF. Prove that OM = ON. State the congruence criterion you use and identify the three pairs of equal or right-angle elements.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [
+            "States that angle OMA = angle ONG = 90° (perpendicular from centre to chord, Theorem 5).",
+            "States OA = OG (radii of the same circle).",
+            "States AM = GN (each equals half the equal chord lengths, by Theorem 5's bisection).",
+            "Concludes triangles OMA and ONG are congruent by RHS.",
+            "Derives OM = ON as corresponding sides of congruent triangles."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": null,
+            "SCR": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": "Students who are unsure may be prompted to list what they know about each of the three elements of the RHS criterion (right angle, hypotenuse, one side) before writing the proof; students who finish quickly can be asked to write the converse (OM = ON implies AB = GF) and identify whether the same or a different congruence criterion applies."
+            },
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 6,
+          "section_ref": "5.6",
+          "section_title": "Distance of Chords from the Centre",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can find the distance of a chord from the centre or the chord length given radius and the remaining measurement, using the formula derived from the Baudhayana-Pythagoras theorem.",
+          "section_context": "Equal chords ↔ equal distances from centre; RHS congruence proof; chord-distance formula",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-4.3",
+            "competency_text": "Prove and apply properties of circles including chord, subtended-angle, and inscribed-polygon relationships."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "In a circle with centre O, a chord of length 18 cm is drawn at a perpendicular distance d from the centre. The radius of the circle is 15 cm. Find d.",
+          "options": [],
+          "expected_answer": "d = 12 cm",
+          "method_one_line": "The perpendicular from O bisects the chord (Theorem 5), giving a right triangle with hypotenuse 15, one leg 9 (half the chord), and other leg d; apply Pythagoras: d² = 15² − 9² = 225 − 81 = 144, so d = 12.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "inclusivity": "Students who are unsure may be prompted to draw the right triangle with the radius as hypotenuse and half-chord as one leg before applying Pythagoras; students who finish quickly can verify by computing 2√(15² − 12²) = 2×9 = 18 to confirm the original chord length, building the habit of checking by substitution."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 7,
+          "section_ref": "5.6.1",
+          "section_title": "Which of the two unequal chords is farther from the centre?",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can prove that the longer of two unequal chords lies closer to the centre, using the Baudhayana-Pythagoras theorem and inequality reasoning.",
+          "section_context": "Longer chord closer to centre; inequality proof via Pythagoras; chord-length formula 2√(r²−d²)",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-4.3",
+            "competency_text": "Prove and apply properties of circles including chord, subtended-angle, and inscribed-polygon relationships."
+          },
+          "cognitive_demand": "Analysis",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "In a circle with centre O and radius r, chord AB has length greater than chord CD. Let d₁ be the perpendicular distance from O to AB and d₂ be the perpendicular distance from O to CD. Prove that d₁ < d₂. Show all algebraic steps and state explicitly where you use the fact that AB > CD.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [
+            "Applies Theorem 5 to write d₁² = r² − (AB/2)² and d₂² = r² − (CD/2)².",
+            "Uses AB > CD to derive (AB/2)² > (CD/2)².",
+            "Subtracts to get r² − (AB/2)² < r² − (CD/2)², i.e. d₁² < d₂².",
+            "Concludes d₁ < d₂ (since both are non-negative lengths).",
+            "States the theorem name or number at the point where the bisection is used."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": null,
+            "SCR": null,
+            "ECR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": "Students who find the inequality step difficult may be prompted to write out the Pythagoras expressions for both chords before comparing them; students who complete the proof quickly can be asked to describe the two extreme cases — when one chord becomes a diameter and when it shrinks to a point — and state what d₁ becomes in each case, connecting the general proof to its boundary behaviour."
+            },
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 8,
+          "section_ref": "5.7",
+          "section_title": "Angles Subtended by an Arc",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can define minor arc, major arc, and the angle subtended by an arc at the centre, and distinguish the central angles corresponding to each arc.",
+          "section_context": "Minor arc, major arc; central angle swept by minor vs major arc; complementary angle to 360°",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-4.3",
+            "competency_text": "Prove and apply properties of circles including chord, subtended-angle, and inscribed-polygon relationships."
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Points A and B lie on a circle with centre O. The angle subtended by the minor arc AB at the centre is 110°. What is the angle subtended by the major arc AB at the centre?",
+          "options": [
+            {
+              "label": "A",
+              "text": "70°",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "110°",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "180°",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "250°",
+              "is_correct": true
+            }
+          ],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "what_each_option_reveals": {
+                "A": "Subtracts 110° from 180° rather than 360°, treating the two central angles as supplementary rather than as summing to a full revolution; shows a confusion between supplementary angles and the full-circle relationship.",
+                "B": "States the same angle for both arcs, not recognising that major and minor arc central angles are different (they are only equal when both are 180°, i.e. when the chord is a diameter).",
+                "C": "Recalls the 180° figure associated with a diameter or semicircle and applies it here without checking whether AB is a diameter; shows a context-independent retrieval error."
+              },
+              "inclusivity": "Students who are unsure may be prompted to sketch the circle, mark the 110° sector, and shade the remaining sector before computing; students who answer quickly can be asked what chord length relationship holds when the minor and major arc central angles are equal, and justify their answer using the definition."
+            },
+            "NUM": null,
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 9,
+          "section_ref": "5.7.1",
+          "section_title": "Angle subtended by an arc at a point on the circle outside the arc",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can prove that the angle subtended by an arc at the centre is double the angle it subtends at any point on the circle outside the arc, and derive the corollary that the angle in a semicircle is 90°.",
+          "section_context": "Central angle double inscribed angle; two-case isosceles-triangle proof; semicircle corollary; equal inscribed angles on same arc",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-7.3",
+            "competency_text": "Establish results about circles using axiomatic deductive reasoning, including proofs involving chord, subtended-angle, and inscribed-polygon properties."
+          },
+          "cognitive_demand": "Evaluation",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Prove that the angle subtended by an arc AB at the centre O of a circle is double the angle subtended by the same arc at a point P on the circle outside the arc. Your proof should handle the case where O lies inside angle APB. Then use this result to prove the corollary: if AB is a diameter, the angle APB = 90° for any point P on the circle not on AB.",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [
+            "Joins P to O and extends to a point Q on the circle, splitting angle APB into sub-angles at P.",
+            "Recognises triangles OPA and OPB are isosceles (OA = OP = OB as radii) and identifies the base angles in each.",
+            "Uses the exterior-angle property of triangles to show angle AOQ = 2·angle APQ and angle BOQ = 2·angle BPQ.",
+            "Adds to conclude angle AOB = 2·angle APB.",
+            "For the corollary: sets AB as diameter so angle AOB = 180°, then uses angle AOB = 2·angle APB to get angle APB = 90°.",
+            "States clearly which step uses the equal-radius property and which uses the exterior-angle theorem."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": null,
+            "SCR": null,
+            "ECR": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "inclusivity": "Students who struggle with the proof may be prompted to draw the auxiliary line PO extended to Q and label all angles before reasoning; students who complete the proof quickly can be asked to sketch the second case (O outside angle APB) and identify how the exterior-angle argument changes, noting that subtraction rather than addition gives the same conclusion."
+            },
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 10,
+          "section_ref": "5.8",
+          "section_title": "Concyclicity of Points",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can prove that equal inscribed angles on the same side imply concyclicity (Theorem 10), and that the opposite angles of a cyclic quadrilateral sum to 180° (Theorem 11), using the central-angle relationship.",
+          "section_context": "Concyclicity proof by contradiction; cyclic quadrilateral; opposite angles sum to 180°; Theorem 12 converse",
+          "question_type": "NUM",
+          "competency": {
+            "c_code": "C-7.3",
+            "competency_text": "Establish results about circles using axiomatic deductive reasoning, including proofs involving chord, subtended-angle, and inscribed-polygon properties."
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "Quadrilateral PQRS is inscribed in a circle. Angle P = (3x − 5)° and angle R = (x + 15)°. Find x, and then find the measures of angle P and angle R.",
+          "options": [],
+          "expected_answer": "x = 42.5; angle P = 122.5°; angle R = 57.5°",
+          "method_one_line": "Opposite angles of a cyclic quadrilateral sum to 180° (Theorem 11), so (3x − 5) + (x + 15) = 180, giving 4x + 10 = 180, x = 42.5, angle P = 122.5°, angle R = 57.5°.",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "inclusivity": "Students who are unsure of the setup may be prompted to write 'opposite angles of a cyclic quadrilateral sum to 180°' before forming the equation; students who finish quickly can be asked to find angle Q and angle S using the same theorem, checking that all four angles sum to 360°."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 11,
+          "section_ref": "synthesis",
+          "section_title": "synthesis",
+          "total_sections": 10,
+          "implied_lo_assessed": "Students can connect and apply the chapter's circle theorems — chord-distance relationships, the central-angle and inscribed-angle results, and cyclic-quadrilateral properties — in a multi-step problem requiring selection among theorems.",
+          "section_context": "Multi-theorem synthesis: chord distance, central angle, inscribed angle, cyclic quadrilateral",
+          "question_type": "OPEN_TASK",
+          "competency": {
+            "c_code": "C-4.3",
+            "competency_text": "Prove and apply properties of circles including chord, subtended-angle, and inscribed-polygon relationships."
+          },
+          "cognitive_demand": "Analysis",
+          "visual_stimulus": null,
+          "graph_paper": false,
+          "question_text": "",
+          "options": [],
+          "expected_answer": "",
+          "method_one_line": "",
+          "expected_elements": [],
+          "look_for": [],
+          "task": "A circle with centre O has radius 10 cm. A chord AB of length 12 cm is drawn. Points C and D lie on the major arc AB such that angle ACB = angle ADB.\n\n(a) Find the perpendicular distance from O to chord AB. Show your working and state which theorem you use to bisect the chord.\n\n(b) Find the central angle AOB. State which theorem connects chord length and central angle, and show your calculation.\n\n(c) Find the angle ACB. State which theorem you use.\n\n(d) Since angle ACB = angle ADB and both C and D lie on the same side of AB, what can you conclude about the four points A, B, C, D? Name the theorem that justifies your conclusion.\n\n(e) Suppose quadrilateral ACBD is cyclic. One of its angles at C is the angle ACB you found in part (c). Find the opposite angle ADB. Then find the sum of angles ACB and ADB and comment on whether your answer is consistent with Theorem 11.",
+          "scaffold": "For part (a): drop a perpendicular from O to AB and label its foot M. Use the theorem that guarantees M is the midpoint of AB, then apply the Baudhayana-Pythagoras theorem in triangle OMA.\nFor part (b): use the triangle OAB with OM as the altitude; you know all three sides and can find the angle at O directly from the right triangle.\nFor part (c): recall the result that relates the central angle to the inscribed angle for the same arc.\nFor parts (d) and (e): connect the equal-inscribed-angle result to the concyclicity theorem, and then apply the opposite-angle property of a cyclic quadrilateral.",
+          "format_of_output": [
+            "Numerical answer with working for (a) and (b)",
+            "Numerical answer with theorem name for (c)",
+            "Statement with theorem name for (d)",
+            "Numerical answer and comment for (e)"
+          ],
+          "verified": true,
+          "guide": {
+            "MCQ": null,
+            "NUM": null,
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "format_type": "Model-and-solve",
+              "format_rationale": "The task requires students to set up the geometric configuration from given data and then apply a sequence of theorems to compute quantities and justify conclusions — the defining feature of model-and-solve at this stage.",
+              "what_this_demonstrates": "Students demonstrate the ability to move through the chapter's theorem chain — from chord-bisection through central angle, inscribed angle, concyclicity, and cyclic quadrilateral — selecting the appropriate theorem at each step and justifying it by name, rather than treating each result in isolation.",
+              "reading_the_scaffold": "The scaffold breaks the problem into five sequential parts so that a student who cannot link all steps can still demonstrate competence on individual theorems. Part (a) isolates Theorem 5 and Pythagoras; part (b) isolates Theorem 2; part (c) isolates Theorem 9; part (d) isolates Theorem 10; part (e) checks Theorem 11. A student who completes (a)–(c) but not (d)–(e) has demonstrated the chord and angle results but not the concyclicity and cyclic-quadrilateral results.",
+              "strong_vs_weak_markers": "Strong response: correctly names the theorem invoked at each step, shows working in parts (a) and (b) explicitly using the right triangle and Pythagoras, arrives at angle ACB = 36.87° ≈ 37° (or exact arccos value), states Theorem 10 in part (d) and connects it to the equal-inscribed-angle condition, and correctly notes in part (e) that angle ACB + angle ADB ≈ 180° only if C and D are opposite vertices — which requires the student to re-read the quadrilateral's structure. Weak response: applies the formula numerically without naming any theorem, or conflates the central angle with the inscribed angle in part (c), or in part (e) sets angle ACB = angle ADB rather than recognising opposite angles.",
+              "inclusivity": "Students who find multi-step problems difficult may work through parts (a)–(c) using just the right triangle and the inscribed-angle theorem without attempting (d)–(e); students who complete all parts quickly can be asked to generalise: for a chord of length 2r·sin(θ) in a circle of radius r, what is the inscribed angle? Connecting the formula to the general result."
+            }
+          }
+        }
+      ]
+    },
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

@@ -1,0 +1,759 @@
+{
+  "filename": "ch_10_canonical_p07.json",
+  "saved_at": "2026-08-19T13:38:18",
+  "plan_status": "canonical",
+  "chapter_number": 10,
+  "chapter_title": "Operations with Integers",
+  "grade": "Grade VII",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 40,
+      "count": 7
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 7 periods = 280 minutes\nTotal: 7 periods · 4h 40min",
+  "genon_canonical": {
+    "generated": "2026-08-19",
+    "schedule": "7x40",
+    "constitution": "LP v3.9 / assessment v3.5",
+    "source": "generate_canonical.py one mathematics vii 10",
+    "ledger_ts": "20260819_130541_math_vii_10_p07",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-19T16:43:26",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 3,
+            "field": "teacher_notes",
+            "rule": "register/forward",
+            "removed": "before the next unit",
+            "replaced_with": "",
+            "note": "forward reference — the self-study pointer is useful whenever it is taken | survives: …Example 1, section 10.2 p.35 on exam marking is a useful self-study pointer for students who want to see the rule applied numerically.…"
+          }
+        ],
+        "ban_hits_before": 1,
+        "ban_hits_after": 0
+      }
+    ],
+    "academic_year": "2026-27"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 10.1",
+              "title": "A Quick Recap of Integers"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Sum-and-Difference Puzzle: Rediscovering Integer Pairs",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "section 10.1",
+              "book_ref": "Figure it Out, section 10.1 p.25",
+              "description": "Find pairs of numbers from their sums and differences: (a) Sum 27, Diff 9; (b) Sum 4, Diff 12; (c) Sum 0, Diff 10; (d) Sum 0, Diff -10; (e) Sum -7, Diff -1; (f) Sum -7, Diff -13. Then play the sum-and-difference guessing game with a partner."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Pose Rakesh's puzzle orally: find two numbers whose sum is 25 and difference is 11. Students guess freely and record attempts in a four-column table (first number, second number, sum, difference), narrowing in on 18 and 7 by systematic guess-and-check."
+            },
+            {
+              "minutes": "8–18",
+              "activity": "Extend the puzzle: what if the difference is -11 instead? Students observe that swapping the pair (7 and 18) from the first case gives sum 25 and difference -11, then articulate why swapping flips the sign of the difference."
+            },
+            {
+              "minutes": "18–32",
+              "activity": "Figure it Out, section 10.1 p.25 (\"Find pairs of numbers from their sums and differences: (a) Sum 27, Diff 9….\") — students work through all six parts in pairs, tabulating each case and noting which parts require negative values in the pair."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Pairs perform the sum-and-difference guessing game as a short partner activity: one student thinks of two integers, announces their sum and difference, and the other finds the pair using the table method. Two or three pairs share one surprising case with the class."
+            }
+          ],
+          "teacher_notes": "Watch for students who try to solve the puzzle by inspection rather than building the four-column table; the table is the method the chapter uses and it generalises to negative cases. A common error is computing the difference as |a - b| rather than a - b (signed), so that cases (d)–(f) are mis-handled. Example 2 of the mining-shaft model (Example 2, section 10.2 p.36) can be kept in mind as an upcoming context where signed differences reappear.",
+          "materials": [
+            "Squared or plain paper for four-column tables",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 10.1",
+              "title": "A Quick Recap of Integers"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Carrom-Coin Strikes: Modelling Signed Movement on a Number Line",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-2",
+              "type": "exercise",
+              "source_section": "section 10.1",
+              "book_ref": "section 10.1 p.26–27",
+              "description": "Using the carrom-coin model P = a + b: (1) if the first movement is -4 and the final position is 5, find the second movement; (2) for successive movements 1, -2, 3, -4, …, -10, find the final position of the coin."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Draw a number line on the board from -10 to +10. Introduce the carrom-coin model: a rightward strike of 5 followed by a leftward strike of 7 gives 5 + (-7) = -2. Students draw two or three examples of their own on number lines in their notebooks, labelling each arrow with its signed value."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Discuss the token model for subtraction: computing (+7) - (+18) by adding eleven zero pairs and removing 18 positives, leaving -11. Students verify 4 - (-12) = 4 + 12 = 16 using the same reasoning, writing both the token argument and the number-line arrow in their notebooks."
+            },
+            {
+              "minutes": "22–36",
+              "activity": "section 10.1 p.26–27 (\"Using the carrom-coin model P = a + b: (1) if the first movement is -4 and the final position is 5….\") — students solve both problems. For part (2), they add the alternating series 1, -2, 3, -4, …, -10 term by term, recording each intermediate position, and identify the final position of the coin."
+            },
+            {
+              "minutes": "36–40",
+              "activity": "Whole-class discussion: what does the sign of the final position tell us about the coin's location relative to zero? Students state the result of the series and compare whose intermediate positions differed and why."
+            }
+          ],
+          "teacher_notes": "Having established that subtracting a number equals adding its additive inverse, ensure students write both the token argument and the arrow diagram for at least one subtraction before moving to the series problem. A common error in the alternating series is miscounting the number of terms or pairing them incorrectly; prompt students to list all ten values first and then pair (1 + (-2)), (3 + (-4)), etc. The sum-and-difference table method from the earlier puzzle is a natural point of contrast: signed sums here model direction, not just magnitude.",
+          "materials": [
+            "Rulers for drawing number lines",
+            "Coloured pens (two colours for opposing directions)"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 10.2",
+              "title": "Multiplication of Integers"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Token Bags and Times-Tables: Why Like Signs Give a Positive Product",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q1, section 10.2 p.31",
+              "description": "Using the token interpretation, find the values of (a) 3 × (-2); (b) (-5) × (-2); (c) (-4) × (-1); (d) (-7) × 3."
+            },
+            {
+              "id": "E-5",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q3, section 10.2 p.31",
+              "description": "Try to frame a simple rule to multiply two integers, and confirm that different token sets all representing -2 give the same product when placed into the bag 4 times; check the same for 5 × 4 with different token sets for 4."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Extend the token model to multiplication: 4 × 2 means placing two green tokens into a bag four times (result: 8); 4 × (-2) places two red tokens four times (result: -8). Students act this out at their desks with small slips of paper labelled +1 and -1, recording each case in a table."
+            },
+            {
+              "minutes": "12–22",
+              "activity": "Introduce the negative-multiplier cases: (-4) × 2 removes four sets of two positives from a bag of zero pairs, leaving -8; (-4) × (-2) removes negatives, leaving +8. Students extend their table to all four cases — (+)(+), (+)(-), (-)(+), (-)(-) — and write the sign rule they observe in their own words."
+            },
+            {
+              "minutes": "22–32",
+              "activity": "Confirm the pattern using the 'times 3' multiplication table, extending it below zero: 3×3=9, 3×2=6, 3×1=3, 3×0=0, 3×(-1)=?, 3×(-2)=?. Students continue the pattern and then repeat for (-3)×n, observing that each unit decrease in the multiplier changes the product by +3 when the multiplicand is -3. Students articulate: “like signs give a positive product; unlike signs give a negative product.”"
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Figure it Out Q1, section 10.2 p.31 (\"Using the token interpretation, find the values of (a) 3 × (-2)….\") and Figure it Out Q3, section 10.2 p.31 (\"Try to frame a simple rule to multiply two integers….\") — students complete both exercises and share the rule they framed."
+            }
+          ],
+          "teacher_notes": "Watch for the common error of students applying the sign rule to addition (e.g., believing -3 + (-2) = +6 because 'like signs give positive'); emphasise that the sign rule applies only to multiplication. The chapter also presents 1 × a = a and -1 × a = -a as important special cases; ask students to verify these with the token model before the unit closes. Example 1 (Example 1, section 10.2 p.35) on exam marking is a useful self-study pointer for students who want to see the rule applied numerically.",
+          "materials": [
+            "Small paper slips labelled +1 and -1 (at least 20 per student)",
+            "Paper bags or envelopes"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 10.2",
+              "title": "Multiplication of Integers"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Brahmagupta's Rules and the Commutativity Argument",
+          "pedagogical_method": "Deductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q2, section 10.2 p.31",
+              "description": "Given 123 × 456 = 56088, without calculating find (a) (-123) × 456; (b) (-123) × (-456); (c) 123 × (-456)."
+            },
+            {
+              "id": "WE-1",
+              "type": "worked_example",
+              "source_section": "section 10.2",
+              "book_ref": "Example 1, section 10.2 p.35",
+              "description": "An exam has 50 multiple-choice questions with +5 for each correct and -2 for each wrong answer. Mala has 30 correct and 20 wrong: 30 × 5 + 20 × (-2) = 150 + (-40) = 110 marks."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Read aloud Brahmagupta's dhana-ṛṇa rules from the chapter: the product of two fortunes is fortune; of two debts is fortune; of a fortune and a debt is debt. Students restate each rule using the vocabulary of positive and negative integers, then check all four sign combinations against the rules."
+            },
+            {
+              "minutes": "10–20",
+              "activity": "Figure it Out Q2, section 10.2 p.31 (\"Given 123 × 456 = 56088, without calculating find (a) (-123) × 456….\") — students apply the sign rules without computing, writing only the sign and the magnitude 56088. Pairs compare reasoning and agree on a one-sentence justification for each part."
+            },
+            {
+              "minutes": "20–32",
+              "activity": "Establish commutativity: separate magnitude and sign for a × b, argue that magnitude |a| × |b| = |b| × |a| (whole-number commutativity) and that the sign depends only on the pair of signs, which is symmetric. Students write the argument in their own words. Then walk through Example 1, section 10.2 p.35 (\"An exam has 50 multiple-choice questions with +5 for each correct….\") as a deductive application."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Students construct two of their own integer multiplication statements using the sign rules and write one-sentence justifications, then swap notebooks with a partner to verify each other's sign reasoning."
+            }
+          ],
+          "teacher_notes": "A frequent confusion here is treating commutativity as obvious without argument; encourage students to write out the magnitude step and the sign step separately as the chapter does, rather than relying on intuition. Watch also for students who believe commutativity implies associativity; the unit covers commutativity and the historical context, so if associativity arises in discussion, acknowledge it and note it is examined more carefully with the distributive property in the upcoming content. Example 2 (Example 2, section 10.2 p.36) on the mining-shaft elevator is a good independent reading task for students who finish quickly.",
+          "materials": [
+            "Chapter text (for Brahmagupta passage)",
+            "Notebooks"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 10.2",
+              "title": "Multiplication of Integers"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Division Sign Rules and Real-World Integer Calculations",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-7",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q1, section 10.2 p.38",
+              "description": "Find the values of (a) 14 × (-15); (b) -16 × (-5); (c) 36 ÷ (-18); (d) (-46) ÷ (-23)."
+            },
+            {
+              "id": "E-8",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q2, section 10.2 p.38",
+              "description": "A freezing process lowers room temperature from 32°C at 5°C per hour. Find the room temperature 10 hours after the process begins."
+            },
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q3, section 10.2 p.38",
+              "description": "A cement company earns ₹8 profit per white-cement bag and ₹5 loss per grey-cement bag. (a) Find profit or loss on 3,000 white and 5,000 grey bags. (b) If 6,400 grey bags are sold, find how many white bags give neither profit nor loss."
+            },
+            {
+              "id": "E-10",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q4, section 10.2 p.38",
+              "description": "Replace the blank with an integer to make a true statement: (a) (-3) × __ = 27; (b) 5 × __ = -35; (c) __ × (-8) = -56; (d) __ × (-12) = 132; (e) __ ÷ (-8) = 7; (f) __ ÷ 12 = -11."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Derive division sign rules by converting each division to a multiplication question: '36 ÷ (-18) = ? means ? × (-18) = 36.' Students work out the sign of the unknown in each of the three cases a ÷ (-b), (-a) ÷ b, and (-a) ÷ (-b), writing the three rules in their notebooks."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Figure it Out Q1, section 10.2 p.38 (\"Find the values of (a) 14 × (-15); (b) -16 × (-5); (c) 36 ÷ (-18); (d) (-46) ÷ (-23).\") and Figure it Out Q4, section 10.2 p.38 (\"Replace the blank with an integer….\") — students work independently, then compare with a neighbour before a quick class check."
+            },
+            {
+              "minutes": "22–34",
+              "activity": "Figure it Out Q2, section 10.2 p.38 (\"A freezing process lowers room temperature from 32°C at 5°C per hour….\") and Figure it Out Q3, section 10.2 p.38 (\"A cement company earns ₹8 profit….\") — students set up each as an integer multiplication expression, compute the result, and write a sentence interpreting the sign of the answer in context."
+            },
+            {
+              "minutes": "34–40",
+              "activity": "Pairs share their interpretation sentences for the freezing and cement problems. The class decides whether the sign of each answer represents profit or loss, above or below zero, and writes a generalisation: 'a negative product in this context means…'"
+            }
+          ],
+          "teacher_notes": "Watch for students who apply division sign rules correctly but misread 'loss per bag' as a positive quantity in the cement problem; the chapter models profit as positive and loss as negative, so ₹5 loss per grey bag must be entered as -5. A common arithmetic error in the freezing problem is computing 32 - 5 × 10 = 27 × 10 rather than 32 + (-5) × 10 = 32 - 50 = -18; encourage students to write the full signed expression first. Example 2 (Example 2, section 10.2 p.36) on the mining-shaft elevator models the same signed-rate structure and can be pointed to for students who need an additional worked reference.",
+          "materials": [
+            "Notebooks",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 10.2",
+              "title": "Multiplication of Integers"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Associativity, Distributivity, and the Sign of a Long Product",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-11",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q1, section 10.2 p.42",
+              "description": "Find the values of (a) (-5) × (18 + (-3)); (b) (-7) × 4 × (-1); (c) (-2) × (-1) × (-5) × (-3)."
+            },
+            {
+              "id": "E-12",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q2, section 10.2 p.42",
+              "description": "Find the values of (a) (-27) ÷ 9; (b) 84 ÷ (-4); (c) (-56) ÷ (-2)."
+            },
+            {
+              "id": "E-14",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q4, section 10.2 p.42",
+              "description": "Given 47 - 56 + 14 - 8 + 2 - 8 + 5 = -4, find the value of -47 + 56 - 14 + 8 - 2 + 8 - 5 without calculating the full expression."
+            },
+            {
+              "id": "E-13",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q3, section 10.2 p.42",
+              "description": "Find the integer whose product with (-1) is (a) 27; (b) -31; (c) -1; (d) 1; (e) 0."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Verify associativity with a concrete example from the chapter: evaluate 25 × (-6) × 12 in at least two groupings and confirm the product is the same. Students then count the negative factors in a product of several integers and state the rule: an even count of negative factors gives a positive product; an odd count gives a negative product."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Figure it Out Q1, section 10.2 p.42 (\"Find the values of (a) (-5) × (18 + (-3)); (b) (-7) × 4 × (-1); (c) (-2) × (-1) × (-5) × (-3).\") and Figure it Out Q2, section 10.2 p.42 (\"Find the values of (a) (-27) ÷ 9….\") — students work independently, applying the distributive property for part (a) and the division rules for Q2."
+            },
+            {
+              "minutes": "22–34",
+              "activity": "Figure it Out Q3, section 10.2 p.42 (\"Find the integer whose product with (-1) is….\") to consolidate -1 × a = -a, then Figure it Out Q4, section 10.2 p.42 (\"Given 47 - 56 + 14 - 8 + 2 - 8 + 5 = -4, find the value of -47 + 56 - 14 + 8 - 2 + 8 - 5….\") — students use the property -1 × (given expression) to find the answer without recalculating."
+            },
+            {
+              "minutes": "34–40",
+              "activity": "Brief class debrief: two students explain their strategies for Q4 — one who multiplied through by -1, one who re-evaluated. The class decides which method is more efficient and writes a one-sentence reason in their notebooks."
+            }
+          ],
+          "teacher_notes": "The most common error in multi-factor products is counting negative signs rather than counting negative factors — remind students to isolate each factor's sign before multiplying. For the distributive property in Q1(a), students who expand (-5) × 18 + (-5) × (-3) may make a sign error on the second term; a token-arrangement diagram can help. Figure it Out Q11, section 10.2 p.44 offers a self-study challenge on combined multiplication and division for students who want to push further.",
+          "materials": [
+            "Notebooks",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 10.2",
+              "title": "Multiplication of Integers"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Puzzles, Patterns and Pibs: Open-Ended Integer Challenges",
+          "pedagogical_method": "Play-way",
+          "textbook_items_in_class": [
+            {
+              "id": "E-16",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q6, section 10.2 p.43",
+              "description": "In a test with +4 for correct and -2 for incorrect answers: (a) Anita answered all questions and scored 40 with 15 correct — find her incorrect answers and the number of questions. (b) Anil scored -10 with 5 correct — find his incorrect answers and whether he left any unanswered."
+            },
+            {
+              "id": "E-20",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q10, section 10.2 p.43–44",
+              "description": "An alien currency 'pibs' has only +13 and -9 coins. Show +85 is possible (ten +13 and five -9), then make (a) +20; (b) +40; (c) -50; (d) +8; (e) +10; (f) -2; (g) +1; and (h) decide whether 1568 pibs is possible."
+            },
+            {
+              "id": "E-25",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q15, section 10.2 p.44",
+              "description": "Use the numbers 3, -2, 5, -6 exactly once and the operations +, -, × exactly once (with brackets as needed) to write an expression giving (a) the maximum possible result; (b) the minimum possible result."
+            },
+            {
+              "id": "E-26",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q16, section 10.2 p.44",
+              "description": "Fill in the blanks in at least 5 different ways with integers: (a) __ + __ × __ = -36; (b) (__ - __) × __ = 12; (c) (__ - (__ - __)) = -1."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Figure it Out Q6, section 10.2 p.43 (\"In a test with +4 for correct and -2 for incorrect answers: (a) Anita answered all questions and scored 40….\") — small groups set up the signed-multiplication equations, solve for the unknowns in both parts, and check their answers by substituting back into the scoring formula."
+            },
+            {
+              "minutes": "12–24",
+              "activity": "Figure it Out Q10, section 10.2 p.43–44 (\"An alien currency 'pibs' has only +13 and -9 coins….\") — students work in pairs on at least four of the eight sub-parts, using trial-and-error guided by the sign rules to find combinations of +13 and -9 coins, and decide on part (h) by checking divisibility or parity."
+            },
+            {
+              "minutes": "24–34",
+              "activity": "Figure it Out Q15, section 10.2 p.44 (\"Use the numbers 3, -2, 5, -6 exactly once….\") and Figure it Out Q16, section 10.2 p.44 (\"Fill in the blanks in at least 5 different ways….\") — students tackle these open-ended challenges individually, aiming for maximum and minimum in Q15 and at least five distinct solutions in Q16."
+            },
+            {
+              "minutes": "34–40",
+              "activity": "Gallery share: three students write their maximum expression (Q15a), three their minimum (Q15b), and two share an unexpected Q16 solution on the board. The class votes on which Q16 solution is most inventive, and the teacher draws out the underlying principle — integer multiplication and addition interleave freely — to close the chapter's content arc."
+            }
+          ],
+          "teacher_notes": "Watch for students who treat the pibs problem as purely arithmetic and miss the combinatorial freedom; prompt them to try large numbers of one coin type first and then adjust the other. In Q15, a common error is failing to consider all bracket placements — encourage students to draw an expression tree rather than write left-to-right. Figure it Out Q9, section 10.2 p.43 (consecutive integers with a given product) makes a good extension for students who finish early.",
+          "materials": [
+            "Notebooks",
+            "Board and chalk/markers for gallery share"
+          ]
+        }
+      ]
+    },
+    "period_schedule": {
+      "duration_minutes": 40,
+      "count": 7,
+      "total_minutes": 280
+    },
+    "coverage_handoff": {
+      "section_a": {
+        "goal_cluster": [
+          "recall"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 10.1",
+            "section_title": "A Quick Recap of Integers",
+            "goal": "recall",
+            "anchor_id": "E-1",
+            "anchor_book_ref": "Figure it Out, section 10.1 p.25",
+            "anchor_description": "Find pairs of numbers from their sums and differences: (a) Sum 27, Diff 9; (b) Sum 4, Diff 12; (c) Sum 0, Diff 10; (d) Sum 0, Diff -10; (e) Sum -7, Diff -1; (f) Sum -7, Diff -13. Then play the sum-and-difference guessing game with a partner."
+          }
+        ]
+      },
+      "section_b": {
+        "goal_cluster": [
+          "reason"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 10.2",
+            "section_title": "Multiplication of Integers",
+            "goal": "reason",
+            "anchor_id": "E-3",
+            "anchor_book_ref": "Figure it Out Q1, section 10.2 p.31",
+            "anchor_description": "Using the token interpretation, find the values of (a) 3 × (-2); (b) (-5) × (-2); (c) (-4) × (-1); (d) (-7) × 3."
+          },
+          {
+            "section_ref": "section 10.2",
+            "section_title": "Multiplication of Integers",
+            "goal": "reason",
+            "anchor_id": "E-4",
+            "anchor_book_ref": "Figure it Out Q2, section 10.2 p.31",
+            "anchor_description": "Given 123 × 456 = 56088, without calculating find (a) (-123) × 456; (b) (-123) × (-456); (c) 123 × (-456)."
+          }
+        ]
+      },
+      "section_c": {
+        "goal_cluster": [
+          "apply"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 10.1",
+            "section_title": "A Quick Recap of Integers",
+            "goal": "apply",
+            "anchor_id": "E-2",
+            "anchor_book_ref": "section 10.1 p.26–27",
+            "anchor_description": "Using the carrom-coin model P = a + b: (1) if the first movement is -4 and the final position is 5, find the second movement; (2) for successive movements 1, -2, 3, -4, …, -10, find the final position of the coin."
+          },
+          {
+            "section_ref": "section 10.2",
+            "section_title": "Multiplication of Integers",
+            "goal": "apply",
+            "anchor_id": "E-7",
+            "anchor_book_ref": "Figure it Out Q1, section 10.2 p.38",
+            "anchor_description": "Find the values of (a) 14 × (-15); (b) -16 × (-5); (c) 36 ÷ (-18); (d) (-46) ÷ (-23)."
+          },
+          {
+            "section_ref": "section 10.2",
+            "section_title": "Multiplication of Integers",
+            "goal": "apply",
+            "anchor_id": "E-11",
+            "anchor_book_ref": "Figure it Out Q1, section 10.2 p.42",
+            "anchor_description": "Find the values of (a) (-5) × (18 + (-3)); (b) (-7) × 4 × (-1); (c) (-2) × (-1) × (-5) × (-3)."
+          },
+          {
+            "section_ref": "section 10.2",
+            "section_title": "Multiplication of Integers",
+            "goal": "apply",
+            "anchor_id": "E-16",
+            "anchor_book_ref": "Figure it Out Q6, section 10.2 p.43",
+            "anchor_description": "In a test with +4 for correct and -2 for incorrect answers: (a) Anita answered all questions and scored 40 with 15 correct — find her incorrect answers and the number of questions. (b) Anil scored -10 with 5 correct — find his incorrect answers and whether he left any unanswered."
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "section_code": "A",
+        "section_title": "Recall and Apply",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-A-1",
+            "section_ref": "section 10.1",
+            "section_title": "A Quick Recap of Integers",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "Two integers have a sum of 0 and a difference of 10. Which of the following is the correct pair?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "-10 and 0",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "5 and 5",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "5 and -5",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "10 and 0",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "5 and -5. Their sum is 5 + (-5) = 0 and their difference is 5 - (-5) = 10.",
+              "method_one_line": "Use systematic guess-and-check with a four-column table (first number, second number, sum, difference) to identify the pair whose sum is 0 and difference is 10.",
+              "what_each_option_reveals": {
+                "B": "The student found a pair with the correct magnitude but did not account for the need for opposite signs to achieve a sum of zero.",
+                "D": "The student identified one possible difference but ignored the constraint that the sum must be zero, not 10.",
+                "A": "The student confused which number is larger and reversed the sign of the difference, giving a difference of -10 instead of 10."
+              },
+              "inclusivity": {
+                "support": "Let the student build the four-column table from the chapter for two or three guesses until the sum and difference both match.",
+                "challenge": "Ask the student to state in their own words why swapping the pair changes the sign of the difference but not the sum."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out, section 10.1 p.25",
+              "description": "Find pairs of numbers from their sums and differences: (a) Sum 27, Diff 9; (b) Sum 4, Diff 12; (c) Sum 0, Diff 10; (d) Sum 0, Diff -10; (e) Sum -7, Diff -1; (f) Sum -7, Diff -13. Then play the sum-and-difference guessing game with a partner."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "B",
+        "section_title": "Reason and Explain",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-B-1",
+            "section_ref": "section 10.2",
+            "section_title": "Multiplication of Integers",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "Using the token model, explain why (-3) × (-4) gives a positive result. What happens to the tokens in the bag, and what sign rule does this illustrate?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "When the multiplier is -3, tokens are removed from the bag rather than placed. Removing 3 sets of 4 red tokens (each worth -1) eliminates -12 worth of negative tokens, leaving +12. This illustrates the rule that the product of two negative integers is positive (like signs give a positive product).",
+              "method_one_line": "Apply the token-bag model: a negative multiplier means removing tokens; removing negative tokens leaves a positive result.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Encourage the student to act out the removal with paper slips labelled -1 before writing the explanation.",
+                "challenge": "Ask the student to explain what would change if the multiplier were -3 but the multiplicand were +4 instead, and what sign rule that illustrates."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 10.2 p.31",
+              "description": "Using the token interpretation, find the values of (a) 3 × (-2); (b) (-5) × (-2); (c) (-4) × (-1); (d) (-7) × 3."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-2",
+            "section_ref": "section 10.2",
+            "section_title": "Multiplication of Integers",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "Without performing any multiplication, write the sign and value of (-123) × (-456), given that 123 × 456 = 56088. Explain in one sentence why the sign is what it is, using the sign rules for multiplication of integers.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "(-123) × (-456) = +56088. The sign is positive because both factors are negative (like signs give a positive product), and the magnitude is unchanged at 56088.",
+              "method_one_line": "Separate magnitude from sign: the magnitude is 123 × 456 = 56088 (given), and since both factors are negative the product is positive by the like-signs rule.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Ask the student to first state the sign rule for two negative factors, then attach the magnitude from the given fact.",
+                "challenge": "Ask the student to extend their reasoning: if one more negative factor, say (-1), were multiplied in, what would happen to the sign, and why?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q2, section 10.2 p.31",
+              "description": "Given 123 × 456 = 56088, without calculating find (a) (-123) × 456; (b) (-123) × (-456); (c) 123 × (-456)."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "C",
+        "section_title": "Apply in Context",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-C-1",
+            "section_ref": "section 10.1",
+            "section_title": "A Quick Recap of Integers",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A carrom coin starts at 0. It is struck rightward 3 units, then leftward 7 units, then rightward 2 units, then leftward 1 unit. Using the model P = a + b + c + d (where rightward movements are positive and leftward movements are negative), find the final position of the coin.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "P = 3 + (-7) + 2 + (-1) = 3 - 7 + 2 - 1 = -3. The coin is 3 units to the left of zero.",
+              "method_one_line": "Assign positive values to rightward strikes and negative values to leftward strikes, then add all signed values in sequence.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student draw a number line and mark each movement as an arrow, computing the running total after each arrow.",
+                "challenge": "Ask the student to find a different sequence of four strikes (at least two in each direction) that also lands at -3."
+              }
+            },
+            "exercise": {
+              "book_ref": "section 10.1 p.26–27",
+              "description": "Using the carrom-coin model P = a + b: (1) if the first movement is -4 and the final position is 5, find the second movement; (2) for successive movements 1, -2, 3, -4, …, -10, find the final position of the coin."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-2",
+            "section_ref": "section 10.2",
+            "section_title": "Multiplication of Integers",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Evaluate: (a) (-9) × (-7) and (b) 48 ÷ (-6). Show the sign determination and the numerical calculation for each.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "(a) (-9) × (-7): both factors negative, so product is positive; 9 × 7 = 63; answer is +63. (b) 48 ÷ (-6): positive divided by negative, so quotient is negative; 48 ÷ 6 = 8; answer is -8.",
+              "method_one_line": "Determine the sign first using the like/unlike signs rule, then compute the magnitude using whole-number multiplication or division.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Provide a reference card showing the four sign-combination cases for multiplication and division for the student to consult while working.",
+                "challenge": "Ask the student to change one number in each expression so that the answers swap signs, and explain what they changed and why."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 10.2 p.38",
+              "description": "Find the values of (a) 14 × (-15); (b) -16 × (-5); (c) 36 ÷ (-18); (d) (-46) ÷ (-23)."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-3",
+            "section_ref": "section 10.2",
+            "section_title": "Multiplication of Integers",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Evaluate (-2) × (-1) × 3 × (-4) by first counting the number of negative factors to determine the sign of the product, then computing the magnitude. Show both steps clearly.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "There are three negative factors ((-2), (-1), and (-4)) — an odd count — so the product is negative. Magnitude: 2 × 1 × 3 × 4 = 24. Answer: -24.",
+              "method_one_line": "Count the negative factors: an odd count gives a negative product; then multiply the absolute values for the magnitude.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Suggest the student multiply two factors at a time, recording the sign after each step, rather than counting all negative factors at once.",
+                "challenge": "Ask the student to insert one more integer into the product so that the result becomes positive, and justify why their choice works."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 10.2 p.42",
+              "description": "Find the values of (a) (-5) × (18 + (-3)); (b) (-7) × 4 × (-1); (c) (-2) × (-1) × (-5) × (-3)."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-4",
+            "section_ref": "section 10.2",
+            "section_title": "Multiplication of Integers",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "In a quiz, each correct answer earns +3 marks and each wrong answer gives -1 mark. Priya answered 20 questions in total, got 12 correct and the rest wrong. Write a signed-multiplication expression for her total score and evaluate it.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Wrong answers: 20 - 12 = 8. Total score = 12 × 3 + 8 × (-1) = 36 + (-8) = 36 - 8 = 28 marks.",
+              "method_one_line": "Model correct answers as 12 × (+3) and wrong answers as 8 × (-1), then add the two signed products.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Prompt the student to first find the number of wrong answers, then set up one multiplication for correct and one for wrong before adding.",
+                "challenge": "Ask the student to find the minimum number of correct answers Priya would need to score above 20, keeping the total at 20 questions."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q6, section 10.2 p.43",
+              "description": "In a test with +4 for correct and -2 for incorrect answers: (a) Anita answered all questions and scored 40 with 15 correct — find her incorrect answers and the number of questions. (b) Anil scored -10 with 5 correct — find his incorrect answers and whether he left any unanswered."
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

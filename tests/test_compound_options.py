@@ -16,13 +16,17 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from aruvi_core.compound_options import (          # noqa: E402
     display_label, group_of, grouped_option_sets,
 )
 from aruvi_core.normalize import normalize_options  # noqa: E402
+from corpus import grade_dir                        # noqa: E402
 
-SAVED = REPO / "data" / "cloud" / "content" / "saved_plans" / "english" / "ix"
+# The library is foldered by EDITION YEAR (§2.2) — grade_dir resolves the current one
+# and still answers for a flat pre-migration tree.
+SAVED = Path(grade_dir("english", "ix"))
 
 
 def opt(label, text, correct=False):

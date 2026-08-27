@@ -1,0 +1,904 @@
+{
+  "filename": "ch_01_canonical.json",
+  "saved_at": "2026-08-19T17:39:58",
+  "plan_status": "canonical",
+  "chapter_number": 1,
+  "chapter_title": "What's in a Name?",
+  "grade": "Grade III",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 40,
+      "count": 7
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 7 periods = 280 minutes\nTotal: 7 periods · 4h 40min",
+  "genon_canonical": {
+    "generated": "2026-08-19",
+    "schedule": "7x40",
+    "constitution": "LP v1.4 / assessment v1.4",
+    "source": "generate_canonical.py one mathematics iii 1",
+    "ledger_ts": "20260819_133718_math_iii_01_top",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-19T17:57:17",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 3,
+            "field": "teacher_notes",
+            "rule": "register/forward",
+            "removed": ", setting up the reasoning tasks in the next unit",
+            "replaced_with": "",
+            "note": "forward reference struck; the observation stands on its own ground | survives: …helps the class begin to notice which numbers have shorter or longer names.…"
+          }
+        ],
+        "ban_hits_before": 1,
+        "ban_hits_after": 0
+      },
+      {
+        "tool": "genon/repair_c3.py v1.0",
+        "at": "2026-08-19T21:01:06",
+        "reason": "C3 defect repair (testing.md C3 · S4 mathematics·secondary). Generic passes derive their value from the summary, the Pedagogy document or the schema; declared edits are hand-written per instance and listed with their defect id. No pedagogical content was regenerated: register and continuity edits delete or rephrase a clause whose content is already named, and word-count edits shorten a label without adding a fact.",
+        "defects": {
+          "ARV-D-188": {
+            "note": "stem repointed at the page its own exercise block names",
+            "edits": [
+              {
+                "item": 1,
+                "field": "prompt",
+                "old": "A farmer sends 14 goats out to graze in the morning. Draw tally marks in the box below to show all 14 goats leaving. Then draw the marks again with lines struck through them to show all 14 goats came back safely.",
+                "new": "A farmer sends 14 goats out to graze in the morning. Draw tally marks in the box on p.2 to show all 14 goats leaving. Then draw the marks again with lines struck through them to show all 14 goats came back safely."
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "academic_year": "2026-27"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S1"
+          ],
+          "section_titles": [
+            "Tally marks as a counting strategy"
+          ],
+          "activity_title": "Marks on the Wall: Counting One-to-One",
+          "tasks_in_class": [
+            {
+              "id": "T-1",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S1",
+              "book_ref": "p.2",
+              "description": "Help Hemant keep track of his 36 cows and 23 sheep by making marks like Deba and Deep."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Read aloud the story of Deba and Deep to the class; pause at each point where a mark is made and invite children to mime the action of drawing a mark on a wall. Ask: how does one mark stand for one cow? Let children offer ideas freely."
+            },
+            {
+              "minutes": "10–25",
+              "activity": "p.2 (\"Help Hemant keep track of his 36 cows and 23 sheep....\") — children use slate or scrap paper to make tally marks for 36 cows (going out) and then strike out marks as 36 cows return; repeat for 23 sheep. Pairs check each other's marks before moving on."
+            },
+            {
+              "minutes": "25–35",
+              "activity": "Class discussion: how do we know the right number of cows came back? What happens if one mark is missed? Invite two or three children to explain their mark-sets to the class. Draw out the idea of one-to-one correspondence in the children's own words."
+            },
+            {
+              "minutes": "35–40",
+              "activity": "Quick round: teacher calls a number (up to 15), children flash the matching tally on their slates. Celebrate quick, accurate responses."
+            }
+          ],
+          "teacher_notes": "The goal here is one-to-one correspondence — every mark stands for exactly one animal — before any numeral is written. A common slip is grouping marks in fives without understanding why; accept all grouping styles at this stage and note the five-bar bundle as a useful convention during discussion, without enforcing it. Materials are scrap paper or slates; no prepared chart is needed.",
+          "materials": [
+            "Slates or scrap paper",
+            "Chalk or pencils",
+            "Story text (p.2 of textbook)"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S2"
+          ],
+          "section_titles": [
+            "Counting letters in names"
+          ],
+          "activity_title": "Whose Name is Longest? Sorting Names by Letter Count",
+          "tasks_in_class": [
+            {
+              "id": "T-2",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S2",
+              "book_ref": "Let us Do Q1, p.3",
+              "description": "Find the animal with the most letters (first-team captain) and fewest letters (second-team captain) from: tiger, elephant, deer, rat, monkey, ox, dog, snake, goat, lion."
+            },
+            {
+              "id": "T-3",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S2",
+              "book_ref": "Let us Do Q2, p.3",
+              "description": "Who has a longer name — Mahesh or Kartik? Discuss."
+            },
+            {
+              "id": "T-4",
+              "intent": "reason",
+              "method": "Inquiry",
+              "section_ref": "S2",
+              "book_ref": "Let us Do Q3, p.4",
+              "description": "Write friends' names; tick longest and cross shortest; find starting letter of own name; count names with same starting letter; find most-used starting letter; count names with same ending letter; write letters not used as starting letters."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Let us Do Q1, p.3 (\"Find the animal with the most letters....\") — write the ten animal names on the board; children count letters in each and write the counts beside the names on their slates. Pairs compare and agree on the longest and shortest."
+            },
+            {
+              "minutes": "8–15",
+              "activity": "Let us Do Q2, p.3 (\"Who has a longer name — Mahesh or Kartik?....\") — children count and compare letter-by-letter; a few children share their reasoning aloud. Draw out the method: count, then compare the totals."
+            },
+            {
+              "minutes": "15–35",
+              "activity": "Let us Do Q3, p.4 (\"Write friends' names; tick longest and cross shortest....\") — children collect six classmates' names in their notebooks, tick the longest, cross the shortest, and then carry out the starting-letter and ending-letter investigations in small groups. Each group reports one finding."
+            },
+            {
+              "minutes": "35–40",
+              "activity": "Bring the class together: which starting letter is most popular in this room? Record the class tally on the board and let children observe the pattern."
+            }
+          ],
+          "teacher_notes": "Children often count spaces or hyphens as letters; clarify that only the alphabet letters are counted. The starting-letter investigation in Let us Do Q3, p.4 has several sub-tasks — manage the pace by circulating and keeping groups on the next sub-task as they finish. Results will vary by class, and that variation is itself the learning.",
+          "materials": [
+            "Textbook pp.3–4",
+            "Notebooks",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S3"
+          ],
+          "section_titles": [
+            "Number names and letter counts"
+          ],
+          "activity_title": "Spelling Out Numbers: Counting Letters in Number Names",
+          "tasks_in_class": [
+            {
+              "id": "T-5",
+              "intent": "practice",
+              "method": "Problem-solving",
+              "section_ref": "S3",
+              "book_ref": "Let us Do Q4(a), p.5",
+              "description": "Write your roll number using number cards as shown; count how many letters its number name has."
+            },
+            {
+              "id": "T-6",
+              "intent": "practice",
+              "method": "Problem-solving",
+              "section_ref": "S3",
+              "book_ref": "Let us Do Q4(b), p.5",
+              "description": "Write some numbers and their number names in your notebook; count how many letters each has."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Demonstrate on the board: write the numeral 43, write its name 'forty-three', underline each letter, count them. Ask children: does the hyphen count? (No.) Do the two words together count? (Yes, all letters together.) Invite one child to try with a different number."
+            },
+            {
+              "minutes": "10–20",
+              "activity": "Let us Do Q4(a), p.5 (\"Write your roll number using number cards as shown....\") — each child writes their roll number, writes its number name using the card format shown in the book, and counts the letters. Children compare with a neighbour who has a nearby roll number."
+            },
+            {
+              "minutes": "20–35",
+              "activity": "Let us Do Q4(b), p.5 (\"Write some numbers and their number names in your notebook....\") — children choose at least five numbers between 1 and 99, write each as a numeral and as a number name, and record the letter count beside it. Encourage a mix: single-digit, teens, and two-digit numbers above 20."
+            },
+            {
+              "minutes": "35–40",
+              "activity": "Pairs swap notebooks and verify one another's letter counts by recounting aloud. Briefly collect: which number name had the most letters in anyone's list? Record a few on the board."
+            }
+          ],
+          "teacher_notes": "The most common error is forgetting that compound number names like 'forty-three' contain letters in both words; encourage children to underline every letter before counting. Let us Do Q4(b), p.5 gives children free choice of numbers — celebrating a range of choices helps the class begin to notice which numbers have shorter or longer names.",
+          "materials": [
+            "Textbook p.5",
+            "Notebooks",
+            "Pencils",
+            "Number cards (cut-outs from textbook or handmade)"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S3"
+          ],
+          "section_titles": [
+            "Number names and letter counts"
+          ],
+          "activity_title": "Pattern Hunters: Which Numbers Share the Same Name-Length?",
+          "tasks_in_class": [
+            {
+              "id": "T-7",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S3",
+              "book_ref": "Let us Think, p.5",
+              "description": "Write other numbers between 1 and 99 that have 8 letters (given that fifty-six = 8 letters)."
+            },
+            {
+              "id": "T-8",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S3",
+              "book_ref": "Let us Do Q1, p.6",
+              "description": "Write the number(s) between 1 and 99 that have the longest name."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–5",
+              "activity": "Write 'fifty-six' on the board; count letters together: f-i-f-t-y-s-i-x = 8. Tell the class: their task is to hunt for other numbers between 1 and 99 whose name also has exactly 8 letters."
+            },
+            {
+              "minutes": "5–20",
+              "activity": "Let us Think, p.5 (\"Write other numbers between 1 and 99 that have 8 letters....\") — children work individually, writing candidates and counting. After a few minutes form pairs to pool findings. Invite groups to share; build a class list on the board."
+            },
+            {
+              "minutes": "20–35",
+              "activity": "Let us Do Q1, p.6 (\"Write the number(s) between 1 and 99 that have the longest name....\") — children extend the hunt systematically, now looking for the maximum. Groups report; the class debates and agrees. Encourage children to explain how they know no longer name exists."
+            },
+            {
+              "minutes": "35–40",
+              "activity": "Whole-class check: write the agreed answer on the board and count its letters together. Ask: is there any number with more letters? Children justify yes or no in one sentence each."
+            }
+          ],
+          "teacher_notes": "Children working on letter-count patterns built through counting number names will typically start randomly and then shift to a systematic tens-group scan (all the thirties, all the forties, etc.) — prompt this shift explicitly if it does not arise naturally by asking 'have you checked all the forties?'. The longest-name task in Let us Do Q1, p.6 has a specific answer; do not reveal it before children have argued it out.",
+          "materials": [
+            "Textbook pp.5–6",
+            "Notebooks",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S3"
+          ],
+          "section_titles": [
+            "Number names and letter counts"
+          ],
+          "activity_title": "Number Name Detectives: Clue-Based Puzzles",
+          "tasks_in_class": [
+            {
+              "id": "T-9",
+              "intent": "reason",
+              "book_ref": "Let us Do Q2 Find out (left), p.6",
+              "method": "Problem-solving",
+              "section_ref": "S3",
+              "description": "My number name has two words; first word 6 letters, second word 5 letters; I am very near to 100. Who am I?"
+            },
+            {
+              "id": "T-10",
+              "intent": "reason",
+              "method": "Problem-solving",
+              "section_ref": "S3",
+              "book_ref": "Let us Do Q2 Find out (right), p.6",
+              "description": "My friends and I are the numbers from 63 to 78; my number name is the smallest among all my friends. Who am I?"
+            },
+            {
+              "id": "T-11",
+              "intent": "reason",
+              "method": "Inquiry",
+              "section_ref": "S3",
+              "book_ref": "Let us Do Q3, p.6",
+              "description": "Make similar number-name puzzles of your own in your notebook and ask your classmates."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Let us Do Q2 Find out (left), p.6 (\"My number name has two words; first word 6 letters....\") — children read the clue, list candidate two-word number names near 100, and count the letters in each word. Pairs share their working; draw out the deductive chain on the board."
+            },
+            {
+              "minutes": "12–24",
+              "activity": "Let us Do Q2 Find out (right), p.6 (\"My friends and I are the numbers from 63 to 78....\") — children write out the names of every number from 63 to 78 and count letters for each, then identify the one with the fewest letters. Groups compare answers and resolve disagreements by recounting."
+            },
+            {
+              "minutes": "24–38",
+              "activity": "Let us Do Q3, p.6 (\"Make similar number-name puzzles of your own....\") — each child writes at least one clue-puzzle in their notebook (choosing a number, writing clues about its name's letter count, word count, or proximity to a landmark), then exchanges with a partner to solve."
+            },
+            {
+              "minutes": "38–40",
+              "activity": "Two or three volunteers read their puzzles aloud for the class to solve. Celebrate inventive clues."
+            }
+          ],
+          "teacher_notes": "The 'near to 100' clue in Let us Do Q2 Find out (left), p.6 requires children to know which two-word number names appear in the nineties; a quick recap of how numbers from 91 to 99 are named helps those who are unsure. Puzzle-making in Let us Do Q3, p.6 often stalls if children cannot think of a starting number — suggest they pick their favourite two-digit number and work backward from its letter count.",
+          "materials": [
+            "Textbook p.6",
+            "Notebooks",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S4"
+          ],
+          "section_titles": [
+            "Sorting and classifying objects"
+          ],
+          "activity_title": "Same Objects, Different Groups: Sorting by Chosen Rules",
+          "tasks_in_class": [
+            {
+              "id": "T-12",
+              "intent": "reason",
+              "method": "Inductive",
+              "section_ref": "S4",
+              "book_ref": "Let us Do Q4, p.7",
+              "description": "Write TV, Lamp, Clock, Pillow, Chair, Bed, Blanket, Fan into two groups: things that need electricity and things that don't need electricity."
+            },
+            {
+              "id": "T-13",
+              "intent": "reason",
+              "method": "Inquiry",
+              "section_ref": "S4",
+              "book_ref": "Let us Do (group differently), p.8",
+              "description": "Group the same objects differently using your own criterion; write them in the space below."
+            },
+            {
+              "id": "T-14",
+              "intent": "explore",
+              "method": "Play-way",
+              "section_ref": "S4",
+              "book_ref": "Let us Do Hair Styles, p.8",
+              "description": "Look at children in your class; observe how each child has combed their hair; fill the hair-style vs number-of-children table."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–5",
+              "activity": "Read aloud the story of Teji and Jojo from the textbook; discuss how Teji and Jojo grouped the same set of items differently. Ask: can the same object belong to two different groups depending on the rule?"
+            },
+            {
+              "minutes": "5–18",
+              "activity": "Let us Do Q4, p.7 (\"Write TV, Lamp, Clock, Pillow, Chair, Bed, Blanket, Fan into two groups....\") — children sort the eight objects in their notebooks under two headings. Pairs compare; discuss edge cases such as a battery-powered clock."
+            },
+            {
+              "minutes": "18–28",
+              "activity": "Let us Do (group differently), p.8 (\"Group the same objects differently using your own criterion....\") — each child devises a new rule (e.g. furniture vs non-furniture; found in bedroom vs not) and re-sorts the same eight objects. Small groups share their criteria; the class notes that different rules produce different valid groups."
+            },
+            {
+              "minutes": "28–40",
+              "activity": "Let us Do Hair Styles, p.8 (\"Look at children in your class; observe how each child has combed their hair....\") — children circulate briefly, observe and note each classmate's hair style, then return to their seats and fill in the table. Compare counts across the room."
+            }
+          ],
+          "teacher_notes": "The key insight in this unit is that the same set of objects can be validly classified in multiple ways — grouping is a choice, not an inherent property. A common error is children arguing that one classmate's criterion is 'wrong'; redirect by asking 'is it a clear rule that everyone can apply?' rather than 'is it the only rule?'. The hair-style observation in Let us Do Hair Styles, p.8 gives children their first live data-collection experience; counts will differ across classes and that is expected.",
+          "materials": [
+            "Textbook pp.7–8",
+            "Notebooks",
+            "Pencils"
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 40,
+          "section_refs": [
+            "S1",
+            "S2",
+            "S3",
+            "S4"
+          ],
+          "section_titles": [
+            "Tally marks as a counting strategy",
+            "Counting letters in names",
+            "Number names and letter counts",
+            "Sorting and classifying objects"
+          ],
+          "activity_title": "Everything Connects: Marks, Names, Numbers and Groups",
+          "synthesis": true,
+          "tasks_in_class": [],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Warm-up: teacher writes five number names on the board (e.g. 'nine', 'twenty', 'sixty-three', 'ninety-nine', 'fifteen'); children write each numeral and its letter count on their slates. Pairs compare. This revisits counting letters in number names from the number names and letter counts section."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Bridge task: children write their own first name and their roll number's name side by side, count letters in each, and sort both into a small table — 'shorter', 'same length', 'longer'. Each pair then shares which is longer and explains how they know, drawing on the letter-counting method used with animal and classmates' names."
+            },
+            {
+              "minutes": "22–32",
+              "activity": "Sorting revisit: teacher writes twelve two-digit numbers on the board; children sort them into two groups of their own choosing based on a letter-count rule (e.g. 'name has 5 or fewer letters' vs 'name has more than 5 letters'). Groups share their rules and the class checks whether each number lands in the right group, connecting tally-mark counting to grouping by a criterion."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Whole-class reflection: teacher asks three questions in quick succession — 'What did tally marks help us do?', 'What does counting letters in a name tell us?', 'Can the same number be in different groups depending on the rule?' Children respond orally; teacher scribes one sentence per question on the board as a class summary."
+            }
+          ],
+          "teacher_notes": "This unit draws together one-to-one correspondence from tally marks, discrete counting as a way to compare names, the letter-count structure of number names, and the idea that classification rules are chosen rather than fixed. No new concept is introduced; the aim is for children to see these as facets of one connected idea — that counting is a naming strategy, and naming creates groups. Encourage children who finish early to invent a sorting rule that uses a letter-count threshold of their choosing.",
+          "materials": [
+            "Slates or scrap paper",
+            "Textbook (any page for reference)",
+            "Notebooks",
+            "Pencils",
+            "Chalk or board markers"
+          ]
+        }
+      ]
+    },
+    "period_schedule": {
+      "duration_minutes": 40,
+      "count": 7
+    },
+    "coverage_handoff": {
+      "explore": {
+        "tasks": [
+          {
+            "task_id": "T-1",
+            "intent": "explore",
+            "section_ref": "S1",
+            "book_ref": "p.2",
+            "description": "Help Hemant keep track of his 36 cows and 23 sheep by making marks like Deba and Deep."
+          },
+          {
+            "task_id": "T-14",
+            "intent": "explore",
+            "section_ref": "S4",
+            "book_ref": "Let us Do Hair Styles, p.8",
+            "description": "Look at children in your class; observe how each child has combed their hair; fill the hair-style vs number-of-children table."
+          }
+        ]
+      },
+      "reason": {
+        "tasks": [
+          {
+            "task_id": "T-2",
+            "intent": "reason",
+            "section_ref": "S2",
+            "book_ref": "Let us Do Q1, p.3",
+            "description": "Find the animal with the most letters (first-team captain) and fewest letters (second-team captain) from: tiger, elephant, deer, rat, monkey, ox, dog, snake, goat, lion."
+          },
+          {
+            "task_id": "T-4",
+            "intent": "reason",
+            "section_ref": "S2",
+            "book_ref": "Let us Do Q3, p.4",
+            "description": "Write friends' names; tick longest and cross shortest; find starting letter of own name; count names with same starting letter; find most-used starting letter; count names with same ending letter; write letters not used as starting letters."
+          },
+          {
+            "task_id": "T-7",
+            "intent": "reason",
+            "section_ref": "S3",
+            "book_ref": "Let us Think, p.5",
+            "description": "Write other numbers between 1 and 99 that have 8 letters (given that fifty-six = 8 letters)."
+          },
+          {
+            "task_id": "T-8",
+            "intent": "reason",
+            "section_ref": "S3",
+            "book_ref": "Let us Do Q1, p.6",
+            "description": "Write the number(s) between 1 and 99 that have the longest name."
+          },
+          {
+            "task_id": "T-9",
+            "intent": "reason",
+            "section_ref": "S3",
+            "book_ref": "Let us Do Q2 Find out (left), p.6",
+            "description": "My number name has two words; first word 6 letters, second word 5 letters; I am very near to 100. Who am I?"
+          },
+          {
+            "task_id": "T-12",
+            "intent": "reason",
+            "section_ref": "S4",
+            "book_ref": "Let us Do Q4, p.7",
+            "description": "Write TV, Lamp, Clock, Pillow, Chair, Bed, Blanket, Fan into two groups: things that need electricity and things that don't need electricity."
+          },
+          {
+            "task_id": "T-13",
+            "intent": "reason",
+            "section_ref": "S4",
+            "book_ref": "Let us Do (group differently), p.8",
+            "description": "Group the same objects differently using your own criterion; write them in the space below."
+          }
+        ]
+      },
+      "practice": {
+        "tasks": [
+          {
+            "task_id": "T-6",
+            "intent": "practice",
+            "section_ref": "S3",
+            "book_ref": "Let us Do Q4(b), p.5",
+            "description": "Write some numbers and their number names in your notebook; count how many letters each has."
+          }
+        ]
+      },
+      "solve": {
+        "tasks": []
+      }
+    },
+    "assessment_items": [
+      {
+        "section_code": "A",
+        "section_title": "Explore",
+        "items": [
+          {
+            "id": "Q-A-1",
+            "intent": "explore",
+            "section_ref": "S1",
+            "section_title": "Tally marks as a counting strategy",
+            "question_type": "SCR",
+            "prompt": "A farmer sends 14 goats out to graze in the morning. Draw tally marks in the box on p.2 to show all 14 goats leaving. Then draw the marks again with lines struck through them to show all 14 goats came back safely.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "The student draws 14 tally marks (in any grouping) and then shows all 14 struck through or cancelled, with no mark left uncancelled.",
+              "method_one_line": "Use one mark per animal going out and strike each mark when that animal returns, matching one-to-one.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Support: let the child use counters to represent goats before drawing marks. Stretch: ask them to show what the marks would look like if only 11 goats returned."
+            },
+            "exercise": {
+              "book_ref": "p.2",
+              "description": "Help Hemant keep track of his 36 cows and 23 sheep by making marks like Deba and Deep."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-2",
+            "intent": "explore",
+            "section_ref": "S4",
+            "section_title": "Sorting and classifying objects",
+            "question_type": "MCQ",
+            "prompt": "Priya looks at these four things: a torch, a broom, a ceiling fan, and a candle. She wants to sort them into two groups: things that need electricity and things that do not need electricity. Which group does the torch belong to?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "Both groups, because it can use batteries too",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "Neither group, because it gives light like a candle",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "Things that do not need electricity",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "Things that need electricity",
+                "is_correct": true
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Things that need electricity — a torch uses electrical energy (from batteries or mains) to produce light.",
+              "method_one_line": "Decide whether the object uses electrical energy to work; if yes, place it in the electricity group.",
+              "what_each_option_reveals": {
+                "C": "The student may be thinking only of plug-in electricity and not recognising battery power as electrical energy.",
+                "A": "The student confuses the energy source with the type of energy; batteries supply electrical energy just as mains power does.",
+                "B": "The student is classifying by output (light) rather than by the criterion of needing electricity to function."
+              },
+              "inclusivity": "Support: let the child physically handle a torch and identify where the battery goes before deciding. Stretch: ask which of the remaining three objects would change groups if the electricity went out."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Hair Styles, p.8",
+              "description": "Look at children in your class; observe how each child has combed their hair; fill the hair-style vs number-of-children table."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "B",
+        "section_title": "Reason",
+        "items": [
+          {
+            "id": "Q-B-1",
+            "intent": "reason",
+            "section_ref": "S2",
+            "section_title": "Counting letters in names",
+            "question_type": "SCR",
+            "prompt": "Here are four animal names: parrot, bee, crocodile, wolf. Which animal has the most letters in its name? Which has the fewest? Write the letter counts beside each name to show how you know.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "parrot = 6, bee = 3, crocodile = 9, wolf = 4. Crocodile has the most letters (9); bee has the fewest (3).",
+              "method_one_line": "Count every letter in each name, write the count, then compare the counts to find the largest and smallest.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Support: let the child write the name on a strip and tick each letter as they count. Stretch: ask them to find another animal name with the same letter count as 'wolf'."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q1, p.3",
+              "description": "Find the animal with the most letters (first-team captain) and fewest letters (second-team captain) from: tiger, elephant, deer, rat, monkey, ox, dog, snake, goat, lion."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-2",
+            "intent": "reason",
+            "section_ref": "S2",
+            "section_title": "Counting letters in names",
+            "question_type": "MCQ",
+            "prompt": "Riya writes the names of five classmates: Pooja, Arjun, Meenakshi, Raj, Devika. She wants to find the name with the most letters and the name with the fewest letters. Which pair is correct?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "Most letters: Arjun; Fewest letters: Raj",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "Most letters: Devika; Fewest letters: Raj",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "Most letters: Meenakshi; Fewest letters: Pooja",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "Most letters: Meenakshi; Fewest letters: Raj",
+                "is_correct": true
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Meenakshi has the most letters (9); Raj has the fewest (3).",
+              "method_one_line": "Count every letter in each name, record the count, and compare all five counts to identify the largest and smallest.",
+              "what_each_option_reveals": {
+                "B": "The student may have counted letters in 'Devika' (6) correctly but stopped counting before reaching 'Meenakshi', suggesting incomplete comparison.",
+                "C": "The student correctly identified the longest name but confused 'Pooja' (5 letters) with 'Raj' (3 letters) for the shortest, likely not counting to the end.",
+                "A": "The student may have miscounted 'Arjun' as the longest; this reveals a counting error or stopping after the first name that seems long."
+              },
+              "inclusivity": "Support: have the child write each name on a separate strip and mark each letter before counting. Stretch: ask them to order all five names from shortest to longest."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q3, p.4",
+              "description": "Write friends' names; tick longest and cross shortest; find starting letter of own name; count names with same starting letter; find most-used starting letter; count names with same ending letter; write letters not used as starting letters."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-3",
+            "intent": "reason",
+            "section_ref": "S3",
+            "section_title": "Number names and letter counts",
+            "question_type": "SCR",
+            "prompt": "The number name 'fifty-six' has 8 letters. Write two other numbers between 1 and 99 whose names also have exactly 8 letters. Write the number name beside each number to show your working.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Any two correct answers from the set of numbers between 1 and 99 whose names contain exactly 8 letters. Valid examples include: forty-one (8), forty-two (8), forty-six (8), fifty-one (8), fifty-two (8), sixty-one (8), sixty-two (8), seventy (7 — not valid), eighty-one (9 — not valid). The student must write the number name and show or imply a count of 8 letters.",
+              "method_one_line": "Write the number name, count every letter including both words, and check the total equals 8.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Support: give the student the word 'forty-one' and ask them to count its letters to confirm before searching further. Stretch: ask how many numbers between 1 and 99 have exactly 8 letters."
+            },
+            "exercise": {
+              "book_ref": "Let us Think, p.5",
+              "description": "Write other numbers between 1 and 99 that have 8 letters (given that fifty-six = 8 letters)."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-4",
+            "intent": "reason",
+            "section_ref": "S3",
+            "section_title": "Number names and letter counts",
+            "question_type": "MCQ",
+            "prompt": "Which number between 1 and 99 has the longest name?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "eighty-eight",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "ninety-nine",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "ninety-three",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "seventy-seven",
+                "is_correct": true
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "seventy-seven has 12 letters (s-e-v-e-n-t-y = 7, s-e-v-e-n = 5; total 12), which is the longest number name between 1 and 99.",
+              "method_one_line": "Count every letter in each candidate number name and compare the totals; the name with the highest count is the longest.",
+              "what_each_option_reveals": {
+                "A": "eighty-eight has 11 letters; the student may have chosen it by analogy with 'ninety-nine' without counting carefully.",
+                "C": "ninety-three has 11 letters; the student may have assumed proximity to 100 means a longer name.",
+                "B": "ninety-nine has 10 letters; the student may have been drawn by the repeated syllable without counting."
+              },
+              "inclusivity": "Support: ask the student to write out 'seventy-seven' and 'eighty-eight' letter by letter and count each. Stretch: ask what the second-longest number name between 1 and 99 is."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q1, p.6",
+              "description": "Write the number(s) between 1 and 99 that have the longest name."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-5",
+            "intent": "reason",
+            "section_ref": "S3",
+            "section_title": "Number names and letter counts",
+            "question_type": "SCR",
+            "prompt": "Here is a number puzzle. My name has two words. The first word has 6 letters. The second word has 3 letters. I am between 90 and 99. Who am I? Write the number and its name, and show how you counted the letters.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "ninety-two: 'ninety' has 6 letters, 'two' has 3 letters; the number is 92.",
+              "method_one_line": "List the two-word names of numbers from 91 to 99, count the letters in each word, and find the one whose first word has 6 letters and second word has 3 letters.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Support: write the names of 91 to 95 on the board and ask the student to count letters in each word. Stretch: ask the student to write a similar clue for a different number between 90 and 99."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q2 Find out (left), p.6",
+              "description": "My number name has two words; first word 6 letters, second word 5 letters; I am very near to 100. Who am I?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-6",
+            "intent": "reason",
+            "section_ref": "S4",
+            "section_title": "Sorting and classifying objects",
+            "question_type": "SCR",
+            "prompt": "Here are six objects: Scissors, Needle, Toaster, Notebook, Mixer, Rubber. Sort them into two groups: things that need electricity and things that do not need electricity. Write each object's name in the correct group.",
+            "visual_stimulus": "| Needs electricity | Does not need electricity |\n| ... | ... |",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Needs electricity: Toaster, Mixer. Does not need electricity: Scissors, Needle, Notebook, Rubber.",
+              "method_one_line": "For each object, decide whether it requires electrical energy to perform its function; place it in the matching group.",
+              "what_each_option_reveals": {},
+              "inclusivity": "Support: go through each object aloud and ask 'does it need to be plugged in or use a battery to work?' before writing. Stretch: ask the student to invent a second sorting rule for the same six objects and re-sort them."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q4, p.7",
+              "description": "Write TV, Lamp, Clock, Pillow, Chair, Bed, Blanket, Fan into two groups: things that need electricity and things that don't need electricity."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-7",
+            "intent": "reason",
+            "section_ref": "S4",
+            "section_title": "Sorting and classifying objects",
+            "question_type": "MCQ",
+            "prompt": "Tara has a set of five things: a football, a cricket bat, a swimming cap, a badminton racket, and a pair of running shoes. She sorted them one way. Then her friend sorted the same things a different way using a new rule. Which statement about their sorting is correct?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "Both sortings can be correct because the same objects can be grouped by different rules.",
+                "is_correct": true
+              },
+              {
+                "label": "B",
+                "text": "Only one sorting can be correct because each object belongs to only one group.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "The second sorting is wrong because Tara already sorted the objects.",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "You cannot sort the same objects more than once.",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Both sortings can be correct because the same objects can be grouped by different rules — for example, by sport type, or by whether the object is worn on the body.",
+              "method_one_line": "A sorting is valid if the rule is clear and every object fits exactly one group; different valid rules produce different valid sortings of the same set.",
+              "what_each_option_reveals": {
+                "B": "The student believes classification is a fixed property of the object, not a consequence of the chosen rule — a core misconception this section addresses.",
+                "C": "The student thinks the first classification has priority, confusing chronological order with mathematical correctness.",
+                "D": "The student has a rigid view of sorting as a one-time act, not understanding that different criteria yield different valid groups."
+              },
+              "inclusivity": "Support: give the student the five objects as words on slips and ask them to sort physically by one rule, then try a different rule. Stretch: ask them to write three different rules that could be used to sort these five objects."
+            },
+            "exercise": {
+              "book_ref": "Let us Do (group differently), p.8",
+              "description": "Group the same objects differently using your own criterion; write them in the space below."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "C",
+        "section_title": "Practise",
+        "items": [
+          {
+            "id": "Q-C-1",
+            "intent": "practice",
+            "section_ref": "S3",
+            "section_title": "Number names and letter counts",
+            "question_type": "MCQ",
+            "prompt": "How many letters does the number name 'thirty-five' have?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "8",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "9",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "10",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "11",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "10 letters: t-h-i-r-t-y = 6 letters; f-i-v-e = 4 letters; total = 10.",
+              "method_one_line": "Write the number name, count every letter in both words (ignoring the hyphen), and add the two word-counts together.",
+              "what_each_option_reveals": {
+                "A": "The student may have counted only the letters in 'five' (4) and added an incorrect partial count of 'thirty', suggesting they stopped early.",
+                "B": "The student likely counted 9, possibly counting the hyphen as a letter or miscounting one word by one.",
+                "D": "The student may have counted 11 by including the hyphen as a character or double-counting one letter."
+              },
+              "inclusivity": "Support: write 'thirty-five' on paper, circle each letter one by one, and count aloud. Stretch: ask the student to write another number whose name also has exactly 10 letters."
+            },
+            "exercise": {
+              "book_ref": "Let us Do Q4(b), p.5",
+              "description": "Write some numbers and their number names in your notebook; count how many letters each has."
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

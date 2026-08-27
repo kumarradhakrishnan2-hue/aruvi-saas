@@ -1,6 +1,26 @@
 # Aruvi — Administrative Architecture & the Ports a Partner Implements
 
-**Status:** design settled. **Step 5 BUILT 2026-08-24** (entitlement seam to the model of
+**Status:** design settled. ★ **THIS HEADER WAS STALE AND IS NOW CORRECTED (2026-08-27).** It
+said "Steps 2–6 unbuilt" long after both had been substantially built, and the repo has grown
+four ports this document never listed (`Notifier`, `InvoiceRepository`, `ConsentRepository`,
+`SupportRepository` — see §6). Current state, step by step:
+
+| Step | State |
+|---|---|
+| 0 Account + tenant record | **BUILT** 2026-08-22 |
+| 1 Year-scoped addressing | **BUILT** 2026-08-22 |
+| 2 Cutover / rollover | **BUILT** 2026-08-26 (teacher side) + **2026-08-27** (§2.2 edition stamp) |
+| 3 `PlanNoteRepository` | **BUILT** 2026-08-22 |
+| 4 Export / erase | **BUILT** 2026-08-22 |
+| 5 Entitlement seam | **BUILT** 2026-08-24 |
+| 6 UI surfaces | **PARTIAL** — see §5 Step 6 for the three remaining gaps |
+
+**Step 2 deltas from §5's text:** there is no `close_year()` (Step 1's path-scoping made
+`open_year` + `set_current` sufficient) and no `carried_chapters`/`new_chapters`
+(`canonical_version`'s `ledger_ts` already distinguishes them — §2.2). The year rolls
+automatically on the cutover date carrying her bindings; only the clean-up waits on her.
+
+**Step 5 BUILT 2026-08-24** (entitlement seam to the model of
 `docs/subscription_model_discussion.md` §0 — deltas from §5 Step 5's text: `Entitlement`
 gains `scopes` (subject-stage billing) + `trial_chapters` (the trial is capped by ANY 3
 CHAPTERS with unlimited re-serves, no time limit — never by days or serves);
@@ -102,22 +122,77 @@ a production schedule, not a preference.
 
 ### 2.2 LP versioning is by academic year — but the year is a LABEL, not the cache key
 
+> ★ **BUILT 2026-08-27.** Tests: `tests/test_lp_year.py` (17, incl. the two that matter —
+> `test_carried_chapter_still_hits_its_cache` and `test_the_stamp_is_not_in_any_filename`).
+> Implementation notes at the end of this section.
+
 NCERT books are stable for years, but Aruvi's own constitutions, model and accumulated
 corrections are not. So the library is re-versioned annually **regardless of whether the book
 changed**. Canonicals and their generated variants live in a per-year folder; every canonical
 and variant is stamped with its year, and both My Lessons and My Classes display that stamp so
 versions can never be confused.
 
+★ **TWO DIFFERENT YEARS LIVE IN THIS SYSTEM, and conflating them is the bug this section
+exists to prevent** (founder, 2026-08-27):
+
+| | the **teacher's** academic year | the **library's** edition year |
+|---|---|---|
+| what it means | the year she is TEACHING in | which authored edition a plan IS |
+| bucket | B — per teacher | A — the same for everybody |
+| where | `AcademicYear.year_id` (Step 1) | `genon_canonical.academic_year`, `config.LP_YEAR` |
+
+They are **independent**: she can teach one 2026-27 plan for several years running, and two
+teachers in different years can be served the same edition. What matters on screen is *the
+year the plan was authored*, not when she taught it. My Lessons already showed a year — HERS
+— and `YearStamp` was using it as a proxy for the edition precisely because the edition was
+not recorded anywhere. It now is, and the stamp prefers the real fact.
+
 **But the cache key stays what it already is.** Derived plans are already named
 `ch_NN_<matrix>_e<NN>_c<version>.json` — engine version and constitution version — and
 `api/data.canonical_version` already reads it. `purge_derived.py` exists because stale-cache
 bugs have already been met once.
 
-> **Rule: year is the label, `(engine, constitution)` is the key.** At cutover, mark each
-> chapter's canonical as *carried* or *new*. A carried canonical keeps its variant cache. Get
-> this wrong and every June you re-pay to regenerate content that did not change, at peak load,
-> in your busiest season. `CLAUDE.md §3` names output caching as the #1 economic lever at
-> seasonal scale.
+> **Rule: year is the label, `(engine, constitution)` is the key.** A carried canonical keeps
+> its variant cache. Get this wrong and every June you re-pay to regenerate content that did
+> not change, at peak load, in your busiest season. `CLAUDE.md §3` names output caching as the
+> #1 economic lever at seasonal scale.
+
+★ **The "mark each canonical *carried* or *new*" step was DROPPED — it was already
+implicit.** `canonical_version()` keys off the canonical's own `ledger_ts` (the identity of
+the generation run): re-author a chapter and its key changes, leave it alone and its whole
+variant cache survives. That IS carried-vs-new, and no flag, list or marking pass adds
+anything to it. The remaining risk is not in code but in the **batch run**: a January
+re-authoring pass that regenerates all ~200 chapters indiscriminately changes every
+`ledger_ts` and buys the library again. Name the chapters you re-author.
+
+**What carrying a chapter forward actually does** (`aruvi-scripts/carry_over_year.py`): copies
+the canonical **and its derived plans** into the new edition's folder, rewriting only
+`academic_year` (plus a `carried_from` provenance field) and leaving `ledger_ts` and every
+**filename** untouched — so the copied cache still hits. Copying the canonical alone would
+leave the new folder with no derived plans and regenerate every variant on first request,
+which is the exact bill this section forbids. `--except subject/grade[:ch,ch]` skips what you
+re-authored; anything already present in the target edition is never overwritten.
+
+**Layout and stamping.** `saved_plans/{subject}/{grade}/{year}/ch_NN_*.json`; `config.LP_YEAR`
+is the edition being served and the single place the year enters a path
+(`data.lp_library_dir`, with a flat-tree fallback for un-migrated checkouts).
+`generate_canonical.py` stamps `academic_year` at authoring time, so no future backfill is
+needed — `aruvi-scripts/migrate_lp_year.py` existed only to catch the 990 files written
+before it. A plan from an older edition stays openable (§2.3's immutability) via a look-back
+in `load_saved_plan`.
+
+**Display rule (founder):** every canonical carries the stamp, but a teacher only ever SEES it
+when the plan is from an edition *older* than the one being served. The comparison is made
+server-side (`get_plans` → `lp_year_display`, null otherwise) so the screen and the rule
+cannot drift — the `_consent_outstanding` precedent.
+
+**Two live bugs found while building this**, both pre-dating it and both silent:
+`genon/purge_derived.py` and `generate_canonical.py`'s install path still named
+`data/content/saved_plans`, which stopped existing at the 2026-08-23 cloud/local restructure.
+So the ARV-D-034 invalidation invariant had been purging *nothing* since then, and authored
+canonicals were being written where the API does not read. Both now derive from
+`config.DATA_DIR`. `purge_derived` also sweeps **every** edition, because a repaired canonical
+that was carried forward shares its `ledger_ts` — and therefore its cache key — with its copy.
 
 ### 2.3 Mid-year changes are software updates, not versioning events
 
@@ -327,9 +402,11 @@ callers change; the engine does not.
 
 Implements §2.1–§2.2. Two operations, not one:
 
-- **Aruvi-side (a):** publish the new year's library; mark each chapter *carried* or *new*;
-  carried canonicals keep their variant cache (§2.2); My Lessons folds the prior year into its
-  archive folder.
+- **Aruvi-side (a):** publish the new year's library; carried canonicals keep their variant
+  cache (§2.2); My Lessons folds the prior year into its archive folder.
+  ★ **BUILT 2026-08-27** — `aruvi-scripts/carry_over_year.py`, the edition folder, and the
+  `academic_year` stamp. The "mark each chapter *carried* or *new*" step was dropped as
+  already-implicit in `ledger_ts`; read §2.2 before re-proposing it.
 - **Teacher-side (b):** clear section attachments and pointers for the closing year; carry the
   class list forward unchanged; leave notes with their old plans.
 
@@ -465,6 +542,21 @@ partner's work is to implement `BillingProvider` and populate `source`.
 
 ### Step 6 — The UI surfaces
 
+> ★ **PARTIAL, audited 2026-08-27.** BUILT: Settings (personal + teaching profile,
+> subscription & billing, invoices, export/erase, help, About), `SubscribeFlow.jsx`,
+> `Agreement.jsx` + Settings › Legal, the Support form, and the trial counter.
+> **THREE GAPS REMAIN:**
+>
+> 1. **Notification preferences: not built.** `Account.notify` exists in ports.py and is
+>    round-tripped by the file adapter, but no route writes it and no screen reads it —
+>    zero references in `web/app/components/` or `api/main.py`. A field nothing can set.
+> 2. **The annual budget is still read-only prose in Year Plan** (`YearPlan.jsx:176`),
+>    which is this step's *own* first rule ("put each control where its number is used")
+>    going unhonoured. Editing still lives in `TeachingProfile.jsx`'s budget step.
+> 3. **"Disclose the assumptions" is a code comment, not a screen.** `FirstRun.jsx:433`
+>    notes that periods/week is assumed; nothing tells the teacher that her section,
+>    periods/week and annual budget were chosen for her.
+
 Last, deliberately. Account, subscription, privacy, notifications, support, and the year-plan
 budget control.
 
@@ -493,7 +585,12 @@ Two rules that follow from the rest of this document:
 | 0 | `AuthProvider` | declared, expand | header stub → partner's IdP |
 | 1 | `AcademicYearRepository` | **new** | `academic_year_repository_file.py` |
 | 1 | all five existing repositories | **signature change** (`year_id`) | existing files |
-| 2 | `AcademicYearRepository.close_year` | **new** | same adapter |
+| 2 | `YearCutover.cutover` (NOT `close_year` — see §2.2) | **new** | `year_cutover_file.py` |
+| 2 | edition stamp + carry-over (§2.2) | **new** | `carry_over_year.py`, `migrate_lp_year.py` |
+| — | `Notifier` | **new** (undocumented until 2026-08-27) | `notifier.py` |
+| — | `InvoiceRepository` | **new** (undocumented until 2026-08-27) | `invoice_repository_file.py` |
+| — | `ConsentRepository` | **new** (undocumented until 2026-08-27) | `consent_repository_file.py` |
+| — | `SupportRepository` | **new** (undocumented until 2026-08-27) | `support_repository_file.py` |
 | 3 | `PlanNoteRepository` | **new** | `plan_note_repository_file.py` |
 | 4 | `DataRightsService` | **new** | walks every Bucket-B repo |
 | 5 | `EntitlementRepository` | **new** | `entitlement_repository_file.py` |
@@ -509,8 +606,16 @@ implementation and nothing above the port changes.
 - **Backup retention** — confirm 30 days is achievable before the privacy policy promises it.
 - **GST retention period** — confirm the statutory figure with an accountant (§2.6).
 - **Children's data** — decide whether to constrain notes or accept the DPDP obligation (§2.8).
-- **Notes split per plan** — confirm two plans for one chapter yielding two notes is intended
-  (§2.4); it reverses a deliberate 2026-07-23 "one surface" decision.
+- ~~**Notes split per plan**~~ — RESOLVED 2026-08-22: the note key is the CHAPTER's identity
+  (`{subject}/{grade}/{chapter_number}`), one note per chapter per year, so the 2026-07-23
+  "one surface" decision stands within a year and notes split only across years.
+- **Corpus tests that were passing vacuously** (found 2026-08-27) — ten test files carried
+  their own flat `glob(saved_plans/*/*/*.json)` and silently matched ZERO plans once the
+  library was foldered by edition. They now go through `tests/corpus.py`. Making them
+  actually run surfaced three pre-existing content defects, none of them caused by the
+  foldering: 4 empty-stem assessment items in 13,115 (`test_normalized_item`), 8 plans whose
+  units are re-ordered by their subject port (`test_unit_order`), and one `test_unitize`
+  string corruption. **These are unfixed and are real findings, not test noise.**
 - **Periods/week** — nothing reads it while the budget is stored as `{method: "periods"}`, but
   it becomes load-bearing the moment she switches to the weeks method in her profile. Derive it
   (`round(budget / 30)`) rather than seeding a flat guess.
@@ -526,7 +631,13 @@ implementation and nothing above the port changes.
 - A teacher's plan is a **reference** to the shared library, never a per-tenant copy of bytes.
 - A plan attached to a section is **immutable** for the life of that attachment (§2.3).
 - Notes carry **no version history** (§2.4).
-- Year is a **label**; `(engine, constitution)` is the cache key (§2.2).
+- Year is a **label**; `(engine, constitution)` is the cache key (§2.2). Grep-able form: **no
+  plan FILENAME ever contains a year** — `tests/test_lp_year.py` asserts it on the live
+  library, and `test_carried_chapter_still_hits_its_cache` is what fails if someone re-keys.
+- The **library's** edition year and the **teacher's** academic year are different facts and
+  never substitute for one another (§2.2).
+- Authoring and the runtime resolve paths from the **same** `config.DATA_DIR` — a canonical
+  must never be written where the API does not read (this drifted twice; §2.2).
 - Entitlement is resolved **server-side** and carries its **platform of purchase** (§2.5).
 - Export and erase remain reachable **while lapsed** (§2.5).
 - Core/engine never talks to a vendor directly — only through `aruvi_core/ports.py`.

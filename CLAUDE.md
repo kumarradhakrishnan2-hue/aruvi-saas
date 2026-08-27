@@ -828,6 +828,40 @@ know; it may never invent an answer about her record.** Next natural step: a
 "this plan looks wrong" report FROM the lesson, which can carry the plan id and unit
 that Settings cannot.
 
+**The lesson-plan library is foldered by EDITION YEAR, and the year is a LABEL (2026-08-27).**
+Spec: `docs/administrative_architecture.md §2.2` (rewritten the same day; its status header was
+stale and now carries a per-step table). ★ **Two different years live in this system and
+conflating them is the bug:** the TEACHER's academic year (Bucket B, `AcademicYear.year_id`,
+the year she is teaching in) versus the LIBRARY's edition (Bucket A, which authored edition a
+plan IS). She can teach one 2026-27 plan for years; My Lessons was showing HER year and
+`YearStamp` was using it as a proxy for the edition because nothing recorded the edition.
+Now: `saved_plans/{subject}/{grade}/{year}/…`, `config.LP_YEAR` is the edition being served and
+`data.lp_library_dir` is the ONE place the year enters a path (flat-tree fallback kept for
+un-migrated checkouts); `generate_canonical.py` stamps `academic_year` at authoring time;
+`migrate_lp_year.py` backfilled the 990 pre-stamp files (990 stamped + moved, verified
+byte-identical to a pre-move tarball bar the new field). **★ THE YEAR IS NEVER IN A FILENAME** —
+derived plans stay keyed `(engine, constitution-run)` via `canonical_version`'s `ledger_ts`, and
+that is the whole economic point: `carry_over_year.py` copies an unchanged chapter's canonical
+AND its derived plans into the next edition, rewriting only `academic_year` (+ `carried_from`),
+so the copied cache still HITS. Copy the canonical alone and every variant regenerates on first
+request — in June, at peak, which is the bill §2.2 exists to prevent. The doc's "mark each
+canonical carried or new" step was DROPPED as already-implicit in `ledger_ts`. **Display rule
+(founder): every canonical carries the stamp, but she only SEES it for a PRIOR edition** — the
+comparison is server-side (`get_plans` → `lp_year_display`, null otherwise) so screen and rule
+cannot drift. **Two silent pre-existing bugs fixed en route:** `genon/purge_derived.py` and
+`generate_canonical.py`'s install path both still named `data/content/saved_plans`, dead since
+the 2026-08-23 restructure — so the ARV-D-034 invalidation invariant had been purging NOTHING
+and authored canonicals were landing where the API never looks; both now read `config.DATA_DIR`,
+and purge sweeps every edition (a carried canonical shares its `ledger_ts`, so its copy shares
+the cache key). `generate_canonical` also gained redirectable `LIB_ROOT`/`BACKUP_ROOT` — moving
+its path onto config silently removed the redirection `test_genon_plan_key` relied on, and the
+test reached for the live english/ix ch 7. Tests: `tests/test_lp_year.py` (17, incl. a
+sabotage-verified cache-key guard). ★ **`tests/corpus.py` is now the ONE way a test reaches the
+library** — ten files carried their own flat globs and matched ZERO plans after foldering;
+making them run surfaced three pre-existing content defects (4 empty-stem items in 13,115, 8
+re-ordered plans, 1 unitize corruption) that are REAL and unfixed. Suite 37 green (was 20).
+Static + unit-verified; live + mobile pass owed on the `YearStamp` change.
+
 **Persistence + tenanting groundwork (2026-06-28) — the front-end-only state is now
 server-persisted and per-tenant, ahead of full Phase-4 auth.** Built: (a) a **user-ID login
 portal** (`web/app/components/Login.jsx`) gating the app — no password yet; the ID travels as

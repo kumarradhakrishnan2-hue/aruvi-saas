@@ -1,0 +1,1726 @@
+{
+  "filename": "ch_07_canonical.json",
+  "saved_at": "2026-08-17T11:54:19",
+  "plan_status": "canonical",
+  "chapter_number": 7,
+  "chapter_title": "Particulate Nature of Matter",
+  "grade": "Grade VIII",
+  "subject": "Science",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 45,
+      "count": 18
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 45 minutes × 18 periods = 810 minutes\nTotal: 18 periods · 13h 30min",
+  "genon_canonical": {
+    "generated": "2026-08-17",
+    "schedule": "18x45",
+    "constitution": "LP v2.2 / assessment v1.5",
+    "source": "generate_canonical.py one science viii 7",
+    "ledger_ts": "20260817_113057_sci_viii_07_top",
+    "validation": "clean",
+    "synthesis_reauthor": {
+      "spec": "science_middle_stage_serve.md §6 v1.3",
+      "at": "2026-08-18T08:14:05",
+      "ledger_ts": "20260817_203333_sci_viii_07_resynth",
+      "model": "claude-sonnet-4-6",
+      "compacts_read": {
+        "ch_07_canonical_p16.json": "2026-08-17T12:37:59",
+        "ch_07_canonical_p14.json": "2026-08-17T12:38:00",
+        "ch_07_canonical_p12.json": "2026-08-17T12:38:00",
+        "ch_07_canonical_p10.json": "2026-08-17T12:38:00"
+      },
+      "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+    },
+    "synthesis_polish": {
+      "spec": "density + typed visual_aids (founder, 2026-08-18)",
+      "at": "2026-08-18T12:09:58",
+      "ledger_ts": "20260818_120452_sci_viii_07_polish",
+      "model": "claude-sonnet-4-6",
+      "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+    },
+    "repairs": [
+      {
+        "tool": "genon/repair_approach_labels.py v1.0",
+        "at": "2026-08-18T13:16:33",
+        "reason": "resynth wrote essay-length pedagogical_approach into a 2-word label field (founder, 2026-08-18); label read from the essay's own first device, full old text archived here",
+        "edits": [
+          {
+            "unit": 18,
+            "field": "pedagogical_approach",
+            "removed": "Problem-based learning in which a concrete, novel design scenario acts as the integrating context. Pairs collaborate to produce a tangible artefact — an annotated diagram plus a written rationale — whose quality is judged by how fully and accurately they deploy the chapter's particulate model. The teacher's role is to prompt without prescribing, keeping the reasoning at the particle level rather than the everyday level.",
+            "replaced_with": "Problem-based Design Task"
+          }
+        ]
+      }
+    ],
+    "academic_year": "2026-27"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 45,
+          "progression_stage": 1,
+          "stage_label": "Observe and question the nature of matter",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Chalk, Powder, and an Unanswered Question",
+          "activity_description": "Students break and grind chalk, examining each fragment and concluding it remains chalk throughout subdivision. They record observations at each stage and frame the question: is there a smallest piece beyond which something stops being chalk?",
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Break and grind chalk progressively, record observations at each step, and articulate the central question about indefinite subdivision."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Circulates to prompt students to compare successive stages and voice the question that drives the chapter."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher orients the class to the chapter's opening question — what is matter made up of — and distributes chalk and mortars."
+            },
+            {
+              "minutes": "8-30",
+              "activity": "Groups break chalk into halves, then quarters, then grind to powder, recording at each step whether the fragment is still chalk and what changes."
+            },
+            {
+              "minutes": "30-40",
+              "activity": "Groups share observations; class identifies the shared pattern that the substance identity persists despite size change."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Students individually write the unanswered question: could subdivision continue to a particle too small to see, and would it still be chalk?"
+            }
+          ],
+          "teacher_notes": "This unit opens the chapter's central inquiry, so orient students to the idea that they are asking a question scientists have wrestled with for centuries. Watch for the common conflation of physical change with change of substance — students may say grinding 'changes' the chalk; push them to distinguish appearance from identity. A useful checkpoint: every group should be able to state, unprompted, that each fragment is still chalk before the unit closes.",
+          "materials": [
+            "chalk sticks",
+            "mortar and pestle",
+            "magnifying glass",
+            "observation recording sheets"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 45,
+          "progression_stage": 1,
+          "stage_label": "Observe and question the nature of matter",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Sugar That Vanishes but Stays",
+          "activity_description": "Students dissolve sugar in water, observe the disappearance of sugar crystals, and then taste the solution to confirm sugar's continued presence. They construct an inference about what happened to the sugar and why the volume changed less than expected.",
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Dissolve sugar in water, taste, and record the paradox of invisible-yet-present sugar as a written inference."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Poses guiding questions that push students from 'the sugar disappeared' toward 'the sugar must be somewhere in the water, just too small to see'."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Brief recall of the previous unit's central question; teacher frames today's activity as a second test of whether matter can subdivide beyond visibility."
+            },
+            {
+              "minutes": "6-25",
+              "activity": "Groups add measured sugar to water, stir until dissolved, observe the clear solution, and taste a drop to confirm sugar's presence."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Groups discuss: where did the sugar go, why can it still be tasted, and why did the water level not rise by the full volume of sugar added?"
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Each group commits to a written inference explaining their observations using the idea that sugar broke into particles too small to see."
+            }
+          ],
+          "teacher_notes": "Building on the previous unit's chalk activity, this unit provides a second, complementary line of evidence for constituent particles. The most common error here is that students say 'the sugar dissolved, so it's gone' — press them to reconcile that claim with the taste evidence. Ask groups to explain the partial volume increase before moving on; this seeds the interparticle spaces concept developed in later units.",
+          "materials": [
+            "sugar",
+            "water",
+            "beakers (200 mL)",
+            "stirring rods",
+            "measuring cylinders"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 45,
+          "progression_stage": 2,
+          "stage_label": "Classify matter by observable properties into three states",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Nails, Rocks, and Rulers — What Solids Share",
+          "activity_description": "Students collect and handle a set of solid objects — iron nail, rock salt crystal, stone, wood block, key, aluminium strip — and systematically record their shape and volume across multiple observations. They identify the defining observable property that unites all solids.",
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Handle each solid, attempt to change its shape by hand, record whether shape and volume are definite or indefinite, and draft a one-sentence definition of a solid based on observations."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Ensures groups test shape-retention rigorously and does not supply the definition before groups have committed to their own."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher introduces the stage's organising question: can we classify all matter by what we can observe about shape, volume, and flow?"
+            },
+            {
+              "minutes": "7-28",
+              "activity": "Groups handle each solid object, attempt to change shape, pour between containers, and complete an observation table: object, definite shape (Y/N), definite volume (Y/N), flows (Y/N)."
+            },
+            {
+              "minutes": "28-38",
+              "activity": "Groups share tables; class arrives at the shared definition of a solid through discussion."
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Students individually identify which column in their table is the decisive classifier and justify the choice in one sentence."
+            }
+          ],
+          "teacher_notes": "This is the first unit of the classification stage, moving from the particle question of the previous two units to the observable-property level that the chapter uses to distinguish states. A frequent misconception is that hardness defines a solid — students may argue butter or wax are not solids; steer discussion toward definite shape and volume as the criteria, not hardness. Grouping students so at least one handled a flexible solid (aluminium strip) helps surface this.",
+          "materials": [
+            "iron nail",
+            "rock salt crystals",
+            "stone",
+            "wood block",
+            "key",
+            "aluminium strip",
+            "rulers",
+            "observation tables"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 45,
+          "progression_stage": 2,
+          "stage_label": "Classify matter by observable properties into three states",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "200 mL of Water, Three Containers",
+          "activity_description": "Students transfer a fixed volume of water through three differently shaped containers, recording shape and volume at each transfer. They contrast liquid behaviour with solid behaviour from the previous unit and produce a classification entry for liquids.",
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Transfer water across containers, mark and verify volume constancy, record shape change, and add a liquid row to their state-classification table."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Prompts students to compare liquid findings directly against the solid findings from the previous unit before writing the classification."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Quick recall: groups state in one sentence what defines a solid; teacher frames today's focus as finding out whether water fits the same definition."
+            },
+            {
+              "minutes": "6-27",
+              "activity": "Groups pour 200 mL of water into container A, mark volume, transfer to container B, verify volume is unchanged, observe shape change, then repeat with container C."
+            },
+            {
+              "minutes": "27-38",
+              "activity": "Class discusses: what stays the same (volume), what changes (shape), and how this compares to solids."
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Students add a liquid row to their state-classification table and write the distinguishing property in their own words."
+            }
+          ],
+          "teacher_notes": "In the previous unit students classified solids; this unit directly extends that table to liquids using the same observation categories. Watch for the error of claiming liquids have no definite volume — students sometimes equate 'no fixed shape' with 'no fixed volume'; the measured transfer should correct this if students actually record the volume at each step. A probing question: 'if volume changes when you pour, where did the extra water come from?' helps surface the misconception.",
+          "materials": [
+            "measuring cylinder (250 mL)",
+            "water",
+            "three differently shaped containers (A, B, C)",
+            "marker pen"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 45,
+          "progression_stage": 2,
+          "stage_label": "Classify matter by observable properties into three states",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Smoke in a Jar — Classifying Gas",
+          "activity_description": "Students collect smoke from an incense stick in one gas jar, then invert a second gas jar on top, observing smoke filling both jars. They classify gas by recording its behaviour with respect to shape, volume, and flow, and complete the three-state classification table.",
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Set up the gas jar demonstration, observe smoke spreading into the second jar, and complete the gas row of their classification table."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Facilitates safe handling of the incense stick and guides students to connect the smoke's spreading behaviour to the classification criteria."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher reviews the two completed rows of the classification table and frames the question: does gas behave like a solid, a liquid, or something distinct?"
+            },
+            {
+              "minutes": "7-27",
+              "activity": "Groups collect smoke in Gas Jar A, invert Gas Jar B on top, remove the cover, and observe smoke filling both jars over time."
+            },
+            {
+              "minutes": "27-38",
+              "activity": "Class discussion: how does gas's shape and volume compare with liquid and solid? Why does smoke fill the second jar rather than staying in the first?"
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Students complete the gas row of their classification table, then write a one-sentence summary distinguishing fluid from non-fluid states."
+            }
+          ],
+          "teacher_notes": "With solids and liquids already classified in the previous two units, this unit closes the three-state table. A common error is confusing the smoke's visible appearance with the gas itself — students may think gas is only present where the smoke is visible; clarify that invisible gas fills the jar even before smoke makes the movement detectable. The completed three-state table is a reference the class will use in every subsequent unit.",
+          "materials": [
+            "incense sticks",
+            "matches",
+            "two gas jars with covers",
+            "safety guidelines sheet"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 45,
+          "progression_stage": 3,
+          "stage_label": "Link observable properties to interparticle spacing and packing",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Compressing Air, Resisting Water",
+          "activity_description": "Students push the plunger of a sealed syringe to compress trapped air, then repeat with water. They measure how far the plunger moves in each case and record the contrast in compressibility, then relate this to differences in space between particles.",
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Compress air and attempt to compress water in syringes, record plunger displacement, and propose what the difference implies about particle spacing."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Ensures syringes are sealed correctly and asks groups to quantify displacement before drawing conclusions."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher links this unit to the completed classification table: now that states are classified by observable properties, the question is what particle-level difference explains those properties."
+            },
+            {
+              "minutes": "7-28",
+              "activity": "Groups seal a syringe with air, push the plunger and record displacement; then fill the syringe with water, seal, push, and record displacement."
+            },
+            {
+              "minutes": "28-38",
+              "activity": "Groups share quantitative observations; class identifies the pattern that air compresses substantially while water barely compresses."
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Students write an explanation linking compressibility to interparticle spacing, using the term 'constituent particle' from earlier units."
+            }
+          ],
+          "teacher_notes": "This unit opens the stage that moves from observable classification to particle-level explanation, so make the conceptual pivot explicit at the start. Students commonly think water is incompressible because it is 'heavier' rather than because particles are already close together — redirect this toward spacing, not mass. A useful check: ask each group to say in one sentence why a gas compresses and a liquid does not before writing their explanation.",
+          "materials": [
+            "syringes (10 mL, two per group)",
+            "water",
+            "rubber caps or fingers to seal syringe tip"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 45,
+          "progression_stage": 3,
+          "stage_label": "Link observable properties to interparticle spacing and packing",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Does Sugar Fit Inside Water?",
+          "activity_description": "Students measure and mark the water level in a cylinder, add a known volume of sugar and stir until dissolved, then measure the new level. They compare the measured volume increase against the volume of sugar added, observe it is smaller, and explain this using the concept of interparticle spaces.",
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Carry out the volume measurement before and after sugar dissolution, calculate the 'missing' volume, and develop an explanation using interparticle spaces."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Prompts groups to be precise about marking levels and to commit to a numerical discrepancy before offering any explanatory framing."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Recall from the first two units: sugar disappeared into water but could be tasted; this unit asks whether the water volume reflects what happened to the sugar particles."
+            },
+            {
+              "minutes": "6-28",
+              "activity": "Groups mark water level at 100 mL, add 10 mL volume equivalent of sugar, stir to full dissolution, mark the new level, and record the actual increase."
+            },
+            {
+              "minutes": "28-37",
+              "activity": "Groups discuss why the volume increase is less than 10 mL and propose explanations; teacher asks: where did the 'missing' sugar volume go?"
+            },
+            {
+              "minutes": "37-45",
+              "activity": "Students write an explanation using 'interparticle spaces' and sketch a simple diagram of water particles with sugar particles fitting between them."
+            }
+          ],
+          "teacher_notes": "The previous unit established compressibility as evidence for spacing in gases; this unit provides the parallel evidence for spacing in liquids, closing the cross-state picture. The main confusion is students expecting the volume to increase by exactly the sugar's volume — the discrepancy surprises them, and that surprise is the productive moment to introduce interparticle spaces. Accepting rough numerical discrepancies without dismissing imprecise measurements keeps students focused on the concept rather than experimental error.",
+          "materials": [
+            "measuring cylinder (200 mL)",
+            "water",
+            "sugar",
+            "stirring rod",
+            "marker pen"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 45,
+          "progression_stage": 3,
+          "stage_label": "Link observable properties to interparticle spacing and packing",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "The Three-State Particle Packing Picture",
+          "activity_description": "Students examine and annotate Figure 7.12's three-panel particle diagram (solid, liquid, gas), labelling spacing, packing arrangement, and relative attraction strength in each panel. They then use the diagram to explain why gas is compressible and why a dissolved substance fits into liquid without proportionally increasing volume.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Presents the particle packing diagram systematically, explaining each panel and explicitly linking each feature to the observations from the previous two units."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Annotate their own copy of the diagram with labels and a written explanation connecting diagram features to the compressibility and volume observations."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher presents the three-panel particle diagram, walking through solid, liquid, and gas panels and naming the features: spacing, packing, and attraction strength."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Students individually annotate their own copy of the diagram with labels for spacing (minimum/moderate/maximum), packing (tight/loose/very loose), and attraction strength (strong/moderate/negligible)."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Teacher models using the diagram to explain gas compressibility, then students use their annotated diagram to explain the sugar-in-water volume finding from the previous unit."
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Whole-class discussion: students share diagram-based explanations and the class agrees on a common language for the three states at particle level."
+            }
+          ],
+          "teacher_notes": "The previous two units built the empirical case; this unit provides the representational tool — the particle diagram — that the class will use for the rest of the chapter. Students often place all three panels on the same attraction-strength scale but fail to distinguish between moderate and negligible; be explicit that liquid attraction is not zero, only weaker than solid. The annotated diagram should remain in students' notes as a reference for subsequent units.",
+          "materials": [
+            "printed or projected copies of three-panel particle diagram (Fig. 7.12)",
+            "pencils or coloured pens"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 45,
+          "progression_stage": 4,
+          "stage_label": "Explain particle motion across states using evidence",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Permanganate Trails — Motion in Liquids",
+          "activity_description": "Students drop a single grain of potassium permanganate into still water and observe the pink colour spreading slowly outward from the grain over time. They record the spread pattern and generate an explanation for why colour moves without stirring.",
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Drop potassium permanganate into still water, observe and sketch the spread of colour at intervals, and write an evidence-based explanation for the spreading."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Reminds groups to keep the water undisturbed and probes whether any other explanation besides particle motion could account for the spreading."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher introduces this stage's question: the particle diagram showed spacing and packing, but do particles move, and if so how?"
+            },
+            {
+              "minutes": "7-28",
+              "activity": "Groups gently drop one grain of potassium permanganate into a beaker of still water, sketch the colour distribution at regular observation points, and note the direction and rate of spread."
+            },
+            {
+              "minutes": "28-38",
+              "activity": "Groups discuss: could colour spread without any movement? What must the liquid particles be doing to carry the permanganate colour outward?"
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Students write an explanation stating that liquid particles are in constant motion and this motion carries permanganate particles through the interparticle spaces."
+            }
+          ],
+          "teacher_notes": "This unit opens the particle-motion stage, which extends the particle packing picture developed in previous units by adding the dimension of movement. A common misconception is that the colour 'floats' to the top or 'sinks' due to density — drawing attention to sideways and upward spreading challenges this; students should observe spread in all directions. Keeping the water container undisturbed is critical: convection currents from movement will confound the observation.",
+          "materials": [
+            "potassium permanganate crystals",
+            "beakers (500 mL)",
+            "water",
+            "tweezers for handling crystals",
+            "observation sheets"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 45,
+          "progression_stage": 4,
+          "stage_label": "Explain particle motion across states using evidence",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Hot, Cold, and In Between — Temperature and Spreading Rate",
+          "activity_description": "Students repeat the potassium permanganate drop into hot, room-temperature, and ice-cold water, compare the rate of colour spreading across the three conditions, and use the comparison to infer the relationship between temperature and particle motion.",
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Conduct the three-temperature comparison, record spreading rates, rank the three conditions, and produce an evidence-based claim about temperature and motion."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Ensures safe handling of hot water and presses groups to state their claim as a causal relationship, not a correlation."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Recall of previous unit: colour spread without stirring, implying liquid particle motion; teacher frames the new question: does temperature change how fast particles move?"
+            },
+            {
+              "minutes": "7-30",
+              "activity": "Groups prepare three beakers (hot, room-temperature, ice-cold water), drop one grain of permanganate into each simultaneously, and record spreading speed and pattern in each."
+            },
+            {
+              "minutes": "30-40",
+              "activity": "Groups rank the three conditions by spreading rate and propose a causal explanation: higher temperature — faster spreading — more energetic particle motion."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Students record the relationship as a written claim, explicitly linking thermal energy to particle motion speed."
+            }
+          ],
+          "teacher_notes": "The previous unit established that liquid particles move; this unit quantifies that motion's dependence on temperature, directly anticipating the thermal-energy synthesis in the final stage. Watch for students confusing rate of colour change with intensity of colour — the hot water result may look different in colour concentration, not just speed; direct observation to time-to-spread, not colour depth. The ranked comparison across three temperatures is the key thinking move here.",
+          "materials": [
+            "potassium permanganate crystals",
+            "beakers (500 mL, three per group)",
+            "hot water (from kettle, teacher-prepared)",
+            "room-temperature water",
+            "ice-cold water",
+            "thermometer"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 45,
+          "progression_stage": 4,
+          "stage_label": "Explain particle motion across states using evidence",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Fragrance Across the Room — Motion in Gases",
+          "activity_description": "Students burn an incense stick in one corner of the room and record, at multiple positions, when they detect the fragrance. They map the time-to-detection at different distances and construct an argument about gas particle motion compared to liquid particle motion.",
+          "roles": [
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Stand at assigned positions, record the moment of fragrance detection, and contribute data to a class map of detection times."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Coordinates the spatial arrangement of students and facilitates the comparison between the gas-motion result and the liquid-motion result from earlier units."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher recalls the liquid-motion evidence and asks: do gas particles also move, and if so, how does their motion compare to liquid particles?"
+            },
+            {
+              "minutes": "7-28",
+              "activity": "Teacher lights incense stick in one corner; students at pre-assigned positions raise a hand when they detect fragrance and note their position; teacher records detection order on the board."
+            },
+            {
+              "minutes": "28-38",
+              "activity": "Class builds a detection-time map and discusses: why does fragrance travel faster than the permanganate colour spread? What does this imply about gas particle motion?"
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Students write a comparative statement: gas particles move faster and more randomly than liquid particles, consistent with greater interparticle spacing and weaker attractions."
+            }
+          ],
+          "teacher_notes": "This unit completes the motion evidence across all three states and explicitly invites comparison with the liquid-motion finding from the previous two units. A common error is students attributing fragrance spread to 'wind' or air currents from the door; closing windows and doors before the activity, and asking students whether air movement would produce the observed omnidirectional spread, helps challenge this. The comparative written statement is the key product linking gas motion to the particle model.",
+          "materials": [
+            "incense sticks",
+            "matches",
+            "room space with windows and doors closed"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 45,
+          "progression_stage": 4,
+          "stage_label": "Explain particle motion across states using evidence",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "Solids Don't Flow — Motion in the Solid State",
+          "activity_description": "Students contrast the absence of translational particle motion in solids with the motion observed in liquids and gases, using the chapter's explanation that solid particles vibrate about fixed positions. They annotate a summary table comparing particle motion type, speed, and freedom across all three states.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Presents the vibration-only model for solids, explicitly comparing it with the liquid and gas motion evidence gathered in previous units."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Annotate and complete the summary table comparing particle motion across the three states, then write a paragraph-length comparison."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher explains the solid particle vibration model: particles oscillate about fixed positions but cannot move past each other, contrasting this with the free movement observed in liquids and gases."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Students complete a summary table: state, type of motion (vibration only / limited movement / free rapid random motion), and relative speed."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Teacher leads a cross-state comparison discussion, connecting motion type back to interparticle attraction strength from the packing diagrams in earlier units."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Students write a paragraph comparing particle motion across solid, liquid, and gas, explicitly connecting motion type to spacing and attraction strength."
+            }
+          ],
+          "teacher_notes": "This unit closes the motion-evidence stage by filling in the solid case, which could not be demonstrated by direct observation the way liquid and gas were. Students sometimes assume solid particles are completely stationary; clarify that vibration is a real form of particle motion, just constrained to fixed positions. The summary table completed here consolidates particle motion, spacing, and attraction — it is the most important reference document for the causal stage that follows.",
+          "materials": [
+            "blank summary tables (printed or drawn)",
+            "pencils"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 13,
+          "period_duration_minutes": 45,
+          "progression_stage": 5,
+          "stage_label": "Construct causal explanations: thermal energy, interparticle attractions, and state changes",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Why Does a Solid Melt? Thermal Energy Meets Attraction",
+          "activity_description": "Students examine the melting point data table (ice 0°C, urea 133°C, iron 1538°C) and identify the pattern linking melting point to interparticle attraction strength. They construct a causal narrative: increasing thermal energy overcomes interparticle attractions, freeing particles from fixed positions at the melting point.",
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Analyse the melting point data table, rank substances by interparticle attraction strength implied by the data, and construct the causal narrative for melting."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Asks groups to commit to the causal direction — does high melting point indicate strong or weak attraction — before revealing the explanation."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher introduces this stage's shift: from describing what particles do to explaining why — using thermal energy as the causal agent."
+            },
+            {
+              "minutes": "8-28",
+              "activity": "Groups examine the melting point data table, rank the three substances by melting point, and infer what a higher melting point implies about how strongly particles are held in place."
+            },
+            {
+              "minutes": "28-38",
+              "activity": "Groups construct a written causal narrative: as thermal energy increases, particles vibrate more intensely; at the melting point, thermal energy is sufficient to overcome interparticle attractions and particles leave fixed positions."
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Class compares narratives; teacher consolidates the definition of melting point as the minimum temperature at which a solid becomes liquid at atmospheric pressure."
+            }
+          ],
+          "teacher_notes": "This unit opens the causal stage, the most cognitively demanding in the chapter, and builds directly on the summary table completed in the previous unit. Students often describe melting as 'heat makes things liquid' without explaining the mechanism; the key move is pressing them to name what happens to interparticle attractions, not just to the substance. The melting-point data table is a powerful tool here — iron's very high melting point makes the attraction-strength argument concrete.",
+          "materials": [
+            "printed melting point data table (ice, urea, iron)",
+            "completed summary tables from previous unit"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 14,
+          "period_duration_minutes": 45,
+          "progression_stage": 5,
+          "stage_label": "Construct causal explanations: thermal energy, interparticle attractions, and state changes",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "Boiling, Evaporating, and Why They Are Different",
+          "activity_description": "Students distinguish between boiling and evaporation using the chapter's explanations: boiling occurs throughout the bulk at a fixed temperature with bubble formation, while evaporation occurs at the surface at any temperature. They construct causal explanations for both using thermal energy and interparticle attractions.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Explains both processes systematically, contrasting site of occurrence, temperature dependence, and particle-level mechanism for each."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Construct parallel causal explanations for boiling and evaporation, explicitly naming thermal energy, interparticle attractions, and site of occurrence in each."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher presents the definition of boiling point and contrasts it with evaporation, emphasising that evaporation is a surface phenomenon occurring at any temperature."
+            },
+            {
+              "minutes": "10-27",
+              "activity": "Teacher explains the particle-level mechanism for each: at the boiling point, particles in the bulk gain enough thermal energy to overcome attractions and form bubbles; at the surface, some particles always have sufficient energy to escape even below the boiling point."
+            },
+            {
+              "minutes": "27-38",
+              "activity": "Students write parallel causal explanations for boiling and evaporation, using: site (bulk vs. surface), temperature (fixed vs. any), and thermal energy (all particles vs. some particles)."
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Pairs compare explanations and identify any missing causal links; teacher addresses the most common gap with the whole class."
+            }
+          ],
+          "teacher_notes": "The previous unit developed the melting explanation; this unit extends the same causal framework to liquid-gas transitions, which involves two distinct mechanisms students routinely conflate. The persistent misconception is that evaporation only happens near the boiling point; ask students to explain why wet clothes dry at room temperature as a check on whether they have internalised the surface-escape mechanism. Ensure the written explanations name the particle-level reason, not just the observable difference.",
+          "materials": [
+            "whiteboard or projected notes",
+            "student notebooks"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 15,
+          "period_duration_minutes": 45,
+          "progression_stage": 5,
+          "stage_label": "Construct causal explanations: thermal energy, interparticle attractions, and state changes",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Sand in Water — When Particles Don't Fit",
+          "activity_description": "Students add sand to water and compare the volume change with the sugar-dissolution result from an earlier unit. They explain the contrast using the particulate model: sand particles are too large to occupy interparticle spaces, so they add volume and settle, unlike dissolved sugar.",
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Repeat the volume measurement procedure with sand, record the volume increase, compare it with the sugar result, and construct a causal explanation for the difference."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Directs groups to use the same measurement protocol as the sugar activity to ensure a valid comparison, and presses them to explain the contrast using particle size and interparticle spaces."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Recall of the sugar-in-water volume activity; teacher frames the question: would sand behave the same way as sugar, and why or why not?"
+            },
+            {
+              "minutes": "7-27",
+              "activity": "Groups add a measured volume of sand to 100 mL of water, record the new volume, note that the increase equals the sand volume, and observe that sand settles rather than dissolving."
+            },
+            {
+              "minutes": "27-38",
+              "activity": "Groups compare the sand result with the sugar result and construct an explanation: sugar particles are small enough to fit into interparticle spaces; sand particles are not."
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Students write a causal explanation linking particle size, interparticle spaces, and observable volume change, explicitly contrasting the two substances."
+            }
+          ],
+          "teacher_notes": "This unit uses a contrastive pairing — sand versus sugar — to deepen the causal explanation of interparticle spaces developed in earlier units. Students often explain the difference purely in terms of 'sugar dissolves and sand doesn't' without the particle-level reasoning; the target is the mechanistic claim about particle size relative to interparticle space size. Ensure students record the sand volume increase before stirring as well as after settling, to observe the before-and-after clearly.",
+          "materials": [
+            "measuring cylinder (200 mL)",
+            "water",
+            "sand",
+            "sugar (for reference)",
+            "stirring rod"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 16,
+          "period_duration_minutes": 45,
+          "progression_stage": 5,
+          "stage_label": "Construct causal explanations: thermal energy, interparticle attractions, and state changes",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "The Thermal Energy Arc — From Solid to Gas",
+          "activity_description": "Students construct a continuous causal narrative arc from the solid state to the liquid state to the gaseous state, showing how progressively increasing thermal energy changes interparticle attraction, spacing, motion, and observable properties at each transition. They produce an annotated sequence diagram.",
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Draw a thermal energy arc diagram with three nodes (solid, liquid, gas) and annotate each transition with changes in thermal energy, attraction, spacing, and motion."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Circulates and asks groups to ensure every annotation names a causal mechanism, not just an observation, and checks that both transition points (melting and boiling) are explicitly labelled."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher frames this unit as a synthesis of the causal explanations developed across this stage: what single factor drives all state transitions?"
+            },
+            {
+              "minutes": "7-28",
+              "activity": "Groups construct an annotated arc diagram: solid node → liquid node → gas node, with arrows labelled with the changes in thermal energy, interparticle attraction, interparticle spacing, and particle motion at each transition."
+            },
+            {
+              "minutes": "28-38",
+              "activity": "Groups present their diagrams to an adjacent group for peer review, checking that both melting point and boiling point are correctly labelled and causally explained."
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Whole-class consolidation: teacher invites one group to walk through the full arc on the board while the class checks their own diagrams against it."
+            }
+          ],
+          "teacher_notes": "This unit consolidates the entire causal stage before the synthesis unit and is the most integrative activity of the chapter arc proper. Students commonly get the direction right (more thermal energy → weaker attraction → more spacing → more motion) but omit the specific transition-point language; press for 'at the melting point' and 'at the boiling point' rather than vague 'when it gets hot enough'. The annotated arc diagram should be kept in student notebooks as a chapter-level reference.",
+          "materials": [
+            "large sheets of paper or A3 sheets",
+            "coloured markers"
+          ],
+          "homework": [
+            "Using the thermal energy arc diagram you constructed, write a paragraph explaining what happens at the particle level when iron (melting point 1538°C) cools from a liquid back to a solid — name the changes in thermal energy, attraction, spacing, and motion at each step."
+          ]
+        },
+        {
+          "period_number": 17,
+          "period_duration_minutes": 45,
+          "progression_stage": 5,
+          "stage_label": "Construct causal explanations: thermal energy, interparticle attractions, and state changes",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "Acharya Kanad and the Limits of Division",
+          "activity_description": "Students revisit the chapter's foundational question — can matter be subdivided indefinitely — in light of the particulate model they have built across the arc. They engage with the chapter's sidebar on Acharya Kanad's Parmanu concept and assess how the ancient idea aligns with and differs from the modern constituent-particle model.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Presents the Acharya Kanad sidebar and its historical context, then facilitates a structured comparison between Parmanu and constituent particles."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Write a structured comparison identifying one point of alignment and one point of difference between the Parmanu concept and the constituent-particle model used in this chapter."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher returns to the opening question from the first unit: is there a smallest particle? Presents the Acharya Kanad sidebar and its claim about tiny, indivisible, eternal particles."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Class discussion: how does the Parmanu concept align with the constituent-particle idea used throughout the chapter? Where does it differ — for example, in the claim about indivisibility?"
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Students individually write a structured comparison: one sentence of alignment (both propose a smallest particle that retains substance identity), one sentence of difference (Parmanu is eternal and indivisible; modern models allow further subdivision)."
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Teacher briefly distinguishes the scale difference flagged in the SPM sidebar: SPM 'particles' are thousands of times larger than constituent particles such as atoms and molecules."
+            }
+          ],
+          "teacher_notes": "This unit provides conceptual closure before the synthesis unit and anchors the chapter's history-of-science content in the arc. A potential confusion is students treating Parmanu and constituent particle as interchangeable; the structured comparison is designed to prevent this by requiring an explicit difference. Ending with the SPM scale clarification ensures students leave with a precise understanding of the word 'particle' as used in two distinct scientific contexts.",
+          "materials": [
+            "chapter text (Acharya Kanad sidebar)",
+            "student notebooks"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 18,
+          "period_duration_minutes": 45,
+          "progression_stage": 5,
+          "stage_label": "Construct causal explanations: thermal energy, interparticle attractions, and state changes",
+          "synthesis": true,
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Apply the particulate model to predict the state of substance X at each temperature, explain each prediction using constituent particles, interparticle attractions, interparticle spacing, and particle motion, and present their reasoning."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Presents the substance X scenario without scaffolding the steps, observes group reasoning, and facilitates a closing whole-class discussion that draws the chapter's arc explicitly to a close."
+            }
+          ],
+          "activity_title": "The Ice-Lolly Problem: Designing for Particles",
+          "activity_description": "Students receive a brief design brief about a food-technology problem — a factory wants to ship flavoured ice lollies to a hot region without a cold chain — and work in pairs to produce an annotated design response. The design task requires them to apply every shared concept of the chapter: constituent particles and interparticle spaces, the three states and their observable properties, interparticle attraction and spacing, compressibility, particle motion, thermal energy as a driver, and the melting and boiling points as thresholds. Each pair produces a single annotated diagram and a short written rationale. The class finishes by comparing two contrasting designs and naming the chapter's central ideas as the reason the task could be solved at all.",
+          "teacher_notes": "This synthesis unit asks pairs to solve a novel design problem — shipping ice lollies without refrigeration — by applying every particulate-model concept from the chapter: constituent particles, interparticle attraction and spacing, the three states, compressibility, particle motion, thermal energy, and melting and boiling points as thresholds. Circulate with one reserve probe — 'What is happening to the interparticle attractions as the lolly warms up?' — to redirect any pair that slips into everyday language. For the closing comparison, select two designs that differ in emphasis (one foregrounding thermal energy and melting point, one foregrounding interparticle spacing or gas-state properties) so the board list naturally covers the whole chapter; then close by asking 'why was the particulate model useful here?' rather than 'summarise the chapter' (see material).",
+          "materials": [
+            "Design brief card, one per pair (see visual aid: 'Ice-Lolly Design Brief')",
+            "Plain A4 paper, two sheets per pair (one for annotated diagram, one for written rationale)",
+            "Pencils and rulers, one set per pair",
+            "Coloured markers or crayons for particle-level diagrams, one set per pair",
+            "Class whiteboard or chalkboard for displaying two chosen designs and building the closing concept list"
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher places the design brief card on each pair's desk and reads it aloud. Without explaining how to solve it, the teacher asks the class one orienting question: 'An ice lolly is a solid. What has to happen at the particle level for it to become a liquid?' A few students respond — teacher accepts answers, writes three key terms on the board (thermal energy, interparticle attraction, melting point) and says: 'Your design has to slow or stop exactly that process. You decide how. Use the card, use those terms, and use everything else from the chapter you need.'"
+            },
+            {
+              "minutes": "7-30",
+              "activity": "Pairs work simultaneously on the annotated diagram and the written rationale. The diagram must show particle-level sketches of the lolly in its solid state and what happens as thermal energy increases; the rationale must explain, in prose, how their packaging choice interferes with that process. Teacher circulates, listening for pairs reasoning only at the everyday level ('we wrap it in foil to keep it cold') and redirecting them to the particle level ('tell me what the foil does to the rate at which thermal energy reaches the interparticle attractions inside the lolly'). Teacher also listens for pairs who invoke compressibility, interparticle spacing, or particle motion in gases (e.g., trapped air as insulation) and encourages them to make that reasoning explicit in their written rationale."
+            },
+            {
+              "minutes": "30-40",
+              "activity": "Teacher selects two pairs whose designs differ in emphasis — one foregrounding thermal energy and melting point, one foregrounding interparticle spacing or the properties of the gas state (e.g., trapped air layer). Each pair briefly presents their diagram and reads one or two sentences of rationale. The class is then asked: 'Which particle-model ideas did Design A use? Which did Design B use? Is one approach more complete?' Students respond; teacher tracks responses on the board, building a list of chapter concepts that have appeared across the two designs."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Teacher points to the board list and names what it is: the chapter's core ideas — constituent particles, interparticle attraction, interparticle spacing, three states and their properties, thermal energy, melting point, particle motion. 'We used all of these to solve one practical problem we had never seen before. That is what the particulate model does: it makes the invisible world of particles a tool for understanding — and designing for — the visible world. The chapter's work is in that list.'"
+            }
+          ],
+          "homework": [],
+          "pedagogical_approach": "Problem-based Design Task",
+          "visual_aids": [
+            {
+              "type": "prose",
+              "title": "Ice-Lolly Design Brief",
+              "text": "A factory makes flavoured ice lollies. They need to transport them for 6 hours to a shop in a hot region with no refrigeration. Design a simple packaging solution and explain, using the particle model, why your design slows down or prevents melting."
+            },
+            {
+              "type": "table",
+              "title": "Valid Design Emphases and Required Particle-Level Reasoning",
+              "table": "Design focus | Example student choice | Particle-level reasoning required\nThermal energy and melting point | Choose a substance or additive with a higher melting point | Explain that greater thermal energy is needed to overcome interparticle attractions; melting point as threshold\nInterparticle spacing and gas state | Trap an air layer in packaging as insulation | Explain large interparticle spacing in gases, low thermal-energy transfer rate through gas, compressibility\nInsulation slowing heat transfer | Wrap in foil or thick material | Explain rate at which thermal energy reaches interparticle attractions inside the lolly; link to particle motion"
+            }
+          ]
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 45,
+        "count": 18
+      }
+    ],
+    "coverage_handoff": [
+      {
+        "stage_number": 1,
+        "stage_label": "Observe and question the nature of matter",
+        "total_stages": 5,
+        "period_numbers": [
+          1,
+          2
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students observe that matter retains its identity through physical subdivision (chalk grinding) and that dissolved matter remains detectable by taste (sugar in water), establishing the foundational idea of constituent particles too small to see.",
+        "implied_lo": "Students can describe and justify, using observations from the chalk and sugar activities, that all matter is composed of extremely small constituent particles that persist even when the substance is no longer visible.",
+        "cg": "CG-1",
+        "c_code": "C-1.1",
+        "co_central": true
+      },
+      {
+        "stage_number": 2,
+        "stage_label": "Classify matter by observable properties into three states",
+        "total_stages": 5,
+        "period_numbers": [
+          3,
+          4,
+          5
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students systematically observe and record the shape, volume, and flow behaviour of solids, liquids, and gases through hands-on activities, completing a three-state classification table that distinguishes each state by observable properties.",
+        "implied_lo": "Students can classify a given substance as a solid, liquid, or gas by identifying its definite or indefinite shape, definite or indefinite volume, and ability to flow, using evidence from their own observation tables.",
+        "cg": "CG-1",
+        "c_code": "C-1.1",
+        "co_central": true
+      },
+      {
+        "stage_number": 3,
+        "stage_label": "Link observable properties to interparticle spacing and packing",
+        "total_stages": 5,
+        "period_numbers": [
+          6,
+          7,
+          8
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students connect compressibility and dissolution volume data to differences in interparticle spacing across the three states, then consolidate this using an annotated particle-packing diagram that represents spacing, packing, and attraction strength for solid, liquid, and gas.",
+        "implied_lo": "Students can use a particle packing diagram to explain why gases are compressible and why a dissolved substance does not increase solution volume proportionally, linking each explanation to the relative interparticle spacing and attraction strength in the relevant state.",
+        "cg": "CG-1",
+        "c_code": "C-1.2",
+        "co_central": true
+      },
+      {
+        "stage_number": 4,
+        "stage_label": "Explain particle motion across states using evidence",
+        "total_stages": 5,
+        "period_numbers": [
+          9,
+          10,
+          11,
+          12
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students gather observational evidence for particle motion in liquids (permanganate spreading) and gases (fragrance spreading), investigate how temperature affects motion rate, and consolidate the motion picture for all three states including the vibration-only model for solids.",
+        "implied_lo": "Students can describe the type, freedom, and relative speed of particle motion in each state and explain why motion rate increases with temperature, using evidence from the spreading activities as justification.",
+        "cg": "CG-1",
+        "c_code": "C-1.2",
+        "co_central": true
+      },
+      {
+        "stage_number": 5,
+        "stage_label": "Construct causal explanations: thermal energy, interparticle attractions, and state changes",
+        "total_stages": 5,
+        "period_numbers": [
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students construct causal explanations for melting, boiling, and evaporation using thermal energy and interparticle attractions, compare soluble versus insoluble substances using the interparticle spaces concept, build a full thermal energy arc diagram across all three states, and apply the complete particulate model to an unfamiliar substance in the whole-chapter synthesis.",
+        "implied_lo": "Students can explain the observable properties and state-changes of matter — including classifying a substance's state at a given temperature — by using the full particulate model (constituent particles, interparticle attractions, interparticle spacing, and particle motion) to represent what is happening at the submicroscopic level.",
+        "cg": "CG-1",
+        "c_code": "C-1.2",
+        "co_central": true
+      }
+    ],
+    "assessment_items": [
+      {
+        "progression_stage": 1,
+        "stage_label": "Observe and question the nature of matter",
+        "implied_lo_assessed": "Students can describe and justify, using observations from the chalk and sugar activities, that all matter is composed of extremely small constituent particles that persist even when the substance is no longer visible.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classifies matter into three physical states by observable properties."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "A student grinds a piece of chalk until it becomes a very fine powder. Which statement best describes what happened to the chalk?",
+        "options": [
+          {
+            "label": "A",
+            "text": "The chalk changed into a new substance because its appearance changed.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The chalk particles were destroyed because they became too small to see.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The chalk turned into dust, which is a different substance from chalk.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The chalk was broken into smaller pieces, each of which is still chalk.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 1
+            },
+            "what_each_option_reveals": {
+              "A": "Confuses physical change with change of substance — student believes that a change in appearance means the substance itself has changed.",
+              "B": "Holds the misconception that particles are destroyed when they become too small to see, conflating invisibility with non-existence.",
+              "C": "Treats the word 'dust' as a substance category distinct from chalk, not recognising that dust is the same material in smaller pieces."
+            },
+            "inclusivity": "Students who struggle with written stems can be asked to explain verbally what happened during the chalk activity. Students who respond confidently can be asked to extend their reasoning: would the smallest possible piece of chalk still be chalk?"
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 1,
+        "stage_label": "Observe and question the nature of matter",
+        "implied_lo_assessed": "Students can describe and justify, using observations from the chalk and sugar activities, that all matter is composed of extremely small constituent particles that persist even when the substance is no longer visible.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classifies matter into three physical states by observable properties."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "Sugar is stirred into water until it completely disappears. A student tastes the solution and finds it is sweet. What does this observation tell us about the sugar?",
+        "options": [
+          {
+            "label": "A",
+            "text": "The sugar broke into very small constituent particles that are present throughout the water.",
+            "is_correct": true
+          },
+          {
+            "label": "B",
+            "text": "The sugar changed into water because both are now mixed together.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The sugar rose to the top of the water and is present but invisible there.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The sugar was destroyed by the water and no longer exists in the solution.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 1
+            },
+            "what_each_option_reveals": {
+              "D": "Holds the misconception that dissolution equals destruction — the substance is gone rather than present in a different form.",
+              "C": "Applies a naive floating model to dissolved particles, confusing dissolution with suspension at the surface.",
+              "B": "Confuses mixing with chemical transformation, believing that two substances merged into one new substance."
+            },
+            "inclusivity": "Students can be offered a physical analogy: if you add a drop of ink to water and the water turns blue throughout, is the ink gone? Students who answer confidently can be asked why the volume of the solution is less than the sum of sugar plus water."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Classify matter by observable properties into three states",
+        "implied_lo_assessed": "Students can classify a given substance as a solid, liquid, or gas by identifying its definite or indefinite shape, definite or indefinite volume, and ability to flow, using evidence from their own observation tables.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classifies matter into three physical states by observable properties."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": "Substance | Shape when placed in a container | Volume when transferred | Flows freely\nP | Takes the shape of the container | Volume remains fixed | Yes\nQ | Retains its own shape | Volume remains fixed | No\nR | Fills all available space | Volume changes with container | Yes",
+        "question_text": "Refer to the table provided. A student observes three substances P, Q, and R. Which row correctly matches each substance to its state of matter?",
+        "options": [
+          {
+            "label": "A",
+            "text": "P is a gas, Q is a solid, R is a liquid.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "P is a liquid, Q is a gas, R is a solid.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "P is a liquid, Q is a solid, R is a gas.",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "P is a solid, Q is a liquid, R is a gas.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "what_each_option_reveals": {
+              "A": "Confuses liquid and gas: treats definite volume as a gas property rather than a liquid property, and indefinite volume as a liquid property.",
+              "D": "Confuses solid and liquid: uses shape-retention as a liquid property rather than a solid property.",
+              "B": "Scrambles all three states, suggesting the student has not connected the observable properties (shape, volume, flow) to state identity."
+            },
+            "inclusivity": "Students who struggle with the table can be asked to focus on one column at a time: 'which substance retains its own shape?' before attempting the full classification. Students who answer quickly can be asked to write a rule that would work for any substance, not just P, Q, and R."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Classify matter by observable properties into three states",
+        "implied_lo_assessed": "Students can classify a given substance as a solid, liquid, or gas by identifying its definite or indefinite shape, definite or indefinite volume, and ability to flow, using evidence from their own observation tables.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classifies matter into three physical states by observable properties."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "A student pours 200 mL of water from a cylindrical container into a flat dish and then into a tall narrow tube. What remains the same in all three containers, and what changes?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Both shape and volume change to match each container.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Both shape and volume remain the same in all three containers.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Shape remains the same; volume changes with each container.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Volume remains the same; shape changes to match each container.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "what_each_option_reveals": {
+              "B": "Treats liquid as solid — believes both shape and volume are fixed, applying the solid model to a liquid situation.",
+              "C": "Inverts the liquid properties — correctly notes shape constancy but incorrectly attributes volume change to the liquid, a confusion between liquid and gas.",
+              "A": "Treats liquid as gas — believes both shape and volume are indefinite, failing to distinguish liquids from gases on the volume criterion."
+            },
+            "inclusivity": "Students can be asked to act this out by physically pouring water and watching the level; the verification is observable and does not require reading. Students who respond confidently can be asked to predict whether the same would be true for mercury and to justify their prediction."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Classify matter by observable properties into three states",
+        "implied_lo_assessed": "Students can classify a given substance as a solid, liquid, or gas by identifying its definite or indefinite shape, definite or indefinite volume, and ability to flow, using evidence from their own observation tables.",
+        "question_type": "SCR",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classifies matter into three physical states by observable properties."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": null,
+        "question_text": "Smoke from an incense stick placed in a closed gas jar gradually fills the entire jar. (a) State the physical state of the smoke. (b) Identify the two observable properties that led you to this classification.",
+        "options": [],
+        "expected_elements": [
+          "States that smoke is in the gaseous state.",
+          "Identifies that smoke has no fixed shape — it fills the entire available space of the container.",
+          "Identifies that smoke has no fixed volume — it expands to fill whatever volume is available.",
+          "Optionally notes that gas flows freely (or that both shape and volume are indefinite)."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "inclusivity": "Students who struggle to articulate properties in abstract terms can be prompted: 'describe what the smoke does when the jar is opened — does it stay in one place or spread?' Students who complete this readily can be asked to explain why the same substance in a smaller jar would still fill the jar completely."
+          },
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Link observable properties to interparticle spacing and packing",
+        "implied_lo_assessed": "Students can use a particle packing diagram to explain why gases are compressible and why a dissolved substance does not increase solution volume proportionally, linking each explanation to the relative interparticle spacing and attraction strength in the relevant state.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.2",
+          "competency_text": "Uses the particulate model — constituent particles, interparticle attractions, interparticle spacing, and particle motion — to represent properties of matter and explain state changes."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": null,
+        "question_text": "A syringe filled with air can be compressed easily by pushing the plunger, but a syringe filled with water cannot be compressed in the same way. Which explanation best accounts for this difference using the particulate model?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Air particles are farther apart because they are in a liquid state, while water particles are in a gaseous state.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Air particles are lighter than water particles, so they move aside more easily when the plunger pushes.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Air particles have large spaces between them that can be reduced, while water particles are already closely packed with little space between them.",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "Water particles are attracted to the syringe walls, preventing compression, while air particles are not.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "what_each_option_reveals": {
+              "B": "Explains compressibility through particle mass rather than interparticle spacing — a common everyday-reasoning error that confuses the macroscopic property of weight with particle-level structure.",
+              "D": "Invents a wall-attraction mechanism not present in the chapter — student is guessing a structural cause without grounding it in the particulate model.",
+              "A": "Reverses the states of air and water — a reading error that reveals confusion between the two substances rather than a particle-model misconception."
+            },
+            "inclusivity": "Students can be offered a physical model: imagine a box of tennis balls (air) versus a box packed tightly with marbles (water) — which box shrinks more when you press the lid? Students who answer correctly can be asked to predict what would happen to the volume of a gas if you cool it significantly."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Link observable properties to interparticle spacing and packing",
+        "implied_lo_assessed": "Students can use a particle packing diagram to explain why gases are compressible and why a dissolved substance does not increase solution volume proportionally, linking each explanation to the relative interparticle spacing and attraction strength in the relevant state.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.2",
+          "competency_text": "Uses the particulate model — constituent particles, interparticle attractions, interparticle spacing, and particle motion — to represent properties of matter and explain state changes."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "A student adds 10 mL of sugar to 100 mL of water and stirs until the sugar dissolves completely. The final volume of the solution is 106 mL, not 110 mL. Which explanation is correct?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Some of the sugar was destroyed during dissolving, so less volume was added.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Sugar particles are small enough to fit into the spaces between water particles, so the total volume increase is less than the volume of sugar added.",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "The measurement is incorrect because volume must always add up exactly when two substances are mixed.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Water particles shrank when the sugar was added, reducing the total volume.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "what_each_option_reveals": {
+              "A": "Reverts to the 'dissolved means destroyed' misconception from stage 1, not integrating the interparticle-spaces concept developed in this stage.",
+              "D": "Proposes that water particles physically shrink, a novel but incorrect mechanism that ignores the spatial model of interparticle spacing.",
+              "C": "Applies a naive conservation-of-volume rule that the student may have imported from mathematics; this option tests whether they recognise that volume is not always additive when mixing substances."
+            },
+            "inclusivity": "Students who struggle with the abstract volume argument can be offered the physical analogy of adding small pebbles to a jar already containing larger stones — the pebbles fill the gaps. Students who respond quickly can be challenged to predict whether adding sand (an insoluble substance) would produce the same volume result and to explain why or why not."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Link observable properties to interparticle spacing and packing",
+        "implied_lo_assessed": "Students can use a particle packing diagram to explain why gases are compressible and why a dissolved substance does not increase solution volume proportionally, linking each explanation to the relative interparticle spacing and attraction strength in the relevant state.",
+        "question_type": "SCR",
+        "competency": {
+          "c_code": "C-1.2",
+          "competency_text": "Uses the particulate model — constituent particles, interparticle attractions, interparticle spacing, and particle motion — to represent properties of matter and explain state changes."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "Look at a particle-packing diagram showing three panels: one for solid, one for liquid, and one for gas. Using the diagram, explain why a solid cannot be compressed but a gas can. Your answer must name the difference in interparticle spacing and in interparticle attraction strength between the two states.",
+        "options": [],
+        "expected_elements": [
+          "States that in a solid, particles are very closely packed with minimum interparticle spacing.",
+          "States that in a gas, particles have maximum interparticle spacing with large empty spaces between them.",
+          "States that interparticle attractions are strong in solids, holding particles in fixed positions.",
+          "States that interparticle attractions are negligible in gases.",
+          "Explains that gas can be compressed because the large spaces between particles can be reduced, whereas in a solid there is already almost no space to reduce."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "inclusivity": "Students who find the written explanation difficult can annotate the diagram directly with arrows and labels as an alternative demonstration. Students who complete the response readily can be asked to add a sentence explaining where liquid falls on the compressibility scale and why."
+          },
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Explain particle motion across states using evidence",
+        "implied_lo_assessed": "Students can describe the type, freedom, and relative speed of particle motion in each state and explain why motion rate increases with temperature, using evidence from the spreading activities as justification.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.2",
+          "competency_text": "Uses the particulate model — constituent particles, interparticle attractions, interparticle spacing, and particle motion — to represent properties of matter and explain state changes."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": null,
+        "question_text": "A grain of potassium permanganate is placed at the bottom of a beaker of still water. After some time, the pink colour spreads throughout the water without any stirring. What does this observation demonstrate?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Permanganate particles move only downward due to gravity, which spreads them across the base of the beaker.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Potassium permanganate is denser than water, so it rises to the top and spreads from there.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The pink colour spreads because water evaporates from the surface, creating a current that moves the permanganate.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Water particles are in constant motion, carrying permanganate particles through the interparticle spaces.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "what_each_option_reveals": {
+              "B": "Applies a density-based rising model, which contradicts the observation of sideways and downward spread in addition to upward spread.",
+              "C": "Attributes spreading to macroscopic convection currents from evaporation, avoiding the particle-motion explanation.",
+              "A": "Restricts motion to the direction of gravity, failing to account for the omnidirectional spread that is the key evidence for random motion."
+            },
+            "inclusivity": "Students can be asked to recall where they observed the pink colour spreading — upward, sideways, or only downward — as a factual anchor before reasoning about mechanism. Students who respond readily can be asked to predict how the rate of spreading would change if the beaker were placed on ice."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Explain particle motion across states using evidence",
+        "implied_lo_assessed": "Students can describe the type, freedom, and relative speed of particle motion in each state and explain why motion rate increases with temperature, using evidence from the spreading activities as justification.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.2",
+          "competency_text": "Uses the particulate model — constituent particles, interparticle attractions, interparticle spacing, and particle motion — to represent properties of matter and explain state changes."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": "Water temperature | Observation\nHot (approximately 70°C) | Pink colour spreads rapidly and fills the beaker quickly\nRoom temperature (approximately 25°C) | Pink colour spreads slowly over a longer period\nIce-cold (approximately 5°C) | Pink colour spreads very slowly and remains near the grain for a long time",
+        "question_text": "A student repeats the potassium permanganate activity using hot, room-temperature, and ice-cold water. Refer to the table provided. Which statement best explains the pattern in the results?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Cold water particles are denser and block the movement of permanganate particles more effectively than hot water particles.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Higher temperature provides more thermal energy to water particles, increasing their speed of motion and causing faster spreading.",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "Hot water has fewer particles than cold water, so permanganate can spread through it more easily.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The pink colour is more soluble in hot water, which is why it spreads faster at higher temperatures.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "what_each_option_reveals": {
+              "C": "Confuses particle count with particle speed — incorrectly proposes that fewer particles explains faster spreading rather than attributing the difference to energy.",
+              "D": "Applies a solubility explanation from chemistry that, while partially valid in other contexts, bypasses the particle-motion mechanism that is the target of this stage.",
+              "A": "Proposes a blocking model based on density, a macroscopic-level explanation that contradicts the particle-motion framework."
+            },
+            "inclusivity": "Students can be supported by asking them to rank the three conditions by spreading rate before attempting to explain; the ranking task separates observation from reasoning. Students who answer readily can be asked to predict what the spreading rate would be at a temperature between room temperature and ice-cold."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Explain particle motion across states using evidence",
+        "implied_lo_assessed": "Students can describe the type, freedom, and relative speed of particle motion in each state and explain why motion rate increases with temperature, using evidence from the spreading activities as justification.",
+        "question_type": "SCR",
+        "competency": {
+          "c_code": "C-1.2",
+          "competency_text": "Uses the particulate model — constituent particles, interparticle attractions, interparticle spacing, and particle motion — to represent properties of matter and explain state changes."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "An incense stick is burned in one corner of a closed room. Within a short time, the fragrance is detected at the opposite corner of the room. (a) Name the type of particle motion responsible for this observation. (b) Explain why fragrance spreads across a room faster than potassium permanganate colour spreads across a beaker of water. Your answer must refer to interparticle spacing and attraction strength in each state.",
+        "options": [],
+        "expected_elements": [
+          "Names the motion as rapid, random motion of gas particles (or free movement in all directions).",
+          "States that gas particles have maximum interparticle spacing and negligible interparticle attractions.",
+          "States that liquid particles have moderate interparticle spacing and moderate interparticle attractions.",
+          "Explains that greater spacing and weaker attraction in gases allows particles to move faster and more freely than in liquids.",
+          "Concludes that the faster, freer gas particle motion causes faster spreading compared to liquid particle motion."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "inclusivity": "Students who struggle to construct the comparison can be guided to first describe gas particle motion, then liquid particle motion, before attempting to compare. Students who respond readily can be asked to explain why the fragrance would take even longer to spread if the room were filled with a dense gas."
+          },
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 5,
+        "stage_label": "Construct causal explanations: thermal energy, interparticle attractions, and state changes",
+        "implied_lo_assessed": "Students can explain the observable properties and state-changes of matter — including classifying a substance's state at a given temperature — by using the full particulate model (constituent particles, interparticle attractions, interparticle spacing, and particle motion) to represent what is happening at the submicroscopic level.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.2",
+          "competency_text": "Uses the particulate model — constituent particles, interparticle attractions, interparticle spacing, and particle motion — to represent properties of matter and explain state changes."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "The melting point of iron is 1538°C, while the melting point of ice is 0°C. Using the particulate model, which statement best explains why iron has a much higher melting point than ice?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Iron has a higher melting point because it is a metal and metals always melt at high temperatures.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Iron particles are much larger than water particles, so more heat is needed to make them move.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Iron particles are packed more tightly than water particles because iron is heavier, requiring more heat to create space between them.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Iron particles have much stronger interparticle attractions than water particles, so much more thermal energy is needed to free them from fixed positions.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 5
+            },
+            "what_each_option_reveals": {
+              "B": "Attributes melting point to particle size rather than interparticle attraction strength — a confusion of particle properties with the force between particles.",
+              "A": "Applies a category-based rule ('metals melt at high temperatures') without using the particulate model, showing that the student can classify but not explain causally.",
+              "C": "Conflates particle packing density with interparticle attraction and attributes both to particle mass — a compound misconception mixing macroscopic and particle-level reasoning."
+            },
+            "inclusivity": "Students who struggle with the abstract attraction concept can be offered the analogy of magnets: substances with stronger attractions need more energy to pull apart. Students who respond confidently can be asked to predict the relative melting point of urea (133°C) and explain where it fits in the iron–ice comparison."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 5,
+        "stage_label": "Construct causal explanations: thermal energy, interparticle attractions, and state changes",
+        "implied_lo_assessed": "Students can explain the observable properties and state-changes of matter — including classifying a substance's state at a given temperature — by using the full particulate model (constituent particles, interparticle attractions, interparticle spacing, and particle motion) to represent what is happening at the submicroscopic level.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.2",
+          "competency_text": "Uses the particulate model — constituent particles, interparticle attractions, interparticle spacing, and particle motion — to represent properties of matter and explain state changes."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "Wet clothes dry on a clothesline even on a cool day, well below the boiling point of water. Which statement correctly explains this observation using the particulate model?",
+        "options": [
+          {
+            "label": "A",
+            "text": "At any temperature, some water particles at the surface have enough thermal energy to overcome interparticle attractions and escape as vapour.",
+            "is_correct": true
+          },
+          {
+            "label": "B",
+            "text": "Evaporation only occurs when the temperature equals the boiling point, so the clothes must have reached 100°C locally.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The cloth absorbs the water particles and breaks them into smaller particles that are light enough to float away.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Water boils at a lower temperature when it is spread thinly on cloth, allowing it to evaporate faster.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 5
+            },
+            "what_each_option_reveals": {
+              "D": "Conflates evaporation with boiling and applies a false rule that boiling point depends on thickness — a confusion of the two liquid-to-gas processes.",
+              "B": "Holds the persistent misconception that evaporation requires the boiling point to be reached, which is the specific alternative conception this question is designed to detect.",
+              "C": "Invents a cloth-absorption mechanism with no basis in the particulate model, suggesting the student is guessing a structural cause."
+            },
+            "inclusivity": "Students can be asked first to recall where evaporation occurs (surface only) and at what temperatures (any temperature), before applying this to the clothesline scenario. Students who answer readily can be asked to explain why evaporation is faster on a windy day using the same particle-level reasoning."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 5,
+        "stage_label": "Construct causal explanations: thermal energy, interparticle attractions, and state changes",
+        "implied_lo_assessed": "Students can explain the observable properties and state-changes of matter — including classifying a substance's state at a given temperature — by using the full particulate model (constituent particles, interparticle attractions, interparticle spacing, and particle motion) to represent what is happening at the submicroscopic level.",
+        "question_type": "ECR",
+        "competency": {
+          "c_code": "C-1.2",
+          "competency_text": "Uses the particulate model — constituent particles, interparticle attractions, interparticle spacing, and particle motion — to represent properties of matter and explain state changes."
+        },
+        "cognitive_demand": "Evaluation",
+        "visual_stimulus": null,
+        "question_text": "A student claims: 'When a substance is heated from a solid to a gas, the particles themselves change — they become lighter and move farther apart because they expand.' Evaluate this claim. State whether it is correct or incorrect and construct a counter-explanation using the particulate model that correctly accounts for what changes and what stays the same when a solid is heated to become a gas.",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [
+          "Correctly identifies the claim as incorrect.",
+          "States that the particles themselves do not change — they are the same constituent particles throughout all three states.",
+          "Explains that what changes is the interparticle spacing (increases from solid to liquid to gas) and interparticle attraction (decreases).",
+          "Explains that increasing thermal energy causes particles to move faster and overcome interparticle attractions.",
+          "Correctly names the transitions: at the melting point, thermal energy overcomes solid-state attractions; at the boiling point, thermal energy is sufficient to overcome liquid-state attractions entirely.",
+          "Connects particle motion type (vibration → limited movement → rapid random motion) to the three states correctly."
+        ],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": null,
+          "ECR": {
+            "learning_outcome": {
+              "stage": 5
+            },
+            "inclusivity": "Students who find the full counter-explanation difficult can be asked to first identify one thing that is wrong in the claim, then one thing that is right (particles do move farther apart), before constructing the full correction. Students who respond strongly can be asked to extend their explanation to predict what would happen to the thermal energy arc if you started with a substance that had much stronger interparticle attractions than iron."
+          },
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 5,
+        "stage_label": "Construct causal explanations: thermal energy, interparticle attractions, and state changes",
+        "implied_lo_assessed": "Students can explain the observable properties and state-changes of matter — including classifying a substance's state at a given temperature — by using the full particulate model (constituent particles, interparticle attractions, interparticle spacing, and particle motion) to represent what is happening at the submicroscopic level.",
+        "question_type": "OPEN_TASK",
+        "competency": {
+          "c_code": "C-1.2",
+          "competency_text": "Uses the particulate model — constituent particles, interparticle attractions, interparticle spacing, and particle motion — to represent properties of matter and explain state changes."
+        },
+        "cognitive_demand": "Evaluation",
+        "visual_stimulus": "Substance | Melting point (°C) | Boiling point (°C) | Temperature of observation (°C) | State at observation temperature | Interparticle attraction strength (strong / moderate / negligible) | Type of particle motion | One observable property that follows from the state\nNaphthalene | 80 | 218 | 25 | | | |\nNaphthalene | 80 | 218 | 150 | | | |\nNaphthalene | 80 | 218 | 300 | | | |\nEthanol | -114 | 78 | 25 | | | |\nEthanol | -114 | 78 | -150 | | | |",
+        "question_text": "",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "Refer to the table provided. For each row, use the particulate model to complete the table: (1) identify the state of the substance at the observation temperature, (2) state the interparticle attraction strength in that state, (3) describe the type of particle motion, and (4) name one observable property that follows from the state. Then write a paragraph explaining how the relationship between thermal energy and interparticle attraction determines which state a substance is in at any given temperature.",
+        "scaffold": "For step (1): compare the observation temperature to the melting point and boiling point to decide the state. For step (2) and (3): use what you know about interparticle attraction and particle motion in each state. For step (4): choose one property a person could observe without instruments — such as whether it flows, retains its shape, or can be compressed. For the paragraph: explain the causal chain from thermal energy to particle motion to observable state.",
+        "format_of_output": [
+          "Completed table with all five rows filled in.",
+          "A paragraph of at least four sentences explaining the thermal energy–interparticle attraction relationship and how it determines state."
+        ],
+        "guide": {
+          "MCQ": null,
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": {
+            "learning_outcome": {
+              "stage": 5
+            },
+            "format_type": "Data interpretation task (provided table or graph)",
+            "format_rationale": "The final stage's convergent implied LO requires students to use the full particulate model — constituent particles, interparticle attractions, spacing, and motion — to explain state and state-change simultaneously across an unfamiliar dataset; a partially completed data table is the most direct vehicle for eliciting that integrated reasoning across two substances with contrasting melting and boiling points.",
+            "what_this_demonstrates": "A complete response demonstrates that the student can apply the full particulate model flexibly to substances not encountered in the textbook activities, correctly classifying states from melting and boiling point data and causally linking thermal energy to interparticle attraction, particle motion type, and observable properties — integrating both the classification competency (C-1.1) and the representation competency (C-1.2) simultaneously.",
+            "reading_the_scaffold": "The scaffold separates the four columns into discrete reasoning steps so the teacher can diagnose where a student's reasoning breaks down: a student who fills in the state column correctly but fills in attraction and motion incorrectly has the classification but not the causal model; a student who cannot write the paragraph has the table-level reasoning but cannot synthesise across cases. The paragraph is the convergence point where both competencies must operate together.",
+            "strong_vs_weak_markers": "Strong responses: all five state cells correctly determined by comparing observation temperature to both melting and boiling point thresholds; attraction and motion columns consistent with the state identified; observable properties are genuine state-level properties (flows, retains shape, compressible) not particle-level properties; paragraph explicitly names thermal energy as the driver, interparticle attraction as the resistance being overcome, and uses both melting point and boiling point as transition markers. Weak responses: one or more state cells incorrect because only the melting point was consulted; attraction described as 'none' for liquids rather than 'moderate'; paragraph restates the table rather than explaining the causal relationship; observable property column contains particle-level descriptions instead of observable ones.",
+            "inclusivity": "Students who struggle with the full table can be asked to complete only the naphthalene rows first, using the scaffold questions explicitly for each step, before attempting ethanol. Students who complete the table and paragraph readily can be asked to design a third row for a hypothetical substance with a melting point of 500°C and a boiling point of 2000°C and explain what that implies about its interparticle attraction strength relative to naphthalene and ethanol. The teacher may substitute any other format from the Science open task menu — such as a predict-and-explain task using the same two substances — if a data table is not accessible for a particular student."
+          }
+        }
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

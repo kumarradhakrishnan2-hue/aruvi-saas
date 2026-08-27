@@ -18,6 +18,8 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from corpus import plan_paths, split_path, grade_dir, require_corpus  # noqa: E402
 
 from aruvi_core.normalize import parse_minutes_band, phases_from, phase_tiling_issues
 from aruvi_core.view_model import Phase
@@ -94,9 +96,8 @@ def walk_periods(groups):
 
 total_plans = total_periods = with_phases = parsed_ok = tiled = 0
 untiled_report = []
-for f in sorted(glob.glob(os.path.join(SAVED, "*", "*", "*.json"))):
-    parts = f.split(os.sep)
-    subject_slug, filename = parts[-3], parts[-1]
+for f in plan_paths():
+    subject_slug, _grade, filename = split_path(f)
     saved = json.load(open(f))
     sub = subjects.get(subject_slug)
     lp = sub.lesson_plan_to_view(

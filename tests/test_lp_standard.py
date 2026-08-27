@@ -19,6 +19,8 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from corpus import plan_paths, split_path, grade_dir, require_corpus  # noqa: E402
 
 import aruvi_core.subjects.english      # noqa: F401
 import aruvi_core.subjects.mathematics  # noqa: F401
@@ -51,9 +53,8 @@ def walk_periods(groups):
 
 
 views = []  # (slug, grade, filename, raw_periods, lp_view)
-for f in sorted(glob.glob(os.path.join(SAVED, "*", "*", "*.json"))):
-    parts = f.split(os.sep)
-    slug, grade_dir, fn = parts[-3], parts[-2], parts[-1]
+for f in plan_paths():
+    slug, grade_dir, fn = split_path(f)
     saved = json.load(open(f))
     result = saved.get("result", {})
     inner = result.get("lesson_plan", {})

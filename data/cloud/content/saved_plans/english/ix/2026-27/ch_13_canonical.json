@@ -1,0 +1,1379 @@
+{
+  "filename": "ch_13_canonical.json",
+  "saved_at": "2026-08-14T11:03:12",
+  "plan_status": "canonical",
+  "chapter_number": 13,
+  "chapter_title": "Carrier of Words (Carrier of Words)",
+  "grade": "Grade IX",
+  "subject": "English",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 50,
+      "count": 15
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 15 periods = 750 minutes\nTotal: 15 periods · 12h 30min",
+  "genon_canonical": {
+    "generated": "2026-08-14",
+    "schedule": "15x50",
+    "constitution": "LP v1.2 / assessment v1.6",
+    "source": "generate_canonical.py one english ix 13",
+    "ledger_ts": "20260813_193359_eng_ix_13_top",
+    "validation": "clean",
+    "repairs": [
+      {
+        "tool": "repair_stem_direction.py",
+        "kind": "stem_direction",
+        "at": "2026-08-14T17:24:32",
+        "why": "EXTRACT_ANALYSIS routes its stimulus to `passage`, which every renderer places BEFORE the stem. The stems said 'the following passage' / 'the passage below'. Only the passage-facing direction was changed; 'the questions below' and 'the questions that follow' are correct and untouched.",
+        "items": [
+          {
+            "item_id": "Q-RFC-A-2",
+            "before": "Read the following passage from the chapter and answer the questions below.",
+            "after": "Read the passage above from the chapter and answer the questions below."
+          }
+        ]
+      },
+      {
+        "tool": "repair_passage_fidelity.py",
+        "kind": "passage_fidelity",
+        "at": "2026-08-14T18:03:34",
+        "why": "Founder ruling 2026-08-14 after visual clearance of docs/batch_evidence/english_ix_passage_transcriptions.md: textbook content is set in inverted commas with its page; where it claimed to be the book and was not, it was replaced with the hand-transcribed text.",
+        "items": [
+          {
+            "item_id": "Q-RFC-A-2",
+            "mode": "replace",
+            "source": "From the chapter (pp.209–210):",
+            "words_before": 71,
+            "words_after": 81,
+            "question_edited": true
+          }
+        ]
+      }
+    ],
+    "academic_year": "2026-27"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Carrier of Words",
+          "spines_taught": [
+            "reading_for_comprehension"
+          ],
+          "activity_title": "Pre-reading Activation: Who Carries Our Words?",
+          "pedagogical_methods": {
+            "reading_for_comprehension": "comprehension-discussion"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 0,
+              "task_brief": "Reflect and Respond (p.203): paired discussion on postal workers and their challenges"
+            },
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 1,
+              "task_brief": "Reflect and Respond (p.203): group discussion on carrying words and means of connection"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Open with the photographs on p.203 projected or passed around. Students observe silently, then share first impressions in pairs — who these workers are and what difficulties they might face."
+            },
+            {
+              "minutes": "10–30",
+              "activity": "Facilitate the Reflect and Respond paired discussion (p.203) on the three questions: profession, difficulties, and impact on the people they meet. Pairs share key points aloud with the class, building a collective picture of the postal worker's world."
+            },
+            {
+              "minutes": "30–45",
+              "activity": "Move into the group discussion task (p.203): how can words be carried, who could be a carrier, and what means keep people connected. Groups report back; teacher charts responses on the board as a pre-reading concept map."
+            },
+            {
+              "minutes": "45–50",
+              "activity": "Teacher briefly previews the setting of the prose — the Thar desert, the Indo-Pakistan border, the Somarad Branch Post Office — using the map on p.203 to orient students geographically before the first read."
+            }
+          ],
+          "teacher_notes": "This unit activates prior knowledge of postal communication and sets up the contrast between digital ease and the arduous desert delivery route that the prose will develop. Students from urban settings may need a moment to appreciate how a 20-km walk in 50-degree heat is an ordinary workday for Khetaram. No uncovered tasks in this unit.",
+          "materials": [
+            "Textbook pp.203–204 (with photographs)",
+            "Board or chart paper for concept map"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Carrier of Words",
+          "spines_taught": [
+            "reading_for_comprehension"
+          ],
+          "activity_title": "Reading Khetaram's World Aloud: Desert, Distance, Duty",
+          "pedagogical_methods": {
+            "reading_for_comprehension": "shared-reading"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 2,
+              "task_brief": "Reading for Meaning (p.204): vocabulary-in-context fill-in passage with six desert words"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–20",
+              "activity": "Teacher reads pp.203–207 aloud at an unhurried pace, students following in their textbooks. Pause at vivid descriptive moments — the slumped shoulder, the mojri-clad feet, the sandman image — and invite brief oral observations before reading on."
+            },
+            {
+              "minutes": "20–38",
+              "activity": "Students work individually on the vocabulary fill-in task (p.204): placing slumped, dunes, defying, hamlets, signals, devoid into the contextual passage. Teacher circulates, then elicits answers orally, asking students to explain why each word fits."
+            },
+            {
+              "minutes": "38–50",
+              "activity": "Consolidate by revisiting the six words in the prose itself — where does each appear, and what does it add? Students note one personal observation about Khetaram's working conditions before the unit closes."
+            }
+          ],
+          "teacher_notes": "The vocabulary-in-context passage mirrors the desert setting exactly: arid, sandstorms, camels, khejri trees. Students who confuse 'slumped' (posture) with 'sank' (vertical movement) benefit from the physical image of Khetaram's left shoulder. Ensure students read the passage holistically before attempting individual blanks.",
+          "materials": [
+            "Textbook pp.203–207"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Carrier of Words",
+          "spines_taught": [
+            "reading_for_comprehension"
+          ],
+          "activity_title": "Reading On: Khetaram's Identity and Inner Life",
+          "pedagogical_methods": {
+            "reading_for_comprehension": "guided-reading"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 3,
+              "task_brief": "Check Your Understanding (p.207): identity card information sheet for Khetaram"
+            },
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 4,
+              "task_brief": "Check Your Understanding (p.207): teacher-led discussion on why Khetaram took up and sustains this job"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "Continue reading pp.207–210 aloud, students following. Focus on the sections describing Khetaram's route, his mailbag weight, and the GDS workforce context — including the shift from 'delivery agent' to GDS and India Post's post-independence mandate."
+            },
+            {
+              "minutes": "15–30",
+              "activity": "Students complete the identity card information sheet (p.207) individually: position, employer, official address, mode of transport, and four key responsibilities drawn from the text they have just read. Pairs compare and correct."
+            },
+            {
+              "minutes": "30–45",
+              "activity": "Teacher-led discussion (p.207): why did Khetaram take up this challenging job, and how might he feel about it each day? Students draw on the bajra harvest detail and the family-of-five context to reason aloud — teacher prompts for evidence from the text."
+            },
+            {
+              "minutes": "45–50",
+              "activity": "Brief consolidation: teacher summarises the economic and existential dimensions of Khetaram's role — the salary as survival — and asks students to hold that in mind as reading continues."
+            }
+          ],
+          "teacher_notes": "The information sheet grounds students in factual reading before the more interpretive discussion that follows. The bajra detail — one crop that cannot feed five — is central to understanding Khetaram's motivation; draw it out explicitly if students focus only on dedication and miss economic necessity.",
+          "materials": [
+            "Textbook pp.207–210"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Carrier of Words",
+          "spines_taught": [
+            "reading_for_comprehension"
+          ],
+          "activity_title": "Situations, Reasons, and the Weight of a Letter",
+          "pedagogical_methods": {
+            "reading_for_comprehension": "close-reading"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 5,
+              "task_brief": "Check Your Understanding (p.210): situation-reason table linking desert conditions to Khetaram's daily decisions"
+            },
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 6,
+              "task_brief": "Check Your Understanding (p.210): why jaggery was offered on news of births or weddings"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Read pp.210–212 aloud — the sections on jaggery, the BSF camp, the threshold hospitality, the dread of the torn-corner envelope, and the closing 'Main tayyar hoon'. Students follow text closely."
+            },
+            {
+              "minutes": "10–30",
+              "activity": "Students complete the situation-reason table (p.210) in pairs: matching the state-holiday heat threshold to its situation, explaining why Khetaram can dwell on any threshold, and why the BSF always gave him a lift. Pairs compare tables; teacher corrects misconceptions."
+            },
+            {
+              "minutes": "30–42",
+              "activity": "Class discussion: why was a piece of jaggery offered when Khetaram brought news of births or weddings? Teacher draws out the cultural weight of the gesture — hospitality, shared joy, the postman as community member, not just functionary."
+            },
+            {
+              "minutes": "42–50",
+              "activity": "Students write two sentences in their notebooks: one describing a specific hardship Khetaram faces and one describing a specific warmth he receives. These personal responses anchor the affective dimension of the prose."
+            }
+          ],
+          "teacher_notes": "The situation-reason table tests precise reading — students often conflate the state-holiday rule with Khetaram's personal choice to continue working; the table format forces them to separate the general law from his individual action. The jaggery question opens a discussion of cultural hospitality that is worth dwelling on briefly.",
+          "materials": [
+            "Textbook pp.210–212"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Carrier of Words",
+          "spines_taught": [
+            "reading_for_comprehension"
+          ],
+          "activity_title": "Extract Analysis: Famine, Phone Lines, and Survival",
+          "pedagogical_methods": {
+            "reading_for_comprehension": "critical-reading"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 7,
+              "task_brief": "Reading for Meaning (p.211): how phone lines would help Khetaram in his job"
+            },
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 8,
+              "task_brief": "Critical Reflection (p.211): five-question close analysis of the akaal and bajra extract"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Revisit the closing lines of the prose — Khetaram's optimism about phone lines and his aspiration to become a Gramin Sanchar Sewak. Students discuss in pairs: how exactly would phone lines change his daily work? Pairs share with the class."
+            },
+            {
+              "minutes": "10–40",
+              "activity": "Students work through the Critical Reflection extract (p.211) on the akaal and bajra passage: completing the fill-in on what one crop means, explaining 'famine as a way of life', identifying why Khetaram needed paid work, completing the analogy, and characterising 'a good year'. Teacher guides after individual attempts, pushing for textual evidence."
+            },
+            {
+              "minutes": "40–50",
+              "activity": "Whole-class discussion: what does the extract reveal about the relationship between geography, economy, and the postal service? Teacher draws the thread between Khetaram's personal survival and the money-order lifeline for other desert families."
+            }
+          ],
+          "teacher_notes": "The akaal extract is the prose's economic core; students who rush may answer the fill-in mechanically without grasping that 'famine as a way of life' is Khetaram's philosophical framing of chronic scarcity, not a description of an acute event. The analogy (Other families: Money orders :: Khetaram: salary) rewards careful re-reading.",
+          "materials": [
+            "Textbook pp.211–212"
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Carrier of Words",
+          "spines_taught": [
+            "reading_for_comprehension"
+          ],
+          "activity_title": "Extract Analysis: The Torn Corner and What It Carries",
+          "pedagogical_methods": {
+            "reading_for_comprehension": "critical-reading"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 9,
+              "task_brief": "Critical Reflection (p.211–212): five-question extract analysis on the Ashubh Samachar death-notice passage"
+            }
+          ],
+          "homework": [
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 10,
+              "task_brief": "Critical Reflection (p.212): answer questions on GDS being 'invaluable', India Post vs British postal purpose, community trust, Khetaram after 60, and the author's tribute"
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Teacher re-reads the torn-corner extract aloud with deliberate pacing — the dread, the ritual reading aloud twice outside the house, the tearing to bits. Students close their books and recall the sequence from memory before opening them."
+            },
+            {
+              "minutes": "8–38",
+              "activity": "Students work through all five questions of the extract (pp.211–212): who tore the corner, the most likely reason Khetaram read the letter twice, his philosophy and action on bad news, the true/false on whether his action matched his belief, and one aspect of his temperament revealed. Teacher circulates; pairs discuss before individual responses are written."
+            },
+            {
+              "minutes": "38–48",
+              "activity": "Whole-class debrief: teacher focuses on the temperament question — what words describe Khetaram here (philosophic, protective, superstitious, compassionate)? Students justify each descriptor with evidence from the extract."
+            },
+            {
+              "minutes": "48–50",
+              "activity": "Teacher sets the homework task (p.212): the five broader questions on GDS value, India Post's mandate, community trust, Khetaram's longevity in the role, and the author's tribute. Students note the page reference."
+            }
+          ],
+          "teacher_notes": "The true/false question is a conceptual trap — Khetaram's action (tearing the letter) perfectly enacts his belief ('bad news must be destroyed'), so the statement that his action differed from his belief is false. Students who answer 'true' are confusing the letter's destruction with a departure from ritual; clarify before moving on.",
+          "materials": [
+            "Textbook pp.211–212"
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Carrier of Words",
+          "spines_taught": [
+            "vocabulary_grammar"
+          ],
+          "activity_title": "Words of the Desert: Phrases, Devices, and Contextual Meanings",
+          "pedagogical_methods": {
+            "vocabulary_grammar": "domain-vocabulary"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "vocabulary_grammar",
+              "task_index": 0,
+              "task_brief": "Vocabulary and Structures in Context (p.212): match four desert phrases to meanings, then use each in a sentence"
+            },
+            {
+              "spine": "vocabulary_grammar",
+              "task_index": 1,
+              "task_brief": "Vocabulary and Structures in Context (p.212): identify alliteration and metaphor in the khaki-turban extract"
+            },
+            {
+              "spine": "vocabulary_grammar",
+              "task_index": 2,
+              "task_brief": "Vocabulary and Structures in Context (p.213): match five contextual vocabulary words to meanings, then use each in a sentence"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–18",
+              "activity": "Students match the four phrases in Column 1 (p.212) to their meanings in Column 2 — crumbles into sand, give a new lease of life, turn into a trickle before drying out, bearing words across this desolate geography. After checking in pairs, each student writes one original sentence using each phrase."
+            },
+            {
+              "minutes": "18–30",
+              "activity": "Teacher reads the khaki-turban extract aloud (p.212). Students identify examples of alliteration (scorching summer, swirling sandstorms) and metaphor ('walking sandman') in writing. Class discusses what effect each device creates — what the alliteration does to pace, what the metaphor does to image."
+            },
+            {
+              "minutes": "30–48",
+              "activity": "Students match the five contextual vocabulary words (p.213) — arid, concessional, gaunt, remote, desolate — to their contextual meanings in Column 2. After matching, each student writes one sentence per word. Pairs compare sentences for appropriateness of register."
+            },
+            {
+              "minutes": "48–50",
+              "activity": "Quick oral consolidation: teacher asks for one example of alliteration from everyday life and one metaphor students have heard or read, connecting the device work to wider language awareness."
+            }
+          ],
+          "teacher_notes": "The phrase-matching task works best when students are pushed to infer meaning from the desert geography itself — 'crumbles into sand' is figurative as well as literal here. For the device task, watch for students who call every repeated consonant alliteration; the alliteration in 'scorching summer' and 'swirling sandstorms' is effective precisely because it mimics the sound of wind.",
+          "materials": [
+            "Textbook pp.212–213"
+          ]
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Carrier of Words",
+          "spines_taught": [
+            "vocabulary_grammar"
+          ],
+          "activity_title": "Present Perfect Tense and the Story of Stamps",
+          "pedagogical_methods": {
+            "vocabulary_grammar": "grammar-in-writing"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "vocabulary_grammar",
+              "task_index": 3,
+              "task_brief": "Vocabulary and Structures in Context (p.213–214): present perfect tense — match seven functions, then fill blanks in the postage-stamp paragraph"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "Teacher introduces the present perfect tense using the underlined verbs in Column 1 (p.213) and their functions in Column 2. Students read the seven example sentences and match each to its function (finished action, recently completed, life experience, accomplishment, change over time, multiple actions, past action with present impact) individually."
+            },
+            {
+              "minutes": "15–35",
+              "activity": "Students fill in the five blanks in the postage-stamp paragraph (p.214) using the correct present perfect form of the verbs in brackets: have got, has collected, have studied, have begun, has truly inspired. Teacher circulates and notes common errors — especially have/has agreement and irregular past participles."
+            },
+            {
+              "minutes": "35–48",
+              "activity": "Class correction of the paragraph on the board. Teacher draws attention to the connection between the tense's functions and the meaning each sentence carries: why 'has collected over 20 years' fits 'change over time', not 'recently completed'. Students correct their own work."
+            },
+            {
+              "minutes": "48–50",
+              "activity": "Students compose one original sentence in the present perfect tense about Khetaram — using content from the prose — and share it orally. This links grammar practice back to the chapter's world."
+            }
+          ],
+          "teacher_notes": "The matching task (seven functions) often produces guesswork if students treat it as vocabulary. Encourage students to first read the full example sentence, identify what time relationship it expresses, and then match. The irregular past participle 'begun' (not 'begun' vs 'began') is a high-frequency error; address it explicitly during the fill-in correction.",
+          "materials": [
+            "Textbook pp.213–214"
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Carrier of Words",
+          "spines_taught": [
+            "vocabulary_grammar"
+          ],
+          "activity_title": "Active to Passive: Khetaram Advises His Nephew",
+          "pedagogical_methods": {
+            "vocabulary_grammar": "linguistic-aspects-in-context"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "vocabulary_grammar",
+              "task_index": 4,
+              "task_brief": "Vocabulary and Structures in Context (p.215): active-to-passive voice conversion — fill blanks A–E in Khetaram's advice paragraph"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–15",
+              "activity": "Teacher leads a short exposition of active and passive voice using the model sentences in the textbook (p.215). Students identify the agent, the action, and what shifts when the sentence is converted. Two or three examples are worked through together on the board."
+            },
+            {
+              "minutes": "15–38",
+              "activity": "Students work through the advice paragraph (p.215), converting the active sentences into passive and filling blanks A–E. Each blank is attempted individually, then compared with a partner. Teacher circulates and addresses agent omission and auxiliary-verb formation errors."
+            },
+            {
+              "minutes": "38–48",
+              "activity": "Full class correction: teacher writes each completed sentence on the board and asks students to identify the passive auxiliary and the past participle used. Discussion: why does Khetaram's advice lend itself to passive voice — what is foregrounded when the agent is de-emphasised?"
+            },
+            {
+              "minutes": "48–50",
+              "activity": "Students write one original active sentence about Khetaram's daily routine and convert it to passive voice. This closes the grammar work with a creative application grounded in the chapter's world."
+            }
+          ],
+          "teacher_notes": "Students commonly forget to include 'by + agent' when the agent is relevant, and omit 'to be' in modal passives. The context of Khetaram advising his nephew — instructions and procedures — naturally calls for passive constructions; drawing attention to this register helps students understand why the transformation makes functional sense.",
+          "materials": [
+            "Textbook p.215"
+          ]
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Carrier of Words",
+          "spines_taught": [
+            "listening"
+          ],
+          "activity_title": "Listening to Bhavna: The Daakroom Carnival Announcement",
+          "pedagogical_methods": {
+            "listening": "listen-and-respond"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "listening",
+              "task_index": 0,
+              "task_brief": "Listen and Respond (p.215): fill in whether the speaker concluded with a suggestion, request, or advice"
+            },
+            {
+              "spine": "listening",
+              "task_index": 1,
+              "task_brief": "Listen and Respond (p.215–216): five multiple-choice questions on the Daakroom carnival announcement"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Teacher sets the listening context: students will hear a Grade 9B student, Bhavna, making a school announcement about an upcoming event. Students read the fill-in question (p.215) — what kind of conclusion did the speaker give — before listening begins."
+            },
+            {
+              "minutes": "8–18",
+              "activity": "Teacher reads the transcript aloud (or plays the recording) at a natural, unhurried pace. Students listen for the fill-in answer: the speaker concluded with a request. Students write their answer and the class confirms it together."
+            },
+            {
+              "minutes": "18–30",
+              "activity": "Students read the five MCQ questions (p.215–216) silently. Teacher reads the transcript a second time. Students select their answers individually."
+            },
+            {
+              "minutes": "30–45",
+              "activity": "Class debrief: each MCQ is discussed in turn — the occasion (Indian Postal Day), India Post's network reach (most widely functioning in the world), the art form being revived (letter writing), the carnival activities (calligraphy and graphology), and the postal department's contribution (interactive demonstrations). Teacher asks students to justify each choice with a phrase from the transcript."
+            },
+            {
+              "minutes": "45–50",
+              "activity": "Students share one event from the Daakroom carnival they would most like to attend and give a reason. This brief oral close connects listening comprehension to personal response."
+            }
+          ],
+          "teacher_notes": "The distinction between 'suggestion', 'request', and 'advice' in the first task is a register question — Bhavna says 'I request all students to actively participate', so 'request' is unambiguous. In the MCQ set, distractor option 'letter posting and philately' (question 4) is plausible; ensure students listen for 'calligraphy and graphology' specifically, not just a thematically related activity.",
+          "materials": [
+            "Textbook pp.215–216",
+            "Transcript text (Unit 7, p.272 of transcript booklet) or audio recording"
+          ]
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Carrier of Words",
+          "spines_taught": [
+            "speaking"
+          ],
+          "activity_title": "The Great Postal Debate: Postcard vs Money Order",
+          "pedagogical_methods": {
+            "speaking": "group-discussion"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "speaking",
+              "task_index": 0,
+              "task_brief": "Speaking Activity (p.216): group role-play debate — postcard, inland letter, envelope, money order argue their importance"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Teacher explains the task: groups of four each take one postal form (postcard, inland letter, envelope, money order) and argue its case using the discussion points on utility, cost, privacy, space, and enclosures. Students read the verbal cues in Column 2 (p.216) and practise the phrases aloud briefly."
+            },
+            {
+              "minutes": "10–32",
+              "activity": "Groups conduct their debates simultaneously. Each student argues in character for their postal form, using verbal cues from Column 2 and at least two of the five discussion criteria. Teacher circulates, noting quality of reasoning and use of the cue phrases."
+            },
+            {
+              "minutes": "32–45",
+              "activity": "Two groups present their debates to the class. The audience listens for which arguments were strongest and notes the verbal cues used. After each presentation, the class votes on the most convincing case and briefly justifies the vote."
+            },
+            {
+              "minutes": "45–50",
+              "activity": "Teacher draws out the insight that the money order's importance in the prose — as a lifeline for desert families — adds weight to that argument beyond utility alone. Students connect the speaking activity back to Khetaram's world."
+            }
+          ],
+          "teacher_notes": "Students often default to listing features rather than reasoning from the discussion criteria; prompt them to frame each point as an argument ('I would like to point out that the money order is cost-effective because…'). The verbal cue phrases from Column 2 are scaffolding — push stronger students to vary their phrasing once they are comfortable with the structure.",
+          "materials": [
+            "Textbook p.216 (speaking task and verbal cues column)"
+          ]
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Carrier of Words",
+          "spines_taught": [
+            "writing"
+          ],
+          "activity_title": "Writing a Condolence Message: Tone, Form, and Compassion",
+          "pedagogical_methods": {
+            "writing": "guided-writing"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "writing",
+              "task_index": 0,
+              "task_brief": "Writing Task (p.216–217): draft a condolence message on behalf of parents to an aunt on the passing of her father"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Teacher reads the model condolence message (the Sawant Singh example in the textbook, p.216–217) aloud. Students identify its structural elements: salutation, expression of sympathy, specific acknowledgement, offer of support, closing. These are noted on the board as a writing frame."
+            },
+            {
+              "minutes": "12–22",
+              "activity": "Teacher leads a brief discussion on register: what tone, vocabulary, and sentence length are appropriate in condolence writing. Students suggest phrases — what to include and what to avoid — and the board list grows. The connection to Khetaram's dread of the torn-corner letter is named as context."
+            },
+            {
+              "minutes": "22–40",
+              "activity": "Students draft their own condolence message on behalf of their parents to their aunt on the passing of her father. Teacher circulates, giving formative feedback on tone (avoiding clichés), structure (logical progression), and register (formal but warm)."
+            },
+            {
+              "minutes": "40–48",
+              "activity": "Students exchange drafts with a partner for peer response: the reader checks that the message addresses all five structural elements and that the tone is appropriate. Writers receive the feedback and note one revision they would make."
+            },
+            {
+              "minutes": "48–50",
+              "activity": "Two or three students read their messages aloud. Class offers one appreciation and one specific suggestion for each. The unit closes with students having a complete, peer-reviewed draft."
+            }
+          ],
+          "teacher_notes": "Condolence writing is a functional form students will encounter in life; the prose's torn-corner envelope scene gives it genuine emotional grounding. Watch for students who produce messages that are either too brief (one line) or who slide into informal register; the model on p.216–217 is a reliable anchor. Every student should leave with a complete draft — if drafting runs long, abbreviate the peer exchange to one focused question rather than skipping it.",
+          "materials": [
+            "Textbook pp.216–217 (writing task and model condolence message)",
+            "Writing paper or notebooks"
+          ]
+        },
+        {
+          "period_number": 13,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Carrier of Words",
+          "spines_taught": [
+            "beyond_text"
+          ],
+          "activity_title": "Beyond the Letter: Daakroom, Philately, and the Telegram",
+          "pedagogical_methods": {
+            "beyond_text": "project-work"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "beyond_text",
+              "task_index": 0,
+              "task_brief": "Learning Beyond the Text (p.217): read about the Daakroom carnival and discuss its aims and design"
+            },
+            {
+              "spine": "beyond_text",
+              "task_index": 1,
+              "task_brief": "Learning Beyond the Text (p.218): philately group project — research stamps by category and contribute to a class board display"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Students read the Daakroom passage (p.217) individually. Teacher-led discussion: what problem was the carnival designed to solve, and why does 'digital detox' matter in the context of this chapter's argument about human postal connection?"
+            },
+            {
+              "minutes": "12–18",
+              "activity": "Teacher introduces the philately project (p.218): groups of five are assigned one of the five categories — personalities, celebrations, centenaries, nature, heritage. Each group identifies at least three stamps in their category from the images in the textbook."
+            },
+            {
+              "minutes": "18–40",
+              "activity": "Groups research their assigned category using the stamp images and any factual knowledge they bring. Each group prepares a brief display panel on a sheet of paper: stamp images (hand-drawn or described), names, and a two-sentence explanation of their heritage significance."
+            },
+            {
+              "minutes": "40–48",
+              "activity": "Groups present their panels to the class in two minutes each. The class asks one question per group. Teacher notes strong examples of heritage connection and raises the link between stamps as miniature cultural documents and the chapter's theme of words that carry meaning."
+            },
+            {
+              "minutes": "48–50",
+              "activity": "Teacher introduces the telegram task (p.219) as self-study: students examine the inland telegram form in the textbook and think about what occasion they would compose a telegram for. This prepares them to engage with the form independently."
+            }
+          ],
+          "teacher_notes": "The philately project is self-contained: stamp images in the textbook are sufficient and no external resources are required. Students who are unfamiliar with stamps as cultural objects benefit from the teacher naming one or two examples from the textbook images before groups begin. The telegram task (Beyond the Text, third item) is directed as self-study here because two substantial activities already fill this unit.",
+          "materials": [
+            "Textbook pp.217–219 (Daakroom passage, philately task, stamp images, telegram form)",
+            "Blank paper for group display panels"
+          ]
+        },
+        {
+          "period_number": 14,
+          "period_duration_minutes": 50,
+          "section_id": "A",
+          "section_title": "Carrier of Words",
+          "spines_taught": [
+            "reading_for_comprehension"
+          ],
+          "activity_title": "Critical Reflection: GDS, Trust, and the Author's Tribute",
+          "pedagogical_methods": {
+            "reading_for_comprehension": "literary-analysis"
+          },
+          "tasks_in_class": [
+            {
+              "spine": "reading_for_comprehension",
+              "task_index": 10,
+              "task_brief": "Critical Reflection (p.212): five extended questions — GDS invaluable, India Post vs British postal purpose, community trust, Khetaram after 60, and the author's tribute"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Teacher opens with a brief re-reading of the prose's closing two paragraphs (p.212) — 'Main tayyar hoon' and the author's tribute. Students recall key facts about the GDS workforce: numbers, geography covered, the shift from 25,000 to 1.5 lakh post offices, and the community trust passages."
+            },
+            {
+              "minutes": "10–35",
+              "activity": "Students work through the five questions (p.212) in writing: justifying the Postmaster-General's claim that GDS is invaluable, comparing India Post's mandate with the British system's purpose, supporting the trust statement with two instances, inferring why Khetaram continued past 60, and explaining the author's tribute. Teacher circulates and prompts for textual evidence rather than general comment."
+            },
+            {
+              "minutes": "35–47",
+              "activity": "Whole-class discussion of the ECR questions: the invaluable-GDS justification and the author's tribute. Students read their responses aloud; the class identifies the strongest textual evidence used. Teacher models how to structure an extended answer — claim, evidence, explanation."
+            },
+            {
+              "minutes": "47–50",
+              "activity": "Consolidation: teacher names the three threads that bind the prose — economic necessity, social trust, and human endurance — and asks students which of the five questions most directly addresses each thread. This closes the analytical work on the prose."
+            }
+          ],
+          "teacher_notes": "Students often conflate the India Post / British postal system question with a general history answer; push them to name the specific mandate difference: the British system relayed company dak between administrative centres, while post-independence India Post was mandated to bring the entire population within the mailing ambit. For the trust question, the two instances closest to hand are the villages' rejection of the patwari proposal and Khetaram's reading and drafting letters on thresholds.",
+          "materials": [
+            "Textbook p.212"
+          ]
+        },
+        {
+          "period_number": 15,
+          "period_duration_minutes": 50,
+          "synthesis": true,
+          "section_id": "A",
+          "section_title": "Carrier of Words",
+          "spines_taught": [
+            "reading_for_comprehension",
+            "speaking"
+          ],
+          "activity_title": "Synthesis: From Khetaram's Desert to India's Postal Story",
+          "pedagogical_methods": {
+            "reading_for_comprehension": "multicultural-comparative-reading",
+            "speaking": "open-house-dialogue"
+          },
+          "tasks_in_class": [],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Teacher opens with the chapter's central contrast — digital ease versus the desert delivery — and asks students to name, from memory, three specific details from the prose that make Khetaram's world vivid: a physical detail, an economic detail, and a cultural detail. Students share in pairs, then with the class."
+            },
+            {
+              "minutes": "12–25",
+              "activity": "Teacher-led discussion drawing the whole chapter together: how does the prose's structure — opening with digital communication, moving to the desert, then widening to the GDS system and post-independence India Post — build its argument? Students trace this structure aloud, naming the transitions and the evidence at each stage."
+            },
+            {
+              "minutes": "25–40",
+              "activity": "Open-house dialogue: the teacher poses three synthesis questions and students argue across the room — (1) Is Khetaram a government employee or a community member? (2) Does the prose romanticise poverty or honour labour? (3) Would a phone replace what Khetaram actually does? Students must use evidence from the prose — the vocabulary work, the grammar tasks, the philately and Daakroom contexts — to support each position."
+            },
+            {
+              "minutes": "40–48",
+              "activity": "Students write three sentences in their notebooks: one that states the prose's central argument, one that names the literary device they found most effective (alliteration, metaphor, or first-person testimony), and one personal response to Khetaram's closing words 'Main tayyar hoon'. No further input from the teacher — this is individual reflection."
+            },
+            {
+              "minutes": "48–50",
+              "activity": "Teacher closes by naming the spine of the chapter — words as weight, as lifeline, as social fabric — and connects Khetaram's endurance to the broader GDS workforce described in the prose. No preview of anything beyond; the chapter stands complete on its own ground."
+            }
+          ],
+          "teacher_notes": "This synthesis draws on the vocabulary of the desert (arid, gaunt, desolate), the grammar of service (present perfect and passive voice as frames for enduring action), the cultural contexts of philately and the Daakroom carnival, and the prose's economic and affective arguments — all named as content, not as activities that must have happened in a particular form. The open-house dialogue works best when the teacher withholds personal conclusions and lets competing textual readings resolve through student argument.",
+          "materials": [
+            "Textbook pp.203–220 (full chapter)",
+            "Students' own notebooks"
+          ]
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "period_duration_minutes": 50,
+        "period_count": 15
+      }
+    ],
+    "coverage_handoff": {
+      "reading_for_comprehension": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "Carrier of Words",
+            "section_type": "prose",
+            "implied_lo": "Student analyses character motivation, authorial purpose, and the social argument of a prose text using close reading and evidence-based response as the vehicle.",
+            "section_context": "Khetaram's desert delivery life, GDS workforce history, and the author's tribute to postal workers as social fabric.",
+            "tasks_anchored": [
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 0,
+                "task_brief": "Reflect and Respond (p.203): paired discussion on postal workers and their challenges"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 1,
+                "task_brief": "Reflect and Respond (p.203): group discussion on carrying words and means of connection"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 2,
+                "task_brief": "Reading for Meaning (p.204): vocabulary-in-context fill-in passage with six desert words"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 3,
+                "task_brief": "Check Your Understanding (p.207): identity card information sheet for Khetaram"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 4,
+                "task_brief": "Check Your Understanding (p.207): teacher-led discussion on why Khetaram took up and sustains this job"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 5,
+                "task_brief": "Check Your Understanding (p.210): situation-reason table linking desert conditions to Khetaram's daily decisions"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 6,
+                "task_brief": "Check Your Understanding (p.210): why jaggery was offered on news of births or weddings"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 7,
+                "task_brief": "Reading for Meaning (p.211): how phone lines would help Khetaram in his job"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 8,
+                "task_brief": "Critical Reflection (p.211): five-question close analysis of the akaal and bajra extract"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 9,
+                "task_brief": "Critical Reflection (p.211–212): five-question extract analysis on the Ashubh Samachar death-notice passage"
+              },
+              {
+                "spine": "reading_for_comprehension",
+                "task_index": 10,
+                "task_brief": "Critical Reflection (p.212): five extended questions on GDS value, postal mandates, community trust, and the author's tribute"
+              }
+            ]
+          }
+        ]
+      },
+      "listening": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "Carrier of Words",
+            "section_type": "prose",
+            "implied_lo": "Student demonstrates accurate listening comprehension by identifying key details, speaker intent, and event specifics from an oral announcement.",
+            "section_context": "Bhavna's school announcement about Indian Postal Day and the Daakroom letter-writing carnival.",
+            "tasks_anchored": [
+              {
+                "spine": "listening",
+                "task_index": 0,
+                "task_brief": "Listen and Respond (p.215): fill in whether the speaker concluded with a suggestion, request, or advice"
+              },
+              {
+                "spine": "listening",
+                "task_index": 1,
+                "task_brief": "Listen and Respond (p.215–216): five multiple-choice questions on the Daakroom carnival announcement"
+              }
+            ]
+          }
+        ]
+      },
+      "speaking": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "Carrier of Words",
+            "section_type": "prose",
+            "implied_lo": "Student argues a position with logical reasoning and structured verbal cues using group discussion and role-assigned debate as the vehicle.",
+            "section_context": "Group debate in which students argue for the importance of the postcard, inland letter, envelope, or money order.",
+            "tasks_anchored": [
+              {
+                "spine": "speaking",
+                "task_index": 0,
+                "task_brief": "Speaking Activity (p.216): group role-play debate — postcard, inland letter, envelope, money order argue their importance"
+              }
+            ]
+          }
+        ]
+      },
+      "writing": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "Carrier of Words",
+            "section_type": "prose",
+            "implied_lo": "Student produces a formally structured functional message in an appropriate register using guided writing as the vehicle.",
+            "section_context": "A condolence message written to a neighbour who has lost a family member during a community disaster.",
+            "tasks_anchored": [
+              {
+                "spine": "writing",
+                "task_index": 0,
+                "task_brief": "Writing Task (p.216–217): draft a condolence message on behalf of parents to an aunt on the passing of her father"
+              }
+            ]
+          }
+        ]
+      },
+      "vocabulary_grammar": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "Carrier of Words",
+            "section_type": "prose",
+            "implied_lo": "Student identifies contextual meaning of domain vocabulary, recognises literary devices, and applies present perfect tense and passive voice in writing using grammar-in-context tasks as the vehicle.",
+            "section_context": "Vocabulary of the Thar desert, alliteration and metaphor in the khaki-turban passage, present perfect tense in a postal context, and active-to-passive conversion in Khetaram's advice.",
+            "tasks_anchored": [
+              {
+                "spine": "vocabulary_grammar",
+                "task_index": 0,
+                "task_brief": "Vocabulary and Structures in Context (p.212): match four desert phrases to meanings, then use each in a sentence"
+              },
+              {
+                "spine": "vocabulary_grammar",
+                "task_index": 1,
+                "task_brief": "Vocabulary and Structures in Context (p.212): identify alliteration and metaphor in the khaki-turban extract"
+              },
+              {
+                "spine": "vocabulary_grammar",
+                "task_index": 2,
+                "task_brief": "Vocabulary and Structures in Context (p.213): match five contextual vocabulary words to meanings, then use each in a sentence"
+              },
+              {
+                "spine": "vocabulary_grammar",
+                "task_index": 3,
+                "task_brief": "Vocabulary and Structures in Context (p.213–214): present perfect tense — match seven functions, then fill blanks in the postage-stamp paragraph"
+              },
+              {
+                "spine": "vocabulary_grammar",
+                "task_index": 4,
+                "task_brief": "Vocabulary and Structures in Context (p.215): active-to-passive voice conversion — fill blanks A–E in Khetaram's advice paragraph"
+              }
+            ]
+          }
+        ]
+      },
+      "beyond_text": {
+        "section_contributions": [
+          {
+            "section_id": "A",
+            "section_title": "Carrier of Words",
+            "section_type": "prose",
+            "implied_lo": "Student investigates cultural and historical dimensions of a theme through interdisciplinary project work and research using beyond-the-text exploration as the vehicle.",
+            "section_context": "The Daakroom carnival's aims and the philately project on stamps as cultural heritage documents.",
+            "tasks_anchored": [
+              {
+                "spine": "beyond_text",
+                "task_index": 0,
+                "task_brief": "Learning Beyond the Text (p.217): read about the Daakroom carnival and discuss its aims and design"
+              },
+              {
+                "spine": "beyond_text",
+                "task_index": 1,
+                "task_brief": "Learning Beyond the Text (p.218): philately group project — research stamps by category and contribute to a class board display"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "spine_code": "reading_for_comprehension",
+        "spine_title": "Reading for Comprehension",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-RFC-A-1",
+            "source_section_id": "A",
+            "source_section_title": "Carrier of Words",
+            "source_section_type": "prose",
+            "source_spine": "reading_for_comprehension",
+            "source_lo": "Student analyses character motivation, authorial purpose, and the social argument of a prose text using close reading and evidence-based response as the vehicle.",
+            "source_context": "Khetaram's desert delivery life, GDS workforce history, and the author's tribute to postal workers as social fabric.",
+            "item_stem": "Which of the following best explains why Khetaram continues his delivery rounds even when temperatures in the Thar desert informally cross 50 degrees Celsius?",
+            "question_type": "MCQ",
+            "options": [
+              {
+                "label": "A",
+                "text": "He is inspired by the British postal tradition of delivering mail through all weather conditions.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "He is legally required to work regardless of temperature because GDS workers are not covered by state-holiday rules.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "His salary is the only reliable source of income his family of five has, since one bajra crop cannot feed them.",
+                "is_correct": true
+              },
+              {
+                "label": "D",
+                "text": "The BSF camp along his route always provides transport, making the journey safe regardless of heat.",
+                "is_correct": false
+              }
+            ],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [],
+              "answer_key": [],
+              "what_each_option_reveals": {
+                "B": "Confuses the state-holiday rule (which applies to others) with Khetaram's personal obligation; misreads the prose's legal framing.",
+                "A": "Conflates India Post's post-independence mandate with the British postal tradition the text explicitly contrasts it against.",
+                "D": "Misreads the BSF lift as a regular safety arrangement rather than an occasional gesture of warmth."
+              },
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-RFC-A-2",
+            "source_section_id": "A",
+            "source_section_title": "Carrier of Words",
+            "source_section_type": "prose",
+            "source_spine": "reading_for_comprehension",
+            "source_lo": "Student analyses character motivation, authorial purpose, and the social argument of a prose text using close reading and evidence-based response as the vehicle.",
+            "source_context": "Khetaram's desert delivery life, GDS workforce history, and the author's tribute to postal workers as social fabric.",
+            "item_stem": "Read the passage above from the chapter and answer the questions below.\n\n1. What does the phrase ‘a part and parcel of our social fabric’ tell us about the author's view of workers like Khetaram? Identify the figure of speech used and explain its effect.\n2. The prose contrasts the British postal system with post-independence India Post. What does this contrast reveal about the author's argument for the GDS workforce?\n3. Khetaram's ritual with the torn-corner envelope — reading the death notice aloud twice, then tearing it to pieces — is described as philosophical. Evaluate whether this word accurately describes his behaviour, using evidence from the prose.",
+            "question_type": "EXTRACT_ANALYSIS",
+            "options": [],
+            "visual_stimulus": "From the chapter (pp.209–210):\n“There is one letter delivery he dreads. The envelope with the right corner torn off, which signifies that the missive bears news of death. ‘Ashubh Samachar cannot be carried into the house,’ says Khetaram. So, he stands outside, reads out the letter twice, then tears it to bits. ‘Bad news must be destroyed,’ he mutters philosophically.\nPeople like Khetaram are a part and parcel of our social fabric, and are a great support! Our salute to all the people like Khetaram!”",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Identifies metaphor ('integral threads') and explains it conveys indispensability to the community.",
+                "States the British system relayed administrative dak; India Post was mandated to include the entire population.",
+                "Explains 'philosophical' fits because Khetaram holds a reasoned belief — bad news must be destroyed — and acts on it consistently.",
+                "Supports evaluation with the ritual detail: standing outside, reading twice, tearing to bits as enactment of belief.",
+                "Notes the contrast reveals the author's argument that GDS workers are social, not merely administrative, agents."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "spine_code": "listening",
+        "spine_title": "Listening",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-LIS-A-1",
+            "source_section_id": "A",
+            "source_section_title": "Carrier of Words",
+            "source_section_type": "prose",
+            "source_spine": "listening",
+            "source_lo": "Student demonstrates accurate listening comprehension by identifying key details, speaker intent, and event specifics from an oral announcement.",
+            "source_context": "Bhavna's school announcement about Indian Postal Day and the Daakroom letter-writing carnival.",
+            "item_stem": "Listen to Bhavna's announcement about an upcoming school event. Then state whether each of the following is true or false, and give a one-sentence reason drawn from her announcement.\n\n(1) Bhavna says the Daakroom carnival is designed to celebrate digital communication.\n(2) The carnival will include interactive demonstrations by the postal department.\n(3) India Post is described as the most widely functioning government postal service in India.",
+            "question_type": "TRUE_FALSE",
+            "options": [
+              {
+                "label": "1",
+                "text": "Bhavna says the Daakroom carnival is designed to celebrate digital communication.",
+                "is_correct": false
+              },
+              {
+                "label": "2",
+                "text": "India Post is described as the most widely functioning government postal service in India.",
+                "is_correct": false
+              },
+              {
+                "label": "3",
+                "text": "The carnival will include interactive demonstrations by the postal department.",
+                "is_correct": true
+              }
+            ],
+            "visual_stimulus": "",
+            "transcript_ref": "p. 272",
+            "teacher_guide": {
+              "suggested_answer": "(1) False — Bhavna says the objective is to give a digital detox and revive the forgotten art of letter writing, not to celebrate digital communication. (2) True — Bhavna explicitly states the postal department will add interactive demonstrations to the event. (3) False — Bhavna describes India Post as the most widely functioning government postal service in the world, not just in India.",
+              "expected_elements": [],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-LIS-A-2",
+            "source_section_id": "A",
+            "source_section_title": "Carrier of Words",
+            "source_section_type": "prose",
+            "source_spine": "listening",
+            "source_lo": "Student demonstrates accurate listening comprehension by identifying key details, speaker intent, and event specifics from an oral announcement.",
+            "source_context": "Bhavna's school announcement about Indian Postal Day and the Daakroom letter-writing carnival.",
+            "item_stem": "After listening to Bhavna's announcement, a student says: 'The Daakroom carnival sounds interesting, but I'm not sure why we need to revive letter writing when we have email and messaging apps.' In two or three sentences, respond to this student using at least two specific details from Bhavna's announcement to support your view.",
+            "question_type": "SCR",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "p. 272",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "References Bhavna's description of letter writing as a forgotten art form.",
+                "Names at least one specific carnival activity (calligraphy, graphology, origami, postcard making).",
+                "Connects the digital-detox aim to the value of slow, personal communication.",
+                "Uses a reason beyond personal preference — cultural, historical, or community value."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "spine_code": "speaking",
+        "spine_title": "Speaking",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-SPK-A-1",
+            "source_section_id": "A",
+            "source_section_title": "Carrier of Words",
+            "source_section_type": "prose",
+            "source_spine": "speaking",
+            "source_lo": "Student argues a position with logical reasoning and structured verbal cues using group discussion and role-assigned debate as the vehicle.",
+            "source_context": "Group debate in which students argue for the importance of the postcard, inland letter, envelope, or money order.",
+            "item_stem": "You have been assigned the role of the money order in a debate among four postal forms. In two minutes, describe to the class what the money order does, why it matters to families in remote areas like the Thar desert, and why it is the most important postal form. Use at least one specific detail from the chapter in your argument.",
+            "question_type": "ORAL_PROMPT",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Clearly states what the money order does: transfers cash to recipients who may have no bank access.",
+                "Links the money order to survival for desert families — remittances as a lifeline named in the prose.",
+                "Uses at least one textual detail (e.g. akaal, bajra, the village's reliance on remittances).",
+                "Structures the argument with a claim, a reason, and a textual example.",
+                "Uses appropriate verbal cue phrasing ('I would like to point out that…', 'Some people say…')."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-SPK-A-2",
+            "source_section_id": "A",
+            "source_section_title": "Carrier of Words",
+            "source_section_type": "prose",
+            "source_spine": "speaking",
+            "source_lo": "Student argues a position with logical reasoning and structured verbal cues using group discussion and role-assigned debate as the vehicle.",
+            "source_context": "Group debate in which students argue for the importance of the postcard, inland letter, envelope, or money order.",
+            "item_stem": "A classmate argues: 'The postcard is the most important postal form because it is cheap, open, and anyone can read it — it builds community.' Do you agree or disagree? Present your view in two to three minutes, giving at least two reasoned counter-arguments or supporting arguments, and refer to specific points from the chapter to strengthen your position.",
+            "question_type": "ORAL_PROMPT",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Takes a clear position (agree or disagree) and states it at the outset.",
+                "Provides two distinct reasons supported by logic or textual evidence.",
+                "Engages with the classmate's argument rather than ignoring it ('That's one way to look at it, but…').",
+                "References at least one specific detail from the chapter (e.g. money order as survival lifeline, privacy of the envelope for sensitive news).",
+                "Maintains appropriate register and uses structured verbal cue phrases to signal agreement, disagreement, or qualification."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "spine_code": "writing",
+        "spine_title": "Writing",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-WRT-A-1",
+            "source_section_id": "A",
+            "source_section_title": "Carrier of Words",
+            "source_section_type": "prose",
+            "source_spine": "writing",
+            "source_lo": "Student produces a formally structured functional message in an appropriate register using guided writing as the vehicle.",
+            "source_context": "A condolence message written to a neighbour who has lost a family member during a community disaster.",
+            "item_stem": "A notice has been put up in your school informing students that a classmate's grandfather, a retired postmaster, has passed away. On behalf of your family, write a formal condolence note (80–100 words) to your classmate. Your note should include a greeting, an expression of sympathy, an acknowledgement of the grandfather's service, and an offer of support.",
+            "question_type": "WRITING_TASK",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Opens with a formal salutation and correctly addresses the classmate.",
+                "Expresses genuine sympathy without clichés; tone is warm and formal.",
+                "Specifically acknowledges the grandfather's identity as a retired postmaster.",
+                "Includes a concrete offer of support or condolence (prayers, presence, help).",
+                "Closes appropriately within the 80–100 word limit with a formal sign-off."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-WRT-A-2",
+            "source_section_id": "A",
+            "source_section_title": "Carrier of Words",
+            "source_section_type": "prose",
+            "source_spine": "writing",
+            "source_lo": "Student produces a formally structured functional message in an appropriate register using guided writing as the vehicle.",
+            "source_context": "A condolence message written to a neighbour who has lost a family member during a community disaster.",
+            "item_stem": "Your school magazine is running a series called 'Letters That Matter' — real-life accounts of how a handwritten letter changed something. Write a letter to the editor (120–150 words) arguing that handwritten letters and personal correspondence deserve to be preserved as a living practice, not a museum piece. Draw on at least one idea from the chapter — the emotional weight letters carry, the communities they connect, or the role of the postman — to support your argument.",
+            "question_type": "WRITING_TASK",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Uses correct letter-to-editor format: address, date, salutation, body, sign-off.",
+                "States a clear central argument for preserving handwritten correspondence.",
+                "Draws explicitly on at least one idea from the chapter with a brief reference.",
+                "Employs discursive language — concession, evidence, and a call to action.",
+                "Maintains formal register throughout; stays within the 120–150 word range."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "spine_code": "vocabulary_grammar",
+        "spine_title": "Vocabulary and Grammar",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-VGR-A-1",
+            "source_section_id": "A",
+            "source_section_title": "Carrier of Words",
+            "source_section_type": "prose",
+            "source_spine": "vocabulary_grammar",
+            "source_lo": "Student identifies contextual meaning of domain vocabulary, recognises literary devices, and applies present perfect tense and passive voice in writing using grammar-in-context tasks as the vehicle.",
+            "source_context": "Vocabulary of the Thar desert, alliteration and metaphor in the khaki-turban passage, present perfect tense in a postal context, and active-to-passive conversion in Khetaram's advice.",
+            "item_stem": "Match each word from Column A with its contextual meaning in Column B as it is used in the chapter about Khetaram's desert delivery route.",
+            "question_type": "MATCH",
+            "options": [],
+            "visual_stimulus": "| Column A | Column B |\n|---|---|\n| arid | a person who looks thin and worn from hardship or hunger |\n| gaunt | barren land that receives very little rainfall |\n| desolate | a remote area that is empty and cut off from people |\n| concessional | offered at a reduced rate as a special allowance |\n| remote | far away from towns, services, or other people |",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "arid–1c (barren land with very little rainfall); gaunt–1a (thin and worn from hardship); desolate–1c (empty, cut off from people); concessional–1d (offered at a reduced rate); remote–1e (far from towns and services). Short form: arid-barren/little rainfall, gaunt-thin and worn, desolate-empty and isolated, concessional-reduced rate, remote-far from services.",
+              "expected_elements": [],
+              "answer_key": [
+                {
+                  "left": "arid",
+                  "right": "barren land that receives very little rainfall"
+                },
+                {
+                  "left": "gaunt",
+                  "right": "a person who looks thin and worn from hardship or hunger"
+                },
+                {
+                  "left": "desolate",
+                  "right": "a remote area that is empty and cut off from people"
+                },
+                {
+                  "left": "concessional",
+                  "right": "offered at a reduced rate as a special allowance"
+                },
+                {
+                  "left": "remote",
+                  "right": "far away from towns, services, or other people"
+                }
+              ],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-VGR-A-2",
+            "source_section_id": "A",
+            "source_section_title": "Carrier of Words",
+            "source_section_type": "prose",
+            "source_spine": "vocabulary_grammar",
+            "source_lo": "Student identifies contextual meaning of domain vocabulary, recognises literary devices, and applies present perfect tense and passive voice in writing using grammar-in-context tasks as the vehicle.",
+            "source_context": "Vocabulary of the Thar desert, alliteration and metaphor in the khaki-turban passage, present perfect tense in a postal context, and active-to-passive conversion in Khetaram's advice.",
+            "item_stem": "The sentence below, set in a context similar to Khetaram's world, is in the active voice. Rewrite it in the passive voice AND rewrite it again using the present perfect tense in the active voice. Write both transformed sentences.\n\nActive sentence: 'Villagers trust the postman to read every letter aloud.'",
+            "question_type": "SCR",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "Passive voice: 'The postman is trusted by villagers to read every letter aloud.' Present perfect (active): 'Villagers have trusted the postman to read every letter aloud.' Accept minor variation in auxiliary form provided tense and voice are correctly applied.",
+              "expected_elements": [],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "spine_code": "beyond_text",
+        "spine_title": "Beyond the Text",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-BTX-A-1",
+            "source_section_id": "A",
+            "source_section_title": "Carrier of Words",
+            "source_section_type": "prose",
+            "source_spine": "beyond_text",
+            "source_lo": "Student investigates cultural and historical dimensions of a theme through interdisciplinary project work and research using beyond-the-text exploration as the vehicle.",
+            "source_context": "The Daakroom carnival's aims and the philately project on stamps as cultural heritage documents.",
+            "item_stem": "The Daakroom carnival was described as aiming to give people a 'digital detox' and revive letter writing as a forgotten art. In a paragraph of five to six sentences, explain what the carnival was designed to do and why organisers felt this was necessary in today's context. Use at least two specific activities from the carnival's programme to support your explanation.",
+            "question_type": "ECR",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Names the Daakroom carnival and its organising bodies (Ministry of Culture, India Post, Gandhi Smriti).",
+                "Explains the digital-detox aim: countering the decline of personal, handwritten communication.",
+                "Names at least two specific programme activities (calligraphy, graphology, origami, postcard making, stamp collecting, letter writing).",
+                "Connects the carnival's purpose to the broader chapter theme of words as human connection.",
+                "Writes in clear, organised prose with a logical flow of ideas across five to six sentences."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-BTX-A-2",
+            "source_section_id": "A",
+            "source_section_title": "Carrier of Words",
+            "source_section_type": "prose",
+            "source_spine": "beyond_text",
+            "source_lo": "Student investigates cultural and historical dimensions of a theme through interdisciplinary project work and research using beyond-the-text exploration as the vehicle.",
+            "source_context": "The Daakroom carnival's aims and the philately project on stamps as cultural heritage documents.",
+            "item_stem": "Design a project plan for a school philately display titled 'Stamps as Stories'. Your plan should: (1) name three categories of stamps you would include and explain what each category reveals about Indian history or culture; (2) describe how you would present the display so that a visitor who knows nothing about philately can understand why stamps matter; (3) explain the connection between your display's theme and the chapter's argument about the postal service as social fabric.",
+            "question_type": "PROJECT",
+            "options": [],
+            "visual_stimulus": "",
+            "transcript_ref": "",
+            "teacher_guide": {
+              "suggested_answer": "",
+              "expected_elements": [
+                "Names three distinct stamp categories with a clear explanation of each one's cultural or historical significance.",
+                "Describes a visitor-friendly presentation strategy: labels, captions, or a guided trail.",
+                "Explicitly connects the display's theme to the chapter's social-fabric argument.",
+                "Shows evidence of interdisciplinary thinking: history, culture, visual design, and language.",
+                "Plan is feasibly achievable with school resources and demonstrates genuine research intent."
+              ],
+              "answer_key": [],
+              "what_each_option_reveals": {},
+              "note": ""
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

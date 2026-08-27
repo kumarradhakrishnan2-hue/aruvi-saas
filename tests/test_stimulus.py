@@ -11,6 +11,8 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from corpus import plan_paths, split_path, grade_dir, require_corpus  # noqa: E402
 
 from aruvi_core.normalize import classify_stimulus, parse_table  # noqa: E402
 from aruvi_core.view_model import StimulusType  # noqa: E402
@@ -114,7 +116,7 @@ def test_all_pipe_bearing_assessment_stimuli_type_as_table():
     """Every pipe-bearing assessment stimulus in saved plans must classify as TABLE."""
     checked = 0
     offenders = []
-    for f in glob.glob(os.path.join(DATA, "saved_plans", "*", "*", "*.json")):
+    for f in plan_paths():
         d = json.load(open(f))
 
         def walk(o):

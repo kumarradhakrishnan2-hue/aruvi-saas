@@ -43,10 +43,24 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 # (partition-era imports removed 2026-07-31 — the band/handoff layer is retired;
 # see docs/variant_canonical_architecture.md §6a)
 
+# The authoring pipeline reads DATA_DIR and LP_YEAR from the SAME place the runtime does,
+# so a canonical can never be written where the API will not look for it (§2.2).
+from api import config  # noqa: E402
+
 HERE = Path(__file__).resolve().parent           # genon/
 REPO = HERE.parent                                # aruvi-saas/
 OUT_DIR = HERE / "out" / "canonical"
 LEDGER = HERE / "ledger.csv"
+
+# ★ WHERE AUTHORED CANONICALS LAND — module-level so it can be REDIRECTED (2026-08-27).
+# install_canonical writes into the live library, so a test that cannot point it
+# somewhere else is a test that edits production content. It used to be redirectable by
+# accident (it built its path from REPO, which tests reassigned); moving it onto
+# config.DATA_DIR silently took that away, and the next run of test_genon_plan_key
+# reached for the real english/ix ch 7 — saved only by a cross-device link error.
+# Redirect BOTH of these together, never one.
+LIB_ROOT = Path(config.DATA_DIR) / "saved_plans"
+BACKUP_ROOT = REPO / "backup" / "saved_plans"
 
 # Certified generation config — mirrors Project Aruvi llm_client.py
 # (2026-07-15 regression cycle): Sonnet 4.6, thinking off.
@@ -479,13 +493,22 @@ def install_canonical(parsed: dict, subject_folder: str, grade_folder: str, ch: 
     findings ride along in genon_canonical.validation + the ledger; they are review
     input (testing.md C3), never a block. A pre-existing canonical is archived to
     backup/saved_plans/ (never deleted) — its ledger_ts keys retire with it."""
-    lib = REPO / "data" / "content" / "saved_plans" / subject_folder / grade_folder
+    # ★ TWO PATH BUGS FIXED HERE 2026-08-27.
+    # (a) `data/content/` has not existed since the 2026-08-23 cloud/local restructure —
+    #     the live tree is `data/cloud/content/` (CLAUDE.md §7). This wrote authored
+    #     canonicals into a directory the API never reads.
+    # (b) The library is now foldered by EDITION YEAR (§2.2). Authoring writes into the
+    #     CURRENT edition, so the January re-authoring batch lands beside the chapters
+    #     carry_over_year.py brought forward, not on top of last year's.
+    # Both derive from api.config so an ARUVI_DATA_DIR / ARUVI_LP_YEAR override moves
+    # the authoring output and the runtime together — they must never disagree.
+    lib = LIB_ROOT / subject_folder / grade_folder / config.LP_YEAR
     lib.mkdir(parents=True, exist_ok=True)
     fname = (f"ch_{ch:02d}_canonical_p{variant:02d}.json" if variant
              else f"ch_{ch:02d}_canonical.json")
     dest = lib / fname
     if dest.exists():
-        bdir = REPO / "backup" / "saved_plans" / subject_folder / grade_folder
+        bdir = BACKUP_ROOT / subject_folder / grade_folder
         bdir.mkdir(parents=True, exist_ok=True)
         try:
             old_ts = (json.loads(dest.read_text(encoding="utf-8"))
@@ -508,6 +531,16 @@ def install_canonical(parsed: dict, subject_folder: str, grade_folder: str, ch: 
                                     f"Total: {count} periods · {total // 60}h {total % 60}min"),
         "genon_canonical": {
             "generated": datetime.now().strftime("%Y-%m-%d"),
+            # ★ The EDITION this canonical belongs to (§2.2, 2026-08-27). Not the same
+            # fact as `generated`: a chapter authored in January 2027 belongs to the
+            # 2027-28 edition, and a chapter CARRIED forward keeps its old bytes under a
+            # new year. Stamped at authoring time so no future backfill is ever needed —
+            # aruvi-scripts/migrate_lp_year.py existed only to catch the 990 files
+            # written before this line.
+            # It is a LABEL, never part of the cache key: ledger_ts below is what keys a
+            # derived plan's filename, which is what lets carry_over_year.py move an
+            # unchanged chapter into a new edition without re-buying its variants.
+            "academic_year": config.LP_YEAR,
             "schedule": f"{count}x{duration}",
             "constitution": const_label,
             "source": f"generate_canonical.py one {subject_folder} {grade_folder} {ch}",

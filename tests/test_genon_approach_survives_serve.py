@@ -99,7 +99,11 @@ def approaches_of(view):
 
 ran = 0
 for subject, grade, chapter, periods in LIBRARIES:
-    folder = PLANS / subject / grade
+    # The library is foldered by edition year (§2.2); grade_dir resolves the current
+    # edition and still answers for a flat pre-migration tree.
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from corpus import grade_dir
+    folder = pathlib.Path(grade_dir(subject, grade))
     files = sorted(folder.glob(f"ch_{chapter:02d}_canonical*.json"))
     if not files:
         print(f"  skip  {subject}/{grade} ch{chapter} — no library on disk")

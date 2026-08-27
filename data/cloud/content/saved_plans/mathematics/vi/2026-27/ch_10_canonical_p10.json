@@ -1,0 +1,1239 @@
+{
+  "filename": "ch_10_canonical_p10.json",
+  "saved_at": "2026-08-19T13:38:18",
+  "plan_status": "canonical",
+  "chapter_number": 10,
+  "chapter_title": "The Other Side of Zero",
+  "grade": "Grade VI",
+  "subject": "Mathematics",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 40,
+      "count": 10
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 10 periods = 400 minutes\nTotal: 10 periods · 6h 40min",
+  "genon_canonical": {
+    "generated": "2026-08-19",
+    "schedule": "10x40",
+    "constitution": "LP v3.9 / assessment v3.5",
+    "source": "generate_canonical.py one mathematics vi 10",
+    "ledger_ts": "20260819_130541_math_vi_10_p10",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-19T16:43:25",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 4,
+            "field": "band:3",
+            "rule": "register/forward",
+            "removed": ", previewing the conversion rule",
+            "replaced_with": "",
+            "note": "forward reference — the observation stands on its own; naming what it previews does not | survives: …7–(–7) and 7+(+7) give the same result.…"
+          }
+        ],
+        "ban_hits_before": 1,
+        "ban_hits_after": 0
+      }
+    ],
+    "academic_year": "2026-27"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 10.1",
+              "title": "Bela's Building of Fun"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Floors Above and Below: Meeting Negative Numbers",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "A-1",
+              "type": "activity",
+              "source_section": "section 10.1",
+              "book_ref": "Activity 1, p.243",
+              "description": "Students identify floors and their numbers in Bela's Building of Fun from a diagram, and determine what to press on the lift to travel four floors up and three floors down."
+            },
+            {
+              "id": "WE-1",
+              "type": "worked_example",
+              "source_section": "section 10.1",
+              "book_ref": "Example (Addition to keep track of movement), p.245",
+              "description": "Starting from Food Court (Floor +1), pressing +2 in the lift leads to target floor (+1)+(+2)=+3, illustrating the rule Starting Floor + Movement = Target Floor."
+            },
+            {
+              "id": "E-1",
+              "type": "exercise",
+              "source_section": "section 10.1",
+              "book_ref": "Figure it Out Q1, section 10.1 p.245",
+              "description": "Start from Floor +2 and press –3. Where do you reach? Write an expression."
+            },
+            {
+              "id": "E-2",
+              "type": "exercise",
+              "source_section": "section 10.1",
+              "book_ref": "Figure it Out Q2, section 10.1 p.245",
+              "description": "Evaluate seven expressions (a–g) as Starting Floor + Movement: (+1)+(+4), (+4)+(+1), (+4)+(–3), (–1)+(+2), (–1)+(+1), 0+(+2), 0+(–2)."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Activity 1, p.243 (\"students identify floors in Bela's Building of Fun....\"). Teacher draws the building on the board — ground Floor 0, positive floors above, negative floors below — and asks students to name what is special about the numbering. Students call out observations; teacher records them."
+            },
+            {
+              "minutes": "8–18",
+              "activity": "Teacher walks through Example (Addition to keep track of movement), p.245 (\"Starting Floor +1, pressing +2 leads to Floor +3....\"). The rule Starting Floor + Movement = Target Floor is written and students copy it. Teacher poses two or three fresh floor-and-button questions orally; students respond by showing fingers for the target floor."
+            },
+            {
+              "minutes": "18–30",
+              "activity": "Figure it Out Q1, section 10.1 p.245 (\"start from Floor +2 and press –3....\") and Figure it Out Q2, section 10.1 p.245 (\"evaluate seven expressions as Starting Floor + Movement....\"). Students work in pairs, writing expressions; teacher circulates and listens for how pairs handle crossing Floor 0."
+            },
+            {
+              "minutes": "30–40",
+              "activity": "Pairs share answers for Q2; teacher uses a vertical number line on the board to verify each, paying attention to expressions where the result is negative. Class identifies which expressions cross Floor 0 and why the result changes sign."
+            }
+          ],
+          "teacher_notes": "Students often resist writing a negative result and will round up to zero — keep the vertical line visible and insist they point to the actual floor. Watch for the error of treating –3 as 'press 3 upward because there is a number': the minus sign means direction, not magnitude alone. Example (Addition to keep track of movement), p.245 is a gentle anchor for any student who needs the worked logic before attempting the Figure it Out set.",
+          "materials": [
+            "Blackboard with vertical building diagram drawn fresh this unit",
+            "Rulers or straight edges for students"
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 10.1",
+              "title": "Bela's Building of Fun"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Additive Inverses and Comparing Integer Floors",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-2",
+              "type": "worked_example",
+              "source_section": "section 10.1",
+              "book_ref": "Example (Combining button presses), p.245",
+              "description": "Gurmit presses +2 by mistake then –3 to correct; result is (+2)+(–3)=–1, illustrating that combining button presses is addition."
+            },
+            {
+              "id": "WE-3",
+              "type": "worked_example",
+              "source_section": "section 10.1",
+              "book_ref": "Example (Back to zero), p.246",
+              "description": "Pressing +3 and then –3 returns to Floor 0; introduces the concept of additive inverse. (+3)+(–3)=0."
+            },
+            {
+              "id": "E-5",
+              "type": "exercise",
+              "source_section": "section 10.1",
+              "book_ref": "Figure it Out Q1, section 10.1 p.247",
+              "description": "Compare six pairs of integers using < or > by referring to the Building of Fun: –2 vs +5, –5 vs +4, –5 vs –3, +6 vs –6, 0 vs –4, 0 vs +4."
+            },
+            {
+              "id": "E-6",
+              "type": "exercise",
+              "source_section": "section 10.1",
+              "book_ref": "Figure it Out Q2, section 10.1 p.247",
+              "description": "Compare six pairs of larger integers with < or >: –10 vs –12, +17 vs –10, 0 vs –20, +9 vs –9, –25 vs –7, +15 vs –17."
+            },
+            {
+              "id": "E-4",
+              "type": "exercise",
+              "source_section": "section 10.1",
+              "book_ref": "Figure it Out, section 10.1 p.246",
+              "description": "Evaluate four expressions (a–d) as combined button presses: (+1)+(+4), (+4)+(+1), (+4)+(–3)+(–2), (–1)+(+2)+(–3)."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-3",
+              "type": "exercise",
+              "source_section": "section 10.1",
+              "book_ref": "Figure it Out Q3, section 10.1 p.245",
+              "description": "Find multiple starting floors and the movements needed to reach Floor –5; write expressions of the form (starting)+(movement)=–5."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Teacher presents Example (Combining button presses), p.245 (\"Gurmit presses +2 by mistake then –3....\") and Example (Back to zero), p.246 (\"pressing +3 then –3 returns to Floor 0....\"). Students predict the result of each before seeing it confirmed, then formulate the 'Back to Zero' idea in their own words."
+            },
+            {
+              "minutes": "10–20",
+              "activity": "Figure it Out, section 10.1 p.246 (\"evaluate four expressions as combined button presses....\"). Students work individually, then compare with a neighbour. Teacher spotlights the three-press expression (+4)+(–3)+(–2) to show associativity is not needed — just follow the lift step by step."
+            },
+            {
+              "minutes": "20–32",
+              "activity": "Figure it Out Q1, section 10.1 p.247 (\"compare six pairs of integers using < or >....\") and Figure it Out Q2, section 10.1 p.247 (\"compare six pairs of larger integers....\"). Students use the vertical building diagram to justify each comparison; teacher asks 'which floor is lower?' as the prompt for the < symbol."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Class discussion: what pattern emerges when comparing two negative numbers (e.g., –25 vs –7)? Students articulate that the more negative a number, the lower the floor, and therefore the smaller it is. Teacher records the ordering rule on the board."
+            }
+          ],
+          "teacher_notes": "Having established the rule Starting Floor + Movement = Target Floor, students are now ready to see that two successive presses combine as a single addition — stress that the sign is part of the number, not a separate operation. A common error is reversing the inequality for two negatives (writing –25 > –7 because 25 > 7 in absolute value); the building diagram resolves this visually. Figure it Out Q3, section 10.1 p.245 is set for homework to deepen fluency with the additive form.",
+          "materials": [
+            "Blackboard with vertical number line",
+            "Individual whiteboards or rough paper for pair work"
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 10.1",
+              "title": "Bela's Building of Fun"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Subtraction as Movement: Finding the Button Press Needed",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-4",
+              "type": "worked_example",
+              "source_section": "section 10.1",
+              "book_ref": "Example (Subtraction a), p.249",
+              "description": "Target Floor –1, Starting Floor –2: movement needed is (+1). Expression: (–1)–(–2)=(+1)."
+            },
+            {
+              "id": "WE-5",
+              "type": "worked_example",
+              "source_section": "section 10.1",
+              "book_ref": "Example (Subtraction b), p.249",
+              "description": "Target Floor –1, Starting Floor +3: movement needed is –4. Expression: (–1)–(+3)=(–4)."
+            },
+            {
+              "id": "WE-6",
+              "type": "worked_example",
+              "source_section": "section 10.1",
+              "book_ref": "Example (Subtraction c), p.249",
+              "description": "Target Floor +2, Starting Floor –2: movement needed is +4. Expression: (+2)–(–2)=(+4)."
+            },
+            {
+              "id": "E-9",
+              "type": "exercise",
+              "source_section": "section 10.1",
+              "book_ref": "Figure it Out, section 10.1 p.249",
+              "description": "Complete ten subtraction expressions (a–j) as movement from Starting Floor to Target Floor: (+1)–(+4), 0–(+2), (+4)–(+1), 0–(–2), (+4)–(–3), (–4)–(–3), (–1)–(+2), (–2)–(–2), (–1)–(+1), (+3)–(–3)."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Teacher presents all three subtraction worked examples — Example (Subtraction a), p.249, Example (Subtraction b), p.249, and Example (Subtraction c), p.249 — side by side on the board. For each, the teacher asks: 'What floor are you on? What floor do you want? Which button gets you there?' Students state the movement before the teacher writes the expression."
+            },
+            {
+              "minutes": "12–28",
+              "activity": "Figure it Out, section 10.1 p.249 (\"complete ten subtraction expressions as movement from Starting Floor to Target Floor....\"). Students work independently, using the lift metaphor. Teacher circulates; any student who writes a correct numerical answer but cannot explain the movement is asked to re-narrate using floors."
+            },
+            {
+              "minutes": "28–40",
+              "activity": "Whole-class review of selected items from the Figure it Out set, particularly (+4)–(–3) and (+3)–(–3). Teacher highlights that subtracting a negative number requires moving upward, connecting to what the worked examples revealed: subtracting a negative is equivalent to adding a positive."
+            }
+          ],
+          "teacher_notes": "The key insight — that subtracting a negative equals adding a positive — emerges naturally from Example (Subtraction c), p.249, where going from –2 to +2 is a positive movement; reinforce this without naming it a 'rule' yet, letting students feel the pattern first. A frequent error is computing (+4)–(–3) as (+4)–(+3)=+1 by dropping the negative sign; the floor question 'what button from –3 to +4?' self-corrects this. Example (Infinite lift subtraction), p.251 extends this insight to larger numbers and can be offered to students who finish early.",
+          "materials": [
+            "Blackboard",
+            "Squared paper or rough notebooks for students"
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 10.1",
+              "title": "Bela's Building of Fun"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "The Number Line, Larger Integers, and Converting Operations",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-7",
+              "type": "worked_example",
+              "source_section": "section 10.1",
+              "book_ref": "Example (Adding larger numbers, mine), p.250",
+              "description": "Mine context: (+40)+(+60)=+100 and (–90)+(–55)=–145 for addition; (+40)–(–50)=+90 and (–90)–(+40)=–130 for subtraction."
+            },
+            {
+              "id": "WE-9",
+              "type": "worked_example",
+              "source_section": "section 10.1",
+              "book_ref": "Example (Unmarked number line addition), p.254",
+              "description": "UNL showing 85+(–60)=25 by marking –60 movement from +85."
+            },
+            {
+              "id": "E-10",
+              "type": "exercise",
+              "source_section": "section 10.1",
+              "book_ref": "Figure it Out, section 10.1 p.251",
+              "description": "Complete seven expressions using the mine/larger number context (a–g): (+40)+__=+200, (+40)+__=–200, (–50)+__=+200, (–50)+__=–200, (–200)–(–40), (+200)–(+40), (–200)–(+40). Verify using the mineshaft."
+            },
+            {
+              "id": "E-12",
+              "type": "exercise",
+              "source_section": "section 10.1",
+              "book_ref": "Figure it Out, section 10.1 p.255",
+              "description": "Use unmarked number lines to evaluate four expressions: –125+(–30), +105–(–55), +80–(–150), –99–(–200)."
+            },
+            {
+              "id": "E-16",
+              "type": "exercise",
+              "source_section": "section 10.1",
+              "book_ref": "Figure it Out Q4, section 10.1 p.254",
+              "description": "Compute six integer expressions: –5+0, 7+(–7), –10+20, 10–20, 7–(–7), –8–(–10)."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-11",
+              "type": "exercise",
+              "source_section": "section 10.1",
+              "book_ref": "Figure it Out, section 10.1 p.251",
+              "description": "Evaluate eight expressions by imagining a suitable lift (a–h): –125+(–30), +105–(–55), +105+(+55), +80–(–150), +80+(+150), –99–(–200), –99+(+200), +1500–(–1500)."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Teacher presents Example (Adding larger numbers, mine), p.250 (\"mine context: (+40)+(+60)=+100 and (–90)–(+40)=–130....\"). Students confirm that the lift metaphor still works at larger scales. Teacher draws a quick mineshaft on the board showing +180 m at the top and –200 m at the bottom."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Figure it Out, section 10.1 p.251 (\"complete seven expressions using the mine context....\"). Students work in pairs, using the mineshaft sketch to verify. Teacher focuses attention on the missing-addend form (+40)+__=–200 as a subtraction in disguise."
+            },
+            {
+              "minutes": "22–33",
+              "activity": "Teacher presents Example (Unmarked number line addition), p.254 (\"UNL showing 85+(–60)=25....\"), then students tackle Figure it Out, section 10.1 p.255 (\"use unmarked number lines to evaluate four expressions....\") individually, drawing their own number line sketches."
+            },
+            {
+              "minutes": "33–40",
+              "activity": "Figure it Out Q4, section 10.1 p.254 (\"compute six integer expressions....\"). Students complete these mentally or in writing; teacher closes with the observation that 7–(–7) and 7+(+7) give the same result. Homework from Figure it Out, section 10.1 p.251 is set."
+            }
+          ],
+          "teacher_notes": "Students who handled small-floor arithmetic confidently sometimes lose the sign when numbers grow — the mine context keeps magnitude intuitive; encourage them to ask 'am I going up or down?' before computing. The unmarked number line is a powerful tool for checking: if a student's drawn arrow points the wrong direction, the error is immediately visible. Example (Infinite lift subtraction), p.251 and Example (Conversion subtraction to addition), p.255 provide self-study paths for students who want to see the formal conversion rule before the homework.",
+          "materials": [
+            "Blackboard",
+            "Rough paper for number line sketches"
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 10.2",
+              "title": "The Token Model"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Positive and Negative Tokens: Addition and Subtraction by Cancellation",
+          "pedagogical_method": "Play-way",
+          "textbook_items_in_class": [
+            {
+              "id": "WE-12",
+              "type": "worked_example",
+              "source_section": "section 10.2",
+              "book_ref": "Example (Token addition +5 and –8), p.256",
+              "description": "Lay out 5 positive and 8 negative tokens; remove 5 zero pairs; 3 negative tokens remain. (+5)+(–8)=–3."
+            },
+            {
+              "id": "WE-15",
+              "type": "worked_example",
+              "source_section": "section 10.2",
+              "book_ref": "Example (Token subtraction +5 minus +6), p.257-258",
+              "description": "5 positives, need to remove 6 — not enough. Add one zero pair; now remove 6 positives; 1 negative left. (+5)–(+6)=–1."
+            },
+            {
+              "id": "WE-16",
+              "type": "worked_example",
+              "source_section": "section 10.2",
+              "book_ref": "Example (Token subtraction +4 minus –6), p.258",
+              "description": "4 positives, need to remove 6 negatives — none present. Add 6 zero pairs (6 positives + 6 negatives); remove 6 negatives; 10 positives remain. +4–(–6)=+10."
+            },
+            {
+              "id": "E-17",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q1, section 10.2 p.257",
+              "description": "Complete four additions using token diagrams: (+6)+(+4), (–3)+(–2), (+5)+(–7), (–2)+(+6)."
+            },
+            {
+              "id": "E-19",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q1, section 10.2 p.258",
+              "description": "Evaluate six differences using tokens: (+10)–(+7), (–8)–(–4), (–9)–(–4), (+9)–(+12), (–5)–(–7), (–2)–(–6)."
+            },
+            {
+              "id": "E-22",
+              "type": "exercise",
+              "source_section": "section 10.2",
+              "book_ref": "Figure it Out Q2, section 10.2 p.259",
+              "description": "Evaluate six expressions using tokens: (–3)–(+10), (+8)–(–7), (–5)–(+9), (–9)–(+10), (+6)–(–4), (–2)–(+7)."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–5",
+              "activity": "Teacher introduces the token model: two-sided tokens (or coloured circles drawn on paper), one side positive, one negative. Each student creates a small set of 10 tokens using torn paper — one colour for positive, another for negative."
+            },
+            {
+              "minutes": "5–16",
+              "activity": "Teacher demonstrates Example (Token addition +5 and –8), p.256 (\"lay out 5 positive and 8 negative tokens; remove 5 zero pairs....\"). Students replicate with their own tokens on their desk, physically pairing and setting aside zero pairs."
+            },
+            {
+              "minutes": "16–26",
+              "activity": "Figure it Out Q1, section 10.2 p.257 (\"complete four additions using token diagrams....\"). Students lay out tokens and draw the before-and-after state. Teacher walks through Example (Token subtraction +5 minus +6), p.257-258 (\"add one zero pair when not enough tokens to remove....\") before students meet similar cases in E-19."
+            },
+            {
+              "minutes": "26–40",
+              "activity": "Teacher demonstrates Example (Token subtraction +4 minus –6), p.258 (\"add 6 zero pairs; remove 6 negatives; 10 positives remain....\"). Students then work on Figure it Out Q1, section 10.2 p.258 (\"evaluate six differences using tokens....\") and Figure it Out Q2, section 10.2 p.259 (\"evaluate six expressions including subtracting opposite-sign tokens....\"). Teacher collects one observation: what is +4–(–6) equivalent to as an addition?"
+            }
+          ],
+          "teacher_notes": "The token model gives a concrete, manipulative argument for why subtracting a negative is the same as adding a positive — this is the payoff of the whole demonstration, so give students time to handle the zero-pair trick themselves rather than watching. Watch for students who remove zero pairs before laying out enough tokens for the subtraction; the sequence matters: lay out, check, add zero pairs if needed, then remove. Example (Token subtraction –7 minus –5), p.257 is an accessible self-study item for students who want one more worked reference for the same-sign subtraction case.",
+          "materials": [
+            "Torn paper or card pieces in two colours (one per student, made in first band)",
+            "Blackboard for teacher demonstration"
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 10.3",
+              "title": "Integers in Other Places"
+            }
+          ],
+          "section_goal": "apply",
+          "activity_title": "Integers in the Real World: Banks, Geography, and Temperature",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-23",
+              "type": "exercise",
+              "source_section": "section 10.3",
+              "book_ref": "Figure it Out Q1, section 10.3 p.260",
+              "description": "Bank account: start at ₹0, add credits of ₹30, ₹40, ₹50 and debits of ₹40, ₹50, ₹60. What is the balance?"
+            },
+            {
+              "id": "E-24",
+              "type": "exercise",
+              "source_section": "section 10.3",
+              "book_ref": "Figure it Out Q2, section 10.3 p.260",
+              "description": "Bank account: start at ₹0, debits of ₹1, 2, 4, 8, 16, 32, 64, 128 and a single credit of ₹256. What is the balance?"
+            },
+            {
+              "id": "E-26",
+              "type": "exercise",
+              "source_section": "section 10.3",
+              "book_ref": "Figure it Out Q1, section 10.3 p.261",
+              "description": "Read heights A–G from a geographical cross-section chart and fill in the values."
+            },
+            {
+              "id": "E-28",
+              "type": "exercise",
+              "source_section": "section 10.3",
+              "book_ref": "Figure it Out Q3, section 10.3 p.261",
+              "description": "Write points A–G in decreasing and increasing order of heights."
+            },
+            {
+              "id": "E-32",
+              "type": "exercise",
+              "source_section": "section 10.3",
+              "book_ref": "Figure it Out Q2, section 10.3 p.262",
+              "description": "Match four temperatures (14°C, 8°C, –2°C, –4°C) with four times of day in Leh, Ladakh in November."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-25",
+              "type": "exercise",
+              "source_section": "section 10.3",
+              "book_ref": "Figure it Out Q3, section 10.3 p.260",
+              "description": "Why is it generally better to keep a positive bank balance? When might a temporary negative balance be worthwhile?"
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–12",
+              "activity": "Teacher introduces banking context: credits as positive integers, debits as negative integers, balance as the running sum. Students work through Figure it Out Q1, section 10.3 p.260 (\"bank account with ₹30, ₹40, ₹50 credits and ₹40, ₹50, ₹60 debits....\") and Figure it Out Q2, section 10.3 p.260 (\"debits doubling from ₹1 to ₹128, single credit ₹256....\") in pairs, tracking each transaction step by step."
+            },
+            {
+              "minutes": "12–26",
+              "activity": "Teacher draws a simplified geographical cross-section on the board with sea level at zero. Students open the textbook cross-section chart and complete Figure it Out Q1, section 10.3 p.261 (\"read heights A–G and fill in values....\") and Figure it Out Q3, section 10.3 p.261 (\"write A–G in decreasing and increasing order....\"). Quick whole-class check: how does ordering heights compare to ordering floors in the building?"
+            },
+            {
+              "minutes": "26–40",
+              "activity": "Teacher frames the temperature context: 0°C is the freezing point, below-zero temperatures are negative. Students attempt Figure it Out Q2, section 10.3 p.262 (\"match four temperatures with four times of day in Leh, Ladakh in November....\"), reasoning about which time of day is coldest. Class shares and justifies matches. Homework (Figure it Out Q3, section 10.3 p.260) is set."
+            }
+          ],
+          "teacher_notes": "The three real-world contexts — banking, geography, temperature — all use the same integer ordering students developed through the Building of Fun; invite students to name the connection explicitly rather than treating each context as new. A common slip in the banking problem is adding all debits and all credits separately and then subtracting, which gives the correct answer but obscures the running-balance idea — push for a step-by-step expression. Figure it Out Q4 and Q5, section 10.3 p.261 (world extremes) are good self-study pointers for curious students.",
+          "materials": [
+            "Textbook open to p.261 for the cross-section chart",
+            "Blackboard for sea-level diagram"
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 10.4",
+              "title": "Explorations with Integers"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Hollow Grids and Amazing Grids: Discovering Integer Structure",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-33",
+              "type": "exercise",
+              "source_section": "section 10.4",
+              "book_ref": "Figure it Out Q1, section 10.4 p.263",
+              "description": "Compute the four border sums (top row, bottom row, left column, right column) for the second hollow integer grid and identify the border sum."
+            },
+            {
+              "id": "E-34",
+              "type": "exercise",
+              "source_section": "section 10.4",
+              "book_ref": "Figure it Out Q2, section 10.4 p.264",
+              "description": "Complete three hollow integer grids to achieve specified border sums: +4, –2, –4."
+            },
+            {
+              "id": "E-35",
+              "type": "exercise",
+              "source_section": "section 10.4",
+              "book_ref": "Figure it Out Q3, section 10.4 p.264",
+              "description": "Find more than one way to fill the border-sum –4 grid."
+            },
+            {
+              "id": "E-36",
+              "type": "exercise",
+              "source_section": "section 10.4",
+              "book_ref": "Figure it Out Q4, section 10.4 p.264",
+              "description": "Which grids can be filled in multiple ways? What could be the reason?"
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–8",
+              "activity": "Teacher draws a hollow 3×3 grid on the board and explains the hollow integer grid rule: only border cells are filled; all four border strips (top row, bottom row, left column, right column) must each sum to the same value. The class computes the border sums of the first example grid from the textbook together."
+            },
+            {
+              "minutes": "8–20",
+              "activity": "Figure it Out Q1, section 10.4 p.263 (\"compute four border sums for the second grid and identify the border sum....\"). Students work in pairs, computing each strip sum. Teacher then sets Figure it Out Q2, section 10.4 p.264 (\"complete three hollow grids to achieve border sums +4, –2, –4....\"); pairs attempt at least two grids."
+            },
+            {
+              "minutes": "20–32",
+              "activity": "Figure it Out Q3, section 10.4 p.264 (\"find more than one way to fill the border-sum –4 grid....\"). Groups of three compare their different fillings. Teacher circulates asking: 'Did you get the same cells filled differently? How is that possible?' Students articulate what freedom they have in choosing individual cell values."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Figure it Out Q4, section 10.4 p.264 (\"which grids can be filled in multiple ways?....\"). Class discussion: students reason about whether the constraint uniquely determines the filling or allows choices. Teacher records student conjectures on the board without adjudicating — the goal is articulated reasoning, not a proved theorem."
+            }
+          ],
+          "teacher_notes": "The hollow grid activity rewards trial and refinement; resist giving students a formula — the reasoning emerges from noticing that corner cells are shared by two strips, so choosing them affects two sums simultaneously. Watch for students who treat each strip independently and ignore the corner-sharing constraint; asking 'does that corner count for the row or the column?' realigns their thinking. Figure it Out Q5, section 10.4 p.264 (create your own puzzle) is a suitable extension for groups who complete all grids quickly.",
+          "materials": [
+            "Squared paper or grid-ruled paper",
+            "Blackboard with a 3×3 grid drawn"
+          ]
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 10.4",
+              "title": "Explorations with Integers"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Amazing Grids, Integer Arithmetic, and Pattern Reasoning",
+          "pedagogical_method": "Discovery",
+          "textbook_items_in_class": [
+            {
+              "id": "E-38",
+              "type": "exercise",
+              "source_section": "section 10.4",
+              "book_ref": "Figure it Out Q1, section 10.4 p.265",
+              "description": "In the amazing grid, try the circle-and-strike game afresh with different chosen numbers. Does the final sum change?"
+            },
+            {
+              "id": "E-39",
+              "type": "exercise",
+              "source_section": "section 10.4",
+              "book_ref": "Figure it Out Q2, section 10.4 p.265",
+              "description": "Play the circle-and-strike game on two other provided 4×4 grids (arithmetic progression grids)."
+            },
+            {
+              "id": "E-44",
+              "type": "exercise",
+              "source_section": "section 10.4",
+              "book_ref": "Figure it Out Q4, section 10.4 p.265",
+              "description": "Solve eight integer arithmetic expressions arranged in a 2×4 table: 8–13, (–8)–(13), (–13)–(–8), (–13)+(–8), 8+(–13), (–8)–(–13), (13)–8, 13–(–8)."
+            },
+            {
+              "id": "E-48",
+              "type": "exercise",
+              "source_section": "section 10.4",
+              "book_ref": "Figure it Out Q8, section 10.4 p.266",
+              "description": "Determine whether each of six types of integer addition/subtraction combinations [(positive)–(negative), (positive)+(negative), (negative)+(negative), (negative)–(negative), (negative)–(positive), (negative)+(positive)] is always positive, always negative, or can be either."
+            },
+            {
+              "id": "E-43",
+              "type": "exercise",
+              "source_section": "section 10.4",
+              "book_ref": "Figure it Out Q3, section 10.4 p.265",
+              "description": "Two dice with faces –1, 2, –3, 4, –5, 6. Find the numbers between –10 and +12 that cannot be obtained as a sum of the two dice."
+            }
+          ],
+          "homework": [
+            {
+              "id": "E-42",
+              "type": "exercise",
+              "source_section": "section 10.4",
+              "book_ref": "Figure it Out Q2, section 10.4 p.265",
+              "description": "Give three integers whose sum is –8."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0–14",
+              "activity": "Teacher introduces the amazing 4×4 grid and demonstrates the circle-and-strike game: circle any number, strike its row and column, repeat until four numbers are circled. Students play Figure it Out Q1, section 10.4 p.265 (\"try the game with different chosen numbers — does the sum change?....\") twice with different choices. Pairs compare their sums."
+            },
+            {
+              "minutes": "14–24",
+              "activity": "Figure it Out Q2, section 10.4 p.265 (\"play the game on two other 4×4 grids....\"). Students play both grids and record their sums. Teacher asks: 'Is the magic in the numbers, the arrangement, or both?' — but does not answer; students formulate a conjecture in writing."
+            },
+            {
+              "minutes": "24–34",
+              "activity": "Figure it Out Q4, section 10.4 p.265 (\"solve eight integer arithmetic expressions....\") and Figure it Out Q8, section 10.4 p.266 (\"determine whether six combination types are always positive, always negative, or either....\"). Students work individually on Q4 for fluency, then discuss Q8 in pairs, constructing examples to test each case."
+            },
+            {
+              "minutes": "34–40",
+              "activity": "Figure it Out Q3, section 10.4 p.265 (\"two integer dice: find sums between –10 and +12 that cannot be obtained....\"). Students list possible sums systematically and identify the gaps. Homework (Figure it Out Q2, section 10.4 p.265 — three integers summing to –8) is set."
+            }
+          ],
+          "teacher_notes": "The amazing-grid invariance is best discovered rather than announced; students who notice the fixed sum after two trials and ask 'why?' are ready for a structural explanation — the sum equals the sum of one entry from each row plus column offset, a pattern visible in arithmetic-progression grids. For Q8, students commonly think (positive)+(negative) is always negative; pushing them to try +10+(–3) dismantles the overgeneralisation. Figure it Out Q3, section 10.4 p.265 (integer dice) rewards systematic listing — if a group struggles, suggest organising results in a small table.",
+          "materials": [
+            "Textbook open to p.265 for grid tables",
+            "Rough paper for recording sums"
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 10.4",
+              "title": "Explorations with Integers"
+            }
+          ],
+          "section_goal": "reason",
+          "activity_title": "Integer Sequences, History Timelines, and the Snakes-and-Ladders Game",
+          "pedagogical_method": "Problem-solving",
+          "textbook_items_in_class": [
+            {
+              "id": "E-45",
+              "type": "exercise",
+              "source_section": "section 10.4",
+              "book_ref": "Figure it Out Q5, section 10.4 p.265-266",
+              "description": "Find three historical years: (a) 150 years before the present year, (b) 2200 years before the present year (no year 0), (c) 320 years after 680 BCE."
+            },
+            {
+              "id": "E-46",
+              "type": "exercise",
+              "source_section": "section 10.4",
+              "book_ref": "Figure it Out Q6, section 10.4 p.266",
+              "description": "Complete three integer sequences: (a) (–40),(–34),(–28),(–22),__,__,__; (b) 3,4,2,5,1,6,0,7,__,__,__; (c) __,__,12,6,1,(–3),(–6),__,__,__."
+            },
+            {
+              "id": "E-47",
+              "type": "exercise",
+              "source_section": "section 10.4",
+              "book_ref": "Figure it Out Q7, section 10.4 p.266",
+              "description": "From six integer cards (+1, +7, +18, –5, –2, –9), construct an addition/subtraction expression whose value is closest to –30."
+            },
+            {
+              "id": "E-49",
+              "type": "exercise",
+              "source_section": "section 10.4",
+              "book_ref": "Figure it Out Q9, section 10.4 p.266",
+              "description": "A string of 100 tokens in a repeating pattern (+++––). What is the total value of the string?"
+            },
+            {
+              "id": "E-41",
+              "type": "exercise",
+              "source_section": "section 10.4",
+              "book_ref": "Figure it Out Q1, section 10.4 p.265",
+              "description": "Write all integers between four given pairs in increasing order: (a) 0 and –7, (b) –4 and 4, (c) –8 and –15, (d) –30 and –23."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Figure it Out Q1, section 10.4 p.265 (\"write all integers between four given pairs in increasing order....\") — students work individually. These warm up integer ordering on a larger scale, including the negative-to-negative intervals that trip up students who sort by absolute value."
+            },
+            {
+              "minutes": "10–22",
+              "activity": "Figure it Out Q5, section 10.4 p.265-266 (\"find three historical years including one BCE year....\") and Figure it Out Q6, section 10.4 p.266 (\"complete three integer sequences....\"). Students tackle the history problem with an integer number line placed horizontally on rough paper. For Q6, teacher asks groups to state the pattern in words before filling the blanks."
+            },
+            {
+              "minutes": "22–32",
+              "activity": "Figure it Out Q7, section 10.4 p.266 (\"from six integer cards construct an expression closest to –30....\") and Figure it Out Q9, section 10.4 p.266 (\"string of 100 tokens in pattern +++–– — what is the total?....\"). The card problem is open-ended; pairs share their best expression. The token string rewards recognising the repeating group of five."
+            },
+            {
+              "minutes": "32–40",
+              "activity": "Integer Snakes and Ladders (–50 to +50) from the end of section 10.4: small groups of three or four play one round, moving their counters on a drawn or textbook board. On each move, students must write the integer expression for their new position. Teacher monitors that expressions are written, not just positions moved."
+            }
+          ],
+          "teacher_notes": "The BCE year problem is rich: emphasise that there is no year 0 in the standard calendar, so moving 2200 years back from the present is not a straightforward subtraction — students must reason about where the gap falls. The repeating-token problem (+++––) is an excellent reasoning task: students who count all 100 individually are invited to spot the five-cycle and compute 100 ÷ 5 = 20 cycles of net +1 each, giving +20. The Snakes and Ladders game keeps integer arithmetic active in a low-stakes playful frame; insist on written expressions to prevent the game from becoming pure movement.",
+          "materials": [
+            "Rough paper for horizontal number lines",
+            "Snakes and Ladders board (drawn quickly or from textbook)",
+            "Counters (coins or torn paper pieces)",
+            "A die per group"
+          ]
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 40,
+          "synthesis": false,
+          "textbook_segments": [
+            {
+              "ref": "section 10.5",
+              "title": "A Pinch of History"
+            }
+          ],
+          "section_goal": "recall",
+          "activity_title": "Brahmagupta's Rules and the History of Integers",
+          "pedagogical_method": "Inductive",
+          "textbook_items_in_class": [
+            {
+              "id": "E-50",
+              "type": "exercise",
+              "source_section": "section 10.5",
+              "book_ref": "Figure it Out Q1, section 10.5 p.268",
+              "description": "Explain each of Brahmagupta's rules for addition and subtraction in terms of Bela's Building of Fun or the number line."
+            },
+            {
+              "id": "E-51",
+              "type": "exercise",
+              "source_section": "section 10.5",
+              "book_ref": "Figure it Out Q2, section 10.5 p.268",
+              "description": "Give your own examples of each of Brahmagupta's rules for addition and subtraction."
+            }
+          ],
+          "homework": [],
+          "time_bands": [
+            {
+              "minutes": "0–10",
+              "activity": "Teacher gives a brief oral narrative of the historical journey: the Nine Chapters (China, c. 1st–2nd century CE) with rod arithmetic, Kautilya's Arthaśhāstra (India, c. 300 BCE) recognising negative balances, the Bakśhālī manuscript (c. 300 CE), and Brahmagupta's Brāhma-sphuṭa-siddhānta (628 CE) — the first complete explicit rules. Students note the timeline on a rough integer number line, placing each text at its approximate year."
+            },
+            {
+              "minutes": "10–24",
+              "activity": "Teacher reads Brahmagupta's five rules for addition and five rules for subtraction aloud from the textbook. After each rule, students identify whether it describes positive+positive, negative+negative, positive+negative, or zero combinations. Students annotate their textbook margins or notebook with one number-line or building example per rule."
+            },
+            {
+              "minutes": "24–34",
+              "activity": "Figure it Out Q1, section 10.5 p.268 (\"explain each of Brahmagupta's rules using Bela's Building of Fun or the number line....\"). Students work in pairs, writing a one-sentence explanation per rule. After writing, pairs swap and check each other's explanations for accuracy."
+            },
+            {
+              "minutes": "34–40",
+              "activity": "Figure it Out Q2, section 10.5 p.268 (\"give your own examples of each of Brahmagupta's rules....\"). Each student writes two original examples — one for addition, one for subtraction — not drawn from any worked example in the chapter. Teacher closes by connecting the token model (red and black rods from China, positive and negative tokens in the chapter) to Brahmagupta's language of 'fortune' and 'debt'."
+            }
+          ],
+          "teacher_notes": "Brahmagupta's language — 'fortune', 'debt', 'cipher' — maps exactly onto positive, negative, and zero; making this translation explicit helps students see that the rules they have been using all unit are the same ones formalised fourteen centuries ago. Watch for students who can recite a rule but stumble when writing an original example for the negative-minus-negative case; asking 'which floor are you on and where do you want to go?' brings them back to ground. The historical timeline drawn on a number line is itself an application of integer comparison, so treat it as mathematics, not decoration.",
+          "materials": [
+            "Textbook open to p.268 for Brahmagupta's rules",
+            "Rough paper for the historical timeline number line"
+          ]
+        }
+      ]
+    },
+    "period_schedule": {
+      "duration_minutes": 40,
+      "count": 10
+    },
+    "coverage_handoff": {
+      "section_a": {
+        "goal_cluster": [
+          "recall"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 10.1",
+            "section_title": "Bela's Building of Fun",
+            "goal": "recall",
+            "anchor_id": "E-1",
+            "anchor_book_ref": "Figure it Out Q1, section 10.1 p.245",
+            "anchor_description": "Start from Floor +2 and press –3. Where do you reach? Write an expression."
+          },
+          {
+            "section_ref": "section 10.1",
+            "section_title": "Bela's Building of Fun",
+            "goal": "recall",
+            "anchor_id": "E-5",
+            "anchor_book_ref": "Figure it Out Q1, section 10.1 p.247",
+            "anchor_description": "Compare six pairs of integers using < or > by referring to the Building of Fun: –2 vs +5, –5 vs +4, –5 vs –3, +6 vs –6, 0 vs –4, 0 vs +4."
+          },
+          {
+            "section_ref": "section 10.5",
+            "section_title": "A Pinch of History",
+            "goal": "recall",
+            "anchor_id": "E-50",
+            "anchor_book_ref": "Figure it Out Q1, section 10.5 p.268",
+            "anchor_description": "Explain each of Brahmagupta's rules for addition and subtraction in terms of Bela's Building of Fun or the number line."
+          }
+        ]
+      },
+      "section_b": {
+        "goal_cluster": [
+          "reason"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 10.4",
+            "section_title": "Explorations with Integers",
+            "goal": "reason",
+            "anchor_id": "E-33",
+            "anchor_book_ref": "Figure it Out Q1, section 10.4 p.263",
+            "anchor_description": "Compute the four border sums (top row, bottom row, left column, right column) for the second hollow integer grid and identify the border sum."
+          },
+          {
+            "section_ref": "section 10.4",
+            "section_title": "Explorations with Integers",
+            "goal": "reason",
+            "anchor_id": "E-38",
+            "anchor_book_ref": "Figure it Out Q1, section 10.4 p.265",
+            "anchor_description": "In the amazing grid, try the circle-and-strike game afresh with different chosen numbers. Does the final sum change?"
+          },
+          {
+            "section_ref": "section 10.4",
+            "section_title": "Explorations with Integers",
+            "goal": "reason",
+            "anchor_id": "E-45",
+            "anchor_book_ref": "Figure it Out Q5, section 10.4 p.265-266",
+            "anchor_description": "Find three historical years: (a) 150 years before the present year, (b) 2200 years before the present year (no year 0), (c) 320 years after 680 BCE."
+          }
+        ]
+      },
+      "section_c": {
+        "goal_cluster": [
+          "apply"
+        ],
+        "goals": [
+          {
+            "section_ref": "section 10.1",
+            "section_title": "Bela's Building of Fun",
+            "goal": "apply",
+            "anchor_id": "E-9",
+            "anchor_book_ref": "Figure it Out, section 10.1 p.249",
+            "anchor_description": "Complete ten subtraction expressions (a–j) as movement from Starting Floor to Target Floor: (+1)–(+4), 0–(+2), (+4)–(+1), 0–(–2), (+4)–(–3), (–4)–(–3), (–1)–(+2), (–2)–(–2), (–1)–(+1), (+3)–(–3)."
+          },
+          {
+            "section_ref": "section 10.1",
+            "section_title": "Bela's Building of Fun",
+            "goal": "apply",
+            "anchor_id": "E-10",
+            "anchor_book_ref": "Figure it Out, section 10.1 p.251",
+            "anchor_description": "Complete seven expressions using the mine/larger number context (a–g): (+40)+__=+200, (+40)+__=–200, (–50)+__=+200, (–50)+__=–200, (–200)–(–40), (+200)–(+40), (–200)–(+40). Verify using the mineshaft."
+          },
+          {
+            "section_ref": "section 10.2",
+            "section_title": "The Token Model",
+            "goal": "apply",
+            "anchor_id": "E-19",
+            "anchor_book_ref": "Figure it Out Q1, section 10.2 p.258",
+            "anchor_description": "Evaluate six differences using tokens: (+10)–(+7), (–8)–(–4), (–9)–(–4), (+9)–(+12), (–5)–(–7), (–2)–(–6)."
+          },
+          {
+            "section_ref": "section 10.3",
+            "section_title": "Integers in Other Places",
+            "goal": "apply",
+            "anchor_id": "E-23",
+            "anchor_book_ref": "Figure it Out Q1, section 10.3 p.260",
+            "anchor_description": "Bank account: start at ₹0, add credits of ₹30, ₹40, ₹50 and debits of ₹40, ₹50, ₹60. What is the balance?"
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "section_code": "A",
+        "section_title": "Recall and Apply",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-A-1",
+            "section_ref": "section 10.1",
+            "section_title": "Bela's Building of Fun",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "In Bela's Building of Fun, the ground floor is Floor 0. Floors above ground are numbered with positive integers and floors below ground are numbered with negative integers. Which of the following correctly describes Floor –4?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "It is 4 floors above Floor 0.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "It is 4 floors below Floor 0.",
+                "is_correct": true
+              },
+              {
+                "label": "C",
+                "text": "It is 4 floors below Floor –1.",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "It is the same as Floor 0 because –4 and 4 are both 4 away from zero.",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "Floor –4 is 4 floors below Floor 0.",
+              "method_one_line": "Use the Building of Fun convention: negative floor number = floors below ground, counted downward from Floor 0.",
+              "what_each_option_reveals": {
+                "A": "The student has confused the sign: they read –4 as positive, placing the floor above ground.",
+                "D": "The student believes that equal absolute value means equal position, ignoring the role of the negative sign in indicating direction.",
+                "C": "The student correctly identifies below-ground placement but miscounts, placing –4 one step below –1 instead of four steps below 0."
+              },
+              "inclusivity": {
+                "support": "Look back at the Building of Fun diagram and count floors downward from 0.",
+                "challenge": "Name two other floors that are the same distance from Floor 0 as Floor –4 is, and write a comparison statement for each pair."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 10.1 p.245",
+              "description": "Start from Floor +2 and press –3. Where do you reach? Write an expression."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-2",
+            "section_ref": "section 10.1",
+            "section_title": "Bela's Building of Fun",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "A student is standing on Floor –3 in Bela's Building of Fun. She wants to go to Floor –1. Which inequality correctly compares these two floors, and what does it tell us about their positions?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "–3 < –1, because Floor –3 is lower than Floor –1.",
+                "is_correct": true
+              },
+              {
+                "label": "B",
+                "text": "–3 = –1, because both are negative numbers.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "–3 > –1, because –3 is a bigger number than –1.",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "–3 > –1, because 3 is farther from zero than 1.",
+                "is_correct": false
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "–3 < –1, because Floor –3 is lower in the building than Floor –1.",
+              "method_one_line": "On the vertical integer number line, the lower floor corresponds to the smaller integer; –3 is below –1, so –3 < –1.",
+              "what_each_option_reveals": {
+                "C": "The student has applied the rule for positive numbers directly to negatives, equating a larger absolute value with a larger integer.",
+                "B": "The student believes that sharing the same sign makes two numbers equal, ignoring their different magnitudes.",
+                "D": "The student correctly notes that 3 is farther from zero but incorrectly concludes that greater distance from zero means greater value for negative numbers."
+              },
+              "inclusivity": {
+                "support": "Draw a vertical line, mark Floor –3 below Floor –1, and ask which floor is lower — that floor is the smaller number.",
+                "challenge": "Write a general rule in your own words for comparing any two negative integers, and test it with two examples of your own."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 10.1 p.247",
+              "description": "Compare six pairs of integers using < or > by referring to the Building of Fun: –2 vs +5, –5 vs +4, –5 vs –3, +6 vs –6, 0 vs –4, 0 vs +4."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-A-3",
+            "section_ref": "section 10.5",
+            "section_title": "A Pinch of History",
+            "goal": "recall",
+            "question_type": "MCQ",
+            "prompt": "Brahmagupta's Brāhma-sphuṭa-siddhānta (628 CE) gave the first complete explicit rules for integer arithmetic. Which of the following statements about integers is directly in the spirit of Brahmagupta's rules as the chapter describes them?",
+            "visual_stimulus": "",
+            "options": [
+              {
+                "label": "A",
+                "text": "Adding a negative number to a positive number always gives a positive result.",
+                "is_correct": false
+              },
+              {
+                "label": "B",
+                "text": "Subtracting a negative number always gives a negative result.",
+                "is_correct": false
+              },
+              {
+                "label": "C",
+                "text": "The sum of two negative numbers is a positive number.",
+                "is_correct": false
+              },
+              {
+                "label": "D",
+                "text": "The sum of two negative numbers is negative.",
+                "is_correct": true
+              }
+            ],
+            "teacher_guide": {
+              "expected_answer": "The sum of two negative numbers is negative — for example, (–3) + (–5) = –8.",
+              "method_one_line": "Brahmagupta's rule for two 'debts': their sum is a debt (negative), matching the integer rule that negative + negative = negative.",
+              "what_each_option_reveals": {
+                "C": "The student has confused the rule for subtraction of two negatives (which can give a positive) with addition of two negatives.",
+                "A": "The student overgeneralises: positive + negative is not always positive — it depends on which has greater absolute value.",
+                "B": "The student confuses subtraction of a negative (which adds the positive) with getting a negative result; the result depends on the starting value."
+              },
+              "inclusivity": {
+                "support": "Look back at Brahmagupta's addition rules in section 10.5 and find the one that involves two debts.",
+                "challenge": "Translate one of Brahmagupta's rules for subtraction into the language of Bela's Building of Fun and give a numerical example."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 10.5 p.268",
+              "description": "Explain each of Brahmagupta's rules for addition and subtraction in terms of Bela's Building of Fun or the number line."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "B",
+        "section_title": "Reason and Explain",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-B-1",
+            "section_ref": "section 10.4",
+            "section_title": "Explorations with Integers",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "A hollow 3×3 integer grid has its eight border cells filled with integers. The top row is –2, 0, +3; the bottom row is +1, –4, –1; the left column (top, middle, bottom) is –2, +5, +1; the right column (top, middle, bottom) is +3, –3, –1. A student claims the border sum of this grid is –1. Is she correct? Show your working for all four border strips and state the border sum.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Top row: (–2) + 0 + (+3) = +1. Bottom row: (+1) + (–4) + (–1) = –4. Left column: (–2) + (+5) + (+1) = +4. Right column: (+3) + (–3) + (–1) = –1. The four border sums are +1, –4, +4, –1 — these are not all equal, so this is not a valid border-sum grid at all, and the student's claim is incorrect. A valid border-sum grid requires all four strip sums to be equal.",
+              "method_one_line": "Sum each of the four border strips using integer addition and check whether all four sums are equal to identify a valid border sum.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Talk through each strip sum with a partner before writing — say each addition aloud.",
+                "challenge": "Change one border cell value so that all four strip sums become equal, and state the new border sum."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 10.4 p.263",
+              "description": "Compute the four border sums (top row, bottom row, left column, right column) for the second hollow integer grid and identify the border sum."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-2",
+            "section_ref": "section 10.4",
+            "section_title": "Explorations with Integers",
+            "goal": "reason",
+            "question_type": "SCR",
+            "prompt": "In the amazing grid circle-and-strike game, Rohan plays on the following 4×4 grid and circles 3, –5, 2, –4 (one from each row and column). His classmate Priya circles 0, 1, –1, –2 from the same grid using different rows and columns. Rohan says his sum is –4. Priya says her sum is –2. Without knowing the grid, explain in one or two sentences why at most one of them can be correct if this is a valid amazing grid, and what the amazing grid property implies about both their sums.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "In a valid amazing grid, the sum of any selection of one number from each row and each column (with no row or column repeated) is always the same fixed value. So if Rohan's sum is –4, then Priya's sum must also be –4; they cannot both be correct if their sums differ. The amazing grid property implies that the sum is invariant — it does not depend on which numbers are chosen, only on the structure of the grid.",
+              "method_one_line": "Apply the amazing-grid invariance principle: the circle-and-strike sum is the same for any valid selection, so two different sums from the same grid is a contradiction.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Try the circle-and-strike game on a grid from section 10.4 twice with different choices and compare the two sums before answering.",
+                "challenge": "Alter one entry in the grid so that the invariant sum changes from –4 to –2, and explain how your change affects the fixed sum."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 10.4 p.265",
+              "description": "In the amazing grid, try the circle-and-strike game afresh with different chosen numbers. Does the final sum change?"
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-B-3",
+            "section_ref": "section 10.4",
+            "section_title": "Explorations with Integers",
+            "goal": "reason",
+            "question_type": "ECR",
+            "prompt": "There is no Year 0 in the standard BCE/CE calendar: the year before 1 CE is 1 BCE. Using the integer number line, explain how you would find the number of years between 45 BCE and 320 CE. Then compute the answer and justify each step of your reasoning.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Represent 45 BCE as –45 and 320 CE as +320 on the integer number line. Because there is no Year 0, the gap from 1 BCE (= –1) to 1 CE (= +1) counts as 1 year, not 2 — but the integer subtraction (+320) – (–45) = 365 already accounts for this correctly only if we treat 1 BCE as –1 and 1 CE as +1 with no zero between them in the calendar. The integer distance is (+320) – (–45) = 365 years. Each step: subtracting a negative is the same as adding the corresponding positive, so 320 – (–45) = 320 + 45 = 365.",
+              "method_one_line": "Place BCE years as negative integers and CE years as positive integers; compute the span as Target – Starting = (+320) – (–45) = 320 + 45 = 365 years.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Draw a horizontal number line, place –45 on the left and +320 on the right, and count the movement needed to travel from –45 to +320.",
+                "challenge": "The Bakśhālī manuscript is dated approximately 300 CE and the Nine Chapters approximately 100 CE. How many years apart are they? Now compute the gap between 300 BCE and 300 CE — is the answer what you expect? Explain."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q5, section 10.4 p.265-266",
+              "description": "Find three historical years: (a) 150 years before the present year, (b) 2200 years before the present year (no year 0), (c) 320 years after 680 BCE."
+            },
+            "verified": true
+          }
+        ]
+      },
+      {
+        "section_code": "C",
+        "section_title": "Apply in Context",
+        "note": "",
+        "items": [
+          {
+            "id": "Q-C-1",
+            "section_ref": "section 10.1",
+            "section_title": "Bela's Building of Fun",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Ananya is on Floor –3 in Bela's Building of Fun. She presses +5, then –2, then –4 on the lift in succession. Using the rule Starting Floor + Movement = Target Floor at each step, find the floor Ananya is on after all three presses. Write the expression for each step.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Step 1: (–3) + (+5) = +2. Step 2: (+2) + (–2) = 0. Step 3: 0 + (–4) = –4. Ananya ends on Floor –4.",
+              "method_one_line": "Apply Starting Floor + Movement = Target Floor at each press, using the previous target floor as the new starting floor.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Draw a short vertical number line and trace each press as an arrow before writing the expressions.",
+                "challenge": "What single button press from Floor –3 would take Ananya to the same final floor? Write the expression and explain why it works."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out, section 10.1 p.249",
+              "description": "Complete ten subtraction expressions (a–j) as movement from Starting Floor to Target Floor: (+1)–(+4), 0–(+2), (+4)–(+1), 0–(–2), (+4)–(–3), (–4)–(–3), (–1)–(+2), (–2)–(–2), (–1)–(+1), (+3)–(–3)."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-2",
+            "section_ref": "section 10.1",
+            "section_title": "Bela's Building of Fun",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "A mine has levels from –300 m (deepest) to +150 m (above ground). A miner is at level –80 m. She rides the lift to level +70 m, then back down to level –120 m. Write an expression for each journey and find the total distance (sum of absolute movements) she has travelled.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Journey 1: from –80 to +70 — movement = (+70) – (–80) = (+70) + (+80) = +150 m upward. Journey 2: from +70 to –120 — movement = (–120) – (+70) = –190 m downward. Total distance travelled = 150 + 190 = 340 m.",
+              "method_one_line": "Use Target – Starting = Movement for each leg; total distance is the sum of the absolute values of the two movements.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Sketch a vertical number line with the three levels marked and draw arrows for each leg before computing.",
+                "challenge": "If the miner needs to reach level +150 m starting from –120 m in one further lift ride, what movement must she press, and what is the total distance for all three legs combined?"
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out, section 10.1 p.251",
+              "description": "Complete seven expressions using the mine/larger number context (a–g): (+40)+__=+200, (+40)+__=–200, (–50)+__=+200, (–50)+__=–200, (–200)–(–40), (+200)–(+40), (–200)–(+40). Verify using the mineshaft."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-3",
+            "section_ref": "section 10.2",
+            "section_title": "The Token Model",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Use the token model to evaluate (–4) – (+7). Show clearly: (a) how many tokens of each type you start with, (b) how many zero pairs you need to add, and (c) what tokens remain after taking away the required tokens. State the result.",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "(a) Start with 4 negative tokens. (b) Need to take away 7 positive tokens, but there are none — add 7 zero pairs (7 positive + 7 negative tokens). Now the pool has 7 positive tokens and 11 negative tokens. (c) Remove the 7 positive tokens. Remaining: 11 negative tokens. Result: (–4) – (+7) = –11.",
+              "method_one_line": "Lay out 4 negative tokens; add 7 zero pairs to obtain enough positives to remove; remove 7 positives; count the remaining negatives.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Use torn paper pieces in two colours as physical tokens and carry out each step by hand before writing.",
+                "challenge": "Verify your answer a second way by converting the subtraction to addition: (–4) – (+7) = (–4) + (–7), and confirm both methods give the same result. Explain why the conversion works."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 10.2 p.258",
+              "description": "Evaluate six differences using tokens: (+10)–(+7), (–8)–(–4), (–9)–(–4), (+9)–(+12), (–5)–(–7), (–2)–(–6)."
+            },
+            "verified": true
+          },
+          {
+            "id": "Q-C-4",
+            "section_ref": "section 10.3",
+            "section_title": "Integers in Other Places",
+            "goal": "apply",
+            "question_type": "NUM",
+            "prompt": "Meera opens a bank account with ₹0. She makes the following transactions in order: deposits ₹75, withdraws ₹40, withdraws ₹60, deposits ₹20, withdraws ₹15. Write an integer expression for her final balance and compute it. Is her balance positive or negative?",
+            "visual_stimulus": "",
+            "options": [],
+            "teacher_guide": {
+              "expected_answer": "Expression: 0 + 75 + (–40) + (–60) + 20 + (–15) = 75 – 40 – 60 + 20 – 15 = –20. Meera's final balance is –₹20, which is negative — she is overdrawn by ₹20.",
+              "method_one_line": "Represent deposits as positive integers and withdrawals as negative integers; compute the running sum step by step.",
+              "what_each_option_reveals": {},
+              "inclusivity": {
+                "support": "Make a two-column table of credits and debits, sum each column, then subtract debits total from credits total.",
+                "challenge": "What is the minimum single deposit Meera must make to bring her balance back to at least ₹0? Write the expression that shows this."
+              }
+            },
+            "exercise": {
+              "book_ref": "Figure it Out Q1, section 10.3 p.260",
+              "description": "Bank account: start at ₹0, add credits of ₹30, ₹40, ₹50 and debits of ₹40, ₹50, ₹60. What is the balance?"
+            },
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

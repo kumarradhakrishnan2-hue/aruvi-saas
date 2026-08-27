@@ -915,6 +915,21 @@ def get_plans(subject: str, grade: str, year_id: Optional[str] = None,
                 if pkey in (prepared_plans_repo.load_all(tenant_id, user_id, prior_year) or {}):
                     p["prepared_source_year"] = prior_year
                     break
+        # ★ THE LP EDITION STAMP — SHOWN ONLY WHEN IT IS A PRIOR EDITION (founder, §2.2).
+        # Note what sits directly above: `prepared_source_year` is HER year, the one she
+        # prepared the plan in. This is a DIFFERENT fact — which authored edition of the
+        # library the plan itself is. They are independent (she can teach one 2026-27
+        # plan for several years), and showing one while she assumes the other is the
+        # confusion §2.2 wrote the stamp to prevent.
+        #
+        # The RULE lives here, not in JSX: `lp_year_display` is null unless the plan
+        # comes from an edition older than the one being served, so the screen cannot
+        # disagree with the rule (the `_consent_outstanding` precedent). A teacher on the
+        # current edition — every teacher, today — sees nothing at all. Silence is right:
+        # the year is only information when it is NOT the obvious one.
+        p["lp_year_display"] = (p.get("lp_year")
+                                if p.get("lp_year") and p["lp_year"] < config.LP_YEAR
+                                else None)
         p["total_units"] = None
         try:
             saved = data.load_saved_plan(subject, grade, p["filename"]) or {}
@@ -929,7 +944,10 @@ def get_plans(subject: str, grade: str, year_id: Optional[str] = None,
             p["total_units"] = _count_units(lp.groups)
         except Exception:
             pass
-    return {"subject": subject, "grade": grade, "plans": plans}
+    # The edition currently being served, so a client can label a prior-year folder
+    # without re-deriving the comparison the per-plan rule above already made.
+    return {"subject": subject, "grade": grade, "plans": plans,
+            "current_lp_year": config.LP_YEAR}
 
 
 @app.get("/plans/{subject}/{grade}/{filename}/view")
@@ -2630,6 +2648,17 @@ def genon_make_plan(subject: str, grade: str, chapter_number: int, req: GenonPla
         chosen = next((c for c in reversed(library) if _count(c) >= total_periods),
                       library[0])
     filename = data.genon_plan_filename(chapter_number, matrix, chosen)
+
+    # ── the edition stamp travels with the plan (§2.2, 2026-08-27) ────────────────
+    # Read off `chosen` — the canonical this plan's bytes actually came from, after
+    # every rung of §0.4 has run — and NOT off config.LP_YEAR. Those differ exactly
+    # when they matter: a plan served from a carried-over edition must say which
+    # edition wrote it, not which edition happens to be current. Deliberately NOT in
+    # the filename: the year is a label, `(engine, constitution-run)` is the key, and
+    # keying on the year is what would make every June re-buy the library.
+    lp_year = data.plan_lp_year(chosen)
+    if lp_year:
+        plan.setdefault("genon", {})["academic_year"] = lp_year
 
     def _serve_summary(g: Dict[str, Any]) -> Dict[str, Any]:
         """The response's serve facts. `compression`/`seam_periods` keys survive

@@ -141,8 +141,10 @@ class TestAgainstTheInstalledCorpus(unittest.TestCase):
         import json
         from aruvi_core.genon import compile_stream
         from aruvi_core.genon.serve import section_registry
-        p = (REPO / "data" / "cloud" / "content" / "saved_plans" / subject / grade
-             / f"ch_{ch:02d}_canonical.json")
+        import sys as _sys
+        _sys.path.insert(0, str(REPO / "tests"))
+        from corpus import grade_dir           # edition-foldered library (§2.2)
+        p = Path(grade_dir(subject, grade)) / f"ch_{ch:02d}_canonical.json"
         top = compile_stream(json.loads(p.read_text()))
         return section_registry(top), closing_anchors(top)
 

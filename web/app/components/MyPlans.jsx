@@ -15,9 +15,24 @@ import LessonView from "./LessonView";
    server derived (`prepared_source_year`) or, inside a prior-year folder, that folder's
    own year — the folder knows, and its rows are fetched under that year so the server's
    own flag is naturally absent there. */
-export function YearStamp({ year }) {
-  if (!year) return null;
-  return <div className="sc-yearstamp">{year} version</div>;
+/* ★ AMENDED 2026-08-27 — `lpYear` is the REAL answer; `year` was always a proxy for it.
+   Read the paragraph above: the reason a stamp exists at all is "the plan may have been
+   written against an earlier constitution or textbook edition". That is a fact about the
+   LIBRARY EDITION, and until §2.2 landed nothing recorded it — so the year she PREPARED
+   in was used as a stand-in, on the assumption that an older preparation means older
+   material. The assumption does not hold: a chapter carried forward unchanged is stamped
+   with the NEW edition, and a plan she prepared last year may be the current edition.
+   So prefer the edition when the server sends one, and keep the proxy for plans authored
+   before the stamp existed.
+
+   The server sends `lp_year_display` ALREADY FILTERED — null unless it is a prior
+   edition (api/main.py get_plans; the founder's rule: never show the year for the
+   current edition, even though every canonical carries it). Do not re-derive that
+   comparison here; a second copy of the rule is how the screen and the rule drift. */
+export function YearStamp({ year, lpYear }) {
+  const shown = lpYear || year;
+  if (!shown) return null;
+  return <div className="sc-yearstamp">{shown} version</div>;
 }
 
 const subjectSlug = (name) => (name || "").toLowerCase().replace(/ /g, "_");
@@ -596,7 +611,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
                   </span>
                   {p.duration_label ? <span className="sc-durline">{p.duration_label}</span> : null}
                   {/* A plan she brought forward keeps saying so, even in the picker. */}
-                  <YearStamp year={p.prepared_source_year} />
+                  <YearStamp year={p.prepared_source_year} lpYear={p.lp_year_display} />
                 </button>
               ))
             )}
@@ -1024,7 +1039,7 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
                     earlier constitution or an earlier textbook edition — she should never
                     be uncertain which version is in her hand. Absent for anything she
                     prepared this year, which is the ordinary case. */}
-                <YearStamp year={plan.prepared_source_year} />
+                <YearStamp year={plan.prepared_source_year} lpYear={plan.lp_year_display} />
                 {ticks && (
                   <div className="sc-rail" aria-label={done ? `${total} units, completed` : lu ? `Unit ${lu} of ${total}` : `${total} units, not started`}>
                     {ticks.map((_, t) => (

@@ -1,0 +1,1587 @@
+{
+  "filename": "ch_12_canonical_p12.json",
+  "saved_at": "2026-08-17T10:56:56",
+  "plan_status": "canonical",
+  "chapter_number": 12,
+  "chapter_title": "Patterns in Life: Diversity and Classification",
+  "grade": "Grade IX",
+  "subject": "Science",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 50,
+      "count": 12
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 50 minutes × 12 periods = 600 minutes\nTotal: 12 periods · 10h 0min",
+  "genon_canonical": {
+    "generated": "2026-08-17",
+    "schedule": "12x50",
+    "constitution": "LP v1.1 / assessment v1.2",
+    "source": "generate_canonical.py one science ix 12",
+    "ledger_ts": "20260817_104548_sci_ix_12_p12",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-17T11:19:51",
+        "tool": "genon/repair_anchors.py v1.1",
+        "reason": "V2 section-anchor joiner repair (';' read as one opaque registry section; corrupted the derived registry, falsely quarantined p10, and mis-served X=8/X=9)",
+        "edits": [
+          {
+            "unit": 9,
+            "field": "section_anchor",
+            "rule": "V2/registry-omission",
+            "removed": "12.7.1 The hierarchical nature of classification / 12.8 Scientific Naming — The Binomial System",
+            "replaced_with": "12.8 Scientific Naming — The Binomial System",
+            "note": "the top registry has no 12.7.1; one label edit clears anchor-verbatim, first-visit and both SERVE INVALIDs; no teaching text changes"
+          }
+        ]
+      }
+    ],
+    "academic_year": "2026-27"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 50,
+          "activity_title": "Mapping India's Biodiversity Hotspots and Endemic Species",
+          "section_anchor": "12.1 India as a Biodiversity Hotspot",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "Political map of India (printed or on board)",
+            "Chapter 12 textbook",
+            "Pencils and colour pens"
+          ],
+          "visual_aids": "Outline map of India showing major geographical regions",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Students examine the outline map of India and identify the major geographical zones — mountains, deserts, northeastern rainforests, southern plateaus, coastlines — labelling each zone and noting the distinct climatic condition they associate with it."
+            },
+            {
+              "minutes": "8-20",
+              "activity": "Students read section 12.1 and build an annotated map: they mark the four biodiversity hotspots (Western Ghats, Himalayas, Indo-Burma, Nicobar Islands) on the outline map and, beside each, write two endemic species found there, choosing from the examples in the text."
+            },
+            {
+              "minutes": "20-35",
+              "activity": "In pairs, students reason through two questions in writing: (1) Why would a mountain habitat and a coastal habitat support different endemic species? (2) Why does habitat loss make a region a 'hotspot' rather than merely a region of high diversity? They use evidence from the section to justify their answers."
+            },
+            {
+              "minutes": "35-45",
+              "activity": "Pairs share their reasoning with the class; teacher draws out the link between habitat specificity, endemism, and the definition of a biodiversity hotspot, correcting any conflation of 'diverse' with 'hotspot'."
+            },
+            {
+              "minutes": "45-50",
+              "activity": "Students write a one-sentence definition of 'endemic species' and one-sentence definition of 'biodiversity hotspot' in their own words, then compare with a neighbour to check consistency."
+            }
+          ],
+          "teacher_notes": "This unit opens the chapter at its geographical entry point — India's varied habitats as the reason for its extraordinary endemic diversity. Watch for the common conflation: students often believe any diverse region is automatically a hotspot; stress that designation requires both high endemism and significant habitat loss. A useful checkpoint is whether students can distinguish, in their own words, a merely diverse region from a hotspot before the unit closes.",
+          "homework": []
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 50,
+          "activity_title": "Tracing Biodiversity's Origins and Choosing Classification Criteria",
+          "section_anchor": "12.2 How has the Biodiversity Evolved? / 12.3 How to Classify Organisms?",
+          "pedagogical_approach": "Discovery approach",
+          "materials": [
+            "Textbook (Chapter 12)",
+            "Activity 12.1 ecosystem image (day-and-night scene, from textbook)",
+            "Worksheet with a two-column table (Group by Criterion A / Group by Criterion B)"
+          ],
+          "visual_aids": "Day-and-night ecosystem image from Activity 12.1",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher poses: 'Where did all the different organisms we see today come from?' Students share brief intuitions, then read section 12.2 silently and write in one sentence what drives the accumulation of new life forms over many generations."
+            },
+            {
+              "minutes": "8-18",
+              "activity": "Students examine the day-and-night ecosystem image from Activity 12.1. Working individually, they list the animals they can identify and record, for each, its habitat location (land, water, air, underground) and its time of activity (day, night, both)."
+            },
+            {
+              "minutes": "18-32",
+              "activity": "Students regroup the same set of animals using at least two different criteria of their own choosing (e.g., feeding habit, body covering, movement type). They fill in the worksheet table, then write one observation about how changing the criterion changes which animals end up together."
+            },
+            {
+              "minutes": "32-42",
+              "activity": "Class discussion: teacher asks students to share cases where the same animal fell into different groups under different criteria. Students articulate why this shows that criterion choice is not arbitrary — different criteria reveal different relationships."
+            },
+            {
+              "minutes": "42-50",
+              "activity": "Students read section 12.3 and underline the sentence that explains what motivates the search for scientifically robust classification criteria, then compare their underlined sentence with a neighbour."
+            }
+          ],
+          "teacher_notes": "Having established in section 12.1 that India's habitats support extraordinary variety, this unit asks where that variety came from (section 12.2) and immediately confronts the practical challenge: how do we organise it (section 12.3)? A genuine discovery moment occurs when students find that the same eagle can be a 'carnivore' or a 'flying animal' depending on the criterion — press them to articulate why this is a problem for science, not just an observation. Watch for students who treat all criteria as equally valid; guide them toward the idea that some criteria reflect evolutionary relationships more faithfully than others.",
+          "homework": []
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 50,
+          "activity_title": "Evaluating Classification Criteria from External Features to DNA",
+          "section_anchor": "12.3.1 Some criteria to classify living organisms",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "Textbook (Chapter 12)",
+            "Notebook",
+            "Board and chalk/markers"
+          ],
+          "visual_aids": "Teacher-drawn board table: rows = criteria, columns = example organisms",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher introduces the seven classification criteria from section 12.3.1 using the board table, giving one concrete organism example for each criterion as it is presented. Students copy the table and add their own organism example for each criterion."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Students work in small groups. Each group is assigned two criteria and must: (a) describe in one sentence what that criterion measures, (b) give one organism where that criterion alone places it correctly, and (c) give one organism where that criterion alone would be misleading or ambiguous."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Groups report their criterion pairs to the class. Teacher uses the reports to build a ranked list on the board: which criteria are broad and visible (shape, size), which are structural and deeper (cell structure, tissue types), and which are molecular (DNA). Students label their own table with these three tiers."
+            },
+            {
+              "minutes": "38-47",
+              "activity": "Students read the final paragraph of section 12.3.1 and answer in writing: Why do similar features among organisms suggest common ancestry rather than coincidence? They must use at least two criteria from the section in their explanation."
+            },
+            {
+              "minutes": "47-50",
+              "activity": "Quick oral check: teacher names an organism (mushroom, cyanobacterium, fern) and students call out which criteria would be most informative for placing it, giving a brief reason."
+            }
+          ],
+          "teacher_notes": "Having discovered that criterion choice matters, students now examine the specific criteria scientists use and why deeper structural and molecular criteria carry more evolutionary weight than visible external features. A common error is treating unicellular/multicellular as the only important criterion; use the oral check at the close to expose cases where that criterion alone is insufficient. The ranked-tier framework on the board helps students see criteria as a toolkit rather than a flat list.",
+          "homework": []
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 50,
+          "activity_title": "Why Classification Matters — From Pakke to Global Science",
+          "section_anchor": "12.4 The Need for Classification / 12.5 Biological Classification Systems Over Time",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "Textbook (Chapter 12)",
+            "Printed or projected Pakke Tiger Reserve case study (Activity 12.2)",
+            "Notebook"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Students read the Pakke Tiger Reserve case study from Activity 12.2. In pairs they discuss and write answers to the three questions in the text: how classification helps track 300 bird species, how it distinguishes similar-looking hornbills, and what would happen ecologically if large old nesting trees were lost."
+            },
+            {
+              "minutes": "12-22",
+              "activity": "Pairs share their answers. Teacher consolidates on the board the six functions of classification listed in section 12.4, asking students to match each Pakke example to one of the six functions."
+            },
+            {
+              "minutes": "22-35",
+              "activity": "Students read section 12.5 and construct a timeline of classification systems on a strip of their notebook page: Aristotle's habitat grouping → two-kingdom → three-kingdom → four-kingdom → five-kingdom, noting for each the new discovery or tool that forced the expansion."
+            },
+            {
+              "minutes": "35-45",
+              "activity": "Students write an explanation of why fungi could not fit comfortably in either Plantae or Animalia under the two-kingdom system, using the absorption-versus-synthesis distinction from the text, and why a fifth kingdom became necessary."
+            },
+            {
+              "minutes": "45-50",
+              "activity": "Teacher asks: 'What does the timeline tell us about scientific knowledge?' Students offer one sentence each — eliciting the idea that classification systems are revised as tools and evidence improve."
+            }
+          ],
+          "teacher_notes": "This unit pairs the practical justification for classification (the Pakke case study) with the historical evidence that systems change as knowledge grows. A persistent misconception is that Fungi are plants because they have cell walls; use the explanation task explicitly to address this. The timeline task should surface the logic of each expansion — each new kingdom was forced by an organism that violated the previous system's assumptions.",
+          "homework": []
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 50,
+          "activity_title": "The Five-Kingdom Framework — Criteria, Kingdoms Monera and Protista",
+          "section_anchor": "12.6 Five Kingdom Classification / 12.6.1 Kingdom Monera — Unicellular prokaryotes / 12.6.2 Kingdom Protista — Unicellular eukaryotes",
+          "pedagogical_approach": "Hands-on Science",
+          "materials": [
+            "Textbook (Chapter 12)",
+            "School microscope",
+            "Permanent prepared slides of bacteria and cyanobacteria (Activity 12.4)",
+            "Textbook diagrams of bacterial and cyanobacterial cells",
+            "Notebook for observational sketches"
+          ],
+          "visual_aids": "Textbook diagrams of bacterial and cyanobacterial cell structure",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Students study the five-kingdom concept map from Activity 12.3 in the textbook. They list every criterion they can identify from the map, then compare their list with the four criteria given in section 12.6. Any criterion they missed is added and annotated."
+            },
+            {
+              "minutes": "10-22",
+              "activity": "Teacher introduces Monera (section 12.6.1): students read and note the prokaryotic nucleus, examples (bacteria, cyanobacteria), habitats and ecological roles (beneficial bacteria, nitrogen-fixing Rhizobium, pollution-breaking bacteria). Students observe permanent slides of bacteria and cyanobacteria under the microscope and sketch what they see, labelling any visible structural features."
+            },
+            {
+              "minutes": "22-35",
+              "activity": "Students compare their microscope sketches with the textbook diagrams of the two cell types, noting structural differences in writing: size, shape, and any visible internal organisation. They then read section 12.6.2 on Protista and list how a eukaryotic unicellular cell (Amoeba, Euglena) differs from a prokaryotic one (bacterium) using their observations and the criteria from section 12.6."
+            },
+            {
+              "minutes": "35-45",
+              "activity": "Students construct a comparison table: rows = Monera and Protista; columns = cell type, cell wall, unicellular/multicellular, mode of nutrition, habitat. They complete the table using sections 12.6.1 and 12.6.2."
+            },
+            {
+              "minutes": "45-50",
+              "activity": "Exit task: teacher names two organisms (Lactobacillus; Chlamydomonas) and students must place each in the correct kingdom and give two criteria that justify the placement."
+            }
+          ],
+          "teacher_notes": "The concept-map analysis at the opening anchors the four governing criteria before any kingdom is introduced; students who can name those criteria unprompted are ready to proceed. A reliable misconception is that all single-celled organisms are bacteria — the microscope comparison makes the prokaryote/eukaryote boundary visible and concrete. Encourage students to use observational language ('I see no distinct nucleus') rather than memorised labels during the comparison discussion.",
+          "homework": []
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 50,
+          "activity_title": "Kingdom Fungi and Kingdom Plantae — Structure, Function, and Comparison",
+          "section_anchor": "12.6.3 Kingdom Fungi — Multicellular, heterotrophic eukaryotes with a cell wall / 12.6.4 Kingdom Plantae — Multicellular, autotrophic eukaryotes with a cell wall",
+          "pedagogical_approach": "Discovery approach",
+          "materials": [
+            "Textbook (Chapter 12)",
+            "Hand lens",
+            "Fresh or dried mushroom sample (if available) or photograph",
+            "Collected leaves from school surroundings (Activity 12.8 materials)",
+            "Notebook"
+          ],
+          "visual_aids": "Textbook diagrams of fungal mycelium structure and the five plant-class comparison",
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Students examine a mushroom sample (or photograph) and describe in writing what they observe: colour, texture, structure, absence of green colour. They then read section 12.6.3 and explain in a sentence why the mushroom cannot be placed in Plantae, despite having a cell wall, using the nutrition mode and cell-wall composition criteria."
+            },
+            {
+              "minutes": "12-25",
+              "activity": "Students read section 12.6.4 and begin filling in the structured comparison table from Activity 12.9: for each of the five plant classes (Thallophyta, Bryophyta, Pteridophyta, Gymnosperm, Angiosperm), they record the key structural features and the survival advantage or constraint each structural feature confers."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Students collect leaves from their surroundings (or use specimens brought to class) and, following Activity 12.8, observe leaf shape and venation, group them as monocot or dicot, and annotate their grouping with a structural reason. They connect this to the angiosperm entry in their comparison table."
+            },
+            {
+              "minutes": "38-47",
+              "activity": "Students write an explanation of the evolutionary progression visible in the five plant classes: why Thallophyta are limited to moist environments, how Bryophyta made a partial move to land, how vascular tissue in Pteridophyta extended land colonisation, and how seed production in Gymnosperms and fruit-enclosed seeds in Angiosperms removed dependence on water for reproduction."
+            },
+            {
+              "minutes": "47-50",
+              "activity": "Quick check: teacher asks which plant class was first to produce seeds, and which is most diverse — students give a one-sentence justification for each answer."
+            }
+          ],
+          "teacher_notes": "Having established that Fungi cannot be Plantae despite both having cell walls, students work through the plant kingdom's own internal diversity. The most common error is treating 'plant' as a single category with uniform features; the comparison table forces students to see that the five classes represent genuinely different structural solutions. Emphasise that the progression from Thallophyta to Angiosperm is not a value judgment but a record of adaptations that progressively reduced dependence on water.",
+          "homework": []
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 50,
+          "activity_title": "Kingdom Animalia — Invertebrates and the Rise in Organisational Complexity",
+          "section_anchor": "12.6.5 Kingdom Animalia — Multicellular, heterotrophic eukaryotes",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "Textbook (Chapter 12)",
+            "Board and chalk/markers",
+            "Notebook"
+          ],
+          "visual_aids": "Teacher-drawn board progression: cellular → tissue → organ → organ-system organisation across invertebrate phyla",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher introduces the defining features of Kingdom Animalia (section 12.6.5): multicellular, heterotrophic eukaryotes, no cell wall, typically motile. Students copy the key distinguishing criteria and note the notochord criterion that splits animals into non-chordata and chordata."
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Teacher draws the organisational-complexity progression on the board (cellular → tissue → organ → organ-system) and introduces each invertebrate phylum — Porifera, Cnidaria, Platyhelminthes, Nematoda, Annelida, Arthropoda, Mollusca, Echinodermata — placing each on the progression and noting one defining structural feature. Students build a corresponding table in their notebooks."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Students answer Pause and Ponder 6 in writing: how does a beetle's exoskeleton give it survival advantages over an earthworm with the same segmented body plan? They must reference at least two functions of the exoskeleton (protection, water loss reduction, muscle support) and two environments each animal can or cannot exploit."
+            },
+            {
+              "minutes": "38-47",
+              "activity": "Students read the 'Looking across invertebrates' paragraph and write two sentences summarising the pattern: what new capability each increase in organisational level enables, and what constraint it does not yet remove."
+            },
+            {
+              "minutes": "47-50",
+              "activity": "Oral spot-check: teacher names a phylum and students give its level of organisation and one structural feature that defines it, going around the class rapidly."
+            }
+          ],
+          "teacher_notes": "The organisational progression from Porifera to Echinodermata is the structural spine of this unit; students often memorise phylum names without grasping the logic of the sequence. Ground every phylum addition in a functional question: 'What problem did this new structure solve?' The exoskeleton writing task exposes a common misconception that segmentation alone explains terrestrial success — push students to articulate the specific role of the exoskeleton as distinct from segmentation.",
+          "homework": []
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 50,
+          "activity_title": "Protochordates, Vertebrates, and Adaptations Across Body Plans",
+          "section_anchor": "12.6.5 Kingdom Animalia — Protochordates and Vertebrates / 12.7 Adaptations as Outcomes of Structural Change",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "Textbook (Chapter 12)",
+            "Notebook",
+            "Board and chalk/markers"
+          ],
+          "visual_aids": "Textbook diagram or teacher-drawn sketch of the notochord-to-vertebral-column transition",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Students read the protochordate section and answer in writing: What is the significance of possessing a notochord 'at some point in life' rather than throughout life? How does Amphioxus serve as an evolutionary link? They draw on the text's language of 'primitive chordates'."
+            },
+            {
+              "minutes": "10-22",
+              "activity": "Teacher introduces the five vertebrate groups (fish, amphibians, reptiles, birds, mammals) on the board. Students read section 12.6.5 (Vertebrates) and complete a table: group, body covering, reproduction mode, and one habitat specialisation for each."
+            },
+            {
+              "minutes": "22-35",
+              "activity": "Students read section 12.7 and, for each structural feature listed (fins/gills, hollow bones/feathers, fat storage/dense fur, mammary glands), write an explanation linking the feature to one specific survival challenge it resolves — food acquisition, predator avoidance, thermal regulation, or offspring survival."
+            },
+            {
+              "minutes": "35-46",
+              "activity": "Students construct a two-column table: left column lists a structural feature from section 12.7; right column gives the survival function AND the vertebrate group in which it appears. They then add a third column: 'What constraint does this group still face?' — drawing on the text's description of each group's habitat range."
+            },
+            {
+              "minutes": "46-50",
+              "activity": "Students write one sentence explaining why the appearance of mammary glands in mammals represents a structural solution to offspring survival that earlier vertebrate groups lack, using the language of section 12.7."
+            }
+          ],
+          "teacher_notes": "The notochord-to-vertebral-column transition at the opening of this unit connects the invertebrate organisational progression — established when students worked through the invertebrate phyla — to the chordate lineage. A frequent error is treating adaptations as intentional choices rather than structural outcomes of change over time; press students to phrase their explanations in terms of what the structure does, not why the animal 'decided' to grow it. The three-column table makes the trade-off logic explicit: every structural solution also carries a new constraint.",
+          "homework": []
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 50,
+          "activity_title": "Hierarchical Classification and the Binomial Naming System",
+          "section_anchor": "12.8 Scientific Naming — The Binomial System",
+          "pedagogical_approach": "Didactic approach",
+          "materials": [
+            "Textbook (Chapter 12)",
+            "Notebook",
+            "Board and chalk/markers"
+          ],
+          "visual_aids": "Teacher-drawn classification hierarchy pyramid: Kingdom → Phylum → Class → Order → Family → Genus → Species",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher draws the seven-level hierarchy pyramid on the board and introduces the postal-address analogy from section 12.7.1. Students copy the pyramid and annotate each level with the tiger's classification (Panthera tigris) alongside the pea plant's (Pisum sativum), using the text."
+            },
+            {
+              "minutes": "10-22",
+              "activity": "Students analyse the two classifications: at which level do tiger and pea plant first diverge? What does that tell them about when their lineages separated? They write a two-sentence response that uses the logic of 'progressively more features in common' from the section."
+            },
+            {
+              "minutes": "22-34",
+              "activity": "Teacher introduces binomial nomenclature (section 12.8): genus capitalised, species lowercase, italicised. Students apply the three rules by writing the scientific names for five organisms given in plain text format on the board (e.g., 'panthera leo, pisum sativum, homo sapiens') and correcting formatting errors introduced deliberately by the teacher."
+            },
+            {
+              "minutes": "34-44",
+              "activity": "Students read the section on genus grouping (Panthera tigris and Panthera leo as closely related species with similar skull structure) and answer: What does sharing a genus name imply about two organisms? What additional criterion — beyond shared features — must be met for two organisms to belong to the same species? They use the text's interbreeding-for-fertile-offspring definition."
+            },
+            {
+              "minutes": "44-50",
+              "activity": "Students write a three-line explanation of why common names like 'bagh', 'puli' and 'tigre' are inadequate for scientific communication, using the binomial system as the solution, addressed to an imaginary student who has never heard of taxonomy."
+            }
+          ],
+          "teacher_notes": "The hierarchy and the naming system are closely linked: the binomial name is the bottom two levels of the hierarchy made portable. A persistent confusion is treating genus and species as interchangeable; use the Panthera example explicitly to show that genus groups multiple species, and that interbreeding for fertile offspring is what defines a species boundary, not appearance alone. The formatting-correction task is more diagnostic than it appears: students who write 'Panthera Tigris' or 'panthera tigris' in plain text reveal that they have memorised the rule without internalising its logic.",
+          "homework": []
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 50,
+          "activity_title": "Fossils as Evidence of Life's History and Change Over Time",
+          "section_anchor": "12.9 Fossils as Evidence",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "Textbook (Chapter 12)",
+            "Notebook",
+            "Board and chalk/markers"
+          ],
+          "visual_aids": "Teacher-drawn stratigraphy sketch: layered rock column with older layers at bottom, fossil complexity increasing upward",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher draws a layered rock column on the board and asks: 'If you found a fossil in the deepest layer and one in the top layer, what would you predict about their relative complexity?' Students record their prediction before reading the section."
+            },
+            {
+              "minutes": "10-22",
+              "activity": "Students read section 12.9 and compare their prediction with the text's account: older layers tend to contain simpler organisms, newer layers progressively more complex forms. They write a sentence explaining why this pattern is consistent with the accumulation of evolutionary change described in section 12.2."
+            },
+            {
+              "minutes": "22-35",
+              "activity": "Students examine the Indian fossil examples given in the section (giant dinosaurs, early humans, ancient plant life) and reason through: what kind of environmental conditions would need to exist for each type of organism to be preserved as a fossil? They use inference, not additional reading — the task is to reason from what a fossil requires (burial in rock, sand or mud, preservation of remains) to the conditions each example implies."
+            },
+            {
+              "minutes": "35-46",
+              "activity": "Students write an argument — in three to four sentences — for why fossils are better described as 'direct evidence' of life's history rather than 'indirect evidence', addressing what exactly is preserved and how it supports the claim that life has changed over time."
+            },
+            {
+              "minutes": "46-50",
+              "activity": "Pair-share: each student reads their argument to a partner, who identifies one claim that needs more support from the section and one claim that is well-grounded. Students annotate their own argument in response."
+            }
+          ],
+          "teacher_notes": "The stratigraphy prediction at the opening activates prior intuitions about depth and age before students encounter the text's explanation; those who predict 'simpler organisms deeper' demonstrate readiness for the evolutionary logic, while those who predict otherwise reveal an opportunity to address it. Connect the fossil record explicitly to section 12.2's account of how biodiversity accumulated over vast spans of time — fossils are the material trace of that process. Watch for students who treat fossil evidence as proof of exactly what organisms 'turned into' rather than as evidence of change over time.",
+          "homework": []
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 50,
+          "activity_title": "Biodiversity Under Threat — Cascades, Causes, and Consequences",
+          "section_anchor": "12.10 Biodiversity Under Threat",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "Textbook (Chapter 12)",
+            "Notebook"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Students read section 12.10 and list every functional role assigned to organisms in the section: plants produce food and oxygen; animals pollinate and disperse seeds; microorganisms recycle nutrients. They annotate each role with the kingdom (from earlier in the chapter) that performs it."
+            },
+            {
+              "minutes": "10-22",
+              "activity": "Students analyse the three real-world examples in the section: (1) mangrove forests dampening Orissa's 1999 cyclone, (2) Western Ghats forest diversity limiting Kyasanur Forest Disease spread, (3) forest soil microorganisms breaking down pollutants. For each, they write one sentence identifying which functional role is being illustrated and one sentence explaining the cascade consequence if that organism group were lost."
+            },
+            {
+              "minutes": "22-35",
+              "activity": "Students consider the Sangai deer case: declared extinct in 1951, rediscovered in 1953 through morphological classification. They write an explanation of why accurate taxonomic classification was necessary — not just desirable — for conservation action here, connecting it to section 12.4's account of how classification supports conservation."
+            },
+            {
+              "minutes": "35-46",
+              "activity": "Students reason through the Ram Bux Singh biogas plant example: which kingdom's organisms are being used, what ecological role they normally perform (nutrient cycling/decomposition), and how that same metabolic capacity is being redirected to produce renewable energy. They write a two-sentence explanation linking microbiology to the practical application."
+            },
+            {
+              "minutes": "46-50",
+              "activity": "Students write a single summary statement: 'Biodiversity is infrastructure because…' completing the sentence with two distinct functional roles drawn from the section's examples. Partners read and confirm that both roles are distinct and grounded in the text."
+            }
+          ],
+          "teacher_notes": "This unit ties the chapter's conservation concerns back to the five-kingdom structure: students should be able to name which kingdom provides each ecosystem service they discuss. A common over-simplification is treating biodiversity loss as merely an aesthetic or moral issue; use the cascade-consequence writing task to press students toward functional, ecological reasoning. The Ram Bux Singh example is particularly effective at showing that understanding kingdom Monera has direct practical consequences beyond conservation.",
+          "homework": []
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 50,
+          "activity_title": "Classifying and Defending — Applying Five-Kingdom Criteria to Novel Organisms",
+          "section_anchor": "12.6 Five Kingdom Classification / 12.6.1 Kingdom Monera — Unicellular prokaryotes / 12.6.2 Kingdom Protista — Unicellular eukaryotes / 12.6.3 Kingdom Fungi — Multicellular, heterotrophic eukaryotes with a cell wall / 12.6.4 Kingdom Plantae — Multicellular, autotrophic eukaryotes with a cell wall / 12.6.5 Kingdom Animalia — Multicellular, heterotrophic eukaryotes",
+          "pedagogical_approach": "Inquiry approach",
+          "materials": [
+            "Textbook (Chapter 12)",
+            "Notebook",
+            "Board and chalk/markers",
+            "Set of organism description cards (teacher-prepared, one per pair — six cards describing fictional or unfamiliar organisms with their structural and nutritional features)"
+          ],
+          "visual_aids": "Five-kingdom criteria summary on board (cell type, level of organisation, cell wall composition, nutrition mode)",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher writes the four governing criteria of Whittaker's system on the board (cell type, level of organisation, cell wall composition, mode of nutrition) and each kingdom's defining combination. Students reproduce this as a quick-reference grid in their notebooks."
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Pairs receive an organism description card. Each card describes a fictional or unfamiliar organism with its key structural and nutritional features (e.g., 'single-celled, no membrane-bound nucleus, absorbs dead organic matter, chitin-like wall'). Pairs classify the organism into one of the five kingdoms, write a justification citing each of the four criteria, and identify which criterion is most diagnostic for their organism."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Each pair presents their organism and classification to the class. The class acts as a review panel: they may challenge the classification if they believe a different kingdom fits better, citing criteria from the grid. Teacher facilitates, ensuring challenges are criterion-based rather than name-based."
+            },
+            {
+              "minutes": "38-47",
+              "activity": "Students individually write a short argument for the most contested classification from the class discussion: they state the organism's features, the two kingdoms under dispute, and which criteria resolve the ambiguity in favour of one kingdom over the other."
+            },
+            {
+              "minutes": "47-50",
+              "activity": "Teacher closes by asking: 'When two organisms share a cell wall, why is that not sufficient to place them in the same kingdom?' Students give a one-sentence answer naming the additional criteria required."
+            }
+          ],
+          "teacher_notes": "This unit asks students to apply the five-kingdom criteria actively to novel cases, making their classification reasoning visible and challengeable. Designing the organism cards to include at least one genuinely ambiguous case — for example, an organism with a cell wall that is heterotrophic — exposes whether students have internalised the logic of the system or are pattern-matching on superficial features. The panel-challenge format keeps all students engaged during presentations; prompt quiet students to articulate which criterion they would use to settle the dispute.",
+          "homework": []
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 50,
+        "count": 12
+      }
+    ],
+    "coverage_handoff": [
+      {
+        "section_number": 1,
+        "section_label": "12.1 India as a Biodiversity Hotspot",
+        "total_sections": 17,
+        "period_numbers": [
+          1
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students annotate a map of India with biodiversity hotspots and endemic species, then reason in writing about why habitat specificity produces endemism and what the 'hotspot' designation requires beyond high diversity.",
+        "implied_lo": "Students can distinguish between a highly diverse region and a biodiversity hotspot by applying the criteria of endemism and habitat loss to geographic examples.",
+        "section_context": "Indian endemic species, four biodiversity hotspots, habitat diversity and endemism",
+        "c_code": "C-4.1",
+        "co_central": true
+      },
+      {
+        "section_number": 2,
+        "section_label": "12.2 How has the Biodiversity Evolved?",
+        "total_sections": 17,
+        "period_numbers": [
+          2
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students read section 12.2 and write a sentence identifying how accumulated small differences over many generations produce new life forms, connecting this to the need for a classification framework.",
+        "implied_lo": "Students can explain how variation accumulating across generations over time produces the diversity of life forms that classification systems must organise.",
+        "section_context": "Gradual accumulation of individual differences, organism-environment interactions, origin of biodiversity",
+        "c_code": "C-4.1",
+        "co_central": true
+      },
+      {
+        "section_number": 3,
+        "section_label": "12.3 How to Classify Organisms?",
+        "total_sections": 17,
+        "period_numbers": [
+          2
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students regroup animals from an ecosystem image using at least two different criteria, discovering how criterion choice changes group membership and motivating the search for scientifically robust classification criteria.",
+        "implied_lo": "Students can demonstrate that grouping outcomes depend on criterion choice and articulate why some criteria reveal evolutionary relationships more faithfully than others.",
+        "section_context": "Criterion-dependent grouping, eagle as carnivore or flier, Activity 12.1 ecosystem image",
+        "c_code": "C-4.1",
+        "co_central": true
+      },
+      {
+        "section_number": 4,
+        "section_label": "12.3.1 Some criteria to classify living organisms",
+        "total_sections": 17,
+        "period_numbers": [
+          3
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students evaluate seven classification criteria, tier them from visible to molecular, and explain why similar features imply common ancestry using two criteria in writing.",
+        "implied_lo": "Students can rank classification criteria by the depth of evolutionary information they carry and justify why shared structural or molecular features indicate common ancestry.",
+        "section_context": "Seven classification criteria from external features to DNA, tiers of structural and molecular evidence",
+        "c_code": "C-4.1",
+        "co_central": true
+      },
+      {
+        "section_number": 5,
+        "section_label": "12.4 The Need for Classification",
+        "total_sections": 17,
+        "period_numbers": [
+          4
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students analyse the Pakke Tiger Reserve case study, match examples to the six functions of classification, and write an explanation of why the six functions make classification indispensable for science and conservation.",
+        "implied_lo": "Students can apply each of the six functions of biological classification to real ecological scenarios, explaining how classification enables systematic study and conservation action.",
+        "section_context": "Six functions of classification, Pakke Tiger Reserve case study, 300 bird species and four hornbill species",
+        "c_code": "C-4.1",
+        "co_central": true
+      },
+      {
+        "section_number": 6,
+        "section_label": "12.5 Biological Classification Systems Over Time",
+        "total_sections": 17,
+        "period_numbers": [
+          4
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students construct a timeline of classification systems from Aristotle to Whittaker, identifying the tool or discovery that forced each expansion, then write an explanation of why fungi required a fifth kingdom.",
+        "implied_lo": "Students can trace how advances in observation tools and biological knowledge forced each expansion of the classification system, explaining the specific evidence that motivated each new kingdom.",
+        "section_context": "Aristotle, two-kingdom to five-kingdom progression, Whittaker 1969, fungi absorption versus synthesis",
+        "c_code": "C-4.1",
+        "co_central": true
+      },
+      {
+        "section_number": 7,
+        "section_label": "12.6 Five Kingdom Classification",
+        "total_sections": 17,
+        "period_numbers": [
+          5,
+          12
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students analyse the five-kingdom concept map to identify the four governing criteria, then apply those criteria to classify novel organisms and defend classifications in a peer-challenge discussion.",
+        "implied_lo": "Students can apply the four criteria of Whittaker's system — cell type, level of organisation, cell wall composition, and mode of nutrition — to classify an unfamiliar organism into one of the five kingdoms and justify the placement.",
+        "section_context": "Whittaker five-kingdom system, four criteria: cell type, organisation level, cell wall, nutrition mode",
+        "c_code": "C-4.1",
+        "co_central": true
+      },
+      {
+        "section_number": 8,
+        "section_label": "12.6.1 Kingdom Monera — Unicellular prokaryotes",
+        "total_sections": 17,
+        "period_numbers": [
+          5
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students observe prepared microscope slides of bacteria and cyanobacteria, sketch structural features, compare with textbook diagrams, and place both organisms in Monera using the four criteria.",
+        "implied_lo": "Students can use observed structural features of prokaryotic cells to justify the placement of bacteria and cyanobacteria in Kingdom Monera and distinguish their roles in ecosystems.",
+        "section_context": "Bacteria and cyanobacteria, primitive nucleus, ecological roles including Lactobacillus, Rhizobium, decomposition",
+        "c_code": "C-4.1",
+        "co_central": true
+      },
+      {
+        "section_number": 9,
+        "section_label": "12.6.2 Kingdom Protista — Unicellular eukaryotes",
+        "total_sections": 17,
+        "period_numbers": [
+          5
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students construct a comparison table for Monera and Protista across the four classification criteria, using their microscope observations and textbook descriptions to articulate the prokaryote-eukaryote distinction.",
+        "implied_lo": "Students can distinguish unicellular prokaryotes from unicellular eukaryotes using cell-structural criteria and explain the ecological roles of protists in aquatic food chains.",
+        "section_context": "Amoeba, Paramecium, Chlamydomonas, Euglena; eukaryotic cell structure; aquatic food chain roles",
+        "c_code": "C-4.1",
+        "co_central": true
+      },
+      {
+        "section_number": 10,
+        "section_label": "12.6.3 Kingdom Fungi — Multicellular, heterotrophic eukaryotes with a cell wall",
+        "total_sections": 17,
+        "period_numbers": [
+          6
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students observe a mushroom specimen, explain in writing why Fungi cannot be placed in Plantae despite having a cell wall, using mode of nutrition and chitin cell-wall composition as the decisive criteria.",
+        "implied_lo": "Students can use mode of nutrition and cell-wall composition to distinguish Kingdom Fungi from Kingdom Plantae and explain fungi's ecological role as decomposers.",
+        "section_context": "Chitin cell wall, saprophytic nutrition via mycelium, Penicillium and yeast examples, decomposer ecological role",
+        "c_code": "C-4.1",
+        "co_central": true
+      },
+      {
+        "section_number": 11,
+        "section_label": "12.6.4 Kingdom Plantae — Multicellular, autotrophic eukaryotes with a cell wall",
+        "total_sections": 17,
+        "period_numbers": [
+          6
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students complete a comparison table for the five plant classes, observe leaf venation to distinguish monocots and dicots, and write an explanation of the evolutionary progression from Thallophyta to Angiosperm in terms of decreasing water dependence.",
+        "implied_lo": "Students can trace the structural progression across the five plant classes in terms of adaptations that progressively reduce dependence on water for survival and reproduction.",
+        "section_context": "Five plant classes, vascular tissue, seed production, fruit-enclosed seeds, monocot and dicot venation",
+        "c_code": "C-4.1",
+        "co_central": true
+      },
+      {
+        "section_number": 12,
+        "section_label": "12.6.5 Kingdom Animalia — Multicellular, heterotrophic eukaryotes",
+        "total_sections": 17,
+        "period_numbers": [
+          7
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students build a table of eight invertebrate phyla mapped to levels of organisational complexity, analyse the exoskeleton's survival advantages over segmentation alone, and write a summary of the functional gains at each organisational level.",
+        "implied_lo": "Students can map each invertebrate phylum to its level of biological organisation and explain how each increase in organisational complexity confers a specific functional advantage.",
+        "section_context": "Eight invertebrate phyla, cellular to organ-system organisation levels, exoskeleton, notochord criterion",
+        "c_code": "C-4.2",
+        "co_central": true
+      },
+      {
+        "section_number": 13,
+        "section_label": "12.6.5 Kingdom Animalia — Protochordates and Vertebrates",
+        "total_sections": 17,
+        "period_numbers": [
+          8
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students reason about the evolutionary significance of the notochord in protochordates, complete a vertebrate-group table covering body covering and reproduction, and link structural features of each vertebrate group to the specific survival challenge they resolve.",
+        "implied_lo": "Students can link the structural features of each vertebrate group to the specific survival challenges they address, using the notochord-to-vertebral-column transition as evidence of increasing structural complexity.",
+        "section_context": "Amphioxus, notochord, five vertebrate groups, vertebral column, habitat specialisation",
+        "c_code": "C-4.2",
+        "co_central": true
+      },
+      {
+        "section_number": 14,
+        "section_label": "12.7 Adaptations as Outcomes of Structural Change",
+        "total_sections": 17,
+        "period_numbers": [
+          8
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students construct a three-column table linking each structural adaptation to its survival function and the constraint the vertebrate group still faces, writing a closing sentence on mammary glands as a solution to offspring survival.",
+        "implied_lo": "Students can analyse vertebrate structural features as solutions to specific survival challenges and identify the constraints each group's body plan does not yet overcome.",
+        "section_context": "Fins and gills, hollow bones and feathers, fat storage, mammary glands; vertebrate structural solutions and constraints",
+        "c_code": "C-4.1",
+        "co_central": true
+      },
+      {
+        "section_number": 15,
+        "section_label": "12.7.1 The hierarchical nature of classification / 12.8 Scientific Naming — The Binomial System",
+        "total_sections": 17,
+        "period_numbers": [
+          9
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students annotate a seven-level hierarchy with tiger and pea plant classifications, correct deliberately mis-formatted scientific names, and explain in writing the distinction between genus and species using the interbreeding criterion.",
+        "implied_lo": "Students can apply the rules of binomial nomenclature correctly and use the hierarchical classification system to infer the degree of relatedness between two organisms.",
+        "section_context": "Seven-level classification hierarchy, Panthera tigris and Pisum sativum, binomial nomenclature rules, genus and species distinction",
+        "c_code": "C-4.1",
+        "co_central": true
+      },
+      {
+        "section_number": 16,
+        "section_label": "12.9 Fossils as Evidence",
+        "total_sections": 17,
+        "period_numbers": [
+          10
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students predict fossil complexity by rock-layer depth, compare prediction with textbook account, infer preservation conditions for Indian fossil examples, and write an argument for why fossils constitute direct rather than indirect evidence.",
+        "implied_lo": "Students can use the pattern of fossil distribution across rock layers to construct an evidence-based argument for how life has changed over time.",
+        "section_context": "Fossil distribution in rock layers, Indian fossil examples, older layers and simpler organisms, preservation conditions",
+        "c_code": "C-4.1",
+        "co_central": true
+      },
+      {
+        "section_number": 17,
+        "section_label": "12.10 Biodiversity Under Threat",
+        "total_sections": 17,
+        "period_numbers": [
+          11
+        ],
+        "period_duration_minutes": 50,
+        "activity_summary": "Students annotate each ecosystem service in section 12.10 with its kingdom, analyse cascade consequences across three real-world examples, and explain how the Sangai deer case and Ram Bux Singh biogas application demonstrate that classification and conservation are inseparable.",
+        "implied_lo": "Students can analyse specific biodiversity loss scenarios to predict cascade ecological consequences and explain how accurate classification underpins both conservation and applied science.",
+        "section_context": "Ecosystem services by kingdom, mangrove cyclone protection, Sangai deer rediscovery, Ram Bux Singh biogas, cascade biodiversity loss",
+        "c_code": "C-4.1",
+        "co_central": true
+      }
+    ],
+    "assessment_items": {
+      "grade": "Grade IX",
+      "subject": "science",
+      "stage": "secondary",
+      "chapter_number": 12,
+      "chapter_title": "Patterns in Life: Diversity and Classification",
+      "chapter_cg": "CG-4",
+      "reasoning_floor_lift_applied": false,
+      "questions": [
+        {
+          "section_number": 1,
+          "section_label": "12.1 India as a Biodiversity Hotspot",
+          "total_sections": 17,
+          "implied_lo_assessed": "Students can distinguish between a highly diverse region and a biodiversity hotspot by applying the criteria of endemism and habitat loss to geographic examples.",
+          "section_context": "Indian endemic species, four biodiversity hotspots, habitat diversity and endemism",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-4.1",
+            "competency_text": "Applying knowledge of cellular diversity and ecological role to classify organisms into the five kingdoms"
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "A region is described as having an extraordinarily large number of plant and animal species. Which additional condition must be true for that region to be designated a biodiversity hotspot?",
+          "options": [
+            {
+              "label": "A",
+              "text": "The region must be legally protected by the government as a national park or wildlife sanctuary.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "The region must be located in a tropical climate zone and receive more than 2000 mm of annual rainfall.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "The region must contain organisms found nowhere else on Earth and must have experienced significant habitat loss.",
+              "is_correct": true
+            },
+            {
+              "label": "D",
+              "text": "The region must have the highest number of total species on Earth, regardless of whether any are found only there.",
+              "is_correct": false
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 1
+              },
+              "what_each_option_reveals": {
+                "B": "Confuses habitat type (tropical, high rainfall) with the specific criteria for hotspot designation; conflates species richness conditions with the hotspot definition.",
+                "D": "Conflates total species count (diversity) with the hotspot criterion; misses that endemism and habitat loss together define the designation, not sheer numbers.",
+                "A": "Confuses legal protection status with scientific designation; a hotspot is defined by biological criteria, not governance status."
+              },
+              "inclusivity": "Students who struggle with written explanation can respond using the map they annotated in class, pointing to a hotspot region and naming the criterion. Students who find the multiple-choice format ambiguous may be asked to explain orally why their chosen option is correct."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 2,
+          "section_label": "12.2 How has the Biodiversity Evolved?",
+          "total_sections": 17,
+          "implied_lo_assessed": "Students can explain how variation accumulating across generations over time produces the diversity of life forms that classification systems must organise.",
+          "section_context": "Gradual accumulation of individual differences, organism-environment interactions, origin of biodiversity",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-4.1",
+            "competency_text": "Applying knowledge of cellular diversity and ecological role to classify organisms into the five kingdoms"
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "The chapter states that the biodiversity visible today 'emerged from small differences among individuals that affected survival and reproduction, accumulating across many generations.' What does this mean for how we interpret the variety of life forms we classify?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Biodiversity is fixed at a maximum level set by the number of habitats available, and has not changed since life first appeared.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "Organisms deliberately changed their body structure across generations to survive better in their habitats.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "Small individual differences are irrelevant to diversity at the species level because only large mutations produce new life forms.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "The variety of life forms is the cumulative result of heritable differences being retained or lost through interactions with the environment over vast time spans.",
+              "is_correct": true
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 2
+              },
+              "what_each_option_reveals": {
+                "B": "Reflects a teleological misconception — that organisms choose or intend structural change; confuses the outcome of accumulated variation with deliberate adaptation.",
+                "A": "Contradicts the chapter's core claim that biodiversity is not fixed; may reflect a static view of species as unchanging.",
+                "C": "Underestimates the role of small heritable differences; this is the key misconception the section directly addresses."
+              },
+              "inclusivity": "Students who find abstract evolutionary language challenging can be asked to give a concrete analogy: 'If each generation of a population living in a cold region slightly favours individuals with thicker fur, what happens after many generations?' This reformulation scaffolds the same reasoning."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 3,
+          "section_label": "12.3 How to Classify Organisms?",
+          "total_sections": 17,
+          "implied_lo_assessed": "Students can demonstrate that grouping outcomes depend on criterion choice and articulate why some criteria reveal evolutionary relationships more faithfully than others.",
+          "section_context": "Criterion-dependent grouping, eagle as carnivore or flier, Activity 12.1 ecosystem image",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-4.1",
+            "competency_text": "Applying knowledge of cellular diversity and ecological role to classify organisms into the five kingdoms"
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "An eagle and a bat can both be placed in the same group if the criterion is 'ability to fly.' However, they would be placed in different groups if the criterion is 'cell structure and body organisation.' Using these two cases, explain why cell structure and body organisation is a more scientifically useful classification criterion than locomotion ability.",
+          "options": [],
+          "expected_elements": [
+            "States that classifying by locomotion ability groups organisms that share a functional trait but may have very different evolutionary histories (eagle: bird; bat: mammal).",
+            "States that cell structure and body organisation reflect deeper biological similarities tied to common ancestry.",
+            "Explains that a criterion is more scientifically robust when it reveals evolutionary relationships rather than superficial functional resemblance.",
+            "Uses at least one concrete feature (e.g., presence of feathers versus fur, or warm-blooded endothermy with live birth in bat versus egg-laying in eagle) to support the comparison."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": null,
+            "SCR": {
+              "learning_outcome": {
+                "section": 3
+              },
+              "inclusivity": "Students who have difficulty articulating the evolutionary argument may begin by listing two structural differences between an eagle and a bat and then explain what those differences tell us about their relationship. This scaffolds the same reasoning from observation to inference."
+            },
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 4,
+          "section_label": "12.3.1 Some criteria to classify living organisms",
+          "total_sections": 17,
+          "implied_lo_assessed": "Students can rank classification criteria by the depth of evolutionary information they carry and justify why shared structural or molecular features indicate common ancestry.",
+          "section_context": "Seven classification criteria from external features to DNA, tiers of structural and molecular evidence",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-4.1",
+            "competency_text": "Applying knowledge of cellular diversity and ecological role to classify organisms into the five kingdoms"
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "Two organisms share nearly identical DNA sequences but look very different from the outside. A third organism looks very similar to one of them but has a quite different DNA sequence. Which grouping is most likely to reflect true evolutionary relationship?",
+          "options": [
+            {
+              "label": "A",
+              "text": "All three should be placed in the same group, because any similarity — whether external or molecular — is equally valid evidence of relationship.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "None of them should be grouped together until their mode of reproduction is checked, since reproduction is always the most important criterion.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "The two organisms that look similar should be grouped together, because external features are the most observable and therefore the most reliable criterion.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "The two organisms with nearly identical DNA should be grouped together, because molecular similarity reflects common ancestry more reliably than external appearance.",
+              "is_correct": true
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 4
+              },
+              "what_each_option_reveals": {
+                "C": "Over-values observable external features over molecular evidence; reflects the pre-molecular view of classification that the section explicitly moves beyond.",
+                "A": "Treats all criteria as equally valid; fails to grasp the section's core point that different criteria carry different depths of evolutionary information.",
+                "B": "Overgeneralises the importance of reproduction as a criterion; while reproduction is one of the seven criteria, it is not always the most diagnostic."
+              },
+              "inclusivity": "Students who are uncertain may be asked to consider: 'If two organisms looked different but shared a blueprint for building their cells, what would that tell you about how recently they shared an ancestor?' This analogy scaffolds the DNA-as-deeper-evidence logic without requiring molecular biology knowledge."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 5,
+          "section_label": "12.4 The Need for Classification",
+          "total_sections": 17,
+          "implied_lo_assessed": "Students can apply each of the six functions of biological classification to real ecological scenarios, explaining how classification enables systematic study and conservation action.",
+          "section_context": "Six functions of classification, Pakke Tiger Reserve case study, 300 bird species and four hornbill species",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-4.1",
+            "competency_text": "Applying knowledge of cellular diversity and ecological role to classify organisms into the five kingdoms"
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "Scientists studying Pakke Tiger Reserve recorded 300 bird species, including four species of hornbills that look similar to casual observers. Explain how biological classification enables scientists to (a) distinguish the four hornbill species from each other, and (b) predict what would happen to hornbill populations if the large old trees used for nesting were removed.",
+          "options": [],
+          "expected_elements": [
+            "For (a): explains that classification identifies distinguishing features (morphological, behavioural or ecological) that separate similar-looking species, giving scientists a framework for accurate identification beyond casual observation.",
+            "For (a): connects to the function of revealing similarities and differences among living beings, or enabling identification and naming of organisms.",
+            "For (b): explains that classification reveals ecological relationships — which species depend on which resources — so losing large old nesting trees would be predicted to reduce the reproductive success of the hornbill species that depend on tree cavities.",
+            "For (b): connects to the function of clarifying how organisms are related and interact, or supporting biodiversity conservation by highlighting threatened species.",
+            "Uses the language of 'classification functions' rather than just describing the reserve scenario in narrative terms."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": null,
+            "SCR": {
+              "learning_outcome": {
+                "section": 5
+              },
+              "inclusivity": "Students who struggle with the two-part structure may address each part in a single sentence before expanding. Students with strong ecological intuition but weaker written expression may be invited to draw a simple diagram showing the nesting-tree dependency before writing their explanation."
+            },
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 6,
+          "section_label": "12.5 Biological Classification Systems Over Time",
+          "total_sections": 17,
+          "implied_lo_assessed": "Students can trace how advances in observation tools and biological knowledge forced each expansion of the classification system, explaining the specific evidence that motivated each new kingdom.",
+          "section_context": "Aristotle, two-kingdom to five-kingdom progression, Whittaker 1969, fungi absorption versus synthesis",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-4.1",
+            "competency_text": "Applying knowledge of cellular diversity and ecological role to classify organisms into the five kingdoms"
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "Why was a fifth kingdom necessary when Fungi had previously been classified under Plantae in the two-kingdom system?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Fungi lack a cell wall entirely, which meant they could not be classified as plants under any system.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "Fungi move from place to place to find food, which placed them among animals rather than plants.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "Fungi obtain nutrients by absorbing organic matter rather than synthesising it through photosynthesis, making them neither plants nor animals.",
+              "is_correct": true
+            },
+            {
+              "label": "D",
+              "text": "Fungi were discovered to be unicellular, and the two-kingdom system had no category for unicellular organisms.",
+              "is_correct": false
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 6
+              },
+              "what_each_option_reveals": {
+                "D": "Confuses the reason for the Protista/Monera additions (unicellularity) with the reason for the Fungi addition; shows partial knowledge of the timeline but misapplies it.",
+                "A": "Directly contradicts the chapter: fungi have chitin cell walls; this is the most common factual misconception about fungi.",
+                "B": "Applies an animal-kingdom criterion (locomotion) incorrectly to fungi; reflects Aristotle's habitat-based thinking rather than the nutrition-mode criterion."
+              },
+              "inclusivity": "Students who find the timeline challenging may first draw a simple two-column table: 'What Plantae requires / What Fungi actually do' — this makes the mismatch visible before they select an answer."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 7,
+          "section_label": "12.6 Five Kingdom Classification",
+          "total_sections": 17,
+          "implied_lo_assessed": "Students can apply the four criteria of Whittaker's system — cell type, level of organisation, cell wall composition, and mode of nutrition — to classify an unfamiliar organism into one of the five kingdoms and justify the placement.",
+          "section_context": "Whittaker five-kingdom system, four criteria: cell type, organisation level, cell wall, nutrition mode",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-4.1",
+            "competency_text": "Applying knowledge of cellular diversity and ecological role to classify organisms into the five kingdoms"
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "An organism is described as follows: it is single-celled, possesses a membrane-bound nucleus, has no cell wall, lives in a freshwater pond, and obtains food by engulfing smaller particles. Using all four criteria of Whittaker's five-kingdom system, identify the kingdom this organism belongs to and justify each criterion.",
+          "options": [],
+          "expected_elements": [
+            "Correctly identifies Kingdom Protista.",
+            "Criterion 1 — Cell type: eukaryote (membrane-bound nucleus present), ruling out Monera.",
+            "Criterion 2 — Level of organisation: unicellular, ruling out Plantae, Fungi and Animalia (which are predominantly multicellular).",
+            "Criterion 3 — Cell wall: absent, which is consistent with Protista (some protists lack a cell wall) and rules out Fungi (chitin wall) and Plantae (cellulose wall).",
+            "Criterion 4 — Mode of nutrition: heterotrophic (engulfs particles), consistent with Protista's heterotrophic members and ruling out autotrophic Plantae.",
+            "States a conclusion linking all four criteria together."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": null,
+            "SCR": {
+              "learning_outcome": {
+                "section": 7
+              },
+              "inclusivity": "Students who are uncertain may begin by ruling out kingdoms one at a time using the criteria, writing 'Not Monera because…' for each kingdom eliminated. This systematic elimination scaffolds the same application without requiring recall of the positive placement rule first."
+            },
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 8,
+          "section_label": "12.6.1 Kingdom Monera — Unicellular prokaryotes",
+          "total_sections": 17,
+          "implied_lo_assessed": "Students can use observed structural features of prokaryotic cells to justify the placement of bacteria and cyanobacteria in Kingdom Monera and distinguish their roles in ecosystems.",
+          "section_context": "Bacteria and cyanobacteria, primitive nucleus, ecological roles including Lactobacillus, Rhizobium, decomposition",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-4.1",
+            "competency_text": "Applying knowledge of cellular diversity and ecological role to classify organisms into the five kingdoms"
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "Rhizobium bacteria live in nodules on the roots of legume plants and fix atmospheric nitrogen into a form the plant can use. Which structural feature places Rhizobium in Kingdom Monera rather than Kingdom Protista?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Rhizobium has a primitive nucleus without a surrounding membrane, making it prokaryotic.",
+              "is_correct": true
+            },
+            {
+              "label": "B",
+              "text": "Rhizobium is autotrophic, and Monera is the only kingdom that includes autotrophic organisms.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "Rhizobium is multicellular, and Protista contains only unicellular organisms.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "Rhizobium lives inside another organism, which is a feature only found in Monera.",
+              "is_correct": false
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 8
+              },
+              "what_each_option_reveals": {
+                "D": "Confuses an ecological role (symbiosis/parasitism) with a kingdom-defining structural criterion; parasites and symbionts exist across many kingdoms.",
+                "B": "Contradicts the chapter: autotrophy is not exclusive to Monera — Plantae and some Protista are also autotrophic; reveals confusion about which criteria are kingdom-specific.",
+                "C": "Factually incorrect: Rhizobium is unicellular; this distractor tests whether students have conflated kingdom with organisational level."
+              },
+              "inclusivity": "Students who remember ecological roles better than structural features may be asked: 'Regardless of where Rhizobium lives or what it does, what does the inside of its cell look like compared to an Amoeba?' This redirects attention to the structural criterion."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 9,
+          "section_label": "12.6.2 Kingdom Protista — Unicellular eukaryotes",
+          "total_sections": 17,
+          "implied_lo_assessed": "Students can distinguish unicellular prokaryotes from unicellular eukaryotes using cell-structural criteria and explain the ecological roles of protists in aquatic food chains.",
+          "section_context": "Amoeba, Paramecium, Chlamydomonas, Euglena; eukaryotic cell structure; aquatic food chain roles",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-4.1",
+            "competency_text": "Applying knowledge of cellular diversity and ecological role to classify organisms into the five kingdoms"
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "Both Monera and Protista include unicellular organisms. What is the single structural feature that places a unicellular organism in Protista rather than Monera?",
+          "options": [
+            {
+              "label": "A",
+              "text": "The organism can perform photosynthesis and produce oxygen.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "The organism lacks a cell wall of any kind.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "The organism lives in water or moist environments rather than in soil or air.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "The organism possesses a membrane-bound nucleus enclosing its genetic material.",
+              "is_correct": true
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 9
+              },
+              "what_each_option_reveals": {
+                "C": "Confuses habitat (water/moist) with a kingdom-defining structural feature; both Monera and Protista can live in water.",
+                "A": "Confuses an ecological/functional role with the structural criterion; some Protista are heterotrophic and some Monera are autotrophic.",
+                "B": "Partially correct for some Protista but not universally true — some protists have a cellulose wall; and the absence of a cell wall is not the kingdom-defining distinction between Monera and Protista."
+              },
+              "inclusivity": "Students who are uncertain may sketch or describe the inside of two cells — one with a distinct nucleus in a membrane, one without — and label which kingdom each belongs to before choosing an answer."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 10,
+          "section_label": "12.6.3 Kingdom Fungi — Multicellular, heterotrophic eukaryotes with a cell wall",
+          "total_sections": 17,
+          "implied_lo_assessed": "Students can use mode of nutrition and cell-wall composition to distinguish Kingdom Fungi from Kingdom Plantae and explain fungi's ecological role as decomposers.",
+          "section_context": "Chitin cell wall, saprophytic nutrition via mycelium, Penicillium and yeast examples, decomposer ecological role",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-4.1",
+            "competency_text": "Applying knowledge of cellular diversity and ecological role to classify organisms into the five kingdoms"
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "A mushroom and a fern both have cell walls and are multicellular. Which pair of criteria most clearly places them in different kingdoms?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Cell-wall composition (chitin in mushroom; cellulose in fern) and mode of nutrition (absorptive heterotroph versus photosynthetic autotroph).",
+              "is_correct": true
+            },
+            {
+              "label": "B",
+              "text": "Habitat (terrestrial mushroom versus aquatic fern) and size (mushroom is smaller than a tree fern).",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "Mode of reproduction (mushroom reproduces only asexually; fern reproduces only sexually).",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "Presence of a nucleus (mushroom is prokaryotic; fern is eukaryotic) and level of organisation.",
+              "is_correct": false
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 10
+              },
+              "what_each_option_reveals": {
+                "B": "Uses ecological and size criteria — neither of which is diagnostic for kingdom placement; reveals a reliance on observable external features rather than structural or nutritional criteria.",
+                "D": "Factually incorrect: mushrooms (fungi) are eukaryotic, not prokaryotic; this tests whether students have conflated Monera with Fungi.",
+                "C": "Oversimplifies reproduction: many fungi reproduce both sexually and asexually, and reproduction mode is not the primary distinguishing criterion between Fungi and Plantae."
+              },
+              "inclusivity": "Students who are uncertain may be asked to answer a preliminary question: 'Does a mushroom make its own food or obtain it from outside?' and 'What is in a mushroom's cell wall?' — these two answers directly map to the correct criteria without requiring memorisation of the full kingdom definitions."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 11,
+          "section_label": "12.6.4 Kingdom Plantae — Multicellular, autotrophic eukaryotes with a cell wall",
+          "total_sections": 17,
+          "implied_lo_assessed": "Students can trace the structural progression across the five plant classes in terms of adaptations that progressively reduce dependence on water for survival and reproduction.",
+          "section_context": "Five plant classes, vascular tissue, seed production, fruit-enclosed seeds, monocot and dicot venation",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-4.1",
+            "competency_text": "Applying knowledge of cellular diversity and ecological role to classify organisms into the five kingdoms"
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "A botanist discovers a plant growing in a semi-arid region. The plant produces seeds enclosed in a fruit, has broad leaves with a network of veins, and shows no dependence on water for fertilisation. Identify its plant class and explain the structural features that allow it to survive with minimal water, tracing the specific adaptations that distinguish this class from the one immediately before it in the five-class sequence.",
+          "options": [],
+          "expected_elements": [
+            "Correctly identifies the plant as an Angiosperm.",
+            "Identifies fruit-enclosed seeds and network (reticulate) venation as diagnostic Angiosperm features from the text.",
+            "Compares Angiosperms to Gymnosperms (the class immediately before): Gymnosperms also produce seeds and do not require water for fertilisation, but their seeds are naked (not enclosed in fruit).",
+            "Explains the specific Angiosperm advance over Gymnosperms: fruit-enclosed seeds enable dispersal by animals, wind or water, allowing colonisation of a wider range of environments.",
+            "Notes that neither Angiosperms nor Gymnosperms require water for fertilisation — a key contrast with Pteridophyta and Bryophyta."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": null,
+            "SCR": {
+              "learning_outcome": {
+                "section": 11
+              },
+              "inclusivity": "Students who are uncertain about which class comes 'immediately before' may refer to their comparison table. Students with strong visual reasoning may draw the five classes as a sequence of steps, annotating what each step adds, before writing their explanation."
+            },
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 12,
+          "section_label": "12.6.5 Kingdom Animalia — Multicellular, heterotrophic eukaryotes",
+          "total_sections": 17,
+          "implied_lo_assessed": "Students can map each invertebrate phylum to its level of biological organisation and explain how each increase in organisational complexity confers a specific functional advantage.",
+          "section_context": "Eight invertebrate phyla, cellular to organ-system organisation levels, exoskeleton, notochord criterion",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-4.2",
+            "competency_text": "Illustrating levels of organisation from molecules to organisms"
+          },
+          "cognitive_demand": "Analysis",
+          "visual_stimulus": null,
+          "question_text": "The invertebrate phyla in Kingdom Animalia show a progression from cellular-level organisation (Porifera) to organ-system-level organisation (Annelida, Arthropoda, Mollusca). Using three specific phyla from this range, explain how each increase in organisational complexity solved a problem that the previous level of organisation could not, and identify one structural constraint that each phylum still faced despite its advance.",
+          "options": [],
+          "expected_elements": [],
+          "look_for": [
+            "Selects three phyla that represent genuinely different organisational levels (e.g., Porifera at cellular, Cnidaria at tissue, Platyhelminthes at organ, Nematoda/Annelida at organ-system) rather than three at the same level.",
+            "For each phylum: names a specific structural feature (pores and water-flow system; tentacles; bilateral symmetry; two body openings; segmentation and coelom) and links it to a functional problem it solves (delivering nutrients to cells; active prey capture; directional movement; efficient digestion; flexible muscular movement).",
+            "For each phylum: identifies a genuine remaining constraint (Porifera: sessile, entirely dependent on water current; Cnidaria: single opening; Platyhelminthes: single opening still limits digestion; Nematoda: lacks segmentation limiting fine motor control; Annelida: soft body limits terrestrial water retention).",
+            "The argument is structured as a progression, not a list — each phylum's advance is framed as addressing the specific constraint of the previous level.",
+            "Does not confuse organisational levels (e.g., does not state that Porifera have tissues)."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": null,
+            "SCR": null,
+            "ECR": {
+              "learning_outcome": {
+                "section": 12
+              },
+              "inclusivity": "Students who struggle with constructing a narrative argument may structure their response as a table with columns: Phylum | Organisational level | Structural feature | Problem solved | Remaining constraint — and then write a connecting sentence between rows. Students who find the 'remaining constraint' difficult may be prompted: 'What can an organism at the next level do that this one cannot?'"
+            },
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 13,
+          "section_label": "12.6.5 Kingdom Animalia — Protochordates and Vertebrates",
+          "total_sections": 17,
+          "implied_lo_assessed": "Students can link the structural features of each vertebrate group to the specific survival challenges they address, using the notochord-to-vertebral-column transition as evidence of increasing structural complexity.",
+          "section_context": "Amphioxus, notochord, five vertebrate groups, vertebral column, habitat specialisation",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-4.2",
+            "competency_text": "Illustrating levels of organisation from molecules to organisms"
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "Amphioxus possesses a notochord only at certain stages of its life and is classified as a protochordate rather than a vertebrate. What does this tell us about the evolutionary relationship between protochordates and vertebrates?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Because Amphioxus lacks a permanent notochord, it has no relationship to vertebrates and should be classified as an invertebrate.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "Protochordates are more advanced than vertebrates because they can survive both with and without a notochord at different life stages.",
+              "is_correct": false
+            },
+            {
+              "label": "C",
+              "text": "Protochordates illustrate an intermediate stage in which internal support appears before it becomes a permanent vertebral column, suggesting a link between invertebrates and vertebrates.",
+              "is_correct": true
+            },
+            {
+              "label": "D",
+              "text": "The notochord in Amphioxus serves the same function as an exoskeleton, so protochordates are best grouped with arthropods.",
+              "is_correct": false
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 13
+              },
+              "what_each_option_reveals": {
+                "B": "Inverts the complexity logic — interprets developmental flexibility as superiority rather than as an intermediate state; reflects a teleological misconception about evolution.",
+                "D": "Confuses the function of internal (notochord) and external (exoskeleton) support structures and crosses kingdoms incorrectly.",
+                "A": "Treats the absence of a permanent notochord as absence of a notochord at all; misreads the text's statement that the notochord is present 'at some point in life'."
+              },
+              "inclusivity": "Students uncertain about the evolutionary logic may be asked to consider: 'If a feature appears briefly during development in one group and permanently in another, what does that sequence suggest about which came first?'"
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 14,
+          "section_label": "12.7 Adaptations as Outcomes of Structural Change",
+          "total_sections": 17,
+          "implied_lo_assessed": "Students can analyse vertebrate structural features as solutions to specific survival challenges and identify the constraints each group's body plan does not yet overcome.",
+          "section_context": "Fins and gills, hollow bones and feathers, fat storage, mammary glands; vertebrate structural solutions and constraints",
+          "question_type": "SCR",
+          "competency": {
+            "c_code": "C-4.1",
+            "competency_text": "Applying knowledge of cellular diversity and ecological role to classify organisms into the five kingdoms"
+          },
+          "cognitive_demand": "Application",
+          "visual_stimulus": null,
+          "question_text": "Section 12.7 describes how hollow bones and feathers enable flight in birds, while mammary glands in mammals improve offspring survival. For each feature, identify the specific survival challenge it addresses, then explain one constraint that each vertebrate group still faces despite this adaptation.",
+          "options": [],
+          "expected_elements": [
+            "Hollow bones and feathers: addresses the challenge of aerial locomotion by reducing body weight while providing lift and insulation; connects to obtaining food or avoiding predators in an aerial environment.",
+            "Birds' constraint: e.g., reproductive vulnerability — eggs laid outside the body are exposed to predators and temperature variation, unlike the internal development in mammals.",
+            "Mammary glands: addresses the challenge of offspring survival after birth by providing nutrition (milk), reducing early mortality.",
+            "Mammals' constraint: e.g., the energetic cost of live birth and extended parental care limits litter size compared to egg-laying vertebrates, or mammals' warm-bloodedness requires continuous food intake.",
+            "Both explanations are grounded in section 12.7's language of 'structural solutions to common challenges' rather than generic biology."
+          ],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": null,
+            "SCR": {
+              "learning_outcome": {
+                "section": 14
+              },
+              "inclusivity": "Students who find 'constraint' difficult to articulate may be asked: 'What is one thing a bird cannot do that a mammal can, precisely because of how its body is built?' This reframes the constraint as a functional trade-off grounded in the body plan rather than an abstract limitation."
+            },
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 15,
+          "section_label": "12.7.1 The hierarchical nature of classification / 12.8 Scientific Naming — The Binomial System",
+          "total_sections": 17,
+          "implied_lo_assessed": "Students can apply the rules of binomial nomenclature correctly and use the hierarchical classification system to infer the degree of relatedness between two organisms.",
+          "section_context": "Seven-level classification hierarchy, Panthera tigris and Pisum sativum, binomial nomenclature rules, genus and species distinction",
+          "question_type": "OPEN_TASK",
+          "competency": {
+            "c_code": "C-4.1",
+            "competency_text": "Applying knowledge of cellular diversity and ecological role to classify organisms into the five kingdoms"
+          },
+          "cognitive_demand": "Analysis",
+          "visual_stimulus": "Organism | Kingdom | Phylum | Class | Order | Family | Genus | Species\nLion | Animalia | Chordata | Mammalia | Carnivora | Felidae | Panthera | leo\nTiger | Animalia | Chordata | Mammalia | Carnivora | Felidae | Panthera | tigris\nDomestic cat | Animalia | Chordata | Mammalia | Carnivora | Felidae | Felis | catus\nDog | Animalia | Chordata | Mammalia | Carnivora | Canidae | Canis | lupus familiaris\nPea plant | Plantae | Magnoliophyta | Magnoliopsida | Fabales | Fabaceae | Pisum | sativum",
+          "question_text": "",
+          "options": [],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "The table above shows the complete classification of five organisms. Use it to answer all three parts: (a) Write the correct scientific names for the lion, domestic cat, and dog, following all three rules of binomial nomenclature. (b) Identify which two organisms are most closely related and justify your answer by naming the classification level at which they first share the same group. (c) Explain what the fact that lion and domestic cat share the same Family (Felidae) but different Genera tells us about how recently they shared a common ancestor compared with lion and tiger, which share the same Genus.",
+          "scaffold": "For part (a): recall that a scientific name has two parts — the genus name comes first with a capital letter, followed by the species name in lowercase; the full name is written in italics. For part (b): compare the rows column by column from Kingdom to Species and identify where two organisms remain in the same group for the greatest number of levels. For part (c): use the principle that the lower the level at which two organisms first diverge, the more recently they shared a common ancestor.",
+          "format_of_output": [
+            "Written scientific names for three organisms (part a)",
+            "One sentence identifying the most closely related pair and the level of convergence (part b)",
+            "Two to three sentences comparing the ancestry of lion-cat and lion-tiger using the hierarchical logic (part c)"
+          ],
+          "guide": {
+            "MCQ": null,
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": {
+              "learning_outcome": {
+                "section": 15
+              },
+              "format_type": "Data interpretation (provided table)",
+              "format_rationale": "The section's core skill is reading a hierarchical classification to infer relatedness and applying naming rules; a classification data table is the most direct vehicle for both operations simultaneously.",
+              "what_this_demonstrates": "That the student can apply binomial nomenclature rules correctly, read a hierarchical classification table to determine relative closeness of relationship, and reason from shared classification levels to inferences about common ancestry.",
+              "reading_the_scaffold": "Part (a) tests rule application directly; part (b) tests table-reading and the logic of 'more shared levels = more closely related'; part (c) elevates the demand to analysis — students must compare two pairs and reason about what the genus-versus-family level of divergence implies about timing of common ancestry.",
+              "strong_vs_weak_markers": "Strong responses write scientific names with correct capitalisation and formatting, identify lion and tiger as the closest pair (sharing Genus Panthera), and articulate that sharing only Family means a more distant and therefore earlier divergence than sharing Genus. Weak responses format names incorrectly, choose a pair based on a single shared level without comparing all levels, or describe relatedness in vague terms ('they are similar') without invoking the hierarchy.",
+              "inclusivity": "Students who find part (c) abstract may first answer: 'At what level do lion and cat first differ? At what level do lion and tiger first differ?' — then use those two answers to compare. Students with strong visual reasoning may annotate the table by drawing a bracket connecting the two organisms in each comparison before writing."
+            }
+          }
+        },
+        {
+          "section_number": 16,
+          "section_label": "12.9 Fossils as Evidence",
+          "total_sections": 17,
+          "implied_lo_assessed": "Students can use the pattern of fossil distribution across rock layers to construct an evidence-based argument for how life has changed over time.",
+          "section_context": "Fossil distribution in rock layers, Indian fossil examples, older layers and simpler organisms, preservation conditions",
+          "question_type": "MCQ",
+          "competency": {
+            "c_code": "C-4.1",
+            "competency_text": "Applying knowledge of cellular diversity and ecological role to classify organisms into the five kingdoms"
+          },
+          "cognitive_demand": "Understanding",
+          "visual_stimulus": null,
+          "question_text": "A geologist finds fossils in three rock layers. The deepest layer contains only simple single-celled organisms. The middle layer contains small multicellular soft-bodied organisms. The top layer contains large vertebrate skeletons. What conclusion about the history of life is most directly supported by this pattern?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Large vertebrates evolved independently in each rock layer without any connection to the organisms found in deeper layers.",
+              "is_correct": false
+            },
+            {
+              "label": "B",
+              "text": "Life forms have become progressively more complex over time, with simpler organisms appearing earlier in the fossil record and more complex forms appearing in younger layers.",
+              "is_correct": true
+            },
+            {
+              "label": "C",
+              "text": "The presence of single-celled organisms only in the deepest layer proves that all single-celled organisms are now extinct.",
+              "is_correct": false
+            },
+            {
+              "label": "D",
+              "text": "The rock layers were formed simultaneously, and the different organisms simply preferred different depths of sediment.",
+              "is_correct": false
+            }
+          ],
+          "expected_elements": [],
+          "look_for": [],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": {
+              "learning_outcome": {
+                "section": 16
+              },
+              "what_each_option_reveals": {
+                "A": "Denies continuity across the fossil record; reflects a misconception that species in different layers are unrelated rather than part of a connected history of change.",
+                "C": "Misreads the fossil record as a complete census of which organisms exist today; confuses 'not found in upper layers' with 'extinct', ignoring that living single-celled organisms are not typically fossilised in newer sediments in the same way.",
+                "D": "Contradicts the stratigraphic principle that deeper layers are older; this is a fundamental misunderstanding of how rock layers and fossils relate to time."
+              },
+              "inclusivity": "Students who find stratigraphic reasoning abstract may be asked to consider a simpler analogy: 'If you dug through layers of rubbish in a pit, would you expect to find older items deeper or shallower? What does that tell you about when each layer was deposited?' This makes the time-depth logic accessible before applying it to fossils."
+            },
+            "SCR": null,
+            "ECR": null,
+            "OPEN_TASK": null
+          }
+        },
+        {
+          "section_number": 17,
+          "section_label": "12.10 Biodiversity Under Threat",
+          "total_sections": 17,
+          "implied_lo_assessed": "Students can analyse specific biodiversity loss scenarios to predict cascade ecological consequences and explain how accurate classification underpins both conservation and applied science.",
+          "section_context": "Ecosystem services by kingdom, mangrove cyclone protection, Sangai deer rediscovery, Ram Bux Singh biogas, cascade biodiversity loss",
+          "question_type": "ECR",
+          "competency": {
+            "c_code": "C-4.1",
+            "competency_text": "Applying knowledge of cellular diversity and ecological role to classify organisms into the five kingdoms"
+          },
+          "cognitive_demand": "Evaluation",
+          "visual_stimulus": null,
+          "question_text": "Section 12.10 presents three cases: mangrove forests dampening the Orissa 1999 cyclone, the Sangai deer being declared extinct in 1951 and rediscovered in 1953 through morphological classification, and Ram Bux Singh's biogas plants using bacteria from ruminant gut. Evaluate this claim: 'Biodiversity is not merely an environmental concern — it functions as infrastructure for human survival.' Draw on all three cases to justify or challenge this claim, identifying the specific functional role (by ecological category and kingdom) each case illustrates.",
+          "options": [],
+          "expected_elements": [],
+          "look_for": [
+            "Takes a clear evaluative stance on the claim (supports, challenges, or qualifies it) rather than only describing the cases.",
+            "Mangrove case: identifies mangroves as Plantae, their structural role as physical barrier reducing storm impact, and links this to 'infrastructure' in the sense of a functional service that human engineering would otherwise need to provide.",
+            "Sangai deer case: identifies how accurate morphological classification (taxonomy) prevented irreversible conservation error — the rediscovery depended on classifying the deer correctly as a distinct species; links this to the claim by arguing that knowing which species exists is a precondition for protecting the infrastructure they provide.",
+            "Ram Bux Singh case: identifies bacteria as Kingdom Monera, their ecological role as decomposers/nutrient cyclers in a ruminant gut, and explains how redirecting that metabolic capacity to biogas production demonstrates that biodiversity has direct energy-infrastructure applications.",
+            "The response uses the term 'cascade' or equivalent reasoning: losing one species affects others that depend on it, weakening the overall ecosystem service.",
+            "The evaluative stance is argued, not merely asserted — the student explains why the evidence does or does not support the claim."
+          ],
+          "task": "",
+          "scaffold": "",
+          "format_of_output": [],
+          "guide": {
+            "MCQ": null,
+            "SCR": null,
+            "ECR": {
+              "learning_outcome": {
+                "section": 17
+              },
+              "inclusivity": "Students who find the evaluative frame challenging may begin by completing a sentence for each case: 'This case shows that biodiversity functions as infrastructure because…' — and then write a closing sentence that takes a position. Students who are stronger in ecology than in written argument may annotate a simple diagram showing each case's functional pathway before writing their response."
+            },
+            "OPEN_TASK": null
+          }
+        }
+      ]
+    },
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

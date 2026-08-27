@@ -879,7 +879,7 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
                   <div className="sc-metarow">
                     {p.duration_label ? <span className="sc-durline">{p.duration_label}</span> : null}
                     {/* Same stamp, same component, as the section card and both pickers. */}
-                    <YearStamp year={p.prepared_source_year} />
+                    <YearStamp year={p.prepared_source_year} lpYear={p.lp_year_display} />
                   </div>
                   {busy ? (
                     /* Re-preparing THIS plan: the progress line replaces the status line on

@@ -336,14 +336,19 @@ def _handoff(stream):
 
 def test_unit_granularity_stages_are_untouched():
     """The guard that matters most: ten stages must not have moved."""
-    import glob
     import json
+    import os
+    import sys
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from corpus import plan_paths
     seen = 0
     for sub, gr, ch in (("social_sciences", "ix", "ch_03"),
                         ("social_sciences", "viii", "ch_03"),
                         ("science", "ix", "ch_08")):
-        fs = sorted(glob.glob("data/cloud/content/saved_plans/%s/%s/%s_canonical*.json"
-                              % (sub, gr, ch)))
+        # plan_paths, not a literal path: the library is foldered by edition year
+        # (§2.2), and this glob previously ran relative to the CWD as well — so it
+        # found nothing whenever the suite was run from anywhere but the repo root.
+        fs = plan_paths(sub, gr, f"{ch}_canonical*.json")
         if not fs:
             continue
         streams = [compile_stream(json.load(open(f))) for f in fs]

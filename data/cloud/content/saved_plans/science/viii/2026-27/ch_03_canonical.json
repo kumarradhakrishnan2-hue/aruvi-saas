@@ -1,0 +1,1160 @@
+{
+  "filename": "ch_03_canonical.json",
+  "saved_at": "2026-08-17T11:54:19",
+  "plan_status": "canonical",
+  "chapter_number": 3,
+  "chapter_title": "Health: The Ultimate Treasure",
+  "grade": "Grade VIII",
+  "subject": "Science",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 45,
+      "count": 9
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 45 minutes × 9 periods = 405 minutes\nTotal: 9 periods · 6h 45min",
+  "genon_canonical": {
+    "generated": "2026-08-17",
+    "schedule": "9x45",
+    "constitution": "LP v2.2 / assessment v1.5",
+    "source": "generate_canonical.py one science viii 3",
+    "ledger_ts": "20260817_113057_sci_viii_03_top",
+    "validation": "clean",
+    "synthesis_reauthor": {
+      "spec": "science_middle_stage_serve.md §6 v1.3",
+      "at": "2026-08-18T08:14:05",
+      "ledger_ts": "20260817_203333_sci_viii_03_resynth",
+      "model": "claude-sonnet-4-6",
+      "compacts_read": {
+        "ch_03_canonical_p07.json": "2026-08-17T12:38:00",
+        "ch_03_canonical_p05.json": "2026-08-17T12:38:00"
+      },
+      "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+    },
+    "repairs": [
+      {
+        "at": "2026-08-18T08:16:26",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 9,
+            "field": "band:0",
+            "rule": "register/clock",
+            "removed": "for two minutes without writing",
+            "replaced_with": "without writing",
+            "note": "read-first-then-clarify is the instruction; the band carries its minutes"
+          }
+        ],
+        "ban_hits_before": 1,
+        "ban_hits_after": 0
+      },
+      {
+        "tool": "genon/repair_approach_labels.py v1.0",
+        "at": "2026-08-18T13:16:33",
+        "reason": "resynth wrote essay-length pedagogical_approach into a 2-word label field (founder, 2026-08-18); label read from the essay's own first device, full old text archived here",
+        "edits": [
+          {
+            "unit": 9,
+            "field": "pedagogical_approach",
+            "removed": "Collaborative annotation and peer-critique approach: students work as co-analysts of a realistic but unfamiliar document set, constructing understanding by applying concepts to evidence they have not seen before, then sharpening that understanding by interrogating a peer group's reasoning.",
+            "replaced_with": "Collaborative Annotation and Peer Critique"
+          }
+        ]
+      }
+    ],
+    "synthesis_polish": {
+      "spec": "density + typed visual_aids (founder, 2026-08-18)",
+      "at": "2026-08-18T12:09:58",
+      "ledger_ts": "20260818_120452_sci_viii_03_polish",
+      "model": "claude-sonnet-4-6",
+      "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+    },
+    "academic_year": "2026-27"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 45,
+          "progression_stage": 1,
+          "stage_label": "Observe and question the meaning of health",
+          "pedagogical_approach": "Discovery approach",
+          "activity_title": "Beyond Not Being Sick",
+          "activity_description": "Students examine the case study from Activity 3.1 — a student whose excessive screen time and social isolation produce physical and mental symptoms — and record what they notice about the connections between habits, surroundings, and well-being, before sharing observations with the class.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Presents the case study, prompts students to notice physical, mental, and social threads, and collects observations on the board."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Read the case study, record specific observations about how habits and surroundings affect the student in the scenario, and contribute findings to the class pool."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher introduces the chapter's opening question — what does being healthy actually mean — and distributes or displays the Activity 3.1 case study for individual reading."
+            },
+            {
+              "minutes": "8-22",
+              "activity": "Students read independently and note specific examples of physical, mental, and social changes they observe in the case study character, without being prompted to categorise yet."
+            },
+            {
+              "minutes": "22-35",
+              "activity": "Class sharing: teacher records observations on the board under headings students themselves propose, guiding the emergence of physical, mental, and social dimensions."
+            },
+            {
+              "minutes": "35-45",
+              "activity": "Teacher introduces the WHO definition of health and the Ayurvedic framing, connecting them explicitly to the observations already on the board."
+            }
+          ],
+          "teacher_notes": "This opening unit anchors the chapter in a lived scenario before any definition is given, so students develop their own language for what health involves. Watch for students who equate health only with physical fitness or absence of illness — the case study is designed to surface exactly that narrowness. Invite students who initially say 'he just needs to exercise more' to point to what the case study says about his relationships and mood.",
+          "materials": [
+            "Printed or projected copy of Activity 3.1 case study",
+            "Whiteboard or chart paper"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 45,
+          "progression_stage": 1,
+          "stage_label": "Observe and question the meaning of health",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Habits in the Open: A Personal Audit",
+          "activity_description": "Students individually list their own good and harmful habits across the domains of diet, activity, sleep, screen time, relationships, and environment, then pair with a classmate to compare lists and identify shared patterns — mirroring Activity 3.2 from the chapter.",
+          "roles": [
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Privately list personal habits in each domain before pairing, ensuring honest individual reflection."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "In pairs, compare lists and identify which habits appear in both, discussing why certain habits affect more than one dimension of health."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Circulates to probe thinking, ensuring students connect habits to specific health dimensions rather than making generic statements."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-5",
+              "activity": "Teacher briefly recaps the three-dimensional health model from the previous unit and frames the task: students will audit their own habits before comparing with a peer."
+            },
+            {
+              "minutes": "5-18",
+              "activity": "Students work individually, completing a structured habit-audit grid with rows for diet, physical activity, sleep, screen time, social habits, and environment cleanliness, noting each as helpful or harmful."
+            },
+            {
+              "minutes": "18-32",
+              "activity": "Pairs compare grids, circle habits that appear in both lists, and write one sentence explaining how their most common shared habit connects to a specific dimension of health."
+            },
+            {
+              "minutes": "32-45",
+              "activity": "Brief whole-class discussion: pairs report one finding; teacher maps responses to the chapter's lifestyle subsection content, introducing the vocabulary of lifestyle and dinacharya."
+            }
+          ],
+          "teacher_notes": "This unit builds directly on the previous unit's observations — students move from noticing a fictional character's habits to examining their own, deepening the same conceptual question. A common error is listing habits without connecting them to outcomes; push pairs to write an explicit link, not just a label. The Ayurvedic concept of dinacharya can be introduced here as a structured daily routine that integrates the habits students are already recognising.",
+          "materials": [
+            "Habit-audit grid worksheet (one per student)",
+            "Pencils"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 45,
+          "progression_stage": 2,
+          "stage_label": "Classify diseases and their routes of spread",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Clean Air, Dirty Water, and What Gets In",
+          "activity_description": "Students examine two contrasting playground images from Activity 3.3 — one clean, one polluted — and then investigate Activity 3.4's disease table, sorting common diseases by their route of entry into the body and identifying the causal agent type for each.",
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "In small groups, first discuss the playground images to explain why people in the polluted setting fall ill more often, then begin sorting Activity 3.4 diseases into transmission categories with causal agents identified."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Introduces the pathogen concept and the communicable/non-communicable distinction before groups begin sorting, and circulates to probe classification reasoning."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher displays the two playground images, asks groups to list specific health risks visible in each, and introduces the vocabulary of pathogen, communicable disease, and transmission route."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Groups work through a partial version of Activity 3.4's Table 3.1, classifying assigned diseases by transmission route — airborne, waterborne or foodborne, or vector-borne — and recording the causal agent type for each."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Groups compare classifications across the class; teacher resolves disagreements and introduces the five transmission routes formally, connecting each to the diseases groups have already placed."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Quick individual written exit task: students name one disease from each transmission category and state one preventive action linked to that route."
+            }
+          ],
+          "teacher_notes": "This unit shifts from the broad health concept to the specific biology of communicable disease — the previous units established that environment matters; now students learn exactly why, through pathogen routes. Watch for students confusing vectors with direct contact — mosquitoes are not touching hands — and use the disease examples in Table 3.1 to anchor the distinction. The exit task doubles as a readiness check before the next unit deepens non-communicable disease classification.",
+          "materials": [
+            "Projected or printed playground images from Activity 3.3",
+            "Partial Activity 3.4 table worksheets (one per group)",
+            "Whiteboard"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 45,
+          "progression_stage": 2,
+          "stage_label": "Classify diseases and their routes of spread",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "NCDs, Deficiencies, and the Diabetes Snapshot",
+          "activity_description": "Students build and populate a classification tree for non-communicable diseases, distinguishing lifestyle-driven NCDs from deficiency diseases, and then analyse the diabetes example to extract the causal factors — diet, inactivity, hormonal imbalance, obesity — that the chapter presents.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Leads structured note-building on NCDs, guiding students to distinguish NCD subtype causes and using diabetes as a worked example of multi-factor causation."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Complete the classification tree and, after the diabetes walkthrough, write one causal factor for each of scurvy, anaemia, and goitre from the chapter's deficiency disease content."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Teacher draws a blank two-branch classification tree on the board — one branch for lifestyle-driven NCDs, one for deficiency diseases — and students copy and populate it using chapter examples as the teacher names each."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Teacher works through diabetes as a detailed case: lists the four causal factors from the chapter, connects each to the earlier lifestyle habits discussion, and asks students to predict which habits from their unit-2 audit might contribute."
+            },
+            {
+              "minutes": "28-38",
+              "activity": "Students individually identify the causal nutrient and associated deficiency disease for scurvy, anaemia, and goitre using the chapter's subsection 3.4.2 content, writing one sentence per disease."
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Teacher recaps the communicable-versus-NCD boundary established across this and the previous unit, asking students to state the one criterion that separates the two types."
+            }
+          ],
+          "teacher_notes": "The previous unit established communicable disease classification; this unit completes the disease taxonomy by building the NCD branch, so students now hold a full picture before moving to prevention. A persistent error is treating all NCDs as lifestyle diseases — deficiency diseases are also NCDs but are caused by nutrient absence, not excess or inactivity. The diabetes case is particularly well-suited to connecting backward to the lifestyle habits students audited in unit 2.",
+          "materials": [
+            "Whiteboard",
+            "Student notebooks"
+          ],
+          "homework": [
+            "Using the chapter's Activity 3.5 survey framework, identify one common lifestyle-related disease you have observed among adults in your household or neighbourhood; write its name, two symptoms, and one specific lifestyle change that could reduce risk."
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 45,
+          "progression_stage": 3,
+          "stage_label": "Explain mechanisms of symptoms, immunity, and prevention",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Signs, Symptoms, and What the Body Is Telling Us",
+          "activity_description": "Students receive a set of scenario cards describing individuals with various complaints, and determine — using the chapter's symptom and sign definitions — whether each observation is a symptom or a sign, justifying each classification with a reason drawn from the chapter's framing of what constitutes deviation from normal body functioning.",
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Sort scenario cards into symptom and sign categories, writing a one-sentence justification for each card that references either subjectivity or measurability."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Introduces the symptom-sign distinction with two clear examples before releasing groups, and leads the consolidation discussion that connects accurate symptom-sign identification to how doctors determine disease cause."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher presents the chapter's definitions of symptom and sign with two contrasting examples — dizziness as a symptom, fever measured on a thermometer as a sign — and asks students to articulate the distinguishing criterion in their own words."
+            },
+            {
+              "minutes": "8-28",
+              "activity": "Groups sort a set of scenario cards (pain, rash, high blood pressure reading, tiredness, visible swelling, reported dizziness, measured swelling circumference) into symptom and sign columns, writing a justification for each."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Groups share their most contested card; class debates correct placement and teacher uses disagreements to sharpen the measurable-versus-felt distinction."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Teacher connects accurate symptom-sign identification to the chapter's claim that these categories help doctors understand the cause of illness, bridging toward the immunity and prevention content in the next unit."
+            }
+          ],
+          "teacher_notes": "This unit opens the mechanism stage — students move from classifying disease types to explaining the body's own signalling system. Watch for the common conflation of sign and symptom as simply 'what you notice'; the chapter's criterion of measurability by another person is the precise distinction to reinforce. The bridge at the close of this unit — that symptoms and signs guide the doctor toward cause — sets up the next unit's examination of how the immune system responds to that cause.",
+          "materials": [
+            "Scenario card sets (one per group)",
+            "Sorting worksheet"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 45,
+          "progression_stage": 3,
+          "stage_label": "Explain mechanisms of symptoms, immunity, and prevention",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Jenner's Logic: How Vaccines Train the Body",
+          "activity_description": "Students reconstruct Edward Jenner's vaccination inquiry — observation, hypothesis, experiment, conclusion — using the chapter's 'Think like a scientist' framework, then map the steps of acquired immunity (vaccine exposes immune system to harmless pathogen parts; immune system learns; future infection is resisted) onto a sequencing strip.",
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Reconstruct Jenner's inquiry sequence by ordering provided statement strips, then complete the immunity sequencing strip by writing what happens at each biological step."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Introduces the inquiry sequence structure before group work, and after the activity presents the historical context — variolation in India, smallpox eradication by 1979, India's vaccine production role — to complete the picture."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher introduces the Jenner case using the chapter's four-stage scientist framework, reading aloud Jenner's observation about cowpox-infected milkmaids, then asks groups to predict what hypothesis he might have formed before revealing the chapter text."
+            },
+            {
+              "minutes": "10-28",
+              "activity": "Groups sequence a set of statement strips representing Jenner's observation, hypothesis, inoculation experiment, and eradication conclusion into correct order, then complete the blank immunity mechanism strip — vaccine administered, immune system encounters weakened pathogen, immunity acquired, future infection resisted — with one sentence per step."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Groups share their immunity sequences; teacher fills in biological vocabulary (acquired immunity) and connects the mechanism to the chapter's characterisation of vaccines as preventive, not curative."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Teacher narrates the Indian variolation tradition and India's current vaccine production role as a brief contextualising close, asking students to articulate in one sentence why vaccines are classified as prevention rather than treatment."
+            }
+          ],
+          "teacher_notes": "Building directly on the previous unit's symptom-sign discussion, this unit explains the body's own defence system — immunity — and how it can be trained before exposure rather than only responding after. A common misunderstanding is that vaccines cure disease; the chapter is explicit that they are preventive, and students should be able to state why based on the mechanism sequence they built. The Jenner inquiry structure also reinforces the scientific reasoning pattern the chapter foregrounds.",
+          "materials": [
+            "Jenner inquiry statement strips (one set per group)",
+            "Immunity mechanism sequencing strips (one per group)"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 45,
+          "progression_stage": 3,
+          "stage_label": "Explain mechanisms of symptoms, immunity, and prevention",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Antibiotics, Resistance, and the Infographic",
+          "activity_description": "Students analyse the Activity 3.7 infographic on antibiotic resistance, inferring from the visual how resistance develops when antibiotics are overused or courses are left incomplete, and then constructing a set of specific precautions that follow logically from the mechanism they have identified.",
+          "roles": [
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Examine the infographic independently, write three inferences about how resistance develops, and then list three precautions that directly follow from those inferences."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Introduces the Fleming penicillin discovery as context, facilitates sharing of inferences, and connects antibiotic mechanism and limitation to the chapter's treatment subsection including traditional medicine systems."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher presents Alexander Fleming's penicillin discovery using the chapter's 'Think like a scientist' example, asking students what made it significant before introducing the resistance problem that followed."
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Students examine the Activity 3.7 antibiotic resistance infographic individually, writing three specific inferences about how resistance develops — overuse, incomplete dosing, bacterial survival — in their own words."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Pairs compare inferences and together derive three precautions that follow logically from the resistance mechanism, connecting each precaution to a specific point in the mechanism."
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Teacher leads a class close that also covers traditional medicine systems — Ayurveda, Siddha, Unani — and NCD management through lifestyle and early diagnosis, completing the chapter's treatment subsection."
+            }
+          ],
+          "teacher_notes": "This unit completes the mechanism stage by addressing what happens when the immune system and prevention fail, and what treatment options the chapter offers. Students frequently think antibiotics work on all infections — the chapter's explicit statement that they are ineffective against viruses and protozoa is the key corrective to surface here. The precaution-derivation task demands causal reasoning from mechanism to action, which is the cognitive level this stage targets.",
+          "materials": [
+            "Printed or projected Activity 3.7 antibiotic resistance infographic",
+            "Student notebooks"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 45,
+          "progression_stage": 4,
+          "stage_label": "Apply holistic health reasoning to prevention and disease management decisions",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Bhadrak's Sanitation Campaign: Prevention at the Community Scale",
+          "activity_description": "Students analyse the Activity 3.6 Bhadrak case study, identifying which specific communicable diseases decreased, which transmission routes were blocked by the sanitation intervention, and what the case implies about prevention strategies that operate at an environmental rather than individual level.",
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Read and annotate the Bhadrak case study, complete a cause-intervention-effect chain for each disease outcome mentioned, and identify which transmission routes were disrupted by the community campaign."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Frames the case as an application of the prevention principle — that blocking transmission routes at the community level produces measurable disease reduction — and guides groups to connect intervention steps to specific transmission mechanisms from the earlier classification work."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher recaps the chapter's five transmission routes from the classification stage and frames the task: students will test whether the Bhadrak campaign's steps map onto those routes, treating the case as evidence for evaluation."
+            },
+            {
+              "minutes": "8-28",
+              "activity": "Groups read the Bhadrak case study, annotate each intervention mentioned, and complete a three-column chain — intervention taken, transmission route disrupted, disease outcome reduced — for at least two outcomes described in the case."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Groups share chains; class identifies which routes the sanitation campaign did and did not address, noting that airborne and vector-borne routes required different strategies."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Teacher poses a closing question: if the community had also wanted to reduce dengue incidence alongside diarrhoea, what additional intervention type would be needed, and why — students give brief oral responses."
+            }
+          ],
+          "teacher_notes": "This unit asks students to apply the classification and mechanism knowledge from earlier units to evaluate a real community intervention, shifting cognitive demand from explanation to application and evaluation. A common gap is accepting the intervention as simply 'cleaning up' without tracing which specific transmission route it blocked; push groups to be route-specific in their chains. The closing question about dengue is deliberately unfamiliar — students must reason from mechanism, not recall.",
+          "materials": [
+            "Printed or projected Activity 3.6 Bhadrak case study",
+            "Cause-intervention-effect chain worksheet"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 45,
+          "progression_stage": 4,
+          "stage_label": "Apply holistic health reasoning to prevention and disease management decisions",
+          "synthesis": true,
+          "roles": [
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Analyse assigned scenarios, construct written recommendations that draw on the full conceptual arc of the chapter — health dimensions, disease type, transmission or cause, immunity or treatment mechanism, and prevention strategy — and present their reasoning to the class."
+            },
+            {
+              "actor": "Teacher",
+              "role_description": "Frames the synthesis task, circulates to probe reasoning at each conceptual layer, and leads a closing discussion that draws the full chapter together under the dissolution test's central claim."
+            }
+          ],
+          "activity_title": "The Coastal Village Health File: Reading a Place Through the Whole Chapter",
+          "activity_description": "Students receive a one-page dossier about a fictional coastal fishing village — Neelavur — that contains a hand-drawn map, an AQI reading strip, a short list of reported illnesses from the village health worker's register, a food-habit summary, and three villager quotes describing how they feel day-to-day. Working in groups, students build a 'health file' for Neelavur by annotating the dossier: classifying each illness, tracing each causal pathway, identifying which health dimensions are under threat and why, and recommending targeted actions that distinguish communicable from non-communicable responses. Groups then rotate to critique one another's files before a whole-class convergence that names — through the work itself — the chapter's central ideas.",
+          "teacher_notes": "This synthesis unit asks groups to build a 'health file' for the fictional coastal village of Neelavur by annotating a multi-part dossier, deliberately designed so every chapter concept — the three dimensions of health, communicable vs NCD classification, transmission routes, immunity, and prevention tools — surfaces through new, unfamiliar terrain. Do not pre-explain the dossier; let the annotation framework card guide groups, and during the closing band resist summarising yourself: ask 'What did you need to know to do this task?' and build the chapter map from student answers. Full dossier content and the annotation framework tasks are in the prepared materials (see material).",
+          "materials": [
+            "One printed Neelavur dossier per group of four (see visual aid: 'Neelavur Dossier')",
+            "One annotation framework card per group (see visual aid: 'Annotation Framework Card')",
+            "Blank A4 sheets, two per group, for the health file write-up",
+            "Coloured pens or pencils, at least two colours per group — one for communicable, one for non-communicable",
+            "Blackboard or whiteboard and chalk or markers for the closing convergence list"
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher distributes the Neelavur dossier face-down and the annotation framework card face-up. Without explaining the dossier, teacher says: 'Neelavur is a coastal fishing village. A health worker has handed you everything she knows about it — a map, an illness register, a food summary, and three things villagers told her. Your job is to build a health file for this village using everything you have studied.' Students turn the dossier over and read it in their groups without writing. Teacher then fields only factual clarifications about the dossier's content — no conceptual hints."
+            },
+            {
+              "minutes": "7-22",
+              "activity": "Groups work through Tasks A and B on the annotation framework card. They mark each illness in the register as communicable or non-communicable in one colour and write the causal agent or factor beside it. For communicable diseases they draw an arrow on the map or write a sentence tracing the transmission route — for example, connecting 'river water for drinking' to cholera, or 'fish-drying ground near houses' and 'standing water' to dengue. Teacher circulates, asking groups who finish Task A quickly: 'How do you know tuberculosis spreads differently from cholera — what does the map tell you?' and prompting groups who are uncertain about anaemia: 'Is there a pathogen involved, or is something missing from the diet?'"
+            },
+            {
+              "minutes": "22-32",
+              "activity": "Groups move to Tasks C and D. For Task C they annotate each villager quote — the tired fisherman triggers discussion of whether tiredness alone makes someone unwell and which dimension of health is affected; the unvaccinated child connects to acquired immunity; the isolated teenager surfaces the social and mental dimensions and the link between lifestyle and NCD risk. For Task D groups write their two targeted actions, explicitly labelling each with its prevention tool. Teacher listens for groups that write the same action for cholera and diabetes ('eat healthy food') and prompts: 'Would eating healthy food stop cholera spreading through the river water? What would — and which chapter concept is that?'"
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Groups swap health files with one adjacent group. Each group reads the file they have received and writes two critique comments on a blank sheet: one thing the file got right with a reason, and one gap or error — for example, a file that traces dengue transmission correctly but recommends only antibiotics for it, or one that addresses physical health in all three quotes but misses the social dimension in the teenager's quote. Teacher gives groups two minutes to read and two minutes to write their critique, then each group returns the file and verbally delivers its critique to the authoring group in one minute."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Teacher draws a vertical line on the board creating two columns — left blank, right headed 'What the task needed'. Addressing the whole class: 'Tell me one thing you had to know to complete any part of this task.' As students name concepts — the three dimensions of health, communicable versus non-communicable, transmission routes, what a vaccine does, what a symptom versus a sign is, what a pathogen is, why lifestyle matters, what the AQI means — teacher writes each on the right side. When the list is complete, teacher draws a bracket around it and says: 'This list is the chapter. You just used it all at once on a village none of us had seen before — that is what the chapter is for.' No further summary is given."
+            }
+          ],
+          "homework": [],
+          "pedagogical_approach": "Collaborative Annotation and Peer Critique",
+          "visual_aids": [
+            {
+              "type": "prose",
+              "title": "Neelavur Dossier",
+              "text": "NEELAVUR — COASTAL FISHING VILLAGE HEALTH DOSSIER\n\nMAP ELEMENTS (hand-drawn or printed):\nShow a river, fishing docks, houses, a fish-drying ground close to houses, one health sub-centre, and the notation: 'AQI: 148 — Unhealthy for sensitive groups'.\n\nVILLAGE HEALTH WORKER'S ILLNESS REGISTER EXCERPT:\nSix conditions reported: cholera, dengue, Type 2 diabetes, tuberculosis, anaemia, skin infections.\n\nFOOD-HABIT SUMMARY:\nMost families eat fish daily; rice and vegetables twice a day; packaged snack consumption has risen in the past two years; drinking water drawn from river.\n\nVILLAGER QUOTES:\nQuote 1 (fisherman, adult): 'I feel tired all the time even when I am not sick.'\nQuote 2 (mother): 'My child was never vaccinated — the health worker came but we were at sea.'\nQuote 3 (teenager): 'I have no friends here; I stay inside and eat chips most of the day.'"
+            },
+            {
+              "type": "prose",
+              "title": "Annotation Framework Card",
+              "text": "TASK A — For each illness in the register, write whether it is communicable or non-communicable and name its causal agent or factor.\n\nTASK B — For communicable illnesses, trace the transmission route using evidence from the map and food-habit summary.\n\nTASK C — For each villager quote, identify which health dimension(s) — physical, mental, social — is affected and why.\n\nTASK D — Write two targeted actions for Neelavur that distinguish what you would do differently for communicable diseases versus NCDs, and state which prevention tool (hygiene, vaccine, lifestyle change, environmental improvement) each action uses."
+            }
+          ]
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 45,
+        "count": 9
+      }
+    ],
+    "coverage_handoff": [
+      {
+        "stage_number": 1,
+        "stage_label": "Observe and question the meaning of health",
+        "total_stages": 4,
+        "period_numbers": [
+          1,
+          2
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students examine a case study and conduct a personal habit audit to surface the physical, mental, and social dimensions of health, moving from observation of a fictional character to reflection on their own habits and surroundings.",
+        "implied_lo": "Students can identify at least two physical, mental, and social dimensions of health from a given scenario and explain how specific habits or environmental conditions affect each dimension.",
+        "cg": "CG-4",
+        "c_code": "C-4.1",
+        "co_central": false
+      },
+      {
+        "stage_number": 2,
+        "stage_label": "Classify diseases and their routes of spread",
+        "total_stages": 4,
+        "period_numbers": [
+          3,
+          4
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students classify communicable diseases by transmission route using Activity 3.4's disease table, and construct an NCD classification tree distinguishing lifestyle-driven NCDs from deficiency diseases, with diabetes and deficiency disease examples.",
+        "implied_lo": "Students can correctly classify a given disease as communicable or non-communicable, state its transmission route or causal factor, and provide a named preventive or causal-change action linked to that classification.",
+        "cg": "CG-4",
+        "c_code": "C-4.1",
+        "co_central": false
+      },
+      {
+        "stage_number": 3,
+        "stage_label": "Explain mechanisms of symptoms, immunity, and prevention",
+        "total_stages": 4,
+        "period_numbers": [
+          5,
+          6,
+          7
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students distinguish symptoms from signs using scenario cards, reconstruct Jenner's vaccination inquiry and map acquired immunity steps, then infer from an antibiotic resistance infographic how resistance develops and what precautions follow from that mechanism.",
+        "implied_lo": "Students can explain how the body detects illness through symptoms and signs, how vaccines produce acquired immunity before exposure, and how antibiotic resistance develops through overuse or incomplete treatment.",
+        "cg": "CG-4",
+        "c_code": "C-4.1",
+        "co_central": false
+      },
+      {
+        "stage_number": 4,
+        "stage_label": "Apply holistic health reasoning to prevention and disease management decisions",
+        "total_stages": 4,
+        "period_numbers": [
+          8,
+          9
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students evaluate the Bhadrak community sanitation case study by mapping interventions to transmission routes and disease outcomes, then construct layered scenario recommendations that integrate holistic health definition, disease classification, mechanism, and prevention or treatment choice.",
+        "implied_lo": "Students can distinguish holistic health from mere absence of disease and construct a reasoned recommendation for a given health scenario that correctly identifies the disease type, explains the causal or transmission mechanism, and selects an appropriate prevention or treatment strategy with justification.",
+        "cg": "CG-4",
+        "c_code": "C-4.1",
+        "co_central": false
+      }
+    ],
+    "assessment_items": [
+      {
+        "progression_stage": 1,
+        "stage_label": "Observe and question the meaning of health",
+        "implied_lo_assessed": "Students can identify at least two physical, mental, and social dimensions of health from a given scenario and explain how specific habits or environmental conditions affect each dimension.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-4.1",
+          "competency_text": "Explain the effect of nutrition and lifestyle on health."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "The World Health Organization defines health as a state of complete physical, mental, and social well-being — not merely the absence of disease. Which of the following best matches this definition?",
+        "options": [
+          {
+            "label": "A",
+            "text": "A student who exercises daily, eats nutritiously, sleeps adequately, and maintains positive relationships with peers.",
+            "is_correct": true
+          },
+          {
+            "label": "B",
+            "text": "A student who has no fever, no cough, and no visible illness, but feels lonely and avoids all social interaction.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "A student who has not visited a doctor in two years and has never taken any medicine.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "A student who scores top marks in every subject and is described by teachers as focused and disciplined.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 1
+            },
+            "what_each_option_reveals": {
+              "B": "Selects this option: student recognises physical health but retains the misconception that social well-being is optional or secondary, not part of the definition.",
+              "C": "Selects this option: student holds the narrowest misconception — that health is simply the absence of disease or medical intervention, which the WHO definition explicitly rejects.",
+              "D": "Selects this option: student confuses academic or behavioural performance with health, not recognising that achievement and positive well-being are distinct."
+            },
+            "inclusivity": "Students who find verbal definitions abstract can be directed to re-read the Activity 3.1 case study character's profile against each option before choosing. Students who struggle with the English phrasing of the WHO definition can be offered the Ayurvedic restatement — balance of body, mind, and surroundings — as an equivalent anchor."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 1,
+        "stage_label": "Observe and question the meaning of health",
+        "implied_lo_assessed": "Students can identify at least two physical, mental, and social dimensions of health from a given scenario and explain how specific habits or environmental conditions affect each dimension.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-4.1",
+          "competency_text": "Explain the effect of nutrition and lifestyle on health."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "Riya spends most of her time indoors looking at screens, rarely goes outside, and has stopped talking to friends. Which habit change would most directly address the social dimension of her health, as described in the chapter?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Doing pranayama and yoga exercises each morning.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Eating more fruits and vegetables every day.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Rebuilding positive relationships and spending time with peers.",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "Reducing screen time and going to sleep earlier.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 1
+            },
+            "what_each_option_reveals": {
+              "B": "Selects this option: student identifies a healthy lifestyle change but applies it to the physical dimension rather than the social dimension — confusion between health dimensions.",
+              "A": "Selects this option: student associates all health improvements with the physical or mental dimension through yoga, not recognising that social well-being is a distinct category requiring social action.",
+              "D": "Selects this option: student correctly identifies a lifestyle improvement but selects one that targets physical or mental health rather than the social dimension specifically."
+            },
+            "inclusivity": "Students who find the distinction between dimensions abstract can be invited to match each option to one of the three WHO dimensions before choosing, treating it as a sorting task first. Students who conflate mental and social health can be directed to the chapter's framing of relationships and peer adjustment as the specific markers of the social dimension."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Classify diseases and their routes of spread",
+        "implied_lo_assessed": "Students can correctly classify a given disease as communicable or non-communicable, state its transmission route or causal factor, and provide a named preventive or causal-change action linked to that classification.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-4.1",
+          "competency_text": "Explain the effect of nutrition and lifestyle on health."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "A student is diagnosed with ascariasis. Which combination correctly identifies the disease type, causal agent, and primary prevention strategy for ascariasis, as described in the chapter?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Communicable; caused by a bacterium; prevented by wearing a mask.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Communicable; caused by a parasitic worm; prevented by food and water hygiene.",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "Communicable; caused by a virus; prevented by vaccination.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Non-communicable; caused by a nutrient deficiency; prevented by dietary supplementation.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "what_each_option_reveals": {
+              "A": "Selects this option: student correctly identifies ascariasis as communicable but confuses the causal agent (worm vs bacterium) and applies an airborne-disease prevention strategy instead of a food-water hygiene strategy.",
+              "D": "Selects this option: student misclassifies ascariasis as non-communicable, possibly conflating parasitic infection with deficiency disease due to both involving nutritional impact on the host.",
+              "C": "Selects this option: student correctly places ascariasis as communicable but confuses the causal agent type (worm vs virus) and the prevention route, applying vaccination — which is not the relevant prevention for intestinal worms."
+            },
+            "inclusivity": "Students who struggle with the full three-part combination can be asked to answer each component separately — type? agent? prevention? — before choosing the option that matches all three. Students who confuse parasites and bacteria can be directed to the chapter's definition of parasites as organisms living in or on a host."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Classify diseases and their routes of spread",
+        "implied_lo_assessed": "Students can correctly classify a given disease as communicable or non-communicable, state its transmission route or causal factor, and provide a named preventive or causal-change action linked to that classification.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-4.1",
+          "competency_text": "Explain the effect of nutrition and lifestyle on health."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": "Disease | Causal Agent | Classification\nTuberculosis | Bacterium | ?\nDiabetes | Hormonal imbalance and lifestyle factors | ?\nDengue | Virus via mosquito vector | ?\nAnaemia | Iron deficiency | ?",
+        "question_text": "Refer to the table provided. A student classifies the four diseases as either communicable or non-communicable. Which row in the table is classified incorrectly?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Anaemia classified as non-communicable.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Dengue classified as communicable.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Diabetes classified as communicable.",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "Tuberculosis classified as communicable.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "what_each_option_reveals": {
+              "D": "Selects this option: student misclassifies tuberculosis — a bacterially caused, airborne communicable disease — suggesting confusion about what makes a disease communicable.",
+              "B": "Selects this option: student misclassifies dengue — a vector-borne viral communicable disease — possibly confusing the vector-borne route with non-communicable causation.",
+              "A": "Selects this option: student misclassifies anaemia, a deficiency disease that is indeed non-communicable, suggesting confusion between deficiency diseases and communicable infections."
+            },
+            "inclusivity": "Students can be permitted to write the classification criterion — 'can it spread from person to person?' — next to each row before selecting an answer. Students who are uncertain about diabetes can be directed to the chapter text describing it as arising from hormonal imbalance, unhealthy diet, and inactivity rather than from a pathogen."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Classify diseases and their routes of spread",
+        "implied_lo_assessed": "Students can correctly classify a given disease as communicable or non-communicable, state its transmission route or causal factor, and provide a named preventive or causal-change action linked to that classification.",
+        "question_type": "SCR",
+        "competency": {
+          "c_code": "C-4.1",
+          "competency_text": "Explain the effect of nutrition and lifestyle on health."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": null,
+        "question_text": "State whether scurvy is a communicable or non-communicable disease. Name the causal factor responsible and identify one specific dietary change that would prevent it.",
+        "options": [],
+        "expected_elements": [
+          "Correct classification: non-communicable disease.",
+          "Correct causal factor: deficiency of Vitamin C (a nutrient deficiency, not a pathogen).",
+          "Specific dietary change linked directly to correcting the deficiency — e.g., consuming fruits or vegetables rich in Vitamin C."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "inclusivity": "Students who mix up the causal agent type can be prompted to ask whether a pathogen or a nutrient gap is involved before writing. Students who give a general answer such as 'eat healthy food' should be redirected to name the specific food group or nutrient the chapter associates with scurvy prevention."
+          },
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Explain mechanisms of symptoms, immunity, and prevention",
+        "implied_lo_assessed": "Students can explain how the body detects illness through symptoms and signs, how vaccines produce acquired immunity before exposure, and how antibiotic resistance develops through overuse or incomplete treatment.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-4.1",
+          "competency_text": "Explain the effect of nutrition and lifestyle on health."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "A doctor records that a patient reports feeling dizzy and tired, while the doctor also observes a skin rash and measures a temperature of 39°C. Which pair correctly identifies one symptom and one sign from this observation?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Symptom: dizziness; Sign: temperature of 39°C.",
+            "is_correct": true
+          },
+          {
+            "label": "B",
+            "text": "Symptom: skin rash; Sign: dizziness.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Symptom: skin rash; Sign: tiredness.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Symptom: temperature of 39°C; Sign: tiredness.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "what_each_option_reveals": {
+              "B": "Selects this option: student reverses the categories — placing a visible, measurable observable (rash) under symptom and a subjective feeling (dizziness) under sign, indicating the measurability criterion has not been retained.",
+              "D": "Selects this option: student reverses both categories entirely, suggesting the symptom-sign distinction has not been internalised at all and the student is guessing or confusing the definitions.",
+              "C": "Selects this option: student places two subjective feelings — rash could be mistaken as subjective — together, possibly not recognising that a visible skin rash is observable and measurable by the doctor, while tiredness is self-reported."
+            },
+            "inclusivity": "Students who are uncertain can be asked to apply the chapter's criterion — 'can another person observe or measure it?' — to each item in the question before choosing. Students who confuse rash and tiredness can be directed to consider which the doctor would write in an observation chart versus which the patient would report verbally."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Explain mechanisms of symptoms, immunity, and prevention",
+        "implied_lo_assessed": "Students can explain how the body detects illness through symptoms and signs, how vaccines produce acquired immunity before exposure, and how antibiotic resistance develops through overuse or incomplete treatment.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-4.1",
+          "competency_text": "Explain the effect of nutrition and lifestyle on health."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "Edward Jenner observed that cowpox-infected milkmaids did not contract smallpox. He hypothesised that cowpox infection gave protection against smallpox and tested this by inoculating a boy with cowpox material. Which statement correctly describes how this leads to immunity, using the chapter's explanation of vaccines?",
+        "options": [
+          {
+            "label": "A",
+            "text": "The cowpox material cured any existing smallpox infection in the boy's body.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The cowpox material killed the smallpox pathogen before it could enter the body.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The cowpox material replaced the smallpox pathogen entirely, making future infection impossible at any point in life.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The cowpox material trained the immune system to resist smallpox by exposing it to a related but harmless agent, producing acquired immunity.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "what_each_option_reveals": {
+              "A": "Selects this option: student holds the persistent misconception that vaccines are curative — they treat existing infection — rather than preventive, which the chapter explicitly corrects.",
+              "B": "Selects this option: student misunderstands the mechanism, treating the vaccine material as a direct pathogen killer rather than an immune system trainer, confusing vaccination with antibiotic action.",
+              "C": "Selects this option: student over-applies the immunity concept, claiming permanent and complete replacement of the pathogen, which goes beyond the chapter's explanation and misrepresents how acquired immunity works."
+            },
+            "inclusivity": "Students who confuse vaccination with antibiotic treatment can be directed to the chapter's explicit statement that vaccines are preventive, not curative, and asked to use that sentence to evaluate each option. Students who struggle with the sequence can be asked to reconstruct the four-step immunity strip from the unit activity before selecting."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Explain mechanisms of symptoms, immunity, and prevention",
+        "implied_lo_assessed": "Students can explain how the body detects illness through symptoms and signs, how vaccines produce acquired immunity before exposure, and how antibiotic resistance develops through overuse or incomplete treatment.",
+        "question_type": "SCR",
+        "competency": {
+          "c_code": "C-4.1",
+          "competency_text": "Explain the effect of nutrition and lifestyle on health."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": null,
+        "question_text": "A patient with a bacterial infection is prescribed a ten-day course of antibiotics but stops taking them after five days because they feel better. Explain, using the chapter's account of antibiotic resistance, what is likely to happen and why.",
+        "options": [],
+        "expected_elements": [
+          "Some bacteria in the infection survive the incomplete course because they are naturally more resistant.",
+          "These surviving bacteria multiply and pass on their resistance traits.",
+          "Future antibiotic treatment becomes less effective or ineffective against this resistant bacterial population.",
+          "The precaution is to complete the full prescribed antibiotic course to ensure all bacteria are eliminated."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "inclusivity": "Students who produce only a conclusion without the mechanism ('bacteria become resistant') can be prompted to explain the step-by-step sequence: what happens to the surviving bacteria, and then what happens when antibiotics are taken again later. Students who confuse antibiotic resistance with vaccine immunity can be directed to identify which of the two involves a pathogen adapting versus an immune system adapting."
+          },
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Apply holistic health reasoning to prevention and disease management decisions",
+        "implied_lo_assessed": "Students can distinguish holistic health from mere absence of disease and construct a reasoned recommendation for a given health scenario that correctly identifies the disease type, explains the causal or transmission mechanism, and selects an appropriate prevention or treatment strategy with justification.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-4.1",
+          "competency_text": "Explain the effect of nutrition and lifestyle on health."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "In the Bhadrak district campaign, improved sanitation and toilet use led to a reduction in diarrhoea and infections among children. A health officer wants to use a similar intervention to reduce malaria in the same community. Why would the Bhadrak sanitation approach alone be insufficient for malaria, and what additional intervention would be needed?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Sanitation addresses waterborne transmission routes, but malaria spreads through a mosquito vector — so eliminating mosquito breeding sites or using protective barriers would be required in addition.",
+            "is_correct": true
+          },
+          {
+            "label": "B",
+            "text": "Sanitation alone is insufficient because malaria is a non-communicable disease caused by lifestyle factors and requires dietary changes rather than environmental intervention.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Sanitation is insufficient because malaria spreads through direct contact, so personal hygiene measures such as handwashing and mask-wearing would be the additional requirement.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Sanitation is sufficient for malaria because malaria is also spread through contaminated water sources, just like diarrhoea.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "what_each_option_reveals": {
+              "D": "Selects this option: student confuses malaria's vector-borne transmission route with waterborne transmission, having not distinguished between the two routes from the disease classification work.",
+              "B": "Selects this option: student misclassifies malaria as a non-communicable disease, a significant classification error indicating the communicable-NCD distinction has not been secured.",
+              "C": "Selects this option: student correctly identifies that sanitation alone is insufficient but applies the wrong additional route — direct contact — rather than vector-borne, suggesting the five transmission routes have not been fully differentiated."
+            },
+            "inclusivity": "Students who are uncertain can be directed to the chapter's Table 3.1 classification of malaria under insect-transmitted diseases before selecting. Students who conflate waterborne and vector-borne routes can be asked to identify the specific organism that carries the malaria pathogen from the chapter's transmission route descriptions."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Apply holistic health reasoning to prevention and disease management decisions",
+        "implied_lo_assessed": "Students can distinguish holistic health from mere absence of disease and construct a reasoned recommendation for a given health scenario that correctly identifies the disease type, explains the causal or transmission mechanism, and selects an appropriate prevention or treatment strategy with justification.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-4.1",
+          "competency_text": "Explain the effect of nutrition and lifestyle on health."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "A survey of a neighbourhood finds that adults report no physical illness but describe persistent loneliness, anxiety, and difficulty maintaining relationships, while the neighbourhood's AQI readings are also in the poor range. Which statement best evaluates the health status of this neighbourhood using the chapter's holistic definition?",
+        "options": [
+          {
+            "label": "A",
+            "text": "The neighbourhood is fully healthy because no communicable or non-communicable disease has been diagnosed.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The neighbourhood is not fully healthy because well-being requires physical, mental, and social dimensions — both the emotional state of residents and the environmental AQI indicate deficits in these dimensions.",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "The neighbourhood is not fully healthy, but only the AQI issue needs addressing — mental and social problems are personal matters outside the scope of community health.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The neighbourhood is unhealthy because poor AQI alone is sufficient to classify a community as unwell according to the chapter.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "what_each_option_reveals": {
+              "A": "Selects this option: student retains the foundational misconception the chapter opens by challenging — that health equals absence of diagnosed disease — despite having worked through the holistic definition.",
+              "D": "Selects this option: student applies the AQI dimension correctly but reduces the holistic definition to a single environmental factor, ignoring the chapter's equal weighting of mental and social well-being.",
+              "C": "Selects this option: student accepts that the AQI is a community health matter but excludes mental and social dimensions from community health, contradicting the chapter's explicit statement that relationships and feelings matter equally."
+            },
+            "inclusivity": "Students who select option A can be directed to the WHO definition and asked to check each of the three dimensions against the scenario before reconsidering. Students who struggle to integrate all three dimensions simultaneously can be invited to evaluate the neighbourhood against each dimension separately before forming an overall judgement."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Apply holistic health reasoning to prevention and disease management decisions",
+        "implied_lo_assessed": "Students can distinguish holistic health from mere absence of disease and construct a reasoned recommendation for a given health scenario that correctly identifies the disease type, explains the causal or transmission mechanism, and selects an appropriate prevention or treatment strategy with justification.",
+        "question_type": "ECR",
+        "competency": {
+          "c_code": "C-4.1",
+          "competency_text": "Explain the effect of nutrition and lifestyle on health."
+        },
+        "cognitive_demand": "Evaluation",
+        "visual_stimulus": null,
+        "question_text": "A classmate argues: 'Antibiotics are the best solution for all serious infections — we should always take them as soon as we fall ill to prevent the infection from getting worse.' Evaluate this claim using the chapter's explanation of how antibiotics work, their limitations, and the mechanism of antibiotic resistance. Your response should include a judgement on whether the claim is correct, a reason based on the antibiotic mechanism, and at least one specific limitation the chapter identifies.",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [
+          "Explicit judgement that the claim is incorrect or partially correct, with a reason — not a mere assertion.",
+          "Accurate statement of antibiotic mechanism: they kill bacteria by targeting bacterial cell structures absent in human cells.",
+          "Identified limitation: antibiotics are ineffective against viral or protozoal infections.",
+          "Connection to antibiotic resistance: overuse or early termination allows resistant bacteria to survive and multiply, making future treatment less effective.",
+          "Logically coherent evaluation: the student's judgement, reason, and limitation form a connected argument rather than three isolated facts."
+        ],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": null,
+          "ECR": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "inclusivity": "Students who struggle to produce a written evaluation can be offered a two-step scaffold verbally: first, state what antibiotics can do; second, state one thing they cannot do or one harm that can result from overuse. Students who write a long response without a clear judgement can be asked to underline the one sentence in their response that directly answers whether the classmate's claim is correct."
+          },
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Apply holistic health reasoning to prevention and disease management decisions",
+        "implied_lo_assessed": "Students can distinguish holistic health from mere absence of disease and construct a reasoned recommendation for a given health scenario that correctly identifies the disease type, explains the causal or transmission mechanism, and selects an appropriate prevention or treatment strategy with justification.",
+        "question_type": "OPEN_TASK",
+        "competency": {
+          "c_code": "C-4.1",
+          "competency_text": "Explain the effect of nutrition and lifestyle on health."
+        },
+        "cognitive_demand": "Evaluation",
+        "visual_stimulus": "Scenario | Reported concern | Additional information\nScenario 1: School community | Several children have developed chickenpox in the past two weeks; parents are asking what the school should do | Chickenpox spreads through airborne droplets and direct contact; a vaccine exists\nScenario 2: Urban neighbourhood | Adults report rising rates of type 2 diabetes; residents eat mostly processed food and have sedentary jobs | Type 2 diabetes is linked to diet, physical inactivity, hormonal imbalance, and obesity\nScenario 3: Rural village | Children frequently suffer from diarrhoea; open defecation is common; the nearest clean water source is far away | Diarrhoea can be spread through contaminated food and water",
+        "question_text": "",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "Refer to the table provided. For each scenario, use the information given and what you know about health, disease types, transmission or causal mechanisms, and prevention strategies to complete the recommendation table below.",
+        "scaffold": "For each scenario, fill in: (1) Is this a communicable or non-communicable disease concern? (2) What is the transmission route or main causal factor? (3) What does this disease affect — which health dimension/s — physical, mental, social, environmental? (4) State one specific prevention strategy and explain in one sentence why it works against this particular route or cause. For Scenario 1 only: also state whether vaccination is a treatment or a prevention measure, and give one reason from the chapter.",
+        "format_of_output": [
+          "Completed recommendation table with four columns per scenario as specified in the scaffold",
+          "One additional sentence for Scenario 1 on the nature of vaccination"
+        ],
+        "guide": {
+          "MCQ": null,
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "format_type": "Classification or sorting task with justification",
+            "format_rationale": "The final stage implied LO requires students to distinguish holistic health from absence of disease and construct layered recommendations integrating disease type, mechanism, and prevention — a multi-scenario classification-with-justification table is the most natural vehicle for demonstrating this simultaneously across communicable and non-communicable disease contexts.",
+            "what_this_demonstrates": "A complete response demonstrates that the student can reason across the full chapter arc — applying the holistic health definition, classifying disease by type and route or cause, connecting mechanism to prevention strategy, and evaluating the role of vaccination — without being cued to any single concept in isolation.",
+            "reading_the_scaffold": "The four-column scaffold for each scenario is not a checklist to fill mechanically — it is a reasoning sequence. A student who fills column 4 with a prevention strategy unconnected to column 2's mechanism has not demonstrated the causal link the task requires. Look at whether column 4 flows from column 2, not whether any prevention strategy is named.",
+            "strong_vs_weak_markers": "Strong responses: name the specific transmission route or causal factor for each scenario, choose a prevention strategy that directly blocks or addresses that factor, and use at least one precise causal connector ('because this blocks airborne spread', 'because reducing processed food intake addresses the dietary cause'). Weak responses: correctly classify disease type but state a generic prevention ('stay clean', 'eat healthy') without connecting it to the specific mechanism identified; or treat vaccination as a cure rather than prevention without engaging with why.",
+            "inclusivity": "Students who find three scenarios simultaneously overwhelming can be permitted to complete any two scenarios fully rather than all three partially — depth of reasoning on two is more diagnostic than surface-level completion of all three. Students who struggle with written responses can be invited to construct the table orally with a partner before writing, as long as each column is individually completed."
+          }
+        }
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

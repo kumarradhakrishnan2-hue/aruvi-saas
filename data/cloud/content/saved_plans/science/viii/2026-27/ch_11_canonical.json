@@ -1,0 +1,1498 @@
+{
+  "filename": "ch_11_canonical.json",
+  "saved_at": "2026-08-17T11:54:19",
+  "plan_status": "canonical",
+  "chapter_number": 11,
+  "chapter_title": "Keeping Time with the Skies",
+  "grade": "Grade VIII",
+  "subject": "Science",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 45,
+      "count": 15
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 45 minutes × 15 periods = 675 minutes\nTotal: 15 periods · 11h 15min",
+  "genon_canonical": {
+    "generated": "2026-08-17",
+    "schedule": "15x45",
+    "constitution": "LP v2.2 / assessment v1.5",
+    "source": "generate_canonical.py one science viii 11",
+    "ledger_ts": "20260817_113057_sci_viii_11_top",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-17T12:04:42",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 6,
+            "field": "band:0",
+            "rule": "register/clock",
+            "removed": "for the 50-minutes-later moonrise rule",
+            "replaced_with": "of the 50-minute-later moonrise rule",
+            "note": "homonym, not a breach in substance: the 50-minute moonrise lag is the unit's content; two-word rephrase clears the ranged-clock pattern with the fact intact"
+          }
+        ],
+        "ban_hits_before": 1,
+        "ban_hits_after": 0
+      },
+      {
+        "tool": "genon/repair_approach_labels.py v1.0",
+        "at": "2026-08-18T13:16:33",
+        "reason": "resynth wrote essay-length pedagogical_approach into a 2-word label field (founder, 2026-08-18); label read from the essay's own first device, full old text archived here",
+        "edits": [
+          {
+            "unit": 15,
+            "field": "pedagogical_approach",
+            "removed": "Design-based learning: students apply the chapter's conceptual framework to an unfamiliar but realistic problem, constructing an artefact (the calendar design) whose internal logic must be consistent with orbital-motion reasoning. The design constraint — no imported calendar, only sky observations — forces students to re-derive the day, month, and year from first principles rather than recall definitions, and the limitation-identification task at the close ensures they hold the nuance that every calendar system involves a trade-off.",
+            "replaced_with": "Design-based Learning"
+          }
+        ]
+      }
+    ],
+    "synthesis_reauthor": {
+      "spec": "science_middle_stage_serve.md §6 v1.3",
+      "at": "2026-08-18T08:14:05",
+      "ledger_ts": "20260817_203333_sci_viii_11_resynth",
+      "model": "claude-sonnet-4-6",
+      "compacts_read": {
+        "ch_11_canonical_p13.json": "2026-08-17T12:38:00",
+        "ch_11_canonical_p11.json": "2026-08-17T12:38:00",
+        "ch_11_canonical_p09.json": "2026-08-17T12:38:00"
+      },
+      "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+    },
+    "synthesis_polish": {
+      "spec": "density + typed visual_aids (founder, 2026-08-18)",
+      "at": "2026-08-18T12:09:59",
+      "ledger_ts": "20260818_120452_sci_viii_11_polish",
+      "model": "claude-sonnet-4-6",
+      "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+    },
+    "academic_year": "2026-27"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 45,
+          "progression_stage": 1,
+          "stage_label": "Observe and record lunar phenomena",
+          "pedagogical_approach": "Discovery approach",
+          "activity_title": "Noticing the Moon: What Changes and When?",
+          "activity_description": "Students examine a set of Moon-appearance sketches arranged over a month-long sequence and identify patterns in the size of the bright portion, the shape, and the Moon's position relative to the Sun. They record their observations systematically and generate questions about what drives the changes.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Presents the sequence of Moon-appearance sketches and guides students to notice specific features: bright-portion size, crescent vs. gibbous shape, and proximity to the Sun."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Record observations for each sketch in a structured observation table, noting shape, bright-portion size, and estimated Sun-Moon angular relationship."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Share their recorded patterns with a partner and jointly list questions they cannot yet answer from observation alone."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher introduces the kite-festival scenario from the chapter and displays the sequence of Moon-appearance sketches, prompting students to describe what they see."
+            },
+            {
+              "minutes": "8-28",
+              "activity": "Students individually complete the observation table, labelling each Moon shape and estimating how much of it appears bright."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Pairs compare tables and compile a shared list of patterns and unresolved questions."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "A brief whole-class share-out collects two or three key questions on the board to anchor the next unit."
+            }
+          ],
+          "teacher_notes": "This unit opens the chapter's inquiry arc, so orient students to the core puzzle: the Moon's appearance changes in a regular, repeating cycle. Watch for students who conflate the Moon's changing shape with it being physically different objects — acknowledge the idea and tell them the next activities will test it. Collecting student questions on the board at the close gives you a visible thread to revisit as the arc progresses.",
+          "materials": [
+            "Printed or projected sequence of Moon-phase sketches (full month)",
+            "Structured observation table worksheet"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 45,
+          "progression_stage": 1,
+          "stage_label": "Observe and record lunar phenomena",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Tracking the Moon: A Month of Observations (Activity 11.1)",
+          "activity_description": "Students set up and begin the sustained Moon-observation log described in Activity 11.1. They record the Moon's appearance, the estimated size of the bright portion, and its angular separation from the Sun each day, and they plan when to switch from sunset to sunrise viewing midway through the cycle.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Models how to complete one entry in the observation log, demonstrating how to estimate the bright-portion fraction and record the Moon's cardinal-direction position."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Set up their personal Moon-observation log, enter the first two dated entries using available sky-watching data, and mark the observation-window switch date."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Discuss and agree on a consistent description scheme for Moon shapes so the class uses the same vocabulary across the month-long record."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher models a complete observation-log entry, explaining each column and demonstrating how to estimate bright-portion size as a fraction of the full disc."
+            },
+            {
+              "minutes": "10-25",
+              "activity": "Students set up their logs and complete the first two entries using the phase-sketch sequence from the previous unit as a reference."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Small groups agree on a shared vocabulary for shape names — full, gibbous, crescent — and annotate a reference card for consistency."
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Class identifies the midpoint of the cycle when the viewing window should shift from sunset to sunrise, and students mark this in their logs."
+            }
+          ],
+          "teacher_notes": "This unit builds directly on the patterns students noticed in the previous unit and gives them the observation instrument they will use across the arc. A common difficulty is estimating the bright-portion fraction consistently — encourage students to use the reference card the groups just created rather than redescribing each time. Remind students that the log is a scientific record, so accuracy matters even if the Moon appears slightly different from expectation.",
+          "materials": [
+            "Moon-observation log template (one per student)",
+            "Reference card with Moon-shape vocabulary",
+            "Printed phase-sketch sequence from previous unit"
+          ],
+          "homework": [
+            "Over the next several days, make two or three entries in your Moon-observation log; note the bright-portion fraction and the direction in which the Moon appears in the sky."
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 45,
+          "progression_stage": 1,
+          "stage_label": "Observe and record lunar phenomena",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "Naming the Phases: Vocabulary of the Lunar Cycle",
+          "activity_description": "Students match their accumulated observation-log entries to the official phase names — Purnima, Amavasya, gibbous, crescent — and learn to distinguish the waxing (Shukla Paksha) and waning (Krishna Paksha) halves of the cycle. They produce an annotated lunar-cycle diagram with all phase names placed correctly.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Introduces the phase vocabulary systematically, mapping each term onto the Moon-shape sketches the class already knows, and explains the Shukla Paksha / Krishna Paksha division."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Annotate a blank circular lunar-cycle diagram by placing phase names and waxing/waning labels at the correct positions based on their observation logs."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Cross-check each other's annotated diagrams and flag any placements that differ, discussing which is more consistent with their logged observations."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Teacher presents the phase vocabulary — Purnima, Amavasya, gibbous, crescent, Shukla Paksha, Krishna Paksha — by overlaying terms on the familiar phase-sketch sequence."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Students annotate a blank lunar-cycle diagram individually, drawing on both the teacher's presentation and their own observation logs."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Groups compare annotated diagrams and resolve any disagreements by referring back to the observation logs."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Teacher confirms the correct placements and introduces the key fact that the complete cycle takes approximately one month."
+            }
+          ],
+          "teacher_notes": "This unit closes the first observation stage by giving students the formal vocabulary to describe what they have been recording. Watch for confusion between 'waxing gibbous' and 'waning gibbous' — students sometimes place both on the same side of the diagram. Encourage students to use their own observation logs as evidence when resolving disagreements in the group comparison.",
+          "materials": [
+            "Blank lunar-cycle diagram (one per student)",
+            "Phase-vocabulary reference list",
+            "Student Moon-observation logs"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 45,
+          "progression_stage": 2,
+          "stage_label": "Explain the causal mechanism of lunar phases",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Light, Ball, and Head: Modelling the Phases (Activity 11.2)",
+          "activity_description": "Students use a ball on a stick, a torch, and their own head as Earth to physically model the lunar-phase cycle. Rotating with the ball outstretched, each student observes the same progression of illuminated shapes they recorded in their observation logs, and links each modelled shape to the correct phase name.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Demonstrates the model set-up first, then circulates to check that torches are aimed horizontally at ball-height and that students are rotating slowly enough to see each shape clearly."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Each student performs the rotation, calls out the phase name at each position, and sketches the illuminated shape they observe at four key positions in the orbit."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Groups of four take turns operating the torch while one student rotates, then discuss whether their sketched shapes match the observation-log record from Stage 1."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher demonstrates the model, explicitly linking the torch to the Sun, the ball to the Moon, and the rotating student's eye to the observer on Earth."
+            },
+            {
+              "minutes": "8-30",
+              "activity": "Groups rotate through the activity, each student performing the rotation while others operate the torch; each student sketches the illuminated shape at Purnima, waxing gibbous, crescent, and Amavasya positions."
+            },
+            {
+              "minutes": "30-40",
+              "activity": "Students compare their four sketched shapes with the corresponding entries in their Moon-observation logs and note any matches or discrepancies."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Brief class discussion: what does the model reveal about why the bright-portion size changes? Students offer one-sentence explanations."
+            }
+          ],
+          "teacher_notes": "This unit moves the class from observation into causal reasoning by making the geometry of reflected sunlight physically tangible. The most common error is students thinking the ball (Moon) is moving into Earth's shadow — correct this by asking where the shadow would fall given the torch position. The closing discussion's one-sentence explanations serve as an informal checkpoint: students who can articulate that the angle between observer, Moon, and Sun controls the visible illuminated fraction are ready to move to the next unit.",
+          "materials": [
+            "White ball on a stick (one per group of four)",
+            "Torch or lamp (one per group)",
+            "Student Moon-observation logs for comparison"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 45,
+          "progression_stage": 2,
+          "stage_label": "Explain the causal mechanism of lunar phases",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Why Not Every Month? Eclipses vs. Phases",
+          "activity_description": "Students investigate the distinction between lunar phases and lunar eclipses by analysing the geometry of the Moon's tilted orbit. They identify why a lunar eclipse requires Earth's shadow to fall on the Moon, why this happens only occasionally on full Moon days, and why phases occur every month regardless.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Poses the driving question — if the Moon is full every month, why isn't there a lunar eclipse every month? — and provides a simple orbital-tilt diagram for students to analyse."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Analyse the orbital-tilt diagram to identify conditions required for an eclipse versus conditions present every full Moon, and record a clear distinction statement."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Write a two-sentence causal explanation distinguishing phases from eclipses, using the diagram as evidence."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher poses the eclipse question and distributes the orbital-tilt diagram, asking groups to study it before answering."
+            },
+            {
+              "minutes": "7-22",
+              "activity": "Groups analyse the diagram, marking on it the conditions for a lunar eclipse and for a solar eclipse, and identify the orbital tilt as the key variable."
+            },
+            {
+              "minutes": "22-35",
+              "activity": "Each student writes two causal sentences: one explaining why phases occur monthly and one explaining why eclipses do not."
+            },
+            {
+              "minutes": "35-45",
+              "activity": "Pairs exchange sentences and evaluate whether each sentence uses evidence from the diagram; teacher takes two or three examples to discuss with the class."
+            }
+          ],
+          "teacher_notes": "In the previous unit students discovered that the Moon's orbit geometry controls the phases; this unit extends that reasoning to the eclipse question, which the chapter identifies as a common misconception site. Watch for students who write that eclipses happen only on new Moon days without explaining why they do not happen every new Moon day — push them to add the tilt condition. The pair-evaluation step is a useful checkpoint before moving to the calendar stage.",
+          "materials": [
+            "Orbital-tilt diagram (one per group)",
+            "Student observation logs (for phase reference)"
+          ],
+          "homework": [
+            "Draw and label a diagram showing the orbital positions of Earth and Moon during (a) a full Moon night with no eclipse and (b) a lunar eclipse night; write one sentence explaining the difference."
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 45,
+          "progression_stage": 2,
+          "stage_label": "Explain the causal mechanism of lunar phases",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "Predicting the Moon: Phase, Position, and Viewing Window",
+          "activity_description": "Students apply the causal model from Activity 11.2 to predict where and when to look for the Moon at a given phase. Using the 50-minutes-later-each-day moonrise rule, they explain the pattern in their own observation logs and check predictions against the Positional Astronomy Centre moonrise data.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Explains the 50-minutes-later moonrise rule causally — the Moon advances in its orbit while Earth completes one rotation — and demonstrates its application to three specific phase positions."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Use the 50-minutes-later rule to calculate expected moonrise times for a waxing crescent, first quarter, and waning gibbous Moon, then compare calculations against their observation-log entries."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Discuss why a waxing Moon is easiest to spot at sunset and a waning Moon at sunrise, connecting this to the Sun-Moon angular-separation data in their logs."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Teacher presents the causal explanation of the 50-minute-later moonrise rule, using a diagram that shows Earth's rotation and the Moon's orbital advance."
+            },
+            {
+              "minutes": "12-27",
+              "activity": "Students apply the rule to calculate moonrise times for three named phases and note whether their observation logs show a consistent shift."
+            },
+            {
+              "minutes": "27-40",
+              "activity": "Groups discuss the sunset/sunrise viewing-window rule and explain it using the Sun-Moon angular separation column in their logs."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Teacher confirms the rule and previews the next unit: these same periodic motions also gave humans their first calendar."
+            }
+          ],
+          "teacher_notes": "This unit completes the causal-reasoning stage by showing students that the same geometric model predicts not just phase shape but also viewing time and direction. Students frequently struggle to connect the 50-minutes-later rule to the Moon's orbital motion — use the diagram to make explicit that the Moon moves roughly 13 degrees along its orbit each day, requiring Earth to rotate a little extra. The preview to calendars at the close creates a natural conceptual bridge to the next stage.",
+          "materials": [
+            "Moonrise-rule diagram",
+            "Student Moon-observation logs",
+            "Projected or printed moonrise data table from Positional Astronomy Centre (selected dates)"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 45,
+          "progression_stage": 3,
+          "stage_label": "Connect periodic motions to the origin of calendar units",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "From Sky to Calendar: Discovering the Day, Month, and Year (Activity 11.3)",
+          "activity_description": "Students analyse shortest-shadow data from a gnomon (vertical stick) collected over several days, identifying that the interval between successive solar noons defines the mean solar day. They then connect the Moon's phase cycle to the month and Earth's revolution to the year, completing a three-cycle diagram linking each motion to its calendar unit.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Distributes the gnomon shadow-length data table and poses the question: what does the time between the shortest shadows tell us?"
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Analyse the shadow data to identify the solar-noon interval, then complete a three-cycle diagram by adding the Moon-phase cycle and the seasonal cycle as the basis for the month and year respectively."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Write one sentence for each of the three calendar units explaining which celestial motion produces it and approximately how long it is."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher introduces the gnomon shadow-length data table and prompts groups to identify the pattern before drawing any conclusions."
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Groups analyse the data, identify the solar-noon interval as approximately 24 hours, and extend their reasoning to the Moon-phase and seasonal cycles to complete the three-cycle diagram."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Each student writes three sentences — one for day, one for month, one for year — linking motion to unit."
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Class shares sentences; teacher confirms the three cycles and names them as the nested foundation of all calendar systems."
+            }
+          ],
+          "teacher_notes": "Students now encounter the intellectual move that unifies the entire chapter: every calendar unit has an astronomical origin. A frequent confusion is between the sidereal month (Moon's orbital period relative to stars) and the synodic month (phase cycle) — at this stage, focus on the phase cycle as the observable phenomenon students actually tracked. The three-cycle diagram, once completed, becomes a reference tool the class will use throughout the calendar units that follow.",
+          "materials": [
+            "Gnomon shadow-length data table (provided)",
+            "Blank three-cycle diagram template",
+            "Student Moon-observation logs"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 45,
+          "progression_stage": 3,
+          "stage_label": "Connect periodic motions to the origin of calendar units",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "Lunar and Solar Calendars: The 11-Day Problem",
+          "activity_description": "Students examine how a 12-month lunar calendar totals approximately 354 days, falling about 11 days short of the solar year, causing seasonal drift. They compare this with the Gregorian solar calendar's leap-year correction and its century-year fine-tuning, tracing each correction to the 0.25-day remainder in Earth's revolution.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Presents the 354-day lunar year calculation and the resulting seasonal-drift problem, then explains the Gregorian leap-year and century-year rules as successive corrections to the same fractional remainder."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Complete a correction-chain table showing: lunar year length → gap from solar year → leap year rule → century exception → 400-year restoration, noting which astronomical fact motivates each step."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Discuss which calendar type — lunar or solar — is better suited to agricultural planning and justify their answer using the seasonal-drift data."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Teacher walks through the 29.5-day month and 12-month calculation, showing that 354 days falls 11 short of 365.25, and explains why this matters for seasonal festivals and agriculture."
+            },
+            {
+              "minutes": "12-28",
+              "activity": "Students complete the correction-chain table individually, tracing each calendar rule back to a specific numerical astronomical fact."
+            },
+            {
+              "minutes": "28-40",
+              "activity": "Groups discuss the agricultural-planning question and select one calendar type, preparing a two-sentence justification."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Two or three groups share their justifications; teacher highlights that the choice depends on which periodic motion one treats as primary."
+            }
+          ],
+          "teacher_notes": "This unit builds directly on the three-cycle foundation from the previous unit and introduces the tension that drives all calendar design: the day, month, and year are incommensurable. Students often think the leap year solves the problem completely — the correction-chain table is designed to show that it does not and that further fine adjustments are needed. Push students completing the table to write the astronomical origin of each correction, not just the rule.",
+          "materials": [
+            "Correction-chain table worksheet",
+            "Projected calculation showing 29.5 × 12 = 354 days"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 45,
+          "progression_stage": 3,
+          "stage_label": "Connect periodic motions to the origin of calendar units",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "The Luni-Solar Solution: Adhika Maasa and Indian Calendars",
+          "activity_description": "Students investigate how luni-solar calendars resolve the 11-day annual gap by adding an intercalary month (Adhika Maasa) every two to three years. They examine the Amant and Purnimant conventions, map the twelve Indian lunar month names onto the phase-cycle diagram from Stage 1, and explain why luni-solar festivals shift by less than a month across years.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Poses the problem — how can you keep lunar months but avoid seasonal drift? — and provides data on the accumulated 11-day annual gap to help groups derive when an intercalary month becomes necessary."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Use the 11-day annual gap data to calculate when the gap accumulates to roughly 30 days, deriving the intercalary month frequency, then map the twelve month names onto the phase-cycle diagram."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Write a causal explanation of why luni-solar festival dates shift by less than a month across Gregorian years, referencing the Adhika Maasa correction."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher poses the intercalary-month problem and provides the 11-day annual gap as the starting data, asking groups to calculate when insertion is needed."
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Groups calculate the gap accumulation timeline, identify the two-to-three year insertion window, and add the twelve Indian month names to the phase-cycle diagram."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Each student writes the causal explanation for the smaller festival-date shift in luni-solar vs. purely lunar calendars."
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Class discussion comparing the Amant and Purnimant conventions; teacher notes that both use the same month names but differ in where the month boundary falls."
+            }
+          ],
+          "teacher_notes": "Students often find it surprising that the solution to the 11-day problem is to add an entire month rather than adjusting days — the calculation exercise is designed to make this feel inevitable. Watch for confusion between Adhika Maasa and the Gregorian leap day; emphasise that the scale of the correction differs because luni-solar calendars are correcting a month-level mismatch, not a quarter-day one. The twelve month names added to their existing phase-cycle diagram give students a single reference tool that spans Stages 1 through 3.",
+          "materials": [
+            "11-day annual gap data table",
+            "Phase-cycle diagram from Stage 1 (students' own copies)",
+            "List of twelve Indian lunar month names"
+          ],
+          "homework": [
+            "Look up the Gregorian dates for Diwali and Holi for two consecutive years and write one sentence explaining, using the Adhika Maasa concept, why the dates shift but stay within a recognisable seasonal window."
+          ]
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 45,
+          "progression_stage": 3,
+          "stage_label": "Connect periodic motions to the origin of calendar units",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "India's Official Calendar: The Indian National Calendar",
+          "activity_description": "Students examine the Indian National Calendar — a solar calendar established in 1956 following the Calendar Reform Committee's recommendations — noting its month lengths, leap-year alignment with the Gregorian calendar, and its grounding in the Surya Siddhanta. They compare it with the Gregorian calendar to identify structural similarities and differences.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Presents the Indian National Calendar's structure — year start, month lengths, leap-year rule — and explains the role of the Calendar Reform Committee and Meghnad Saha in standardising it."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Complete a side-by-side comparison table of the Indian National Calendar and the Gregorian calendar, identifying at least two structural similarities and two differences."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Discuss why a country might need a single official calendar when multiple regional calendars already exist, and connect this to the scientific heritage box on the Surya Siddhanta."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Teacher presents the Indian National Calendar's key features — 22 March year start, 30/31-day month structure, leap-year alignment — and the historical context of the 1952 Calendar Reform Committee."
+            },
+            {
+              "minutes": "12-27",
+              "activity": "Students complete the comparison table individually."
+            },
+            {
+              "minutes": "27-40",
+              "activity": "Groups discuss the standardisation rationale and connect it to India's multiple regional calendar traditions covered in the previous unit."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Teacher closes by noting that both the Indian National Calendar and the Gregorian calendar are solar, both correcting for the same fractional-year remainder, grounding the unit in the three-cycle framework."
+            }
+          ],
+          "teacher_notes": "This unit consolidates the calendar-origins stage by showing students a real, policy-level application of the astronomical principles they derived. A common confusion is between the Indian National Calendar (solar) and luni-solar Indian regional calendars — the comparison table is designed to make this distinction visible. The closing grounding in the three-cycle framework keeps the calendar diversity from feeling like disconnected facts.",
+          "materials": [
+            "Indian National Calendar structure handout",
+            "Comparison table worksheet (Indian National Calendar vs. Gregorian)"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 45,
+          "progression_stage": 4,
+          "stage_label": "Apply the periodic-motion framework to satellites and space observation",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Satellites in the Sky: Spotting and Understanding Orbital Motion (Activity 11.4)",
+          "activity_description": "Students plan and conduct an outdoor or window-based satellite-spotting observation using naked-eye viewing or binoculars during the twilight window before sunrise or after sunset. They record the satellite's apparent path, estimated speed across the sky, and the time of the observation, then compare their records with pass predictions from a satellite-tracking app or website.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Briefs students on why satellites are visible only near twilight — they are illuminated by the Sun while the observer is in shadow — and demonstrates how to use a satellite-tracking resource to predict pass times."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Conduct the observation in pairs, with one student watching and the other recording direction, apparent speed, and duration of the pass."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Sketch the satellite's observed path on a sky-map template and annotate it with the direction of travel and brightness estimate."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Teacher explains the twilight-visibility condition, introduces the satellite-tracking resource, and assigns observation roles to pairs."
+            },
+            {
+              "minutes": "10-30",
+              "activity": "Students conduct the outdoor satellite-spotting observation, recording path, direction, and brightness."
+            },
+            {
+              "minutes": "30-40",
+              "activity": "Students sketch the observed path on the sky-map template and compare their path with the predicted pass from the tracking resource."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Brief discussion: what does the fast apparent movement tell us about orbital altitude compared with the Moon?"
+            }
+          ],
+          "teacher_notes": "This unit opens the satellite stage by giving students a direct observational experience analogous to the Moon-observation activity in Stage 1, but now applied to artificial satellites. If outdoor observation is not possible during the unit, the satellite-tracking website can be used to examine historical pass records, preserving the data-interpretation work. Watch for students who think satellites are visible all night — the twilight condition directly parallels why phases determine when the Moon is viewable.",
+          "materials": [
+            "Sky-map template (one per student)",
+            "Satellite-tracking app or website access (teacher device or student devices)",
+            "Binoculars (optional)"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 45,
+          "progression_stage": 4,
+          "stage_label": "Apply the periodic-motion framework to satellites and space observation",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "What Do Satellites Do? Uses, ISRO Missions, and Space Debris",
+          "activity_description": "Students examine the range of artificial satellite applications — communication, navigation, weather monitoring, disaster management, and scientific research — and identify specific ISRO missions illustrating each function. They also analyse the space-debris problem as an unintended consequence of orbital use and discuss international cooperation as a response.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Presents the classification of satellite uses and maps specific ISRO missions — Cartosat/Bhuvan, AstroSat, Chandrayaan series, Aditya L1, Mangalyaan — to functions, then introduces the space-debris issue."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Complete a mission-classification table matching each named ISRO mission to its primary purpose and the type of observation it performs."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Discuss the space-debris problem and propose one principle that an international cooperation agreement should include, justifying it using the debris-collision mechanism explained in the chapter."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-12",
+              "activity": "Teacher presents the five satellite-use categories and maps ISRO missions to them, highlighting that student-built satellites such as AzaadiSat and Jugnu also orbit Earth."
+            },
+            {
+              "minutes": "12-27",
+              "activity": "Students complete the mission-classification table individually."
+            },
+            {
+              "minutes": "27-40",
+              "activity": "Groups discuss the space-debris problem and formulate one cooperative-management principle with a justification sentence."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Two groups share their principles; teacher connects the debris issue to the orbital-period concept — debris stays in orbit because it is in the same continuous-motion condition as active satellites."
+            }
+          ],
+          "teacher_notes": "This unit builds on the direct observation experience from the previous unit by situating what students saw within a broader framework of satellite purposes and consequences. Students sometimes think satellites and space debris fall back to Earth quickly — clarify that objects at orbital altitude remain in continuous orbit for extended periods because they are continuously falling toward Earth while also moving fast enough to miss it. The group-discussion principle task asks for causal reasoning, not just opinions.",
+          "materials": [
+            "Mission-classification table worksheet",
+            "Projected or printed list of ISRO missions with brief descriptions"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 13,
+          "period_duration_minutes": 45,
+          "progression_stage": 4,
+          "stage_label": "Apply the periodic-motion framework to satellites and space observation",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Natural vs. Artificial: Comparing Orbital Characteristics",
+          "activity_description": "Students compare the Moon's orbital characteristics with those of a typical low-Earth-orbit satellite — altitude, orbital period, and visibility conditions — using data from the chapter. They trace each characteristic to the underlying physics of orbital motion and explain why the Moon is visible all night while a satellite is visible only briefly.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Poses the comparison question and provides a two-column data card: Moon (altitude ~384,000 km, period ~27 days, visibility: most of night) versus satellite (altitude ~800 km, period ~100 minutes, visibility: twilight only)."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Analyse the data card to identify the relationship between altitude and orbital period, and explain the visibility difference in terms of illumination conditions and orbital speed."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Write a structured comparison: for each of the three characteristics, state the difference and give a one-sentence explanation tracing it to orbital motion."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher distributes the data card and poses the driving question: what determines how long and when you can see an orbiting object?"
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Groups analyse the data card, identifying the altitude-period pattern and the illumination condition for visibility, and draft explanations."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Each student writes the three-characteristic comparison with explanations."
+            },
+            {
+              "minutes": "38-45",
+              "activity": "Class shares explanations for the orbital-period difference; teacher connects this to the foundational principle that higher orbits have longer periods."
+            }
+          ],
+          "teacher_notes": "In the previous unit students classified satellite uses; this unit asks them to reason about orbital mechanics using the same data-card format they used for calendar comparisons. A common confusion is that a faster-moving satellite should have a longer period — work through the data explicitly to show that a lower satellite completes more orbits per day. The written comparison prepares students for the synthesis unit, where they will need to draw connections across all four stages.",
+          "materials": [
+            "Moon vs. satellite data card (one per group)",
+            "Student sky-map sketches from Activity 11.4 (for reference)"
+          ],
+          "homework": [
+            "Using the orbital-period data from the data card, calculate how many complete orbits a satellite at 800 km altitude makes in 24 hours, and write one sentence explaining what this implies about how many times it could pass over the same location in a day."
+          ]
+        },
+        {
+          "period_number": 14,
+          "period_duration_minutes": 45,
+          "progression_stage": 4,
+          "stage_label": "Apply the periodic-motion framework to satellites and space observation",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Festivals, Phases, and Calendars: Applying the Full Framework",
+          "activity_description": "Students apply their knowledge of lunar phases, calendar types, and periodic motions to explain why specific Indian festivals fall on different Gregorian dates each year, why solar-sidereal festivals drift slowly, and why Eid can shift across months. They work with a provided festival-date table spanning three years.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Distributes the festival-date table and guides students to identify which calendar type governs each festival before attempting any explanation."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Classify each festival in the table by its governing calendar type and explain the pattern of date variation using the astronomical mechanism behind that calendar type."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Write causal explanations for three festivals — one purely lunar, one luni-solar, one solar-sidereal — each linking the date-shift pattern to the specific periodic motion and calendar correction involved."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher distributes the festival-date table and asks groups to first classify each festival before opening it to discussion."
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Groups classify festivals and draft explanations for the date-variation pattern of each calendar type."
+            },
+            {
+              "minutes": "25-38",
+              "activity": "Each student writes three individual causal explanations, one per calendar type, referencing the specific astronomical mechanism."
+            },
+            {
+              "minutes": "38-45",
+              "activity": "A quick whole-class check: teacher asks for the explanation of the Eid date variation as a test case; students identify the absence of an intercalary correction as the cause of the larger Gregorian shift."
+            }
+          ],
+          "teacher_notes": "This unit is the capstone of Stage 4 and pulls together the calendar framework from Stage 3 with the phase-observation foundation of Stages 1 and 2. Watch for students who explain all festival shifts simply as 'because of the lunar calendar' without distinguishing lunar, luni-solar, and solar-sidereal — push them to name the specific mechanism. This unit prepares students well for the synthesis unit, which requires reasoning across the entire chapter arc.",
+          "materials": [
+            "Festival-date table (three years of dates for Diwali, Holi, Eid-ul-Fitr, Makar Sankranti, Buddha Purnima)",
+            "Phase-cycle diagram (students' own annotated copies from Stage 1)"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 15,
+          "period_duration_minutes": 45,
+          "progression_stage": 4,
+          "stage_label": "Apply the periodic-motion framework to satellites and space observation",
+          "synthesis": true,
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Distributes the synthesis prompt cards and poses the unifying question: what single physical principle connects Moon phases, calendar structure, festival timing, and satellite visibility?"
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Arrange the prompt cards into an argument map, drawing causal arrows between concepts and identifying the unifying principle, then test their map by explaining one concept from each domain using only the principle."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Write a final synthesis statement — three to four sentences — that answers the unifying question by tracing the periodic-motion principle from Moon phases through calendars to satellites."
+            }
+          ],
+          "activity_title": "The Island Observatory: Designing a Sky-Based Calendar for a New Settlement",
+          "activity_description": "Groups receive a brief that places them as advisers to a small coastal settlement that has just been established on a remote island. The settlers have no imported calendar. They can observe the sky and they need three things: a way to count days, a way to know when the planting season returns each year, and a way to hold a community festival on a predictable Moon phase. Each group studies a data card giving thirty days of actual sky observations — times of shortest midday shadow, Moon phase descriptions, and any visible satellite passes — and must design a working calendar system from that data alone, justify every design choice with chapter reasoning, and identify one limitation their system still carries. The act of building the calendar from raw sky data is the synthesis: every concept in the chapter is called upon in sequence as the settlers' real problem demands it.",
+          "teacher_notes": "This unit drives synthesis through construction: groups build a working calendar from raw sky data alone, forcing them to re-derive day, month, year, and the 11-day lunar shortfall in sequence as a real settlement problem demands each concept. The non-optional limitation round is the critical facilitation move — push any group citing lunar drift to name the 11-day figure and explain why, and push luni-solar groups to articulate the intercalary-month complexity (see material: 'Island Observatory data card'). The satellite entries on the data card are not decoration; they anchor the orbital-mechanics strand and ensure the whole chapter is drawn in.",
+          "materials": [
+            "One data card per group (see visual aid: 'Island Observatory data card')",
+            "One blank sheet of paper per group for the calendar design",
+            "Pencils or pens",
+            "Rulers (optional, for drawing calendar grids)"
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher reads the settlement brief aloud and distributes or writes up the data card. Without explanation, teacher asks: 'Before you design anything, what does this data already tell you about the sky?' Groups spend three minutes reading the card silently and annotating what they notice — shortest-shadow regularity, Moon phase progression, satellite pass timing — then share one observation each in a rapid round. Teacher does not confirm or correct yet; the observations seed the design task."
+            },
+            {
+              "minutes": "7-20",
+              "activity": "Groups begin designing their calendar. The brief requires them to answer three questions in writing on their design sheet: (1) How will the settlers count a day, and what in the data supports that unit? (2) How will they mark a month, and how long is it according to the data? (3) How will they know the planting season is returning — and if they use only lunar months, what problem will appear within a few years? As groups work, teacher circulates and poses probing questions only when a group has stalled: 'What is the Moon doing during those thirty days — and why does it look that way from Earth?' or 'The settlers want to plant when the rains return each year — which cycle tells them that?' Groups are not required to choose the same calendar type; a group may choose lunar, solar, or luni-solar, and each choice is acceptable if justified."
+            },
+            {
+              "minutes": "20-30",
+              "activity": "Each group adds two further items to their design sheet: (4) On which Moon phase should the settlers hold their community festival, and on which day of their calendar does it fall this cycle? They must name the phase, state where the Moon would appear in the sky at sunset on that evening, and explain why it looks that way — tracing the appearance back to reflected sunlight and the geometry of Earth–Moon–Sun. (5) Two evenings in the data show a fast-moving point of light crossing the sky shortly after sunset. The settlers ask what it is. Groups must write a one-sentence explanation using the chapter's reasoning about artificial satellites, their orbital altitude, and why they are visible only near twilight."
+            },
+            {
+              "minutes": "30-40",
+              "activity": "Each group names their calendar type (lunar, solar, or luni-solar), reads their answer to question 3 aloud — the drift problem or how they solve it — and states their one honest limitation. Teacher records the limitation from each group on the board without comment until all have spoken. Class then compares: which limitations are the same across different calendar types, and which are unique to one type? Teacher asks whether any calendar design on the board has no limitation at all. The expected answer is no, and the class articulates why: because the three astronomical cycles — day, month, year — do not divide into each other evenly, every calendar must make a choice about which cycle to prioritise and accept an approximation in the others."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Teacher closes by returning to the data card and naming what each piece of data stood for: the regular shortest shadow is Earth's rotation giving the day; the Moon's thirty-day phase cycle is the Moon's revolution giving the month; the settlers would need a full year of shadow observations to pin down the solar year, but they now know the cycle exists and why. The satellite pass at dusk is the final thread: even in a remote settlement, the same orbital mechanics that govern the Moon also place human-made objects in the sky on predictable schedules. Teacher names the chapter's central idea in one sentence — the day, the month, and the year are not inventions; they are measurements of three orbital motions that were already happening — and notes that the settlers on the data card were doing exactly what every calendar-making civilisation did: reading the sky carefully enough to build time from it."
+            }
+          ],
+          "homework": [],
+          "pedagogical_approach": "Design-based Learning",
+          "visual_aids": [
+            {
+              "type": "table",
+              "title": "Island Observatory data card",
+              "table": "Day | Shortest-shadow clock-reading | Moon phase description | Satellite pass note\n1 | Same reading as all other days | Full Moon | —\n2 | Same reading as all other days | Waning gibbous | —\n3 | Same reading as all other days | Waning gibbous | —\n4 | Same reading as all other days | Waning gibbous | —\n5 | Same reading as all other days | Waning gibbous | —\n6 | Same reading as all other days | Waning gibbous | —\n7 | Same reading as all other days | Waning gibbous | —\n8 | Same reading as all other days | Waning half-circle (last quarter) | —\n9 | Same reading as all other days | Waning crescent | —\n10 | Same reading as all other days | Waning crescent | —\n11 | Same reading as all other days | Waning crescent | —\n12 | Same reading as all other days | Waning crescent | —\n13 | Same reading as all other days | Waning crescent | —\n14 | Same reading as all other days | Waning crescent | —\n15 | Same reading as all other days | No Moon visible (new Moon) | —\n16 | Same reading as all other days | Waxing crescent | —\n17 | Same reading as all other days | Waxing crescent | —\n18 | Same reading as all other days | Waxing crescent | —\n19 | Same reading as all other days | Waxing crescent | —\n20 | Same reading as all other days | Waxing crescent | —\n21 | Same reading as all other days | Waxing crescent | —\n22 | Same reading as all other days | Waxing gibbous | Fast-moving point of light seen shortly after sunset\n23 | Same reading as all other days | Waxing gibbous | —\n24 | Same reading as all other days | Waxing gibbous | —\n25 | Same reading as all other days | Waxing gibbous | —\n26 | Same reading as all other days | Waxing gibbous | —\n27 | Same reading as all other days | Waxing gibbous | Fast-moving point of light seen shortly after sunset\n28 | Same reading as all other days | Waxing gibbous | —\n29 | Same reading as all other days | Waxing gibbous | —\n30 | Same reading as all other days | Full Moon again (one complete phase cycle: ~29–30 days) | —"
+            },
+            {
+              "type": "prose",
+              "title": "Facilitation: limitation-round accept conditions",
+              "text": "The limitation round is non-optional — it closes the design loop and prevents students from leaving with the impression that any single calendar system is perfect.\n\nLunar calendar groups: if a group says their limitation is 'it will drift from the seasons,' accept this only if they can also state by how many days per year and why — push for the 11-day figure.\n\nLuni-solar calendar groups: their stated limitation should reference the complexity of deciding when to add the intercalary month.\n\nFinal class synthesis: teacher asks whether any calendar design on the board carries no limitation at all. The expected answer is no. The class then articulates why: because the three astronomical cycles — day, month, year — do not divide into each other evenly, every calendar must choose which cycle to prioritise and accept an approximation in the others."
+            },
+            {
+              "type": "prose",
+              "title": "Design-sheet questions (written prompts for each group)",
+              "text": "Groups answer all five questions in writing on their calendar design sheet.\n\n(1) How will the settlers count a day, and what in the data supports that unit?\n\n(2) How will they mark a month, and how long is it according to the data?\n\n(3) How will they know the planting season is returning — and if they use only lunar months, what problem will appear within a few years?\n\n(4) On which Moon phase should the settlers hold their community festival, and on which day of their calendar does it fall this cycle? Name the phase, state where the Moon would appear in the sky at sunset on that evening, and explain why it looks that way — tracing the appearance back to reflected sunlight and the geometry of Earth–Moon–Sun.\n\n(5) Two evenings in the data show a fast-moving point of light crossing the sky shortly after sunset. The settlers ask what it is. Write a one-sentence explanation using the chapter's reasoning about artificial satellites, their orbital altitude, and why they are visible only near twilight."
+            }
+          ]
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 45,
+        "count": 15
+      }
+    ],
+    "coverage_handoff": [
+      {
+        "stage_number": 1,
+        "stage_label": "Observe and record lunar phenomena",
+        "total_stages": 4,
+        "period_numbers": [
+          1,
+          2,
+          3
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students observe, record, and name the changing appearance of the Moon across its full phase cycle, tracking bright-portion size, shape, and Sun-Moon angular position in a structured observation log.",
+        "implied_lo": "Students can accurately record and name each phase in the lunar cycle — distinguishing Purnima, Amavasya, gibbous, and crescent shapes — and identify the waxing and waning halves of the cycle from their observation data.",
+        "cg": "CG-2",
+        "c_code": "C-2.5",
+        "co_central": false
+      },
+      {
+        "stage_number": 2,
+        "stage_label": "Explain the causal mechanism of lunar phases",
+        "total_stages": 4,
+        "period_numbers": [
+          4,
+          5,
+          6
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students use a physical model and orbital-geometry diagrams to explain that phases result from the changing angle between observer, Moon, and Sun as the Moon revolves; they distinguish this mechanism from the separate condition required for eclipses and apply the model to predict Moon viewing times.",
+        "implied_lo": "Students can explain, using the reflected-sunlight and orbital-geometry model, why the illuminated fraction of the Moon visible from Earth changes through the cycle, and can distinguish this from the distinct conditions that produce lunar and solar eclipses.",
+        "cg": "CG-2",
+        "c_code": "C-2.5",
+        "co_central": false
+      },
+      {
+        "stage_number": 3,
+        "stage_label": "Connect periodic motions to the origin of calendar units",
+        "total_stages": 4,
+        "period_numbers": [
+          7,
+          8,
+          9,
+          10
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students derive the day, month, and year from the three periodic motions of Earth and Moon, analyse the 11-day lunar-solar gap and its corrections across lunar, solar, and luni-solar calendar types, and examine the Indian National Calendar as a policy-level application of these astronomical principles.",
+        "implied_lo": "Students can trace each of the three calendar units to its originating celestial motion, explain the arithmetic mismatch between lunar and solar years, and compare how lunar, solar, and luni-solar calendars manage that mismatch.",
+        "cg": "CG-2",
+        "c_code": "C-2.5",
+        "co_central": false
+      },
+      {
+        "stage_number": 4,
+        "stage_label": "Apply the periodic-motion framework to satellites and space observation",
+        "total_stages": 4,
+        "period_numbers": [
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students observe and classify artificial satellites, compare their orbital characteristics with the Moon, apply the full periodic-motion framework to explain festival-date variation across calendar types, and in the synthesis unit construct an argument tracing Moon phases, calendar structure, festival timing, and satellite visibility to the single principle of periodic celestial motion.",
+        "implied_lo": "Students can explain the phases of the Moon, the structure of different calendar types, and the role of artificial satellites by tracing each to the observable periodic motions of Earth and Moon in their orbits.",
+        "cg": "CG-2",
+        "c_code": "C-2.5",
+        "co_central": false
+      }
+    ],
+    "assessment_items": [
+      {
+        "progression_stage": 1,
+        "stage_label": "Observe and record lunar phenomena",
+        "implied_lo_assessed": "Students can accurately record and name each phase in the lunar cycle — distinguishing Purnima, Amavasya, gibbous, and crescent shapes — and identify the waxing and waning halves of the cycle from their observation data.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.5",
+          "competency_text": "Explain celestial phenomena — the phases of the Moon, the structure of calendars, and the role of artificial satellites — by tracing each to the observable periodic motions of the Earth and Moon in their orbits."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "A student observes the Moon on four consecutive nights and notes that each night the bright portion appears slightly smaller than the night before, and the Moon is visible in the eastern sky before sunrise. Which phase name and cycle half correctly describe the Moon during these four nights?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Purnima followed by Amavasya on the same night",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Waning crescent or waning gibbous — Krishna Paksha",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "Waning gibbous — Shukla Paksha",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Waxing crescent or waxing gibbous — Shukla Paksha",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 1
+            },
+            "what_each_option_reveals": {
+              "D": "The student confuses the direction of bright-portion change — a shrinking portion signals waning (Krishna Paksha), not waxing (Shukla Paksha); this is the most common observation-to-vocabulary mapping error.",
+              "A": "The student has not grasped that Purnima and Amavasya are single events separated by two weeks, not consecutive nights; this reveals a fundamental misconception about cycle duration.",
+              "C": "The student correctly identifies a waning phase but incorrectly assigns it to Shukla Paksha, suggesting the waxing/waning vocabulary has been learned without being anchored to the direction of change."
+            },
+            "inclusivity": "Students who struggle with text-heavy stems benefit from sketching the Moon shape described before selecting an option. The sunrise-viewing clue is an alternative pathway for students whose phase-name recall is weaker but whose observation-log pattern recognition is stronger."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 1,
+        "stage_label": "Observe and record lunar phenomena",
+        "implied_lo_assessed": "Students can accurately record and name each phase in the lunar cycle — distinguishing Purnima, Amavasya, gibbous, and crescent shapes — and identify the waxing and waning halves of the cycle from their observation data.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.5",
+          "competency_text": "Explain celestial phenomena — the phases of the Moon, the structure of calendars, and the role of artificial satellites — by tracing each to the observable periodic motions of the Earth and Moon in their orbits."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": "Night | Bright fraction visible\n1 | About one-quarter\n2 | About one-half\n3 | About three-quarters\n4 | Full disc",
+        "question_text": "A student records the Moon's bright fraction over four nights. Refer to the table provided. Which sequence of phase names, in the correct order, matches these observations?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Amavasya → waning crescent → waning gibbous → Purnima",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Purnima → waning gibbous → first quarter → waxing crescent",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Waning crescent → last quarter → waning gibbous → Amavasya",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Waxing crescent → first quarter → waxing gibbous → Purnima",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 1
+            },
+            "what_each_option_reveals": {
+              "C": "The student reads an increasing bright fraction as waning rather than waxing, indicating that the directional meaning of the waxing/waning terms has not been internalized from the observation log.",
+              "A": "The student confuses Amavasya (new Moon, zero bright fraction) with the starting point of a sequence that begins at one-quarter illumination, suggesting the phase terms are known as labels but not linked to specific bright-fraction values.",
+              "B": "The student reverses the sequence, reading a brightening moon as darkening, which indicates the phase cycle direction is not yet secured from observation."
+            },
+            "inclusivity": "Students who find the table ambiguous may benefit from sketching four Moon shapes matching the fractions before mapping phase names; this separates the observation skill from the vocabulary-matching skill."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Explain the causal mechanism of lunar phases",
+        "implied_lo_assessed": "Students can explain, using the reflected-sunlight and orbital-geometry model, why the illuminated fraction of the Moon visible from Earth changes through the cycle, and can distinguish this from the distinct conditions that produce lunar and solar eclipses.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.5",
+          "competency_text": "Explain celestial phenomena — the phases of the Moon, the structure of calendars, and the role of artificial satellites — by tracing each to the observable periodic motions of the Earth and Moon in their orbits."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "In the ball-torch model, a student holds a white ball at arm's length and rotates slowly while a torch shines from across the room. When the ball is positioned directly between the student and the torch, what does the student observe on the ball, and which lunar phase does this correspond to?",
+        "options": [
+          {
+            "label": "A",
+            "text": "The ball appears half-lit; this corresponds to first quarter.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The half facing the student is dark; this corresponds to a lunar eclipse.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The half facing the student is dark; this corresponds to Amavasya (new Moon).",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "The half facing the student is fully lit; this corresponds to Purnima (full Moon).",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "what_each_option_reveals": {
+              "D": "The student reverses which hemisphere faces the observer when the Moon is between Earth and Sun, conflating the geometry of new Moon with full Moon — this is a persistent spatial-reasoning error with the reflected-light model.",
+              "B": "The student correctly identifies the dark hemisphere but incorrectly labels the condition a lunar eclipse rather than a new Moon, showing the eclipse-vs.-phase distinction from the unit has not been secured.",
+              "A": "The student infers a half-lit appearance from a 'between' position without applying the geometry, possibly confusing this with a quarter-Moon position at 90 degrees."
+            },
+            "inclusivity": "Students who struggle with spatial reasoning can re-enact the ball-torch model physically before answering; tracing the torch-beam path to the ball and then to the observer's eye is an embodied pathway to the correct answer."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Explain the causal mechanism of lunar phases",
+        "implied_lo_assessed": "Students can explain, using the reflected-sunlight and orbital-geometry model, why the illuminated fraction of the Moon visible from Earth changes through the cycle, and can distinguish this from the distinct conditions that produce lunar and solar eclipses.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.5",
+          "competency_text": "Explain celestial phenomena — the phases of the Moon, the structure of calendars, and the role of artificial satellites — by tracing each to the observable periodic motions of the Earth and Moon in their orbits."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": null,
+        "question_text": "A student argues: 'There should be a lunar eclipse every month because there is always a full Moon every month.' What is the specific flaw in this argument?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Earth's shadow is too small to cover the Moon at full Moon distance.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Lunar eclipses occur only on new Moon days, not on full Moon days.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The Moon does not reflect enough sunlight during full Moon to be fully eclipsed.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The Moon's orbit is slightly tilted relative to Earth's orbit, so Earth's shadow usually misses the Moon even during a full Moon.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "what_each_option_reveals": {
+              "B": "The student has confused the conditions for lunar and solar eclipses, reversing which phase is associated with each type — a chapter-specific confusion the eclipse-vs.-phases unit was designed to address.",
+              "C": "The student introduces a brightness-based explanation unrelated to the chapter's content, suggesting reliance on everyday reasoning rather than the orbital-geometry model.",
+              "A": "The student applies a size-based reasoning that has some intuitive appeal but is factually incorrect — lunar eclipses do occur and Earth's shadow does cover the Moon; the issue is orbital tilt, not shadow size."
+            },
+            "inclusivity": "Students who find the verbal argument format challenging can first draw the orbital positions for a full Moon night and a lunar eclipse night and compare them; the diagram pathway makes the tilt condition visible before the verbal explanation is attempted."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Explain the causal mechanism of lunar phases",
+        "implied_lo_assessed": "Students can explain, using the reflected-sunlight and orbital-geometry model, why the illuminated fraction of the Moon visible from Earth changes through the cycle, and can distinguish this from the distinct conditions that produce lunar and solar eclipses.",
+        "question_type": "SCR",
+        "competency": {
+          "c_code": "C-2.5",
+          "competency_text": "Explain celestial phenomena — the phases of the Moon, the structure of calendars, and the role of artificial satellites — by tracing each to the observable periodic motions of the Earth and Moon in their orbits."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": null,
+        "question_text": "A waning crescent Moon is observed very close to the Sun just before sunrise. Using the orbital-geometry model, explain (a) why the bright crescent is on the side facing the Sun and (b) why this Moon is visible only near sunrise and not at midnight.",
+        "options": [],
+        "expected_elements": [
+          "The Moon shines by reflecting sunlight; the hemisphere of the Moon facing the Sun is always illuminated.",
+          "A waning crescent means the Moon is positioned close to the Sun in its orbit, so only a small edge of the illuminated hemisphere is visible to an Earth observer.",
+          "The bright crescent is on the Sun-facing side because that is the hemisphere the Sun's light reaches.",
+          "The Moon rises near the Sun and is therefore above the horizon only around sunrise; it has set by midnight because it is near the Sun in the sky."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "inclusivity": "Students who struggle with the verbal explanation can draw the orbital position of the Moon relative to Earth and Sun and annotate which hemisphere is lit before writing their answer. Accepting a labelled diagram alongside the written explanation allows spatial reasoners to demonstrate the same understanding."
+          },
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Connect periodic motions to the origin of calendar units",
+        "implied_lo_assessed": "Students can trace each of the three calendar units to its originating celestial motion, explain the arithmetic mismatch between lunar and solar years, and compare how lunar, solar, and luni-solar calendars manage that mismatch.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.5",
+          "competency_text": "Explain celestial phenomena — the phases of the Moon, the structure of calendars, and the role of artificial satellites — by tracing each to the observable periodic motions of the Earth and Moon in their orbits."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "The mean solar day is defined as the average time between two successive solar noons. Which celestial motion directly produces this interval?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Earth's revolution around the Sun",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Earth's rotation on its own axis",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "The Moon's revolution around Earth",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The Sun's apparent movement through the background stars",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "what_each_option_reveals": {
+              "A": "The student confuses Earth's rotation (producing the day) with Earth's revolution (producing the year) — a common conflation when the two motions are introduced together.",
+              "C": "The student associates the Moon with all time-keeping, not distinguishing which body's motion defines which calendar unit.",
+              "D": "The student selects an astronomical phenomenon from the chapter (the Sun's apparent movement through star backgrounds, related to the sidereal year) but applies it to the wrong calendar unit."
+            },
+            "inclusivity": "Students who confuse rotation and revolution benefit from first labelling the three-cycle diagram before answering. The gnomon-shadow connection from the activity offers a physical anchor: the shadow is shortest at solar noon, and noon recurs because Earth rotates."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Connect periodic motions to the origin of calendar units",
+        "implied_lo_assessed": "Students can trace each of the three calendar units to its originating celestial motion, explain the arithmetic mismatch between lunar and solar years, and compare how lunar, solar, and luni-solar calendars manage that mismatch.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.5",
+          "competency_text": "Explain celestial phenomena — the phases of the Moon, the structure of calendars, and the role of artificial satellites — by tracing each to the observable periodic motions of the Earth and Moon in their orbits."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": null,
+        "question_text": "A student calculates that after three years, a purely lunar calendar will have fallen approximately 33 days behind a solar calendar. What is the correct response of a luni-solar calendar to this accumulation?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Add one extra day to each month of the third year, as the Gregorian calendar does in a leap year.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Insert an intercalary month (Adhika Maasa) to bring the lunar count back in line with the solar year.",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "Remove one month from the third year to reduce the total day count.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Shift the new year start date by 33 days to realign with the solar year.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "what_each_option_reveals": {
+              "A": "The student applies the Gregorian leap-day solution to the luni-solar problem, confusing the scale of the correction — a day-level fix cannot bridge a month-level gap.",
+              "C": "The student reasons that a calendar running long should have a month removed rather than added, reversing the direction of the correction.",
+              "D": "The student recognises that a correction is needed but proposes a new-year-shift rather than an intercalary month, showing the Adhika Maasa concept has not been retained."
+            },
+            "inclusivity": "Students who find the 33-day arithmetic abstract can first verify it — 11 days × 3 years — and then ask themselves whether a day-level or month-level correction is needed; the scale of the gap makes the month-insertion answer feel more natural."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Connect periodic motions to the origin of calendar units",
+        "implied_lo_assessed": "Students can trace each of the three calendar units to its originating celestial motion, explain the arithmetic mismatch between lunar and solar years, and compare how lunar, solar, and luni-solar calendars manage that mismatch.",
+        "question_type": "SCR",
+        "competency": {
+          "c_code": "C-2.5",
+          "competency_text": "Explain celestial phenomena — the phases of the Moon, the structure of calendars, and the role of artificial satellites — by tracing each to the observable periodic motions of the Earth and Moon in their orbits."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": null,
+        "question_text": "The Gregorian calendar adds a leap day every four years but skips it in century years (e.g. 1700, 1800, 1900) and then restores it every 400 years (e.g. 2000). Explain what single astronomical fact requires this chain of corrections and why each step in the chain is necessary.",
+        "options": [],
+        "expected_elements": [
+          "Earth takes approximately 365.25 days to complete one revolution around the Sun — the fractional 0.25 day is the source of all corrections.",
+          "Adding one day every four years corrects the accumulated 0.25-day remainder (four × 0.25 = 1 day).",
+          "However, 0.25 is slightly more than the true fractional remainder, so the calendar gains a small excess; skipping the leap year in century years removes this excess.",
+          "Skipping all century years overcorrects slightly in the other direction, so restoring the leap year every 400 years provides a fine balance that keeps the calendar accurately aligned with the seasons over long periods."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "inclusivity": "Students who struggle to hold all four steps in working memory can complete the correction-chain table format — one row per correction, one column for the rule and one for the astronomical reason — before writing their prose answer. Both formats demonstrate the same causal chain."
+          },
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Apply the periodic-motion framework to satellites and space observation",
+        "implied_lo_assessed": "Students can explain the phases of the Moon, the structure of different calendar types, and the role of artificial satellites by tracing each to the observable periodic motions of Earth and Moon in their orbits.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.5",
+          "competency_text": "Explain celestial phenomena — the phases of the Moon, the structure of calendars, and the role of artificial satellites — by tracing each to the observable periodic motions of the Earth and Moon in their orbits."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": null,
+        "question_text": "A student wants to spot an artificial satellite. She knows it is a clear night and the satellite is in a low Earth orbit at about 800 km altitude. At which time and under which sky condition is she most likely to succeed, and why?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Any time on a moonless night, because the absence of moonlight makes the satellite brighter by contrast.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "At local midnight, when the sky is darkest and the satellite is easiest to distinguish from stars.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "At local noon, because the satellite is directly overhead at its highest point in the orbit.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Just after sunset or just before sunrise, when the sky is dark but the satellite is still in sunlight above the shadow zone — for the same reason a waxing Moon is visible at sunset.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "what_each_option_reveals": {
+              "B": "The student reasons from sky-darkness alone without applying the illumination condition — at midnight the satellite is in Earth's shadow and therefore not visible, a direct parallel to the new Moon being invisible.",
+              "C": "The student confuses the satellite's orbital position (altitude) with the observer's sky geometry, not recognising that visibility depends on the Sun-satellite-observer illumination angle.",
+              "A": "The student applies a contrast-reasoning heuristic (less moonlight = easier to see) that works for stars but ignores the illumination condition specific to satellites."
+            },
+            "inclusivity": "Students who find the twilight condition counterintuitive can draw a quick Earth-satellite-Sun diagram and shade Earth's shadow cone; this makes the reason the satellite must be above the shadow zone spatially explicit."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Apply the periodic-motion framework to satellites and space observation",
+        "implied_lo_assessed": "Students can explain the phases of the Moon, the structure of different calendar types, and the role of artificial satellites by tracing each to the observable periodic motions of Earth and Moon in their orbits.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-2.5",
+          "competency_text": "Explain celestial phenomena — the phases of the Moon, the structure of calendars, and the role of artificial satellites — by tracing each to the observable periodic motions of the Earth and Moon in their orbits."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": "Festival | Calendar type | Gregorian date in Year 1 | Gregorian date in Year 2 | Gregorian date in Year 3\nDiwali | Luni-solar | 12 November | 1 November | 20 October\nEid-ul-Fitr | Lunar | 21 April | 10 April | 30 March\nMakar Sankranti | Solar-sidereal | 14 January | 14 January | 14 January",
+        "question_text": "Refer to the table provided. Which festival's date pattern is best explained by the absence of any intercalary correction in its governing calendar, and what does that pattern look like across the three years?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Diwali, because it shifts by more than a month each year due to its luni-solar calendar.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Eid-ul-Fitr, because it shifts by approximately 11 days each year, reflecting the uncorrected lunar-solar gap.",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "Eid-ul-Fitr, because it shifts by approximately 30 days each year, the same as one full lunar month.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Makar Sankranti, because it stays on the same date, showing no correction is needed for a solar-sidereal calendar.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "what_each_option_reveals": {
+              "A": "The student misreads Diwali's shift pattern — it shifts by roughly 10-11 days annually but is constrained within a season window by Adhika Maasa — confusing the luni-solar festival's behaviour with the uncorrected lunar one.",
+              "D": "The student correctly notes Makar Sankranti's stability but misattributes it to the absence of correction rather than recognising that the solar-sidereal calendar is already aligned with the solar year.",
+              "C": "The student identifies the correct festival but overstates the annual shift as 30 days (one full lunar month) rather than the actual 11-day lunar-solar gap, showing the arithmetic from the calendar units has not been connected to the date pattern."
+            },
+            "inclusivity": "Students who find it easier to work with numbers can calculate the year-to-year shifts for each festival before identifying which pattern matches the 11-day gap; the table makes this computation accessible without external data."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Apply the periodic-motion framework to satellites and space observation",
+        "implied_lo_assessed": "Students can explain the phases of the Moon, the structure of different calendar types, and the role of artificial satellites by tracing each to the observable periodic motions of Earth and Moon in their orbits.",
+        "question_type": "ECR",
+        "competency": {
+          "c_code": "C-2.5",
+          "competency_text": "Explain celestial phenomena — the phases of the Moon, the structure of calendars, and the role of artificial satellites — by tracing each to the observable periodic motions of the Earth and Moon in their orbits."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "A low-Earth-orbit satellite completes one orbit in approximately 100 minutes and is visible only during twilight. The Moon completes one orbit in approximately 27 days and is visible for much of the night. Using the relationship between orbital altitude and orbital period, and the illumination condition for visibility, explain these two differences between the satellite and the Moon.",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [
+          "Identifies that the satellite's much lower orbital altitude (~800 km) results in a much shorter orbital period (~100 minutes) compared with the Moon's greater distance (~384,000 km) and longer period (~27 days).",
+          "Explains the altitude-period relationship: objects closer to Earth orbit faster because gravitational pull is stronger at lower altitudes.",
+          "Correctly applies the illumination condition: both satellite and Moon shine by reflected sunlight; the satellite at low altitude enters Earth's shadow during the night hours, making it invisible, while the Moon at greater distance is above Earth's shadow cone for most of the night.",
+          "Draws an explicit connection between the two differences — both the period difference and the visibility difference trace back to the difference in orbital altitude.",
+          "Uses chapter-specific data (100-minute period, ~800 km altitude for satellite; ~27-day period for Moon) to ground the explanation."
+        ],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": null,
+          "ECR": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "inclusivity": "Students who find the extended written response challenging can structure their answer as two labelled parts — 'Orbital period difference' and 'Visibility difference' — before integrating them; this scaffolds the response without reducing the analytical demand. Students with stronger spatial reasoning may wish to draw a diagram showing the shadow cone and the two orbital altitudes before writing."
+          },
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Apply the periodic-motion framework to satellites and space observation",
+        "implied_lo_assessed": "Students can explain the phases of the Moon, the structure of different calendar types, and the role of artificial satellites by tracing each to the observable periodic motions of Earth and Moon in their orbits.",
+        "question_type": "OPEN_TASK",
+        "competency": {
+          "c_code": "C-2.5",
+          "competency_text": "Explain celestial phenomena — the phases of the Moon, the structure of calendars, and the role of artificial satellites — by tracing each to the observable periodic motions of the Earth and Moon in their orbits."
+        },
+        "cognitive_demand": "Evaluation",
+        "visual_stimulus": "Phenomenon | Observable periodic motion involved | Celestial body/bodies | How the motion produces the phenomenon | What would change if the motion stopped or changed\nMoon phases | | | |\nDuration of a calendar month | | | |\nNeed for a leap year | | | |\nArtificial satellite orbital period | | | |\nTwilight visibility of satellites | | | |",
+        "question_text": "",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "Five celestial phenomena are listed in the table. For each one, identify the periodic motion involved, the celestial body or bodies responsible, explain how that motion produces the phenomenon, and predict what would change if the motion stopped or changed. Refer to the table provided.",
+        "scaffold": "Complete all five rows. In the last column, make a specific prediction — not just 'it would change' — for each phenomenon.",
+        "format_of_output": [
+          "Completed table with all five rows filled",
+          "Each row: motion identified, body named, causal explanation (one to two sentences), specific prediction"
+        ],
+        "guide": {
+          "MCQ": null,
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "format_type": "Data interpretation task (provided table or graph)",
+            "format_rationale": "The table format requires students to demonstrate the chapter's central operation — tracing each phenomenon to a specific periodic motion — across all four domains of the chapter simultaneously, making it the most direct vehicle for the final-stage implied LO.",
+            "what_this_demonstrates": "A complete response demonstrates the student's ability to explain Moon phases, calendar structure, and satellite behaviour by identifying and causally connecting each to its originating periodic motion, and to extend that reasoning counterfactually in the prediction column.",
+            "reading_the_scaffold": "The table separates the cognitive steps — identify the motion, name the body, explain causally, predict counterfactually — so the teacher can diagnose exactly where a student's reasoning breaks down. A student who fills the first three columns correctly but writes vague predictions has not yet reached the evaluation level; a student who leaves the motion column blank but writes strong predictions may have internalized the connection without being able to articulate the starting point.",
+            "strong_vs_weak_markers": "Strong responses: each row names a specific motion (Earth's rotation, Moon's revolution, Earth's revolution), gives a causal sentence connecting motion to phenomenon, and makes a concrete specific prediction (e.g. 'if Earth's revolution slowed, the solar year would lengthen and the Gregorian calendar's 365-day count would become inaccurate'). Weak responses: motion columns filled with generic terms ('celestial motion'), explanations restate the phenomenon rather than explaining it, predictions default to 'everything would change' without specificity.",
+            "inclusivity": "Students who find the counterfactual prediction column most challenging can approach it by first describing what is currently true and then asking 'what if the number were different?'; this step-by-step questioning pathway reduces the abstraction without reducing the analytical demand. Students who prefer diagrammatic thinking may annotate a blank orbital diagram before filling the table, using the diagram as their reasoning scaffold."
+          }
+        }
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

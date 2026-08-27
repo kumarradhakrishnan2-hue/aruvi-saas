@@ -1,0 +1,2077 @@
+{
+  "filename": "ch_03_canonical.json",
+  "saved_at": "2026-08-16T09:20:21",
+  "plan_status": "canonical",
+  "chapter_number": 3,
+  "chapter_title": "Climates of India",
+  "grade": "Grade VII",
+  "subject": "Social Science",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 40,
+      "count": 21
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 40 minutes × 21 periods = 840 minutes\nTotal: 21 periods · 14h 0min",
+  "genon_canonical": {
+    "generated": "2026-08-16",
+    "schedule": "21x40",
+    "constitution": "LP v2.8 / assessment v2.4",
+    "source": "generate_canonical.py one social_sciences vii 3",
+    "ledger_ts": "20260815_201057_ss_vii_03_top",
+    "validation": "clean",
+    "repairs": [
+      {
+        "at": "2026-08-16T09:44:21",
+        "tool": "genon/repair_register.py v1.5",
+        "reason": "register backfill (founder ruling 2026-08-02; testing.md C3 / ARV-D-011..013, ARV-D-026)",
+        "edits": [
+          {
+            "unit": 3,
+            "field": "band:2",
+            "rule": "register/clock",
+            "removed": "for five minutes",
+            "replaced_with": "",
+            "note": "clock quantity struck; the band carries its own minutes and the platform rescales them | survives: …ear; what does that tell us about the role of latitude relative to seasons?' Pairs discuss, then share answers aloud.…"
+          },
+          {
+            "unit": 3,
+            "field": "teacher_notes",
+            "rule": "register/forward",
+            "removed": "; distinguish them clearly here since altitude is the subject of the next unit.",
+            "replaced_with": ".",
+            "note": "forward reference — false for any served count that ends here or borrows a different unit at this slot | survives: …m. Students may conflate latitude with altitude (both make places cooler as they increase).…"
+          },
+          {
+            "unit": 7,
+            "field": "band:3",
+            "rule": "register/forward",
+            "removed": "This grounds the mechanism in cultural significance before the next unit explores climate and livelihoods.",
+            "replaced_with": "",
+            "note": "forward reference — false for any served count that ends here or borrows a different unit at this slot | survives: …e the subject of classical music in a farming civilisation?' Students write one sentence.…"
+          },
+          {
+            "unit": 13,
+            "field": "band:3",
+            "rule": "register/forward",
+            "removed": "— it sets up the next unit's deeper engagement with mitigation.",
+            "replaced_with": ".",
+            "note": "forward reference — false for any served count that ends here or borrows a different unit at this slot | survives: …lifestyles) often conflict with economic growth goals. This question is not resolved here.…"
+          }
+        ],
+        "ban_hits_before": 4,
+        "ban_hits_after": 0
+      },
+      {
+        "at": "2026-08-16T11:37:17",
+        "tool": "genon/repair_anchors.py v1.0",
+        "reason": "V2 section-anchor joiner repair (';' read as one opaque registry section; corrupted the derived registry, falsely quarantined p10, and mis-served X=8/X=9)",
+        "edits": [
+          {
+            "unit": 6,
+            "field": "section_anchor",
+            "rule": "V2/granularity",
+            "removed": "Factors Determining the Climate — Winds",
+            "replaced_with": "Factors Determining the Climate — Winds / Factors Determining the Climate — Topography",
+            "note": "the unit teaches both factors and its title says so; anchoring only Winds pushed Topography's first exposure to U16 and made two correct compacts look like they jumped"
+          }
+        ]
+      }
+    ],
+    "academic_year": "2026-27"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 40,
+          "activity_title": "Weather, Seasons and the Climate: Mapping the Difference",
+          "section_anchor": "Weather, Seasons and the Climate",
+          "materials": [
+            "Blackboard or whiteboard",
+            "Chalk or markers",
+            "Student notebooks"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Write the words 'Weather' and 'Climate' as two column headers on the board. Ask students to call out what the sky looked like on their way to school and record three or four responses under 'Weather'. Then ask: 'Would you say the same things if someone asked what Delhi is like in July every year?' — record the contrast under 'Climate'. Establish together that weather is what changes day to day, while climate is the long-term pattern a region shows over several decades."
+            },
+            {
+              "minutes": "8-18",
+              "activity": "Introduce the six Indian ṛitus — vasanta (spring), grīṣhma (summer), varṣhā (rainy season), śharad (autumn), hemanta (pre-winter), śhiśhir (winter) — by writing each Sanskrit name with its English equivalent on the board. Ask students to match each ṛitu with one thing that changes in daily life during it: a crop sown, a food commonly eaten, a festival, or a style of clothing. Each student writes a quick individual list in their notebook — one daily-life change per season."
+            },
+            {
+              "minutes": "18-30",
+              "activity": "Lead a whole-class comparison of students' lists. Draw out that Vasanta Pañchamī is linked to vasanta and Śharad Pūrṇima to śharad, and that India's recognition of a distinct varṣhā season (monsoon) goes beyond the four-season model common elsewhere. Ask: 'Why would a farming community need to track six seasons rather than four?' — push students toward the idea that agriculture, animal life, and ritual practice are all in rhythm with seasonal patterns."
+            },
+            {
+              "minutes": "30-40",
+              "activity": "Close by posing the question: 'Scientists have recorded changes in global climates in recent decades, many caused by human actions — what might that mean for the ṛitu calendar communities have followed for centuries?' Students write a two-sentence response in their notebooks. This question is not resolved here; it plants the thread that the chapter will return to when it addresses climate change."
+            }
+          ],
+          "section_context": "Six ṛitus, Vasanta Pañchamī, Śharad Pūrṇima, weather-climate distinction",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "Students at this level commonly conflate weather and climate, treating any unusual day as evidence of 'climate change'; insist on the decades-long timescale of climate as distinct from the daily timescale of weather. The six-ṛitu framework is culturally rich — encourage students to connect it to festivals or foods their own families observe, as this grounds the concept in lived experience. A student who notes that their region does not mark six distinct seasons is making a valid geographic observation worth exploring briefly.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.1",
+              "cg": "CG-6",
+              "weight": 3,
+              "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change.",
+              "implied_lo": "Students can distinguish between weather as a short-term condition and climate as a long-term regional pattern.",
+              "cognitive_demand": "Understanding"
+            }
+          ]
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 40,
+          "activity_title": "Types of Climates in India: Reading the Landscape",
+          "section_anchor": "Types of Climates in India",
+          "materials": [
+            "Outline map of India (one per student or pair)",
+            "Coloured pencils (at least 6 colours)",
+            "Blackboard"
+          ],
+          "visual_aids": "Outline map of India showing major physical regions and state boundaries",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Distribute outline maps of India. Tell students that India's varied geography produces at least seven distinct climate types. Introduce the first three — alpine (Himalayan peaks), temperate (lower Himalayan and hilly areas, home to hill stations), and subtropical (northern plains) — by naming their key features aloud: alpine has cold snowy winters and cool summers; temperate has moderately cold winters and mild summers; subtropical has very hot summers and cold winters suitable for wheat. Students shade these three zones on their maps in three chosen colours and add a one-word crop or characteristic label."
+            },
+            {
+              "minutes": "10-22",
+              "activity": "Introduce the remaining four climate types: arid (Thar Desert — extremely hot days, cool nights, very little rain, unique water conservation), tropical wet (western coastal strip — heavy monsoon rain, rice and spices), semi-arid (central Deccan Plateau — hot summers, mild winters, moderate monsoon), and tropical (eastern India and southern peninsula — mild winters, distinct wet and dry periods driven by monsoon winds). Students shade and label these four on the same map. Ask: 'Which two climate types are found on the coasts and which are found deep inland — what pattern do you notice?'"
+            },
+            {
+              "minutes": "22-33",
+              "activity": "Pairs exchange maps and check each other's zone placement. Each pair must identify one climate type where they disagree about the boundary and write a one-sentence justification for their own choice citing a geographic feature (e.g., 'I placed the arid zone only in Rajasthan because the Thar Desert is the text's example'). Call on two or three pairs to share disagreements and mediate using the summary's descriptions."
+            },
+            {
+              "minutes": "33-40",
+              "activity": "Students individually write two sentences answering: 'A traveller moves from the Himalayan foothills to the Deccan Plateau in June — name the climate types she passes through and one change in agriculture or land use she would observe.' Collect maps as a formative record."
+            }
+          ],
+          "section_context": "Alpine, temperate, subtropical, arid Thar, tropical wet coast, semi-arid Deccan, tropical east-south",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "Students often place the 'tropical' label on the entire south of India and miss the distinction between the drier eastern peninsular zone and the wet western coast; use the western coast's rice-and-spice agriculture versus the Deccan's semi-arid wheat pattern to sharpen the boundary. The map-colouring task is an application, not decoration — the colour key forces students to commit to a boundary. The traveller-question at the close asks students to connect climate type to land use, which previews the livelihood thread the chapter develops later.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.1",
+              "cg": "CG-6",
+              "weight": 3,
+              "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change.",
+              "implied_lo": "Students can classify India's regional climate types by locating them on a map and linking each to its geographic zone.",
+              "cognitive_demand": "Application"
+            },
+            {
+              "c_code": "C-6.2",
+              "cg": "CG-6",
+              "weight": 1,
+              "competency_text": "Identify patterns of agricultural suitability and resource distribution across India's geographic regions.",
+              "implied_lo": "Students can match India's climate zones to the crops or agricultural patterns associated with each.",
+              "cognitive_demand": "Understanding"
+            }
+          ]
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 40,
+          "activity_title": "Latitude and Temperature: Why Location on the Globe Matters",
+          "section_anchor": "Factors Determining the Climate — Latitude",
+          "materials": [
+            "Globe or printed diagram of Earth showing Equator and Tropics",
+            "Blackboard",
+            "Student notebooks"
+          ],
+          "visual_aids": "Diagram showing the angle of the sun's rays at low versus high latitudes",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Draw two parallel lines on the board representing the Earth's surface at different latitudes. Hold a torch (or mime one) pointing straight down at the first line, then at a steep angle to the second. Ask: 'Where does the same amount of light energy spread over a smaller area?' Establish that perpendicular rays concentrate heat over a smaller surface — this is the core mechanism linking latitude to temperature."
+            },
+            {
+              "minutes": "8-20",
+              "activity": "Explain that at low latitudes near the Equator, sun rays arrive nearly perpendicularly and also travel through less atmosphere, concentrating energy and producing warmth year-round — Kanniyakumari and the Nicobar Islands are India's examples. At high latitudes near the poles, rays arrive obliquely, travel through more atmosphere, and spread over a larger surface, producing cold conditions — Srinagar represents the cooler northern extreme within India. Students draw this contrast as a simple annotated sketch in their notebooks, labelling the two ray angles, the two Indian places, and a one-phrase explanation for each."
+            },
+            {
+              "minutes": "20-32",
+              "activity": "Pose three scenario questions for pair discussion, written on the board: (1) 'A city at 8°N and a city at 35°N in India — which is likely warmer in December and why?' (2) 'If India extended further north beyond the Himalayas, what would its northern climate be like — and why don't we see that inside India?' (3) 'The Nicobar Islands are warm all year; what does that tell us about the role of latitude relative to seasons?' Pairs discuss, then share answers aloud."
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Students individually write a two-sentence explanation: 'Explain why Kanniyakumari remains warm throughout the year while Srinagar experiences cold winters, using the concept of latitude and the angle of the sun's rays.' This serves as an exit check."
+            }
+          ],
+          "section_context": "Equatorial perpendicular rays, oblique high-latitude rays, Kanniyakumari, Nicobar Islands, Srinagar",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "A common confusion is that latitude controls temperature only in summer; emphasise that because Kanniyakumari is near the Equator, the sun's angle stays high throughout all seasons, which is why it stays warm year-round rather than just in June. The torch demonstration, even mimed, is more memorable than a verbal explanation for the ray-angle mechanism. Students may conflate latitude with altitude (both make places cooler as they increase).",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.1",
+              "cg": "CG-6",
+              "weight": 3,
+              "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change.",
+              "implied_lo": "Students can explain how latitude determines regional temperature patterns by tracing the relationship between sun-ray angle and heat concentration.",
+              "cognitive_demand": "Understanding"
+            }
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 40,
+          "activity_title": "Altitude and Temperature: Why Hill Stations Are Cool",
+          "section_anchor": "Factors Determining the Climate — Altitude",
+          "materials": [
+            "Blackboard",
+            "Student notebooks",
+            "Printed or drawn diagram of a mountain cross-section (optional)"
+          ],
+          "visual_aids": "Cross-section diagram of a mountain showing temperature gradient from base to peak",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Ask: 'Shimla, Ooty, Darjeeling, Munnar — what do these places have in common?' (All are hill stations, all are cooler than the plains surrounding them.) Write the principle on the board: temperature decreases as altitude increases. Ask students to suggest a reason before explaining it — accept all guesses, then clarify: atmospheric pressure and air density decrease with height, making air less dense and less capable of holding heat; also, the sun heats the Earth's surface first, so higher altitudes farther from that warm surface receive less warmth."
+            },
+            {
+              "minutes": "8-20",
+              "activity": "Extend to the Himalayas: the peaks are so high that many remain permanently below freezing and stay snow-covered. Ask: 'If a mountaineer starts at Dehradun (about 700 m) and climbs toward a Himalayan peak, what changes would she notice in temperature and vegetation at different heights?' Students construct a simple annotated column in their notebooks — a vertical line representing altitude with three marked levels (plain, mid-slope, peak) and labels for temperature condition and one expected vegetation or land-use feature at each level."
+            },
+            {
+              "minutes": "20-32",
+              "activity": "Contrast altitude with latitude as a cooling mechanism: both reduce temperature, but through different processes. Write two questions on the board: (1) 'A plains city and Shimla are both at roughly the same latitude — why is Shimla cooler?' (2) 'Could a coastal city near the Equator ever be cool? Under what condition?' (Answer to the second: yes, if it is at high altitude — e.g., a city on a high equatorial plateau.) Students answer in pairs, then share."
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Students write: 'Explain in two sentences why Darjeeling is cooler than Kolkata even though both are in eastern India, using the concept of altitude.' Collect as a formative check."
+            }
+          ],
+          "section_context": "Shimla, Ooty, Darjeeling, Munnar hill stations, Himalayan permanent snow, atmospheric pressure decrease",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "Having examined how latitude affects temperature through ray angle, students now explore altitude as a second independent driver — the confusion to address is that students often assume 'being higher up means being closer to the sun, so it should be hotter'; redirect to the fact that the sun heats Earth's surface first, and the air near that surface is warmed by conduction and radiation from the ground, not directly from the sun. The column diagram exercise makes the temperature-altitude gradient visible and spatial. The contrast question linking altitude and latitude prevents students from treating these factors as interchangeable.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.1",
+              "cg": "CG-6",
+              "weight": 3,
+              "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change.",
+              "implied_lo": "Students can explain how altitude produces cooler temperatures by tracing the mechanism of decreasing air density and surface-first heating.",
+              "cognitive_demand": "Understanding"
+            }
+          ]
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 40,
+          "activity_title": "The Sea as a Temperature Moderator: Coastal vs. Inland Climates",
+          "section_anchor": "Factors Determining the Climate — Proximity to the Sea",
+          "materials": [
+            "Blackboard",
+            "Student notebooks"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Write this data pair on the board: 'Mumbai — summer ~32°C, winter ~18°C (range: ~14°C). Nagpur — summer ~44°C, winter ~10°C (range: ~34°C).' Ask: 'Both are in Maharashtra. Why is Mumbai's temperature range so much smaller?' Accept student guesses. Establish the principle: the sea absorbs and releases heat more slowly than land, so coastal areas experience moderated temperatures — summers are not too hot, winters are not too cold."
+            },
+            {
+              "minutes": "8-20",
+              "activity": "Explain the mechanism: because the sea takes longer to heat up and longer to cool down, it acts as a buffer. In summer the sea stays cooler than the land, so sea breezes cool coastal cities; in winter the sea stays warmer than the land, preventing extreme cold. Moving inland removes this buffering effect — temperatures swing more extremely. Ask students to predict: 'If you built a city in the middle of the Deccan Plateau, far from both coasts, what would its summer and winter temperatures be like compared to a coastal city at the same latitude?'"
+            },
+            {
+              "minutes": "20-32",
+              "activity": "Students construct a simple comparison table in their notebooks with columns 'Mumbai (coastal)' and 'Nagpur (inland)' and rows: summer temperature, winter temperature, temperature range, one word describing the climate character. After filling it individually, pairs discuss: 'What does this table tell us about how proximity to the sea shapes the usefulness of a place for farming or settlement?' Push for the idea that moderate temperatures support longer growing seasons and more comfortable living."
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Students write: 'A ship captain lives in Chennai and her sister lives in Hyderabad — predict whose temperature range across the year is larger and explain why using the mechanism of how the sea moderates temperature.' Collect notebooks."
+            }
+          ],
+          "section_context": "Mumbai summer-winter 14°C range, Nagpur 34°C range, sea heat absorption and release",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "Having examined latitude (ray angle) and altitude (air density) as climate factors, students now encounter proximity to the sea — a factor that moderates rather than simply cools or warms. The common confusion is thinking coastal = cold; emphasise it means moderate, not cold — Mumbai's summers are warm, just not as extreme as Nagpur's. The Mumbai-Nagpur data pair is the chapter's own quantitative evidence and should be used concretely rather than paraphrased; students who engage with the actual numbers develop better intuition for the scale of the effect.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.1",
+              "cg": "CG-6",
+              "weight": 3,
+              "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change.",
+              "implied_lo": "Students can explain how proximity to the sea moderates coastal temperatures by tracing the differential heat absorption rates of land and water.",
+              "cognitive_demand": "Understanding"
+            }
+          ]
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 40,
+          "activity_title": "Winds and Topography: How Moving Air and Landforms Shape Climate",
+          "section_anchor": "Factors Determining the Climate — Winds / Factors Determining the Climate — Topography",
+          "materials": [
+            "Blackboard",
+            "Outline map of India (one per student)",
+            "Coloured pencils"
+          ],
+          "visual_aids": "Outline map of India showing the Himalayas, Western Ghats, Thar Desert, and wind-arrow directions",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Ask: 'In summer, Punjab and Rajasthan experience severe heat waves; in winter, the same region experiences cold waves — what could be causing both?' Introduce winds as air masses carrying temperature and moisture from their source region. Write on the board: dry hot winds from Arabia and Afghanistan → summer heat waves in Punjab, Haryana, Rajasthan, Madhya Pradesh; cold winds from across the Himalayas → cold waves in winter; moist winds from the sea → rainfall (monsoon winds). Students annotate these three wind pathways on their outline maps with directional arrows and brief labels."
+            },
+            {
+              "minutes": "10-22",
+              "activity": "Transition to topography as the second factor in this unit. Ask: 'Why doesn't India freeze in winter the way Central Asian countries at similar latitudes do?' Introduce the Himalayan and Karakoram ranges as barriers blocking cold Central Asian desert winds. Then introduce the Western Ghats as a barrier to the southwest monsoon — the western slopes receive heavy rainfall while the Deccan Plateau lies in a rain shadow. Students add these barriers and the rain-shadow arrow to the same map."
+            },
+            {
+              "minutes": "22-32",
+              "activity": "Introduce microclimates: a localised climate differing from its surroundings in temperature, humidity, and precipitation. Give the three examples from the text — enclosed valleys, some forests, and urban heat islands (cities with dense concrete and little vegetation that trap heat). Ask: 'Is your school in a microclimate? What evidence would you look for?' Students write a two-sentence hypothesis in their notebooks."
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Whole-class discussion: 'The Thar Desert has no mountain barrier on its west — how does that relate to its extreme temperatures?' Students synthesise the winds and topography factors: the absence of a barrier means no protection from hot dry desert winds, compounding the arid climate. Students write the synthesis as one closing sentence."
+            }
+          ],
+          "section_context": "Arabia-Afghanistan hot winds, Himalayan cold winds, Western Ghats rain shadow, Deccan Plateau, urban heat islands",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "This unit covers two factors together because the chapter treats them as complementary — winds carry air masses, and topography either channels or blocks them; the Western Ghats example is the clearest demonstration of how both work in tandem. Students often think of 'wind' as simply moving air without connecting it to source-region temperatures or moisture content; the Arabian hot-dry versus sea-moistened monsoon contrast directly addresses this. The microclimate discussion is brief but important for urban students, many of whom live in or near urban heat islands without having a term for what they experience.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.1",
+              "cg": "CG-6",
+              "weight": 3,
+              "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change.",
+              "implied_lo": "Students can explain how wind direction and topographic barriers jointly determine rainfall and temperature in different regions.",
+              "cognitive_demand": "Analysis"
+            }
+          ]
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 40,
+          "activity_title": "The Monsoon Mechanism: Land, Sea and Seasonal Wind Reversal",
+          "section_anchor": "The Monsoons",
+          "materials": [
+            "Blackboard",
+            "Student notebooks"
+          ],
+          "visual_aids": "Diagram showing summer low-pressure over Asian landmass and ocean high-pressure with wind arrows, and winter reversal",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Write the Arabic word mausim on the board and tell students it means 'season' — the English word 'monsoon' derives from it. Explain that monsoon strictly refers to seasonal winds over a large area including the Indian Ocean, South Asia, Africa and Australia — not just rainfall. The mechanism rests on a single principle: land heats and cools faster than ocean. Ask students to predict from this principle: 'In summer, which has lower air pressure — the hot Asian landmass or the cooler ocean?' Establish that hot air rises, reducing surface pressure; so the landmass has low pressure and the ocean high pressure."
+            },
+            {
+              "minutes": "10-22",
+              "activity": "Walk through the summer monsoon step by step, writing each step on the board: (1) Asian landmass heats up → low pressure over land. (2) Cooler, moisture-laden ocean winds are drawn inland toward the low pressure. (3) Moisture in those winds condenses as they rise over land → heavy monsoon rain. (4) The southwest monsoon advances from southern India in early June northward, covering the subcontinent by mid-July. Then contrast the winter reversal: land cools faster than ocean → land has high pressure, ocean has relatively lower pressure → dry winds blow from land to ocean → dry northeast monsoon in winter."
+            },
+            {
+              "minutes": "22-33",
+              "activity": "Link the Western Ghats to the monsoon: the Ghats act as a barrier to the southwest monsoon — western slopes receive heavy rain, the Deccan Plateau to the east is in a rain shadow. Introduce Mawsynram, Meghalaya, as the site of the world's highest average annual rainfall (~11,000 mm), asking: 'What geographic condition might produce this extraordinary figure?' (Hills in Meghalaya force the moisture-laden Bay of Bengal winds to rise sharply, condensing enormous amounts of rainfall.) Students draw and label a simple southwest-monsoon path diagram in notebooks, showing the Ghats barrier and rain shadow."
+            },
+            {
+              "minutes": "33-40",
+              "activity": "Cultural close: the monsoons have inspired ragās such as Meghamalhār and Amruthavarshini in classical Indian music. Ask: 'Why would seasons and monsoon winds become the subject of classical music in a farming civilisation?' Students write one sentence. "
+            }
+          ],
+          "section_context": "Mausim origin, low-pressure landmass mechanism, southwest monsoon June-July advance, Mawsynram 11,000 mm, Meghamalhār",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "The most common misconception about the monsoon is that it simply means 'rainy season' — stress that it is a seasonal wind reversal system that spans the Indian Ocean region, and that the rain is a consequence of moisture-laden winds meeting land, not the defining feature. The land-heats-faster-than-ocean principle is the lever for both the summer and winter phases; if students grasp this one principle, both the onset and withdrawal of the monsoon follow logically. Mawsynram's rainfall figure (~11,000 mm) is viscerally large; comparing it to a typical Indian city's annual rainfall (Mumbai ~2,400 mm, Delhi ~800 mm) helps students appreciate the scale.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.1",
+              "cg": "CG-6",
+              "weight": 3,
+              "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change.",
+              "implied_lo": "Students can explain the monsoon's seasonal wind-reversal mechanism by tracing pressure differences between land and ocean in summer and winter.",
+              "cognitive_demand": "Understanding"
+            }
+          ]
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 40,
+          "activity_title": "Climate and Our Lives: Festivals, Farming and Monsoon Failure",
+          "section_anchor": "Climate and our Lives",
+          "materials": [
+            "Blackboard",
+            "Student notebooks"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Write the following festival names on the board: Bihu, Baisakhi, Pongal, Onam, Lohri, Chhath Puja, Makar Sankranti, Gudi Padwa, Hemis, Losoong. Ask students to identify which festivals they know and what time of year they occur. Guide the class to notice that these festivals cluster around agricultural transitions — harvest, sowing, or seasonal change — establishing the link between seasonal climate rhythms and cultural celebration."
+            },
+            {
+              "minutes": "10-22",
+              "activity": "Introduce the livelihood-climate connections named in the chapter: northern plains' subtropical climate supports wheat cultivation; the tropical wet western coast is ideal for rice and spices. Ask: 'Why would the western coast grow rice and spices while the northern plains grow wheat — what climate features make each crop suitable in each zone?' Students write a two-column analysis: western coast (heavy monsoon rain, year-round warmth → rice, spices) versus northern plains (cold winters, hot summers, seasonal rainfall → wheat). Introduce traditional ecological knowledge — communities have observed nature closely to predict monsoon timing, developing this knowledge across generations."
+            },
+            {
+              "minutes": "22-33",
+              "activity": "Introduce the consequences of monsoon failure — poor rainfall during the monsoon season — as a cascade: agriculture is disrupted → food prices rise → water becomes scarce → agricultural labourers migrate to cities. Industrial activity also suffers because it depends on predictable weather and water availability. Ask students to map this cascade as a cause-effect chain in their notebooks, beginning with 'Monsoon fails' and ending with at least three downstream effects."
+            },
+            {
+              "minutes": "33-40",
+              "activity": "Discussion question: 'If the monsoon fails in Maharashtra, which people are most immediately affected and which are affected more slowly — and why does that sequence matter for government planning?' Push students to see that farmers and agricultural labourers are immediately affected, while urban consumers and industrial firms face delayed but real consequences. Students write a two-sentence answer."
+            }
+          ],
+          "section_context": "Bihu, Baisakhi, Pongal, Onam, traditional ecological knowledge, monsoon failure cascade, agricultural migration",
+          "pedagogical_approaches": [
+            "Issues-based learning"
+          ],
+          "teacher_notes": "Having established how the monsoon works mechanically, this unit examines what it means for people's lives — the shift from mechanism to consequence. Students sometimes treat festival lists as mere memorisation; ground each festival in its agricultural context (Bihu marks the Assamese harvest, Baisakhi marks the Punjabi wheat harvest) to make the climate-culture link concrete rather than incidental. The monsoon-failure cascade is the chapter's clearest demonstration that climate is not just a geographic fact but a socioeconomic driver, and the cause-effect chain exercise builds the analytical habit the chapter's later sections on climate change will require.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.4",
+              "cg": "CG-6",
+              "weight": 2,
+              "competency_text": "Correlate climate with patterns of livelihoods, crop suitability, and the socioeconomic consequences of climate variability.",
+              "implied_lo": "Students can trace the chain of socioeconomic consequences that follow from monsoon failure across agriculture, food prices, water availability, and labour migration.",
+              "cognitive_demand": "Analysis"
+            },
+            {
+              "c_code": "C-6.2",
+              "cg": "CG-6",
+              "weight": 1,
+              "competency_text": "Identify patterns of agricultural suitability and resource distribution across India's geographic regions.",
+              "implied_lo": "Students can justify why specific crops are grown in specific Indian climate zones by linking crop requirements to climate characteristics.",
+              "cognitive_demand": "Application"
+            }
+          ]
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 40,
+          "activity_title": "Climate and Livelihoods: Deepening the Agriculture-Economy Connection",
+          "section_anchor": "Climate and our Lives",
+          "materials": [
+            "Blackboard",
+            "Student notebooks"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Open by recalling the climate-crop pairs established when studying India's climate types: western coastal tropical wet → rice and spices; northern subtropical plains → wheat; semi-arid Deccan → moderate monsoon crops. Add the question: 'Industry also depends on predictable weather and water availability — can you name an industry that would suffer if rainfall was far below normal for a year?' Push for textiles (cotton), sugar (sugarcane), hydroelectric power, and food processing as examples, drawing on students' general knowledge rather than the chapter's explicit list."
+            },
+            {
+              "minutes": "10-24",
+              "activity": "Introduce traditional ecological knowledge (TEK): communities have, over generations, developed practices for predicting and adapting to monsoon patterns through close observation of nature. Ask: 'What kinds of observations might a farming community track to predict whether the monsoon will arrive on time — cloud patterns, animal behaviour, wind direction, plant flowering?' Students brainstorm in pairs, then share. Establish that TEK represents centuries of accumulated environmental observation and is distinct from but complementary to modern meteorological science."
+            },
+            {
+              "minutes": "24-35",
+              "activity": "Role-play scenario: divide the class into three groups representing a marginal farmer, an agricultural labourer, and an urban factory worker dependent on agricultural raw materials. Each group has two minutes to discuss how a prolonged monsoon failure in their region would change their immediate decisions (what to plant, whether to stay, what to produce). Groups share their responses; teacher records the differentiated impacts on the board, showing how the same climate event has layered socioeconomic consequences."
+            },
+            {
+              "minutes": "35-40",
+              "activity": "Students individually write: 'Using two pieces of evidence from India's climate and agriculture, explain why the monsoon is described as the backbone of India's economy.' Collect as a formative check."
+            }
+          ],
+          "section_context": "Traditional ecological knowledge, industrial water dependence, marginal farmers, agricultural labourers, monsoon backbone",
+          "pedagogical_approaches": [
+            "Role plays and simulations",
+            "Issues-based learning"
+          ],
+          "teacher_notes": "This unit extends the climate-livelihoods connection begun in the previous unit to the industrial economy and the differentiated experience of monsoon failure across social groups — the key analytical move is that the same climate event hits different groups at different points in time and with different severity. The role-play is deliberately kept short and structured; its purpose is to make abstract economic consequences personally imaginable, not to produce a detailed performance. Students who note that industrial workers in urban areas are also affected by water shortages (not just agricultural workers) are making a sophisticated cross-sectoral connection worth affirming.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.4",
+              "cg": "CG-6",
+              "weight": 2,
+              "competency_text": "Correlate climate with patterns of livelihoods, crop suitability, and the socioeconomic consequences of climate variability.",
+              "implied_lo": "Students can compare how climate variability affects different socioeconomic groups — farmers, labourers, and industry — by analysing their differential dependence on monsoon conditions.",
+              "cognitive_demand": "Analysis"
+            }
+          ]
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 40,
+          "activity_title": "Cyclones: Formation, Impact, and India's Response Institutions",
+          "section_anchor": "Climates and Disasters — Cyclones",
+          "materials": [
+            "Blackboard",
+            "Student notebooks"
+          ],
+          "visual_aids": "Diagram showing cyclone structure: inward-spiralling winds, eye, cloud bands",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Ask: 'India's eastern coastline experiences cyclones almost every year — where do these storms come from and what makes them so destructive?' Write the formation sequence on the board: an intense low-pressure system develops over the sea → warm, moist ocean air is drawn inward → air rotates as it spirals inward → clouds and heavy rain form → the cloudless centre, the eye of the cyclone, forms at the core. Draw a simple cyclone structure diagram showing the eye, inward-rotating winds, and rain bands."
+            },
+            {
+              "minutes": "10-22",
+              "activity": "Examine the impacts: loss of life, property damage, soil erosion, and infrastructure destruction. Ask: 'Why is India's eastern coastline particularly vulnerable — what geographic features make it so, compared to the western coast?' Guide students to consider the Bay of Bengal's shape (relatively enclosed, warm, shallow), which allows cyclones to intensify before striking the coast, whereas the Arabian Sea's cyclones often lose energy or change track. Students note this geographic asymmetry."
+            },
+            {
+              "minutes": "22-33",
+              "activity": "Introduce India's institutional response: the India Meteorological Department (IMD) tracks cyclones; the National Disaster Response Force (NDRF), with 12 battalions across India, carries out rescue and evacuation operations. Ask: 'What information would the IMD need to provide to the NDRF and to coastal communities to make evacuation effective — and how far in advance?' Push students toward the idea that advance warning, track prediction, and timing of landfall are critical. Introduce the IMD's colour-coded warning system (green–yellow–orange–red) as a graduated public communication tool."
+            },
+            {
+              "minutes": "33-40",
+              "activity": "Students write a two-part response: (1) 'Name two impacts of a cyclone on coastal communities beyond immediate loss of life.' (2) 'What is the difference between the IMD's and the NDRF's roles in cyclone management?' Collect as a check."
+            }
+          ],
+          "section_context": "Low-pressure sea formation, eye of cyclone, eastern coastline vulnerability, IMD, NDRF 12 battalions",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "Students are often familiar with the word 'cyclone' from news coverage but do not know the formation mechanism; the low-pressure inward-spiral sequence is the chapter's explanation and should be taught precisely rather than left as 'a big storm'. The IMD colour-coded warning system is described in the chapter's weather-prediction context and is the chapter's only treatment of C-4.1 (institutions in disaster response) — emphasise both the IMD's scientific role and the NDRF's operational role to give students a complete picture of India's disaster-response architecture. The question about what information the NDRF needs from the IMD builds the habit of seeing institutions as interdependent rather than isolated.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.1",
+              "cg": "CG-6",
+              "weight": 3,
+              "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change.",
+              "implied_lo": "Students can explain the formation sequence of a cyclone and connect its geographic conditions to India's eastern coastline vulnerability.",
+              "cognitive_demand": "Understanding"
+            },
+            {
+              "c_code": "C-4.1",
+              "cg": "CG-4",
+              "weight": 1,
+              "competency_text": "Identify the roles of institutions such as IMD and NDRF in disaster prediction and response.",
+              "implied_lo": "Students can distinguish between the IMD's warning role and the NDRF's operational role in responding to cyclone disasters.",
+              "cognitive_demand": "Understanding"
+            }
+          ]
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 40,
+          "activity_title": "Floods: Causes, Vulnerable States, and Urban Flooding",
+          "section_anchor": "Climates and Disasters — Floods",
+          "materials": [
+            "Blackboard",
+            "Student notebooks",
+            "Outline map of India"
+          ],
+          "visual_aids": "Outline map of India with flood-prone states marked",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Ask: 'A flood is when water overflows onto normally dry land — but not all floods have the same cause. How many different causes can you think of?' Accept responses, then organise the chapter's three causes on the board: (1) heavy rainfall, (2) river bank breaches, (3) glacial lake bursts when glaciers melt rapidly or excessive rain builds pressure. Each cause is associated with a different geographic type — monsoon floods, river-system floods, and Himalayan glacial floods are distinct phenomena with distinct triggers."
+            },
+            {
+              "minutes": "8-20",
+              "activity": "Identify flood-prone states from the chapter: Uttar Pradesh, Bihar, Kerala, Andhra Pradesh, Assam. Students locate and mark these on an outline map of India. Introduce the 2013 Uttarakhand disaster: a glacial lake burst destroyed the Kedarnath area and killed approximately 6,000 people — a glacial lake burst event triggered by rapid glacial melt combined with heavy rain. Ask: 'Kedarnath is a major pilgrimage site — what additional factors might have made the death toll so high?' (Large numbers of pilgrims, difficult terrain, limited road access for rescue.)"
+            },
+            {
+              "minutes": "20-32",
+              "activity": "Introduce urban flooding as a distinct category: worsened by poor drainage systems, encroachment on waterways (building on floodplains and riverbeds), and impermeable concrete or asphalt surfaces that prevent water from soaking into the ground. Ask: 'A city that receives the same rainfall as a rural area might flood worse — why?' Students construct a short explanation using the three urban factors. Connect to the microclimate idea from the winds-and-topography unit: urban areas trap heat and now also trap water."
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Students write: 'Compare two causes of flooding in India — one from Himalayan regions and one from urban areas — and explain what makes each type difficult to prevent.' This requires students to apply the chapter's content analytically rather than listing causes."
+            }
+          ],
+          "section_context": "Glacial lake bursts, 2013 Uttarakhand Kedarnath 6,000 deaths, UP, Bihar, Kerala, Assam flood-prone, urban impermeable surfaces",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "The 2013 Kedarnath disaster is a powerful anchor case because it involves both natural factors (glacial burst, heavy rain) and human factors (large pilgrim population in a vulnerable mountain valley) — students often ask why people were there, which opens the question of how pilgrimage and settlement patterns interact with climate vulnerability. Urban flooding is sometimes treated as a separate problem from 'natural' disasters, but the chapter frames it as a climate-disaster type worsened by human choices — impermeable surfaces, encroachment on waterways — which connects directly to the climate-change section's argument that human actions worsen climate hazards.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.1",
+              "cg": "CG-6",
+              "weight": 3,
+              "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change.",
+              "implied_lo": "Students can distinguish between natural and human-induced causes of flooding in India by analysing specific cases across different geographic contexts.",
+              "cognitive_demand": "Analysis"
+            }
+          ]
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 40,
+          "activity_title": "Landslides and Forest Fires: Climate Hazards Worsened by Human Action",
+          "section_anchor": "Climates and Disasters — Landslides",
+          "materials": [
+            "Blackboard",
+            "Student notebooks"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Define a landslide: the sudden collapse of rock, soil, or debris down a slope. Write the three natural triggers on the board: heavy rain (saturates soil, adds weight, reduces cohesion), earthquakes (sudden shaking loosens material), volcanic activity. Name the high-risk regions from the chapter: Himachal Pradesh, Uttarakhand, Sikkim, Arunachal Pradesh, and the Western Ghats — all steeply sloped and subject to heavy monsoon rainfall. Ask: 'Why are these regions more at risk than, say, the Gangetic plains?' (Steep slopes, heavy rainfall, loose or disturbed soils.)"
+            },
+            {
+              "minutes": "10-22",
+              "activity": "Introduce the human actions that increase landslide risk: deforestation (removes root systems that bind soil), improper construction on slopes (adds weight, cuts into hillsides), and blocking natural water flow (prevents drainage, saturates soil). Ask students to evaluate each: 'Which of these human actions is most reversible — can trees be replanted, can buildings be moved, can drainage be restored?' This is an evaluative question with no single right answer; push for reasoned responses."
+            },
+            {
+              "minutes": "22-32",
+              "activity": "Transition to forest fires: uncontrolled fires fuelled by dry conditions, drought, high winds, or human carelessness. High-risk regions: Uttarakhand, Himachal Pradesh, Madhya Pradesh, Chhattisgarh, Western Ghats. Consequences beyond burning trees: destruction of wildlife, ecosystem degradation, air pollution, displacement of communities, economic losses. Ask: 'A forest fire and a landslide can both be triggered by the same monsoon conditions — in what sense? (A fire risk is highest in dry conditions before the monsoon; landslide risk peaks with heavy monsoon rain — they are sequential hazards on the same landscape.)'"
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Students write: 'For one of these two disasters — landslides or forest fires — identify one natural trigger and one human action that increases risk, and suggest one measurable step a state government could take to reduce that risk.' Collect as a formative check."
+            }
+          ],
+          "section_context": "Deforestation slope instability, Himachal-Uttarakhand-Sikkim landslides, Uttarakhand-MP-Chhattisgarh forest fires, ecosystem damage",
+          "pedagogical_approaches": [
+            "Issues-based learning"
+          ],
+          "teacher_notes": "Students often treat landslides and forest fires as purely natural events; this unit's central analytical move is distinguishing between the natural trigger and the human-caused amplification of risk — deforestation, improper construction, and carelessness are the chapter's explicit examples. The sequential-hazard question (fires in dry season, landslides in wet season on the same Western Ghats slopes) is an insight the chapter implies rather than states explicitly, but it is a valid inference from the section content and develops the kind of multi-factor causal reasoning the chapter supports. The government-action question at the close requires students to move from analysis to evaluation.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.1",
+              "cg": "CG-6",
+              "weight": 3,
+              "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change.",
+              "implied_lo": "Students can identify how human land-use decisions amplify the risk of climate-related hazards such as landslides and forest fires.",
+              "cognitive_demand": "Analysis"
+            }
+          ]
+        },
+        {
+          "period_number": 13,
+          "period_duration_minutes": 40,
+          "activity_title": "Climate Change: Fossil Fuels, Greenhouse Effect and Global Warming",
+          "section_anchor": "Climate Change",
+          "materials": [
+            "Blackboard",
+            "Student notebooks"
+          ],
+          "visual_aids": "Diagram showing the greenhouse effect: solar radiation entering, infrared radiation trapped by greenhouse gas layer",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Write 'Climate Change' on the board and ask: 'What is the difference between climate varying naturally over thousands of years and climate change happening now?' Establish the chapter's distinction: natural processes drove climate change across geological time, but since the 19th century, human activities have become the primary driver. Introduce fossil fuels — coal, petroleum, natural gas — as substances formed from buried plant and animal remains over millions of years, now being burned at a rate far faster than they were formed."
+            },
+            {
+              "minutes": "8-20",
+              "activity": "Explain the greenhouse mechanism: burning fossil fuels and other human activities release large amounts of carbon dioxide and other greenhouse gases. These gases trap outgoing infrared radiation in the atmosphere — the natural greenhouse effect keeps Earth warm enough for life, but an enhanced greenhouse effect from extra CO₂ causes rapid global warming. Draw and annotate the greenhouse diagram: solar radiation enters → Earth's surface warms → some heat radiates outward → greenhouse gas layer traps a portion → atmosphere and surface warm further. Ask: 'What other human activities, beyond burning fossil fuels, add greenhouse gases?' (Deforestation, industrial processes, excessive consumption patterns — all named in the chapter.)"
+            },
+            {
+              "minutes": "20-32",
+              "activity": "Connect to India: early 2025 saw average temperatures 1–3°C above normal, shortening and warming winter and affecting agriculture and industry. Ask students to analyse: 'A 2°C rise in average winter temperature in the northern plains — what crop, water, and health consequences would you predict?' Students write a quick individual analysis in their notebooks, drawing on their knowledge of the subtropical climate and wheat cultivation in the northern plains."
+            },
+            {
+              "minutes": "32-40",
+              "activity": "Pose the evaluative question: 'Why would a government committed to reducing greenhouse gas emissions find it difficult to do so quickly?' Students write two sentences identifying the tension the chapter names: climate mitigation measures (reducing emissions, expanding renewables, energy efficiency, sustainable lifestyles) often conflict with economic growth goals. This question is not resolved here."
+            }
+          ],
+          "section_context": "Fossil fuels coal-petroleum-gas, enhanced greenhouse effect, CO₂, India 2025 temperatures 1–3°C above normal, winter shortening",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "The most common confusion about the greenhouse effect is that students think the ozone hole and the greenhouse effect are the same thing — they are distinct mechanisms and the chapter does not mention the ozone hole, so do not introduce it; simply keep the explanation anchored to CO₂, heat trapping, and global warming. The 2025 India temperature data is a striking piece of real evidence that should be used concretely to make the abstract warming trend tangible. The tension between climate mitigation and economic growth is named explicitly in the chapter and is the central normative challenge this section opens — acknowledging it as unresolved is more intellectually honest and pedagogically richer than pretending it has a simple answer.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.3",
+              "cg": "CG-6",
+              "weight": 2,
+              "competency_text": "Analyse human-caused climate change and evaluate India's mitigation efforts in the context of global climate change.",
+              "implied_lo": "Students can explain the enhanced greenhouse effect as the mechanism linking fossil fuel combustion to global warming.",
+              "cognitive_demand": "Understanding"
+            },
+            {
+              "c_code": "C-6.1",
+              "cg": "CG-6",
+              "weight": 3,
+              "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change.",
+              "implied_lo": "Students can connect the burning of fossil fuels to long-term shifts in global temperature patterns through the mechanism of the enhanced greenhouse effect.",
+              "cognitive_demand": "Understanding"
+            }
+          ]
+        },
+        {
+          "period_number": 14,
+          "period_duration_minutes": 40,
+          "activity_title": "Climate Mitigation: India's Measures and the Growth-Environment Tension",
+          "section_anchor": "Climate Change",
+          "materials": [
+            "Blackboard",
+            "Student notebooks"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Recap the greenhouse warming mechanism established in the previous unit's content, then pose the question this unit addresses: 'Governments worldwide, including India's, are responding — what are they actually doing, and does it work?' List the five mitigation measures from the chapter on the board: (1) reducing greenhouse gas emissions, (2) planting trees, (3) expanding renewable energy, (4) improving energy efficiency, (5) encouraging sustainable lifestyles. Ask students to briefly discuss in pairs what each of these means in practical terms before the class works through them."
+            },
+            {
+              "minutes": "10-24",
+              "activity": "For each mitigation measure, ask: 'What economic activity or interest would be reduced or disrupted if India pursued this measure aggressively?' Work through examples: reducing fossil fuel emissions constrains coal-dependent electricity generation and industries; planting trees requires land that might otherwise be used for agriculture or construction; renewable energy requires large upfront investment; sustainable lifestyles require changing consumption patterns that currently drive economic growth. Students note the tension for each measure in a two-column table: 'Mitigation measure' | 'Economic interest it conflicts with'."
+            },
+            {
+              "minutes": "24-35",
+              "activity": "Structured discussion: 'Is it possible to grow India's economy and reduce greenhouse emissions at the same time, or does one have to give way to the other?' Students share a position with one piece of evidence. Teacher records positions on the board without adjudicating — the goal is to surface the genuine complexity the chapter names. Close by noting that this is an active debate among governments, economists, and scientists worldwide."
+            },
+            {
+              "minutes": "35-40",
+              "activity": "Students write: 'Identify one climate mitigation measure India is pursuing and explain one way it could conflict with a specific economic goal, using examples from India's geography or economy.' This consolidates the analytical argument rather than just listing measures."
+            }
+          ],
+          "section_context": "Renewable energy expansion, tree planting, energy efficiency, sustainable lifestyles, mitigation-growth tension",
+          "pedagogical_approaches": [
+            "Issues-based learning"
+          ],
+          "teacher_notes": "Having introduced the greenhouse mechanism and the fact of India's rising temperatures, this unit turns to evaluation of responses — the key shift from explanation to normative analysis that C-6.3 demands. Students frequently assume that 'doing more renewable energy' solves the problem cleanly; the two-column table exercise is designed to prevent premature closure by making the economic costs concrete. The structured discussion is not a debate with assigned sides — it is an open, evidence-grounded conversation; if all students take the same side, push gently with the opposing consideration the chapter provides.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.3",
+              "cg": "CG-6",
+              "weight": 2,
+              "competency_text": "Analyse human-caused climate change and evaluate India's mitigation efforts in the context of global climate change.",
+              "implied_lo": "Students can evaluate specific climate mitigation measures by identifying the economic interests they conflict with in the Indian context.",
+              "cognitive_demand": "Evaluation"
+            }
+          ]
+        },
+        {
+          "period_number": 15,
+          "period_duration_minutes": 40,
+          "activity_title": "Source Analysis: Reading the Monsoon Through Multiple Lenses",
+          "section_anchor": "The Monsoons",
+          "materials": [
+            "Printed or written excerpts — one descriptive passage on monsoon mechanism, one on monsoon failure consequences, one on a monsoon-inspired ragā",
+            "Student notebooks"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Distribute or write on the board three short source excerpts drawn from the chapter's monsoon content: Excerpt A — a factual description of the southwest monsoon advancing from southern India in June to cover the subcontinent by mid-July. Excerpt B — a description of how monsoon failure raises food prices and causes agricultural labourers to migrate to cities. Excerpt C — a sentence noting that the monsoon has inspired classical ragās such as Meghamalhār and Amruthavarshini. Ask: 'These three texts describe the same phenomenon — the monsoon — from three different angles. What angle or discipline is each one using?'"
+            },
+            {
+              "minutes": "8-20",
+              "activity": "Students work individually to answer three structured questions: (1) What physical mechanism does Excerpt A describe, and what two geographic facts does it rely on? (2) What does Excerpt B tell us about who bears the worst consequences of monsoon failure, and why? (3) What does Excerpt C suggest about the relationship between climate and culture in India? Students write answers in their notebooks."
+            },
+            {
+              "minutes": "20-33",
+              "activity": "Pair and share: partners compare answers to question 2 (the socioeconomic lens) and question 3 (the cultural lens), noting where their interpretations agree or differ. Then whole-class share: ask two students to read their answer to question 3 — note that different students may draw different inferences from a brief cultural source, and that this is a normal and valuable feature of source analysis, not an error."
+            },
+            {
+              "minutes": "33-40",
+              "activity": "Students write a closing synthesis: 'Using all three excerpts, explain in two sentences why the monsoon is more than a meteorological event for India.' This asks students to integrate the physical, economic, and cultural lenses into a single claim."
+            }
+          ],
+          "section_context": "Southwest monsoon June–July advance, monsoon failure economic consequences, Meghamalhār and Amruthavarshini ragās, multidisciplinary monsoon",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "This unit returns to the monsoon's content to develop historical and social-science inquiry skills — specifically, the capacity to read the same phenomenon through different disciplinary lenses. Students should be told explicitly that Excerpt C is culturally significant evidence, not decoration; the chapter's inclusion of ragās named for monsoon moods is evidence that climate shapes artistic expression as surely as it shapes agriculture. A common difficulty is question 2: students list 'farmers' without specifying agricultural labourers as the group most immediately displaced — push for this precision because it is the chapter's specific claim.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.4",
+              "cg": "CG-6",
+              "weight": 2,
+              "competency_text": "Correlate climate with patterns of livelihoods, crop suitability, and the socioeconomic consequences of climate variability.",
+              "implied_lo": "Students can interpret sources about the monsoon from physical, economic, and cultural perspectives to construct a multidimensional account of its significance.",
+              "cognitive_demand": "Analysis"
+            }
+          ]
+        },
+        {
+          "period_number": 16,
+          "period_duration_minutes": 40,
+          "activity_title": "Constructing a Climate Explainer: Integrating Factors for a Chosen Region",
+          "section_anchor": "Factors Determining the Climate — Topography",
+          "materials": [
+            "Blackboard",
+            "Student notebooks",
+            "Outline map of India"
+          ],
+          "visual_aids": "Outline map of India showing major physical features — Himalayas, Western Ghats, Thar Desert, Deccan Plateau, coastal plains",
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Pose the integrating task: 'A journalist is writing a feature article explaining why Kerala's Malabar Coast receives massive monsoon rainfall while the Deccan Plateau just 200 km to the east is semi-arid — can you write her explanation?' The question is chosen because it requires applying at least three of the chapter's five climate factors simultaneously: proximity to the sea (Arabian Sea moisture), topography (Western Ghats as a barrier and rain-shadow producer), and winds (southwest monsoon direction). Students identify which factors they need before writing."
+            },
+            {
+              "minutes": "8-22",
+              "activity": "Students write their explanation individually — targeting a reader who knows basic Indian geography but not climate science. They must name: (1) the moisture source (Arabian Sea), (2) the topographic barrier (Western Ghats), (3) the rain-shadow mechanism (Deccan Plateau's drier eastern side), and (4) the wind direction (southwest monsoon from the Indian Ocean). Four minutes before the end of this window, students underline every climate factor they named."
+            },
+            {
+              "minutes": "22-33",
+              "activity": "Pairs exchange explanations and use the four-factor checklist to give structured feedback: 'Factor 1 — moisture source: present/absent; Factor 2 — topographic barrier: present/absent; Factor 3 — rain shadow: present/absent; Factor 4 — wind direction: present/absent.' Each student revises their explanation to include any missing factor."
+            },
+            {
+              "minutes": "33-40",
+              "activity": "Two or three students read their revised explanation aloud. The class votes: 'Would a reader without climate science knowledge understand this?' If not, identify the gap together. Close by noting that being able to explain a geographic pattern in plain language while citing mechanisms is the core of geographic literacy."
+            }
+          ],
+          "section_context": "Western Ghats rain shadow, Arabian Sea moisture, southwest monsoon barrier, Kerala-Deccan contrast, geographic literacy",
+          "pedagogical_approaches": [
+            "Reflective essays"
+          ],
+          "teacher_notes": "Having studied topography as one of five climate factors, this unit requires students to apply multiple factors together to explain a real Indian geographic contrast — the Western Ghats rain-shadow example is the chapter's most vivid multi-factor case. The four-factor checklist in the peer-feedback window is deliberately concrete: it prevents vague praise ('good explanation') and makes the analytical work visible and specific. Students who write very long explanations often bury the factors in narrative — prompt them to ensure each factor is explicitly named, not just implied.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.1",
+              "cg": "CG-6",
+              "weight": 3,
+              "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change.",
+              "implied_lo": "Students can construct a multi-factor explanation of a regional climate pattern by integrating topography, proximity to sea, and wind direction.",
+              "cognitive_demand": "Application"
+            }
+          ]
+        },
+        {
+          "period_number": 17,
+          "period_duration_minutes": 40,
+          "activity_title": "Disaster Response Architecture: IMD, NDRF and Community Preparedness",
+          "section_anchor": "Climates and Disasters — Cyclones",
+          "materials": [
+            "Blackboard",
+            "Student notebooks"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Write the names 'India Meteorological Department (IMD)' and 'National Disaster Response Force (NDRF)' on the board. Ask students to describe what each does before explaining. Establish: the IMD's role is scientific — tracking cyclones, issuing colour-coded warnings (green–yellow–orange–red as a graduated scale of severity) so that communities and governments can act proportionately to actual risk. The NDRF's role is operational — with 12 battalions stationed across India, it carries out rescue and evacuation. Ask: 'Why does it matter that the NDRF has battalions distributed across India rather than centralised in one location?'"
+            },
+            {
+              "minutes": "10-22",
+              "activity": "Examine the flow from IMD warning to NDRF action to community response. Ask: 'What decisions would a coastal village panchayat make at each IMD warning colour level — green, yellow, orange, red?' Students work in small groups to sketch a simple decision flowchart: green → normal monitoring; yellow → inform community leaders; orange → prepare evacuation routes and supplies; red → begin mandatory evacuation. Groups share their flowcharts; the class builds a composite version on the board."
+            },
+            {
+              "minutes": "22-33",
+              "activity": "Introduce the limits of institutional response: 'The NDRF has 12 battalions for a country of 1.4 billion people facing cyclones, floods, and landslides — what does this tell us about the importance of community-level preparedness alongside state institutions?' Students discuss in pairs and share. Push for the recognition that institutions like the IMD and NDRF are necessary but not sufficient — community knowledge, traditional warning signals, and local leadership are also essential."
+            },
+            {
+              "minutes": "33-40",
+              "activity": "Students write: 'Explain how the IMD's colour-coded warning system and the NDRF's distributed presence together form a disaster-response system — and identify one thing this system cannot do without community cooperation.' Collect as a check."
+            }
+          ],
+          "section_context": "IMD colour-coded warnings green-yellow-orange-red, NDRF 12 battalions, community evacuation, institutional limits",
+          "pedagogical_approaches": [
+            "Role plays and simulations"
+          ],
+          "teacher_notes": "This unit deepens the institutional content introduced when cyclones were first covered, moving from naming the institutions to analysing how they function together as a system. The flowchart exercise uses role play simulation at a group level — it is not a performance but a structured decision-mapping exercise that makes abstract institutional roles concrete. The question about NDRF's 12 battalions is a scale question that often surprises students; it leads naturally to the point that government institutions depend on community preparedness, which connects to the chapter's broader theme of human response to climate hazards.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-4.1",
+              "cg": "CG-4",
+              "weight": 1,
+              "competency_text": "Identify the roles of institutions such as IMD and NDRF in disaster prediction and response.",
+              "implied_lo": "Students can analyse how the IMD's warning system and the NDRF's deployment structure function together as an interdependent disaster-response system.",
+              "cognitive_demand": "Analysis"
+            }
+          ]
+        },
+        {
+          "period_number": 18,
+          "period_duration_minutes": 40,
+          "activity_title": "Climate Change and Agriculture: India's Rising Temperatures and Crop Vulnerability",
+          "section_anchor": "Climate Change",
+          "materials": [
+            "Blackboard",
+            "Student notebooks"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Open with the chapter's specific evidence: early 2025 in India saw average temperatures 1–3°C above normal, shortening and warming the winter season. Ask: 'The northern plains depend on wheat cultivation in a subtropical climate with cold winters — what happens to wheat if winters become shorter and warmer by 1–3°C?' Students predict before the analysis. Establish that wheat requires a cold period for grain development; warmer winters can reduce yields and alter the cultivation calendar."
+            },
+            {
+              "minutes": "10-24",
+              "activity": "Extend the analysis across India's climate zones: (1) northern plains — shorter winters threaten wheat; (2) western coastal zone — intensified monsoon rainfall could increase flood risk and damage spice crops; (3) Thar Desert — more extreme heat events worsen water scarcity and stress on unique water conservation systems; (4) Himalayan regions — accelerated glacier melt increases glacial lake burst flood risk. Students map these four predicted impacts in a table with columns: Climate Zone | Key Crop or Resource | Climate Change Effect."
+            },
+            {
+              "minutes": "24-35",
+              "activity": "Connect to the monsoon failure cascade studied earlier: climate change is projected to make monsoon patterns less predictable — some years more intense rainfall, other years less. Ask: 'If monsoon timing becomes unpredictable rather than simply weaker, which communities are most exposed — those with irrigation infrastructure or those depending entirely on rain-fed agriculture?' Discuss how infrastructure availability shapes vulnerability."
+            },
+            {
+              "minutes": "35-40",
+              "activity": "Students write: 'Using India's 2025 temperature data and one climate zone example, explain how global warming is already disrupting agricultural patterns in India.' This integrates the climate-change mechanism with the livelihood-climate connection."
+            }
+          ],
+          "section_context": "India 2025 temperatures 1–3°C above normal, winter shortening, wheat vulnerability, monsoon unpredictability, rain-fed vs. irrigated agriculture",
+          "pedagogical_approaches": [
+            "Issues-based learning"
+          ],
+          "teacher_notes": "This unit bridges the climate-change mechanism (units 13–14) and the livelihoods material (units 8–9) by examining how rising temperatures concretely affect India's agricultural zones — the key move is taking abstract warming data and tracing it to specific crop and community consequences. Students may treat 1–3°C as trivially small; use the wheat example to show that crop physiology is sensitive to small mean-temperature changes, not just extreme events. The infrastructure question (irrigation versus rain-fed) surfaces the equity dimension of climate vulnerability without the chapter needing to state it explicitly.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.3",
+              "cg": "CG-6",
+              "weight": 2,
+              "competency_text": "Analyse human-caused climate change and evaluate India's mitigation efforts in the context of global climate change.",
+              "implied_lo": "Students can analyse the projected agricultural impacts of rising temperatures across India's climate zones using observed temperature data.",
+              "cognitive_demand": "Analysis"
+            },
+            {
+              "c_code": "C-6.4",
+              "cg": "CG-6",
+              "weight": 2,
+              "competency_text": "Correlate climate with patterns of livelihoods, crop suitability, and the socioeconomic consequences of climate variability.",
+              "implied_lo": "Students can connect observed temperature changes to specific agricultural disruptions by applying knowledge of crop requirements in different climate zones.",
+              "cognitive_demand": "Application"
+            }
+          ]
+        },
+        {
+          "period_number": 19,
+          "period_duration_minutes": 40,
+          "activity_title": "Evaluating Mitigation: Renewable Energy, Sustainable Lifestyles, and Real Constraints",
+          "section_anchor": "Climate Change",
+          "materials": [
+            "Blackboard",
+            "Student notebooks"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Write the five mitigation measures from the chapter on the board: reducing greenhouse gas emissions, planting trees, expanding renewable energy, improving energy efficiency, encouraging sustainable lifestyles. Ask students to rank these by how quickly they think each could show measurable results, and write their ranking with a one-word reason. This activates prior analysis from unit 14 and surfaces students' assumptions before they are tested."
+            },
+            {
+              "minutes": "10-24",
+              "activity": "Examine three measures in depth. Renewable energy: 'What does India need to change to run more of its electricity on solar or wind power — infrastructure, investment, grid systems?' Tree planting: 'Why is planting trees a slow mitigation measure — how long does a tree need to grow before it absorbs significant CO₂?' Sustainable lifestyles: 'If a family reduces its consumption of goods manufactured using fossil fuels, how does that connect to reducing CO₂ emissions — what is the chain?' For each, students write a one-sentence answer in their notebook. Focus on mechanism, not slogan."
+            },
+            {
+              "minutes": "24-35",
+              "activity": "Introduce the central tension the chapter names: climate mitigation measures often conflict with goals of economic growth. Assign students to two positions for a structured discussion — not a debate with winners and losers, but a structured exchange: Position A: 'India must slow some industrial and economic growth to meet climate goals.' Position B: 'India must grow economically first and invest in clean technology, not slow down.' Each student writes one piece of evidence supporting their assigned position, then the class shares."
+            },
+            {
+              "minutes": "35-40",
+              "activity": "Students write a personal evaluation: 'Of the five mitigation measures, which do you think is most practical for India right now, and what is one realistic obstacle it faces? Justify your answer.' Collect as a check."
+            }
+          ],
+          "section_context": "Renewable energy solar-wind, tree planting CO₂ absorption rate, sustainable lifestyles, fossil fuel industry conflicts, India economic growth tension",
+          "pedagogical_approaches": [
+            "Issues-based learning"
+          ],
+          "teacher_notes": "Having analysed the impacts of climate change on Indian agriculture in the previous unit, this unit completes the C-6.3 strand by turning to the evaluation of responses — the chapter's explicit content is that mitigation and growth goals conflict, and the structured discussion is designed to make this normative tension intellectually real rather than rhetorical. The three depth-questions on mechanism (renewable energy infrastructure, tree-growth timeline, consumption chain) prevent students from treating mitigation measures as magic-wand solutions. The personal evaluation at the close asks for a justified position, not a balanced summary — students should take a stand.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.3",
+              "cg": "CG-6",
+              "weight": 2,
+              "competency_text": "Analyse human-caused climate change and evaluate India's mitigation efforts in the context of global climate change.",
+              "implied_lo": "Students can evaluate the feasibility of specific climate mitigation measures by identifying their mechanisms, timescales, and conflicts with economic goals.",
+              "cognitive_demand": "Evaluation"
+            }
+          ]
+        },
+        {
+          "period_number": 20,
+          "period_duration_minutes": 40,
+          "activity_title": "Agricultural Patterns and Resource Distribution Across India's Climate Zones",
+          "section_anchor": "Types of Climates in India",
+          "materials": [
+            "Outline map of India",
+            "Student notebooks",
+            "Blackboard"
+          ],
+          "visual_aids": "Outline map of India showing climate zones with major crop-growing regions marked",
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Pose the question: 'India has seven distinct climate zones — how do these zones shape what can be grown and where?' Place the chapter's explicit crop-climate pairs on the board: northern plains subtropical → wheat; western coastal tropical wet → rice and spices; semi-arid Deccan → moderate monsoon crops. Ask: 'Why can wheat not simply be grown on the western coast, and why are spices not grown in the northern plains?' Students answer in pairs, citing one climate characteristic per answer."
+            },
+            {
+              "minutes": "10-24",
+              "activity": "Extend to resource distribution beyond crops. Ask students to consider: water resources (heavy rainfall on the western coast means river systems carry more water; the Thar Desert requires unique water conservation practices); forest resources (Western Ghats' heavy rainfall supports dense forests; the Thar Desert does not). Students construct a distribution table: Climate Zone | Key Agricultural Product | Key Resource Constraint or Advantage. Complete for at least four of the seven climate zones."
+            },
+            {
+              "minutes": "24-35",
+              "activity": "Pattern analysis: 'Looking at your completed table, which climate zones have the most agricultural advantages, and which face the greatest resource constraints — and what does this tell us about where population pressure on land is likely to be highest?' Students identify the western coast and northern plains as high-productivity zones and the arid zone as a high-constraint zone. Ask: 'What human adaptations or technologies have developed in the arid Thar region to overcome the constraint of very little rainfall?'"
+            },
+            {
+              "minutes": "35-40",
+              "activity": "Students write: 'Using two contrasting climate zones, explain how climate determines both what is grown and what resources are available in each zone.' Collect as a formative check."
+            }
+          ],
+          "section_context": "Wheat northern plains, rice-spices western coast, Thar water conservation, Western Ghats forests, Deccan moderate crops",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "This unit completes the C-6.2 strand by synthesising crop and resource patterns across all seven climate zones rather than treating each in isolation — the key analytical move is pattern recognition across the whole map. Students often list crops correctly but cannot explain the climate mechanism behind each choice; the paired question ('why can wheat not be grown on the western coast?') forces the mechanism to be stated, not just assumed. The water-resource extension (Thar water conservation, Western Ghats river systems) broadens the livelihood-resource connection beyond agriculture alone.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.2",
+              "cg": "CG-6",
+              "weight": 1,
+              "competency_text": "Identify patterns of agricultural suitability and resource distribution across India's geographic regions.",
+              "implied_lo": "Students can construct a systematic account of how India's climate zones determine agricultural suitability and resource distribution by analysing contrasting zones.",
+              "cognitive_demand": "Analysis"
+            }
+          ]
+        },
+        {
+          "period_number": 21,
+          "period_duration_minutes": 40,
+          "activity_title": "Whole-Chapter Synthesis: Climate as a System Connecting Land, Life and Society",
+          "section_anchor": "synthesis",
+          "materials": [
+            "Blackboard",
+            "Student notebooks"
+          ],
+          "visual_aids": null,
+          "time_bands": [
+            {
+              "minutes": "0-10",
+              "activity": "Draw a large circle on the board labelled 'Climate as a System'. Inside it, draw four spokes leading to: 'Physical determinants', 'Monsoon and seasons', 'Livelihoods and culture', 'Disasters and change'. Tell students the task: they will build this web together by contributing one connection per spoke — but each connection must cross spokes. For example: 'How does a physical determinant (the Western Ghats as a topographic barrier) directly shape a livelihood outcome (rice cultivation on the western coast and wheat on the northern plains)?'"
+            },
+            {
+              "minutes": "10-24",
+              "activity": "In groups of four, students generate cross-spoke connections. Each group is assigned one starting spoke and must trace a chain that touches at least two other spokes. Examples the teacher may prompt if groups are stuck: (1) Latitude (physical) → year-round warmth in Kanniyakumari (climate type) → distinct monsoon pattern → rice and spice cultivation (livelihood). (2) Enhanced greenhouse effect (climate change) → rising temperatures (physical change) → shortened winter in northern plains → wheat vulnerability (livelihood disruption) → monsoon unpredictability → flood disasters (disaster). Groups write their chain on the board under the relevant arc."
+            },
+            {
+              "minutes": "24-35",
+              "activity": "Whole-class synthesis discussion: 'Looking at all the chains on the board, what single overarching claim can we make about how climate functions in India — as a background condition, as an active shaper of lives, or as a system under pressure?' Students discuss, then each student writes a two-sentence thesis statement that makes a specific claim using at least two concepts from the chapter (e.g., monsoon, greenhouse effect, rain shadow, ṛitu, NDRF, fossil fuels, traditional ecological knowledge)."
+            },
+            {
+              "minutes": "35-40",
+              "activity": "Two or three students read their thesis statements aloud. The class identifies which statement makes the strongest, most evidence-grounded claim. Close with the question: 'If climate is a system connecting land, life and society — who is responsible for maintaining it, and what does that responsibility look like in practice?' Students answer in one sentence: a question worth carrying beyond this class."
+            }
+          ],
+          "section_context": "Western Ghats rain shadow, ṛitus, monsoon mechanism, greenhouse effect, wheat vulnerability, traditional ecological knowledge, NDRF, fossil fuels",
+          "pedagogical_approaches": [
+            "Inquiry"
+          ],
+          "teacher_notes": "This synthesis unit draws on every section of the chapter — the ṛitu framework, climate determinants, the monsoon mechanism, the livelihoods connection, the disasters section, and the climate-change analysis — and asks students to construct cross-cutting connections rather than revisit each section in sequence. The cross-spoke chain exercise is the core intellectual task: it requires students to see climate as a system, not a list of topics. The closing question about responsibility is deliberately open-ended and normative — it is not answered in this unit, but it is the question the chapter's climate-change and mitigation sections collectively pose.",
+          "homework": [],
+          "competency_edges": [
+            {
+              "c_code": "C-6.1",
+              "cg": "CG-6",
+              "weight": 3,
+              "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change.",
+              "implied_lo": "Students can construct cross-domain causal chains that connect climate determinants, the monsoon, livelihoods, disasters, and climate change as an integrated system.",
+              "cognitive_demand": "Evaluation"
+            },
+            {
+              "c_code": "C-6.3",
+              "cg": "CG-6",
+              "weight": 2,
+              "competency_text": "Analyse human-caused climate change and evaluate India's mitigation efforts in the context of global climate change.",
+              "implied_lo": "Students can synthesise the chapter's climate-change arguments into a coherent thesis statement that connects physical mechanisms to social and livelihood consequences.",
+              "cognitive_demand": "Evaluation"
+            },
+            {
+              "c_code": "C-6.4",
+              "cg": "CG-6",
+              "weight": 2,
+              "competency_text": "Correlate climate with patterns of livelihoods, crop suitability, and the socioeconomic consequences of climate variability.",
+              "implied_lo": "Students can trace multi-step chains linking climate system changes to livelihood disruptions across different regions and social groups.",
+              "cognitive_demand": "Evaluation"
+            }
+          ]
+        }
+      ]
+    },
+    "period_schedule": [
+      {
+        "duration_minutes": 40,
+        "count": 21
+      }
+    ],
+    "coverage_handoff": {
+      "C-6.1": {
+        "cg": "CG-6",
+        "weight": 3,
+        "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change.",
+        "los": [
+          {
+            "period_number": 1,
+            "section_anchor": "Weather, Seasons and the Climate",
+            "section_context": "Six ṛitus, Vasanta Pañchamī, Śharad Pūrṇima, weather-climate distinction",
+            "implied_lo": "Students can distinguish between weather as a short-term condition and climate as a long-term regional pattern.",
+            "cognitive_demand": "Understanding"
+          },
+          {
+            "period_number": 2,
+            "section_anchor": "Types of Climates in India",
+            "section_context": "Alpine, temperate, subtropical, arid Thar, tropical wet coast, semi-arid Deccan, tropical east-south",
+            "implied_lo": "Students can classify India's regional climate types by locating them on a map and linking each to its geographic zone.",
+            "cognitive_demand": "Application"
+          },
+          {
+            "period_number": 3,
+            "section_anchor": "Factors Determining the Climate — Latitude",
+            "section_context": "Equatorial perpendicular rays, oblique high-latitude rays, Kanniyakumari, Nicobar Islands, Srinagar",
+            "implied_lo": "Students can explain how latitude determines regional temperature patterns by tracing the relationship between sun-ray angle and heat concentration.",
+            "cognitive_demand": "Understanding"
+          },
+          {
+            "period_number": 4,
+            "section_anchor": "Factors Determining the Climate — Altitude",
+            "section_context": "Shimla, Ooty, Darjeeling, Munnar hill stations, Himalayan permanent snow, atmospheric pressure decrease",
+            "implied_lo": "Students can explain how altitude produces cooler temperatures by tracing the mechanism of decreasing air density and surface-first heating.",
+            "cognitive_demand": "Understanding"
+          },
+          {
+            "period_number": 5,
+            "section_anchor": "Factors Determining the Climate — Proximity to the Sea",
+            "section_context": "Mumbai summer-winter 14°C range, Nagpur 34°C range, sea heat absorption and release",
+            "implied_lo": "Students can explain how proximity to the sea moderates coastal temperatures by tracing the differential heat absorption rates of land and water.",
+            "cognitive_demand": "Understanding"
+          },
+          {
+            "period_number": 6,
+            "section_anchor": "Factors Determining the Climate — Winds",
+            "section_context": "Arabia-Afghanistan hot winds, Himalayan cold winds, Western Ghats rain shadow, Deccan Plateau, urban heat islands",
+            "implied_lo": "Students can explain how wind direction and topographic barriers jointly determine rainfall and temperature in different regions.",
+            "cognitive_demand": "Analysis"
+          },
+          {
+            "period_number": 7,
+            "section_anchor": "The Monsoons",
+            "section_context": "Mausim origin, low-pressure landmass mechanism, southwest monsoon June-July advance, Mawsynram 11,000 mm, Meghamalhār",
+            "implied_lo": "Students can explain the monsoon's seasonal wind-reversal mechanism by tracing pressure differences between land and ocean in summer and winter.",
+            "cognitive_demand": "Understanding"
+          },
+          {
+            "period_number": 10,
+            "section_anchor": "Climates and Disasters — Cyclones",
+            "section_context": "Low-pressure sea formation, eye of cyclone, eastern coastline vulnerability, IMD, NDRF 12 battalions",
+            "implied_lo": "Students can explain the formation sequence of a cyclone and connect its geographic conditions to India's eastern coastline vulnerability.",
+            "cognitive_demand": "Understanding"
+          },
+          {
+            "period_number": 11,
+            "section_anchor": "Climates and Disasters — Floods",
+            "section_context": "Glacial lake bursts, 2013 Uttarakhand Kedarnath 6,000 deaths, UP, Bihar, Kerala, Assam flood-prone, urban impermeable surfaces",
+            "implied_lo": "Students can distinguish between natural and human-induced causes of flooding in India by analysing specific cases across different geographic contexts.",
+            "cognitive_demand": "Analysis"
+          },
+          {
+            "period_number": 12,
+            "section_anchor": "Climates and Disasters — Landslides",
+            "section_context": "Deforestation slope instability, Himachal-Uttarakhand-Sikkim landslides, Uttarakhand-MP-Chhattisgarh forest fires, ecosystem damage",
+            "implied_lo": "Students can identify how human land-use decisions amplify the risk of climate-related hazards such as landslides and forest fires.",
+            "cognitive_demand": "Analysis"
+          },
+          {
+            "period_number": 13,
+            "section_anchor": "Climate Change",
+            "section_context": "Fossil fuels coal-petroleum-gas, enhanced greenhouse effect, CO₂, India 2025 temperatures 1–3°C above normal, winter shortening",
+            "implied_lo": "Students can connect the burning of fossil fuels to long-term shifts in global temperature patterns through the mechanism of the enhanced greenhouse effect.",
+            "cognitive_demand": "Understanding"
+          },
+          {
+            "period_number": 16,
+            "section_anchor": "Factors Determining the Climate — Topography",
+            "section_context": "Western Ghats rain shadow, Arabian Sea moisture, southwest monsoon barrier, Kerala-Deccan contrast, geographic literacy",
+            "implied_lo": "Students can construct a multi-factor explanation of a regional climate pattern by integrating topography, proximity to sea, and wind direction.",
+            "cognitive_demand": "Application"
+          },
+          {
+            "period_number": 21,
+            "section_anchor": "synthesis",
+            "section_context": "Western Ghats rain shadow, ṛitus, monsoon mechanism, greenhouse effect, wheat vulnerability, traditional ecological knowledge, NDRF, fossil fuels",
+            "implied_lo": "Students can construct cross-domain causal chains that connect climate determinants, the monsoon, livelihoods, disasters, and climate change as an integrated system.",
+            "cognitive_demand": "Evaluation"
+          }
+        ]
+      },
+      "C-6.3": {
+        "cg": "CG-6",
+        "weight": 2,
+        "competency_text": "Analyse human-caused climate change and evaluate India's mitigation efforts in the context of global climate change.",
+        "los": [
+          {
+            "period_number": 13,
+            "section_anchor": "Climate Change",
+            "section_context": "Fossil fuels coal-petroleum-gas, enhanced greenhouse effect, CO₂, India 2025 temperatures 1–3°C above normal, winter shortening",
+            "implied_lo": "Students can explain the enhanced greenhouse effect as the mechanism linking fossil fuel combustion to global warming.",
+            "cognitive_demand": "Understanding"
+          },
+          {
+            "period_number": 14,
+            "section_anchor": "Climate Change",
+            "section_context": "Renewable energy expansion, tree planting, energy efficiency, sustainable lifestyles, mitigation-growth tension",
+            "implied_lo": "Students can evaluate specific climate mitigation measures by identifying the economic interests they conflict with in the Indian context.",
+            "cognitive_demand": "Evaluation"
+          },
+          {
+            "period_number": 18,
+            "section_anchor": "Climate Change",
+            "section_context": "India 2025 temperatures 1–3°C above normal, winter shortening, wheat vulnerability, monsoon unpredictability, rain-fed vs. irrigated agriculture",
+            "implied_lo": "Students can analyse the projected agricultural impacts of rising temperatures across India's climate zones using observed temperature data.",
+            "cognitive_demand": "Analysis"
+          },
+          {
+            "period_number": 19,
+            "section_anchor": "Climate Change",
+            "section_context": "Renewable energy solar-wind, tree planting CO₂ absorption rate, sustainable lifestyles, fossil fuel industry conflicts, India economic growth tension",
+            "implied_lo": "Students can evaluate the feasibility of specific climate mitigation measures by identifying their mechanisms, timescales, and conflicts with economic goals.",
+            "cognitive_demand": "Evaluation"
+          },
+          {
+            "period_number": 21,
+            "section_anchor": "synthesis",
+            "section_context": "Western Ghats rain shadow, ṛitus, monsoon mechanism, greenhouse effect, wheat vulnerability, traditional ecological knowledge, NDRF, fossil fuels",
+            "implied_lo": "Students can synthesise the chapter's climate-change arguments into a coherent thesis statement that connects physical mechanisms to social and livelihood consequences.",
+            "cognitive_demand": "Evaluation"
+          }
+        ]
+      },
+      "C-6.4": {
+        "cg": "CG-6",
+        "weight": 2,
+        "competency_text": "Correlate climate with patterns of livelihoods, crop suitability, and the socioeconomic consequences of climate variability.",
+        "los": [
+          {
+            "period_number": 8,
+            "section_anchor": "Climate and our Lives",
+            "section_context": "Bihu, Baisakhi, Pongal, Onam, traditional ecological knowledge, monsoon failure cascade, agricultural migration",
+            "implied_lo": "Students can trace the chain of socioeconomic consequences that follow from monsoon failure across agriculture, food prices, water availability, and labour migration.",
+            "cognitive_demand": "Analysis"
+          },
+          {
+            "period_number": 9,
+            "section_anchor": "Climate and our Lives",
+            "section_context": "Traditional ecological knowledge, industrial water dependence, marginal farmers, agricultural labourers, monsoon backbone",
+            "implied_lo": "Students can compare how climate variability affects different socioeconomic groups — farmers, labourers, and industry — by analysing their differential dependence on monsoon conditions.",
+            "cognitive_demand": "Analysis"
+          },
+          {
+            "period_number": 15,
+            "section_anchor": "The Monsoons",
+            "section_context": "Southwest monsoon June–July advance, monsoon failure economic consequences, Meghamalhār and Amruthavarshini ragās, multidisciplinary monsoon",
+            "implied_lo": "Students can interpret sources about the monsoon from physical, economic, and cultural perspectives to construct a multidimensional account of its significance.",
+            "cognitive_demand": "Analysis"
+          },
+          {
+            "period_number": 18,
+            "section_anchor": "Climate Change",
+            "section_context": "India 2025 temperatures 1–3°C above normal, winter shortening, wheat vulnerability, monsoon unpredictability, rain-fed vs. irrigated agriculture",
+            "implied_lo": "Students can connect observed temperature changes to specific agricultural disruptions by applying knowledge of crop requirements in different climate zones.",
+            "cognitive_demand": "Application"
+          },
+          {
+            "period_number": 21,
+            "section_anchor": "synthesis",
+            "section_context": "Western Ghats rain shadow, ṛitus, monsoon mechanism, greenhouse effect, wheat vulnerability, traditional ecological knowledge, NDRF, fossil fuels",
+            "implied_lo": "Students can trace multi-step chains linking climate system changes to livelihood disruptions across different regions and social groups.",
+            "cognitive_demand": "Evaluation"
+          }
+        ]
+      },
+      "C-6.2": {
+        "cg": "CG-6",
+        "weight": 1,
+        "competency_text": "Identify patterns of agricultural suitability and resource distribution across India's geographic regions.",
+        "los": [
+          {
+            "period_number": 2,
+            "section_anchor": "Types of Climates in India",
+            "section_context": "Alpine, temperate, subtropical, arid Thar, tropical wet coast, semi-arid Deccan, tropical east-south",
+            "implied_lo": "Students can match India's climate zones to the crops or agricultural patterns associated with each.",
+            "cognitive_demand": "Understanding"
+          },
+          {
+            "period_number": 8,
+            "section_anchor": "Climate and our Lives",
+            "section_context": "Bihu, Baisakhi, Pongal, Onam, traditional ecological knowledge, monsoon failure cascade, agricultural migration",
+            "implied_lo": "Students can justify why specific crops are grown in specific Indian climate zones by linking crop requirements to climate characteristics.",
+            "cognitive_demand": "Application"
+          },
+          {
+            "period_number": 20,
+            "section_anchor": "Types of Climates in India",
+            "section_context": "Wheat northern plains, rice-spices western coast, Thar water conservation, Western Ghats forests, Deccan moderate crops",
+            "implied_lo": "Students can construct a systematic account of how India's climate zones determine agricultural suitability and resource distribution by analysing contrasting zones.",
+            "cognitive_demand": "Analysis"
+          }
+        ]
+      },
+      "C-4.1": {
+        "cg": "CG-4",
+        "weight": 1,
+        "competency_text": "Identify the roles of institutions such as IMD and NDRF in disaster prediction and response.",
+        "los": [
+          {
+            "period_number": 10,
+            "section_anchor": "Climates and Disasters — Cyclones",
+            "section_context": "Low-pressure sea formation, eye of cyclone, eastern coastline vulnerability, IMD, NDRF 12 battalions",
+            "implied_lo": "Students can distinguish between the IMD's warning role and the NDRF's operational role in responding to cyclone disasters.",
+            "cognitive_demand": "Understanding"
+          },
+          {
+            "period_number": 17,
+            "section_anchor": "Climates and Disasters — Cyclones",
+            "section_context": "IMD colour-coded warnings green-yellow-orange-red, NDRF 12 battalions, community evacuation, institutional limits",
+            "implied_lo": "Students can analyse how the IMD's warning system and the NDRF's deployment structure function together as an interdependent disaster-response system.",
+            "cognitive_demand": "Analysis"
+          }
+        ]
+      }
+    },
+    "assessment_items": [
+      {
+        "question_type": "MCQ",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-6.1",
+          "cg": "CG-6",
+          "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change."
+        },
+        "implied_lo": "Students can distinguish between weather as a short-term condition and climate as a long-term regional pattern.",
+        "cognitive_demand": "Understanding",
+        "period_ref": [
+          1
+        ],
+        "chapter_section": "Weather, Seasons and the Climate",
+        "question_text": "A meteorologist says: 'Delhi experienced an unusually cold week in January.' A geographer says: 'Delhi has a subtropical climate with cold winters.' Which statement best explains the difference between what each person is describing?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Both are saying the same thing using different words, because all Delhi winters are cold.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The geographer is wrong because climate can only be observed day by day, not described in advance.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The meteorologist describes a short-term atmospheric condition, while the geographer describes the long-term pattern of conditions over several decades.",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "The meteorologist is correct because one week of cold weather proves that Delhi's climate is cold.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "D": "Confuses a single weather event with a climate pattern — the misconception that any unusual day is evidence of climate.",
+              "B": "Reverses the meaning of climate — treats it as only observable in the present rather than as a long-term derived pattern.",
+              "A": "Treats climate and weather as synonymous, failing to distinguish timescale and scope."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-6.1",
+          "cg": "CG-6",
+          "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change."
+        },
+        "implied_lo": "Students can explain the monsoon's seasonal wind-reversal mechanism by tracing pressure differences between land and ocean in summer and winter.",
+        "cognitive_demand": "Understanding",
+        "period_ref": [
+          7
+        ],
+        "chapter_section": "The Monsoons",
+        "question_text": "In summer, the Asian landmass heats up quickly while the Indian Ocean remains relatively cooler. What happens to air pressure over the landmass as a result, and how does this drive the monsoon winds?",
+        "options": [
+          {
+            "label": "A",
+            "text": "The Himalayas block all incoming winds in summer, so monsoon rains come only from the Bay of Bengal.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The hot landmass creates high pressure; this pushes dry air outward from India toward the ocean.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The hot landmass creates low pressure; cooler, moisture-laden ocean winds are drawn toward this low pressure, carrying rain inland.",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "The ocean heats faster than the land in summer, creating low pressure over the water and drawing winds out to sea.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "B": "Reverses the pressure relationship — confuses rising hot air (low pressure) with the sinking-air high-pressure system that actually develops over land in winter, not summer.",
+              "D": "Reverses the land-heats-faster principle — mistakenly assigns faster heating to the ocean.",
+              "A": "Confuses the Himalayan barrier role (blocking cold Central Asian winds) with the monsoon-wind entry mechanism; also incorrectly restricts monsoon to the Bay of Bengal alone."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "SCR",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-6.1",
+          "cg": "CG-6",
+          "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change."
+        },
+        "implied_lo": "Students can explain how wind direction and topographic barriers jointly determine rainfall and temperature in different regions.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          6
+        ],
+        "chapter_section": "Factors Determining the Climate — Winds",
+        "question_text": "The western slopes of the Western Ghats receive heavy rainfall while the Deccan Plateau to the east remains semi-arid. Using the roles of both winds and topography, explain why this difference exists.",
+        "options": [],
+        "expected_elements": [
+          "Identifies that southwest monsoon winds carry moisture from the Arabian Sea toward India.",
+          "Explains that the Western Ghats act as a topographic barrier that forces the moisture-laden winds to rise.",
+          "States that as winds rise over the Ghats, moisture condenses and falls as heavy rain on the western slopes.",
+          "Identifies that the Deccan Plateau lies in the rain shadow — winds that cross the Ghats have lost most of their moisture and bring far less rain to the east."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "Students who find writing difficult may use a labelled diagram with brief annotations in place of full sentences — accept any format that demonstrates the four expected elements.",
+        "guide": {
+          "SCR": {
+            "expected_elements": [
+              "Identifies that southwest monsoon winds carry moisture from the Arabian Sea toward India.",
+              "Explains that the Western Ghats act as a topographic barrier that forces the moisture-laden winds to rise.",
+              "States that as winds rise over the Ghats, moisture condenses and falls as heavy rain on the western slopes.",
+              "Identifies that the Deccan Plateau lies in the rain shadow — winds that cross the Ghats have lost most of their moisture and bring far less rain to the east."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "ECR",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-6.1",
+          "cg": "CG-6",
+          "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change."
+        },
+        "implied_lo": "Students can distinguish between natural and human-induced causes of flooding in India by analysing specific cases across different geographic contexts.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          11
+        ],
+        "chapter_section": "Climates and Disasters — Floods",
+        "question_text": "India experiences floods from multiple causes. Compare a glacial-burst flood in the Himalayan region with urban flooding in a large city. For each, identify the specific cause and explain one human decision or condition that made it worse.",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [
+          "Accurately identifies glacial lake burst as the cause of Himalayan flooding, with reference to rapid glacial melt or excessive rainfall building pressure (the 2013 Uttarakhand case is a valid anchor).",
+          "Accurately identifies poor drainage, encroachment on waterways, or impermeable concrete/asphalt surfaces as causes of urban flooding — not just 'heavy rain'.",
+          "For the glacial case, names a human condition that worsened impact — such as deforestation on slopes, dense pilgrimage settlement in a vulnerable valley, or difficult terrain for rescue.",
+          "For the urban case, names a specific human decision — such as building on floodplains, paving over natural drainage, or failing to maintain drainage infrastructure.",
+          "The response treats these as analytically distinct flood types, not as variations of the same phenomenon."
+        ],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "ECR": {
+            "look_for": [
+              "Accurately identifies glacial lake burst as the cause of Himalayan flooding, with reference to rapid glacial melt or excessive rainfall building pressure (the 2013 Uttarakhand case is a valid anchor).",
+              "Accurately identifies poor drainage, encroachment on waterways, or impermeable concrete/asphalt surfaces as causes of urban flooding — not just 'heavy rain'.",
+              "For the glacial case, names a human condition that worsened impact — such as deforestation on slopes, dense pilgrimage settlement in a vulnerable valley, or difficult terrain for rescue.",
+              "For the urban case, names a specific human decision — such as building on floodplains, paving over natural drainage, or failing to maintain drainage infrastructure.",
+              "The response treats these as analytically distinct flood types, not as variations of the same phenomenon."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "OPEN_TASK",
+        "weight_label": "Central",
+        "competency": {
+          "c_code": "C-6.1",
+          "cg": "CG-6",
+          "competency_text": "Explain climate as a key natural phenomenon — its types, determinants, monsoon mechanism, disasters, and climate change."
+        },
+        "implied_lo": "Students can construct cross-domain causal chains that connect climate determinants, the monsoon, livelihoods, disasters, and climate change as an integrated system.",
+        "cognitive_demand": "Evaluation",
+        "period_ref": [
+          21
+        ],
+        "chapter_section": "synthesis",
+        "question_text": "",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "A geography magazine is running a feature titled 'How Climate Shapes India'. You have been asked to write the opening section. Construct a cause-effect map showing how at least three of India's climate determinants (latitude, altitude, proximity to sea, winds, topography) lead to specific climate types or monsoon patterns, which in turn shape at least two livelihood or cultural outcomes. Then write a two-sentence claim that summarises what your map shows about climate as a system.",
+        "scaffold": "Step 1 — Choose three climate determinants from the chapter. For each, name the specific mechanism: what does it do to temperature, rainfall, or wind? Step 2 — Connect each determinant to a climate type or monsoon outcome it produces (e.g., Western Ghats topography → rain shadow → semi-arid Deccan). Step 3 — From your climate outcomes, trace at least two paths to livelihood or cultural effects (e.g., semi-arid Deccan → moderate monsoon crops; western coast heavy rainfall → rice and spice cultivation; monsoon advance → Bihu, Baisakhi festivals). Step 4 — Write a two-sentence summary claim: 'India's climate is a system because...' — your claim must name at least two connected elements from your map.",
+        "format_of_output": [
+          "A cause-effect map with labelled arrows connecting determinants → climate outcomes → livelihood or cultural effects",
+          "A two-sentence written summary claim"
+        ],
+        "visual_stimulus": "",
+        "inclusivity": "Students may draw the cause-effect map as a diagram with boxes and arrows or as a written chain using 'leads to' connectors — both formats are equally acceptable. Students who find the two-sentence claim difficult may instead write three separate short statements that together express the same argument.",
+        "guide": {
+          "OPEN_TASK": {
+            "what_this_demonstrates": "Students demonstrate the ability to construct multi-domain causal chains — connecting physical climate determinants through specific mechanisms to climate outcomes and then to livelihood or cultural effects — and to synthesise those chains into an evaluative claim about climate as a system.",
+            "reading_the_scaffold": "Step 1 anchors the work in mechanism (not just naming); Step 2 requires the determinant-to-outcome chain; Step 3 extends to the human-livelihood dimension; Step 4 asks for an evaluative synthesis, not a summary. A student who completes Steps 1–3 but produces only a list in Step 4 has not reached the evaluative demand of the LO.",
+            "strong_vs_weak_markers": "Strong response: chains are specific (names the mechanism, not just the determinant and outcome), livelihood effects are drawn from different parts of the chapter (not just two adjacent facts), and the two-sentence claim makes a genuine evaluative assertion about how the system works. Weak response: lists climate determinants and climate types without connecting them, or gives livelihood effects without linking them back to a climate chain, or writes a summary sentence that only restates the list rather than making a system-level claim.",
+            "format_type": "Cause-effect map",
+            "format_rationale": "A cause-effect map is the most natural demonstration vehicle for an LO requiring students to construct multi-step causal chains across domains — it makes the chain structure visible and allows the teacher to assess whether connections are accurately drawn or merely listed. The teacher may substitute any other format from the Open Task menu (comparison table, annotated map or diagram, structured discussion prompt with written output, source analysis task) if better suited to their classroom context."
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Substantive",
+        "competency": {
+          "c_code": "C-6.3",
+          "cg": "CG-6",
+          "competency_text": "Analyse human-caused climate change and evaluate India's mitigation efforts in the context of global climate change."
+        },
+        "implied_lo": "Students can explain the enhanced greenhouse effect as the mechanism linking fossil fuel combustion to global warming.",
+        "cognitive_demand": "Understanding",
+        "period_ref": [
+          13
+        ],
+        "chapter_section": "Climate Change",
+        "question_text": "Burning fossil fuels releases large amounts of carbon dioxide into the atmosphere. How does this lead to global warming?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Carbon dioxide absorbs moisture from the atmosphere, reducing cloud cover and allowing more sunlight to reach the Earth.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Carbon dioxide blocks incoming sunlight, preventing the Earth's surface from cooling at night.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Carbon dioxide destroys the ozone layer, allowing more ultraviolet radiation to heat the Earth's surface.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Carbon dioxide traps outgoing heat radiation in the atmosphere, enhancing the natural greenhouse effect and raising global temperatures.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "B": "Confuses the greenhouse mechanism with a sunlight-blocking effect — a common reversal where the student thinks CO₂ acts as a physical shield rather than a heat trap.",
+              "C": "Conflates the greenhouse effect with ozone depletion — a very common misconception that the chapter does not address, so students who choose this are importing an unrelated concept.",
+              "A": "Invents a moisture-absorption mechanism with no basis in the chapter — indicates the student has not grasped the outgoing-infrared-radiation trapping principle."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Substantive",
+        "competency": {
+          "c_code": "C-6.3",
+          "cg": "CG-6",
+          "competency_text": "Analyse human-caused climate change and evaluate India's mitigation efforts in the context of global climate change."
+        },
+        "implied_lo": "Students can evaluate specific climate mitigation measures by identifying the economic interests they conflict with in the Indian context.",
+        "cognitive_demand": "Evaluation",
+        "period_ref": [
+          14
+        ],
+        "chapter_section": "Climate Change",
+        "question_text": "India's government wants to reduce greenhouse gas emissions by rapidly expanding renewable energy and phasing out coal-based power plants. Which of the following best describes a real conflict this policy creates?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Coal-dependent industries and workers face economic disruption, creating tension between the climate goal and economic growth objectives.",
+            "is_correct": true
+          },
+          {
+            "label": "B",
+            "text": "Renewable energy produces more greenhouse gases than coal, so the policy would worsen climate change.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The policy only affects cities, so rural farmers would not be impacted by the transition away from coal.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "There is no conflict because all economic growth is compatible with reducing emissions.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "B": "Factually incorrect about renewables producing more greenhouse gases — indicates a fundamental misunderstanding of the mitigation rationale; student may be confused about energy production processes.",
+              "D": "Denies the tension the chapter explicitly names — student has not engaged with the conflict between mitigation goals and economic growth, or assumes the two are automatically compatible.",
+              "C": "Incorrectly limits the impact to urban areas — indicates the student has not connected coal-based electricity and industrial water dependence to rural agricultural livelihoods."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "SCR",
+        "weight_label": "Substantive",
+        "competency": {
+          "c_code": "C-6.3",
+          "cg": "CG-6",
+          "competency_text": "Analyse human-caused climate change and evaluate India's mitigation efforts in the context of global climate change."
+        },
+        "implied_lo": "Students can analyse the projected agricultural impacts of rising temperatures across India's climate zones using observed temperature data.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          18
+        ],
+        "chapter_section": "Climate Change",
+        "question_text": "Early 2025 in India saw average temperatures 1–3°C above normal, shortening and warming the winter season. Using this evidence, explain what agricultural impact this is likely to have in the northern plains and why.",
+        "options": [],
+        "expected_elements": [
+          "States that the northern plains have a subtropical climate where wheat is the key crop.",
+          "Explains that wheat requires a cold period for proper grain development.",
+          "Connects the shortened, warmer winter to a disruption in wheat cultivation — such as reduced yields, altered sowing or harvesting calendar, or reduced grain quality.",
+          "Uses the 1–3°C temperature data as the specific evidence linking climate change to the agricultural impact."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "SCR": {
+            "expected_elements": [
+              "States that the northern plains have a subtropical climate where wheat is the key crop.",
+              "Explains that wheat requires a cold period for proper grain development.",
+              "Connects the shortened, warmer winter to a disruption in wheat cultivation — such as reduced yields, altered sowing or harvesting calendar, or reduced grain quality.",
+              "Uses the 1–3°C temperature data as the specific evidence linking climate change to the agricultural impact."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Substantive",
+        "competency": {
+          "c_code": "C-6.4",
+          "cg": "CG-6",
+          "competency_text": "Correlate climate with patterns of livelihoods, crop suitability, and the socioeconomic consequences of climate variability."
+        },
+        "implied_lo": "Students can trace the chain of socioeconomic consequences that follow from monsoon failure across agriculture, food prices, water availability, and labour migration.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          8
+        ],
+        "chapter_section": "Climate and our Lives",
+        "question_text": "In a year when the monsoon fails and rainfall is far below normal across a major agricultural region, which sequence of events most accurately describes what follows?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Agricultural labourers migrate to other farming regions, which then face a surplus of workers and lower wages.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Crops fail → food prices rise → water becomes scarce → agricultural labourers migrate to cities.",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "Food prices fall because farmers sell their remaining stocks quickly to avoid losses.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Only the farming community is affected; industrial workers and urban residents experience no change.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "C": "Applies a naive market logic — assumes supply-reduction raises nothing; confuses producer distress selling with the price mechanism; does not connect scarcity to price rises.",
+              "D": "Fails to recognise the chapter's explicit claim that industrial activity depends on predictable water and weather — limits consequences to the farming sector only.",
+              "A": "Partially correct in noting labour migration but incorrectly identifies destination as other farming regions rather than cities, and invents a 'surplus labour' economic sub-argument not supported by the chapter."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Substantive",
+        "competency": {
+          "c_code": "C-6.4",
+          "cg": "CG-6",
+          "competency_text": "Correlate climate with patterns of livelihoods, crop suitability, and the socioeconomic consequences of climate variability."
+        },
+        "implied_lo": "Students can compare how climate variability affects different socioeconomic groups — farmers, labourers, and industry — by analysing their differential dependence on monsoon conditions.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          9
+        ],
+        "chapter_section": "Climate and our Lives",
+        "question_text": "Refer to the table provided.",
+        "options": [
+          {
+            "label": "A",
+            "text": "Agricultural labourer, because they have no land or crops of their own and depend entirely on hired work that disappears when harvests fail.",
+            "is_correct": true
+          },
+          {
+            "label": "B",
+            "text": "The factory owner, because industrial production requires large amounts of water and the factory will shut down immediately.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The marginal farmer, because they own land and can sell it to cover losses from a failed harvest.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The urban consumer, because food prices rise and they spend the most money on food in absolute terms.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "Group | Livelihood source | Dependence on monsoon | Ability to absorb loss\nMarginal farmer | Own small plot of land | High — rain-fed crops | Low — small savings, no irrigation\nAgricultural labourer | Hired farm work | Very high — work disappears if harvest fails | Very low — no land or assets\nFactory owner | Industrial production | Medium — needs water and raw materials | Medium — may have reserves\nUrban consumer | Salaried or wage work | Low — indirect through food prices | Variable — depends on income level",
+        "inclusivity": "Students who struggle with the table may describe their answer verbally to a peer or teacher — the reasoning, not the reading format, is what the question assesses.",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "B": "Overestimates the factory owner's immediate dependence — industrial activity is affected but not necessarily shut down immediately; confuses medium-term dependence with the most immediate and severe vulnerability.",
+              "C": "Incorrectly assumes marginal farmers can sell land to cover losses — misunderstands the meaning of 'marginal' and the practical constraints of land ownership among subsistence farmers.",
+              "D": "Confuses absolute spending with vulnerability — urban consumers face higher food prices but are less immediately threatened than those whose entire income source disappears."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "SCR",
+        "weight_label": "Substantive",
+        "competency": {
+          "c_code": "C-6.4",
+          "cg": "CG-6",
+          "competency_text": "Correlate climate with patterns of livelihoods, crop suitability, and the socioeconomic consequences of climate variability."
+        },
+        "implied_lo": "Students can interpret sources about the monsoon from physical, economic, and cultural perspectives to construct a multidimensional account of its significance.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          15
+        ],
+        "chapter_section": "The Monsoons",
+        "question_text": "The monsoon has inspired classical Indian music, with ragās such as Meghamalhār and Amruthavarshini composed to evoke its mood. Agricultural labourers, by contrast, fear the monsoon's failure as an economic catastrophe. Using both the cultural and economic lenses, explain in three or four sentences why the monsoon is described as central to life in India.",
+        "options": [],
+        "expected_elements": [
+          "Acknowledges the cultural dimension: the monsoon has shaped artistic expression, including classical music, reflecting the deep connection between seasonal rhythms and Indian cultural life.",
+          "Acknowledges the economic dimension: the monsoon is the primary determinant of agricultural output, and its failure triggers food price rises, water scarcity, and the migration of agricultural labourers.",
+          "Connects the two dimensions: shows that the same phenomenon — the monsoon — is experienced as cultural inspiration by one group and as economic survival by another, demonstrating that it is central to life across multiple domains.",
+          "Uses at least one specific piece of evidence from the chapter (a named ragā, a named festival, or a specific consequence of monsoon failure)."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "SCR": {
+            "expected_elements": [
+              "Acknowledges the cultural dimension: the monsoon has shaped artistic expression, including classical music, reflecting the deep connection between seasonal rhythms and Indian cultural life.",
+              "Acknowledges the economic dimension: the monsoon is the primary determinant of agricultural output, and its failure triggers food price rises, water scarcity, and the migration of agricultural labourers.",
+              "Connects the two dimensions: shows that the same phenomenon — the monsoon — is experienced as cultural inspiration by one group and as economic survival by another, demonstrating that it is central to life across multiple domains.",
+              "Uses at least one specific piece of evidence from the chapter (a named ragā, a named festival, or a specific consequence of monsoon failure)."
+            ]
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Present",
+        "competency": {
+          "c_code": "C-6.2",
+          "cg": "CG-6",
+          "competency_text": "Identify patterns of agricultural suitability and resource distribution across India's geographic regions."
+        },
+        "implied_lo": "Students can match India's climate zones to the crops or agricultural patterns associated with each.",
+        "cognitive_demand": "Understanding",
+        "period_ref": [
+          2
+        ],
+        "chapter_section": "Types of Climates in India",
+        "question_text": "The western coastal strip of India experiences a tropical wet climate with heavy monsoon rainfall. Which crops are most suited to this climate zone?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Cotton, because the coastal humidity keeps the soil dry and suitable for cotton bolls.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Drought-resistant millets, because the western coast receives very little annual rainfall.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Rice and spices, because they thrive in heavy rainfall and warm humid conditions.",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "Wheat, because the coastal areas have cool temperatures ideal for grain crops.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "D": "Confuses the western coast's tropical wet climate with the northern plains' subtropical cold winters that suit wheat — applies the wrong climate-crop pairing.",
+              "B": "Directly contradicts the chapter's description of the western coast as receiving heavy monsoon rainfall — indicates the student has not connected climate type to rainfall pattern.",
+              "A": "Invents a 'coastal humidity keeps soil dry' claim — demonstrates a fundamental misunderstanding of both humidity and what cotton cultivation requires."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Present",
+        "competency": {
+          "c_code": "C-6.2",
+          "cg": "CG-6",
+          "competency_text": "Identify patterns of agricultural suitability and resource distribution across India's geographic regions."
+        },
+        "implied_lo": "Students can construct a systematic account of how India's climate zones determine agricultural suitability and resource distribution by analysing contrasting zones.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          20
+        ],
+        "chapter_section": "Types of Climates in India",
+        "question_text": "Refer to the table provided.",
+        "options": [
+          {
+            "label": "A",
+            "text": "The alpine Himalayan zone, because snow cover makes water unavailable for agriculture.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The northern plains, because the subtropical climate produces very hot summers that dry up all available water.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The semi-arid Deccan, because it receives no monsoon rainfall at all.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "The Thar Desert, because its arid climate means very little rainfall and unique water conservation is required — it faces the greatest water-resource constraint.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "Climate Zone | Rainfall Level | Key Crop or Agricultural Use | Water Resource Situation\nNorthern plains (subtropical) | Moderate seasonal | Wheat | Seasonal rivers; irrigation used\nWestern coast (tropical wet) | Very heavy monsoon | Rice, spices | Abundant; rivers carry high volume\nThar Desert (arid) | Very little | Requires water conservation practices | Scarce; unique conservation needed\nSemi-arid Deccan | Moderate monsoon | Moderate monsoon crops | Moderate; rain-fed farming common\nAlpine Himalayan | Snow and glacial melt | Very limited cultivation | Glacial melt provides river flow downstream",
+        "inclusivity": "Students who find reading tables difficult may have the table read aloud to them or have a peer summarise each row before answering.",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "B": "Overstates the northern plains' summer heat as a water-exhaustion mechanism — the chapter describes the northern plains as having seasonal rivers and suitable wheat cultivation, not extreme water scarcity.",
+              "A": "Confuses the alpine zone's glacial water with unavailability — snow and glacial melt are actually sources of river water; the student has not read the table's alpine row carefully.",
+              "C": "Directly contradicts the chapter, which describes the Deccan as receiving moderate monsoon rainfall — the student may be confusing the Deccan with the Thar Desert."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Present",
+        "competency": {
+          "c_code": "C-4.1",
+          "cg": "CG-4",
+          "competency_text": "Identify the roles of institutions such as IMD and NDRF in disaster prediction and response."
+        },
+        "implied_lo": "Students can distinguish between the IMD's warning role and the NDRF's operational role in responding to cyclone disasters.",
+        "cognitive_demand": "Understanding",
+        "period_ref": [
+          10
+        ],
+        "chapter_section": "Climates and Disasters — Cyclones",
+        "question_text": "When a cyclone is approaching India's eastern coastline, what are the distinct roles of the India Meteorological Department (IMD) and the National Disaster Response Force (NDRF)?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Both the IMD and NDRF track the cyclone together, and local state governments carry out all rescue operations.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The IMD evacuates coastal communities; the NDRF studies weather patterns and predicts when the cyclone will make landfall.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The IMD tracks the cyclone and issues warnings; the NDRF carries out rescue and evacuation operations on the ground.",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "The NDRF prevents cyclones from forming by seeding clouds over the Bay of Bengal before storm season.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "B": "Reverses the roles of the two institutions — swaps the scientific/warning function of the IMD with the operational function of the NDRF; student has not grasped the institutional division of labour.",
+              "A": "Conflates the two institutions' functions and incorrectly reassigns rescue entirely to state governments — indicates the student does not know the NDRF's specific operational mandate.",
+              "D": "Invents a cloud-seeding prevention role for the NDRF with no basis in the chapter — indicates the student has not engaged with the chapter's specific description of what the NDRF does."
+            }
+          }
+        }
+      },
+      {
+        "question_type": "MCQ",
+        "weight_label": "Present",
+        "competency": {
+          "c_code": "C-4.1",
+          "cg": "CG-4",
+          "competency_text": "Identify the roles of institutions such as IMD and NDRF in disaster prediction and response."
+        },
+        "implied_lo": "Students can analyse how the IMD's warning system and the NDRF's deployment structure function together as an interdependent disaster-response system.",
+        "cognitive_demand": "Analysis",
+        "period_ref": [
+          17
+        ],
+        "chapter_section": "Climates and Disasters — Cyclones",
+        "question_text": "The NDRF has 12 battalions distributed across India rather than concentrated in one central location. The IMD issues colour-coded warnings (green, yellow, orange, red) that escalate in severity. How do these two features work together to make India's disaster response more effective?",
+        "options": [
+          {
+            "label": "A",
+            "text": "A central NDRF headquarters receives the IMD's red warning and then distributes orders to all 12 battalions at once, so the distribution of battalions is not relevant to the warning system.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The IMD's colour codes tell the NDRF which battalion to activate, with each colour corresponding to a specific battalion number.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The IMD's graduated warnings allow regional NDRF battalions to mobilise proportionately — local deployment reduces travel time and the warning scale ensures action is scaled to actual threat.",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "The two systems are independent — the IMD warns the public and the NDRF responds to emergencies, but they do not coordinate with each other.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "visual_stimulus": "",
+        "inclusivity": "",
+        "guide": {
+          "MCQ": {
+            "what_each_option_reveals": {
+              "A": "Misses the geographic efficiency argument — acknowledges the warning system but fails to see how distributed deployment reduces response time; treats the battalion distribution as irrelevant.",
+              "B": "Invents a one-to-one battalion-to-colour-code correspondence that does not exist in the chapter — indicates the student has memorised facts without understanding the systemic relationship.",
+              "D": "Treats the two institutions as independent and non-coordinating — fails to grasp the chapter's implication that scientific warning and operational response are designed to work as a linked system."
+            }
+          }
+        }
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

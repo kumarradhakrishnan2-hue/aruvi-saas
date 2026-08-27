@@ -1,0 +1,1623 @@
+{
+  "filename": "ch_08_canonical.json",
+  "saved_at": "2026-08-17T11:54:19",
+  "plan_status": "canonical",
+  "chapter_number": 8,
+  "chapter_title": "Elements, Compounds, and Mixtures",
+  "grade": "Grade VIII",
+  "subject": "Science",
+  "period_rows_snapshot": [
+    {
+      "id": 0,
+      "duration": 45,
+      "count": 14
+    }
+  ],
+  "period_schedule_display": "Period schedule:\n  Row 1: 45 minutes × 14 periods = 630 minutes\nTotal: 14 periods · 10h 30min",
+  "genon_canonical": {
+    "generated": "2026-08-17",
+    "schedule": "14x45",
+    "constitution": "LP v2.2 / assessment v1.5",
+    "source": "generate_canonical.py one science viii 8",
+    "ledger_ts": "20260817_113057_sci_viii_08_top",
+    "validation": "clean",
+    "synthesis_reauthor": {
+      "spec": "science_middle_stage_serve.md §6 v1.3",
+      "at": "2026-08-18T08:14:04",
+      "ledger_ts": "20260817_203333_sci_viii_08_resynth",
+      "model": "claude-sonnet-4-6",
+      "compacts_read": {
+        "ch_08_canonical_p12.json": "2026-08-17T12:38:00",
+        "ch_08_canonical_p10.json": "2026-08-17T12:38:00",
+        "ch_08_canonical_p08.json": "2026-08-17T12:37:59"
+      },
+      "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+    },
+    "synthesis_polish": {
+      "spec": "density + typed visual_aids (founder, 2026-08-18)",
+      "at": "2026-08-18T12:09:59",
+      "ledger_ts": "20260818_120452_sci_viii_08_polish",
+      "model": "claude-sonnet-4-6",
+      "replaced_stripped": "stripped 2026-08-18 (founder direction): the replaced payload served no runtime purpose and risked stale defective content riding in Bucket A — full copies live in backup/resynth/, the polish backups, and genon/out raw files"
+    },
+    "repairs": [
+      {
+        "tool": "genon/repair_approach_labels.py v1.0",
+        "at": "2026-08-18T13:16:33",
+        "reason": "resynth wrote essay-length pedagogical_approach into a 2-word label field (founder, 2026-08-18); label read from the essay's own first device, full old text archived here",
+        "edits": [
+          {
+            "unit": 14,
+            "field": "pedagogical_approach",
+            "removed": "Evidence-based reasoning: students treat a structured set of observations as data and construct a classification argument from it, rather than being told what the sample contains. The vehicle is a classification map built from evidence, which differs in kind from entity-list sorting, claim-evaluation cards, and scenario-card group challenges used in the shorter plans' final units.",
+            "replaced_with": "Evidence-based Reasoning"
+          }
+        ]
+      },
+      {
+        "tool": "genon/repair_prose_tables.py v1.0",
+        "at": "2026-08-19T10:24:35",
+        "reason": "founder direction 2026-08-19: enumerable card/event/scene content flattened into dense prose visual aids becomes typed tables (records → rows, field labels → columns, content moved verbatim); scene-setting stays as caption or companion prose",
+        "edits": [
+          {
+            "unit": 14,
+            "field": "visual_aids[0]",
+            "removed": {
+              "type": "prose",
+              "title": "River water data card",
+              "text": "A river water sample was collected downstream from a town. Record the following observations:\n1. The water looks slightly cloudy.\n2. It smells faintly of rotten eggs.\n3. When a small amount is evaporated in a glass dish, a white crust remains.\n4. When air is bubbled through the residue from evaporation and tested with lime water, the lime water turns milky.\n5. A small piece of iron left in the water for two days turns reddish-brown.\n6. A dissolved-gas reading shows two gases present in unequal proportions."
+            },
+            "replaced_with": [
+              "[table] River water data card"
+            ]
+          }
+        ]
+      }
+    ],
+    "academic_year": "2026-27"
+  },
+  "result": {
+    "lesson_plan": {
+      "periods": [
+        {
+          "period_number": 1,
+          "period_duration_minutes": 45,
+          "progression_stage": 1,
+          "stage_label": "Observe and classify mixtures by property",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Sorting the Everyday: Recognising Mixtures",
+          "activity_description": "Students examine a set of familiar substances — sprout salad, sugar dissolved in water, baking powder, and sand-in-water — observing each for visibility of components, texture, and uniformity. They sort them into two groups: those where components are visible and those where components cannot be distinguished, recording observations in a table.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Sets up the sample stations, poses the sorting challenge, and circulates to prompt closer observation."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Examine samples, record observations, and sort them into uniform and non-uniform categories with written justifications."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher introduces the chapter's central question — how do we tell different kinds of matter apart — and presents the sample stations with a brief orientation to the observation task."
+            },
+            {
+              "minutes": "8-32",
+              "activity": "Groups rotate through samples, recording colour, texture, visibility of components, and any other observable property in their observation table."
+            },
+            {
+              "minutes": "32-42",
+              "activity": "Groups share their sorting decisions; class reaches a shared two-group classification and the teacher names the categories: non-uniform and uniform mixtures."
+            },
+            {
+              "minutes": "42-45",
+              "activity": "Teacher connects the two categories to the chapter's vocabulary — mixture, component, uniform, non-uniform — and previews the investigation ahead."
+            }
+          ],
+          "teacher_notes": "This is the opening unit of the chapter, so orient students to the big idea: all matter can be classified, and this chapter builds that classification from the ground up. Watch for the common conflation of 'pure' with 'unadulterated' — students often think filtered water is purer than saltwater in a scientific sense, which the chapter will address later. A useful checkpoint before moving on is whether every group can state one observable reason for placing a sample in each category.",
+          "materials": [
+            "Small cups or petri dishes",
+            "Sprout salad sample or mixed seeds",
+            "Sugar-water solution",
+            "Baking powder sample",
+            "Sand-water suspension",
+            "Magnifying glasses",
+            "Observation recording sheet"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 2,
+          "period_duration_minutes": 45,
+          "progression_stage": 1,
+          "stage_label": "Observe and classify mixtures by property",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Is Air a Mixture? Testing with Lime Water and Dust",
+          "activity_description": "Students carry out Activity 8.1, preparing lime water and exposing it to air to observe the milky change, and Activity 8.2, placing black paper near a window to collect airborne particles for magnifying-glass examination. From both observations, they build evidence that air contains multiple components — carbon dioxide and dust particulates — and classify air as a mixture.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Demonstrates the preparation of lime water from calcium oxide and water, and guides safety handling; facilitates the dust-collection setup."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Conduct both activities, record observations, and construct an evidence-based argument that air is a uniform mixture."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher connects to the previous unit's uniform-mixture category and poses the question: does air fit there, and how would we find out?"
+            },
+            {
+              "minutes": "6-20",
+              "activity": "Groups prepare lime water (teacher-demonstrated first), expose it to air in a petri dish, and record the time-course of any colour or turbidity change."
+            },
+            {
+              "minutes": "20-32",
+              "activity": "Groups set up black paper near the window, collect particulates, and examine them with a magnifying glass, sketching what they see."
+            },
+            {
+              "minutes": "32-42",
+              "activity": "Class discussion: what does each observation reveal about air's composition, and why does air fit the uniform-mixture category despite containing solid particles?"
+            },
+            {
+              "minutes": "42-45",
+              "activity": "Teacher introduces the Air Quality Index sidebar and names major air pollutants, linking particulate matter to the dust observation."
+            }
+          ],
+          "teacher_notes": "The previous unit established the uniform/non-uniform distinction; this unit applies it to a gas-phase mixture, which many students find counterintuitive because they cannot see air's components at all. A persistent misconception is that air is a single pure substance because it looks uniform and clear — push students to explain how the lime water result overturns that assumption. Ask groups to state which component each activity revealed before moving to the AQI discussion.",
+          "materials": [
+            "Calcium oxide (small amount)",
+            "Water",
+            "Petri dishes",
+            "Black paper sheets",
+            "Magnifying glasses",
+            "Observation sheets"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 3,
+          "period_duration_minutes": 45,
+          "progression_stage": 1,
+          "stage_label": "Observe and classify mixtures by property",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "Mapping All Mixture Types: A Classification Table",
+          "activity_description": "Students work from Table 8.1 in the chapter, examining six mixture types across combinations of physical states. For each type they assign a real example, determine whether it is uniform or non-uniform, and justify that determination using observable properties discussed in the previous two units. The completed table becomes a reference for the stage.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Walks through the logic of the state-based classification framework, clarifying the meaning of 'component' as a pure substance in each mixture."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Complete the classification table independently, writing justifications for uniform/non-uniform assignments before comparing with a partner."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-8",
+              "activity": "Teacher recaps the two previous units — lime water result and dust observation — and frames the question: are there other kinds of mixtures beyond those we tested?"
+            },
+            {
+              "minutes": "8-25",
+              "activity": "Students work individually to complete the six-row classification table, drawing on examples from the chapter text and their own experience, noting observable properties that determine uniformity."
+            },
+            {
+              "minutes": "25-37",
+              "activity": "Students compare tables in pairs, resolve disagreements, and identify any mixture type they found difficult to classify."
+            },
+            {
+              "minutes": "37-43",
+              "activity": "Teacher consolidates the full table on the board, addresses the alloys sidebar (stainless steel, brass, bronze as solid-solid uniform mixtures), and mentions Mishraloha as a historical context."
+            },
+            {
+              "minutes": "43-45",
+              "activity": "Quick oral check: teacher asks two or three students to justify one classification each before closing the unit."
+            }
+          ],
+          "teacher_notes": "This unit consolidates the first two units' observational work into a systematic framework; the shift to individual work here is deliberate before the class moves to more abstract content about pure substances. Watch for students classifying oil-and-water as uniform because both are liquids — the key is that the components are not evenly distributed, which the chapter explicitly categorises as non-uniform. The alloys sidebar links to the heritage note on Mishraloha, which can briefly enrich the discussion without derailing it.",
+          "materials": [
+            "Chapter text (Table 8.1 reference)",
+            "Blank classification table worksheet",
+            "Board or display surface for consolidation"
+          ],
+          "homework": [
+            "Choose one solid-solid mixture from daily life not listed in the chapter table, describe how you would observe whether it is uniform or non-uniform, and write two sentences justifying your classification."
+          ]
+        },
+        {
+          "period_number": 4,
+          "period_duration_minutes": 45,
+          "progression_stage": 2,
+          "stage_label": "Distinguish pure substances from mixtures and identify elements and compounds",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "What Does 'Pure' Really Mean? Electrolysis of Water",
+          "activity_description": "Students carry out Activity 8.3, passing electricity through water (with dilute sulfuric acid) using a 9V battery and two inverted test tubes. They observe unequal gas volumes, then test each gas — a burning candle tests for oxygen (flame glows brighter) and a lit splint tests for hydrogen (pop sound) — and record that water decomposes into two chemically distinct gases.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Sets up or guides the electrolysis apparatus, demonstrates safe handling of dilute acid, and sequences the gas tests as a class demonstration component."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Observe gas collection, predict what the tests will show before each test is conducted, record results, and write an inference about the nature of water."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher opens with the scientific meaning of 'pure substance' and contrasts it with everyday usage, posing the question: if water is pure, what would happen if we tried to break it apart?"
+            },
+            {
+              "minutes": "7-25",
+              "activity": "Electrolysis apparatus is assembled; students observe gas collecting unequally in the two test tubes and record volume comparison and any observations about the process."
+            },
+            {
+              "minutes": "25-37",
+              "activity": "Gas tests are conducted — burning candle near the oxygen tube, lit splint near the hydrogen tube — students record results and write an inference."
+            },
+            {
+              "minutes": "37-43",
+              "activity": "Class discussion: the test shows water is not a single substance; teacher introduces the distinction between pure substances that are elements and those that are compounds."
+            },
+            {
+              "minutes": "43-45",
+              "activity": "Teacher previews the next unit: we know water breaks into two gases — what exactly are those gases, and what does that tell us about elements?"
+            }
+          ],
+          "teacher_notes": "This unit pivots from classifying mixtures (Stage 1) to examining pure substances — a significant conceptual step, and the electrolysis activity makes the abstract distinction concrete. Students commonly think that because water is 'pure' it cannot be broken down; the activity directly challenges that by producing two measurably different gases. Ensure groups articulate their prediction before each gas test so the test result registers as evidence, not just a procedure.",
+          "materials": [
+            "9V battery",
+            "Connecting wires with clips",
+            "Dilute sulfuric acid solution",
+            "Two inverted test tubes",
+            "Beaker or trough",
+            "Carbon or graphite electrodes",
+            "Burning candle (on a stick)",
+            "Lit splint",
+            "Safety goggles"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 5,
+          "period_duration_minutes": 45,
+          "progression_stage": 2,
+          "stage_label": "Distinguish pure substances from mixtures and identify elements and compounds",
+          "pedagogical_approach": "Discovery approach",
+          "activity_title": "Building Blocks: Identifying Elements Around Us",
+          "activity_description": "Students examine a curated set of element samples or images (gold, silver, sulfur, carbon/graphite pencil lead) and a reference card listing 118 known elements with physical state at room temperature. They sort elements into metals, non-metals, and metalloids, note which are solid/liquid/gas at room temperature, and construct a definition of 'element' from their observations rather than receiving it directly.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Provides the sample set and reference card, poses the sorting challenge, and consolidates student-generated definitions into a shared scientific definition."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Sort, observe, and discuss element properties, then collaboratively draft a definition of 'element' using the pattern they found across the samples."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher connects to the previous unit — hydrogen and oxygen were produced from water — and asks: what kind of substance is each of those gases, and how is that different from water itself?"
+            },
+            {
+              "minutes": "6-28",
+              "activity": "Groups examine samples/images, use the reference card to note physical state and metal/non-metal classification, and sort them into categories, recording patterns they observe."
+            },
+            {
+              "minutes": "28-38",
+              "activity": "Each group drafts a two-sentence definition of 'element' based on the pattern they found; groups compare definitions and identify agreements and disagreements."
+            },
+            {
+              "minutes": "38-43",
+              "activity": "Teacher consolidates into the chapter's definition: pure substances made of identical atoms that cannot be broken into simpler substances; atoms of most elements exist as molecules."
+            },
+            {
+              "minutes": "43-45",
+              "activity": "Teacher signals the next unit: if elements are building blocks, what happens when they combine — and does the combination always produce a mixture?"
+            }
+          ],
+          "teacher_notes": "Coming from the electrolysis activity, students have seen that hydrogen and oxygen are the products of decomposing water — this unit lets them discover what makes those products fundamentally different from water itself. A common error is conflating molecules with compounds; clarify that H₂ is a molecule of a pure element, not a compound, because it contains only one kind of atom. The reference card's data on eleven gaseous elements and two liquid elements (mercury, bromine) often surprises students and can anchor the discussion productively.",
+          "materials": [
+            "Element samples or printed images: gold foil or object, silver coin or object, sulfur powder, graphite pencil lead",
+            "Reference card: list of 118 elements with state at room temperature and metal/non-metal designation",
+            "Sorting labels: Metals / Non-metals / Metalloids"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 6,
+          "period_duration_minutes": 45,
+          "progression_stage": 2,
+          "stage_label": "Distinguish pure substances from mixtures and identify elements and compounds",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Sugar's Secret: Heating a Compound",
+          "activity_description": "Students carry out Activity 8.4, heating sugar in a boiling tube and observing the sequence of colour changes — clear to brown to black char — and the appearance of water droplets at the open end of the tube. From these observations they infer that sugar contains at least three elements (carbon, hydrogen, and oxygen) and classify sugar as a compound.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Demonstrates the safe setup for heating the boiling tube and guides students to observe both the residue inside and condensation at the open end simultaneously."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Conduct the heating activity, record observations at each stage of colour change, and construct a written inference identifying sugar as a compound and naming its constituent elements."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher connects to the previous unit's definition of elements and poses the question: if sugar is a pure substance, is it an element or something else — how could heating help us decide?"
+            },
+            {
+              "minutes": "6-28",
+              "activity": "Groups heat sugar samples in boiling tubes, recording colour changes and noting any condensation at the open end; teacher circulates to prompt observation of both the residue and the tube opening."
+            },
+            {
+              "minutes": "28-38",
+              "activity": "Groups share observations and reason from the black carbon residue and water condensate to infer the elements present in sugar, writing a classification inference."
+            },
+            {
+              "minutes": "38-43",
+              "activity": "Teacher introduces the definition of a compound: elements chemically combined in a fixed ratio with properties entirely different from the constituent elements."
+            },
+            {
+              "minutes": "43-45",
+              "activity": "Teacher previews the contrasting experiment in the next unit: a mixture vs. a compound of iron and sulfur — to make the distinction sharper."
+            }
+          ],
+          "teacher_notes": "This unit builds on the previous unit's element definition by introducing a pure substance that is not an element — a compound. Students sometimes think that because only one substance (sugar) was put into the tube, only one kind of matter can come out; the two distinct products (carbon and water) are the key evidence to push on. Ask groups explicitly: could you separate carbon from water and recombine them to get sugar back by physical means — and why does the answer matter?",
+          "materials": [
+            "Sugar (granulated)",
+            "Boiling tubes",
+            "Test tube holder or clamp",
+            "Bunsen burner or spirit lamp",
+            "Safety goggles",
+            "Observation sheets"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 7,
+          "period_duration_minutes": 45,
+          "progression_stage": 2,
+          "stage_label": "Distinguish pure substances from mixtures and identify elements and compounds",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Iron and Sulfur: Mixture vs. Compound Under Test",
+          "activity_description": "Students carry out Activity 8.5, examining Sample A (iron filings and sulfur mixed) and Sample B (iron sulfide produced by heating that mixture). They test each sample for colour, texture, magnetic attraction, and response to dilute hydrochloric acid, recording the gas produced in each case (hydrogen vs. hydrogen sulfide) and its observable properties, then state a conclusion distinguishing mixture from compound.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Prepares Sample B (iron sulfide) in advance as a demonstration product, conducts the HCl acid test safely, and guides the class through systematic comparison of the two samples."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Test Sample A for magnetic attraction and record colour and texture; observe teacher's HCl tests on both samples and record gas observations; write a four-property comparison table."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher recaps the sugar-heating activity from the previous unit and sets up the contrast: today both samples start from the same two substances — what difference could heating make?"
+            },
+            {
+              "minutes": "6-25",
+              "activity": "Groups test Sample A with a magnet, record colour and texture; teacher demonstrates HCl test on both samples, students record gas observations (pop sound and colourless for hydrogen; rotten-egg odour for hydrogen sulfide)."
+            },
+            {
+              "minutes": "25-37",
+              "activity": "Groups complete a four-property comparison table (colour, texture, magnetic attraction, reaction with HCl) and write a conclusion distinguishing the mixture from the compound."
+            },
+            {
+              "minutes": "37-43",
+              "activity": "Class discussion: which properties of iron and sulfur are retained in the mixture but absent in the compound, and what does that tell us about chemical bonding?"
+            },
+            {
+              "minutes": "43-45",
+              "activity": "Teacher summarises the compound definition with this activity as its evidence base and notes that the next unit will extend to how elements and compounds are used in technology and daily life."
+            }
+          ],
+          "teacher_notes": "This is the most evidence-rich activity of Stage 2 and the one that makes the mixture/compound distinction most concrete; it directly follows from the sugar activity, so students already have one compound example. The magnetic test is particularly powerful: students are often surprised that a compound of iron is non-magnetic, which challenges the assumption that a compound inherits its elements' properties. Ensure students smell hydrogen sulfide only with a wafting gesture, never directly — safety must be modelled explicitly.",
+          "materials": [
+            "Iron filings",
+            "Sulfur powder",
+            "Magnet",
+            "Sample B (iron sulfide, teacher-prepared)",
+            "Dilute hydrochloric acid",
+            "Test tubes",
+            "Test tube holder",
+            "Safety goggles",
+            "Comparison table worksheet"
+          ],
+          "homework": [
+            "Write three observations that distinguish Sample A from Sample B, then explain in one sentence why those differences show that a compound is not just a mixture of the same elements."
+          ]
+        },
+        {
+          "period_number": 8,
+          "period_duration_minutes": 45,
+          "progression_stage": 3,
+          "stage_label": "Explain causal mechanisms linking composition to properties",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Why Do Properties Change? Reasoning from Fixed Ratios",
+          "activity_description": "Students revisit the data from Activities 8.4 and 8.5 and pose a causal question: why does chemical combination in a fixed ratio produce properties so different from the elements alone? They construct a reasoned explanation linking the fixed 2:1 hydrogen-to-oxygen ratio in water to water's unique properties, contrasting it with a hydrogen-oxygen mixture that would retain each element's properties.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Poses the causal question as a structured inquiry prompt and guides groups to reason from their own recorded evidence rather than memorising a definition."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Review their Activity 8.4 and 8.5 records, construct a causal explanation in writing, and then share their reasoning with another group for critique."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher opens by returning to the iron-sulfide result: the properties changed completely — the question for this unit is why, not just what."
+            },
+            {
+              "minutes": "7-25",
+              "activity": "Groups use their Activity 8.4 and 8.5 data to construct a written causal explanation of why fixed-ratio chemical bonding produces properties different from constituent elements."
+            },
+            {
+              "minutes": "25-35",
+              "activity": "Groups exchange written explanations and provide written critique: does the explanation actually answer 'why', or does it only re-describe 'what'?"
+            },
+            {
+              "minutes": "35-43",
+              "activity": "Class discussion consolidates the core mechanism: fixed ratio bonding means particles of the new substance are fundamentally different from either element's particles."
+            },
+            {
+              "minutes": "43-45",
+              "activity": "Teacher connects this reasoning to the water electrolysis result from earlier — the fixed 2:1 ratio is why physical separation is impossible — and previews the uses of compounds in the next unit."
+            }
+          ],
+          "teacher_notes": "This unit marks the transition to Stage 3 — students move from classifying and identifying to explaining causes; it is a significant cognitive step and the peer-critique structure here is deliberate. A frequent weak explanation is 'because they mix differently' — push students to be specific: it is the fixed-ratio chemical bond, not just proximity, that changes the identity of the particles. The connection back to water's 2:1 ratio is a good check: if students can explain why you cannot unmix hydrogen and oxygen from water physically, they have grasped the mechanism.",
+          "materials": [
+            "Students' own Activity 8.4 and 8.5 observation sheets",
+            "Blank explanation template (optional scaffold)",
+            "Board for class consolidation"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 9,
+          "period_duration_minutes": 45,
+          "progression_stage": 3,
+          "stage_label": "Explain causal mechanisms linking composition to properties",
+          "pedagogical_approach": "Didactic approach",
+          "activity_title": "From Lab to Life: How Composition Drives Use",
+          "activity_description": "Students examine the applications described in section 8.4 — alloys, medicines, fertilisers, construction materials — and for each application construct a cause-effect statement linking composition to the property that makes the material useful. For example: stainless steel is an alloy (mixture) of iron with carbon and chromium, and its mixture composition is why it is stronger and more corrosion-resistant than pure iron.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Presents the section 8.4 applications systematically, modelling one cause-effect statement before asking students to construct the rest."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Construct cause-effect statements for each application listed in section 8.4, explicitly naming whether the material is a mixture, element, or compound and what property that classification explains."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher connects to the previous unit's causal reasoning: now that we understand why composition determines properties, we can ask what composition is chosen for real applications and why."
+            },
+            {
+              "minutes": "7-12",
+              "activity": "Teacher models the cause-effect statement structure using the stainless steel example: composition (mixture/compound/element) → property produced → application it enables."
+            },
+            {
+              "minutes": "12-30",
+              "activity": "Students individually write cause-effect statements for at least four applications from section 8.4 (alloys, medicines, construction materials, graphene aerogel)."
+            },
+            {
+              "minutes": "30-40",
+              "activity": "Students share one statement each in a brief round; teacher corrects any misattributions (e.g., confusing property of element with property of compound)."
+            },
+            {
+              "minutes": "40-45",
+              "activity": "Teacher introduces the Dhokra art sidebar — brass and bronze as alloys — as a cultural instance of the same principle: choosing a mixture whose properties suit the intended object."
+            }
+          ],
+          "teacher_notes": "The previous unit built the causal mechanism in the abstract; this unit grounds it in real applications from section 8.4, shifting register from lab evidence to designed materials. Students often confuse direction here — they say a material is used for a purpose and stop, without explaining which property of which composition makes it fit; the modelled structure (composition → property → use) should be held to consistently. The graphene aerogel sidebar is particularly engaging and can reinforce that carbon as an element has properties quite different from its compounds.",
+          "materials": [
+            "Chapter section 8.4 text",
+            "Cause-effect statement template worksheet",
+            "Board for modelling"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 10,
+          "period_duration_minutes": 45,
+          "progression_stage": 3,
+          "stage_label": "Explain causal mechanisms linking composition to properties",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Minerals as Natural Compounds and Elements: What Composition Reveals",
+          "activity_description": "Students examine section 8.5's mineral examples — quartz, calcite, mica, native gold, native sulfur — and explain why each is classified as an element, compound, or mixture. They trace a cause-effect chain from mineral composition to the everyday material it enables (calcite → cement, talc → talcum powder), constructing a summary diagram linking mineral type to material use.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Frames minerals as nature's own instances of elements and compounds, poses the causal question for each mineral example, and consolidates the summary diagram at the close."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Classify each mineral as element, compound, or mixture using composition criteria, then trace the cause-effect chain from mineral to material for at least two examples."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher connects to the previous unit's application examples and asks: before humans create compounds and mixtures, where do elements and compounds occur naturally — and how do we recognise them?"
+            },
+            {
+              "minutes": "6-26",
+              "activity": "Groups work through section 8.5's mineral examples, classifying each and constructing at least two cause-effect chains from mineral composition to material use."
+            },
+            {
+              "minutes": "26-37",
+              "activity": "Groups share their chains; class identifies which minerals are native elements and which are compounds, and why most rocks are classified as mixtures."
+            },
+            {
+              "minutes": "37-43",
+              "activity": "Teacher consolidates: the same classification framework (element/compound/mixture) applies to natural minerals as to lab-made substances — composition is the determinant in both cases."
+            },
+            {
+              "minutes": "43-45",
+              "activity": "Teacher flags the closing move of Stage 3: the next unit will apply this reasoning to unfamiliar contexts — a key step before the synthesis."
+            }
+          ],
+          "teacher_notes": "This unit completes Stage 3 by extending causal reasoning beyond lab and technology into natural mineral occurrences, giving students a broader scope for the classification framework. Students sometimes think minerals must be pure substances because they come from rocks described as 'natural'; clarify that most rocks are mixtures of minerals, and minerals themselves can be elements, compounds, or — in a few impure cases — mixtures. The cement example (calcite + quartz + alumina + iron oxide) is a useful check: students should identify it as a mixture whose components are compounds.",
+          "materials": [
+            "Chapter section 8.5 text",
+            "Printed or projected mineral images (quartz, calcite, mica, native gold, sulfur)",
+            "Summary diagram template"
+          ],
+          "homework": [
+            "Look up one mineral not mentioned in the chapter and write a two-sentence explanation of whether it is an element, compound, or mixture, justifying your answer using composition evidence."
+          ]
+        },
+        {
+          "period_number": 11,
+          "period_duration_minutes": 45,
+          "progression_stage": 4,
+          "stage_label": "Apply classification and causal reasoning to unfamiliar contexts",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Classifying the Unknown: Applying Tests to New Substances",
+          "activity_description": "Students receive descriptions of four unfamiliar substances with data on observable properties, response to heating, magnetic behaviour, and reaction with HCl. Without being told the classification, they apply the chapter's physical and chemical criteria to classify each substance as element, compound, or mixture, and write a justification citing which specific test result determined each classification.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Distributes the unfamiliar-substance data cards, clarifies that no new knowledge is needed — only the chapter's own criteria — and facilitates the justification debrief."
+            },
+            {
+              "actor": "Students (Individual)",
+              "role_description": "Apply classification criteria independently to each unfamiliar substance, write a test-by-test justification, and identify which single test was most decisive for each case."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher frames the shift: in earlier units we classified substances we had tested ourselves; now we apply the same framework to substances described on a card — the criteria are the same."
+            },
+            {
+              "minutes": "6-28",
+              "activity": "Students work individually through the four substance descriptions, recording their classification and the specific test evidence that supports it for each."
+            },
+            {
+              "minutes": "28-38",
+              "activity": "Students compare answers in pairs, identify any classifications that differ, and reason through the discrepancy using the chapter's criteria."
+            },
+            {
+              "minutes": "38-44",
+              "activity": "Class debrief: teacher reveals the correct classification for each substance and focuses discussion on the most commonly misclassified case."
+            },
+            {
+              "minutes": "44-45",
+              "activity": "Teacher previews the next unit: applying the same reasoning to a data table, where students will need to read patterns across multiple substances simultaneously."
+            }
+          ],
+          "teacher_notes": "This unit is Stage 4's opening — the first time students apply the framework without the scaffold of a known substance; individual work is deliberate before pair comparison. A likely trouble spot is distinguishing a compound from a very uniform mixture: push students to articulate which test — not just which property — is the decisive one (fixed ratio is detectable only chemically, not by appearance). If any student completes the task quickly, ask them to write a second justification arguing for a different classification and explain why that argument fails.",
+          "materials": [
+            "Unfamiliar-substance data cards (teacher-prepared, grounded in chapter property criteria: colour, texture, magnetic behaviour, response to heating, reaction with HCl)",
+            "Classification recording sheet"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 12,
+          "period_duration_minutes": 45,
+          "progression_stage": 4,
+          "stage_label": "Apply classification and causal reasoning to unfamiliar contexts",
+          "pedagogical_approach": "Hands-on Science",
+          "activity_title": "Designing a Test Protocol: Which Substance Is It?",
+          "activity_description": "Groups receive an unlabelled sample (one of: a salt-sand mixture, a piece of graphite, or iron sulfide) and must design and carry out a minimal sequence of physical and chemical tests to identify and classify it, recording their reasoning at each decision point. The task requires selecting which tests to apply and in what order — not just conducting a fixed procedure.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Provides the unlabelled samples and safety guidance, confirms or questions groups' test-sequence reasoning without revealing the answer, and facilitates the post-investigation comparison."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Design a test sequence, conduct the tests, record observations and classification decisions at each step, and present their reasoning to another group."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher connects to the previous unit's data-card task and escalates: this time groups design their own test sequence before conducting it, justifying the order they choose."
+            },
+            {
+              "minutes": "7-28",
+              "activity": "Groups plan their test sequence on paper, conduct the agreed tests on their sample, and record observations and classification reasoning at each decision point."
+            },
+            {
+              "minutes": "28-38",
+              "activity": "Each group presents their test sequence and conclusion to another group; the receiving group evaluates whether the evidence cited actually supports the classification claimed."
+            },
+            {
+              "minutes": "38-44",
+              "activity": "Class shares which test was most efficient (required fewest steps to distinguish the three possible substances) and why."
+            },
+            {
+              "minutes": "44-45",
+              "activity": "Teacher notes that the next unit begins the chapter synthesis across all content, so students should consolidate their understanding of the full classification hierarchy before arriving."
+            }
+          ],
+          "teacher_notes": "Coming from the data-card task, students now have to operationalise the framework rather than just apply it to given data — a genuine step up in cognitive demand. The most common error at this stage is conducting every possible test without reasoning about which is necessary; the design-first constraint is what makes this an application task rather than a repeat of Activity 8.5. Encourage groups to ask: after this test, which classification possibilities are eliminated — and is that enough, or do we need another?",
+          "materials": [
+            "Unlabelled samples (salt-sand mixture, graphite piece, iron sulfide — one per group)",
+            "Magnets",
+            "Dilute hydrochloric acid",
+            "Test tubes and holder",
+            "Magnifying glass",
+            "Safety goggles",
+            "Test sequence planning sheet"
+          ],
+          "homework": [
+            "Write a one-paragraph explanation of why the order of tests matters when classifying an unknown substance — use the sequence your group chose and one alternative order that would have been less efficient."
+          ]
+        },
+        {
+          "period_number": 13,
+          "period_duration_minutes": 45,
+          "progression_stage": 4,
+          "stage_label": "Apply classification and causal reasoning to unfamiliar contexts",
+          "pedagogical_approach": "Inquiry approach",
+          "activity_title": "Beyond the Lab: Classifying Everyday Substances from Evidence",
+          "activity_description": "Students receive a set of everyday substance descriptions — milk, baking soda, packed fruit juice, ghee, seawater, and soil — with partial property data. They apply the chapter's classification criteria to assign each a category, explain the limits of physical tests for some (e.g., seawater appears uniform but is a mixture), and articulate where additional chemical tests would be needed to confirm a classification.",
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Presents the substance descriptions and partial data, prompts students to identify which classifications are certain from available evidence and which require further testing."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Classify each substance, flag cases where the physical evidence is insufficient, and specify what additional chemical test would resolve the uncertainty."
+            }
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-6",
+              "activity": "Teacher connects to the protocol-design unit and notes that in real life we rarely have complete data — the skill is knowing when the evidence is sufficient and when it is not."
+            },
+            {
+              "minutes": "6-26",
+              "activity": "Groups classify each of the six substances, marking confident versus uncertain classifications and noting the specific evidence gap for uncertain ones."
+            },
+            {
+              "minutes": "26-36",
+              "activity": "Groups share their uncertain cases; class reasons through each one, identifying whether a heating test, magnetic test, or chemical test would resolve it."
+            },
+            {
+              "minutes": "36-43",
+              "activity": "Teacher connects to the chapter's point that everyday 'pure' products (milk, ghee) may be scientifically impure, reinforcing the distinction between common and scientific usage of 'pure'."
+            },
+            {
+              "minutes": "43-45",
+              "activity": "Teacher signals that Stage 4 is now complete; the final unit synthesises the whole chapter and draws every concept into a single coherent framework."
+            }
+          ],
+          "teacher_notes": "This is the last unit of Stage 4 and the final content unit before the synthesis; it deliberately revisits the chapter sidebar question (milk, baking soda, etc.) from section 8.2 to close a loop opened early in the chapter. The key move to watch for is whether students can articulate why seawater being visually uniform does not make it a pure substance — that distinction between sensory uniformity and compositional uniformity is central to the whole chapter. A strong response goes beyond 'it has salt in it' to explain which test would prove that the components retain their own properties.",
+          "materials": [
+            "Substance description cards (milk, baking soda, packed fruit juice, ghee, seawater, soil — with partial property data)",
+            "Classification recording sheet"
+          ],
+          "homework": []
+        },
+        {
+          "period_number": 14,
+          "period_duration_minutes": 45,
+          "progression_stage": 5,
+          "stage_label": "Synthesise: classify matter using physical and chemical tests across the full hierarchy",
+          "synthesis": true,
+          "roles": [
+            {
+              "actor": "Teacher",
+              "role_description": "Facilitates the activity by posing the synthesis challenge and probing groups whose diagrams conflate levels of the hierarchy; consolidates a class-level hierarchy at the close."
+            },
+            {
+              "actor": "Students (Groups)",
+              "role_description": "Work through the substance descriptions, apply the full test sequence, place each substance in the hierarchy with annotated evidence, and present the completed map to the class."
+            }
+          ],
+          "activity_title": "Reading a River: Classifying What the Water Carries",
+          "activity_description": "Students receive a data card describing a river water sample collected downstream from a town. The card lists observations: the water looks slightly cloudy, smells faintly of rotten eggs, leaves a white crust on a glass dish when evaporated, turns lime water milky when air bubbled through the residue is tested, and a small piece of iron left in it for two days turns reddish-brown. A dissolved-gas reading shows two gases present in unequal proportions. Students use these observations as evidence to identify what the river water contains — distinguishing the water itself, dissolved gases, suspended solids, and a dissolved compound — and to classify each identified component as element, compound, or mixture, building a labelled classification map. The map is then used to argue whether the river water as a whole is a mixture, and why its components behave as they do.",
+          "teacher_notes": "This synthesis unit asks students to treat six river-water observations as data, build a labelled classification map, and defend every label with a criterion from the chapter — do not confirm component identities in advance; let groups commit and be challenged. The key facilitation moves are pressing groups who conflate levels with 'What single test or criterion settles this one?' and, at the close, naming the three ideas that made the task workable: the mixture definition, the element/compound distinction, and the fixed-ratio criterion (see material: 'River water data card' and visual aid: 'Component classification accept-list').",
+          "materials": [
+            "River water data card, one per group (see visual aid: 'River water data card')",
+            "Blank classification map template, one per student: large box labelled 'River Water Sample' with branching spaces for identified components and their categories",
+            "Coloured pencils or pens for annotating the map",
+            "Chalk or whiteboard markers for the class-wide composite map"
+          ],
+          "time_bands": [
+            {
+              "minutes": "0-7",
+              "activity": "Teacher distributes the river water data card and reads it aloud with the class. No labels or identities are given — only the six observations. Teacher asks: 'Before we classify anything, what does this sample seem to contain? List every distinct thing you think is present.' Groups write a first-pass inventory on their map template, naming as many components as the clues suggest. This surfaces prior knowledge and shows where groups are uncertain."
+            },
+            {
+              "minutes": "7-22",
+              "activity": "Groups work through the data card observation by observation, matching each to a component and assigning it a classification — element, compound, or mixture — with a written reason citing a specific criterion from the chapter. The unequal dissolved-gas volumes, the white evaporation crust, the rotten-egg smell, and the iron-rusting observation each require a different criterion: particle identity, fixed ratio, retained properties, or chemical change signalling a compound. Teacher circulates, asking 'What single test or criterion settles this one?' without confirming answers. Each student fills in their own map."
+            },
+            {
+              "minutes": "22-33",
+              "activity": "Groups compare maps with an adjacent group, focusing on any component they classified differently. Each group must state the criterion that drove their classification, not just the label. Where groups disagree, they identify which piece of evidence on the data card is doing the work. Teacher listens for the key contested points — especially whether dissolved oxygen is an element and whether the white crust is a compound — and notes these for the class discussion."
+            },
+            {
+              "minutes": "33-42",
+              "activity": "Teacher builds a single composite classification map on the board, taking one component at a time and asking the class to call out the classification and the decisive criterion. For each component the class settles, teacher writes the criterion beside it, not just the label. The final map shows the river water as a non-uniform mixture whose components include elements (dissolved oxygen, nitrogen), compounds (water, carbon dioxide, hydrogen sulfide, calcium carbonate, iron oxide), and suspended solid particles — each retaining its own properties within the whole."
+            },
+            {
+              "minutes": "42-45",
+              "activity": "Teacher names what made the river readable: the mixture definition told us the water could hold different components without those components losing their identities; the element–compound distinction — anchored in whether particles are identical or chemically bonded in a fixed ratio — let us label each component precisely; and the property-change test confirmed which components had reacted to form new compounds rather than simply mixing. These three ideas are the chapter's core, and the river just showed them working together on something real."
+            }
+          ],
+          "homework": [],
+          "pedagogical_approach": "Evidence-based Reasoning",
+          "visual_aids": [
+            {
+              "type": "table",
+              "title": "River water data card",
+              "table": "A river water sample was collected downstream from a town. Record the following observations\nNo. | Observation\n1 | The water looks slightly cloudy\n2 | It smells faintly of rotten eggs\n3 | When a small amount is evaporated in a glass dish, a white crust remains\n4 | When air is bubbled through the residue from evaporation and tested with lime water, the lime water turns milky\n5 | A small piece of iron left in the water for two days turns reddish-brown\n6 | A dissolved-gas reading shows two gases present in unequal proportions"
+            },
+            {
+              "type": "table",
+              "title": "Component classification accept-list",
+              "table": "Observation on card | Component identified | Classification | Decisive criterion\nSlight cloudiness | Suspended solid particles | Part of a non-uniform mixture | Non-uniform distribution; particles do not dissolve\nRotten-egg smell | Dissolved hydrogen sulfide | Compound | Characteristic property distinct from its elements; particles chemically bonded\nWhite evaporation crust | Calcium carbonate | Compound | Fixed composition; properties differ from calcium and carbon and oxygen alone\nLime water turns milky | Carbon dioxide (dissolved gas) | Compound | Known fixed-ratio compound; lime-water test confirms identity\nIron turns reddish-brown | Iron oxide (rust) | Compound formed in situ | Chemical change: new substance with different properties from iron or oxygen alone\nTwo dissolved gases in unequal proportions | Dissolved oxygen + dissolved nitrogen | Elements | Each gas consists of one kind of particle; unequal proportions confirm no fixed ratio — a mixture of elements, not a compound\nThe water itself | Water | Compound | Fixed ratio of hydrogen and oxygen; properties entirely unlike either element"
+            }
+          ]
+        }
+      ]
+    },
+    "period_schedule": {
+      "duration_minutes": 45,
+      "count": 14
+    },
+    "coverage_handoff": [
+      {
+        "stage_number": 1,
+        "stage_label": "Observe and classify mixtures by property",
+        "total_stages": 5,
+        "period_numbers": [
+          1,
+          2,
+          3
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students examine familiar and novel substances, observe physical properties, carry out Activities 8.1 and 8.2, and classify substances as uniform or non-uniform mixtures across six state-combination types.",
+        "implied_lo": "Students can sort a set of substances into uniform and non-uniform mixtures by citing at least one observable physical property as justification for each classification.",
+        "cg": "CG-1",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "stage_number": 2,
+        "stage_label": "Distinguish pure substances from mixtures and identify elements and compounds",
+        "total_stages": 5,
+        "period_numbers": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students carry out Activities 8.3, 8.4, and 8.5, using electrolysis, heating, and chemical tests with HCl to distinguish pure substances from mixtures and to identify whether a pure substance is an element or a compound.",
+        "implied_lo": "Students can distinguish a pure substance from a mixture and classify a pure substance as an element or compound by citing specific physical or chemical test evidence.",
+        "cg": "CG-1",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "stage_number": 3,
+        "stage_label": "Explain causal mechanisms linking composition to properties",
+        "total_stages": 5,
+        "period_numbers": [
+          8,
+          9,
+          10
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students revisit Activity 8.4 and 8.5 data to construct causal explanations linking fixed-ratio chemical bonding to property change, then trace composition-to-property-to-use chains for technological materials and natural minerals.",
+        "implied_lo": "Students can construct a cause-effect statement that links a substance's classification (element, compound, or mixture) to a specific property it has, and explain why that property enables a named use or application.",
+        "cg": "CG-1",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "stage_number": 4,
+        "stage_label": "Apply classification and causal reasoning to unfamiliar contexts",
+        "total_stages": 5,
+        "period_numbers": [
+          11,
+          12,
+          13
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students apply the chapter's physical and chemical test criteria to unfamiliar substance descriptions and unlabelled samples, designing test sequences, justifying classification decisions, and identifying evidence gaps where further testing is needed.",
+        "implied_lo": "Students can classify an unfamiliar substance as element, compound, or mixture by selecting and applying appropriate physical and chemical tests, and can identify which specific test result is decisive for each classification.",
+        "cg": "CG-1",
+        "c_code": "C-1.1",
+        "co_central": false
+      },
+      {
+        "stage_number": 5,
+        "stage_label": "Synthesise: classify matter using physical and chemical tests across the full hierarchy",
+        "total_stages": 5,
+        "period_numbers": [
+          14
+        ],
+        "period_duration_minutes": 45,
+        "activity_summary": "Students construct a fully annotated classification hierarchy of matter from novel substance descriptions, placing each substance using sequential physical and chemical test evidence to demonstrate the full element/compound/mixture framework.",
+        "implied_lo": "Students can construct a complete classification hierarchy of matter for a set of novel substances, annotating each placement with the specific test evidence that determined it, demonstrating the ability to classify matter into elements, compounds, and mixtures by applying physical and chemical tests.",
+        "cg": "CG-1",
+        "c_code": "C-1.1",
+        "co_central": false
+      }
+    ],
+    "assessment_items": [
+      {
+        "progression_stage": 1,
+        "stage_label": "Observe and classify mixtures by property",
+        "implied_lo_assessed": "Students can sort a set of substances into uniform and non-uniform mixtures by citing at least one observable physical property as justification for each classification.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classify matter based on physical and chemical characteristics including the element/compound distinction."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "A student stirs a spoonful of sugar into a glass of water and looks at the result with a magnifying glass. She cannot see any separate particles of sugar. Which statement best classifies this substance and gives the correct observable reason?",
+        "options": [
+          {
+            "label": "A",
+            "text": "It is a non-uniform mixture because the sugar and water are two different substances.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "It is a non-uniform mixture because the sugar dissolves and changes the water's properties.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "It is a pure substance because only one kind of particle can be seen.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "It is a uniform mixture because the components are evenly distributed and indistinguishable even under magnification.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 1
+            },
+            "what_each_option_reveals": {
+              "A": "The student recognises two components are present but confuses the uniform/non-uniform criterion — they apply 'two substances' as the classifier rather than observability of components.",
+              "C": "The student conflates visual uniformity with being a pure substance, the key misconception this stage targets: seeing no separate particles is taken as proof of a single-substance composition.",
+              "B": "The student applies the correct category label (non-uniform) but with an incorrect criterion — property change on dissolving is confused with visible separation of components."
+            },
+            "inclusivity": "Students who struggle with written options can be asked orally to describe what they would see in each cup and then say which description matches. The magnifying-glass context is grounded in Activity 8.1's procedure so hands-on learners have a direct experiential anchor."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 1,
+        "stage_label": "Observe and classify mixtures by property",
+        "implied_lo_assessed": "Students can sort a set of substances into uniform and non-uniform mixtures by citing at least one observable physical property as justification for each classification.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classify matter based on physical and chemical characteristics including the element/compound distinction."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": "Substance | Observation\nP | Grains of two different colours visible to the naked eye\nQ | Clear liquid; no particles visible even under magnifying glass\nR | Liquid with visible droplets of oil floating on top\nS | Grey solid; looks the same throughout under magnifying glass",
+        "question_text": "A student examines four substances and records observations. Refer to the table provided. Which pair contains one uniform mixture and one non-uniform mixture?",
+        "options": [
+          {
+            "label": "A",
+            "text": "P and R",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "P and S",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Q and R",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "Q and S",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 1
+            },
+            "what_each_option_reveals": {
+              "B": "The student has confused the classification: P is non-uniform (visible separate grains) and S appears uniform by sight, but the student has not applied the distinguishing criterion — visible separateness of components — consistently across both.",
+              "D": "The student correctly identifies Q as uniform but pairs it with S rather than R; this suggests the student is matching 'solid and liquid' as a category rather than applying the visibility criterion to each substance separately.",
+              "A": "The student pairs both non-uniform substances (P has visible grains, R has visible oil droplets), indicating they have not identified either as uniform — possibly classifying by physical state rather than component visibility."
+            },
+            "inclusivity": "Students who find the table format difficult can be asked to describe each observation in their own words first, then decide for each: 'can I see two things separately?' before applying the category label. This separates the reading task from the classification task."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Distinguish pure substances from mixtures and identify elements and compounds",
+        "implied_lo_assessed": "Students can distinguish a pure substance from a mixture and classify a pure substance as an element or compound by citing specific physical or chemical test evidence.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classify matter based on physical and chemical characteristics including the element/compound distinction."
+        },
+        "cognitive_demand": "Understanding",
+        "visual_stimulus": null,
+        "question_text": "Electricity is passed through water (with dilute acid added) and two gases collect in separate test tubes. One gas causes a burning splint to make a pop sound; the other makes a glowing ember burst into flame. What does this observation most directly show about water?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Water is a compound because it decomposes into two chemically distinct substances that cannot be separated by physical means.",
+            "is_correct": true
+          },
+          {
+            "label": "B",
+            "text": "Water is a mixture because it can be separated into two components by a physical process.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Water is a uniform mixture because hydrogen and oxygen are evenly distributed throughout it.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Water is an element because both gases produced are pure substances with only one kind of particle.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "what_each_option_reveals": {
+              "B": "The student recognises that separation occurs but misclassifies the process as physical; this is a key confusion between electrolytic decomposition (chemical) and physical separation of mixtures.",
+              "D": "The student correctly notes that both products are pure substances but concludes water is an element; this reveals a confusion between 'being composed of elements' and 'being an element itself'.",
+              "C": "The student applies the uniform-mixture label from Stage 1 to water, showing the misconception that a visually homogeneous liquid with dissolved components is a mixture — the most common prior-knowledge error this chapter targets."
+            },
+            "inclusivity": "Students who do not recall the gas names can still answer from the test descriptions alone (pop sound = one gas, glowing ember = another), so the question does not require memorised gas names. Teachers may read the question aloud for students who struggle with reading."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Distinguish pure substances from mixtures and identify elements and compounds",
+        "implied_lo_assessed": "Students can distinguish a pure substance from a mixture and classify a pure substance as an element or compound by citing specific physical or chemical test evidence.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classify matter based on physical and chemical characteristics including the element/compound distinction."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": "Sample | Colour | Attracted to magnet? | Gas when HCl added | Gas odour\nA | Grey-yellow mixture | Iron particles: yes | Colourless gas | No odour\nB | Uniformly black | No | Colourless gas | Rotten egg",
+        "question_text": "A student tests two samples prepared from iron and sulfur. Refer to the table provided. Which conclusion is best supported by the evidence in the table?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Both samples are mixtures because both produce a gas when HCl is added.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Sample A is a compound because it contains both iron and sulfur.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Sample A is a pure substance because iron can be separated from it using a magnet.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Sample B is a compound because it shows a uniform appearance and properties different from either iron or sulfur alone.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "what_each_option_reveals": {
+              "B": "The student uses the presence of both elements as the criterion for compound identity rather than the test evidence for chemical combination; this is a composition-listing error rather than evidence-based reasoning.",
+              "A": "The student uses gas production as the sole criterion for both samples being the same category, ignoring the critical differences in magnetic behaviour and odour that distinguish the compound from the mixture.",
+              "C": "The student correctly identifies that magnetic separation is possible for Sample A but draws the wrong conclusion — separability by physical means is a marker of a mixture, not a pure substance."
+            },
+            "inclusivity": "The table format provides full data, so students who did not personally conduct Activity 8.5 can still reason from evidence. Students may annotate the table before choosing, circling the properties that are the same or different across samples."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 2,
+        "stage_label": "Distinguish pure substances from mixtures and identify elements and compounds",
+        "implied_lo_assessed": "Students can distinguish a pure substance from a mixture and classify a pure substance as an element or compound by citing specific physical or chemical test evidence.",
+        "question_type": "SCR",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classify matter based on physical and chemical characteristics including the element/compound distinction."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": null,
+        "question_text": "Sugar is heated in a boiling tube. A black residue forms inside the tube and water droplets appear at the open end. Using this observation, explain why sugar is classified as a compound and not as an element.",
+        "options": [],
+        "expected_elements": [
+          "The observation shows that heating sugar produces two distinct substances: a black carbon residue and water (as droplets).",
+          "Because sugar yields more than one kind of substance when decomposed, it cannot be an element (which contains only one kind of atom and cannot be broken into simpler substances).",
+          "Sugar is classified as a compound because it contains different elements (carbon, hydrogen, and oxygen) chemically combined, and the decomposition reveals those constituent elements."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": {
+            "learning_outcome": {
+              "stage": 2
+            },
+            "inclusivity": "Students who express the answer in their home language first and then translate into English, or who draw a before/after diagram labelling the two products, are demonstrating the same reasoning. Accept equivalent descriptions such as 'turns into two different things' as the basis for full credit provided the two products are named."
+          },
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Explain causal mechanisms linking composition to properties",
+        "implied_lo_assessed": "Students can construct a cause-effect statement that links a substance's classification (element, compound, or mixture) to a specific property it has, and explain why that property enables a named use or application.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classify matter based on physical and chemical characteristics including the element/compound distinction."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "Pure iron rusts easily, but stainless steel — an alloy of iron mixed with carbon and chromium — resists corrosion. A student concludes that mixing iron with other elements changes one of its properties. Which statement best explains why this is possible for a mixture but would NOT be possible for a compound of iron?",
+        "options": [
+          {
+            "label": "A",
+            "text": "A mixture always has better properties than a compound because the components help each other.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "A mixture cannot change any property of iron — only a compound can change properties.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "In a compound the iron atoms are still present and still show all their original properties, so a compound and a mixture would behave the same way.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "In a mixture the components retain their own properties, but the combined arrangement can produce a new bulk property, whereas in a compound the fixed chemical bond would yield an entirely new substance with all different properties.",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "what_each_option_reveals": {
+              "A": "The student has a qualitative but non-causal understanding — 'better' is not mechanistically explained, and the claim that mixtures always outperform compounds is not grounded in the chapter's causal framework.",
+              "C": "The student holds the misconception that elements in a compound retain their individual properties, directly contradicting the chapter's definition of a compound; this is the core alternative conception Activities 8.4 and 8.5 are designed to address.",
+              "B": "The student has inverted the causal relationship, perhaps from recalling that compounds have entirely different properties — but has overgeneralised this to mean only compounds can change properties, excluding mixtures."
+            },
+            "inclusivity": "Students who need support can be asked to read back the definitions of mixture and compound before choosing — the question explicitly names the mechanism, so the reasoning task is to match mechanism to consequence rather than recall from memory."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Explain causal mechanisms linking composition to properties",
+        "implied_lo_assessed": "Students can construct a cause-effect statement that links a substance's classification (element, compound, or mixture) to a specific property it has, and explain why that property enables a named use or application.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classify matter based on physical and chemical characteristics including the element/compound distinction."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "Calcite is a mineral that is a compound of calcium, carbon, and oxygen. Cement is made by combining calcite with quartz, alumina, and iron oxide. Which row correctly identifies the classification of calcite and of cement, and gives the right reason for each?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Calcite: compound, because its elements are chemically bonded in a fixed ratio; Cement: mixture, because its mineral components retain their own properties and are not chemically bonded to each other.",
+            "is_correct": true
+          },
+          {
+            "label": "B",
+            "text": "Calcite: compound; Cement: compound, because both have fixed compositions and are used in construction.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "Calcite: element, because it is a natural mineral found in rocks; Cement: mixture, because it is made from several different minerals.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Calcite: mixture, because it contains calcium, carbon, and oxygen; Cement: compound, because it contains multiple components.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "what_each_option_reveals": {
+              "D": "The student confuses 'contains multiple elements' with 'is a mixture' — a persistent error; they have not applied the fixed-ratio chemical bonding criterion to calcite, and have not applied the component-retention criterion to cement.",
+              "C": "The student applies 'natural' as the criterion for element, confusing the geological occurrence of a mineral with its chemical classification — an error the minerals section (8.5) specifically addresses.",
+              "B": "The student correctly classifies calcite as a compound but then extends the same label to cement, possibly because both are described as having specific compositions; this reveals a confusion between a material having a recipe and its components being chemically bonded."
+            },
+            "inclusivity": "Students can be prompted to apply the chapter's two-question test to each substance: (1) are the components chemically bonded in a fixed ratio, or do they retain their own properties? (2) can the components be separated by physical means? This reduces the question to applying two binary checks."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 3,
+        "stage_label": "Explain causal mechanisms linking composition to properties",
+        "implied_lo_assessed": "Students can construct a cause-effect statement that links a substance's classification (element, compound, or mixture) to a specific property it has, and explain why that property enables a named use or application.",
+        "question_type": "SCR",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classify matter based on physical and chemical characteristics including the element/compound distinction."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": null,
+        "question_text": "Hydrogen gas and oxygen gas are both colourless, odourless, and flammable or supports combustion. Water — their compound — is a colourless liquid that extinguishes fire. Construct a cause-effect statement that explains why water's properties are so different from those of its constituent elements.",
+        "options": [],
+        "expected_elements": [
+          "In water, hydrogen and oxygen are chemically bonded in a fixed 2:1 ratio, forming a new kind of particle (a water molecule) that is fundamentally different from either hydrogen or oxygen atoms/molecules.",
+          "Because the bond is chemical, the particles of hydrogen and oxygen no longer exist independently in water — their individual properties (such as flammability and supporting combustion) are not retained.",
+          "The entirely new particle type that results from the fixed-ratio chemical bond gives water properties (liquid state at room temperature, fire-extinguishing) that neither constituent element has."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": {
+            "learning_outcome": {
+              "stage": 3
+            },
+            "inclusivity": "Students may draw a before/after particle diagram (two H atoms + one O atom → one water molecule) as part of or instead of written prose; this demonstrates the same causal reasoning. Accept responses that use the phrase 'new kind of particle' even without the term 'molecule' provided the fixed-ratio bonding mechanism is stated."
+          },
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Apply classification and causal reasoning to unfamiliar contexts",
+        "implied_lo_assessed": "Students can classify an unfamiliar substance as element, compound, or mixture by selecting and applying appropriate physical and chemical tests, and can identify which specific test result is decisive for each classification.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classify matter based on physical and chemical characteristics including the element/compound distinction."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": "Test | Result for Substance X\nAppearance | Shiny grey solid, uniform throughout\nMagnetic test | Not attracted to magnet\nHeating | Does not char; melts to a shiny liquid at high temperature\nReaction with dilute HCl | Produces a colourless, odourless gas that burns with a pop",
+        "question_text": "A student tests an unfamiliar substance X. Refer to the table provided. Which classification is best supported, and which single test result is most decisive?",
+        "options": [
+          {
+            "label": "A",
+            "text": "X could be an element (like a metal) or a compound; the reaction with HCl producing a colourless, odourless, flammable gas is consistent with a metal element reacting with acid, making X most likely an element — but a chemical decomposition test would be needed to confirm it cannot be broken into simpler substances.",
+            "is_correct": true
+          },
+          {
+            "label": "B",
+            "text": "X is a mixture of a metal and a non-metal; the most decisive test is that it is not attracted to the magnet, showing two components with different magnetic properties.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "X is an element; the most decisive test is that it does not char on heating, showing it cannot be broken into simpler substances by heat alone.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "X is an element; the most decisive test is that it melts uniformly to a shiny liquid, showing only one kind of particle is present.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "what_each_option_reveals": {
+              "C": "The student identifies the correct category but cites the wrong decisive test — 'does not char' is relevant to carbon-containing compounds (Activity 8.4) but is not the reasoning logic for classifying a metallic element.",
+              "B": "The student confuses the absence of magnetic attraction with evidence of two components; they have applied the magnetic test from Activity 8.5's mixture context without recognising that non-magnetism alone does not indicate a mixture.",
+              "D": "The student selects a correct category but gives an insufficient decisive test — uniform melting shows one apparent phase but cannot distinguish a pure element from a very uniform compound; this reveals an over-reliance on appearance over chemical testing."
+            },
+            "inclusivity": "Students who find the nuanced option D complex can be scaffolded by asking: what does each test tell us, and which test is the most chemically specific? Providing a blank two-column table (Test | What it rules in or out) as a think tool helps students systematically work through the evidence."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Apply classification and causal reasoning to unfamiliar contexts",
+        "implied_lo_assessed": "Students can classify an unfamiliar substance as element, compound, or mixture by selecting and applying appropriate physical and chemical tests, and can identify which specific test result is decisive for each classification.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classify matter based on physical and chemical characteristics including the element/compound distinction."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": null,
+        "question_text": "A student is given an unlabelled white powder. She observes that it dissolves completely in water forming a clear solution. She wants to determine whether it is a pure substance or a mixture. Which test sequence would be most efficient, and why?",
+        "options": [
+          {
+            "label": "A",
+            "text": "Dissolve it in water and observe — if it dissolves completely and forms a clear solution, it must be a pure substance.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "Heat a sample to check for charring or decomposition products; if only one substance remains or one product forms, it is likely a pure substance; if multiple products are produced, it is a compound; if no decomposition occurs at all, further tests are needed.",
+            "is_correct": true
+          },
+          {
+            "label": "C",
+            "text": "Pass electricity through the dissolved solution — if only one gas is produced, it is an element; if two gases are produced, it is a compound.",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "Test with a magnet first; if it is not attracted, heat it next — this covers both physical and chemical tests in two steps.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "what_each_option_reveals": {
+              "D": "The student selects a sequence but does not justify why the magnetic test would be informative for a white powder — this indicates applying the Activity 8.5 sequence by rote rather than reasoning about which test is appropriate for this substance type.",
+              "A": "The student has accepted the observation already given (complete dissolution, clear solution) as sufficient proof of a pure substance — this is the key misconception the chapter addresses: uniform mixtures like saltwater also dissolve completely and appear clear.",
+              "C": "The student correctly recalls the electrolysis procedure from Activity 8.3 but misapplies it — electrolysis of the dissolved compound would not yield gases that identify the original powder as element or compound in the way described; this shows recall without transfer of the reasoning behind the test."
+            },
+            "inclusivity": "Students who respond that no single test is sufficient and that a combination is needed are showing sophisticated reasoning that should be credited even if their described sequence differs from option C. Partial credit or extended oral discussion is appropriate."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 4,
+        "stage_label": "Apply classification and causal reasoning to unfamiliar contexts",
+        "implied_lo_assessed": "Students can classify an unfamiliar substance as element, compound, or mixture by selecting and applying appropriate physical and chemical tests, and can identify which specific test result is decisive for each classification.",
+        "question_type": "SCR",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classify matter based on physical and chemical characteristics including the element/compound distinction."
+        },
+        "cognitive_demand": "Application",
+        "visual_stimulus": null,
+        "question_text": "Seawater looks completely uniform — it is a clear liquid with no visible particles. A classmate argues that seawater must therefore be a pure substance. Write a response that explains whether the classmate is correct and identifies which specific test would provide decisive evidence.",
+        "options": [],
+        "expected_elements": [
+          "The classmate is incorrect: visual uniformity does not determine whether a substance is pure; a uniform mixture also appears the same throughout.",
+          "Evaporating a sample of seawater would leave behind a solid residue (salt), showing that at least two components were present and that each retains its own properties — this is the decisive physical test.",
+          "The scientific definition of a pure substance requires that it contain only one kind of particle and cannot be separated by physical means; the salt residue from evaporation confirms seawater is a mixture, not a pure substance."
+        ],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": {
+            "learning_outcome": {
+              "stage": 4
+            },
+            "inclusivity": "Students who name a different physical separation method (e.g., distillation) that would also reveal the salt component should receive full credit. Students may sketch a before/after diagram of the evaporation test; accept this as equivalent to written explanation of the test result."
+          },
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 5,
+        "stage_label": "Synthesise: classify matter using physical and chemical tests across the full hierarchy",
+        "implied_lo_assessed": "Students can construct a complete classification hierarchy of matter for a set of novel substances, annotating each placement with the specific test evidence that determined it, demonstrating the ability to classify matter into elements, compounds, and mixtures by applying physical and chemical tests.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classify matter based on physical and chemical characteristics including the element/compound distinction."
+        },
+        "cognitive_demand": "Analysis",
+        "visual_stimulus": "Substance | Physical appearance | Magnetic test | Heating test | Reaction with dilute HCl\nJ | Yellow powder, uniform | No | Melts, then ignites; no charring, no residue | Produces a foul-smelling colourless gas\nK | Shiny silver solid | No | Melts uniformly; no decomposition products | No reaction\nL | Dark grey solid; two textures visible | One region attracted | Residue after heating is black; water droplets at the open end | Produces colourless odourless gas (pop sound) from one region\nM | White solid | No | Black char remains; clear liquid droplets at open end | No reaction",
+        "question_text": "A student tests four substances. Refer to the table provided. Which row correctly classifies all four substances?",
+        "options": [
+          {
+            "label": "A",
+            "text": "J: compound; K: element; L: uniform mixture; M: element",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "J: element; K: compound; L: non-uniform mixture; M: compound",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "J: element; K: element; L: compound; M: element",
+            "is_correct": false
+          },
+          {
+            "label": "D",
+            "text": "J: element; K: element; L: non-uniform mixture; M: compound",
+            "is_correct": true
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 5
+            },
+            "what_each_option_reveals": {
+              "A": "The student misclassifies J as a compound (possibly because of the foul gas produced with HCl, confusing a gas produced by reaction of an element with acid — analogous to Activity 8.5 Sample A — with decomposition evidence for a compound) and misclassifies L as uniform despite two visible textures.",
+              "B": "The student misclassifies K as a compound despite the absence of decomposition products and uniform melting, likely over-applying the compound label to any shiny metal — a recall-of-example error rather than evidence-based reasoning.",
+              "C": "The student misclassifies M as an element despite the charring evidence (black residue + liquid droplets) that directly parallels Activity 8.4 sugar heating, showing that the student has not transferred that test's diagnostic logic to a novel substance."
+            },
+            "inclusivity": "Students who annotate the table before choosing — marking each test result with what it indicates (e.g., 'charring = compound', 'two textures = mixture') — are using the evidence systematically. This annotation approach should be encouraged for all students."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 5,
+        "stage_label": "Synthesise: classify matter using physical and chemical tests across the full hierarchy",
+        "implied_lo_assessed": "Students can construct a complete classification hierarchy of matter for a set of novel substances, annotating each placement with the specific test evidence that determined it, demonstrating the ability to classify matter into elements, compounds, and mixtures by applying physical and chemical tests.",
+        "question_type": "MCQ",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classify matter based on physical and chemical characteristics including the element/compound distinction."
+        },
+        "cognitive_demand": "Evaluation",
+        "visual_stimulus": null,
+        "question_text": "A student classifies bronze (an alloy of copper and tin) as a compound because it looks completely uniform and has properties different from either pure copper or pure tin alone. Evaluate the student's classification and reasoning.",
+        "options": [
+          {
+            "label": "A",
+            "text": "The classification is correct because bronze has different properties from copper and tin, which is the definition of a compound.",
+            "is_correct": false
+          },
+          {
+            "label": "B",
+            "text": "The classification is wrong; the correct classification is element, because bronze is a metal like copper and tin.",
+            "is_correct": false
+          },
+          {
+            "label": "C",
+            "text": "The classification is wrong; bronze is a mixture (alloy). While mixtures can have different bulk properties from their components, copper and tin are not chemically bonded in a fixed ratio in bronze — they retain their elemental identities and can be separated by physical means.",
+            "is_correct": true
+          },
+          {
+            "label": "D",
+            "text": "The classification is correct; any substance that looks uniform must be either a pure substance or a compound, and since bronze contains two elements, it is a compound.",
+            "is_correct": false
+          }
+        ],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": {
+            "learning_outcome": {
+              "stage": 5
+            },
+            "what_each_option_reveals": {
+              "A": "The student accepts the student's reasoning uncritically, confusing the criterion 'different properties from components' — which can apply to some mixtures — with the defining criterion for compounds, which is fixed-ratio chemical bonding.",
+              "B": "The student correctly rejects the compound classification but replaces it with 'element', apparently because bronze is a metal; this is a category error that ignores the multi-component composition of alloys entirely.",
+              "D": "The student endorses both the incorrect classification and the flawed reasoning about uniformity, showing that they equate visible uniformity with compound identity — the chapter's core misconception target for pure substances vs. mixtures."
+            },
+            "inclusivity": "Students who respond orally can be asked: 'can you separate copper and tin from bronze without a chemical reaction — and why does that matter for the classification?' This oral pathway accesses the same reasoning without requiring a written argument."
+          },
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 5,
+        "stage_label": "Synthesise: classify matter using physical and chemical tests across the full hierarchy",
+        "implied_lo_assessed": "Students can construct a complete classification hierarchy of matter for a set of novel substances, annotating each placement with the specific test evidence that determined it, demonstrating the ability to classify matter into elements, compounds, and mixtures by applying physical and chemical tests.",
+        "question_type": "ECR",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classify matter based on physical and chemical characteristics including the element/compound distinction."
+        },
+        "cognitive_demand": "Evaluation",
+        "visual_stimulus": null,
+        "question_text": "A geologist finds three rock samples. Sample 1 is pure native gold — a shiny yellow metal that does not react with dilute HCl and cannot be broken into simpler substances. Sample 2 is quartz — a hard, clear mineral that, when analysed chemically, is found to contain silicon and oxygen in a fixed 1:2 ratio. Sample 3 is granite — a speckled grey-pink rock that contains visible crystals of quartz, feldspar, and mica, each retaining their own properties. For each sample: (a) classify it as element, compound, or mixture; (b) state the one piece of evidence that is most decisive for that classification; and (c) explain why the other two categories are ruled out.",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [
+          "Sample 1 is correctly classified as an element, with the decisive evidence being that it cannot be broken into simpler substances and does not react with HCl — ruling out compound (which would decompose into elements) and mixture (which would contain separable components).",
+          "Sample 2 is correctly classified as a compound, with the decisive evidence being the fixed 1:2 silicon-to-oxygen ratio — ruling out element (which would have only one kind of atom) and mixture (whose components are not in a fixed chemical ratio and retain their own properties).",
+          "Sample 3 is correctly classified as a mixture, with the decisive evidence being that three distinct mineral crystals are visible and each retains its own properties — ruling out element and compound (both of which would have uniform composition throughout).",
+          "The response applies the same classification framework consistently across all three samples, using specific evidence rather than appearance alone.",
+          "The response correctly distinguishes between visual uniformity and compositional identity — it does not equate quartz's clear appearance with being an element, nor does it equate granite's multiple minerals with being a compound."
+        ],
+        "task": "",
+        "scaffold": "",
+        "format_of_output": [],
+        "guide": {
+          "MCQ": null,
+          "SCR": null,
+          "ECR": {
+            "learning_outcome": {
+              "stage": 5
+            },
+            "inclusivity": "Students may respond with a structured table (Sample | Classification | Decisive evidence | Ruled-out categories + reason) rather than paragraphs; this format demonstrates the same reasoning. Students who classify correctly but whose ruling-out explanations are partially formed should receive partial credit with written feedback identifying the gap."
+          },
+          "OPEN_TASK": null
+        }
+      },
+      {
+        "progression_stage": 5,
+        "stage_label": "Synthesise: classify matter using physical and chemical tests across the full hierarchy",
+        "implied_lo_assessed": "Students can construct a complete classification hierarchy of matter for a set of novel substances, annotating each placement with the specific test evidence that determined it, demonstrating the ability to classify matter into elements, compounds, and mixtures by applying physical and chemical tests.",
+        "question_type": "OPEN_TASK",
+        "competency": {
+          "c_code": "C-1.1",
+          "competency_text": "Classify matter based on physical and chemical characteristics including the element/compound distinction."
+        },
+        "cognitive_demand": "Evaluation",
+        "visual_stimulus": "Substance | Appearance | Magnetic test | Heating test | Reaction with dilute HCl | Classification | Decisive test + reason | One category ruled out + reason\nSubstance P | Shiny grey solid, uniform | Not attracted | Melts uniformly; no gas produced, no char | Produces colourless odourless gas that burns with pop sound | | |\nSubstance Q | White powder, uniform | Not attracted | Black char remains; colourless liquid droplets at open end | No reaction | | |\nSubstance R | Black and yellow granules; two textures | Yellow region not attracted; black region not attracted | Yellow region melts; black region sublimes separately | Yellow region: no reaction; black region: produces colourless pungent gas | | |\nSubstance S | Clear colourless liquid | Not applicable | Decomposes into two gases in unequal volumes when electricity is passed | Does not react with HCl | | |",
+        "question_text": "",
+        "options": [],
+        "expected_elements": [],
+        "look_for": [],
+        "task": "You are given data for four substances. Refer to the table provided. For each substance: (1) write its classification (element, compound, or mixture) in the Classification column; (2) identify the single most decisive test and explain why it determines the classification; (3) name one category that is ruled out and explain what evidence rules it out.",
+        "scaffold": "Work through one substance at a time. For each row, ask: Does any test show the substance breaks into more than one kind of matter? Does any test show that components retain their own separate properties? Which single test answered your classification question most directly?",
+        "format_of_output": [
+          "Completed table with Classification, Decisive test + reason, and One category ruled out + reason filled in for all four substances."
+        ],
+        "guide": {
+          "MCQ": null,
+          "SCR": null,
+          "ECR": null,
+          "OPEN_TASK": {
+            "learning_outcome": {
+              "stage": 5
+            },
+            "format_type": "Classification or sorting task with justification",
+            "format_rationale": "The Final Stage implied LO requires students to classify matter using physical and chemical tests and annotate placements with decisive evidence; a classification table with justification columns is the most direct vehicle for demonstrating that complete operation across multiple substances simultaneously.",
+            "what_this_demonstrates": "A complete response demonstrates that the student can apply the chapter's full classification framework — not just name categories, but select the decisive test for each substance, reason from evidence to classification, and explicitly rule out alternative categories, all for novel substances not encountered during instruction.",
+            "reading_the_scaffold": "The scaffold's three questions are ordered to mirror the logical sequence of the classification decision: first establish whether decomposition or component separation is evident, then check component-property retention, then identify the single most decisive test. A student who fills in the table but cannot answer the scaffold questions is likely classifying by pattern-matching rather than reasoning — use the scaffold as a diagnostic probe rather than just a completion guide.",
+            "strong_vs_weak_markers": "Strong responses: classify all four correctly, cite a different decisive test for each substance (not the same test applied mechanically), and give a ruling-out explanation that names the specific criterion the evidence fails. Weak responses: correct classification without stated evidence, or evidence stated without connection to the criterion (e.g., 'it charred' without explaining what charring proves about composition).",
+            "inclusivity": "Students who find the full table overwhelming may complete two substances in depth rather than all four — a response demonstrating the full three-part reasoning on two substances shows the same cognitive operation as a complete four-row table. Students may also annotate the data rows with marginal notes before filling in the classification columns."
+          }
+        }
+      }
+    ],
+    "competency_gap_note": "",
+    "section_coverage_note": null
+  }
+}

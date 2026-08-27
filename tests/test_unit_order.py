@@ -23,6 +23,8 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from corpus import plan_paths, split_path, grade_dir, require_corpus  # noqa: E402
 
 from aruvi_core.subjects.english.subject import EnglishSubject
 from aruvi_core.subjects.mathematics.subject import MathematicsSubject
@@ -52,15 +54,14 @@ def flatten(groups):
 
 
 def main():
-    plans = sorted(glob.glob(os.path.join(DATA, "saved_plans", "*", "*", "*.json")))
+    plans = plan_paths()
     assert plans, f"no saved plans found under {DATA} — set ARUVI_DATA_DIR"
     checked, failures = 0, []
     for path in plans:
-        parts = path.replace("\\", "/").split("/")
-        subject, grade = parts[-3], parts[-2]
+        subject, grade, _fn = split_path(path)
         plugin = PLUGINS.get(subject)
         if plugin is None:
-            failures.append(f"{subject}/{grade}/{parts[-1]}: no plugin registered")
+            failures.append(f"{subject}/{grade}/{_fn}: no plugin registered")
             continue
         with open(path) as fh:
             doc = json.load(fh)
@@ -72,7 +73,7 @@ def main():
         flat = flatten(view.groups)
         if flat != raw_order:
             failures.append(
-                f"{subject}/{grade}/{parts[-1]}: raw {raw_order} → flattened {flat}")
+                f"{subject}/{grade}/{_fn}: raw {raw_order} → flattened {flat}")
         checked += 1
     if failures:
         print(f"{len(failures)} of {checked} plans REORDERED:")

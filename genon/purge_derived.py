@@ -37,7 +37,17 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent
-CONTENT = REPO / "data" / "content" / "saved_plans"
+sys.path.insert(0, str(REPO))
+from api import config  # noqa: E402
+
+# ★ THIS PATH WAS DEAD (fixed 2026-08-27, with the edition change). It named
+# `data/content/saved_plans`, which stopped existing at the 2026-08-23 cloud/local
+# restructure — the live tree is `data/cloud/content/`. Every purge since then found no
+# directory and returned [] : the invariant this file EXISTS to enforce (ARV-D-034 — a
+# repaired canonical must not keep serving from a cache entry cut before the repair)
+# has been quietly off. It reads config.DATA_DIR now, so it cannot drift from the
+# runtime again.
+CONTENT = Path(config.DATA_DIR) / "saved_plans"
 
 
 def derived_pattern(ch: int) -> re.Pattern:
@@ -47,11 +57,19 @@ def derived_pattern(ch: int) -> re.Pattern:
 
 def purge(subject: str, grade: str, ch: int, reason: str = "", apply: bool = True):
     """Remove every plan derived from this chapter's canonicals. Returns the names removed."""
-    d = CONTENT / subject / grade
-    if not d.is_dir():
+    base = CONTENT / subject / grade
+    if not base.is_dir():
         return []
     pat = derived_pattern(ch)
-    doomed = sorted(p for p in d.iterdir() if pat.match(p.name))
+    # EVERY edition, not just the current one (§2.2). A repair to a canonical that was
+    # CARRIED forward invalidates the derived plans in both the edition it was authored
+    # in and every edition it was carried into — they share a ledger_ts, so they share a
+    # cache key, so a stale entry in last year's folder is still reachable by
+    # data.load_saved_plan's look-back. Purging only the current edition would leave
+    # exactly the stale entry this file exists to destroy.
+    dirs = [base] + [d for d in sorted(base.iterdir()) if d.is_dir()]
+    doomed = sorted(p for d in dirs for p in d.iterdir()
+                    if p.is_file() and pat.match(p.name))
     removed, failed = [], []
     for p in doomed:
         if not apply:
