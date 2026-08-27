@@ -687,7 +687,121 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-26 (newest, late) — WHAT OF TODAY'S WORK IS NOW VERIFIED LIVE
+## 2026-08-27 (newest) — THE USER AGREEMENT IS A STEP, NOT A CHECKBOX:
+## SIX TICKS BEFORE SHE CHOOSES SUBJECTS, KEPT AS EVIDENCE
+
+**What changed.** `docs/legal/aruvi_consent_and_disclaimer_v0.1.md` — the founder's draft
+agreement, five acknowledgements plus a final one — is now IN the product. Three surfaces:
+
+1. **The subscribe wizard grew a step.** Verify · About you · **Agreement** · Subjects ·
+   Pay. Five individually-ticked acknowledgement cards, then the full agreement body,
+   then the final tick; Continue is dead until all six are down.
+2. **Settings › Legal** — its own card (About Aruvi's subtitle drops "/ legal"), the same
+   document read-only, with her acceptance record at the top.
+3. **`POST /onboarding/checkout` refuses without a current-version signature** (409, in
+   words she can act on — the client routes on them and sends her back to the step).
+
+**Why BEFORE the cart, not before Pay.** The founder's placement, and it is the right one:
+the five points say what Aruvi IS — a teaching aid, not endorsed by any board, no student
+data, AI-assisted, personally licensed. Those are facts you want before choosing what to
+buy. Placed after the cart the agreement arrives as an obstacle between a teacher and a
+purchase she has already assembled, which is exactly the inversion of §0's benefit-first
+rule that the "teach other classes?" window and first run's four extra screens were both
+struck for.
+
+**One source, or it will disagree with itself.** The markdown moved to
+`data/cloud/content/legal/consent_and_disclaimer_v0.1.md` (Bucket A-serve — the runtime
+serves it to every teacher before she pays, so it must travel inside the migration unit),
+and `api/legal.py` PARSES it into {intro, five acknowledgements, agreement body, final
+tick}. Nothing is retyped in JSX. **The version is the filename**: publishing v0.2 means
+adding a file, never editing text somebody has already ticked, because her consent record
+names the version she saw and that file has to still exist to be shown back to her. A
+document that loses a tick raises `ConsentDocumentError` (503) rather than serving a
+consent screen with four boxes — the kind of bug nobody would notice.
+
+**Re-consent is per VERSION** (founder's choice of three): a subscriber adding a
+subject-stage walks past the step; the same teacher after v0.2 takes all six ticks again.
+That is what §J of the agreement already promised. The rule lives in ONE function
+(`_consent_outstanding`) so the screen and the gate cannot disagree.
+
+**The record is retained through erasure — deliberately, and said out loud in three
+places.** Founder's call: proof the other party can delete is not proof. So the ledger
+sits at `consents/_ledger/{tenant}.json`, OUTSIDE every `{kind}/{tenant}/{user}` folder
+the erase traversal walks — the same reasoning that put the invoice number series in
+`invoices/_series/`. Because a silent remnant is worse than none, the erasure receipt's
+`_KEPT` list now names it, and §G of the agreement was amended to say what survives an
+erase and why. **Those three must move together or none of them.** The record holds
+tenant id, user id, document version, language and per-tick timestamps — no teaching
+content, no notes, no profile. That minimum is what makes retaining it defensible. The
+account's existing `consent` field carries a convenience mirror, which IS erased with her
+account, and which the data-rights export now renders as an "Agreement accepted" row.
+
+**Two things live testing would have caught and static work nearly didn't.**
+(a) **The front door has no localStorage identity.** `getJSON`/`postJSON` attach
+X-Aruvi-User from localStorage, and Login only calls `setUser` AFTER checkout — so a
+signature taken on the front door would have been filed against the fallback identity,
+and the gate, running as her real id, would then have refused a teacher who had just
+ticked all six boxes. Agreement takes a `userId` prop and every request on that path uses
+an explicit header (Settings passes none — there she is signed in). (b) **A consent 409 at
+Pay has a place to send her**, so it sends her there rather than printing advice she
+cannot act on from the Pay screen — the same lesson as the taken-email 409.
+
+**Verified:** `tests/test_consent.py` (7 tests: the document parses to 5+1, a malformed one
+refuses to serve, the ledger appends and isolates tenants, consent survives an erase and
+the receipt names it, per-tick recording, partial/stale acceptance refused and NOT stored,
+checkout gated then passed then not re-asked). test_entitlement/test_invoice gained
+`accept_current` at their checkout calls (imported from test_consent, not re-derived — the
+tick ids belong to the document). Full suite otherwise unchanged; the three red corpus
+tests (normalized_item, unitize, unit_order) are pre-existing content issues, untouched
+here. **Web half is STATIC-verified only** (babel-parse clean on Agreement.jsx /
+SubscribeFlow.jsx / Settings.jsx / legalmd.js, CSS braces 2193/2193, every `.lgl-*` class
+used has a rule) — **live + mobile (360×800) pass is OWED**, and the agreement is the
+longest single scroll in the product, so the sticky footer and the 22px tick targets are
+the two things to look at first.
+
+---
+
+## 2026-08-27 — THE FRONT DOOR OFFERS THE TRIAL ONE LAST TIME,
+## AT THE CART, BEFORE ANY MONEY SCREEN
+
+**What changed.** In the DIRECT subscription path (front door: choose Subscribe → OTP →
+SubscribeFlow), the cart's **Continue →** no longer walks straight to Review & pay. It
+raises a two-option box — **Trial** · **Subscribe**. Subscribe goes to Pay exactly as
+before; Trial signs her straight in, the same landing the choose-screen's Free-to-try card
+has always had (first run next, entitlement defaults to trial).
+
+**Why the cart and not the Pay button.** The cart is the last moment that is still free to
+undo. Once she is on Review & pay she has been shown a total, and an offer to go free at
+that point reads as a discount haggle rather than an invitation. It also keeps the money
+screen single-purpose: everything on it is about paying.
+
+**Why front door ONLY (the coupling that matters).** The wizard has two doors, ONE
+implementation (2026-08-25). The in-app door is the trial-exhausted paywall and Settings —
+a teacher there has already spent or lost her trial, so a Trial button would be an offer
+Aruvi cannot honour. The offer is therefore keyed to a new optional prop, **`onTrial`**:
+present → the box exists; absent → the plain Continue it always was. `Login.jsx` passes
+`() => enter(mobile.trim())`; `page.jsx` passes nothing, deliberately. **Do not make the
+box unconditional** — that is the whole design, not an oversight.
+
+**Honesty note on screen:** the box says her subject choices are not carried into the
+trial. They are not (no cart is persisted); discovering that afterwards is exactly the
+kind of small surprise that costs trust at the moment she is deciding whether to pay.
+
+**Files:** `web/app/components/SubscribeFlow.jsx` (prop + `offerTrial` state + the box),
+`web/app/components/Login.jsx` (passes `onTrial`), `web/app/globals.css`
+(`.ob-offer-*`, reusing `.modal-backdrop`/`.modal-box`; own title because the shared
+`.modal-title` is DANGER-coloured and this is an invitation, not a warning; z-index 80
+clears the in-app `.subflow-overlay`).
+
+**STATIC-verified only** — babel-parse clean on both components, CSS braces balanced
+2157/2157. **Live + mobile (360×800) pass OWED**, and the walk that matters is: front door →
+Subscribe → OTP → About you → cart → Continue → **Trial** → lands in first run; then the
+same walk choosing **Subscribe** → Pay unchanged; then the in-app paywall's Subscribe →
+Continue → **no box**.
+
+---
+
+## 2026-08-26 (late) — WHAT OF TODAY'S WORK IS NOW VERIFIED LIVE
 
 Everything below this entry was written "STATIC ONLY — live pass owed". This records what
 has since been walked in a real browser, on the founder's Mac, so the next session knows

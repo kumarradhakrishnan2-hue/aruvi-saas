@@ -99,6 +99,20 @@ MAIL_REPLY_TO = os.environ.get("ARUVI_MAIL_REPLY_TO", "").strip() or MAIL_FROM
 MAIL_BCC_FOUNDER = os.environ.get("ARUVI_MAIL_BCC_FOUNDER", "1").strip().lower() in (
     "1", "true", "yes", "on")
 
+# ── Support (2026-08-27) ───────────────────────────────────────────────────────
+# Email is the only channel, so the acknowledgement carries the whole weight of "your
+# message arrived and it is somebody's job now". The reference is the handle both sides
+# use afterwards; SUPPORT_START is where the series opens (see support_repository_file
+# for why it is not 1). SUPPORT_REPLY_DAYS is the promise the screen and the mail BOTH
+# make — one value, so they cannot drift apart and leave the teacher with two answers.
+SUPPORT_PREFIX = os.environ.get("ARUVI_SUPPORT_PREFIX", "ARV-S").strip() or "ARV-S"
+SUPPORT_START = int(os.environ.get("ARUVI_SUPPORT_START", "742"))
+SUPPORT_REPLY_DAYS = int(os.environ.get("ARUVI_SUPPORT_REPLY_DAYS", "2"))
+# Billing questions get the firmer promise: money carries a different anxiety, and a
+# teacher who thinks she has paid twice should not wait as long as one with a layout
+# question.
+SUPPORT_BILLING_REPLY_DAYS = int(os.environ.get("ARUVI_SUPPORT_BILLING_REPLY_DAYS", "1"))
+
 # ── Academic-year cutover (administrative architecture Step 2) ──────────────────
 # CUTOVER_MONTH_DAY: the date each year on which Aruvi starts OFFERING the new academic
 # year. June 1 by default — Indian schools reopen late May/early June, and a teacher

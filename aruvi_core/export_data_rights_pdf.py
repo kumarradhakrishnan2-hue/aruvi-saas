@@ -113,6 +113,25 @@ def render_pdf_html(payload: Dict[str, Any]) -> str:
             f'<div class="sub-head">Your chapter notes</div>{notes_html}'
             f'<div class="sub-head">Your teaching state</div>{teaching_html}')
 
+    # ── messages she sent support (2026-08-27) ──
+    # Rendered only when there are some, and worded exactly as the Word export words it:
+    # the two formats are one payload through two renderers and must never disagree.
+    support_html = ""
+    for s in payload.get("support") or []:
+        head = (f"{s.get('reference', '')} · "
+                f"{s.get('category_label') or s.get('category') or ''}")
+        support_html += (
+            f'<div class="note-block"><p class="note-head">{_esc(head)}</p>'
+            f'<p class="note-text">{_esc(s.get("message"))}</p>'
+            + (f'<p class="note-edited">Sent {_esc(str(s.get("created_at"))[:10])}</p>'
+               if s.get("created_at") else "")
+            + '</div>')
+    if support_html:
+        support_html = ('<div class="section-head">Messages you sent us</div>'
+                        '<p class="closing">Support messages you have written to Aruvi, '
+                        'newest first, with the reference each was given.</p>'
+                        + support_html)
+
     return f"""<!DOCTYPE html><html><head><meta charset="UTF-8"><style>{font_face_css()}
   @page {{
     size: a4 portrait; margin: 1.6cm 1.3cm 1.4cm 1.3cm;
@@ -183,6 +202,8 @@ def render_pdf_html(payload: Dict[str, Any]) -> str:
   {profile_html}
 
   {years_html}
+
+  {support_html}
 
   <div class="section-head">About lesson plan content</div>
   <p class="closing">Lesson plans and assessments themselves are Aruvi's shared library

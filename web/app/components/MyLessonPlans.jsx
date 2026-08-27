@@ -869,9 +869,18 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
                       variant library: ch 3 is {12, 9, 7} and three cards reading only
                       "Atmosphere and Climate" are indistinguishable. Source: api/data.py
                       duration_label(), served_matrix -> matrix -> period_rows_snapshot. */}
-                  {p.duration_label ? <div className="sc-durline">{p.duration_label}</div> : null}
-                  {/* Same stamp, same component, as the section card and both pickers. */}
-                  <YearStamp year={p.prepared_source_year} />
+                  {/* ★ ONE META ROW, not two stacked lines (founder, 2026-08-27). The
+                      matrix and the year stamp are both small-print provenance and each
+                      was taking a full line of a compact card, so a shelf of ten plans
+                      paid ten extra line-heights for it. Side by side they read as the
+                      one thing they are — which version of this chapter she holds — and
+                      the section gets its vertical space back. Wraps rather than
+                      squashes on a narrow phone: see .sc-metarow. */}
+                  <div className="sc-metarow">
+                    {p.duration_label ? <span className="sc-durline">{p.duration_label}</span> : null}
+                    {/* Same stamp, same component, as the section card and both pickers. */}
+                    <YearStamp year={p.prepared_source_year} />
+                  </div>
                   {busy ? (
                     /* Re-preparing THIS plan: the progress line replaces the status line on
                        the card she is already looking at, rather than a second card
@@ -960,9 +969,13 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
                     <div className="sc-tag">{pad(p.chapter_number)}</div>
                     <div className="sc-body">
                       <div className="sc-title">{p.chapter_title}</div>
-                      {p.duration_label ? <div className="sc-durline">{p.duration_label}</div> : null}
-                      {/* The folder's year IS the stamp for its rows (fetched under it). */}
-                      <YearStamp year={yid} />
+                      {/* Same one meta row as the active cards above — last year's
+                          shelf is the longest list in the view, so it gains the most. */}
+                      <div className="sc-metarow">
+                        {p.duration_label ? <span className="sc-durline">{p.duration_label}</span> : null}
+                        {/* The folder's year IS the stamp for its rows (fetched under it). */}
+                        <YearStamp year={yid} />
+                      </div>
                     </div>
                   </div>
                 ))}

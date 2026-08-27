@@ -7,8 +7,9 @@ import SubscribeFlow, { MOBILE_TAKEN } from "./SubscribeFlow";
  *
  * FIRST-TIME device → CHOOSE (benefits + Free-to-try/Subscribe cards, honest bullets)
  * → OTP (mobile IS the identity; four auto-advancing boxes; ★ stub code 0000, labeled)
- * → TRIAL: straight in · SUBSCRIBE: SubscribeFlow (About you → Subjects-cart → Pay
- * stub — ONE implementation shared with the in-app paywall's Subscribe button).
+ * → TRIAL: straight in · SUBSCRIBE: SubscribeFlow (About you → Subjects-cart →
+ * ★ Trial-or-Subscribe offer → Pay stub — ONE implementation shared with the in-app
+ * paywall's Subscribe button, which passes no `onTrial` and so never sees the offer).
  * OTP verification REGISTERS the number in the tenant database (/onboarding/verified);
  * the SIGN-IN screen (returning device) admits registered identities only
  * (/onboarding/known) and points unknown numbers at Create sign in. Production: the
@@ -105,8 +106,14 @@ export default function Login({ onEnter }) {
 
   /* ── SUBSCRIBE — the shared wizard (also reachable in-app from the paywall) ── */
   if (screen === "subscribe") {
+    /* ★ `onTrial` is what makes the cart's Trial/Subscribe offer exist (SubscribeFlow's
+       header note): she is one screen from paying for a product she has not used yet.
+       Trial lands exactly where the Free-to-try card lands — signed in, first run next.
+       Her number is already OTP-verified and registered, so nothing further is owed.
+       The in-app door (page.jsx) deliberately passes no onTrial. */
     return <SubscribeFlow userId={mobile.trim()} chrome={<Bar />}
-      onDone={(uid) => enter(uid)} onCancel={() => setScreen("otp")} />;
+      onDone={(uid) => enter(uid)} onCancel={() => setScreen("otp")}
+      onTrial={() => enter(mobile.trim())} />;
   }
 
   /* ── 1 · CHOOSE ── */

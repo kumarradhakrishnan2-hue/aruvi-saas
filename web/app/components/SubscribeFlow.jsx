@@ -1,6 +1,9 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { API, getJSON, pretty, idInUse, errDetail } from "../lib/format";
+import Agreement from "./Agreement";
+import Dropdown from "./Dropdown";
+import { dateWords as consentDateWords } from "../lib/legalmd";
 
 /* The "already in use" sentence, said the same way wherever a credential clashes
  * (founder, 2026-08-26). Deliberately the SAME words the server's 409 carries — this
@@ -15,7 +18,15 @@ export const EMAIL_TAKEN =
 export const MOBILE_TAKEN =
   "This mobile number is already in use. Create using a different number.";
 
-/* ── The subscribe wizard: About you → Subjects & stages (dropdown-row cart) → Pay ──
+/* ── The subscribe wizard: About you → Agreement → Subjects & stages → Pay ──
+ *
+ * ★ THE AGREEMENT STEP (founder, 2026-08-27) sits BEFORE the subject/stage cart, not
+ * before Pay. The five acknowledgements say what Aruvi IS — a teaching aid, not
+ * endorsed by any board, no student data, AI-assisted, personally licensed — and she
+ * should have those five facts before she picks what to buy. Placed after the cart it
+ * would arrive as an obstacle between her and a purchase she had already assembled.
+ * Component: Agreement.jsx (shared with Settings › Legal). Re-consent is per DOCUMENT
+ * VERSION, resolved server-side, so a subscriber adding a subject walks straight past.
  *
  * ONE implementation, two doors (founder, 2026-08-25):
  *   · the FRONT DOOR — Login's subscribe path, entered after OTP verification;
@@ -26,8 +37,28 @@ export const MOBILE_TAKEN =
  * Props: userId (the mobile/id the checkout runs as — the X-Aruvi-User header),
  * chrome (optional bar element rendered on top; Login passes its Bar, the in-app
  * overlay passes none), onDone(userId) after activation, onCancel for backing out of
- * the first step. Pay is the HONEST STUB (no fake gateway; activates instantly via
- * the server's dev checkout and says so). */
+ * the first step, onTrial (see below). Pay is the HONEST STUB (no fake gateway;
+ * activates instantly via the server's dev checkout and says so).
+ *
+ * ★ THE TRIAL OFFER — FRONT DOOR ONLY (founder, 2026-08-27). A teacher who chose
+ * Subscribe on the very first screen has committed to money before she has seen a
+ * single lesson, so the wizard raises a Trial / Subscribe choice. Subscribe walks on
+ * exactly as before. Trial calls `onTrial()` — Login signs her straight in, the same
+ * path its own Free-to-try card takes. The offer exists ONLY when the caller passes
+ * `onTrial`: the IN-APP door (paywall / Settings) belongs to a teacher whose trial has
+ * ended or lapsed, and offering her a trial there would be an offer Aruvi cannot
+ * honour. Do not make this unconditional.
+ *
+ * ★ MOVED TO THE VERY FRONT — after Verify, BEFORE About-you (founder, 2026-08-27).
+ * It first fired on the CART's Continue, then before the Agreement; both were too late
+ * for the same reason, and the second move made the reason plain. A teacher who takes
+ * the trial and decides Aruvi is not for her should not have typed her name, email,
+ * role, state and school first — that is a profile built for a purchase that never
+ * happens. Everything the wizard collects is only needed by someone who is buying, so
+ * the fork belongs before the first field. The trial is an OFFER, never a gate: she may
+ * decline it and subscribe straight away, which is why this is a modal with two live
+ * choices and not a step in the rail. It fires on MOUNT, once per session
+ * (`offeredRef`), and the modal renders on every screen it can still be open over. */
 
 export const ROLES = ["Teacher", "Academic coordinator", "Head of school", "Other"];
 export const STATES = ["Andhra Pradesh", "Assam", "Bihar", "Chhattisgarh", "Delhi", "Goa",
@@ -56,7 +87,10 @@ const maskEmail = (e) => {
 };
 
 const Steps = ({ at }) => {
-  const names = ["Verify", "About you", "Subjects", "Pay"];
+  /* Five, since 2026-08-27 — Agreement sits between About you and Subjects. It is a
+     STEP, not a modal or a footnote: she is meant to see it coming, and to see that it
+     is behind her. */
+  const names = ["Verify", "About you", "Agreement", "Subjects", "Pay"];
   return (
     <div className="ob-steps">
       {names.map((n, i) => (
@@ -83,16 +117,33 @@ const DefaultBar = () => (
   </div>
 );
 
-export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone, onCancel }) {
-  const [screen, setScreen] = useState("about");    // about | cart | pay
+export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone, onCancel,
+                                        onTrial = null }) {
+  const [screen, setScreen] = useState("about");    // about | agreement | cart | pay
+  const [offerTrial, setOfferTrial] = useState(false);  // the front-door Trial/Subscribe ask
+  const offeredRef = useRef(false);                     // …asked once per session, not per screen
   const [name, setName] = useState("");
   /* Email — DOUBLE-BLIND confirmation (founder, 2026-08-25): she types it once; it is
      then HIDDEN (masked) and she types it again fresh. Only a match confirms — a typo
      can't be rubber-stamped by reading the first entry back. Stages:
-     enter → confirm → ok. "Change" restarts. */
+     enter → confirm → ok. "Change" restarts.
+
+     ★ A MISMATCH RETURNS TO `enter`, NOT TO A CLEARED `confirm` (founder, 2026-08-27).
+     It used to blank the second field and hold her in confirm, which silently assumed
+     the FIRST entry was the right one — but a mismatch says only that the two disagree,
+     and the typo is at least as likely to be in the first. Held in confirm she could
+     retype the second entry forever against a wrong original she could not see or
+     reach. So the disagreement sends her back to the first field with her text intact
+     and visible, which is the only place the real address can be established. The
+     double blind is not weakened: she still typed it twice unseen to get here, and
+     confirming again still requires a fresh matching pass. */
   const [email, setEmail] = useState("");
   const [email2, setEmail2] = useState("");
   const [emailStage, setEmailStage] = useState("enter");   // enter | confirm | ok
+  /* Focused when a mismatch or a taken address sends her BACK to the first field. Not an
+     autoFocus, which would steal the caret from Name on the step's first paint. */
+  const emailRef = useRef(null);
+  const schoolRef = useRef(null);   // scrolled into view when she leaves City
   const [emailErr, setEmailErr] = useState("");
   const [emailBusy, setEmailBusy] = useState(false);   // the "already in use" round-trip
   const [role, setRole] = useState("");
@@ -107,6 +158,14 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
   const [price, setPrice] = useState(500);
   const [payBusy, setPayBusy] = useState(false);
   const [payErr, setPayErr] = useState("");
+  /* ★ THE AGREEMENT STEP (founder, 2026-08-27). null until the status lands, then
+     {accepted, current_version, accepted_at, ...}. Asked on MOUNT — while she is still
+     typing her name — so the answer is ready by the time she presses Continue and the
+     step either appears or doesn't, with no pause to think about it. Re-consent is per
+     VERSION: a subscriber adding a subject walks past this; the same teacher after a new
+     version is published takes all six ticks again. The server owns that rule
+     (_consent_outstanding) — this only reads its answer. */
+  const [consent, setConsent] = useState(null);
 
   /* A KNOWN personal profile skips About-you (founder, 2026-08-26): a lapsed teacher
      re-subscribing already gave her name/email/role/state at first checkout — asking
@@ -129,7 +188,10 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
         if (a.city) setCity(a.city);
         if (a.school_name) setSchool(a.school_name);
         if (looksReal && a.email && a.role && a.state) {
-          setScreen("cart");
+          /* Skips About-you, NOT the agreement: the landing is the Agreement step, which
+             forwards itself to the cart when the current version is already accepted
+             (see the effect below). One door, one rule. */
+          setScreen("agreement");
           /* ★ Remember that About-you was SKIPPED (founder, 2026-08-26). The cart's
              Back used to walk to the previous STEP unconditionally, so a subscriber
              adding a subject was taken into a personal-details form she had never been
@@ -142,6 +204,39 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
     return () => { live = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
+
+  /* Ask once, on mount. A failure leaves `consent` at a NOT-accepted shape rather than
+     null: if we cannot tell whether she has signed, the honest move is to show her the
+     agreement, not to wave her through to a checkout the server will refuse anyway. */
+  useEffect(() => {
+    let live = true;
+    /* Explicit header, not getJSON: on the FRONT DOOR localStorage is still empty (Login
+       calls setUser only after checkout), so the ambient identity is not hers. Same
+       reason the /account fetch above does it, and the same reason Agreement takes a
+       userId prop — a signature filed against the wrong tenant is worse than no answer. */
+    fetch(`${API}/legal/consent/status`, { headers: { "X-Aruvi-User": userId } })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => { if (live) setConsent(d || { accepted: false }); })
+      .catch(() => { if (live) setConsent({ accepted: false }); });
+    return () => { live = false; };
+  }, [userId]);
+
+  /* The Agreement step forwards itself when there is nothing to sign. Written as an
+     effect rather than a branch at every entrance because there are two entrances (the
+     About-you Continue and the known-profile skip) and a third would forget. */
+  useEffect(() => {
+    if (screen === "agreement" && consent && consent.accepted) setScreen("cart");
+  }, [screen, consent]);
+
+  /* ★ The trial offer, on MOUNT — after Verify, before About-you (see the header note).
+     No screen test: the wizard's first screen is About-you, so the offer must be the
+     thing standing in front of it, and firing on mount also covers the known-profile
+     skip without naming a second entrance. `offeredRef` makes it once per session. */
+  useEffect(() => {
+    if (!onTrial || offeredRef.current) return;
+    offeredRef.current = true;
+    setOfferTrial(true);
+  }, [onTrial]);
 
   useEffect(() => {
     if (screen !== "cart" || stageMap) return;
@@ -189,7 +284,21 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
          Verify-step check above should have caught the clash already; this is the net
          for the address taken in between, or reached by a path that skipped it. */
       if (!r.ok) {
-        setPayErr(await errDetail(r, "Couldn't complete the activation. Try again in a moment."));
+        const detail = await errDetail(r,
+          "Couldn't complete the activation. Try again in a moment.");
+        /* ★ A consent refusal has a PLACE to send her, so send her there (2026-08-27).
+           The server refuses a checkout without a current-version acceptance — which
+           realistically means a new version was published between her reading one and
+           paying — and an error message on the Pay screen would leave her with advice
+           she cannot act on from where she is standing. Same lesson as the taken-email
+           409: a deterministic refusal must be shown at the step that can fix it. */
+        if (r.status === 409 && /User Agreement/i.test(detail)) {
+          setConsent((c) => ({ ...(c || {}), accepted: false }));
+          setPayBusy(false);
+          setScreen("agreement");
+          return;
+        }
+        setPayErr(detail);
         setPayBusy(false);
         return;
       }
@@ -200,10 +309,89 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
     }
   };
 
+  /* ── The email confirmation, in one place (founder, 2026-08-27) ──
+     Called two ways, and the difference is the whole design:
+
+       · AUTOMATICALLY, the moment the re-typed address MATCHES. A second entry that
+         agrees with the first has nothing left to ask her — making her press Verify
+         after that is a keystroke that can only produce the answer she already gave.
+       · BY THE BUTTON, which now exists for exactly one case: a completed second entry
+         that does NOT match. Nothing may fire on a mismatch while she is still typing,
+         because every address is a mismatch until its last character — telling her so
+         mid-word would be wrong on every keystroke but the final one. So the button is
+         how she says "this IS what I meant", and only then does the mismatch surface. */
+  const verifyEmail = async () => {
+    if (emailBusy) return;
+    if (email2.trim().toLowerCase() !== email.trim().toLowerCase()) {
+      /* Back to ENTER — the same move the taken-address branch makes, for the same
+         reason: put her in the field where the fix can be. */
+      setEmailErr("The two entries didn't match. This is what you typed first — "
+                  + "correct it if it's wrong, then confirm again.");
+      setEmail2(""); setEmailStage("enter");
+      setTimeout(() => emailRef.current && emailRef.current.focus(), 0);
+      return;
+    }
+    setEmailBusy(true);
+    const taken = await idInUse(email, userId);
+    setEmailBusy(false);
+    if (taken) {
+      // Back to ENTER with her text intact: the fix is to edit this field.
+      setEmailErr(EMAIL_TAKEN); setEmail2(""); setEmailStage("enter");
+      setTimeout(() => emailRef.current && emailRef.current.focus(), 0);
+      return;
+    }
+    setEmailStage("ok"); setEmailErr("");
+  };
+
+  /* Auto-verify on match. Deliberately NOT in the input's onChange: a paste, an
+     autofill or a browser restore can set the field without one, and the match is a
+     fact about the VALUE, not about how it arrived. */
+  useEffect(() => {
+    if (emailStage !== "confirm" || emailBusy) return;
+    if (!EMAIL_OK(email2)) return;
+    if (email2.trim().toLowerCase() !== email.trim().toLowerCase()) return;
+    verifyEmail();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [email2, email, emailStage]);
+
+  /* The trial offer, defined once and rendered by every screen it can still be open
+     over. It is declared HERE, above the first screen branch, because it now fires on
+     mount and About-you is what it opens in front of. Dismissing it with "Subscribe"
+     simply closes it — she is already where she was going, and the wizard's first field
+     is the next thing in front of her. */
+  const trialModal = offerTrial ? (
+    <div className="modal-backdrop ob-offer-back" role="dialog" aria-modal="true"
+      aria-labelledby="ob-offer-t">
+      <div className="modal-box ob-offer-box">
+        <h2 className="ob-offer-title" id="ob-offer-t">Would you like to try Aruvi free first?</h2>
+        <p className="ob-offer-body">
+          The free trial gives you any 3 chapters, unlimited lesson plans in each, and
+          every feature you need to plan and assess — at no cost, with no time limit.
+          You can subscribe whenever you&rsquo;re ready.
+        </p>
+        {/* Said here because this is now the FIRST screen of the wizard: choosing Trial
+            costs her nothing she has already done. */}
+        <p className="ob-offer-note">
+          Nothing to fill in — the trial starts straight away. Subscribing asks for your
+          details first.
+        </p>
+        <div className="ob-offer-actions">
+          <button className="primary" onClick={() => { setOfferTrial(false); onTrial(); }}>
+            Trial
+          </button>
+          <button className="ob-offer-alt" onClick={() => setOfferTrial(false)}>
+            Subscribe
+          </button>
+        </div>
+      </div>
+    </div>
+  ) : null;
+
   if (screen === "about") {
     return (
       <div className="ob-wrap">
         {chrome}
+        {trialModal}
         <div className="ob-body">
           <Steps at={1} />
           <h1 className="ob-title">Tell us a bit about yourself</h1>
@@ -216,6 +404,7 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
             <>
               <label className="login-field ob-field"><span>Email</span>
                 <input type="email" inputMode="email" autoComplete="off" value={email}
+                  ref={emailRef}
                   onChange={(e) => { setEmail(e.target.value); setEmailErr(""); }}
                   placeholder="Enter your email" /></label>
               {/* The taken-address message lands HERE — the stage the fix belongs to. */}
@@ -235,29 +424,19 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
                   onChange={(e) => { setEmail2(e.target.value); setEmailErr(""); }}
                   placeholder="Type it again to confirm" /></label>
               {emailErr && <p className="ob-err" role="alert">{emailErr}</p>}
-              {/* ★ The "already in use" check happens HERE, not at Pay (2026-08-26).
-                  The server's 409 was always right; arriving at the END of a checkout is
-                  what made it useless — she had chosen subjects and pressed Pay before
-                  anything told her, and the only advice on screen was "try again", which
-                  for a deterministic clash can never work. One tap from the field she
-                  would have to change anyway. */}
+              {/* ★ The "already in use" check happens inside verifyEmail, HERE rather
+                  than at Pay (2026-08-26). The server's 409 was always right; arriving
+                  at the END of a checkout is what made it useless — she had chosen
+                  subjects and pressed Pay before anything told her, and the only advice
+                  on screen was "try again", which for a deterministic clash can never
+                  work. One tap from the field she would have to change anyway.
+                  A MATCHING entry never reaches this button — the effect above has
+                  already run — so it is only ever pressed to commit a mismatch, and it
+                  says so. `emailBusy` keeps it visible during the auto-verify's own
+                  round trip, which is the one moment it doubles as a progress note. */}
               <button type="button" className="fr-link ob-email-next"
                 disabled={!EMAIL_OK(email2) || emailBusy}
-                onClick={async () => {
-                  if (email2.trim().toLowerCase() !== email.trim().toLowerCase()) {
-                    setEmailErr("The two entries don't match — try again."); setEmail2("");
-                    return;
-                  }
-                  setEmailBusy(true);
-                  const taken = await idInUse(email, userId);
-                  setEmailBusy(false);
-                  if (taken) {
-                    // Back to ENTER with her text intact: the fix is to edit this field.
-                    setEmailErr(EMAIL_TAKEN); setEmail2(""); setEmailStage("enter");
-                    return;
-                  }
-                  setEmailStage("ok"); setEmailErr("");
-                }}>
+                onClick={verifyEmail}>
                 {emailBusy ? "Checking…" : "Verify →"}
               </button>
             </>
@@ -275,28 +454,83 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
           )}
 
           <label className="login-field ob-field"><span>Role</span>
-            <select value={role} className={role ? "" : "ob-unset"}
-              onChange={(e) => setRole(e.target.value)}>
-              <option value="">Select your role</option>
-              {ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
-            </select></label>
+            <Dropdown value={role} onChange={setRole} options={ROLES}
+              placeholder="Select your role" ariaLabel="Role" /></label>
           <label className="login-field ob-field"><span>State</span>
-            <select value={stateName} className={stateName ? "" : "ob-unset"}
-              onChange={(e) => setStateName(e.target.value)}>
-              <option value="">Select your state</option>
-              {STATES.map((s) => <option key={s} value={s}>{s}</option>)}
-            </select></label>
+            <Dropdown value={stateName} onChange={setStateName} options={STATES}
+              placeholder="Select your state" ariaLabel="State" /></label>
           <label className="login-field ob-field"><span>City</span>
-            <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder="Enter your city" /></label>
-          <label className="login-field ob-field"><span>School name (optional)</span>
+            <input type="text" value={city} onChange={(e) => setCity(e.target.value)}
+              /* Leaving City brings the LAST field into view. The sticky footer no longer
+                 covers it (see .ob-body's bottom padding), but it is still the field
+                 furthest down a step she has been filling top-to-bottom, and an optional
+                 field nobody scrolls to is an optional field nobody answers.
+                 `relatedTarget` guards the one case that must not scroll: tapping Save,
+                 where moving the page under her thumb would fight the press. */
+              onBlur={(e) => {
+                const to = e.relatedTarget;
+                if (to && to.closest && to.closest(".ob-foot")) return;
+                if (!city.trim()) return;
+                schoolRef.current && schoolRef.current.scrollIntoView(
+                  { behavior: "smooth", block: "center" });
+              }}
+              placeholder="Enter your city" /></label>
+          <label className="login-field ob-field" ref={schoolRef}><span>School name (optional)</span>
             <input type="text" value={school} onChange={(e) => setSchool(e.target.value)} placeholder="Enter your school name" /></label>
         </div>
         <div className="ob-foot">
           <button className="primary fr-cta"
             disabled={!name.trim() || emailStage !== "ok" || !role || !stateName}
-            onClick={() => setScreen("cart")}>Save &amp; continue →</button>
+            onClick={() => setScreen("agreement")}>Save &amp; continue →</button>
           <button className="fr-link" onClick={() => onCancel && onCancel()}>← Back</button>
         </div>
+      </div>
+    );
+  }
+
+  /* ── Agreement — the step between About you and Subjects (founder, 2026-08-27) ──
+     Deliberately BEFORE the cart: the five points say what Aruvi is, and she should know
+     them before she picks what to buy, not after she has built a cart and is one tap
+     from paying. The document, the ticks and the recording all live in Agreement.jsx;
+     the wizard only says where the step sits and where it goes next. */
+  if (screen === "agreement") {
+    /* Nothing is drawn until we know whether there IS anything to sign — see the
+       forwarding effect. Showing five checkboxes and then yanking them away half a
+       second later is worse than half a second of nothing. */
+    if (!consent) {
+      return (
+        <div className="ob-wrap">
+          {chrome}
+          <div className="ob-body"><Steps at={2} /><div className="fr-loading">Loading…</div></div>
+        </div>
+      );
+    }
+    /* `ob-wrap-lock`/`ob-body-lock`: this ONE step is a fixed-height frame rather than a
+       page that grows (founder, 2026-08-27). The agreement's heading and its accept bar
+       are pinned and the document scrolls between them, which only works if the shell
+       above it stops growing — hence the locked wrap here rather than in Agreement.jsx,
+       which cannot reach its own container. */
+    return (
+      <div className="ob-wrap ob-wrap-lock">
+        {chrome}
+        <div className="ob-body ob-body-lock">
+          <Steps at={2} />
+          <Agreement
+            mode="sign"
+            userId={userId}
+            context="subscription_checkout"
+            onAccepted={() => {
+              setConsent((c) => ({ ...(c || {}), accepted: true,
+                                   accepted_at: new Date().toISOString(),
+                                   accepted_version: (c && c.current_version) || "" }));
+              setScreen("cart");
+            }}
+            /* Back leaves the wizard when About-you was never shown — the same rule the
+               cart's Back follows, for the same reason. */
+            onBack={() => (skippedAbout ? (onCancel && onCancel()) : setScreen("about"))}
+          />
+        </div>
+        {trialModal}
       </div>
     );
   }
@@ -334,7 +568,7 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
       <div className="ob-wrap">
         {chrome}
         <div className="ob-body">
-          <Steps at={2} />
+          <Steps at={3} />
           <h1 className="ob-title">What do you teach?</h1>
           <p className="ob-sub">Each subject &amp; stage is its own subscription — unlimited
             lesson plans across all its classes. The total updates as you add.</p>
@@ -344,32 +578,28 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
               {/* No per-row price (founder, 2026-08-25) — the total below carries the
                   money; the row is all Subject + Stage. Placeholder words bold. */}
               <div className="ob-row-selects">
-                <select value={r.subject} className={r.subject ? "" : "ob-ph"}
-                  onChange={(e) => setRow(i, { subject: e.target.value, stage: "" })}>
-                  <option value="">Subject</option>
-                  {subjectsAvail.map((s) => {
+                {/* Aruvi dropdowns, not <select>s (2026-08-27) — the open list of a
+                    native select is drawn by macOS and comes up black over the cream
+                    page whatever CSS says. See Dropdown.jsx. `unsetClass="ob-ph"`
+                    keeps the bold placeholder words these two rows always had. */}
+                <Dropdown value={r.subject} placeholder="Subject" ariaLabel="Subject"
+                  className="ob-rowdd" unsetClass="ob-ph"
+                  onChange={(v) => setRow(i, { subject: v, stage: "" })}
+                  options={subjectsAvail.map((s) => {
                     const full = subjectFull(s, i);
-                    return (
-                      <option key={s} value={s} disabled={full}>
-                        {pretty(s)}{full ? " — all stages added" : ""}
-                      </option>
-                    );
-                  })}
-                </select>
-                <select value={r.stage} disabled={!r.subject} className={r.stage ? "" : "ob-ph"}
-                  onChange={(e) => setRow(i, { stage: e.target.value })}>
-                  <option value="">Stage</option>
-                  {(stageMap[r.subject] || []).map((st) => {
+                    return { value: s, disabled: full,
+                             label: pretty(s) + (full ? " — all stages added" : "") };
+                  })} />
+                <Dropdown value={r.stage} disabled={!r.subject} placeholder="Stage"
+                  ariaLabel="Stage" className="ob-rowdd" unsetClass="ob-ph"
+                  onChange={(v) => setRow(i, { stage: v })}
+                  options={(stageMap[r.subject] || []).map((st) => {
                     const dup = takenElsewhere(r.subject, st, i);
                     const mine = alreadyOwned(r.subject, st);
-                    return (
-                      <option key={st} value={st} disabled={dup}>
-                        {pretty(st)}
-                        {mine ? " · you have this" : dup ? " · already added" : ""}
-                      </option>
-                    );
-                  })}
-                </select>
+                    return { value: st, disabled: dup,
+                             label: pretty(st) + (mine ? " · you have this"
+                                                       : dup ? " · already added" : "") };
+                  })} />
                 <button type="button" className="ob-row-x" aria-label="Remove this row"
                   onClick={() => dropRow(i)}>✕</button>
               </div>
@@ -384,8 +614,21 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
             </button>
           )}
           <div className="ob-total"><span>Total</span><b>₹{total} / year</b></div>
+          {/* Said once, quietly, where it is true: she is past the agreement. It also
+              tells the returning subscriber — who never saw the step — WHY she didn't,
+              and where to go if she wants to read it again. */}
+          {consent && consent.accepted && (
+            <p className="ob-quiet ob-consent-note">
+              <span className="ob-tick">✓</span> User Agreement v
+              {consent.accepted_version || consent.current_version} accepted
+              {consent.accepted_at ? ` on ${consentDateWords(consent.accepted_at)}` : ""} ·
+              always readable under Settings &rsaquo; Legal.
+            </p>
+          )}
         </div>
         <div className="ob-foot">
+          {/* Plain Continue on both doors: the trial offer now stands BEFORE the
+              agreement, not here (see the header note). */}
           <button className="primary fr-cta" disabled={!cartScopes.length}
             onClick={() => setScreen("pay")}>Continue →</button>
           {/* Back leaves the wizard when About-you was never shown (see setSkippedAbout);
@@ -395,6 +638,8 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
             ← Back
           </button>
         </div>
+
+        {trialModal}
       </div>
     );
   }
@@ -411,7 +656,7 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
     <div className="ob-wrap">
       {chrome}
       <div className="ob-body">
-        <Steps at={3} />
+        <Steps at={4} />
         <h1 className="ob-title">Review &amp; pay</h1>
         {cartScopes.map((cid) => (
           <div className="ob-payrow" key={cid}><span>{scopeLabel(cid)}</span><span>₹{price}</span></div>

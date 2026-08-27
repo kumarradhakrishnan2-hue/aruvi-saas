@@ -25,6 +25,13 @@ from aruvi_core.ports import Entitlement  # noqa: E402
 from aruvi_core.adapters.entitlement_repository_file import EntitlementRepositoryFileImpl  # noqa: E402
 from aruvi_core.adapters.manual_billing_provider import ManualBillingProvider  # noqa: E402
 
+# ★ The checkout gate now needs a signature (2026-08-27) — the user agreement's six
+# ticks are taken before the subject cart, so every checkout test must sign first.
+# Imported from test_consent rather than re-derived: the tick ids belong to the
+# document, and two tests guessing at them is two tests that can drift from it.
+from tests.test_consent import accept_current  # noqa: E402
+
+
 
 def test_repo_roundtrip_and_tenant_isolation():
     with tempfile.TemporaryDirectory() as tmp:
@@ -256,6 +263,7 @@ def test_cannot_rebuy_a_live_scope():
     H = {"X-Aruvi-User": "RebuyTeacher"}
     body = {"scopes": ["science/middle"], "name": "T", "email": "", "role": "Teacher",
             "state": "Kerala", "city": "Kochi", "school": ""}
+    accept_current(c, H)          # the agreement gate (2026-08-27)
     assert c.post("/onboarding/checkout", headers=H, json=body).status_code == 200
     r = c.post("/onboarding/checkout", headers=H, json=body)
     assert r.status_code == 409, r.status_code
@@ -305,6 +313,7 @@ def test_trial_purge_on_first_purchase():
                                                           updated_at=now))
 
     # She buys SCIENCE only.
+    accept_current(c, H)          # the agreement gate (2026-08-27)
     r = c.post("/onboarding/checkout", headers=H, json={
         "scopes": ["science/middle"], "name": "P", "email": "", "role": "Teacher",
         "state": "Kerala", "city": "Kochi", "school": ""})

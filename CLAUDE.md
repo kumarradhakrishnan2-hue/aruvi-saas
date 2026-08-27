@@ -440,6 +440,48 @@ generic look.
 - The on-screen plan/assessment view is a React renderer in `web/app/page.jsx`
   (`ViewModelView` and friends). `aruvi_core/render/html.py` is the separate **export/PDF**
   renderer — keep the two visually aligned.
+- ★ **A NATIVE `<select>` CANNOT BE THEMED ON macOS — so Aruvi stopped using one
+  (`Dropdown.jsx`, 2026-08-27).** Reported as "the dropdowns use a dark background"
+  (Support's category chooser, the subscribe flow's Subject/Stage) and chased in the
+  wrong direction twice before the browser was actually asked. The CLOSED control was
+  never the problem — `.ob-field select` had worn house colours since 2026-08-25. The
+  dark thing was the **OPEN LIST**. First fix: **`color-scheme` was declared nowhere in
+  globals.css**, so browsers drew all native UI from the OS preference. That is a real
+  bug and the fix is KEPT (`:root { color-scheme: light }`, flipped to `dark` in the
+  ≤600px `[data-theme-effective="dark"]` block — it is what stops scrollbars, autofill
+  and date pickers following macOS instead of Aruvi). **But it did not fix the popup.**
+  Measured live, on the founder's Mac, page light and OS dark: `html`, `select` AND
+  `select option` all computed `color-scheme: light` with `background: rgb(255,255,255)`
+  — and the menu still came up black. On macOS Chrome hands a select's popup to a native
+  NSMenu that reads neither the page's `color-scheme` nor the `option` rules. **There is
+  no CSS fix.** `wheels.jsx` reached this same conclusion on 2026-07-26 and built
+  `PpwSplitCell` as a button + listbox to escape it; `Dropdown.jsx` is that pattern
+  generalised so the app escapes it ONCE. Same API as a select (`value` ·
+  `onChange(value)` · `options`), position:FIXED (an `overflow:auto` ancestor would clip
+  it), flips above when below is tight, closes on select/Escape/outside/scroll/resize,
+  full keyboard + `aria-activedescendant`. **Converted: Support category · Personal
+  profile and subscribe Role/State · the cart's Subject/Stage · Allocate's chapter
+  adder.** No native `<select>` remains in a live component. Two traps found by
+  measuring: (a) `all: unset` resets `text-transform`/`letter-spacing` to **inherit**,
+  so inside a field label the button read "CHOOSE ONE" in spaced caps — both are now
+  stated explicitly on `.dd-btn`/`.dd-opt`/`.dd-pop`; (b) sizing the popup from a
+  row-count estimate clipped the last option whenever a label WRAPPED, so a flip-above
+  now sets `bottom` and lets the list size itself under a room-based cap. The base
+  `select` rule still carries the house treatment (appearance:none · `--sel-chevron` ·
+  `--field-bg`) for anything native that remains — ⚠️ a select rule setting
+  **`background:`** instead of **`background-color:`** silently WIPES that chevron.
+  LIVE-VERIFIED in Chrome (Support + Personal profile, 5- and 23-option lists, flip,
+  scroll, current-value marking); the subscribe cart's two rows are static-verified only.
+- **ONE EMAIL FORMAT (founder, 2026-08-27).** `mail_templates._html_shell` (support)
+  is now the subscription confirmation's `_html_body` frame **row for row and padding
+  for padding** — brand + "NCF 2023 aligned", the 2px ink rule, greeting, lead, k/v
+  ledger, closing paragraphs, hairline footer. It was deliberately different at first
+  (the reasoning: a letter borrowing a receipt's shape reads like a receipt); overruled,
+  because a teacher does not receive "a receipt" and "a letter" — she receives mail from
+  Aruvi, and the second one arriving in an unfamiliar shape is a small reason to doubt
+  it came from us. Only the CONTENT differs (no priced rows; a quoted block of her own
+  words). **Change one frame, change both** — they are separate functions only because
+  `_html_body` bakes subscription facts into its rows.
 - **One shell measure — `--shell-w` (860px) / `--shell-pad` (34px), 2026-08-21.** The signed-in
   shell is ONE centred column and the chrome aligns TO it, never to the screen. `main`,
   `.topbar .hdr` (brand · theme · gear · user/log-out) and the Ask-Aruvi mark's right offset all
@@ -515,9 +557,14 @@ data/                  ★ the data root, laid out along the CLOUD/LOCAL boundar
   cloud/               ★ THE MIGRATION UNIT — everything here goes to production, byte for byte
     content/           Bucket A-serve → object store (DATA_DIR): allocation_norms,
                        chapters/**/mappings, framework, saved_plans (libraries + serve cache)
+    content/legal/     ★ the user agreement, ONE copy, versioned by FILENAME (2026-08-27)
     state/             Bucket B → Supabase Postgres (STATE_DIR): accounts, academic_years,
                        readiness, allocations, section_state, prepared_plans, plan_archive,
-                       plan_notes — all {tenant}/{user}[/{year}]-keyed
+                       plan_notes, support — all {tenant}/{user}[/{year}]-keyed; PLUS three
+                       stores that deliberately sit OUTSIDE that shape so the erase
+                       traversal cannot reach them: invoices/_series/ (the seller's number
+                       series), support/_series/ (the support reference series) and
+                       consents/_ledger/ (proof the agreement was accepted)
   authoring/           ★ FOUNDER-SECURE, never syncs: constitutions, chapters/**/summaries
                        (read only by the genon pipeline + chapter skill, NEVER by api/)
   testing/             local testing-campaign state (TESTING_DIR) — outside the migration unit
@@ -700,6 +747,86 @@ rights never gated). **Enforcement default OFF** (`ARUVI_ENTITLEMENT_ENFORCED`;
 test_entitlement.py green. Remaining: Steps 2, 6 — Step 6 next (trial counter,
 exhausted state, upsell screen, subscription status, export/erase buttons), then the
 persona pass with enforcement ON. Full entry: MEMORY.md 2026-08-24.
+
+**The user agreement — six ticks before the subject cart, kept as evidence (2026-08-27).**
+`data/cloud/content/legal/consent_and_disclaimer_v0.1.md` is the ONE copy (Bucket A-serve —
+the runtime serves it to every teacher before she pays, so it travels inside the migration
+unit; `docs/legal/README.md` is only a pointer). `api/legal.py` parses it into {intro, five
+acknowledgements, agreement body, final tick} — nothing is retyped in JSX, and **the version
+is the FILENAME**: publish v0.2 by adding a file, never by editing text somebody has already
+ticked. A document that loses a tick raises `ConsentDocumentError` → 503 rather than serving
+a four-box consent screen. Surfaces: the subscribe wizard's **Agreement step** (Verify ·
+About you · **Agreement** · Subjects · Pay — deliberately BEFORE the cart, because the five
+points say what Aruvi IS and she should know them before choosing what to buy) and
+**Settings › Legal** (its own card; About Aruvi keeps only "Version info"). Both render
+`Agreement.jsx` (`mode="sign"|"read"`) over `web/app/lib/legalmd.js` — a hand-rolled markdown
+renderer that builds React NODES, never `dangerouslySetInnerHTML`, on the one screen where a
+teacher signs something. **Re-consent is per document VERSION** (§J's promise): a subscriber
+adding a subject-stage walks past; after a new version she takes all six again. The rule
+lives in ONE function, `_consent_outstanding` — the screen and the gate cannot disagree.
+`POST /onboarding/checkout` 409s without a current signature, in words she can act on (the
+client routes on them). Routes: `GET /legal/consent` (doc + her status; `?version=` serves an
+older published version) · `GET /legal/consent/status` (the yes/no, without shipping the
+document) · `POST /legal/consent`, which refuses a PARTIAL acceptance rather than storing
+one. ★ **The record is RETAINED THROUGH ERASURE** (founder): `ConsentRepository` + adapter
+store it at `consents/_ledger/{tenant}.json`, outside every `{kind}/{tenant}/{user}` folder
+the erase traversal walks (the `invoices/_series/` precedent). **Three places state that and
+must move together:** §G of the agreement, `_KEPT` in `data_rights_service_file.py`, and the
+ledger's placement. It holds ids, version, language and per-tick timestamps — no teaching
+content. The account's `consent` field carries a mirror that IS erased with her, and the
+data-rights export renders it. ★ **The front door has no localStorage identity** (Login calls
+`setUser` only after checkout), so `Agreement` takes a `userId` prop and uses an explicit
+`X-Aruvi-User` header on that path — without it a signature files against the fallback
+identity and the gate then refuses a teacher who just ticked all six boxes. Tests:
+`tests/test_consent.py`. Web half STATIC-verified only — live + mobile pass owed.
+
+**Settings › Support — email is the ONLY channel, and the acknowledgement is the
+feature (2026-08-27).** No phone, no WhatsApp, no chat, no LLM answering tickets; Ask
+Aruvi stays the instant answer for "how does this work?" and sits ABOVE the form so the
+slowest channel in the product does not become its FAQ. Email's one failure mode is
+SILENCE, so everything is aimed there: she picks one of **four categories** (problem ·
+plan · billing · suggestion — a choice, never a subject line to compose), writes, and
+gets back a **REFERENCE** on screen and by mail within seconds. The series opens at a
+three-digit offset (`ARV-S-742`, `config.SUPPORT_START`) for the invoice series' exact
+reason — "ARV-S-1" tells her she is the first person who ever needed help. **The reply
+window is stated and comes from the server** (`GET /support` → `reply_days`, billing its
+own firmer `billing_reply_days`), because the screen's promise and the mail's promise
+must be one value: a teacher told "2 working days" on screen and "3" by email has been
+told nothing. **Not a `mailto:`** — that assumes a configured mail client (dead on a
+budget Android with only Gmail web), leaves no record and cannot attach what the app
+knows; the address is still spelled out for the teacher with no email on her account
+(every TRIAL teacher — the trial asks for a mobile and nothing else). Built:
+`SupportRequest` + `SupportRepository` in ports.py + file adapter
+(`support/{tenant}/{user}/ARV-S-742.json`; counter at `support/_series/`, **outside**
+every folder the erase traversal walks — invoice-series precedent, or one teacher's
+erasure hands the next a used reference) · `mail_templates.support_acknowledgement`
+(+ `_html_shell`, a LETTER layout distinct from the subscription's receipt-shaped
+`_html_body`) · `POST /support` (stores FIRST, mails second — `notifier.send` never
+raises, so the worst case is a saved case with `acknowledged: false`, never lost words)
+and `GET /support` (her history + the screen's categories and windows) · `SupportForm`
+in Settings.jsx + `.sup-*` CSS. **Never gated** — not on subscription, not on trial,
+not on entitlement (a teacher whose subscription is the broken thing must be able to
+say so; §2.5's reasoning). Her messages joined the export + erase traversal the day the
+store was born, `category_label` stored not re-derived (the consent record's principle:
+a record says what she SAW). `tests/test_support.py` green (13 tests). Web half
+STATIC-verified only (babel-parse clean, CSS braces 2236/2236, csstree clean bar the
+known `env()` false positives) — live + mobile pass owed. **Second pass the same day
+(founder, live):** the "Support" title alone FREEZES (`.set-title-stick` + `.sup-title`'s
+-26px pull out of `main`'s 40px top padding — the gap read as the page starting late);
+the Ask Aruvi row carries the tab row's own stream-and-dot MARK, not a generic icon;
+the five categories became a **`<select>`** (chips wrapped to three rows at 360px and
+pushed the message box under the fold — the one thing that must be visible) with
+**"Something else"** added last; the textarea lost its placeholder (prompt text tells a
+teacher what shape her trouble should be, and she trims to fit). ★ **And the live bug
+worth remembering:** account 1000000001 was told "no email on your account" when it has
+one. `getJSON` THROWS on any non-2xx, and the first build's `.catch` fell back to `{}`,
+which every downstream check then read as a FACT about her record — so an old server
+without the route (or any transient failure) made the screen invent an answer about her
+account. `metaErr` now keeps "we could not ask" apart from "you have none", and the
+claim is made only when the server actually said so. **A screen may say it does not
+know; it may never invent an answer about her record.** Next natural step: a
+"this plan looks wrong" report FROM the lesson, which can carry the plan id and unit
+that Settings cannot.
 
 **Persistence + tenanting groundwork (2026-06-28) — the front-end-only state is now
 server-persisted and per-tenant, ahead of full Phase-4 auth.** Built: (a) a **user-ID login

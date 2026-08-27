@@ -24,6 +24,11 @@ os.environ.setdefault("ARUVI_STATE_DIR", _TMP_STATE)
 from aruvi_core.ports import Invoice, InvoiceLine  # noqa: E402
 from aruvi_core.adapters.invoice_repository_file import InvoiceRepositoryFileImpl  # noqa: E402
 
+# ★ The checkout gate now needs a signature (2026-08-27) — the agreement's six ticks are
+# taken before the subject cart. Imported, not re-derived: the tick ids belong to the
+# document.
+from tests.test_consent import accept_current  # noqa: E402
+
 
 def _sample(number="ARV/2026-27/7834") -> Invoice:
     return Invoice(
@@ -128,6 +133,7 @@ def test_checkout_issues_stores_attaches_and_serves():
     body = {"scopes": ["science/middle", "science/secondary"], "name": "Kumar R",
             "email": "invoice-test@example.com", "role": "Teacher", "state": "Kerala",
             "city": "Kochi", "school": "KV"}
+    accept_current(c, H)          # the agreement gate (2026-08-27)
     r = c.post("/onboarding/checkout", headers=H, json=body).json()
     assert r["invoice_number"].startswith("ARV/"), r
     assert r["amount_inr"] == 2 * 500
@@ -210,6 +216,7 @@ def test_render_failure_does_not_cost_the_subscription():
     def boom(*a, **k):
         raise RuntimeError("no fonts today")
 
+    accept_current(c, H)          # the agreement gate (2026-08-27)
     api_main._build_invoice = boom
     try:
         r = c.post("/onboarding/checkout", headers=H, json={

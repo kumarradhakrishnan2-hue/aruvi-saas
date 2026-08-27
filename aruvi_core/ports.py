@@ -554,6 +554,157 @@ class InvoiceRepository(Protocol):
         ...
 
 
+# ── Consent (the user agreement's six ticks) ───────────────────────────────────
+# The agreement is shown IN FULL before she chooses subjects and stages, and the five
+# acknowledgements plus the final one are ticked individually (founder, 2026-08-27; the
+# document's own front matter says the same). This record is the evidence that happened.
+#
+# Keyed by TENANT, like the entitlement it gates — the agreement governs the paying
+# relationship, and when a school later holds one tenant over many teachers it is the
+# tenant that agreed. `user_id` is carried inside the record (who actually ticked),
+# never in the key.
+@dataclass
+class ConsentRecord:
+    """One acceptance of one version of one document.
+
+    `acknowledgements` maps each tick's id to the ISO timestamp it was ticked —
+    per-tick, because the document asks for them separately and "she ticked all five"
+    is a weaker fact than five moments. `final_accepted_at` is the last tick, the one
+    that accepts the body.
+
+    Records are APPEND-ONLY. A new version is a new record; nothing is ever rewritten,
+    because the point of the record is that it says what she saw."""
+    tenant_id: str
+    user_id: str
+    document_id: str            # "consent_and_disclaimer"
+    document_version: str       # "0.1" — the version SHE saw, not today's
+    language: str = "en"        # which translation was on screen
+    accepted_at: str = ""       # ISO timestamp of the completed acceptance
+    acknowledgements: Dict[str, str] = field(default_factory=dict)  # ack id → ISO
+    final_accepted_at: str = ""
+    context: str = ""           # "subscription_checkout" | "reconsent" | …
+    user_agent: str = ""        # thin provenance; no IP (we do not need one to hold her to it)
+    # ★ Set when the ACCOUNT was erased (2026-08-27). The record stays — it is still
+    # proof that this agreement was accepted on that date — but it stops counting as a
+    # STANDING signature, because the relationship it belonged to ended. See the
+    # repository docstring; this is the one field an append-only store ever writes twice.
+    superseded_at: str = ""
+
+
+@runtime_checkable
+class ConsentRepository(Protocol):
+    """Persists consent records, keyed by tenant_id. Append-only.
+
+    ★ THESE SURVIVE ERASURE (founder, 2026-08-27). Every other Bucket-B store is walked
+    destructively by DataRightsService; this one is not, because it is the proof that an
+    agreement was accepted, and proof that disappears when the other party asks it to is
+    not proof. The file adapter therefore stores OUTSIDE any {tenant}/{user} tree the
+    erase traversal walks — the same reasoning that puts the invoice number series in
+    `invoices/_series/`. The erasure receipt names it under `kept`, and the privacy text
+    says so; those three must move together or none of them.
+
+    It holds her tenant id, her user id and timestamps — no teaching content, no notes,
+    no profile. That minimum is what makes retaining it defensible.
+
+    ★ SURVIVING ERASURE IS NOT THE SAME AS STILL BEING IN FORCE (founder, 2026-08-27).
+    A signature stands from the moment she gives it until her account is ERASED — across
+    sign-outs, across sessions, and whether or not she ever subscribes (an agreement is
+    complete when it is accepted; the next sign-in goes straight to payment). Erasure
+    ends it, because it ends the relationship the signature belonged to: what comes back
+    under the same id is a new account, JIT-created, holding nothing of hers. Treating
+    the old signature as that new account's live consent would also be a live hazard —
+    mobile numbers get REASSIGNED, and the next holder of the number would walk past an
+    agreement she has never seen while the ledger claimed she signed it.
+    So `erase` calls `supersede`: the rows stay as evidence, stamped with the date they
+    stopped applying, and the returning teacher signs afresh. Found the hard way — see
+    MEMORY.md 2026-08-27."""
+    def save(self, record: "ConsentRecord") -> None:
+        """Append one acceptance. Never replaces an earlier one."""
+        ...
+
+    def load_all(self, tenant_id: str) -> List["ConsentRecord"]:
+        """Every acceptance this tenant has made, oldest first — superseded ones
+        INCLUDED. This is the historical view: the export renders it, and a record that
+        vanished from her own export would not be much of a kept record."""
+        ...
+
+    def latest(self, tenant_id: str, document_id: str,
+               version: str = "") -> Optional["ConsentRecord"]:
+        """The most recent acceptance IN FORCE — superseded rows are skipped, so this
+        answers "is she bound today?" and never "did she ever sign?". Of a SPECIFIC
+        version when one is named (the question the checkout gate asks: has she accepted
+        the version that is current today?), otherwise of any version."""
+        ...
+
+    def supersede(self, tenant_id: str, at: str = "") -> int:
+        """End every standing signature for this tenant, keeping the rows. Called by the
+        erase traversal, and returns how many were stamped. Idempotent: a row already
+        superseded keeps its original stamp, so a second erase cannot rewrite the date
+        the first one ended."""
+        ...
+
+
+# ── Support (2026-08-27) ───────────────────────────────────────────────────────
+# Email is the only support channel, and email's one failure mode is SILENCE. Every
+# design decision below is aimed at that: she gets an acknowledgement with a reference
+# the moment she writes, the reference is the handle both sides use afterwards, and the
+# request is stored so a lost inbox on either side does not lose the case.
+@dataclass
+class SupportRequest:
+    """One message a teacher sent to support.
+
+    `reference` is what she is shown and what the acknowledgement quotes — the whole
+    point of it is that a nameless message becomes a case with a number. It is assigned
+    once and never reused.
+
+    `context` is what the APP knows and she should not have to type: which screen she
+    wrote from, which subject·grade·chapter she was on, the build. Email round-trips
+    cost a day each, and a day spent asking "which chapter?" is a day she waits.
+
+    `status` is the FOUNDER's own state, not hers — she never sees it and nothing in
+    the product branches on it. It exists so a stored case can be closed out rather
+    than living forever as an undifferentiated pile."""
+    reference: str             # "ARV-S-742"
+    tenant_id: str
+    user_id: str
+    category: str              # problem | plan | billing | suggestion
+    message: str
+    # The words that were ON SCREEN when she chose that category. Stored rather than
+    # re-derived, on the consent record's principle: what a record is for is saying what
+    # she actually saw. Rename or retire a category later and her export still reads back
+    # the label she picked, not today's.
+    category_label: str = ""
+    created_at: str = ""       # ISO timestamp
+    email: str = ""            # the address the acknowledgement was sent to
+    name: str = ""
+    context: Dict[str, Any] = field(default_factory=dict)
+    acknowledged: bool = False  # did the acknowledgement actually leave?
+    status: str = "open"        # open | answered | closed
+
+
+@runtime_checkable
+class SupportRepository(Protocol):
+    """Persists support requests, keyed by tenant_id + user_id (Bucket B — her own
+    words, so it joins the export and the erase traversal the day it is born).
+
+    NOT year-scoped: a support case belongs to the day it was raised and must stay
+    readable across academic-year cutovers.
+
+    The reference SERIES, like the invoice number series, belongs to the seller and
+    lives outside any tenant folder — a counter inside one would be destroyed by that
+    teacher's erasure and the next teacher would be handed a number already used."""
+    def next_reference(self) -> str:
+        """The next reference in the series ("ARV-S-742"). Must be atomic enough that
+        two concurrent requests cannot take the same one."""
+        ...
+
+    def save(self, request: "SupportRequest") -> None: ...
+
+    def load_all(self, tenant_id: str, user_id: str) -> List["SupportRequest"]:
+        """Every request this teacher has raised, NEWEST FIRST."""
+        ...
+
+
 # ── Allocation persistence (Persistent Annual Allocation Register) ──────────────
 @dataclass
 class AllocationSummary:

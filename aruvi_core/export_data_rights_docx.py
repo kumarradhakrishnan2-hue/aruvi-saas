@@ -122,6 +122,15 @@ def build_export_docx(payload: Dict[str, Any]) -> bytes:
         ("Name", "display_name"), ("User ID", "account_id"), ("Email", "email"),
         ("Phone", "phone"), ("School", "school_name"), ("Member since", "created_at"))
         if acct.get(key)]
+    # The agreement she accepted (2026-08-27). Part of what Aruvi holds about her, so it
+    # belongs in what she can download — and it is the one item on this page that is
+    # deliberately RETAINED after an erase, which the erasure receipt says in the same
+    # words. Read off the account's `consent` mirror; the ledger is the authority.
+    _consent = acct.get("consent") or {}
+    if _consent.get("accepted_at"):
+        rows.append(("Agreement accepted",
+                     f"User Agreement v{_consent.get('policy_version') or '—'} "
+                     f"on {str(_consent.get('accepted_at'))[:10]}"))
     if rows:
         at = doc.add_table(rows=len(rows), cols=2)
         _hairlines(at, "DDDDDD")
@@ -198,6 +207,28 @@ def build_export_docx(payload: Dict[str, Any]) -> bytes:
             _striped(tt)
         else:
             _body_para(doc, "No teaching activity this year.", color=GRAY, italic=True)
+
+    # ── Messages you sent us (2026-08-27) ──
+    # Only when there are some: an empty "Messages you sent us" heading on every export
+    # would tell most teachers they were supposed to have written to somebody. Placed
+    # AFTER the years, because it is the least of what she came for.
+    support = payload.get("support") or []
+    if support:
+        _section_head(doc, "Messages you sent us")
+        _body_para(doc,
+            "Support messages you have written to Aruvi, newest first, with the "
+            "reference each was given.", size=9, color=GRAY, italic=True, space_after=6)
+        for s in support:
+            hp = doc.add_paragraph()
+            hp.paragraph_format.space_before = Pt(8)
+            hp.paragraph_format.space_after = Pt(2)
+            label = s.get("category_label") or s.get("category") or ""
+            _run(hp, f"{s.get('reference', '')}  ·  {label}",
+                 size=10, bold=True, color=INK, font=SERIF)
+            _body_para(doc, s.get("message", ""), space_after=2)
+            if s.get("created_at"):
+                _body_para(doc, f"Sent {str(s['created_at'])[:10]}",
+                           size=8, color=GRAY, italic=True, space_after=8)
 
     # ── Closing note (founder point 6: current text + pre-deletion advisory) ──
     _section_head(doc, "About lesson plan content")

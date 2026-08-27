@@ -40,6 +40,30 @@
      CONTENTS are capped, which is what makes the bar read as a bar.) */
   --shell-w: 860px;
   --shell-pad: 34px;   /* must match .hdr / .tabs / main horizontal padding */
+
+  /* ★ ARUVI DECIDES WHAT COLOUR ITS CONTROLS ARE, NOT THE OS (founder, 2026-08-27).
+     Reported as "the dropdowns use a dark background" — the Support category chooser
+     and the subscribe flow's Subject/Stage rows. The CLOSED select was never the
+     problem: `.ob-field select` and `.sup-select` already paint themselves in Aruvi
+     paper. What went dark was the OPEN LIST, which is drawn by the browser, and with
+     no `color-scheme` declared anywhere a browser draws native UI from the OS
+     preference. So a Mac in dark mode gave every Aruvi dropdown a black popup over a
+     cream page, and the same applies to scrollbars, autofill and date pickers.
+     Declaring it here settles all of them at once: the app is light, so its native
+     chrome is light. The mobile dark theme flips this to `dark` on the same selector
+     that flips the palette (see the dark block below) — a dark page with a light-drawn
+     popup would be this bug in the other direction.
+     This is also the general fix for the thing wheels.jsx worked AROUND in 2026-07-26
+     by refusing to use a native <select> at all. Note it does not make macOS honour
+     Aruvi's exact cream — the popup is still OS-drawn — it only settles light vs dark,
+     which is the whole of what was wrong. */
+  color-scheme: light;
+
+  /* THE chevron — one drawing, held in a custom property so there is exactly one copy
+     of it in the codebase and so the DARK theme can restage it in a legible ink (a
+     #6b6a63 arrow on a #232d27 field is invisible). A custom property can hold an
+     entire url(), which is what makes a themeable data-URI possible at all. */
+  --sel-chevron: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%236b6a63' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -180,6 +204,88 @@ select, input[type="number"] {
   border-radius: 3px; padding: 7px 10px; color: var(--ink);
 }
 select:focus, input:focus { outline: none; border-color: var(--pine); }
+
+/* ── EVERY dropdown in Aruvi wears Aruvi (founder, 2026-08-27) ──────────────────
+   Promoted from `.ob-field select`, which had this treatment alone since 2026-08-25
+   while Allocate's chapter-adder and the rest kept raw OS control chrome — the same
+   drift the Support screen's own select fell into within an hour of being written.
+   The BASE element rule is the only place that cannot be forgotten by the next
+   dropdown somebody adds.
+
+   `appearance: none` strips the UA's control (on a Mac in dark mode that chrome is
+   dark, over a cream page), `--sel-chevron` replaces the native arrow it removes, and
+   --field-bg is the house field colour. The padding-right is not decoration: with the
+   native arrow gone and a background image in its place, text with no right padding
+   runs straight under the chevron.
+
+   NOTE this styles the CLOSED control. The open list is the browser's, and
+   `color-scheme` on :root is what keeps THAT light — see the note there. Any select
+   below may still override size, radius or font; none should reintroduce the native
+   appearance, and any that sets `background:` (the shorthand) instead of
+   `background-color:` will silently wipe the chevron. */
+select {
+  -webkit-appearance: none; -moz-appearance: none; appearance: none;
+  background-color: var(--field-bg);
+  background-image: var(--sel-chevron);
+  background-repeat: no-repeat; background-position: right 10px center;
+  padding-right: 28px; cursor: pointer;
+}
+select:disabled { cursor: default; }
+
+/* ── The Aruvi dropdown (Dropdown.jsx, 2026-08-27) ─────────────────────────────
+   A button + listbox, NOT a <select>, because on macOS Chrome hands a <select>'s popup
+   to a native NSMenu that ignores `color-scheme` and every `option` rule — measured, on
+   the founder's Mac, with html/select/option all computing light and the menu still
+   black. The rules above still matter for the selects that remain (and for scrollbars
+   and autofill); this is what any dropdown a TEACHER sees should use.
+
+   The closed button deliberately matches `.ob-field select`'s metrics, so a converted
+   field sits at exactly the height it did as a native control. */
+.dd-wrap { position: relative; display: block; }
+/* ⚠️ `all: unset` resets text-transform and letter-spacing to INHERIT, not to none —
+   so inside a field label (whose <span> is mono uppercase with wide tracking) the
+   button came out reading "CHOOSE ONE" in spaced caps. A native <select> never had
+   this problem because form controls do not inherit those properties by default.
+   Both are stated explicitly here; the same trap awaits anything else built on
+   `all: unset` inside a label. */
+.dd-btn { all: unset; box-sizing: border-box; display: flex; align-items: center; gap: 8px;
+  width: 100%; cursor: pointer; background-color: var(--field-bg); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 7px; padding: 11px 12px;
+  font-family: var(--f-body); font-size: 14px; line-height: 1.3;
+  text-transform: none; letter-spacing: normal; }
+.dd-btn:disabled, .dd-btn[disabled] { opacity: .5; cursor: default; }
+.dd-btn:focus-visible { outline: none; border-color: var(--pine); }
+.dd-open .dd-btn { border-color: var(--pine); }
+.dd-lab { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* A dropdown still showing its placeholder reads grey, the way `.ob-unset` did. */
+.dd-unset .dd-lab { color: var(--ink-soft); }
+.dd-chev { flex: none; color: var(--ink-soft); line-height: 0; }
+.dd-open .dd-chev { transform: rotate(180deg); }
+
+/* position:FIXED — an overflow:auto ancestor (the wheels, .ob-body, a modal) would
+   otherwise clip the list. Its top/left/width are measured from the button at open
+   time, and it closes rather than chases on scroll. */
+.dd-pop { position: fixed; z-index: 120; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  background: var(--paper-2); color: var(--ink); border: 1px solid var(--line);
+  border-radius: 9px; box-shadow: 0 10px 28px rgba(31, 42, 36, .16); padding: 4px;
+  /* The list is a plain list wherever it opens — a field label's mono uppercase must
+     not follow it out of the flow. Same trap as .dd-btn. */
+  text-transform: none; letter-spacing: normal; font-family: var(--f-body); }
+.dd-opt { all: unset; box-sizing: border-box; display: block; width: 100%; cursor: pointer;
+  padding: 9px 10px; border-radius: 6px; font-family: var(--f-body); font-size: 14px;
+  color: var(--ink); line-height: 1.35;
+  text-transform: none; letter-spacing: normal; }   /* see .dd-btn */
+/* `.active` is the KEYBOARD/hover cursor; `.on` is the current value. Both can show at
+   once, and they must not look the same — one says "you are here", the other "this is
+   what it is set to". */
+.dd-opt.active { background: var(--tint-pine); }
+.dd-opt.on { color: var(--pine); font-weight: 600; }
+.dd-opt.dd-off { color: var(--ink-soft); cursor: default; opacity: .6; }
+.dd-opt.dd-off.active { background: transparent; }
+@media (max-width: 600px) {
+  /* 16px stops iOS zooming when the button takes focus, same rule as the text fields. */
+  .dd-btn, .dd-opt { font-size: 16px; }
+}
 
 /* ── Tabs ─────────────────────────────────────────────── */
 .tabs { display: flex; align-items: center; gap: 26px; padding: 0 34px; background: transparent; border-bottom: 1px solid var(--line); position: relative; z-index: 2; }
@@ -1075,7 +1181,17 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 
 /* G3 inverted chapter select — add from a dropdown; only chosen chapters listed */
 .g3-add { margin:14px 0 6px; }
-.g3-add-select { width:100%; font-family:var(--f-mono); font-size:13px; padding:12px 14px; border:1px solid var(--line); border-radius:9px; background:var(--paper-2); color:var(--ink); cursor:pointer; }
+/* background-COLOR, never the shorthand: the base `select` rule paints the Aruvi
+   chevron as a background-IMAGE, and `background:` would wipe it, leaving a control
+   with no arrow at all (2026-08-27). Padding-right leaves the chevron its room. */
+.g3-add-select { width:100%; font-family:var(--f-mono); font-size:13px; padding:12px 28px 12px 14px; border:1px solid var(--line); border-radius:9px; background-color:var(--paper-2); color:var(--ink); cursor:pointer; }
+/* The same adder, now an Aruvi Dropdown (2026-08-27). Mono, because this list is chapter
+   NUMBERS in a column and they must line up; the rest of the app's dropdowns are body. */
+.g3-add-dd .dd-btn { font-family:var(--f-mono); font-size:13px; padding:12px 14px; border-radius:9px; background-color:var(--paper-2); }
+.g3-add-dd .dd-unset .dd-lab { color:var(--ink); }
+/* The pop is position:fixed but still a DOM child of .dd-wrap, so it inherits by
+   descendant selector even though it paints outside the flow. */
+.g3-add-dd .dd-opt { font-family:var(--f-mono); }
 .g3-chosen-h { margin:16px 0 8px; }
 .g3-row { display:flex; align-items:center; gap:12px; background:var(--paper-2); border:1px solid var(--line); border-left:8px solid var(--pine); border-radius:9px; padding:11px 14px; margin-bottom:8px; }
 .g3-row-name { flex:1; font-family:var(--f-body); font-size:15px; color:var(--ink); }
@@ -1670,7 +1786,8 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .mc-modal .modal-fine { font-size:12.5px; font-style:italic; color:var(--ink-soft); margin:4px 0 14px; }
 .mc-modal .modal-field { display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
 .mc-modal .modal-field label { font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); }
-.mc-modal .modal-field select { font-family:var(--f-mono); font-size:14px; border:1px solid var(--line); border-radius:6px; padding:10px 12px; background:var(--paper-2); color:var(--ink); }
+/* background-COLOR, not the shorthand — see .g3-add-select. */
+.mc-modal .modal-field select { font-family:var(--f-mono); font-size:14px; border:1px solid var(--line); border-radius:6px; padding:10px 28px 10px 12px; background-color:var(--paper-2); color:var(--ink); }
 .mc-modal .addsec-group { margin-bottom:14px; }
 .mc-modal .modal-bar { display:flex; gap:12px; justify-content:flex-end; flex-wrap:wrap; margin-top:6px; }
 .mc-modal .btn { font-family:var(--f-mono); font-size:12px; letter-spacing:.05em; border-radius:7px; padding:11px 18px; cursor:pointer; }
@@ -2437,6 +2554,21 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
    alone no longer identifies a plan. */
 .sc-durline { font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .06em;
   color: var(--ink-soft); margin-top: 2px; }
+/* ── The card's meta ROW (founder, 2026-08-27) ──
+   "45 min × 6 units" and "2026-27 version" side by side instead of stacked. Both are
+   small-print provenance about WHICH version of the chapter she holds, and each was
+   spending a whole line of a deliberately compact card — over a shelf of ten plans that
+   is ten line-heights of nothing.
+
+   `align-items: baseline` because the two sit at the same 9.5px mono size and must
+   share a baseline, not merely a box. `flex-wrap` because they must never SQUASH: on a
+   narrow phone a long matrix ("40 min × 10 · 30 min × 4") pushes the stamp onto its own
+   line, which is the right sacrifice — the matrix is what identifies the plan. The
+   children's own margin-top is zeroed here, or the row would inherit the stacked
+   spacing it exists to remove. */
+.sc-metarow { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px;
+  margin-top: 2px; }
+.sc-metarow .sc-durline, .sc-metarow .sc-yearstamp { margin-top: 0; }
 .ap-loading, .ap-none { font-size: 13px; color: var(--ink-soft); font-style: italic; padding: 8px 2px; }
 /* ── Standardized chapter-listing row (shared by the "+" track picker and the history popup) ──
    A STACKED block, not a horizontal strip: a compact meta line on top — CH no · subject · grade,
@@ -3107,6 +3239,13 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 
   /* — Core palette: the backbone. Almost the entire UI reads these vars. — */
   [data-theme-effective="dark"] {
+    /* The other half of :root's `color-scheme: light` (2026-08-27). Native chrome —
+       select popups, scrollbars, autofill — follows ARUVI's theme, so a page that has
+       gone dark must say so here, or the dropdown list comes back light over it: the
+       same bug the light theme just had, pointing the other way. */
+    color-scheme: dark;
+    /* Same arrow, legible ink — see --sel-chevron in :root. */
+    --sel-chevron: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23a29b8c' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
     --paper:      #161d19;
     --paper-2:    #1e2621;
     --paper-sunk: #11170f;
@@ -3584,8 +3723,18 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 .ob-benefits { font-family: var(--f-body); font-size: 12.5px; line-height: 1.8;
   color: var(--ink); margin: 0 0 18px; }
 .ob-tick { color: var(--pine); font-weight: 700; }
-.ob-body { flex: 1; padding: 22px 20px 10px; max-width: 480px; width: 100%; margin: 0 auto;
-  box-sizing: border-box; }
+/* ★ The bottom padding CLEARS THE STICKY FOOTER (founder, 2026-08-27). `.ob-foot` is
+ * sticky-bottom, so on any step tall enough to scroll it pins to the viewport and the
+ * page scrolls BEHIND it — which silently ate the last field of About-you ("School name
+ * (optional)" sat under the Save button, reported as the field being hidden). 10px of
+ * bottom padding could never clear a ~76px bar. Costs nothing on short steps, where
+ * `.ob-body` is flex:1 and already taller than its content. Any new field added at the
+ * end of a wizard step depends on this. */
+.ob-body { flex: 1; padding: 22px 20px calc(86px + env(safe-area-inset-bottom));
+  max-width: 480px; width: 100%; margin: 0 auto; box-sizing: border-box; }
+/* …except inside the agreement's locked frame, where the footer is a real bottom band
+ * in flow rather than an overlay, and `.lgl-scroll` supplies its own breathing room. */
+.ob-body-lock { padding-bottom: 0; }
 .ob-foot { padding: 10px 20px 26px; max-width: 480px; width: 100%; margin: 0 auto;
   box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; align-items: center; }
 .ob-headline { font-family: var(--f-display); font-size: 24px; font-weight: 700;
@@ -3608,13 +3757,12 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 .ob-sub { font-size: 13px; color: var(--ink-soft); margin: 0 0 14px; line-height: 1.5; }
 .ob-field { margin-top: 12px; }
 /* Selects wear Aruvi paper, not the OS's native (often dark) control chrome
- * (founder, 2026-08-25): appearance:none strips the UA styling, an inline chevron
- * replaces the native arrow. The OPEN list is OS-rendered and can't be themed. */
-.ob-field select, .ob-row-selects select {
-  -webkit-appearance: none; -moz-appearance: none; appearance: none;
-  background-color: var(--card-bg); color: var(--ink);
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%236b6a63' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 10px center; }
+ * (founder, 2026-08-25). ★ 2026-08-27: this treatment MOVED UP to the base `select`
+ * element rule, where no future dropdown can miss it, and the hand-copied chevron here
+ * was replaced by --sel-chevron (one drawing, and it restages itself in the dark
+ * theme). What is left below is only what onboarding fields do DIFFERENTLY. The open
+ * list is the browser's — :root's `color-scheme` is what keeps that light. */
+.ob-field select, .ob-row-selects select { color: var(--ink); }
 .ob-field select { width: 100%; box-sizing: border-box; border: 1px solid var(--line);
   border-radius: 7px; padding: 11px 30px 11px 12px; font-family: var(--f-body); font-size: 14px; }
 .ob-mobile-row { display: flex; align-items: center; gap: 8px; }
@@ -3647,6 +3795,13 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
   padding: 9px 26px 9px 8px; font-family: var(--f-body); font-size: 13px; }
 .ob-row-selects select:disabled { opacity: .5; }
 .ob-row-selects select.ob-ph { font-weight: 700; }
+/* The cart's two dropdowns sit side by side and must share the row evenly — the
+   Dropdown's own wrapper is what flexes, not the button inside it (2026-08-27). */
+.ob-row-selects .ob-rowdd { flex: 1; min-width: 0; }
+.ob-row-selects .ob-rowdd .dd-btn { padding: 9px 8px; font-size: 13px; }
+/* Placeholder words stay BOLD here, as they were on the native selects — this row is
+   an instruction ("Subject", "Stage") before it is a value. */
+.ob-row-selects .ob-rowdd .dd-unset .dd-lab { font-weight: 700; color: var(--ink); }
 /* A select whose field-name option is still showing reads grey, like a placeholder. */
 .ob-field select.ob-unset { color: var(--ink-soft); }
 /* All onboarding/profile form controls sit on the LIGHTER field background. */
@@ -3671,6 +3826,17 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
   gap: 10px; border: 1px solid var(--line); border-radius: 7px; padding: 11px 12px;
   font-family: var(--f-body); font-size: 14px; color: var(--ink);
   background: var(--card-bg); }
+/* The profile shows the WHOLE address (2026-08-27) — see `emailFit` in Settings.jsx,
+   which picks the step below from the address's length. `min-width: 0` is what lets
+   the span be narrower than its text inside the flex row, and `anywhere` wraps rather
+   than overflowing once even the smallest step won't fit (a very long address on a
+   360px phone). Nothing here truncates: no ellipsis, no `nowrap`. The "change" button
+   never shrinks, so the two can't fight over the row. */
+.ob-email-addr { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; line-height: 1.35; }
+.ob-email-addr-s { font-size: 13px; }
+.ob-email-addr-xs { font-size: 12px; }
+.ob-email-addr-xxs { font-size: 11px; }
+.ob-email-view .fr-link { flex: 0 0 auto; }
 .setwrap-tight { margin-top: -12px; }
 /* OTP — four auto-advancing boxes (founder 2026-08-25) */
 .ob-otp-label { display: block; font-family: var(--f-mono); font-size: 10.5px;
@@ -3694,6 +3860,29 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
   color: var(--ink); }
 .ob-payrow { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink);
   padding: 7px 0; border-bottom: 1px solid var(--line-soft); }
+
+/* ★ The trial offer raised by the cart's Continue at the FRONT DOOR (2026-08-27).
+   Reuses .modal-backdrop/.modal-box for the scrim and sheet; its own title/actions
+   because the shared .modal-title is DANGER-coloured and this is an invitation, not a
+   warning. z-index clears the in-app .subflow-overlay (70) so the class stays safe if
+   the offer is ever wanted there. Trial is the primary — it is the thing being
+   suggested — with Subscribe a full-weight bordered alternative, never a whisper. */
+.ob-offer-back { z-index: 80; }
+.ob-offer-box { max-width: 380px; }
+.ob-offer-title { font-family: var(--f-display); font-size: 18px; font-weight: 700;
+  color: var(--ink); margin: 0 0 10px; line-height: 1.3; }
+.ob-offer-body { font-size: 13.5px; color: var(--ink); line-height: 1.55; margin: 0 0 10px; }
+.ob-offer-note { font-size: 11.5px; color: var(--ink-soft); line-height: 1.5; margin: 0 0 18px; }
+.ob-offer-actions { display: flex; gap: 10px; }
+.ob-offer-actions button { flex: 1; }
+.ob-offer-alt { all: unset; box-sizing: border-box; cursor: pointer; text-align: center;
+  font-family: var(--f-mono); font-size: 12.5px; letter-spacing: .04em; color: var(--pine);
+  border: 1px solid var(--pine); border-radius: 6px; padding: 11px 14px; background: transparent; }
+.ob-offer-alt:hover { background: rgba(31, 77, 58, .07); }
+@media (max-width: 480px) {
+  .ob-offer-actions { flex-direction: column; gap: 10px; }
+  .ob-offer-actions button { width: 100%; }
+}
 
 /* ── Your account (gear surface, below the teaching profile — Step 6 slice 2) ── */
 .acct { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); }
@@ -3906,10 +4095,71 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
    as fine print to skim past; never red, because nothing here has gone wrong. */
 .ob-purge-note { color: var(--clay); border-left: 2px solid var(--edge-clay);
   padding-left: 10px; margin-top: 10px; }
+
+/* ── Settings › Support (2026-08-27) ────────────────────────────────────────────
+   Email is the only channel, so this screen's whole job is to make writing feel like
+   filing a case rather than shouting into a void. Two visual moves carry that: the
+   category CHIPS (a choice, not a subject line to compose) and the REFERENCE, set in
+   mono at ledger scale — the same face the invoice number uses, because it is the same
+   kind of object: a number she may have to read out. */
+/* ★ THE TITLE FREEZES, AND ONLY THE TITLE (founder, 2026-08-27). Rides
+   `.set-title-stick` (sticky at var(--nav-h), opaque paper, hairline) and adds the pull
+   UP: main's 40px top padding left a visible gap between the Settings bar and the one
+   word naming the screen, which read as the page starting late. -26px leaves ~14px of
+   air. The bottom margin is the stick's own. */
+.sup-title { margin-top: -26px; }
+
+/* The Ask Aruvi row carries the MARK, not a generic icon — same stream-and-dot as the
+   tab row, so the row and the panel it opens read as one object. Pine like every other
+   instance of it; `line-height: 0` stops the inline SVG adding a descender's worth of
+   height to a deliberately compact card. */
+.sup-ask { align-items: center; }
+.sup-askmark { flex: none; color: var(--pine); line-height: 0; display: inline-flex; }
+.set-bigcard:hover .sup-askmark { color: var(--pine-d); }
+
+/* A DROPDOWN, not chips (founder, 2026-08-27). Five labels as chips wrapped to three
+   rows at 360px and pushed the message box under the fold — and the message box is the
+   one thing on this screen that must be visible.
+
+   Deliberately almost EMPTY: its label carries `.ob-field`, so `.ob-field select` above
+   already gives it the whole house treatment — appearance:none, the Aruvi chevron,
+   --field-bg, the border and the 7px radius. A first version repeated all of that here
+   with its own chevron and its own background and drifted from the subscribe flow's
+   dropdowns within the hour. The class survives only as a hook for the mobile
+   font-size rule below. */
+.sup-select { cursor: pointer; }
+.sup-field { margin-top: 2px; }
+
+/* The OPTIONS inside an open list. Styleable on Chrome/Windows, Linux and Android;
+   ignored on macOS, where the popup is drawn entirely by the OS (which is why
+   :root's `color-scheme` is the real fix — this rule only refines what it can reach).
+   Named explicitly rather than left to the UA so an open list is Aruvi paper and ink
+   on the platforms that allow it, instead of system white on system black. */
+select option { background-color: var(--field-bg); color: var(--ink); }
+.sup-text { width: 100%; box-sizing: border-box; resize: vertical; min-height: 130px;
+  font-family: var(--f-body); font-size: 14px; line-height: 1.55; color: var(--ink);
+  background: var(--paper); border: 1px solid var(--line); border-radius: 3px;
+  padding: 10px 12px; }
+.sup-text:focus { outline: none; border-color: var(--edge-green); }
+.sup-promise { margin-top: 10px; }
+.sup-refcap { font-family: var(--f-mono); font-size: 10px; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink-soft); }
+.sup-ref { font-family: var(--f-mono); font-size: 22px; letter-spacing: .04em;
+  color: var(--pine); padding: 4px 0 10px; word-break: break-all; }
+.sup-rowref { font-family: var(--f-mono); font-size: 11px; color: var(--ink-soft);
+  padding-left: 8px; }
+.sup-addmail { margin-top: 10px; display: inline-block; }
+
 @media (max-width: 600px) {
   .cn-paper { height: 204px; }
   .cn-foot { flex-wrap: wrap; }
   .cn-foot-l { gap: 10px; }
+  .sup-ref { font-size: 19px; }
+  /* 16px exactly: iOS Safari zooms the whole page when a focused field is under 16px,
+     and a teacher typing a bug report should not have the layout jump under her. The
+     select is the same rule — iOS zooms on a small <select> too. */
+  .sup-text, .sup-select { font-size: 16px; }
+  .sup-title { margin-top: -22px; }
 }
 
 /* ── Unit view: the standard anatomy ── */
@@ -4306,4 +4556,138 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
   .sc-prep-failed { flex-direction: row; align-items: center; gap: 10px; }
   .sc-prep-failed .sc-prep-note { order: 0; font-size: 12px; }
   .sc-prep-failed .sc-prep-dismiss { order: 0; }
+}
+
+/* ── The user agreement (Agreement.jsx: subscribe wizard step + Settings › Legal) ──
+ * Founder, 2026-08-27. A legal document read on a phone, in the middle of a purchase,
+ * so it is set as a DOCUMENT, not as app chrome: body serif, generous line-height,
+ * ~62ch measure, and the five acknowledgements as numbered cards with the tick INSIDE
+ * each one — a checkbox that sits under all five points describes none of them.
+ * Namespaced `.lgl-*`; the wizard's own `.ob-body` cap keeps the measure honest on
+ * desktop, and the read-only Settings copy inherits the same rules. */
+.lgl { font-family: var(--f-body); color: var(--ink); }
+.lgl-hint { font-family: var(--f-body); font-size: 13px; line-height: 1.6;
+  color: var(--ink-soft); margin: 0 0 14px; }
+.lgl-fail { font-family: var(--f-body); font-size: 13.5px; color: var(--danger);
+  margin: 12px 0; }
+.lgl-accepted { font-family: var(--f-body); font-size: 13px; line-height: 1.6;
+  color: var(--ink); background: var(--tint-pine); border-radius: 10px;
+  padding: 10px 12px; margin: 0 0 16px; }
+.lgl-tick { color: var(--pine); font-weight: 700; margin-right: 6px; }
+.lgl-stale { color: var(--ink-soft); font-style: italic; }
+.lgl-intro { margin: 0 0 4px; }
+.lgl-intro .lgl-p { font-style: italic; color: var(--ink-soft); font-size: 13px; }
+
+/* Prose primitives — every block the markdown renderer can emit. */
+.lgl-p { font-size: 13.5px; line-height: 1.7; margin: 0 0 10px; }
+.lgl-ul { margin: 0 0 12px; padding-left: 18px; }
+.lgl-ul li { font-size: 13.5px; line-height: 1.7; margin-bottom: 6px; }
+.lgl-h2 { font-family: var(--f-display); font-size: 15.5px; font-weight: 600;
+  color: var(--ink); margin: 20px 0 8px; }
+.lgl-h3 { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-soft); margin: 16px 0 6px; }
+.lgl-hr { border: 0; border-top: 1px solid var(--line); margin: 18px 0; }
+
+/* The five, each its own card. */
+.lgl-acks { list-style: none; margin: 14px 0 0; padding: 0; }
+.lgl-ack { background: var(--card-bg); border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px 15px; margin-bottom: 12px; }
+.lgl-ack.on { border-color: var(--pine); }
+.lgl-ack-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+/* The marginal number, in the mono rail voice the rest of Aruvi numbers things in. */
+.lgl-ack-n { font-family: var(--f-mono); font-size: 12px; color: var(--clay);
+  flex: 0 0 auto; }
+.lgl-ack-title { font-family: var(--f-display); font-size: 14.5px; font-weight: 600;
+  line-height: 1.35; color: var(--ink); }
+.lgl-ack-body .lgl-p:last-child { margin-bottom: 0; }
+
+/* The tick itself. 22px box + the whole label clickable — a checkbox on a phone that
+ * only responds to its own 13px square is a checkbox that gets tapped four times. */
+.lgl-check { display: flex; align-items: flex-start; gap: 10px; margin-top: 12px;
+  padding-top: 10px; border-top: 1px solid var(--line); cursor: pointer;
+  font-family: var(--f-body); font-size: 13.5px; line-height: 1.5; color: var(--ink); }
+.lgl-check input { width: 22px; height: 22px; flex: 0 0 auto; margin: 0;
+  accent-color: var(--pine); cursor: pointer; }
+.lgl-check-final { border-top: 0; padding-top: 0; font-weight: 600; }
+
+.lgl-agreement { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+.lgl-final { background: var(--paper-sunk); border: 1px solid var(--line);
+  border-radius: 12px; padding: 14px 15px; margin-top: 18px; }
+.lgl-need { font-family: var(--f-body); font-size: 12px; font-style: italic;
+  color: var(--ink-soft); margin: 8px 0 0; }
+.lgl-version { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.04em;
+  color: var(--ink-soft); margin: 16px 0 0; line-height: 1.6; }
+/* ── Sign mode is a THREE-BAND FRAME (founder, 2026-08-27) ──
+ * heading pinned · document scrolling · accept bar pinned. A teacher signs this in the
+ * middle of a purchase, and a long document that pushes both the title and the way out
+ * off-screen leaves her scrolling blind. Nothing may scroll below the accept bar.
+ *
+ * WHY THE LOCK IS A PAIR OF CLASSES ON THE SHELL. A child cannot make its ancestors stop
+ * growing: `.ob-wrap` is min-height:100dvh (it GROWS with content) and `.ob-body` is
+ * flex:1 with the default min-height:auto, so a tall child expands the page instead of
+ * scrolling inside it. `.ob-wrap-lock` fixes the height, and every band in the chain
+ * carries `min-height: 0` — the one declaration that lets a flex child be SHORTER than
+ * its content, which is what makes the middle band scroll at all. Applied only to the
+ * agreement step; every other wizard screen keeps the growing page it always had. */
+.ob-wrap-lock { height: 100vh; height: 100dvh; min-height: 0; overflow: hidden; }
+.ob-body-lock { display: flex; flex-direction: column; min-height: 0;
+  flex: 1 1 auto; overflow: hidden; padding-bottom: 0; }
+/* The step rail sits in the frozen top band with the heading; only .lgl may flex. */
+.ob-body-lock > * { flex: 0 0 auto; }
+.ob-body-lock > .lgl { flex: 1 1 auto; min-height: 0; }
+.lgl-sign { display: flex; flex-direction: column; min-height: 0; }
+.lgl-sign .lgl-head { flex: 0 0 auto; }
+.lgl-sign .lgl-head .ob-title { margin-top: 0; }
+/* The scrolling band. Its own bottom padding is the breathing room between the last
+ * line of the document and the pinned bar — without it text stops flush against the
+ * rule and reads as if it were cut off rather than ended. */
+.lgl-sign .lgl-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto;
+  -webkit-overflow-scrolling: touch; padding-bottom: 20px;
+  /* The negative gutters let the scrollbar ride the column edge rather than inset it. */
+  margin-left: -20px; margin-right: -20px; padding-left: 20px; padding-right: 20px; }
+/* Read mode (Settings › Legal) has no frame: the bands are inert wrappers there. */
+.lgl-read .lgl-scroll { overflow: visible; }
+
+/* The wizard's sticky CTA footer, but rendered INSIDE .ob-body (the agreement owns its
+ * own accept button) rather than beside it. It must still span the full column: negative
+ * gutters, not zeroed padding — a sticky bar narrower than the text would let scrolled
+ * paragraphs slide past it at the edges. Inside the locked frame it is the bottom band,
+ * so the hairline is what the document scrolls UNDER, never past. */
+.lgl-foot { max-width: none; margin-left: -20px; margin-right: -20px;
+  padding-left: 20px; padding-right: 20px; margin-top: 6px; }
+.lgl-sign .lgl-foot { flex: 0 0 auto; position: static; border-top: 1px solid var(--line);
+  padding-top: 12px; margin-top: 0; gap: 8px; }
+
+/* The five-point tally: the ticks restated where the accept button is. By the time she
+ * reaches the bar the points are far up the document, so "which one did I miss?" has to
+ * be answerable without scrolling back — hence boxes that show state AND jump to it. */
+.lgl-tally { display: flex; align-items: center; justify-content: center; gap: 10px;
+  flex-wrap: wrap; width: 100%; }
+.lgl-tally-lbl { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-soft); }
+.lgl-tally-boxes { display: flex; gap: 6px; }
+.lgl-box { all: unset; box-sizing: border-box; display: flex; align-items: center;
+  justify-content: center; width: 26px; height: 26px; border-radius: 6px;
+  border: 1.5px solid var(--line); background: var(--card-bg); cursor: pointer;
+  font-family: var(--f-mono); font-size: 12px; color: var(--ink-soft);
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease; }
+.lgl-box.on { background: var(--pine); border-color: var(--pine); color: var(--paper);
+  font-size: 14px; }
+.lgl-box:focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; }
+/* Settings › Legal: the card supplies the frame, so the document supplies the padding. */
+.set-legal { padding: 16px 16px 20px; }
+.ob-consent-note { display: flex; flex-wrap: wrap; gap: 4px; align-items: baseline;
+  margin-top: 12px; line-height: 1.6; }
+
+@media (max-width: 480px) {
+  .lgl-ack { padding: 12px 13px; }
+  .lgl-ack-title { font-size: 14px; }
+  .lgl-p, .lgl-ul li { font-size: 13px; }
+  .set-legal { padding: 12px 12px 16px; }
+  /* On a phone the frame is most of the value and the chrome is the cost: a smaller
+     title and a tighter bar keep the scrolling band tall enough to read in. */
+  .lgl-sign .lgl-head .ob-title { font-size: 18px; margin-bottom: 2px; }
+  .lgl-sign .lgl-foot { padding-top: 10px; }
+  .lgl-tally { gap: 8px; }
+  .lgl-box { width: 24px; height: 24px; }
 }

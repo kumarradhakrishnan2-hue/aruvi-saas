@@ -40,6 +40,8 @@ from aruvi_core.adapters.plan_note_repository_file import PlanNoteRepositoryFile
 from aruvi_core.adapters.data_rights_service_file import DataRightsServiceFileImpl
 from aruvi_core.adapters.entitlement_repository_file import EntitlementRepositoryFileImpl
 from aruvi_core.adapters.invoice_repository_file import InvoiceRepositoryFileImpl
+from aruvi_core.adapters.consent_repository_file import ConsentRepositoryFileImpl
+from aruvi_core.adapters.support_repository_file import SupportRepositoryFileImpl
 from aruvi_core.adapters.manual_billing_provider import ManualBillingProvider
 from aruvi_core.adapters.erasure_log_file import ErasureLogFileImpl
 from aruvi_core.adapters.year_cutover_file import YearCutoverFileImpl
@@ -47,15 +49,16 @@ from aruvi_core.adapters.file_notifier import FileNotifier
 from aruvi_core.adapters.smtp_notifier import SmtpNotifier
 from aruvi_core.ports import EmailMessage
 from api import mail_templates
-from aruvi_core.ports import (Account, AcademicYear, Attachment, Entitlement, Invoice,
-                              InvoiceLine, PlanNote, StaleNoteWrite)
+from aruvi_core.ports import (Account, AcademicYear, Attachment, ConsentRecord,
+                              Entitlement, Invoice, InvoiceLine, PlanNote,
+                              StaleNoteWrite, SupportRequest)
 from aruvi_core.grades import stage_for, UnknownGradeError
 from aruvi_core.report_competency import build_report as build_competency_report
 # NOTE: the PDF/DOCX exporters are imported lazily inside their endpoints (not here)
 # so a missing optional dependency (weasyprint, python-docx) can never break API
 # startup — only the export endpoints would error, with a clear message.
 
-from . import data, config
+from . import data, config, legal
 
 app = FastAPI(title="Aruvi API", version="0.1.0")
 app.add_middleware(
@@ -139,6 +142,21 @@ entitlement_repo = EntitlementRepositoryFileImpl(config.STATE_DIR)
 invoice_repo = InvoiceRepositoryFileImpl(config.STATE_DIR, prefix=config.INVOICE_PREFIX,
                                         start=config.INVOICE_START)
 billing_provider = ManualBillingProvider(entitlement_repo)
+
+# Consent (2026-08-27) — the six ticks on the user agreement, taken BEFORE she chooses
+# subjects and stages, and kept as evidence. Tenant-keyed like the entitlement it gates.
+# ★ Its store deliberately sits outside every folder the erase traversal walks (see
+# consent_repository_file.py): the record survives account deletion, the erasure receipt
+# says so, and §G of the agreement says so.
+consent_repo = ConsentRepositoryFileImpl(config.STATE_DIR)
+
+# Support (2026-08-27) — email is the only channel, so every message she sends is filed
+# here with a reference before it is mailed. Bucket-B STATE (her own words), and it
+# joined the export + erase traversal the day it was born; the reference SERIES sits in
+# support/_series/, outside every folder that traversal walks, for the same reason the
+# invoice series does.
+support_repo = SupportRepositoryFileImpl(config.STATE_DIR, prefix=config.SUPPORT_PREFIX,
+                                         start=config.SUPPORT_START)
 # The one store the erase walk must never traverse — see erasure_log_file.py.
 erasure_log = ErasureLogFileImpl(config.STATE_DIR)
 
@@ -1539,6 +1557,139 @@ def get_entitlement(identity: tuple = Depends(_current_identity)) -> Dict[str, A
     }
 
 
+# ── The user agreement: read it, tick it, prove it (2026-08-27) ────────────────
+# Placement is the founder's, and the document's own front matter says the same: shown
+# IN FULL before she chooses subjects and stages — the last moment before she commits to
+# anything — and permanently available under Settings › Legal. Five ticks for the five
+# points, one final tick for the body.
+#
+# ★ RE-CONSENT IS PER VERSION (founder, 2026-08-27), which is what §J of the agreement
+# already promises. A subscriber adding a subject-stage next month walks past this
+# screen; the same teacher after v0.2 is published takes all six ticks again. That rule
+# lives in ONE place — `_consent_outstanding` — so the screen and the gate can never
+# disagree about whether she has signed.
+
+def _consent_status(tenant_id: str) -> Dict[str, Any]:
+    """What this tenant has accepted, against what is current today."""
+    version = legal.current_version()
+    rec = consent_repo.latest(tenant_id, legal.DOCUMENT_ID, version)
+    prior = consent_repo.latest(tenant_id, legal.DOCUMENT_ID)   # any version
+    return {
+        "current_version": version,
+        "accepted": rec is not None,
+        "accepted_at": rec.accepted_at if rec else "",
+        "accepted_version": rec.document_version if rec else "",
+        # A teacher who signed v0.1 and is being asked for v0.2 is NOT a new signatory,
+        # and the screen should not address her as one.
+        "prior_version": prior.document_version if (prior and rec is None) else "",
+        "prior_accepted_at": prior.accepted_at if (prior and rec is None) else "",
+    }
+
+
+def _consent_outstanding(tenant_id: str) -> bool:
+    """True when the current version has NOT been accepted by this tenant."""
+    return not _consent_status(tenant_id)["accepted"]
+
+
+@app.get("/legal/consent")
+def get_legal_consent(version: Optional[str] = None,
+                      identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """The agreement itself, parsed into the pieces the UI ticks, plus this tenant's
+    acceptance state. One source of truth (api/legal.py): the wizard's Agreement step
+    and Settings › Legal render THIS, never a re-typed summary.
+
+    `?version=` serves an older published version — what Settings shows a teacher who
+    accepted v0.1 after v0.2 has been published, because the document she is entitled to
+    read back is the one she actually signed."""
+    tenant_id, _user_id = identity
+    status = _consent_status(tenant_id)
+    want = version or status["accepted_version"] or status["current_version"]
+    try:
+        doc = legal.load_consent_document(want)
+    except legal.ConsentDocumentError as exc:
+        raise HTTPException(status_code=503, detail=str(exc))
+    return {"document": doc, **status, "versions": legal.available_versions()}
+
+
+@app.get("/legal/consent/status")
+def get_legal_consent_status(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Has this tenant accepted the current version? — WITHOUT the document.
+
+    The subscribe wizard asks this on mount to decide whether the Agreement step is in
+    her path at all, while she is still typing her name. Shipping the whole agreement to
+    answer a yes/no would make that decision cost more than the step it might skip."""
+    tenant_id, _user_id = identity
+    try:
+        return _consent_status(tenant_id)
+    except legal.ConsentDocumentError as exc:
+        raise HTTPException(status_code=503, detail=str(exc))
+
+
+class ConsentAccept(BaseModel):
+    """Body for POST /legal/consent — one completed acceptance.
+
+    `acknowledgements` is the list of tick ids she ticked; the server checks it against
+    the document's own ids rather than trusting a count, because "five ticks arrived" is
+    not the same fact as "these five points were accepted"."""
+    version: str
+    acknowledgements: List[str]
+    final: bool = False
+    context: str = "subscription_checkout"
+    language: str = "en"
+
+
+@app.post("/legal/consent")
+def post_legal_consent(req: ConsentAccept,
+                       user_agent: str = Header(default="", alias="User-Agent"),
+                       identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Record an acceptance. Append-only — a new version is a new record, and nothing
+    already signed is ever rewritten.
+
+    Refuses a PARTIAL acceptance (400) rather than storing one. A record that says four
+    of five points were accepted describes a document nobody agreed to; the UI already
+    disables its button, and this is the net behind it."""
+    tenant_id, user_id = identity
+    try:
+        current = legal.current_version()
+        expected = legal.acknowledgement_ids(current)
+    except legal.ConsentDocumentError as exc:
+        raise HTTPException(status_code=503, detail=str(exc))
+    # Only the CURRENT version can be accepted — accepting a superseded one would create
+    # a record that looks valid and satisfies nothing.
+    if (req.version or "").strip() != current:
+        raise HTTPException(status_code=409, detail=(
+            "The agreement has been updated. Please read and accept the current version."))
+    ticked = [a for a in (req.acknowledgements or []) if a in expected]
+    missing = [a for a in expected if a not in ticked]
+    if missing or not req.final:
+        raise HTTPException(status_code=400, detail=(
+            "Please confirm each point and accept the full agreement to continue."))
+    now = datetime.now(timezone.utc).isoformat()
+    record = ConsentRecord(
+        tenant_id=tenant_id, user_id=user_id,
+        document_id=legal.DOCUMENT_ID, document_version=current,
+        language=(req.language or legal.LANGUAGE).strip() or legal.LANGUAGE,
+        accepted_at=now,
+        # One timestamp per tick is what the document asks to be recorded. The client
+        # does not send per-tick times (it would be sending us its own clock); they are
+        # stamped here, at the moment the completed acceptance arrives.
+        acknowledgements={a: now for a in expected},
+        final_accepted_at=now,
+        context=(req.context or "subscription_checkout").strip(),
+        user_agent=(user_agent or "")[:300])
+    consent_repo.save(record)
+    # Mirrored onto the account record's existing `consent` field, which Step 0 put there
+    # for exactly this and which the account export already renders. The LEDGER is the
+    # authority; this is the convenience copy, and it is the one that is erased with her
+    # account.
+    acct = account_repo.load(tenant_id, user_id)
+    if acct is not None:
+        acct.consent = {"policy_version": current, "accepted_at": now,
+                        "document_id": legal.DOCUMENT_ID}
+        account_repo.save(acct)
+    return {"status": "accepted", "version": current, "accepted_at": now}
+
+
 class AccountUpdate(BaseModel):
     """Body for POST /account — the Settings › Personal profile editor. Only provided
     fields change; the id/phone (her sign-in) is never editable here."""
@@ -1635,6 +1786,146 @@ def update_account(req: AccountUpdate,
         a.school_name = req.school.strip()
     account_repo.save(a)
     return {"status": "saved"}
+
+
+# ── Support (2026-08-27) ───────────────────────────────────────────────────────
+# Email is the only support channel Aruvi offers, so this route carries the whole of
+# what a chat widget would otherwise do. Three rules shape it:
+#
+#   * NEVER GATED. Not on subscription, not on trial state, not on entitlement. A
+#     teacher whose subscription is the thing that is broken must be able to say so —
+#     the same reasoning that keeps data rights ungated (§2.5).
+#   * THE ACKNOWLEDGEMENT IS THE FEATURE. Email's failure mode is silence, and a
+#     teacher who hears nothing writes again, or gives up. She gets a reference and a
+#     stated reply window within seconds.
+#   * A MAIL FAILURE MUST NOT LOSE THE MESSAGE. The request is STORED first and mailed
+#     second, and the store is the record. `notifier.send` never raises by contract, so
+#     the worst case is a saved case with `acknowledged: false` — recoverable, and
+#     visible to the founder — rather than her words evaporating.
+_SUPPORT_MAX_CHARS = 4000
+
+
+class SupportMessage(BaseModel):
+    """Body for POST /support. Named for the message, not the port's SupportRequest —
+    the two would otherwise share a name across the HTTP and domain layers."""
+    category: str = "problem"      # problem | plan | billing | suggestion
+    message: str
+    # What the app knew when she pressed send: {screen, subject, grade, chapter}. Sent
+    # by the client rather than inferred here, because only the client knows which
+    # screen she was standing on — and shown back to her in the acknowledgement.
+    context: Dict[str, str] = {}
+
+
+def _support_reply_days(category: str) -> int:
+    """Billing gets the firmer promise. One place, so the screen's line, the mail's line
+    and the founder's copy cannot end up quoting three different windows."""
+    return (config.SUPPORT_BILLING_REPLY_DAYS
+            if str(category or "").strip().lower() == "billing"
+            else config.SUPPORT_REPLY_DAYS)
+
+
+@app.post("/support")
+def create_support_request(req: SupportMessage,
+                           identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Record a support request, acknowledge it to the teacher, and copy the founder.
+
+    Returns the reference and the promised window so the confirmation screen quotes
+    EXACTLY what the mail quotes. `emailed` tells the client whether the acknowledgement
+    actually left — an account with no email address on it still files a real case, and
+    the screen then says so instead of promising a mail that was never sent."""
+    tenant_id, user_id = identity
+    text = (req.message or "").strip()
+    if not text:
+        raise HTTPException(status_code=400, detail="Please write your message first.")
+    if len(text) > _SUPPORT_MAX_CHARS:
+        # A cap, said in her units. Long enough that nobody hits it describing a real
+        # problem; low enough that a pasted logfile cannot become the support system.
+        raise HTTPException(status_code=400, detail=(
+            f"That message is longer than {_SUPPORT_MAX_CHARS} characters. Send the "
+            f"important part and we will ask for the rest."))
+    category = (req.category or "problem").strip().lower()
+    if category not in mail_templates.SUPPORT_CATEGORIES:
+        category = "problem"
+
+    acct = account_repo.load(tenant_id, user_id)
+    to = (acct.email if acct else "").strip()
+    name = (acct.display_name if acct else "") or ""
+    now = datetime.now(timezone.utc).isoformat()
+    reference = support_repo.next_reference()
+    days = _support_reply_days(category)
+
+    record = SupportRequest(
+        reference=reference, tenant_id=tenant_id, user_id=user_id, category=category,
+        category_label=mail_templates.support_category_label(category),
+        message=text, created_at=now, email=to, name=name,
+        context={k: str(v) for k, v in (req.context or {}).items() if v},
+    )
+    support_repo.save(record)      # stored BEFORE the mail — see the note above
+
+    emailed = False
+    if to:
+        body = mail_templates.support_acknowledgement(
+            name=name, reference=reference, category=category, message=text,
+            reply_days=days, received_on=now[:10], context=record.context)
+        result = notifier.send(EmailMessage(
+            to=to, subject=body["subject"], text=body["text"],
+            html=body.get("html", ""), reply_to=config.MAIL_REPLY_TO))
+        emailed = str(result.get("status", "")) in ("sent", "written")
+        if emailed:
+            record.acknowledged = True
+            support_repo.save(record)
+
+    # The founder's copy — plain text, and it leads with how to reach her, because the
+    # single most common next action on reading it is replying. Sent even when she has
+    # no address on file: a case with no way back is exactly the one worth seeing.
+    if config.MAIL_FROM:
+        ctx = "\n".join(f"{k}: {v}" for k, v in sorted(record.context.items()))
+        notifier.send(EmailMessage(
+            to=config.MAIL_FROM,
+            subject=f"[{reference}] {mail_templates.support_category_label(category)}"
+                    f" — {name or user_id}",
+            text=(f"Reply to: {to or '(no email on the account)'}\n"
+                  f"Name:     {name or '—'}\n"
+                  f"Sign in:  {user_id}\n"
+                  f"Category: {mail_templates.support_category_label(category)}\n"
+                  f"Promised: within {mail_templates.reply_window_words(days)}\n"
+                  + (f"\n{ctx}\n" if ctx else "")
+                  + f"\n----\n{text}\n"),
+            reply_to=(to or config.MAIL_REPLY_TO)))
+
+    return {"reference": reference, "emailed": emailed, "email": to,
+            "reply_days": days,
+            "reply_window": mail_templates.reply_window_words(days),
+            # The address itself, so a teacher with no email on her account (every
+            # TRIAL teacher — the trial asks for a mobile and nothing else) has
+            # somewhere to write from her own mail app rather than a dead end.
+            "address": config.MAIL_REPLY_TO}
+
+
+@app.get("/support")
+def list_support_requests(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Her own support history, newest first — so "did I already write about this?" is
+    answerable inside the app rather than by searching her sent mail.
+
+    Also serves the SCREEN's own furniture: the category list and the reply windows. The
+    screen states a promise and the acknowledgement repeats it, so both read them from
+    here — a teacher told "2 working days" on screen and "3" by email has been told
+    nothing at all. Her email is included because the screen must say WHERE the
+    acknowledgement will land, and offer to add an address when there is none."""
+    tenant_id, user_id = identity
+    acct = account_repo.load(tenant_id, user_id)
+    return {"categories": [{"key": k, "label": v}
+                           for k, v in mail_templates.SUPPORT_CATEGORIES.items()],
+            "reply_days": config.SUPPORT_REPLY_DAYS,
+            "billing_reply_days": config.SUPPORT_BILLING_REPLY_DAYS,
+            "email": (acct.email if acct else "") or "",
+            "address": config.MAIL_REPLY_TO,
+            "requests": [
+        {"reference": r.reference, "category": r.category,
+         "label": r.category_label or mail_templates.support_category_label(r.category),
+         "message": r.message, "created_at": r.created_at,
+         "acknowledged": r.acknowledged, "status": r.status}
+        for r in support_repo.load_all(tenant_id, user_id)]}
 
 
 @app.get("/onboarding/known")
@@ -2029,6 +2320,14 @@ def onboarding_checkout(req: CheckoutRequest,
     scopes = [s.strip() for s in (req.scopes or []) if s.strip()]
     if not scopes:
         raise HTTPException(status_code=400, detail="Pick at least one subject & stage.")
+    # ★ NO MONEY WITHOUT A SIGNATURE (founder, 2026-08-27). The wizard shows the
+    #   agreement two steps before this one and cannot walk past it unticked, so this is
+    #   the net — for a client that skipped the step, and for the case that matters more:
+    #   a new document version published between her reading one and paying for it.
+    #   Said in the words the screen would use, because a 409 body is what she reads.
+    if _consent_outstanding(tenant_id):
+        raise HTTPException(status_code=409, detail=(
+            "Please read and accept the User Agreement before subscribing."))
     # ★ NOTHING SHE ALREADY HAS, LIVE, MAY BE BOUGHT AGAIN (founder, 2026-08-26). The
     #   chooser does not offer such a scope; this is the net, and it also states the
     #   remaining time, which is the only fact that makes the refusal make sense.

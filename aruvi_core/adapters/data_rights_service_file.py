@@ -1,8 +1,9 @@
 """File-backed reference implementation of DataRightsService (Step 4: export + erase).
 
 One traversal, two directions. EXPORT walks every Bucket-B store a teacher owns —
-account, academic years, teaching profile, and per year: chapter notes, allocations,
-section state, prepared register, archive flags — and renders it as one editable Word
+account, academic years, teaching profile, support messages, and per year: chapter
+notes, allocations, section state, prepared register, archive flags — and renders it
+as one editable Word
 document (export_data_rights_docx.build_export_docx). ERASE walks the same path
 destructively (account record last) and returns an ErasureReceipt naming what was kept
 and why (§2.6: backups ≤30 days, statutory tax records, shared content).
@@ -37,6 +38,8 @@ from aruvi_core.adapters.section_state_repository_file import SectionStateReposi
 from aruvi_core.adapters.plan_archive_repository_file import PlanArchiveRepositoryFileImpl
 from aruvi_core.adapters.prepared_plans_repository_file import PreparedPlansRepositoryFileImpl
 from aruvi_core.adapters.plan_note_repository_file import PlanNoteRepositoryFileImpl
+from aruvi_core.adapters.consent_repository_file import ConsentRepositoryFileImpl
+from aruvi_core.adapters.support_repository_file import SupportRepositoryFileImpl
 
 
 def _slug(s: str) -> str:
@@ -56,6 +59,17 @@ _KEPT = [
      "why": "Deleted from the live system immediately; purged from backups within 30 days."},
     {"what": "Tax records for payments made",
      "why": "GST invoices carry a statutory retention period and outlive the account."},
+    # ★ 2026-08-27 — the consent ledger. Retained deliberately (founder), and therefore
+    # named here: an erase that quietly leaves something behind is the one kind of
+    # erasure receipt that is worse than none. Its store sits outside every {tenant}
+    # folder this traversal walks (consent_repository_file.py), so this entry and that
+    # placement must always agree, along with §G of the agreement itself.
+    {"what": "Your acceptance of the User Agreement",
+     "why": "The record that you read and accepted the agreement — its version, the "
+            "date, and which points you confirmed — is kept as evidence of the "
+            "agreement itself. It holds no teaching content, notes or profile details. "
+            "It no longer applies from today: if you use Aruvi again, you will be asked "
+            "to read and accept the agreement afresh."},
     {"what": "Shared lesson-plan library content",
      "why": "Lesson plans are Aruvi's shared library, not personal data; your account "
             "held references to them, and those references are erased."},
@@ -114,6 +128,12 @@ class DataRightsServiceFileImpl(DataRightsService):
         self.archive = PlanArchiveRepositoryFileImpl(data_dir)
         self.prepared = PreparedPlansRepositoryFileImpl(data_dir)
         self.notes = PlanNoteRepositoryFileImpl(data_dir)
+        # Support requests (2026-08-27) — her own words to us, so they export AND erase
+        # like everything else here. Joined this traversal the day the store was born,
+        # which is the rule the entitlement store had to learn the hard way.
+        self.support = SupportRepositoryFileImpl(data_dir)
+        # Not part of the destructive walk — erase() STAMPS this one (see the call site).
+        self.consents = ConsentRepositoryFileImpl(data_dir)
 
     # ── the one traversal ─────────────────────────────────────────────────────────
 
@@ -153,6 +173,10 @@ class DataRightsServiceFileImpl(DataRightsService):
             "exported_at": datetime.now(timezone.utc).isoformat(),
             "account": asdict(acct) if acct else None,
             "profile": self.readiness.load_profile(tenant_id, user_id),
+            # Not year-scoped: a support case belongs to the day it was raised, and an
+            # export that hid the messages she sent us would not be a copy of everything
+            # Aruvi holds about her.
+            "support": [asdict(r) for r in self.support.load_all(tenant_id, user_id)],
             "years": [],
         }
         for year_id in self._year_ids(tenant_id, user_id):
@@ -265,6 +289,12 @@ class DataRightsServiceFileImpl(DataRightsService):
             self._rm(root / t / u, stop=root)   # any stray un-year-scoped leftovers
         if self._rm(self.data_dir / "readiness" / t / u, stop=self.data_dir / "readiness"):
             erased.append("teaching profile")
+        # Support requests — hers, so they go. The reference SERIES is untouched: it
+        # lives in support/_series/, which is not under any {tenant}/{user} path this
+        # walk visits (support_repository_file.py), so the next teacher's reference
+        # still follows the last one issued rather than repeating it.
+        if self._rm(self.data_dir / "support" / t / u, stop=self.data_dir / "support"):
+            erased.append("support messages")
         if self._rm(self.data_dir / "academic_years" / t / u,
                     stop=self.data_dir / "academic_years"):
             erased.append("academic-year records")
@@ -277,6 +307,16 @@ class DataRightsServiceFileImpl(DataRightsService):
             if self._rm(self.data_dir / "entitlements" / t,
                         stop=self.data_dir / "entitlements"):
                 erased.append("subscription record")
+        # ★ The consent ledger is NOT walked — it is STAMPED (founder, 2026-08-27). Its
+        #   rows survive (they are the proof the agreement was accepted, and _KEPT says
+        #   so), but they stop being a standing signature: erasure ends the relationship
+        #   they belonged to, so an id that returns signs afresh. Before this, a teacher
+        #   who erased and came back walked past the agreement entirely — and a
+        #   REASSIGNED mobile number would have done the same to a different person.
+        #   Tenant-scoped like the entitlement above, and for the same reason: one
+        #   teacher's erasure must not end a school's agreement.
+        if _slug(tenant_id) == _slug(user_id):
+            self.consents.supersede(tenant_id)
         # Account record LAST — identity must outlive its data during the walk.
         if self.accounts.load(tenant_id, user_id) is not None:
             self._rm(self.data_dir / "accounts" / t / u, stop=self.data_dir / "accounts")

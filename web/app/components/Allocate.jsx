@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { getJSON, pad, API, pretty, gradeUp, userKey, withUser } from "../lib/format";
 import PeriodRows, { Stepper, toPeriodRows, periodTypeNames, totalsFinePrint } from "./PeriodRows";
 import ViewModelView from "./ViewModelView";
+import Dropdown from "./Dropdown";
 
 /* ── Teacher-adjustment model (explicit Δ per duration, budget-neutral) ──
  * `deltas`: { [chapter_number]: { [duration]: number } }. No auto-rebalancing — the teacher
@@ -667,10 +668,17 @@ export default function Allocate({ subject, grade, readiness, onNavigate, single
           return (
           <>
             <div className="g3-add">
-              <select className="g3-add-select" value="" onChange={(e) => { if (e.target.value) toggleOne(Number(e.target.value)); }}>
-                <option value="">＋ Add a chapter…</option>
-                {addable.map((c) => <option key={c.chapter_number} value={c.chapter_number}>CH {pad(c.chapter_number)} · {c.chapter_title}</option>)}
-              </select>
+              {/* An Aruvi dropdown, not a <select> (2026-08-27): macOS draws a native
+                  select's open list itself, black over the cream page, and no CSS
+                  reaches it. See Dropdown.jsx. Value stays "" — this is an ADDER, not
+                  a field, so it never holds a selection. */}
+              <Dropdown className="g3-add-dd" value="" placeholder="＋ Add a chapter…"
+                ariaLabel="Add a chapter"
+                onChange={(v) => { if (v) toggleOne(Number(v)); }}
+                options={addable.map((c) => ({
+                  value: c.chapter_number,
+                  label: `CH ${pad(c.chapter_number)} · ${c.chapter_title}`,
+                }))} />
             </div>
 
             <div className="kicker kicker-soft g3-chosen-h">{chosen.length ? `CHOSEN — ${chosen.length} CHAPTER${chosen.length !== 1 ? "S" : ""}` : "NONE CHOSEN YET"}</div>

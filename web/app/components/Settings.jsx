@@ -3,12 +3,30 @@ import { useEffect, useState } from "react";
 import { API, withUser, fetchEntitlement, getJSON, pretty, idInUse, errDetail } from "../lib/format";
 import ThemeToggle from "./ThemeToggle";
 import { ROLES, STATES, EMAIL_TAKEN } from "./SubscribeFlow";
+import Agreement from "./Agreement";
+import Dropdown from "./Dropdown";
 
 const EMAIL_OK = (e) => /^\S+@\S+\.\S+$/.test((e || "").trim());
 const maskEmail = (e) => {
   const [u, d] = String(e).split("@");
   if (!d) return "•••";
   return `${u.slice(0, 1)}•••@${d}`;
+};
+
+/* Her own profile shows the address IN FULL (founder, 2026-08-27) — masking is for
+ * places where the address is merely REFERRED to (the support promise, the subscribe
+ * tick); the profile is the one screen whose job is to answer "which address does
+ * Aruvi hold for me?", and "k•••@gmail.com" cannot answer it. Long addresses step the
+ * type DOWN rather than truncate: an elided address is the same failure as a masked
+ * one. Thresholds are character counts against the field's width at 360px (the
+ * budget-phone case, §4); `.ob-email-addr` also wraps as a last resort, so no address
+ * is ever cut off however long it is. */
+const emailFit = (e) => {
+  const n = String(e || "").length;
+  if (n <= 22) return "";
+  if (n <= 28) return " ob-email-addr-s";
+  if (n <= 36) return " ob-email-addr-xs";
+  return " ob-email-addr-xxs";
 };
 
 /* ── Settings — the gear's own screen (founder, 2026-08-24 second pass) ──
@@ -20,9 +38,14 @@ const maskEmail = (e) => {
  *                             billing/invoices arrive with online payments)
  *   Your data & export     · "Download your Aruvi data"   → subview (Word / PDF)
  *   Help                   · "Ask Aruvi guide"            → opens Ask Aruvi
- *   Support                · "Email & feedback"           → subview (placeholder —
- *                             UI link now, content when support channels exist)
- *   About Aruvi            · "Version info / legal"       → subview (placeholder)
+ *   Support                · "Write to us — we reply by email"
+ *                                                         → subview (REAL as of
+ *                             2026-08-27 — SupportForm above: Ask Aruvi first, then a
+ *                             categorised message that posts to /support and comes back
+ *                             with a reference)
+ *   About Aruvi            · "Version info"               → subview (placeholder)
+ *   Legal                  · "User agreement & privacy"   → subview (the real document,
+ *                             Agreement.jsx in read mode — 2026-08-27)
  *
  * Below the cards, two quiet rows: Appearance (the ThemeToggle, moved off the top
  * bar) and Account (Log out · Delete my account — Apple 5.1.1(v), typed-"erase"
@@ -30,8 +53,8 @@ const maskEmail = (e) => {
  * the gear is the profile's dedicated door (founder point 3).
  *
  * Some cards are deliberately UI-first: the founder's direction is to shape the
- * surface now and fill content as features land (payments → billing; support
- * channels → Support; legal texts → About). Placeholders say so honestly.
+ * surface now and fill content as features land (payments → billing; legal texts →
+ * About). Placeholders say so honestly. Support was one of these until 2026-08-27.
  *
  * ★ ON TRIAL two of these cards are not offered — Personal profile and Your data &
  * export (founder, 2026-08-26). See `onTrial` in the component for the rule and for
@@ -113,7 +136,7 @@ function PersonalProfile({ onSaved }) {
            email read too small as a bare line). */
         <label className="login-field ob-field"><span>Email</span>
           <div className="ob-email-view">
-            <span>{email ? maskEmail(email) : "—"}</span>
+            <span className={"ob-email-addr" + emailFit(email)}>{email || "—"}</span>
             <button type="button" className="fr-link"
               onClick={() => { setEmailNew(""); setEmail2(""); setEmailStage("enter"); }}>
               change
@@ -167,17 +190,11 @@ function PersonalProfile({ onSaved }) {
       )}
 
       <label className="login-field ob-field"><span>Role</span>
-        <select value={role} className={role ? "" : "ob-unset"}
-          onChange={(e) => setRole(e.target.value)}>
-          <option value="">Select your role</option>
-          {ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
-        </select></label>
+        <Dropdown value={role} onChange={setRole} options={ROLES}
+          placeholder="Select your role" ariaLabel="Role" /></label>
       <label className="login-field ob-field"><span>State</span>
-        <select value={stateName} className={stateName ? "" : "ob-unset"}
-          onChange={(e) => setStateName(e.target.value)}>
-          <option value="">Select your state</option>
-          {STATES.map((s) => <option key={s} value={s}>{s}</option>)}
-        </select></label>
+        <Dropdown value={stateName} onChange={setStateName} options={STATES}
+          placeholder="Select your state" ariaLabel="State" /></label>
       <label className="login-field ob-field"><span>City</span>
         <input type="text" value={city} placeholder="Enter your city"
           onChange={(e) => setCity(e.target.value)} /></label>
@@ -195,6 +212,250 @@ function PersonalProfile({ onSaved }) {
           saves now.</p>
       )}
       {note && <p className="ob-quiet">{note}</p>}
+    </div>
+  );
+}
+
+/* ── Settings › Support (2026-08-27) ──────────────────────────────────────────────
+ *
+ * EMAIL IS THE ONLY SUPPORT CHANNEL. No phone, no WhatsApp, no chat. That single
+ * constraint shapes every decision on this screen, because email's one failure mode is
+ * SILENCE — a teacher who writes and hears nothing writes again, or gives up on the
+ * product rather than on the message.
+ *
+ *   1. DEFLECT BEFORE INVITING. Ask Aruvi sits above the form, not below it. It answers
+ *      "how does this work?" instantly; without that door first, the slowest channel in
+ *      the product becomes its FAQ, and she waits two days for something she could have
+ *      had in four seconds.
+ *   2. THE FORM IS NOT A `mailto:`. A mailto: assumes a configured mail client — on a
+ *      budget Android with only the Gmail web view, it is a dead link — and it leaves
+ *      Aruvi with no record, no reference, and no way to attach what the app already
+ *      knows. It posts to /support instead.
+ *   3. A CATEGORY, NOT A SUBJECT LINE. A dropdown (founder, 2026-08-27 — chips first,
+ *      then this: five labels as chips wrapped to three rows on a phone and pushed the
+ *      message box below the fold, which is the one thing that must be visible). She
+ *      does not have to compose a title for her own problem, and billing can carry its
+ *      own faster promise. "Something else" is the last option deliberately — a list
+ *      with no escape hatch gets the nearest wrong bucket picked instead.
+ *   4. THE PROMISE IS STATED, AND IT COMES FROM THE SERVER. "Within 2 working days" is
+ *      read from GET /support, the same value the acknowledgement quotes. A stated
+ *      window beats a fast unstated one: the anxiety is not the wait, it is not knowing
+ *      there is an end to it.
+ *   5. THE CONFIRMATION IS A REFERENCE. Not "thanks, we'll be in touch" — a case
+ *      number, on screen and in her inbox, which is what turns a message into something
+ *      somebody owes an answer on.
+ *
+ * What this screen deliberately does NOT do: apologise on behalf of an answer nobody
+ * has written yet, promise an outcome, or list channels that do not exist. */
+const SUPPORT_FALLBACK = [
+  { key: "problem", label: "Something isn't working" },
+  { key: "plan", label: "Something in a lesson plan looks wrong" },
+  { key: "billing", label: "Billing or account" },
+  { key: "suggestion", label: "A suggestion" },
+  { key: "other", label: "Something else" },
+];
+const SUPPORT_MAX = 4000;
+const replyWords = (n) => `${n} working day${Number(n) === 1 ? "" : "s"}`;
+
+/* The Ask Aruvi mark — the same hand-drawn stream-and-dot that sits on the tab row
+   (page.jsx `.ask-q`). Repeated here rather than shown as a generic "?" so the row and
+   the thing it opens are recognisably one object; a teacher who has met the mark once
+   should not have to read the label to know where this goes. */
+function AskMark() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M7 6.5c6 1 6 5 3.5 7.5S6 18 6 18" />
+      <path d="M10.5 14c3.5 0 5.5-1.8 6.5-4" />
+      <circle cx="17.3" cy="8.6" r="1.6" fill="#c0392b" stroke="none" />
+    </svg>
+  );
+}
+
+function SupportForm({ onOpenProfile, onAsk }) {
+  const [meta, setMeta] = useState(null);          // categories + windows + her email
+  const [cat, setCat] = useState("");
+  const [text, setText] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const [sent, setSent] = useState(null);          // the server's reference + window
+  /* ★ "COULDN'T LOAD" IS NOT "YOU HAVE NO EMAIL" (founder, 2026-08-27, live: account
+     1000000001 was told there was no address on it, and there was). The first build
+     fell back to an empty object on a failed fetch, and every downstream test then read
+     that silence as a FACT about her account. A screen may say it does not know
+     something; it may never invent an answer about her record. `metaErr` keeps the two
+     apart, and the send path is unaffected either way — the server is the authority on
+     where the acknowledgement went, and its response says so. */
+  const [metaErr, setMetaErr] = useState(false);
+
+  useEffect(() => {
+    let live = true;
+    getJSON("/support")
+      .then((d) => { if (live) { if (d) setMeta(d); else setMetaErr(true); } })
+      .catch(() => { if (live) setMetaErr(true); })
+      .finally(() => { if (live) setMeta((m) => m || {}); });
+    return () => { live = false; };
+  }, []);
+
+  const cats = (meta && meta.categories && meta.categories.length)
+    ? meta.categories : SUPPORT_FALLBACK;
+  /* Billing's own window, resolved the same way the server resolves it — one rule, two
+     places, and they read it from the same payload so they cannot disagree. */
+  const days = (cat === "billing"
+    ? (meta && meta.billing_reply_days) || 1
+    : (meta && meta.reply_days) || 2);
+  // Three states, not two: has one · known to have none · we could not ask.
+  const emailKnown = !!meta && !metaErr;
+  const hasEmail = emailKnown && !!meta.email;
+
+  const send = async () => {
+    if (!text.trim() || busy) return;
+    setBusy(true); setErr("");
+    try {
+      const r = await fetch(`${API}/support`, withUser({
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          category: cat,
+          message: text.trim(),
+          /* What the app knows and she should not have to type. Only the screen today —
+             richer context (subject · class · chapter) arrives when Support is also
+             reachable FROM a lesson, which is where a "this plan looks wrong" report
+             actually belongs. */
+          context: { screen: "Settings › Support" },
+        }),
+      }));
+      if (!r.ok) { setErr(await errDetail(r, "Couldn't send that just now — try again.")); return; }
+      setSent(await r.json());
+    } catch {
+      setErr("Couldn't send that just now — try again.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  /* ── after sending: the reference, and where the copy went ── */
+  if (sent) {
+    return (
+      <div className="setwrap">
+        <h1 className="set-title">Message sent</h1>
+        <div className="set-card set-card-pad">
+          <div className="sup-refcap">Your reference</div>
+          <div className="sup-ref">{sent.reference}</div>
+          <p className="set-plan-txt">
+            {sent.emailed
+              ? <>A copy is on its way to <strong>{sent.email}</strong>. You can expect a
+                  response within {sent.reply_window || replyWords(sent.reply_days || 2)},
+                  Monday to Friday.</>
+              : <>Your message is with us and you can expect a response within{" "}
+                  {sent.reply_window || replyWords(sent.reply_days || 2)}, Monday to
+                  Friday. There is no email address on your account, so write to us at{" "}
+                  <strong>{sent.address}</strong> — quote your reference — and we will
+                  reply there.</>}
+          </p>
+        </div>
+        {/* On TRIAL the account has only a mobile, so this is the common case, not the
+            edge one. The plain address above is the working answer; adding an email is
+            the better one, offered second. */}
+        {!sent.emailed && (
+          <button className="fr-link sup-addmail"
+            onClick={() => onOpenProfile && onOpenProfile()}>
+            Or add an email address to your account →</button>
+        )}
+        <p className="set-hint">Quote {sent.reference} if you write to us about this
+          again — it keeps everything in one place.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="setwrap">
+      {/* ★ THE TITLE IS FROZEN, AND ONLY THE TITLE (founder, 2026-08-27). The same
+          `.set-title-stick` idiom Subscription & billing uses: sticky at var(--nav-h),
+          opaque paper so the form passes UNDER it. `.sup-title` additionally pulls the
+          heading up out of main's 40px top padding, which read as dead space between
+          the Settings bar and the one word naming the screen. Everything below —
+          including the Ask Aruvi row — scrolls. */}
+      <h1 className="set-title set-title-stick sup-title">Support</h1>
+
+      {/* 1 · the fast door first */}
+      <p className="set-hint">Most questions about how Aruvi works are answered straight
+        away by Ask Aruvi. For anything else, write to us below.</p>
+      <button className="set-bigcard sup-ask" onClick={() => onAsk && onAsk()}>
+        <span className="sup-askmark"><AskMark /></span>
+        <span className="set-bigtext"><span className="set-biglab">Ask Aruvi</span>
+          <span className="set-bigsub">Answers about how Aruvi works — instantly</span></span>
+        <span className="set-chev">›</span>
+      </button>
+
+      {/* 2 · the form */}
+      <div className="set-group">
+        <div className="set-cap">Write to us</div>
+        <div className="set-card set-card-pad">
+          <label className="login-field ob-field sup-field">
+            <span>What is this about?</span>
+            {/* No preselection — a dropdown that answers for her files a suggestion as
+                a fault, and the choice also sets which reply window she is promised. */}
+            <Dropdown value={cat} onChange={setCat} placeholder="Choose one"
+              ariaLabel="What is this about?"
+              options={cats.map((c) => ({ value: c.key, label: c.label }))} />
+          </label>
+          <label className="login-field ob-field sup-field">
+            <span>Your message</span>
+            {/* No placeholder (founder, 2026-08-27). Prompt text inside the box tells a
+                teacher what shape her trouble is supposed to be, and she trims it to
+                fit; an empty box asks nothing and gets the whole story. */}
+            <textarea className="sup-text" rows={7} value={text}
+              maxLength={SUPPORT_MAX}
+              onChange={(e) => setText(e.target.value)} /></label>
+          {/* Only near the cap — a live counter on an empty box reads as a word limit
+              on how much trouble she is allowed to be in. */}
+          {text.length > SUPPORT_MAX - 500 && (
+            <p className="ob-quiet">{SUPPORT_MAX - text.length} characters left</p>
+          )}
+          {/* 4 · the promise, in the same words the email will use — including the
+                 verb. "You can expect a response", never "a person will reply": the
+                 second promises WHO answers, which is not ours to promise and not the
+                 thing she is waiting to hear (founder, 2026-08-27). */}
+          <p className="ob-quiet sup-promise">
+            You can expect a response within {replyWords(days)}, Monday to Friday (IST).
+            {cat === "billing" && " Billing questions come first."}
+          </p>
+          {hasEmail && (
+            <p className="ob-quiet">Our reply goes to {maskEmail(meta.email)}.</p>
+          )}
+          {/* ONLY when the server actually told us she has none. Said BEFORE she
+              writes, not after: a teacher who types out a problem and only then learns
+              nobody can answer her has been wasted. The address is spelled out so she
+              can write from her own mail app instead. When the lookup FAILED we say
+              nothing here — see `metaErr` above. */}
+          {emailKnown && !hasEmail && (
+            <p className="ob-quiet">There is no email address on your account, so we
+              cannot write back — add one under Personal profile, or write to us
+              directly at {meta.address || "support"}.</p>
+          )}
+          {err && <p className="ob-err" role="alert">{err}</p>}
+          <button className="primary fr-cta ob-cta"
+            disabled={!cat || !text.trim() || busy}
+            onClick={send}>{busy ? "Sending…" : "Send message"}</button>
+        </div>
+      </div>
+
+      {/* 3 · what she has already asked — so she does not write twice */}
+      {meta && Array.isArray(meta.requests) && meta.requests.length > 0 && (
+        <div className="set-group set-group-tail">
+          <div className="set-cap">Your earlier messages</div>
+          <div className="set-card">
+            {meta.requests.map((r) => (
+              <div className="set-row set-row-static" key={r.reference}>
+                <span className="set-lab">{r.label}
+                  <span className="sup-rowref">{r.reference}</span></span>
+                <span className="set-val">{fmtValidity(r.created_at)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -525,15 +786,12 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
     );
   }
 
+  /* ── Support (2026-08-27) — the real thing, replacing the placeholder. Never hidden
+     on trial: a teacher whose trial is the thing that is broken must be able to say so,
+     and the /support route is ungated for the same reason data rights are (§2.5). */
   if (view === "support") {
-    return (
-      <div className="setwrap">
-        {back}
-        <h1 className="set-title">Support</h1>
-        <p className="set-hint">Email support and in-app feedback are on their way. Until
-          then, Ask Aruvi (Settings › Help) answers most questions about how Aruvi works.</p>
-      </div>
-    );
+    return <SupportForm onAsk={onAsk}
+                        onOpenProfile={() => setView("personal")} />;
   }
 
   if (view === "about") {
@@ -545,7 +803,29 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
           <p className="set-plan-txt">Aruvi · Lesson Studio — preview build.<br />
             NCF 2023 aligned.</p>
         </div>
-        <p className="set-hint">Version details, terms and the privacy policy will live here.</p>
+        <p className="set-hint">Version details will live here. The user agreement and
+          privacy notice are under Settings &rsaquo; Legal.</p>
+      </div>
+    );
+  }
+
+  /* ── Legal (2026-08-27) — the agreement's permanent home ──
+     The document promises it is "permanently available under Settings → Legal", so it is
+     a card of its own rather than a row inside About: a teacher looking for what she
+     signed should not have to guess that it is filed under version information. Same
+     component the subscribe wizard uses, in read mode — one document, never a retyped
+     summary. Never hidden on trial: what Aruvi is and what it does with her data is not
+     a subscriber benefit. */
+  if (view === "legal") {
+    return (
+      <div className="setwrap">
+        {back}
+        {/* No "Legal" page title (founder, 2026-08-27): the document's own heading —
+            "Legal Agreement with User" — is the title, and a settings label stacked
+            above it made the screen read as two headings for one thing. */}
+        <div className="set-card set-card-pad set-legal">
+          <Agreement mode="read" />
+        </div>
       </div>
     );
   }
@@ -591,12 +871,19 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
       </button>
       <button className="set-bigcard" onClick={() => setView("support")}>
         <span className="set-bigtext"><span className="set-biglab">Support</span>
-          <span className="set-bigsub">Email &amp; feedback</span></span>
+          <span className="set-bigsub">Write to us — we reply by email</span></span>
         <span className="set-chev">›</span>
       </button>
       <button className="set-bigcard" onClick={() => setView("about")}>
         <span className="set-bigtext"><span className="set-biglab">About Aruvi</span>
-          <span className="set-bigsub">Version info / legal</span></span>
+          <span className="set-bigsub">Version info</span></span>
+        <span className="set-chev">›</span>
+      </button>
+      {/* Legal — its own card, per the agreement's own placement promise (see the
+          `legal` view above). Shown on trial too. */}
+      <button className="set-bigcard" onClick={() => setView("legal")}>
+        <span className="set-bigtext"><span className="set-biglab">Legal</span>
+          <span className="set-bigsub">User agreement &amp; privacy notice</span></span>
         <span className="set-chev">›</span>
       </button>
 
