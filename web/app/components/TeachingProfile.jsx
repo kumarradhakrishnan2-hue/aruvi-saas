@@ -708,8 +708,11 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
      brackets behind it when it differs. */
   const recommendSubLine = () => {
     if (recTotal != null) {
-      return `Aruvi recommends ${recTotal} periods a year for this class`
-        + (ncfTotal != null && ncfTotal !== recTotal ? ` (NCF norm: ${ncfTotal}).` : ".");
+      // ★ "based on general norms" (founder, 2026-08-28) — the figure is a calibrated standard
+      // for the class, not a reading of HER year, and the line has to say so: she is being
+      // invited to disagree with it, which she cannot do if it sounds like a fact about her.
+      return `Aruvi recommends ${recTotal} periods a year based on general norms for this class.`
+        + (ncfTotal != null && ncfTotal !== recTotal ? ` (NCF norm: ${ncfTotal})` : "");
     }
     if (ncfTotal != null) return `As per NCF, this class requires ${ncfTotal} periods.`;
     return null;
@@ -719,19 +722,26 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
    * Class set-up and the numbers editor showed byte-identical budget screens, which is how the
    * four-method version came to need the same fix twice. One function now, so they cannot drift.
    *
-   * The sentence under the input is the whole reason the other three methods could go: it gives
-   * her the WEEKS READING those methods were clumsily trying to provide, without a second input
-   * to contradict the first. She types 215, Aruvi says "at 8 a week, about 27 teaching weeks" —
-   * and she can tell at once whether that is her year. If the weeks look wrong because the ppw
-   * is wrong, the pencil goes and fixes that side. Aruvi adjusts NOTHING on her behalf.
-   */
+   * The weeks reading under the input is the whole reason the other three methods could go: it
+   * gives her the WEEKS those methods were clumsily trying to provide, without a second input to
+   * contradict the first. She types 215, Aruvi says "27 weeks (@ 8 periods/week)" — and she can
+   * tell at once whether that is her year. If the weeks look wrong because the ppw is wrong, the
+   * pencil goes and fixes that side. Aruvi adjusts NOTHING on her behalf.
+   *
+   * ★ THE SENSE-CHECK IS A READING, NOT A SENTENCE (founder, 2026-08-28). It used to be a full
+   * line of prose — "Based on 8 periods a week ✎ for this subject, 245 periods is about 31
+   * teaching weeks." — and this screen was carrying it BELOW a recommendation that is itself a
+   * sentence, under a heading, over a footer. Three paragraphs to change one number. The same
+   * two facts now sit directly under the figure they describe, in the small mono of a caption:
+   * "31 weeks (@ 8 periods/week)". The pencil rides along, because it is still the only door to
+   * the other side of that arithmetic. */
   const renderBudgetStep = ({ kicker, heading, ppw, b, setValue, stepValue,
                               onPpwPencil, footer }) => {
     const annual = budgetPeriods(ppw, b);
     const weeks = weeksFromAnnual(annual, ppw);
     const rec = recommendSubLine();
     return (
-      <div className="tp">
+      <div className="tp tp-budget">
         <div className="kicker kicker-ochre">{kicker}</div>
         <h1 className="fr-q">{heading}</h1>
         {/* No sub-hint here (founder, 2026-08-27). It restated the heading in longer words —
@@ -746,19 +756,18 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
           <button type="button" className="tp-val-btn" onClick={() => stepValue(1)} aria-label="More periods">+</button>
           <span className="tp-val-unit">periods / year</span>
         </div>
-        {rec ? <p className="tp-estimate-sub">{rec}</p> : null}
-        {/* The sense-check. Advisory, never corrective — see the note above. */}
+        {/* The sense-check, directly under the figure it reads. Advisory, never corrective. */}
         {annual > 0 && ppw > 0 ? (
-          <p className="tp-implies">
-            Based on <b>{ppw} periods a week</b>
+          <p className="tp-weeks">
+            {weeks} weeks (@ {ppw} periods/week)
             {onPpwPencil ? (
               <button type="button" className="tp-implies-edit" onClick={onPpwPencil}
                 title="Change periods a week"
                 aria-label="Change periods a week for this class"><Pencil size={13} /></button>
-            ) : null} for this subject, <b>{annual} periods</b> is about
-            {" "}<b>{weeks} teaching weeks</b>.
+            ) : null}
           </p>
         ) : null}
+        {rec ? <p className="tp-estimate-sub">{rec}</p> : null}
         {footer}
       </div>
     );

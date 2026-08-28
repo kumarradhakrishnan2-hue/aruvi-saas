@@ -12,7 +12,7 @@ import TeachingProfile from "./components/TeachingProfile";
 import Settings from "./components/Settings";
 import MyLessonPlans from "./components/MyLessonPlans";
 import GuidedTour from "./components/GuidedTour";
-import ProfilePortal, { queueSetupCheck, takeSetupCheck, pruneSetupCheck, setupKey } from "./components/ProfilePortal";
+import ProfilePortal, { queueSetupCheck, takeSetupCheck, pruneSetupCheck, setupKey, SETUP_CHECK_DELAY_MS } from "./components/ProfilePortal";
 // ThemeToggle moved into Settings (App › Appearance) — no longer on the shell's bar.
 import AskAruvi from "./ask-aruvi/AskAruvi";
 
@@ -222,12 +222,25 @@ export default function Home() {
    * Never over the tour, and never while a check window is already open.
    * takeSetupCheck is called OUTSIDE any state updater on purpose: it mutates localStorage, and
    * an updater can be invoked twice (StrictMode) — which would spend the key on the run whose
-   * result React then throws away. */
+   * result React then throws away.
+   *
+   * ★ AND IT WAITS A BEAT (founder, 2026-08-28). The window used to open in the same tick the
+   * dropdown resolved the subject·class, so it landed ON TOP of the selection she had just made —
+   * she never saw the screen she asked for before being asked a question about it. A one-second
+   * hold lets the pane paint first; the question then arrives as a follow-up rather than as an
+   * interruption of her own tap. The timer is cancelled on unmount and superseded by a later
+   * scope change (a teacher spinning the wheels queues one window, not five), and the updater
+   * form re-checks `portalWin` at FIRE time — a second's worth of taps can open one in between. */
+  const scopeCheckTimer = useRef(null);
+  useEffect(() => () => clearTimeout(scopeCheckTimer.current), []);
   const onLessonsScope = (subjectName, grade) => {
     if (!subjectName || !grade || tour || portalWin) return;
-    if (takeSetupCheck(setupKey(subjectName, grade))) {
-      setPortalWin({ mode: "check", reason: "added", subject: subjectName, grade });
-    }
+    if (!takeSetupCheck(setupKey(subjectName, grade))) return;
+    clearTimeout(scopeCheckTimer.current);
+    scopeCheckTimer.current = setTimeout(() => {
+      scopeCheckTimer.current = null;
+      setPortalWin((w) => w || { mode: "check", reason: "added", subject: subjectName, grade });
+    }, SETUP_CHECK_DELAY_MS);
   };
   /* The tour opens on My Classes. It always did implicitly, because its only entry point was a
      nudge ON My Classes; now that first run lands on My Lessons and the same nudge renders

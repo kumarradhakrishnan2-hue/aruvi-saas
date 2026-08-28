@@ -120,9 +120,15 @@ const STEPS = [
   { anchor: "grow-add", place: "below",
     title: "Add/amend sections, classes and/or subjects.",
     body: () => "Use this button to quickly add sections, classes or subjects to your teaching profile." },
+  /* Step 17 — the settings gear. ★ RE-WORDED 2026-08-28 (founder): the profile is now a VIEW.
+     Every pencil moved to the "+" window of step 16 when the two doors onto one record were
+     closed to one (CLAUDE.md, 2026-08-27) — so a card promising she can "build and edit" here
+     was pointing her at controls that no longer exist. The single act left behind the master
+     toggle is REMOVING a subject, which the "+" deliberately cannot do (adding one is a
+     purchase), and that is what this card now says. */
   { anchor: "settings-gear", place: "below",
     title: "Your teaching profile.",
-    body: () => "Your teaching profile is built based on interactions. You may pro-actively build and edit your profile here." },
+    body: () => "Your profile is built from what you do — read it whole here, at any time. Changes are made with the button above; removing a subject is the one thing done here." },
   // Step 17 — Ask Aruvi (the bare stream-a mark on the tab row). Transparent hand centred on it.
   { anchor: "ask-aruvi", place: "below",
     title: "Use Ask Aruvi to answer your queries",

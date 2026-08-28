@@ -145,6 +145,12 @@ const write = (list) => {
 
 export const setupKey = (subjectName, grade) => `${subjectName}|${(grade || "").toUpperCase()}`;
 
+/** ★ How long My Lessons is left alone before the check window opens over it (founder,
+ *  2026-08-28). The window used to arrive in the same tick the dropdown resolved the added
+ *  subject·class, so the screen she had just asked for was covered before she saw it. A second
+ *  is enough for the pane to paint and for the tap to feel finished; page.jsx holds the timer. */
+export const SETUP_CHECK_DELAY_MS = 1000;
+
 /** Queue subject·class keys she has just added, so their first use raises the check window. */
 export function queueSetupCheck(keys) {
   const have = read();

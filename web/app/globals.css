@@ -2864,16 +2864,17 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .tp-val-unit { font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
 .tp-estimate-tag { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; color: var(--pine-d); margin: 0 0 10px; }
 .tp-estimate-sub { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-soft); margin: 0 0 8px; }
-/* ★ THE SENSE-CHECK under the budget input (2026-08-27) — "Based on 8 periods a week ✎ for this
-   subject, 245 periods is about 31 teaching weeks." It is what let the other three methods go:
-   it gives her the WEEKS READING they were clumsily providing, without a second input that can
-   contradict the first. Body serif, not the mono of a label, because it is a sentence she reads
-   — and ADVISORY: Aruvi never adjusts either number to make them agree. */
-.tp-implies {
-  font-family: var(--f-body); font-size: 14px; line-height: 1.55; color: var(--ink-soft);
-  margin: 14px 0 4px;
+/* ★ THE SENSE-CHECK under the budget input — "31 weeks (@ 8 periods/week)" (2026-08-27,
+   RE-CUT 2026-08-28). It is what let the other three budget methods go: it gives her the WEEKS
+   READING they were clumsily providing, without a second input that can contradict the first.
+   It was a full sentence in body serif ("Based on 8 periods a week ✎ for this subject, 245
+   periods is about 31 teaching weeks.") on a screen that was already three paragraphs deep, so
+   it is now a CAPTION on the figure above it: caption mono, tight to the input row, no bold.
+   Still ADVISORY — Aruvi never adjusts either number to make them agree. */
+.tp-weeks {
+  font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .04em; color: var(--ink-soft);
+  margin: -2px 0 14px;
 }
-.tp-implies b { font-weight: 600; color: var(--ink); }
 /* Inline pencil through to periods-a-week — the other side of the sentence, when it is that
    side that looks wrong. Baseline-aligned with negative block margins so a phone-sized tap
    target does not open up the line-height of the paragraph it sits in (the .yp-budget-edit
@@ -2885,6 +2886,14 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 }
 .tp-implies-edit:hover { opacity: 1; color: var(--clay); }
 .tp-implies-edit:focus-visible { outline: 2px solid var(--pine); outline-offset: 1px; border-radius: 6px; }
+
+/* ★ SAVE SITS WELL CLEAR OF THE READING (founder, 2026-08-28). On the annual-budget screen the
+   footer used to start 20px under the recommendation line, so the number, its caption, Aruvi's
+   own figure and the button that commits them all read as one block — and the button is the one
+   thing here that is irreversible-ish (it writes the year). The extra air is what separates
+   "what I am being told" from "what I am about to do". `.fr-foot`'s own 20px stays; this adds to
+   it, so the two callers (class set-up's Next/Save, the numbers editor's Save) move together. */
+.tp-budget .fr-foot { padding-top: 88px; }
 
 /* The reassurance line in the remove-a-subject warning. A teacher who thinks she is about to
    delete her lesson plans will not read the rest of the warning, so this is set apart from the

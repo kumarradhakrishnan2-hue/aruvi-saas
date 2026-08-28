@@ -246,6 +246,10 @@ def _lp_front(doc, lp, competencies, spines=None):
         # section cells vertically merged across their competency rows.
         total = sum(len(s.get("rows", [])) for s in spines)
         t = doc.add_table(rows=1 + total, cols=4); _hairlines(t)
+        # Same autofit defect as the competency table below — the PDF states 14/24/9/53.
+        _sp_avail = ((doc.sections[0].page_width - doc.sections[0].left_margin
+                      - doc.sections[0].right_margin) / 914400.0)
+        _fixed_table(t, [_sp_avail * f for f in (0.14, 0.24, 0.09, 0.53)])
         for j, h in enumerate(["Spine", "Section Name", "Code", "Competency"]):
             c = t.cell(0, j); _bg(c, "F1ECE2"); _run(c.paragraphs[0], h, bold=True, size=7.5, color=SOFT, caps=True)
         ri = 1
@@ -267,6 +271,17 @@ def _lp_front(doc, lp, competencies, spines=None):
         has_just = any(c.get("justification") for c in competencies)
         cols = ["C No.", "Targeted NCF competencies"] + (["Justification"] if has_just else [])
         t = doc.add_table(rows=1 + len(competencies), cols=len(cols)); _hairlines(t)
+        # ★ FIXED WIDTHS — the code column was eating the prose (founder, 2026-08-28). This was
+        # the one front table left on Word's autofit, and autofit sizes a column by its widest
+        # UNBREAKABLE content: "Targeted NCF competencies" as a header and a code like "C-9.3"
+        # both measure as single tokens, so a 5-character column was handed a share nothing in it
+        # needs while the two prose columns wrapped to ribbons. The PDF has always stated these
+        # proportions (export_lesson_pdf: 10/42/48 with a justification column, 12/88 without) —
+        # screen ↔ print parity means Word states the same ones rather than guessing.
+        _fixed_avail = ((doc.sections[0].page_width - doc.sections[0].left_margin
+                         - doc.sections[0].right_margin) / 914400.0)
+        _fixed_table(t, [_fixed_avail * f for f in
+                         ([0.10, 0.42, 0.48] if has_just else [0.12, 0.88])])
         for j, h in enumerate(cols):
             c = t.cell(0, j); _bg(c, "F1ECE2"); _run(c.paragraphs[0], h, bold=True, size=7.5, color=SOFT, caps=True)
         for i, comp in enumerate(competencies, 1):
@@ -298,6 +313,10 @@ def _lp_front(doc, lp, competencies, spines=None):
             and not _science_sectioned and not _ss_flat_units and not _twau):
         word = _lp_group_word(groups)
         t = doc.add_table(rows=1 + len(groups) + 1, cols=2); _hairlines(t)
+        # Same autofit defect as the competency table — the PDF states 12/88 here too.
+        _pg_avail = ((doc.sections[0].page_width - doc.sections[0].left_margin
+                      - doc.sections[0].right_margin) / 914400.0)
+        _fixed_table(t, [_pg_avail * 0.12, _pg_avail * 0.88])
         _bg(t.cell(0, 0), "F1ECE2"); _run(t.cell(0, 0).paragraphs[0], f"{word} No.", bold=True, size=7.5, color=SOFT, caps=True)
         _bg(t.cell(0, 1), "F1ECE2"); _run(t.cell(0, 1).paragraphs[0], f"Progression {word}", bold=True, size=7.5, color=SOFT, caps=True)
         for i, g in enumerate(groups, 1):
