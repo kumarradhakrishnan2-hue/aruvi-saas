@@ -28,7 +28,7 @@ os.environ.setdefault("ARUVI_STATE_DIR", _TMP_STATE)
 
 from aruvi_core.ports import ConsentRecord  # noqa: E402
 from aruvi_core.adapters.consent_repository_file import ConsentRepositoryFileImpl  # noqa: E402
-from api import legal  # noqa: E402
+from api import data, legal  # noqa: E402
 
 
 def _headers(user: str) -> dict:
@@ -78,8 +78,12 @@ def test_a_malformed_document_refuses_to_serve():
                     "### ☐ 1. Only one point\n\nBody.\n\n**I understand and agree.**\n\n"
                     "# Full User Agreement & Information for Users\n\nStuff.\n\n"
                     "## Final acknowledgement\n\n### ☐ I accept.\n")
-        real = legal.DATA_DIR
-        legal.DATA_DIR = tmp
+        # Redirect the CONTENT ROOT, not legal's own constant. Since 2026-08-29 the
+        # agreement is read through the Storage port like every other Bucket A file,
+        # so api/legal.py no longer holds a DATA_DIR of its own to patch — this is the
+        # same `data.DATA_DIR = tmp` idiom test_lp_year and test_genon_plan_key use.
+        real = data.DATA_DIR
+        data.DATA_DIR = tmp
         legal._cache.clear()
         try:
             legal.load_consent_document("9.9")
@@ -87,7 +91,7 @@ def test_a_malformed_document_refuses_to_serve():
         except legal.ConsentDocumentError as exc:
             assert "expected 5" in str(exc)
         finally:
-            legal.DATA_DIR = real
+            data.DATA_DIR = real
             legal._cache.clear()
     print("✓ A document that lost a tick raises instead of serving half of itself")
 

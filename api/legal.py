@@ -37,11 +37,8 @@ nobody would notice.
 """
 from __future__ import annotations
 
-import os
 import re
 from typing import Any, Dict, List, Optional
-
-from .config import DATA_DIR
 
 DOCUMENT_ID = "consent_and_disclaimer"
 LANGUAGE = "en"          # English governs until certified translations exist (§ front matter)
@@ -58,8 +55,12 @@ class ConsentDocumentError(RuntimeError):
     """The document on disk is missing or does not have the expected shape."""
 
 
-def _legal_dir() -> str:
-    return os.path.join(DATA_DIR, "legal")
+# ★ Reads go through the Storage port (2026-08-29), like every other Bucket A read.
+# The agreement is content the runtime serves to every teacher before she pays, so it
+# travels inside the migration unit and belongs behind the same seam as the library —
+# it was reading DATA_DIR directly for the same reason api/data.py was: the port had no
+# way to list, and listing is how a published version is discovered.
+_LEGAL_PREFIX = "legal"
 
 
 def _version_key(v: str) -> tuple:
@@ -68,11 +69,10 @@ def _version_key(v: str) -> tuple:
 
 
 def available_versions() -> List[str]:
-    """Every published version on disk, oldest first."""
-    try:
-        names = os.listdir(_legal_dir())
-    except OSError:
-        return []
+    """Every published version in the content store, oldest first."""
+    from . import data
+    names = [k.rsplit("/", 1)[-1]
+             for k in data.storage().list_prefix(_LEGAL_PREFIX, ".md")]
     out = [m.group(1) for m in (_FILE_RE.match(n) for n in names) if m]
     return sorted(out, key=_version_key)
 
@@ -82,18 +82,18 @@ def current_version() -> str:
     vs = available_versions()
     if not vs:
         raise ConsentDocumentError(
-            f"No consent document found in {_legal_dir()} "
+            f"No consent document found under {_LEGAL_PREFIX}/ "
             f"(expected consent_and_disclaimer_v{{version}}.md).")
     return vs[-1]
 
 
 def _read(version: str) -> str:
-    path = os.path.join(_legal_dir(), f"consent_and_disclaimer_v{version}.md")
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            return f.read()
-    except OSError as exc:
-        raise ConsentDocumentError(f"Consent document v{version} is not readable.") from exc
+    from . import data
+    text = data.storage().get_text(
+        f"{_LEGAL_PREFIX}/consent_and_disclaimer_v{version}.md")
+    if text is None:
+        raise ConsentDocumentError(f"Consent document v{version} is not readable.")
+    return text
 
 
 def _strip(lines: List[str]) -> str:

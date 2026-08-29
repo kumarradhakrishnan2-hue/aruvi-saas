@@ -78,6 +78,19 @@ app.include_router(testing_campaign_router)
 # AllocationRepository port at Phase 4.
 allocation_repo = AllocationRepositoryFileImpl(config.STATE_DIR)
 
+# ── Content store (Bucket A) behind the Storage port ───────────────────────────────
+# ★ The seam the provider sheet listed as declared-but-bypassed, honoured 2026-08-29.
+# Everything the runtime READS — the certified lesson library, chapter mappings, framework
+# glossaries, allocation norms, the master plan, the user agreement — now goes through
+# this object, and api/data.py owns no filesystem call against DATA_DIR any more.
+#
+# It is constructed in api/data.py (that module IS the content-access layer) and named
+# here so storage is CHOSEN where every other provider is chosen. The object-store
+# cutover is one import and one data.set_storage(...) call on this line — no caller
+# changes, which is the claim the other eleven ports could already make and this one
+# could not. Deliberately no vendor here: LocalStorage is the reference adapter.
+storage = data.storage()
+
 # Initialize the readiness teaching-profile repository. This is per-user/tenant STATE
 # (Bucket B), so it writes to STATE_DIR (aruvi-saas/data/) — NOT the read-only content
 # mirror in DATA_DIR. File-based for now; the Supabase adapter swaps in at Phase 4 behind

@@ -47,12 +47,78 @@ class OutputCache(Protocol):
     def put(self, key: str, value: Dict[str, Any]) -> None: ...
 
 
-# ── Object storage (generated PDFs / artifacts) ────────────────────────────────
+# ── Object storage (the shared read-only content tree; generated artifacts) ────
 @runtime_checkable
 class Storage(Protocol):
-    def put_bytes(self, path: str, data: bytes, content_type: str = "application/octet-stream") -> str: ...
+    """Port over Bucket A — the content DATA_DIR holds: the certified lesson library,
+    chapter mappings, framework glossaries, allocation norms, the master plan.
+
+    ★ EXTENDED 2026-08-29 with `list_prefix` and `exists`, and the reason is the
+    whole point of the port. The original three methods addressed a single object by
+    name, which is all a generated PDF ever needs. But the runtime does not only read
+    files it can name — it asks "which chapters exist?", "which canonicals are in this
+    chapter's library?", "which editions have been published?" and reads everything it
+    finds. Without a listing method those questions could only be answered by going
+    around the port to the filesystem, which is exactly what api/data.py did.
+
+    ★ PATHS ARE KEYS, NOT FILESYSTEM PATHS. Every method takes a '/'-joined path
+    RELATIVE to the content root, and no adapter may treat a path component as a
+    directory that must exist. `list_prefix` is therefore prefix-matching, not
+    directory-listing: an object store has no directories, only keys that happen to
+    share a leading substring. A local adapter maps prefixes onto folders because it
+    can; an S3 adapter never needs to. This is the one design choice that decides
+    whether the port survives contact with a real object store.
+
+    Ordering is part of the contract: `list_prefix` returns results SORTED, because
+    callers rely on a stable read order for the library (a plan's units and a
+    chapter's canonicals are read in name order and served in the order read)."""
+
     def get_bytes(self, path: str) -> bytes: ...
+    def put_bytes(self, path: str, data: bytes, content_type: str = "application/octet-stream") -> str: ...
     def url_for(self, path: str) -> str: ...
+
+    def exists(self, path: str) -> bool:
+        """True if an object is stored under exactly this key. Never a directory test."""
+        ...
+
+    def version_token(self, path: str) -> Optional[str]:
+        """An opaque string that CHANGES when the object at `path` changes, or None
+        if there is no object there.
+
+        Exists so in-process memo caches can be invalidated without the runtime
+        knowing what a modification time is. api/data.py keeps two such caches — the
+        master plan and the compiled phase streams — and both previously keyed on
+        os.path.getmtime(), which is a filesystem fact an object store does not
+        offer. It offers ETag and LastModified instead, so the port asks for the
+        weakest thing all three can honour: compare it for equality, never parse it,
+        never order two of them."""
+        ...
+
+    def list_prefix(self, prefix: str, suffix: str = "") -> List[str]:
+        """Every key under `prefix`, sorted, as paths relative to the content root.
+
+        `suffix` filters by ending (".json"). A prefix that matches nothing returns
+        an empty list — a missing prefix is not an error, because in an object store
+        there is nothing there to be missing.
+
+        Non-recursive by contract: returns the keys DIRECTLY under the prefix, not
+        those nested deeper. Callers that want a tree walk compose calls, so the
+        adapter never has to guess how deep to go."""
+        ...
+
+    def list_subprefixes(self, prefix: str) -> List[str]:
+        """The next path SEGMENT under `prefix`, sorted — the answer to "which grades
+        does this subject have?" and "which editions has this library published?".
+
+        Deliberately a separate method from `list_prefix` rather than a flag on it,
+        because in an object store these are genuinely different results from one
+        call: S3's list-objects with Delimiter='/' returns Contents (the keys, ->
+        list_prefix) and CommonPrefixes (the segments, -> here). Folding them together
+        would force every adapter to re-separate what the API already separated.
+
+        Returns bare segment names, not full paths, and never includes a trailing
+        delimiter. An empty result means nothing is stored under the prefix."""
+        ...
 
 
 # ── Tenant data (plans, feedback, cost ledger) ─────────────────────────────────

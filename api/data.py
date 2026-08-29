@@ -1,16 +1,90 @@
-"""Local-disk data access (mappings + saved plans). A stand-in for the cloud content
-store / DB; isolated here so swapping it later touches only this file."""
+"""Content access for the runtime — the certified lesson library, chapter mappings,
+framework glossaries, allocation norms, the master plan.
+
+★ EVERY READ HERE GOES THROUGH THE STORAGE PORT (2026-08-29). It did not used to.
+This module read the content tree directly with open()/os.listdir/os.path.isdir —
+about twenty call sites — which made Storage the one declared-and-bypassed seam in
+ports.py, and the one provider a partner could not swap by writing a single adapter.
+Nothing was broken by it; a filesystem is a fine content store for one machine. But
+the object-store migration was a refactor disguised as a config change, and this
+module is where the disguise lived.
+
+THE RULE, now that it holds: no os.path, no open(), no os.listdir against DATA_DIR
+below this line. A path is a KEY — a '/'-joined string relative to the content root —
+and aruvi_core/adapters/storage_file.py is the only code allowed to turn one into a
+filesystem path. Adding a read means adding a port call, never a convenient open().
+
+THE ONE DELIBERATE EXCEPTION is append_token_log, and its own docstring says why:
+it appends a row to the founder's cost notebook under runtime_data/, which is not
+Bucket A content, is not read by the runtime, and cannot be appended to in an object
+store anyway. It stays on local disk on purpose.
+"""
 from __future__ import annotations
 
 import json
 import os
 from typing import Any, Dict, List, Optional
 
+from aruvi_core.adapters.storage_file import LocalStorage
+
 from .config import DATA_DIR, LP_YEAR
 
+# The content store. Constructed here rather than injected because this module IS the
+# content-access layer — api/main.py's provider block re-exports it as `storage` so the
+# seam is visible where every other provider is chosen, and a swap is one line there
+# plus this default. A caller wanting a different store passes it to set_storage().
+#
+# ★ IT FOLLOWS `DATA_DIR`, AND THAT IS NOT A CONVENIENCE. Half a dozen tests redirect
+# the content root by rebinding `data.DATA_DIR` to a tmpdir mid-run — the established
+# idiom in this repo — and a store built once at import would keep serving the real
+# library while the test wrote into the tmpdir. `_st()` rebuilds when the root moves,
+# so that idiom keeps working unchanged.
+#
+# ★ AND IT CLEARS THE CACHES WHEN IT REBUILDS, which is load-bearing in a way the old
+# code never had to think about: cache keys used to be ABSOLUTE paths, so two roots
+# could not collide. Keys are now root-RELATIVE, so "saved_plans/x/y/ch_01.json" names a
+# different object under a tmpdir than under the real content tree. Without the clear, a
+# redirect would be served a stale stream compiled from the other root.
+_storage = LocalStorage(DATA_DIR)
+_storage_root = DATA_DIR
+_storage_explicit = False
 
-def _isdir(*parts) -> bool:
-    return os.path.isdir(os.path.join(DATA_DIR, *parts))
+
+def _st():
+    """The live content store, rebuilt if DATA_DIR has been rebound since."""
+    global _storage, _storage_root
+    if not _storage_explicit and _storage_root != DATA_DIR:
+        _storage = LocalStorage(DATA_DIR)
+        _storage_root = DATA_DIR
+        _clear_content_caches()
+    return _storage
+
+
+def _clear_content_caches() -> None:
+    global _master_plan_cache, _ncf_norms_cache
+    _stream_cache.clear()
+    _master_plan_cache = None
+    _ncf_norms_cache = None
+
+
+def set_storage(store) -> None:
+    """Swap the content store. The object-store cutover calls this once, at startup,
+    from api/main.py's provider block — after which nothing else in the product knows
+    or cares where the library lives. Also what lets a test run the engine against a
+    fake with no filesystem at all.
+
+    An explicitly-set store PINS: it is never replaced by the DATA_DIR-follow above,
+    because a caller who named a store means it, and silently swapping it back to a
+    local one on the next config change would be the worst kind of surprise."""
+    global _storage, _storage_explicit
+    _storage = store
+    _storage_explicit = True
+    _clear_content_caches()
+
+
+def storage():
+    """The live content store, for the few readers outside this module."""
+    return _st()
 
 
 # ── The lesson-plan library, foldered by EDITION YEAR (§2.2, 2026-08-27) ────────
@@ -23,48 +97,54 @@ def _isdir(*parts) -> bool:
 # it, so an edition bump is a config change, not a search-and-replace across eight call
 # sites — which is what the flat layout had become by the time it held 961 files.
 
-def lp_library_dir(subject: str, grade: str, year: Optional[str] = None) -> str:
-    """The folder holding one subject·grade's plan library for one edition year.
+def lp_library_prefix(subject: str, grade: str, year: Optional[str] = None) -> str:
+    """The KEY PREFIX holding one subject·grade's plan library for one edition year.
 
-    Falls back to the LEGACY FLAT path (saved_plans/{subject}/{grade}) when the year
+    Falls back to the LEGACY FLAT prefix (saved_plans/{subject}/{grade}) when the year
     folder does not exist but the flat one does. That fallback is not decoration: it
     keeps a half-migrated tree, an un-migrated clone and every test fixture that builds
-    a flat folder all working. It costs one isdir() per call on a path the OS has
-    cached, and it is what makes migrate_lp_year.py safe to run in stages rather than
-    as one irreversible move.
+    a flat folder all working, and it is what makes migrate_lp_year.py safe to run in
+    stages rather than as one irreversible move.
 
     Delete the fallback only once no flat tree exists anywhere — and note that "anywhere"
     includes a partner's checkout, not just this machine.
+
+    ★ Returns a KEY, not a path (2026-08-29). It used to return an absolute directory,
+    which is what made every caller below reach for os.path.join and then open(). The
+    emptiness tests are now list_subprefixes() rather than isdir(), which says the same
+    thing in the vocabulary an object store can answer: "is there anything stored under
+    this prefix?" rather than "does this folder exist?".
     """
     y = (year or LP_YEAR).strip()
-    base = os.path.join(DATA_DIR, "saved_plans", subject, grade)
-    dated = os.path.join(base, y)
-    if os.path.isdir(dated):
+    base = f"saved_plans/{subject}/{grade}"
+    dated = f"{base}/{y}"
+    subs = _st().list_subprefixes(base)
+    if y in subs:
         return dated
     # Migrated tree that simply has nothing for this subject·grade yet → still answer
-    # with the dated path, so a WRITE lands in the right edition rather than recreating
+    # with the dated prefix, so a WRITE lands in the right edition rather than recreating
     # the flat layout underneath it.
-    if os.path.isdir(base) and any(
-            os.path.isdir(os.path.join(base, e)) for e in _safe_listdir(base)):
+    if subs:
         return dated
-    if os.path.isdir(base):
+    if _st().list_prefix(base, ".json"):
         return base          # legacy flat tree, pre-migration
     return dated             # nothing exists yet → new writes are foldered
 
 
-def _safe_listdir(d: str) -> List[str]:
-    try:
-        return os.listdir(d)
-    except OSError:
-        return []
+def lp_library_dir(subject: str, grade: str, year: Optional[str] = None) -> str:
+    """The library prefix as an absolute filesystem path — LOCAL STORE ONLY.
+
+    Retained for tests and local tooling that need a real directory. No read path in
+    this module calls it any more; they all work in keys. On a non-local store this
+    raises AttributeError, which is the correct and loud answer."""
+    return _st().local_path(lp_library_prefix(subject, grade, year))
 
 
 def lp_library_years(subject: str, grade: str) -> List[str]:
     """Edition years present for this subject·grade, newest first. A flat legacy tree
     reports no years at all — it is un-editioned, not year zero."""
-    base = os.path.join(DATA_DIR, "saved_plans", subject, grade)
-    out = [e for e in _safe_listdir(base)
-           if os.path.isdir(os.path.join(base, e)) and _looks_like_year(e)]
+    out = [e for e in _st().list_subprefixes(f"saved_plans/{subject}/{grade}")
+           if _looks_like_year(e)]
     return sorted(out, reverse=True)
 
 
@@ -98,9 +178,9 @@ def load_ncf_period_norms() -> Dict[str, Any]:
     supplied Bucket A content. Cached in-process; file only changes via a manual edit."""
     global _ncf_norms_cache
     if _ncf_norms_cache is None:
-        p = os.path.join(DATA_DIR, "allocation_norms", "ncf_period_norms.json")
         try:
-            _ncf_norms_cache = json.load(open(p)).get("subjects", {})
+            doc = _st().get_json("allocation_norms/ncf_period_norms.json") or {}
+            _ncf_norms_cache = doc.get("subjects", {})
         except Exception:
             _ncf_norms_cache = {}
     return _ncf_norms_cache
@@ -114,22 +194,19 @@ def ncf_total_periods(subject: str, stage: str) -> Optional[int]:
 
 
 def list_grades(subject: str) -> List[str]:
-    base = os.path.join(DATA_DIR, "chapters", subject)
-    if not os.path.isdir(base):
-        return []
-    return sorted(d for d in os.listdir(base) if os.path.isdir(os.path.join(base, d)))
+    return _st().list_subprefixes(f"chapters/{subject}")
 
 
 def load_mappings(subject: str, grade: str) -> List[Dict[str, Any]]:
-    d = os.path.join(DATA_DIR, "chapters", subject, grade, "mappings")
     out: List[Dict[str, Any]] = []
-    if os.path.isdir(d):
-        for f in sorted(os.listdir(d)):
-            if f.endswith("_mapping.json"):
-                try:
-                    out.append(json.load(open(os.path.join(d, f))))
-                except Exception:
-                    pass
+    for key in _st().list_prefix(f"chapters/{subject}/{grade}/mappings",
+                                    "_mapping.json"):
+        try:
+            doc = _st().get_json(key)
+        except Exception:
+            continue
+        if doc is not None:
+            out.append(doc)
     out.sort(key=lambda m: m.get("chapter_number", 0))
     return out
 
@@ -147,16 +224,16 @@ def load_competency_descriptions(subject: str, grade: str) -> Dict[str, str]:
         stage = stage_for(grade)
     except UnknownGradeError:
         return {}
-    d = os.path.join(DATA_DIR, "framework", subject, stage)
-    if not os.path.isdir(d):
-        return {}
+    prefix = f"framework/{subject}/{stage}"
     out: Dict[str, str] = {}
-    for f in sorted(os.listdir(d)):
-        if f.startswith("competency_descriptions") and f.endswith(".json"):
-            try:
-                doc = json.load(open(os.path.join(d, f)))
-            except Exception:
-                continue
+    for key in _st().list_prefix(prefix, ".json"):
+        if not key[len(prefix) + 1:].startswith("competency_descriptions"):
+            continue
+        try:
+            doc = _st().get_json(key)
+        except Exception:
+            continue
+        if doc is not None:
             out.update(_flatten_descriptions(doc))
     return out
 
@@ -171,11 +248,8 @@ def load_english_spine_map(grade: str) -> Dict[str, Any]:
         stage = stage_for(grade)
     except UnknownGradeError:
         return {}
-    p = os.path.join(DATA_DIR, "framework", "english", stage, "spine_to_cg.json")
-    if not os.path.isfile(p):
-        return {}
     try:
-        return json.load(open(p))
+        return _st().get_json(f"framework/english/{stage}/spine_to_cg.json") or {}
     except Exception:
         return {}
 
@@ -221,20 +295,20 @@ def _flatten_descriptions(doc: Dict[str, Any]) -> Dict[str, str]:
 
 def list_saved_plans(subject: str, grade: str,
                      year: Optional[str] = None) -> List[Dict[str, Any]]:
-    d = lp_library_dir(subject, grade, year)
     out: List[Dict[str, Any]] = []
-    if os.path.isdir(d):
-        for f in sorted(os.listdir(d)):
-            if f.endswith(".json"):
-                try:
-                    s = json.load(open(os.path.join(d, f)))
-                    out.append({"filename": f, "chapter_number": s.get("chapter_number"),
-                                "chapter_title": s.get("chapter_title"), "saved_at": s.get("saved_at"),
-                                "is_canonical": s.get("plan_status") == "canonical",
-                                "lp_year": plan_lp_year(s),
-                                "duration_label": duration_label(s)})
-                except Exception:
-                    pass
+    for key in _st().list_prefix(lp_library_prefix(subject, grade, year), ".json"):
+        try:
+            s = _st().get_json(key)
+        except Exception:
+            continue
+        if s is None:
+            continue
+        out.append({"filename": key.rsplit("/", 1)[-1],
+                    "chapter_number": s.get("chapter_number"),
+                    "chapter_title": s.get("chapter_title"), "saved_at": s.get("saved_at"),
+                    "is_canonical": s.get("plan_status") == "canonical",
+                    "lp_year": plan_lp_year(s),
+                    "duration_label": duration_label(s)})
     out.sort(key=lambda p: (p.get("chapter_number") or 0, p.get("saved_at") or ""))
     return out
 
@@ -244,18 +318,18 @@ def load_saved_plan(subject: str, grade: str, filename: str,
     # guard against path traversal
     if "/" in filename or "\\" in filename or ".." in filename:
         return None
-    p = os.path.join(lp_library_dir(subject, grade, year), filename)
-    if os.path.isfile(p):
-        return json.load(open(p))
+    doc = _st().get_json(f"{lp_library_prefix(subject, grade, year)}/{filename}")
+    if doc is not None:
+        return doc
     # A plan she is still teaching may belong to an EARLIER edition (§2.3: a plan
     # attached to a section is immutable for the life of that attachment). Opening it
     # must not depend on it being the current edition, so look back through the years
     # before giving up. Newest first — an identical filename in two editions means the
     # chapter was carried, and the current edition's copy is the right answer.
     for y in lp_library_years(subject, grade):
-        p = os.path.join(DATA_DIR, "saved_plans", subject, grade, y, filename)
-        if os.path.isfile(p):
-            return json.load(open(p))
+        doc = _st().get_json(f"saved_plans/{subject}/{grade}/{y}/{filename}")
+        if doc is not None:
+            return doc
     return None
 
 
@@ -275,14 +349,16 @@ _master_plan_cache: Optional[tuple] = None   # (mtime, doc)
 
 def load_master_plan() -> Optional[Dict[str, Any]]:
     global _master_plan_cache
-    p = os.path.join(DATA_DIR, "allocation_norms", "master_plan.json")
-    if not os.path.isfile(p):
+    key = "allocation_norms/master_plan.json"
+    token = _st().version_token(key)     # opaque; compared, never parsed
+    if token is None:
         return None
-    mtime = os.path.getmtime(p)
-    if _master_plan_cache and _master_plan_cache[0] == mtime:
+    if _master_plan_cache and _master_plan_cache[0] == token:
         return _master_plan_cache[1]
-    doc = json.load(open(p))
-    _master_plan_cache = (mtime, doc)
+    doc = _st().get_json(key)
+    if doc is None:
+        return None
+    _master_plan_cache = (token, doc)
     return doc
 
 
@@ -407,10 +483,10 @@ def duration_label(saved: Dict[str, Any]) -> Optional[str]:
         return None
 
 
-def _canonical_path(subject: str, grade: str, chapter_number: int,
-                    year: Optional[str] = None) -> str:
-    return os.path.join(lp_library_dir(subject, grade, year),
-                        f"ch_{int(chapter_number):02d}_canonical.json")
+def _canonical_key(subject: str, grade: str, chapter_number: int,
+                   year: Optional[str] = None) -> str:
+    return (f"{lp_library_prefix(subject, grade, year)}"
+            f"/ch_{int(chapter_number):02d}_canonical.json")
 
 
 def append_token_log(call_type: str, subject: str, grade: str, chapter_number,
@@ -420,7 +496,17 @@ def append_token_log(call_type: str, subject: str, grade: str, chapter_number,
     THIS repo's runtime_data/token_log.csv (fresh log started 2026-07-25, seeded
     with the first ch 5 canonical run; the pre-genon prototype history is archived
     alongside as token_log_old.csv). BEST-EFFORT ONLY: any error is swallowed —
-    serving the teacher never waits on bookkeeping."""
+    serving the teacher never waits on bookkeeping.
+
+    ★ THE ONE FUNCTION IN THIS MODULE THAT TOUCHES THE FILESYSTEM DIRECTLY, and it is
+    a decision, not an oversight (founder, 2026-08-29). Three reasons it stays out of
+    the Storage port: it writes under runtime_data/, not DATA_DIR, so it is not Bucket
+    A content at all; nothing in the runtime ever reads it back; and it APPENDS, which
+    an object store cannot do — a key is written whole or not at all, so honouring the
+    seam here would mean re-uploading the entire notebook once per generated plan.
+
+    If this ever needs to leave the founder's machine, it belongs in STATE_DIR as a
+    proper store with its own port, not bolted onto the content seam."""
     try:
         import csv
         from datetime import datetime
@@ -443,9 +529,16 @@ def append_token_log(call_type: str, subject: str, grade: str, chapter_number,
         pass
 
 
-def canonical_mtime(subject: str, grade: str, chapter_number: int) -> Optional[float]:
-    p = _canonical_path(subject, grade, chapter_number)
-    return os.path.getmtime(p) if os.path.isfile(p) else None
+def canonical_version_token(subject: str, grade: str,
+                            chapter_number: int) -> Optional[str]:
+    """Opaque change-token for a chapter's top canonical, or None if absent.
+
+    Was `canonical_mtime`, returning a float from os.path.getmtime. Renamed rather
+    than adapted because the return type changed meaning: a token is compared for
+    equality and nothing else, where a float invited ordering ("is this newer than").
+    No caller in api/, aruvi_core/ or tests/ referenced the old function — it was
+    already dead — so this is a rename with no call sites to chase."""
+    return _st().version_token(_canonical_key(subject, grade, chapter_number))
 
 
 # ── deterministic plan keys (founder decision 2026-07-26) ───────────────────────
@@ -642,24 +735,21 @@ def genon_plan_filename(chapter_number, matrix, canonical: Dict[str, Any]) -> st
 def genon_chapters(subject: str, grade: str, year: Optional[str] = None) -> List[int]:
     """Chapter numbers with a certified canonical for this subject·grade, in the
     current edition (or `year`)."""
-    d = lp_library_dir(subject, grade, year)
     out: List[int] = []
-    if os.path.isdir(d):
-        for f in sorted(os.listdir(d)):
-            if f.startswith("ch_") and f.endswith("_canonical.json"):
-                try:
-                    out.append(int(f[3:5]))
-                except ValueError:
-                    pass
+    for key in _st().list_prefix(lp_library_prefix(subject, grade, year),
+                                    "_canonical.json"):
+        name = key.rsplit("/", 1)[-1]
+        if name.startswith("ch_"):
+            try:
+                out.append(int(name[3:5]))
+            except ValueError:
+                pass
     return out
 
 
 def load_genon_canonical(subject: str, grade: str, chapter_number: int,
                          year: Optional[str] = None) -> Optional[Dict[str, Any]]:
-    p = _canonical_path(subject, grade, chapter_number, year)
-    if not os.path.isfile(p):
-        return None
-    return json.load(open(p))
+    return _st().get_json(_canonical_key(subject, grade, chapter_number, year))
 
 
 def load_genon_library(subject: str, grade: str, chapter_number: int,
@@ -671,16 +761,14 @@ def load_genon_library(subject: str, grade: str, chapter_number: int,
     Scoped to ONE edition: a chapter's library is the set of counts authored together
     against one constitution, so mixing editions here would let the serve engine borrow
     an Xth unit across a version boundary (variant_canonical_architecture §0.4)."""
-    d = lp_library_dir(subject, grade, year)
     out: List[Dict[str, Any]] = []
     top = load_genon_canonical(subject, grade, chapter_number, year)
     if top is not None:
         out.append(top)
-    prefix = f"ch_{int(chapter_number):02d}_canonical_p"
-    if os.path.isdir(d):
-        for f in sorted(os.listdir(d)):
-            if f.startswith(prefix) and f.endswith(".json"):
-                out.append(json.load(open(os.path.join(d, f))))
+    for key in _variant_keys(subject, grade, chapter_number, year):
+        doc = _st().get_json(key)
+        if doc is not None:
+            out.append(doc)
 
     def _count(c):
         row = (c.get("period_rows_snapshot") or c.get("period_schedule")
@@ -693,28 +781,43 @@ def load_genon_library(subject: str, grade: str, chapter_number: int,
     return out
 
 
-_stream_cache: Dict[str, Any] = {}   # path -> (mtime, stream)
+_stream_cache: Dict[str, Any] = {}   # key -> (version_token, stream)
+
+
+def _variant_keys(subject: str, grade: str, chapter_number: int,
+                  year: Optional[str] = None) -> List[str]:
+    """Sorted keys of a chapter's COMPACT variants (ch_NN_canonical_pKK.json).
+
+    One definition, used by load_genon_library and load_genon_streams alike — they
+    each carried their own copy of the prefix test, which is two chances to disagree
+    about what belongs in a chapter's library."""
+    stem = f"ch_{int(chapter_number):02d}_canonical_p"
+    prefix = lp_library_prefix(subject, grade, year)
+    return [k for k in _st().list_prefix(prefix, ".json")
+            if k.rsplit("/", 1)[-1].startswith(stem)]
 
 
 def load_genon_stream(subject: str, grade: str, chapter_number: int,
                       year: Optional[str] = None) -> Optional[Dict[str, Any]]:
     """The top canonical's phase stream, compiled (strict, declared-only).
-    Memo-cached per file mtime, so the millisecond serve path never pays the
+    Memo-cached per object version, so the millisecond serve path never pays the
     compile twice for an unchanged canonical."""
-    p = _canonical_path(subject, grade, chapter_number, year)
-    return _compiled(p)
+    return _compiled(_canonical_key(subject, grade, chapter_number, year))
 
 
-def _compiled(p: str) -> Optional[Dict[str, Any]]:
-    if not os.path.isfile(p):
+def _compiled(key: str) -> Optional[Dict[str, Any]]:
+    token = _st().version_token(key)
+    if token is None:
         return None
-    mtime = os.path.getmtime(p)
-    hit = _stream_cache.get(p)
-    if hit and hit[0] == mtime:
+    hit = _stream_cache.get(key)
+    if hit and hit[0] == token:
         return hit[1]
+    doc = _st().get_json(key)
+    if doc is None:
+        return None
     from aruvi_core.genon import compile_stream
-    stream = compile_stream(json.load(open(p)))
-    _stream_cache[p] = (mtime, stream)
+    stream = compile_stream(doc)
+    _stream_cache[key] = (token, stream)
     return stream
 
 
@@ -723,14 +826,9 @@ def load_genon_streams(subject: str, grade: str, chapter_number: int,
     """Compiled streams for the chapter's whole variant library, richest first.
     Empty list when the chapter has no canonical at all. One edition only — see
     load_genon_library."""
-    d = lp_library_dir(subject, grade, year)
-    paths = [_canonical_path(subject, grade, chapter_number, year)]
-    prefix = f"ch_{int(chapter_number):02d}_canonical_p"
-    if os.path.isdir(d):
-        for f in sorted(os.listdir(d)):
-            if f.startswith(prefix) and f.endswith(".json"):
-                paths.append(os.path.join(d, f))
-    streams = [s for s in (_compiled(p) for p in paths) if s is not None]
+    keys = [_canonical_key(subject, grade, chapter_number, year)]
+    keys += _variant_keys(subject, grade, chapter_number, year)
+    streams = [s for s in (_compiled(k) for k in keys) if s is not None]
     streams.sort(key=lambda s: -len(s.get("units") or []))
     return streams
 
@@ -749,18 +847,21 @@ def save_generated_plan(subject: str, grade: str, plan: Dict[str, Any],
     from datetime import datetime
     # Writes always land in the CURRENT edition: a served plan is derived from the
     # canonical the teacher was just given, and that is by definition the current one.
-    d = lp_library_dir(subject, grade)
-    os.makedirs(d, exist_ok=True)
+    prefix = lp_library_prefix(subject, grade)
     if not filename:
         nn = f"{int(plan.get('chapter_number') or 0):02d}"
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"ch_{nn}_{ts}.json"
         seq = 1
-        while os.path.exists(os.path.join(d, filename)):   # same-second uniqueness
+        while _st().exists(f"{prefix}/{filename}"):     # same-second uniqueness
             filename = f"ch_{nn}_{ts}_{seq}.json"
             seq += 1
     plan["filename"] = filename
     plan["saved_at"] = datetime.now().isoformat(timespec="seconds")
-    with open(os.path.join(d, filename), "w") as f:
-        json.dump(plan, f, ensure_ascii=False, indent=2)
+    # indent=2 + ensure_ascii=False preserved exactly: the library is read by humans
+    # and diffed by the authoring tools, and a reformatting write would show up as
+    # every file changing.
+    _st().put_bytes(f"{prefix}/{filename}",
+                       json.dumps(plan, ensure_ascii=False, indent=2).encode("utf-8"),
+                       "application/json")
     return filename
