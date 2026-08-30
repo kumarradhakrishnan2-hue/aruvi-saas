@@ -2,8 +2,10 @@
  * No LLM. A query is tokenised, normalised, and ranked against each pair's
  * index by how many query words it matches — best match first, with a count.
  *
- * normalize() MUST stay identical to build_kb.py's norm() so the keywords
+ * normalize() MUST stay identical to sync_ask_aruvi.py's norm() so the keywords
  * baked into qa_knowledge_base.json line up with what a teacher types.
+ * (aruvi-scripts/sync_ask_aruvi.py — it re-indexes the official bank in
+ *  data/cloud/content/ask_aruvi/ and copies it here. Replaced build_kb.py 2026-08-30.)
  *
  * Field weights (a query word scores the strongest field it hits):
  *     keyword 3   ·   question 2   ·   answer 1
@@ -17,7 +19,7 @@ function stripAccents(s) {
   return s.normalize("NFD").replace(/[̀-ͯ]/g, "");
 }
 
-// canonical match key for a single word (mirror of build_kb.py norm())
+// canonical match key for a single word (mirror of sync_ask_aruvi.py norm())
 export function normalize(word) {
   let t = stripAccents(String(word).toLowerCase()).replace(/[^a-z0-9]/g, "");
   if (t.length > 4 && t.endsWith("ies")) t = t.slice(0, -3) + "y";

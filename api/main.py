@@ -577,6 +577,33 @@ class AllocationReportRequest(BaseModel):
     chapters: List[Dict[str, Any]] = []
 
 
+class YearPlanExportRequest(BaseModel):
+    """Request body for the Year Plan table export (POST /api/year-plan/export-docx).
+
+    ★ The client sends WHAT IT IS DISPLAYING; the server does not recompute it.
+    The suggested-periods column is derived client-side in YearPlan.jsx (her annual
+    budget, distributed across chapters by weight with largest-remainder), and the
+    committed column comes from her prepared plans. Re-deriving either here would put
+    a second implementation of that arithmetic in the product — and the day the two
+    drift she gets a Word document that contradicts the screen she exported it from.
+    That is the 2026-08-21 defect (Year Plan said 14, the chapter step said 19)
+    reached through a new door, so the seam is closed by not opening it.
+
+    `subject` may be the display name ("Social Sciences") or the slug; `grade` is the
+    roman string ("vii") or "VII". Both are normalized for display only — nothing is
+    looked up, so this route reads no content and needs no entitlement (it exports
+    what she can already see).
+    """
+    subject: str
+    grade: str
+    budget: Optional[int] = None
+    generated_at: Optional[str] = None
+    # [{n, title, sug: int|None, plan: int|None, prepared: bool, awaited: bool}]
+    rows: List[Dict[str, Any]] = []
+    sug_total: Optional[int] = None
+    plan_total: Optional[int] = None
+
+
 def _subject(name: str):
     try:
         return subjects.get(name)
@@ -3005,6 +3032,37 @@ def export_plan_integrated(subject: str, grade: str, filename: str,
     `unit=N` scopes to a single unit (else the whole chapter)."""
     return _export_plan(subject, grade, filename, "integrated", answers=bool(answers), unit=unit,
                         fmt=format, inline=bool(inline))
+
+
+@app.post("/api/year-plan/export-docx")
+def export_year_plan_docx_route(req: YearPlanExportRequest) -> StreamingResponse:
+    """Export the Year Plan TABLE alone as a DOCX (Word) binary.
+
+    Word only, by decision — this is the one artifact a teacher hands to somebody else
+    (a staff meeting, an HOD's file), and the thing she most often wants to do with it
+    is amend a row before she does. A PDF would freeze exactly what she needs loose.
+
+    The import is lazy for the same reason every other export route's is (main.py:58):
+    a missing optional dependency must never break API import — it returns 501 here
+    rather than taking the whole service down at start-up.
+    """
+    try:
+        from aruvi_core.export_year_plan_docx import export_year_plan_docx
+    except ImportError as e:
+        raise HTTPException(status_code=501, detail=f"DOCX export unavailable: {e}")
+    try:
+        docx_bytes = export_year_plan_docx(req.model_dump())
+        fname = f"year-plan-class-{_safe_name(req.grade)}-{_safe_name(req.subject)}.docx"
+        return _binary_response(docx_bytes, fname, _DOCX_MT)
+    except HTTPException:
+        raise
+    except Exception as e:
+        import traceback
+        tb = traceback.format_exc()
+        print("\n[year-plan export-docx] FAILED:\n" + tb, flush=True)
+        last = tb.strip().splitlines()
+        where = next((l.strip() for l in reversed(last) if "aruvi" in l or "api/" in l), "")
+        raise HTTPException(status_code=500, detail=f"DOCX export failed: {e}  [{where}]")
 
 
 @app.post("/api/allocation/export-docx")

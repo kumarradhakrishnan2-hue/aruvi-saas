@@ -1245,6 +1245,73 @@ animating scroller throws the phone keyboard over the list she is still picking 
 STATIC + unit-verified (15 helper cases, 5 fingerprint cases; babel-parse clean on
 TeachingProfile/MyPlans/verify/wheels, CSS braces 2281/2281) — live + 360px pass owed.
 
+**THE YEAR PLAN TABLE EXPORTS TO WORD — and the file says what the SCREEN said (2026-08-30).**
+`YearPlan.jsx`'s own header calls the pane "a LIVING mobile view, never a PDF", and that stands:
+the struck thing was the ALLOCATION REPORT, a document she was asked to read INSTEAD of the
+screen. This is the opposite direction — she reads the year on the pane and then needs the same
+three columns somewhere the screen cannot go (a staff meeting, an HOD's file, a printout).
+**Word only, by decision:** this is the one artifact she hands to someone else, and the thing she
+most often wants first is to amend a row — a PDF freezes exactly what needs to be loose.
+★ **THE CLIENT POSTS ITS OWN MODEL; THE SERVER ONLY RENDERS IT.** `sug` is computed in
+YearPlan.jsx's `useMemo` (her budget distributed by chapter weight, largest-remainder) and `plan`
+comes from her prepared plans. A server-side rebuild would be a SECOND implementation of that
+arithmetic, and the day the two drift she holds a Word document contradicting the screen she
+exported it from — **the 2026-08-21 defect (Year Plan said 14 where the chapter step said 19)
+reached through a new door.** So the seam is closed by not opening it: `YearPlanExportRequest`
+carries rows + totals, and `test_total_row_carries_the_payloads_totals_not_a_resum` posts totals
+that deliberately DISAGREE with the column above them and asserts the document still says what
+the pane said. Corollary: the route looks nothing up, so it is not gated (it exports what she can
+already see) and needs no entitlement check. ★ **A missing value is an em-dash, never a zero** —
+the Support `metaErr` rule in a document: no suggestion and a suggestion of 0 are different facts.
+`plan` keeps the pane's four-way render including **"set"** for a legacy prepare that stored no
+periods, where a dash would misreport a prepared chapter as untouched. **The export is the table
+and nothing else** — a test asserts "competency", "effort index", "weight" and "executive summary"
+never appear; if it is not on the pane it is not in the file.
+Built: `aruvi_core/export_year_plan_docx.py` (importing the allocation report's helpers, not
+copying them — the `export_data_rights_docx.py` convention, so the three Aruvi documents cannot
+drift) · `POST /api/year-plan/export-docx` (lazy import → 501, never a broken API import) ·
+an **UPWARD-ARROW icon beside the budget pencil** on the totals row.
+★ **PLACEMENT, settled in two moves (founder, same day).** It was first built as a labelled
+`.filebtn` in its own row below the card, on the reasoning that a download and an edit are
+different KINDS of act and should not share a `1fr` cell at 360px. Overruled, and the wrong unit
+of difference: **both are things you do to the TABLE AS A WHOLE**, and the totals row is where
+the table's own controls live — two icons also cost less height than a whole row, which is the
+scarce thing on a phone, and the chapter column runs uninterrupted to the note. So it inherits
+`.yp-budget-edit` wholesale (baseline alignment, the negative margin-block that stops a
+tap target growing the row, pine-against-`--ink-soft`), and the pair reads as a set.
+★ **The glyph is an arrow LEAVING A TRAY, upward** — deliberately not the allocation report's
+file-page glyph, which sits beside a written "Word" label and can afford to name the FORMAT
+where this one sits bare and must name the ACT; upward rather than a download-tray's downward
+arrow because the sense is "take this away with me", not "pull something into this device".
+⚠️ **Deleted with the labelled button: its `.filebtn` plane overrides and a `flex: none` fix.**
+If a labelled button ever returns, the trap to remember is the ≤600px `.filebtn { flex: 1 }`
+written for the allocation report's ROW of two buttons — inside a COLUMN container that is
+flex-basis:0 on the button's HEIGHT.
+★ **AND THE ERROR NAMES ITSELF (founder, live: "it says could not download - try again").** The
+first build printed ONE sentence for every failure — the Support `metaErr` defect in miniature:
+a screen that cannot tell "this server has no such route" from "the server refused" from "the
+network dropped" tells her nothing to act on and the next debugger nothing at all. It now unwraps
+FastAPI's `detail`, gives 404 its own words (**"This Aruvi server doesn't have the export yet"**
+— an API process older than the route, i.e. restart uvicorn, which is the overwhelmingly likely
+cause of that first report) and 501 its own (python-docx absent), keeps "couldn't reach Aruvi"
+for a fetch that never got a status, and logs to the console either way. Said in a line under the
+totals row that PUSHES the note down — never an `alert()` covering the table she is trying to
+take away, and never `position: absolute` overlapping the prose on a narrow screen. Nothing
+renders when idle: a permanent caption explaining an icon is a sign the icon is wrong.
+★ **AND THE NOTE IS A SECOND COPY OF `.yp-note` (founder, live: the closing "To know how Aruvi
+suggests, refer to Ask Aruvi time allocation section." was missing from the file).** The prose is
+hand-carried across the JS/Python boundary, so it drifts silently by construction — the same
+class of defect as `ppw_from_annual` mirrored in two languages, and the same answer: not a shared
+string table, but a TEST. `test_note_matches_the_panes_own_words` reads YearPlan.jsx, replaces
+each `{…}` expression — nested ones included, which needs a depth counter, not a regex — with a
+sentinel, and asserts every fixed RUN of prose between the interpolations appears in the
+document. Cutting at the interpolations rather than at sentence boundaries is what keeps it
+robust: the budget clause and the chapter count legitimately differ. Sabotage-verified (deleting
+the sentence fails it, and the by-name guard beside it).
+`tests/test_year_plan_export.py` 15 green; backend suite unaffected (the three red files are the
+pre-existing content defects logged 2026-08-27). Route live-verified end to end via TestClient
+(200, correct Content-Disposition, correct cells); **browser + 360px pass owed.**
+
 **Persistence + tenanting groundwork (2026-06-28) — the front-end-only state is now
 server-persisted and per-tenant, ahead of full Phase-4 auth.** Built: (a) a **user-ID login
 portal** (`web/app/components/Login.jsx`) gating the app — no password yet; the ID travels as

@@ -4595,7 +4595,36 @@ select option { background-color: var(--field-bg); color: var(--ink); }
 
 /* Frozen plan head: exec + tiles + column header stay put while the chapter rows scroll beneath.
    Sticks directly under My Lessons' own frozen header, whose measured height is --mlp2-frozen-h. */
-.yp-head { position: sticky; top: calc(var(--nav-h, 118px) + var(--mlp2-frozen-h, 132px)); z-index: 3; background: var(--paper); }
+/* ★ THE TABLE, RAISED (founder, 2026-08-30). The palette was right and the differentiation was
+   missing: column header, chapter rows and totals were prose-on-paper like everything around
+   them. They are ONE object, so they get ONE plane — and the note and the prepare row stay
+   outside it, on the page, which is what makes the lift mean something.
+   --yp-card is 1.07 against the page (the same near-white relationship as a My Lessons card),
+   so the fill cannot carry this by itself: the EDGE and the drop are what raise it. The shadow
+   is the app's existing raised-panel idiom — a hairline seat plus a wide, deeply-inset diffused
+   drop (the login card's, .lg-card) — not a new effect. Dark keeps it: the drop is nearly
+   invisible there and the edge does the work, which is the correct behaviour, not a gap. */
+.yp-table {
+  --yp-pad: 14px;                     /* ONE source for the inset — the head's bleed derives from it */
+  background: var(--yp-card);
+  border: 1px solid var(--edge); border-radius: 12px;
+  padding: 0 var(--yp-pad) 12px;
+  box-shadow: 0 1px 0 var(--line-soft), 0 14px 30px -24px rgba(31, 42, 36, .42);
+}
+/* The frozen head now sits ON the card, so it must be painted in the CARD's colour — in --paper
+   the scrolling rows would show through it. The negative margin + matching padding let that
+   fill span the card's full inner width while the header's own columns stay aligned with the
+   chapter rows beneath. ⚠️ Both derive from --yp-pad: hardcoding either one means a padding
+   change at a breakpoint silently leaves a stripe of rows visible beside the frozen header. */
+.yp-head { position: sticky; top: calc(var(--nav-h, 118px) + var(--mlp2-frozen-h, 132px)); z-index: 3;
+  background: var(--yp-card); margin: 0 calc(-1 * var(--yp-pad)); padding: 0 var(--yp-pad);
+  border-radius: 12px 12px 0 0; }
+/* A card costs gutter twice — the pane's and its own — and the chapter-name column is the one
+   that pays. Both tighten together on a narrow phone; --yp-pad keeps the header's bleed in step. */
+@media (max-width: 400px) {
+  .yp { padding-left: 10px; padding-right: 10px; }
+  .yp-table { --yp-pad: 10px; }
+}
 /* The standalone "Plan" row is GONE (2026-08-06). It was a heading above a heading: a mono kicker
    and a disclosure arrow sitting on top of a table that already announces its own columns. The
    explanation it hid now belongs to the column it explains — the arrow rides beside "Your plan" in
@@ -4650,7 +4679,12 @@ select option { background-color: var(--field-bg); color: var(--ink); }
 
 .yp-colhd { display: grid; grid-template-columns: 1fr 54px 68px; gap: 0 6px; align-items: end; margin-top: 15px; padding-bottom: 7px; border-bottom: 1px solid var(--line); }
 .yp-c { font-family: var(--f-mono); font-size: 8.5px; letter-spacing: .03em; text-transform: uppercase; color: var(--ink); text-align: right; }
-.yp-c.chap { text-align: left; }
+/* Centred over its column, not left-aligned to it (founder, 2026-08-30). The other two headers
+   sit right, over right-aligned figures; "Chapter" labels a wide 1fr column of mixed-length
+   titles, where a label pinned to the far left reads as adrift rather than as a heading. The
+   CELLS below stay left-aligned — the label centres over the column, the titles still start
+   where the eye expects to begin reading. */
+.yp-c.chap { text-align: center; }
 
 .yp-row { display: grid; grid-template-columns: 1fr 54px 68px; gap: 0 6px; align-items: start; padding: 6px 0 6px; border-bottom: 1px solid var(--line); }
 .yp-row.pend { opacity: .7; }
@@ -4686,6 +4720,26 @@ select option { background-color: var(--field-bg); color: var(--ink); }
 
 .yp-prepare { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 16px; padding: 13px 2px; border: none; border-top: 1px solid var(--line); background: none; cursor: pointer; font-family: var(--f-body); font-size: 14px; color: var(--clay); }
 .yp-arr { font-size: 16px; color: var(--clay); }
+
+/* ───────── Year plan → Word (2026-08-30) ─────────
+   ★ The export sits IN THE TOTALS ROW beside the budget pencil (founder), so it inherits
+   .yp-budget-edit wholesale — the baseline alignment that keeps the row's two numeric columns
+   registered with the chapter rows above, the negative margin-block that stops a phone-sized
+   tap target growing the row, and the pine-against-the-label affordance. Only the two things
+   that differ from a pencil are set here.
+   It began as a labelled .filebtn in its own row below the card; that row, its .filebtn plane
+   overrides and the flex-axis fix are all deleted with it. If a labelled button ever comes
+   back, the ≤600px `.filebtn { flex: 1 }` rule is the trap to remember — it means flex-basis:0
+   on the HEIGHT inside a column container. */
+.yp-export-btn { margin-left: 2px; }   /* the pair sits closer to each other than to the words */
+.yp-export-btn:disabled { opacity: .45; cursor: default; }
+.yp-export-btn:disabled:hover { color: var(--pine-d); }  /* no hover promise while it works */
+
+/* The export's only words — under the totals row, and only while there is something to say.
+   Not `position: absolute`: it must PUSH the note down, because a message that overlaps the
+   prose beneath it is unreadable on exactly the narrow screen it matters on. */
+.yp-export-msg { margin: 8px 2px 0; font-family: var(--f-body); font-size: 11.5px; line-height: 1.45; color: var(--ink-soft); }
+.yp-export-msg.bad { color: var(--clay); }
 
 
 /* ───────── Ask Aruvi mark — the bare stream-a glyph pinned to the right of the centred

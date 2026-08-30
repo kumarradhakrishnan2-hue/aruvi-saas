@@ -50,7 +50,7 @@ reproduction of, or substitute for, the NCERT textbook, which you should obtain 
 
 Aruvi is built for **you**, not for student records. Do not enter any information that
 identifies a student — names, roll numbers, marks, health or family details — into chapter
-notes, period notes, or any other input field. Aruvi stores what you type on its servers, and
+notes or any other input field. Aruvi stores what you type on its servers, and
 reserves the right to delete student-identifying information if it is inadvertently submitted.
 This protects children under India's data-protection framework, and protects you.
 
@@ -103,7 +103,7 @@ the five acknowledgements plus the remaining standard terms.*
 
 ## B. The service
 - What Aruvi does: NCF-informed lesson planning, period allocation, assessment items,
-  chapter/period notes, progress tracking, exports (PDF/DOCX).
+  chapter notes, progress tracking, exports (PDF/DOCX).
 - Aruvi's recommendations on the length of lesson plans are based on its own algorithm;
   you are free to use what you think is appropriate.
 - Aruvi is under active development; features may change, be added, or be withdrawn. No
@@ -130,7 +130,7 @@ the five acknowledgements plus the remaining standard terms.*
 - Aruvi's engine, libraries, plans, mappings, and design are Aruvi's proprietary material.
 - You receive a personal, non-transferable licence to use plans and exports in your own
   teaching. No resale, redistribution, or republication.
-- Your own notes (chapter and period notes) are yours; you grant Aruvi the licence needed to
+- Your own chapter notes are yours; you grant Aruvi the licence needed to
   store and display them back to you.
 - NCERT/framework references are used for educational navigation under India's fair-dealing
   principles.
