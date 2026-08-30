@@ -94,12 +94,28 @@ function classesFromReadiness(readiness) {
         out.push({
           subjectName: s.name, subjectSlug: sSlug, grade: g.grade, gradeSlug: gSlug,
           sectionTag: sec.tag,
+          /* ★ Her own name for this section, if she gave one (founder, 2026-08-30). DISPLAY
+             ONLY — every key below is still built from `sectionTag`, so renaming a section
+             never moves a bookmark, a chapter binding or a localStorage row. */
+          sectionName: (sec.name || "").trim(),
         });
       });
     });
   });
   return out;
 }
+
+/* The corner of a section card. Un-named it is the tag she has always seen — "6A". Named, the
+ * LETTER gives way to her word: the class number stands alone with her name in fine print
+ * beneath it (founder, 2026-08-30). A teacher who calls that room "Rose" scans this list for
+ * "Rose", and "6A · Rose" would make her read two labels to find one card. The letter is not
+ * lost — it is the key everything is filed under and the teaching profile still shows it. */
+const SectionTag = ({ c, muted }) => (
+  <div className={`sc-tag${muted ? " muted" : ""}`}>
+    {c.sectionName ? classNum(c.grade) : c.sectionTag}
+    {c.sectionName ? <span className="sc-tag-name">{c.sectionName}</span> : null}
+  </div>
+);
 
 export default function MyPlans({ subject, grade, ready, readiness, onReady, onNavigate, onEnterGenerate, user, onSignOut, lapsed, pendingOpen, onConsumePending, pendingAttach, onConsumeAttach, onStartTour, tourActive, tourStep, onTourInfo, onOpenPortal, sectionCheck, yearInfo, onCutover, cutoverBusy, cutoverResult, onDismissCutoverResult, cutoverDismissed, onDismissCutover }) {
   const [openPlan, setOpenPlan] = useState(null);  // { view, sectionKey } for LessonView
@@ -810,6 +826,28 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
    * rail and a status shade (grey=not started, green=ongoing, gold=completed) carried on a
    * left-edge accent bar. FIRST-TIME view (no chapter bound anywhere) drops the greeting and
    * shows the welcome banner; REPEAT view shows the greeting + "continue where you left off". */
+
+  /* ★ SUBJECT BANDS — but ONLY for a teacher who teaches more than one (founder, 2026-08-30).
+   * "Teachers compartmentalize subjects", and the flat list made her read the subject off every
+   * card to find the three that belong together. A single-subject teacher — the common case —
+   * sees exactly what she saw before: no heading, no band, nothing added to a screen where the
+   * grouping would have one member.
+   * NOTHING MOVES. `classesFromReadiness` already walks subjects → grades → sections in profile
+   * order, so same-subject cards are already adjacent; this only inserts headings into an order
+   * that was always there. The band is built by ADJACENCY rather than by a map keyed on the
+   * subject, which is what guarantees that: a map would silently reorder if the underlying walk
+   * ever changed, where adjacency can only ever mis-SPLIT, which is visible.
+   * Each item keeps its ORIGINAL index `i` — the guided tour addresses its target card by
+   * position (`i === tourIdx` on three separate elements), so re-indexing inside a band would
+   * point the hand at the wrong card. */
+  const bands = [];
+  classes.forEach((c, i) => {
+    const last = bands[bands.length - 1];
+    if (last && last.subject === c.subjectName) last.items.push({ c, i });
+    else bands.push({ subject: c.subjectName, slug: c.subjectSlug, items: [{ c, i }] });
+  });
+  const banded = bands.length > 1;
+
   return (
     <div>
       {/* The standing "+" portal (see the unlock note above) opens the Subject · Class ·
@@ -978,8 +1016,47 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
         </div>
       )}
 
-      <div className="sc-list">
-        {classes.map((c, i) => {
+      {/* Banded (>1 subject) or the plain list she has always had. The CARD itself is one
+          renderer either way — `renderCard` — so the two paths can never drift apart. */}
+      {banded ? (
+        <div className="sc-bands">
+          {bands.map((b) => (
+            <div className="sc-band" key={b.slug}>
+              {/* The subject, said ONCE per band. It is a structural label, so it takes the
+                  house's mono uppercase kicker rather than a display-serif heading — this is
+                  the spine of the list, not a title competing with the chapter names. */}
+              <div className="sc-band-hd">{b.subject}</div>
+              <div className="sc-list">{b.items.map(({ c, i }) => renderCard(c, i))}</div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="sc-list">{classes.map((c, i) => renderCard(c, i))}</div>
+      )}
+
+      {/* (The one-time "Do you teach {subject} to other classes?" window stood here until
+          2026-08-21 — removed with its storage keys; see the plusShow note above. All growth
+          is now PULL, via the standing "+" portal.) */}
+
+      {/* (Both the "Would you like to check your set-up?" prompt and the "+" portal chooser stood
+          here until 2026-08-27. They are ONE window now — ProfilePortal.jsx — owned by page.jsx,
+          because the check mood also opens over My Lessons and because every row has to be able
+          to come back to it after a trip through the teaching profile. The "+" below just asks
+          for it.) */}
+
+      {attachModal}
+      {untrackModal}
+      {historyModal}
+    </div>
+  );
+
+  /* ONE card, rendered the same whether or not it sits inside a subject band. The only thing
+     the band changes is the KICKER: with the subject named above the group, repeating it on
+     every card is the same word three times on one screen — so banded cards carry just
+     "Ch 4", and an unattached card carries no kicker at all rather than an empty line.
+     A function DECLARATION, deliberately: it is hoisted, so it can sit below the return where
+     it does not push 90 lines of card markup between the reader and the shape of the screen. */
+  function renderCard(c, i) {
           const sectionKey = `${c.subjectSlug}_${c.gradeSlug}_${c.sectionTag}`;
           const gradePlans = plansByKey[`${c.subjectSlug}/${c.gradeSlug}`];
           const file = currentChapterFile(sectionKey);
@@ -997,9 +1074,11 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
               // On the tour's TARGET card, the "+" carries data-tour="section-add" — step 7's
               // spotlight + hand sit on it ("click the + sign of that section card").
               <div className="sc-card st-new" key={i}>
-                <div className="sc-tag muted">{c.sectionTag}</div>
+                <SectionTag c={c} muted />
                 <div className="sc-body">
-                  <span className="sc-kicker">{pretty(c.subjectSlug)}</span>
+                  {/* No kicker at all inside a band: the subject is the heading above, and this
+                      card has no chapter to name, so an empty line is all that would be left. */}
+                  {banded ? null : <span className="sc-kicker">{pretty(c.subjectSlug)}</span>}
                   <div className="sc-title muted">
                     Pick a chapter to begin
                   </div>
@@ -1028,9 +1107,13 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
             <div className={`sc-card ${status}`} key={i}
               data-tour={i === tourIdx ? "section-card-target" : undefined}
               onClick={() => openLesson(c.subjectSlug, c.gradeSlug, plan, sectionKey)}>
-              <div className="sc-tag">{c.sectionTag}</div>
+              <SectionTag c={c} />
               <div className="sc-body">
-                <span className="sc-kicker">{pretty(c.subjectSlug)}{plan.chapter_number ? ` · Ch ${plan.chapter_number}` : ""}</span>
+                {/* Banded: the subject is overhead, so the kicker is just the chapter — and
+                    nothing at all when the plan carries no chapter number. */}
+                {banded
+                  ? (plan.chapter_number ? <span className="sc-kicker">Ch {plan.chapter_number}</span> : null)
+                  : <span className="sc-kicker">{pretty(c.subjectSlug)}{plan.chapter_number ? ` · Ch ${plan.chapter_number}` : ""}</span>}
                 <div className="sc-title" title={plan.chapter_title}>{plan.chapter_title}</div>
                 {/* ★ YEAR STAMP (founder, 2026-08-26). A chapter she carried forward from an
                     earlier academic year says so, in small print, on the card she teaches
@@ -1075,22 +1158,5 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
               )}
             </div>
           );
-        })}
-      </div>
-
-      {/* (The one-time "Do you teach {subject} to other classes?" window stood here until
-          2026-08-21 — removed with its storage keys; see the plusShow note above. All growth
-          is now PULL, via the standing "+" portal.) */}
-
-      {/* (Both the "Would you like to check your set-up?" prompt and the "+" portal chooser stood
-          here until 2026-08-27. They are ONE window now — ProfilePortal.jsx — owned by page.jsx,
-          because the check mood also opens over My Lessons and because every row has to be able
-          to come back to it after a trip through the teaching profile. The "+" below just asks
-          for it.) */}
-
-      {attachModal}
-      {untrackModal}
-      {historyModal}
-    </div>
-  );
+  }
 }

@@ -26,6 +26,59 @@
   --edge: #cbbfa6;
   --edge-green: #cde0d8;
   --edge-clay: #ecccb9;
+  /* ★ THE SECTION CARD'S OWN SURFACES (founder, 2026-08-30) — "increasing the contrast of the
+     colour of the section card for all states alone can help". Measured, the card was barely a
+     surface at all: against the page (--paper #faf7f1) the fills sat at 1.10 (unstarted),
+     1.04 (ONGOING) and 1.17 (complete). Under about 1.2 nothing reads as a separate plane, so
+     the card was being held up almost entirely by a 1px border — and the ranking was upside
+     down, the card she TEACHES FROM separating least and the one she has FINISHED WITH most.
+     All three are now levelled at 1.32, each darkened toward its own accent (--edge / --pine /
+     --clay) rather than toward grey, so the tints read as green and terracotta instead of as
+     tinted white. The ceiling is the muted text on them: --card-muted is --ink-soft darkened
+     just enough to hold 4.5:1 at this depth ("Pick a chapter to begin" is the case).
+     Deliberately NOT edits to --paper-sunk / --tint-pine, which are used in 37 and 35 other
+     places and would have dragged half the app along. My Lessons shares these on purpose (its
+     status palette is this one, see .mlp2-*) — that is the intended blast radius, and no more.
+     --card-*-edge: the 1px border was --line-soft, at 1.05:1 against its own fill — not an
+     edge. Each state now has one in its own hue at ~1.3–1.4, which is where most of the
+     perceived lift comes from and it costs nothing in text contrast.
+     --card-grid: the constant graph rule laid over EVERY card (see .sc-card). Constant is the
+     whole point — it is a MATERIAL, not a code: it says nothing, needs no legend, and cannot
+     collide with status the way a per-class colour or pattern would. */
+  --card-new:        #e1d8c8;
+  --card-new-edge:   #cbbfa6;
+  --card-going:      #ceddd6;
+  --card-going-edge: #a2bdb4;
+  --card-done:       #efd4c4;
+  --card-done-edge:  #ddac95;
+  --card-muted:      #5f5f59;
+  --card-grid:       rgba(22, 68, 54, .075);
+  /* ⚠️ THE EMPTY PROGRESS TICK HAD TO MOVE WITH THE FILL. The unit rail's unfilled ticks were
+     --line, which against the OLD fills sat at 1.08–1.21 — already weak, and at the new depth
+     1.04. That is not a cosmetic loss: the empty ticks ARE the denominator, so "unit 3 of 6"
+     would have become three pips floating on a card with nothing to count them against.
+     Whenever a surface is darkened, check what was drawn in a hairline ON it. */
+  --card-tick:       #cbbfa6;
+  /* The shelf spine on a My Lessons card ("no section has taken this chapter yet"). A token
+     because the plane under it differs by theme — see .sc-card.mlp2-shelf::before. */
+  --spine-shelf:     #75998c;
+  /* ★ PLAIN PAPER — the My Lessons plane (founder, 2026-08-30). Three were built and compared
+     live in one hour: manila #f1e7cf (the folder metaphor, and the nicest idea — but a WARM
+     neighbour of the unstarted sand card, the one thing it exists to be told apart from), cool
+     slate #e6eaef (the only COOL candidate, so unmistakable in any light, at the cost of a new
+     hue in the app), and this — which is where it settled.
+     Plain is the strongest MEASUREMENT of the three: 1.41 from every status fill in LUMINANCE,
+     so it holds in sunlight, on a cheap screen and for colour-blind eyes, where a same-weight
+     hue swap vanishes. It says the thing plainly too — a lesson plan is a document, so it is
+     the one card that is not tinted at all, and the tint is what marks a class she teaches.
+     Expressed as ALIASES rather than literals, so the dark theme needs no second pair: both
+     --paper-2 and --edge already flip, and "plain paper" means exactly the ordinary card
+     surface in whichever theme is on.
+     ⚠️ Its weakness is the flip side of its strength: at 1.07 against the page the fill cannot
+     hold the card up at all, so the EDGE is the whole of the separation — --edge at 1.82
+     against the fill, never --line-soft. Do not soften it back. */
+  --card-doc:        var(--paper-2);
+  --card-doc-edge:   var(--edge);
   --f-display: "Fraunces", Georgia, serif;
   --f-body: "Newsreader", Georgia, serif;
   --f-mono: "IBM Plex Mono", ui-monospace, monospace;
@@ -1986,7 +2039,12 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 /* Resting "ready to teach" lesson — sage left rail, distinct from My Classes' grey "not started"
    (a prepared lesson isn't unstarted, it's on the shelf). Teaching-now → st-going (green),
    all-done → st-done (clay): reused verbatim so the two tabs share one status palette. */
-.sc-card.mlp2-shelf::before { background:#8aa79b; }
+/* ⚠️ Darkened from #8aa79b and tokenised 2026-08-30, because the plane went plain: with the
+   status tint gone from this card, the 4px spine is now the ONLY carrier of the lifecycle, and
+   sage measured 2.60:1 on white — under the 3:1 a non-text mark needs. It clears at 3.14 and
+   stays visibly sage rather than pine. Dark keeps the lighter value: on #1e2621 it is at 5.97
+   already, and darkening it there would be a change with nothing behind it. */
+.sc-card.mlp2-shelf::before { background:var(--spine-shelf); }
 .mlp2-status { display:flex; flex-wrap:wrap; align-items:baseline; font-family:var(--f-mono); font-size:10px; letter-spacing:.02em; color:var(--ink-soft); }
 .mlp2-status .sep { margin:0 6px; color:var(--line); }
 .mlp2-ready { font-family:var(--f-body); font-style:italic; font-size:12.5px; color:var(--ink-soft); }
@@ -2028,6 +2086,30 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
    clear vertical gap between them. ~3 body rows (2 title lines @1.28·15px + a status line) + the
    card's 20px vertical padding. */
 .mlp2 .sc-card:not(.mlp2-arch) { padding-right:44px; min-height:82px; box-sizing:border-box; }
+
+/* ★ A LESSON PLAN IS A DOCUMENT, NOT A CLASS — PLAIN PAPER (founder, 2026-08-30).
+   The two tabs shared one status palette, so a My Lessons card and a My Classes card were the
+   same object to the eye while affording different things (no bookmark here; no export there).
+   The founder's fix, and the right one: the PLANE now says what KIND of thing this is, and only
+   the 4px spine says where it stands. Nothing is lost, because of an asymmetry between the two
+   tabs — the lesson card ALREADY spells its status out in words ("Completed 6A, 6C · Teaching
+   now 6B"), where the section card has no such line and colour is its only carrier. So the tint
+   was redundant here and load-bearing there; taking it off costs nothing on this side.
+   The plane is --card-doc, which is where the tone lives and where the reasoning for it is
+   written; three were built and compared live the same hour (plain paper, manila, slate).
+   ⚠️ Whatever tone it holds, it is a LIGHT plane and cannot hold the card up on its own, so the
+   EDGE is doing the work here — --card-doc-edge, never --line-soft. Do not soften it back.
+   `:not(.mlp2-arch)` because the archive keeps its sunk, dimmer plane — and because that rule
+   ties this one on specificity and sits EARLIER in the file, so without the exclusion source
+   order alone would decide, which is how the .ap-row-line bug of 2026-08-27 happened. */
+.mlp2 .sc-card:not(.mlp2-arch):not(.sc-proposed) {
+  background-color: var(--card-doc);
+  border-color: var(--card-doc-edge);
+}
+/* Restated at this specificity or the rule above would silently eat the hover affordance —
+   `.sc-card:hover` is (0,2,0) and this plane rule is (0,4,0), so the card would stop responding
+   to the pointer the moment it went plain. */
+.mlp2 .sc-card:not(.mlp2-arch):not(.sc-proposed):hover { border-color: var(--pine); }
 .mlp2-iconbtn {
   position:absolute; top:7px; right:8px; z-index:2;
   display:inline-flex; align-items:center; justify-content:center;
@@ -2112,7 +2194,8 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .mlp2-restore-btn:hover { background:var(--pine-d); border-color:var(--pine-d); }
 
 /* Archived card — muted, greyed rail; clearly "set aside" without looking broken. */
-.sc-card.mlp2-arch { background:var(--paper-sunk); }
+/* background-COLOR, not the shorthand — see the warning above .sc-card. */
+.sc-card.mlp2-arch { background-color:var(--paper-sunk); }
 .sc-card.mlp2-arch::before { background:var(--edge); }
 .sc-card.mlp2-arch .sc-title { color:var(--ink-soft); }
 
@@ -2424,12 +2507,49 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
    done=pine, current=ochre, remaining=hairline) · "LU n of N" meta. Deliberately NO days,
    NO pace pills, NO comparisons — the card answers one question: where did I stop? */
 .sc-list { display: flex; flex-direction: column; gap: 9px; margin: 4px 0 22px; }
+/* ★ SUBJECT BANDS in My Classes — only when she teaches more than one (founder, 2026-08-30).
+   "Teachers compartmentalize subjects", and the flat list made her read the subject off every
+   card to find the three that belong together. The subject is a STRUCTURAL label, so it takes
+   the house's mono uppercase kicker under a ledger hairline — not a display-serif heading,
+   which would compete with the chapter titles it sits over. It carries --pine-d rather than
+   --ink-soft because it is the spine of the list, not a caption on it.
+   The band owns the outer margin (.sc-bands) so the inner lists can sit tight under their own
+   heading; a single-subject teacher never renders any of this and keeps the plain .sc-list. */
+.sc-bands { margin: 4px 0 22px; }
+.sc-band + .sc-band { margin-top: 20px; }
+.sc-band-hd {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--pine-d); padding-bottom: 5px; border-bottom: 1px solid var(--line);
+}
+.sc-band .sc-list { margin: 7px 0 0; }
+/* ⚠️ EVERY BACKGROUND HERE IS `background-color`, NEVER THE `background` SHORTHAND.
+   The card carries a constant grid as a background-IMAGE (below), and the shorthand resets
+   background-image to none — so a state rule written `background: var(--card-going)` silently
+   erases the grid on exactly the cards that have a status, which is all of them. This is the
+   `--sel-chevron` trap of 2026-08-27 in a second place; see §4 of CLAUDE.md. */
 .sc-card {
   position: relative;
   display: flex; align-items: center; gap: 13px;
   padding: 10px 15px 10px 17px; border-radius: 11px;
-  background: var(--paper-2); border: 1px solid var(--line-soft);
-  cursor: pointer; transition: border-color .12s ease, background .12s ease;
+  background-color: var(--paper-2); border: 1px solid var(--line-soft);
+  cursor: pointer; transition: border-color .12s ease, background-color .12s ease;
+  /* ★ THE CONSTANT GRID (founder, 2026-08-30) — the same 11px rule on every card whatever its
+     state. It is a MATERIAL, not a code: because it never varies it carries no meaning, needs
+     no legend, and cannot compete with the status colours the way a per-class pattern would.
+     It is a third separation channel that costs neither colour nor text contrast — paper keeps
+     its grain, cards get their rule, and each surface reads as its own substance.
+     7.5% is the settled weight: 5% disappears into the fill, 13% starts competing with the
+     serif title running over it. Kept as a token so the dark theme can invert it to a LIGHT
+     rule — a dark rule on a dark card is nothing at all. */
+  background-image:
+    linear-gradient(var(--card-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--card-grid) 1px, transparent 1px);
+  background-size: 11px 11px;
+  /* The muted ink INSIDE a card is darker than the page's, because the card is now a darker
+     surface (see --card-muted). Scoped by re-pointing --ink-soft on the card itself, so every
+     muted descendant — kicker, "Pick a chapter to begin", the section's own name, My Lessons'
+     status line — follows without each one being listed and later drifting apart. */
+  --ink-soft: var(--card-muted);
 }
 /* Left-edge accent bar — like the individual lesson-plan cards — coloured by teaching status. */
 .sc-card::before {
@@ -2438,13 +2558,20 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 }
 .sc-card.st-going::before { background: var(--pine); }
 .sc-card.st-done::before  { background: var(--clay); }
-.sc-card.st-new  { background: var(--paper-sunk); }
-.sc-card.st-going { background: var(--tint-pine); }
+.sc-card.st-new   { background-color: var(--card-new);   border-color: var(--card-new-edge); }
+.sc-card.st-going { background-color: var(--card-going); border-color: var(--card-going-edge); }
 /* Completed — warm terracotta, clearly distinct from the grey-cream unstarted + green ongoing. */
-.sc-card.st-done  { background: var(--tint-clay); border-color: var(--edge-clay); }
+.sc-card.st-done  { background-color: var(--card-done);  border-color: var(--card-done-edge); }
 .sc-card:hover { border-color: var(--pine); }
 .sc-tag { flex: none; min-width: 40px; font-family: var(--f-display); font-weight: 500; font-size: 20px; color: var(--pine-d); line-height: 1.2; }
 .sc-tag.muted { color: var(--ink-soft); }
+/* Her own name for the section, in fine print under the class number (founder, 2026-08-30).
+   Mono, deliberately NOT uppercased — it is her word, spelled her way. Capped and clipped
+   rather than wrapped: the tag column is `flex: none`, so a second line here would push the
+   chapter title down and break the card's rhythm on a phone. */
+.sc-tag-name { display: block; max-width: 76px; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap; font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .03em;
+  color: var(--ink-soft); line-height: 1.3; margin-top: 2px; }
 .sc-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
 .sc-kicker { font-family: var(--f-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
 /* Chapter title, capped at TWO lines then truncated — the standard everywhere a title sits in card
@@ -2455,7 +2582,7 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .sc-title.muted { font-style: italic; color: var(--ink-soft); }
 .sc-rail { display: flex; gap: 2px; }
-.sc-tick { height: 5px; flex: 1; max-width: 26px; border-radius: 2px; background: var(--line); }
+.sc-tick { height: 5px; flex: 1; max-width: 26px; border-radius: 2px; background: var(--card-tick); }
 .sc-tick.done { background: var(--pine); }
 .sc-tick.cur { background: var(--ochre); }
 /* Right-slot card actions. "+" = track a chapter (pine), "−" = untrack (clay). One position,
@@ -2773,6 +2900,12 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
   font-family: var(--f-mono); font-size: 11px; color: #f2f7f4;
   background: var(--pine); border-radius: 999px; padding: 4px 10px;
 }
+/* A NAMED section chip carries her word alone — the class is already stated in display serif at
+   the top of the same card, so the tag would be that fact a third time (founder, 2026-08-30;
+   the tag lives on in the chip's `title`). Her names are words, not codes, so the chip drops
+   the mono face for the body serif and its letter-spacing with it; it keeps the pine pill so a
+   row of named and unnamed sections still reads as one set of chips. */
+.tp-chip.named { font-family: var(--f-body); font-size: 12.5px; letter-spacing: 0; }
 .tp-chip-x { background: none; border: none; padding: 0; cursor: pointer; font-size: 10px; color: #b7d2c6; line-height: 1; }
 .tp-chip-x:hover { color: #ffd7cc; }
 .tp-nums { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 8px; }
@@ -2810,16 +2943,27 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
 .tp-icon-btn { display: inline-flex; align-items: center; background: none; border: none; padding: 3px; cursor: pointer; color: var(--pine-d); opacity: .8; }
 .tp-icon-btn:hover { opacity: 1; color: var(--clay); }
 
-/* green add buttons — prominent, shared format at every level */
-.tp-add {
-  display: inline-flex; align-items: center; margin: 10px 14px 14px;
-  font-family: var(--f-display); font-weight: 500; font-size: 13.5px;
-  background: var(--pine); border: none; color: #fdfaf4;
-  border-radius: 999px; padding: 8px 16px; cursor: pointer;
-}
-.tp-add:hover { background: var(--pine-d); }
-.tp-add-sm { margin: 0; padding: 4px 12px; font-size: 12px; }
-.tp-add-subject { display: flex; width: fit-content; margin: 4px 0 0 auto; }
+/* (The green add pills — .tp-add / .tp-add-sm / .tp-add-subject — went 2026-08-30 with their
+   last caller. "+ add a class" was retired on 2026-08-27 into the class pen's tick list, and
+   "+ add a subject" became the empty subject ROW below. Deleted rather than left on disk: an
+   unreferenced pill invites someone to reuse a pattern this screen has deliberately dropped.) */
+/* ★ The empty subject row — the slot the next subject will fill (founder, 2026-08-30). It is a
+   .tp-sub, so it inherits the card, the PLAIN background, the padding and the serif name from
+   the rows above it and cannot drift from them. Two departures, both saying "not yet a
+   subject": a DASHED edge (the .sc-proposed idiom — structure, never colour) and the name in
+   pine, because this row ACTS where the others open.
+   ⚠️ It briefly carried `background: none`, on the reasoning that an empty slot should not read
+   as a filled card. Wrong on the screen (founder, same day): transparent let the page's grain
+   through and the row read as a HOLE in the stack rather than the next place in it. The plane
+   is what makes it one of the list; the dashed edge is what makes it empty. */
+.tp-sub-add { border-style: dashed; border-color: var(--edge); }
+.tp-sub-add .tp-sub-name { color: var(--pine); }
+.tp-sub-add .tp-sub-hd:hover { background: var(--tint-pine); }
+.tp-sub-add .tp-sub-hd:focus-visible { outline: 2px solid var(--pine); outline-offset: -2px; }
+/* The scoped "nothing left to add" answer in the subject chooser — the sentence and the way
+   past it, kept together as one block so the CTA is never read as belonging to the wheel. */
+.tp-nomore { margin: 14px 0 4px; }
+.tp-nomore .fr-cta { margin-top: 10px; }
 
 /* Portal pick screens (the "+" chose Class or Section) — one tappable row per subject/class,
    ledger-hairline rows in the profile's own voice. */
@@ -3005,6 +3149,21 @@ tr[data-sec="3"] .cell:not(.on) { background:var(--sec-d-bg); }
    side arrows height-match off the same flag on the wrap. */
 .fr-sec-wheel-wrap.has-trail .fr-sec-wheel { height: 260px; }
 .fr-sec-wheel-wrap.has-trail .fr-sec-arrows-side { height: 260px; }
+
+/* ── the "customize" cell on a SECTION pick wheel (founder, 2026-08-30) ──
+   Same trailing column the duration question uses for its periods/week split, so sections and
+   durations are one two-column format rather than two. The box opens only on a TICKED row (see
+   SecNameCell), which is what makes ticking read as "and now, if you like, name it".
+   Eight characters is the field's whole width — no scrolling inside it — so what she sees while
+   typing is exactly what the card will show. Sized inside --ppw-col (96px), which is what keeps
+   it on the same axis as the heading above it at 360px. */
+.tp-secname {
+  width: 82px; max-width: 100%; box-sizing: border-box;
+  font-family: var(--f-mono); font-size: 12.5px; color: var(--ink); text-align: center;
+  padding: 6px 6px; background: var(--paper-2);
+  border: 1.5px solid var(--pine); border-radius: 8px;
+}
+.tp-secname:focus { outline: none; border-color: var(--pine-d); box-shadow: 0 0 0 2px var(--tint-pine); }
 
 /* The anchor cell (lowest length) — a derived remainder, deliberately not an input, and no label:
    the column heading already names it. Its face is the reference the dropdowns match. */
@@ -3364,6 +3523,23 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
     --edge:        #3d4a43;
     --edge-green:  #33453d;
     --edge-clay:   #4a382e;
+    /* The card surfaces, measured the same way against the DARK page (#161d19) — a light-mode
+       lift does not transfer, and dark had the identical defect: 1.06 (unstarted), 1.18
+       (ongoing), 1.09 (complete). Levelled at 1.32 by RAISING each tint (a surface above a dark
+       page is lighter, not darker) toward its own lit accent. --card-muted stays --ink-soft
+       here: at 4.7:1 on these fills it already clears, so darkening it would be a change with
+       no reason behind it. The grid inverts to a light rule — a dark one is invisible. */
+    --card-new:        #303229;
+    --card-new-edge:   #4f4e42;
+    --card-going:      #24342d;
+    --card-going-edge: #385449;
+    --card-done:       #3f2d23;
+    --card-done-edge:  #644737;
+    --card-muted:      #a29b8c;
+    --card-grid:       rgba(233, 228, 215, .055);
+    --card-tick:       #4a544d;
+    /* No --card-doc pair here: it aliases --paper-2 / --edge, which flip on this very block. */
+    --spine-shelf:     #8aa79b;
   }
 
   /* — The fixed top bar: same pine-chrome idea at dark depth. A deep pine fill, clearly
@@ -3432,9 +3608,10 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
   [data-theme-effective="dark"] .mycal .cal-totals { border-color: var(--line); }
   [data-theme-effective="dark"] .myclasses .daycal .cell:not(.on):hover,
   [data-theme-effective="dark"] .myclasses .cell.ro:hover { border-color: var(--edge); }
+  /* .sc-card.st-done dropped from this list 2026-08-30: its border is now --card-done-edge,
+     which has its own dark value, so re-pointing it at --edge-clay here would undo the fix. */
   [data-theme-effective="dark"] .lv-chapterdone,
-  [data-theme-effective="dark"] .lv-chapterdone .lv-undo,
-  [data-theme-effective="dark"] .sc-card.st-done { border-color: var(--edge-clay); }
+  [data-theme-effective="dark"] .lv-chapterdone .lv-undo { border-color: var(--edge-clay); }
   [data-theme-effective="dark"] .rd-prog .pip { background: var(--line); }
   [data-theme-effective="dark"] .rd-prog .pip.half { background: linear-gradient(90deg, var(--pine) 50%, var(--line) 50%); }
 
@@ -4582,7 +4759,7 @@ select option { background-color: var(--field-bg); color: var(--ink); }
  * and no hover border; anything else would invite a tap that does nothing. */
 .sc-card.sc-proposed {
   cursor: default;
-  background: var(--paper-2);
+  background-color: var(--paper-2);   /* not the shorthand — see the warning above .sc-card */
   border-style: dashed;               /* the one "not yet" signal — structure, not colour */
   border-color: var(--edge-clay);
 }

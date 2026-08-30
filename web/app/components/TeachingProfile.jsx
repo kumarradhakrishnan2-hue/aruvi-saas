@@ -122,6 +122,57 @@ const deepCopy = (x) => JSON.parse(JSON.stringify(x));
 const secLetter = (s) => (typeof s === "string" ? s : s.sec);
 const byRoman = (a, b) => ROMAN.indexOf(a.toLowerCase()) - ROMAN.indexOf(b.toLowerCase());
 
+/* ★ A SECTION MAY CARRY A NAME OF HER OWN (founder, 2026-08-30).
+ * The LETTER is Aruvi's key and stays the key: `sec` and `tag` are what every bookmark,
+ * chapter binding and localStorage key in the product is built from (clearSectionState,
+ * MyPlans' sectionKey, the tour's `i.tag`), so a rename must never touch them. `name` is a
+ * DISPLAY LABEL laid over the tag — "Rose", "Blue", "Tamil-B", whatever her school calls the
+ * room — and nothing keys off it. That is the whole design: renaming a section can therefore
+ * never orphan the work attached to it.
+ * Eight characters, because it has to sit in a card's corner beside the class number and in a
+ * 96px column on a 360px phone; a label that wraps is not a label. Blank = not customized, and
+ * the field is simply ABSENT from the record then (never an empty string), so "has a name" is
+ * one truthiness test everywhere. */
+const SEC_NAME_MAX = 8;
+const secName = (s) => (typeof s === "string" ? "" : String((s && s.name) || ""));
+/* Typed input → storable label. Collapses runs of whitespace and refuses a LEADING space (so
+ * the caret can never sit past an invisible character) but keeps a trailing one while she is
+ * still typing "Blue " + "House"; the trim happens at save, in `secObj`. */
+const cleanSecName = (v) => String(v == null ? "" : v).replace(/\s+/g, " ").replace(/^ /, "").slice(0, SEC_NAME_MAX);
+// canonical section record; `name` omitted entirely when she has not given one
+const secObj = (grade, sec, names) => {
+  const nm = cleanSecName((names || {})[sec]).trim();
+  const o = { tag: `${classNum(grade)}${sec}`, sec };
+  if (nm) o.name = nm;
+  return o;
+};
+// stored sections → the { letter: name } map the pick screens edit
+const namesFromSections = (list) => {
+  const out = {};
+  (list || []).forEach((x) => { const n = secName(x); if (n) out[secLetter(x)] = n; });
+  return out;
+};
+// how a section reads in the running "Chosen (n)" line: the tag, and her name for it if any
+const secSummary = (grade, s, names) => {
+  const nm = cleanSecName((names || {})[s]).trim();
+  return nm ? `${classNum(grade)}${s} (${nm})` : `${classNum(grade)}${s}`;
+};
+
+/* One "customize" cell — the box that opens on the row she ticks. Deliberately NOT autofocused:
+ * PickWheel re-rests the wheel on every toggle (an animated scroll), and pulling focus into a
+ * field inside that scroller mid-animation fights it and throws up the phone keyboard over the
+ * list she is still picking from. The box appearing IS the invitation. */
+function SecNameCell({ on, tag, value, onChange }) {
+  if (!on) return null;
+  return (
+    <input type="text" className="tp-secname" value={value} maxLength={SEC_NAME_MAX}
+      autoComplete="off" spellCheck={false}
+      aria-label={`Your own name for section ${tag} (optional, up to ${SEC_NAME_MAX} characters)`}
+      onChange={(e) => onChange(cleanSecName(e.target.value))}
+      onClick={(e) => e.stopPropagation()} />
+  );
+}
+
 // red dustbin (stroke inherits color — .tp-bin sets the red)
 const Bin = () => (
   <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
@@ -169,6 +220,9 @@ const gradeDraftFrom = (rec) => {
   return {
     grade: rec.grade,
     sections: (rec.sections || []).map(secLetter),
+    // her custom labels ride alongside the letters, keyed by letter — the draft edits this map
+    // and `secObj` folds it back into the record on save.
+    section_names: namesFromSections(rec.sections),
     durations,
     ppw_by_duration,
     ppw_anchor: ppwAnchor(durations, ppw_by_duration, rec.ppw_anchor),
@@ -181,7 +235,7 @@ const gradeDraftFrom = (rec) => {
  * "{subject}/{stage}"). */
 const stageOfRoman = stageOfGrade;   // lib/format is the web's ONE copy of the mapping
 
-export default function TeachingProfile({ readiness, onChange, onBack, lapsed, paidScopes, autoAddClassSubject, onConsumeAutoAdd, portalIntent, onConsumePortal, portalScope }) {
+export default function TeachingProfile({ readiness, onChange, onBack, lapsed, paidScopes, autoAddClassSubject, onConsumeAutoAdd, portalIntent, onConsumePortal, portalScope, onSubscribe }) {
   // SINGLE SOURCE OF TRUTH: the profile lives in the parent's `readiness` prop. Derive the
   // canonical subjects[] straight from it — no mirrored local copy. That way an edit (which
   // routes through persist → onChange → setReadiness) re-renders THIS view and every other
@@ -231,6 +285,10 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
   const [catalogue, setCatalogue] = useState([]);        // all offerable subject display names
   const [queue, setQueue] = useState([]); const [qi, setQi] = useState(0); // addSubject queue
   const [picked, setPicked] = useState([]);              // generic multi-pick buffer
+  // { letter: her own name } while a SECTION pick screen is open (addSection / editSections).
+  // The conversational class run keeps its copy on the grade draft instead (g.section_names),
+  // because that whole flow is one draft object saved at the end.
+  const [secNames, setSecNames] = useState({});
   const [gradeOptions, setGradeOptions] = useState([]);  // roman uppercase, current subject
   const [draft, setDraft] = useState(null);              // { name, grades:[gradeDraft], existingCount }
   const [pendingIdxs, setPendingIdxs] = useState([]);    // draft.grades indices still to be asked
@@ -783,7 +841,7 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
         const ppwMap = normPpw(g.durations, g.ppw_by_duration, g.periods_per_week, g.ppw_anchor);
         return {
           grade: g.grade,
-          sections: g.sections.map((sec) => ({ tag: `${classNum(g.grade)}${sec}`, sec })),
+          sections: g.sections.map((sec) => secObj(g.grade, sec, g.section_names)),
           durations: [...g.durations],
           ppw_by_duration: ppwMap,
           ppw_anchor: ppwAnchor(g.durations, ppwMap, g.ppw_anchor),
@@ -806,12 +864,19 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
   };
 
   /* ── spot edits ── */
-  const startAddSection = (si, gi) => { setNumCtx({ si, gi }); setPicked([]); setScreen("addSection"); };
+  const startAddSection = (si, gi) => {
+    setNumCtx({ si, gi }); setPicked([]);
+    // The letters already enrolled keep their names even though this screen cannot see them —
+    // seeded so a save re-emits them rather than silently dropping every existing label.
+    setSecNames(namesFromSections(canon[si].grades[gi].sections));
+    setScreen("addSection");
+  };
 
   // pencil next to the sections → one screen to add AND remove (keep ≥1; whole-class delete stays on the basket)
   const startEditSections = (si, gi) => {
     setNumCtx({ si, gi });
     setPicked(canon[si].grades[gi].sections.map(secLetter));
+    setSecNames(namesFromSections(canon[si].grades[gi].sections));
     setScreen("editSections");
   };
   // Save intent: if the edit drops any existing sections, warn first (same as the basket removals);
@@ -831,7 +896,7 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
     const after = [...picked].sort();
     before.filter((s) => !after.includes(s)).forEach((sec) =>
       clearSectionState(sub.name, g.grade, `${classNum(g.grade)}${sec}`));
-    g.sections = after.map((sec) => ({ tag: `${classNum(g.grade)}${sec}`, sec }));
+    g.sections = after.map((sec) => secObj(g.grade, sec, secNames));
     sub.grids = sub.grades.map((gr) => gr.sections.map(() => Array(DAYS_IN_WEEK).fill(-1)));
     persist(next);
     setSecConfirm(null);
@@ -843,7 +908,7 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
     const g = next[si].grades[gi];
     const have = g.sections.map(secLetter);
     [...picked].sort().forEach((sec) => {
-      if (!have.includes(sec)) g.sections.push({ tag: `${classNum(g.grade)}${sec}`, sec });
+      if (!have.includes(sec)) g.sections.push(secObj(g.grade, sec, secNames));
     });
     g.sections.sort((a, b) => (secLetter(a) < secLetter(b) ? -1 : 1));
     next[si].grids = next[si].grades.map((gr) => gr.sections.map(() => Array(DAYS_IN_WEEK).fill(-1)));
@@ -956,7 +1021,28 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
         <p className="fr-hint">{manage
           ? "Tick a subject to add it — untick one to remove it."
           : "Pick the subject — or several — to add."}</p>
-        {options.length === 0 && <p className="fr-hint">Every subject Aruvi offers is already in your profile.</p>}
+        {/* ★ AN EMPTY CHOOSER MEANS TWO DIFFERENT THINGS, AND ONLY ONE OF THEM IS A DEAD END
+            (founder, 2026-08-30). Unscoped (trial, or "*"), it really is "you already teach
+            everything Aruvi offers" — nothing to do. SCOPED, it means her subscription covers
+            no subject she has not already added, which is not a fact about Aruvi's catalogue
+            and must not be reported as one; the honest answer names the limit and offers the
+            way past it. `onSubscribe` opens the SAME SubscribeFlow the front door and Settings
+            use — this screen never learns anything about billing beyond "ask for it". */}
+        {options.length === 0 && (scoped ? (
+          <div className="tp-nomore">
+            <p className="fr-hint">
+              Your subscription covers {enrolled.length === 1 ? "the subject" : "the subjects"} you
+              already teach. Another subject is a separate subscription.
+            </p>
+            {onSubscribe && (
+              <button type="button" className="primary fr-cta" onClick={onSubscribe}>
+                Add a subject to my subscription
+              </button>
+            )}
+          </div>
+        ) : (
+          <p className="fr-hint">Every subject Aruvi offers is already in your profile.</p>
+        ))}
         {/* ★ Clustering is keyed to the MODE, not the screen (founder, 2026-07-26).
             ADD  → options already exclude what she has and `picked` starts empty, so she is building
                    a selection up from nothing: cluster, exactly as on the section and duration wheels.
@@ -975,7 +1061,9 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
             </button>
           </PickWheel>
         )}
-        {scoped && (
+        {/* Only when there IS a wheel — with an empty chooser the block above has already said
+            this, at more length and with the way out attached. */}
+        {scoped && options.length > 0 && (
           <p className="trial-note">
             Your subscription covers what's shown here. Another subject or stage is a
             separate subscription.
@@ -1116,16 +1204,24 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
     const kicker = `${draft.name} · Class ${classNum(g.grade)} · ${pi + 1} of ${pendingIdxs.length}`;
 
     if (classStep === "sections") {
+      const names = g.section_names || {};
       const toggle = (s) => updGrade({
         sections: g.sections.includes(s) ? g.sections.filter((x) => x !== s) : [...g.sections, s].sort(),
       });
+      const setName = (s, v) => updGrade({ section_names: { ...names, [s]: v } });
       return (
         <div className="tp">
           <div className="kicker kicker-ochre">{kicker}</div>
           <h1 className="fr-q">Which sections of Class {classNum(g.grade)}?</h1>
           <p className="fr-hint">Every ticked section gets its own class card and its own bookmark.</p>
           <PickWheel options={SECTION_LETTERS} selected={g.sections} onToggle={toggle}
-            ariaLabel={`Sections of Class ${classNum(g.grade)}`} labelFor={(s) => `Section ${classNum(g.grade)}${s}`}>
+            ariaLabel={`Sections of Class ${classNum(g.grade)}`} labelFor={(s) => `${classNum(g.grade)}${s}`}
+            leadingHeader="Section" trailingHeader="customize"
+            summaryFor={(s) => secSummary(g.grade, s, names)}
+            trailing={(s, on) => (
+              <SecNameCell on={on} tag={`${classNum(g.grade)}${s}`} value={names[s] || ""}
+                onChange={(v) => setName(s, v)} />
+            )}>
             <button type="button" className="primary fr-cta" disabled={!g.sections.length}
               onClick={() => setClassStep("ppw")}>
               Continue
@@ -1259,7 +1355,13 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
         <h1 className="fr-q">Add sections to Class {classNum(g.grade)}</h1>
         <p className="fr-hint">You already have {have.map((s) => `${classNum(g.grade)}${s}`).join(", ")}. Tick the new ones.</p>
         <PickWheel options={options} selected={picked} onToggle={toggle}
-          ariaLabel="Sections to add" labelFor={(s) => `Section ${classNum(g.grade)}${s}`}>
+          ariaLabel="Sections to add" labelFor={(s) => `${classNum(g.grade)}${s}`}
+          leadingHeader="Section" trailingHeader="customize"
+          summaryFor={(s) => secSummary(g.grade, s, secNames)}
+          trailing={(s, on) => (
+            <SecNameCell on={on} tag={`${classNum(g.grade)}${s}`} value={secNames[s] || ""}
+              onChange={(v) => setSecNames((m) => ({ ...m, [s]: v }))} />
+          )}>
           <button type="button" className="primary fr-cta" disabled={!picked.length} onClick={saveAddSection}>Save</button>
         </PickWheel>
         <button className="fr-link" onClick={() => setScreen("view")}>{backLabel}</button>
@@ -1279,7 +1381,13 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
         {/* Pre-ticked over the whole A–Z list, so clustering would hide B…Q for a class that has
             A and R — the sections she is most likely to be adding. */}
         <PickWheel options={SECTION_LETTERS} selected={picked} onToggle={toggle} cluster={false}
-          ariaLabel="Sections" labelFor={(s) => `Section ${classNum(g.grade)}${s}`}>
+          ariaLabel="Sections" labelFor={(s) => `${classNum(g.grade)}${s}`}
+          leadingHeader="Section" trailingHeader="customize"
+          summaryFor={(s) => secSummary(g.grade, s, secNames)}
+          trailing={(s, on) => (
+            <SecNameCell on={on} tag={`${classNum(g.grade)}${s}`} value={secNames[s] || ""}
+              onChange={(v) => setSecNames((m) => ({ ...m, [s]: v }))} />
+          )}>
           <button type="button" className="primary fr-cta" disabled={!picked.length} onClick={requestEditSections}>Save</button>
         </PickWheel>
         <button className="fr-link" onClick={() => setScreen("view")}>{backLabel}</button>
@@ -1397,13 +1505,28 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
   }
 
   /* ════════════════════ VIEW — the accordion ════════════════════ */
+  /* ★ A WEEKLY TOTAL IS COUNTED PER SECTION, NOT PER CLASS (founder, 2026-08-30).
+   * `periods_per_week` is a property of the CLASS — "Class 9 gets 8 periods a week for
+   * Science" — and it is what she was ASKED for ("How many periods a week does Class 9 get?").
+   * But she does not teach Class 9; she teaches 9A, 9B and 9C, and each of them gets those 8.
+   * Summing the class figure told a teacher of three sections that her week is 8 periods long
+   * when she actually stands in front of 24. So every AGGREGATE multiplies by the number of
+   * sections enrolled in that class. The per-class card is left stating the per-section week
+   * (that is the figure she entered, and the one the budget derives from) — its label now says
+   * so, or the subject header would not add up from the rows beneath it.
+   * A class always carries ≥1 section (removing the last one cascades the class away, see
+   * `removeSection`), so `.length` is the multiplier; the `|| 1` covers only a legacy record
+   * that has no sections array at all, where the old behaviour is the safest reading. */
+  const secCount = (g) => (g.sections || []).length || 1;
+  const gradePpw = (g) => (g.periods_per_week || 0) * secCount(g);
+
   // headline totals across the whole profile
   const stats = (() => {
     const classSet = new Set(); const secSet = new Set(); let ppw = 0;
     canon.forEach((s) => (s.grades || []).forEach((g) => {
       classSet.add(classNum(g.grade));
       (g.sections || []).forEach((x) => secSet.add(`${classNum(g.grade)}${secLetter(x)}`));
-      ppw += g.periods_per_week || 0;
+      ppw += gradePpw(g);
     }));
     return { subjects: canon.length, classes: classSet.size, sections: secSet.size, ppw };
   })();
@@ -1432,12 +1555,16 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
             <h1 className="lvl-title">Your teaching profile</h1>
             <div className="tp-hd-spacer" aria-hidden="true"></div>
           </div>
-          {/* ★ THE TOGGLE NOW HAS EXACTLY ONE JOB (founder, 2026-08-27): revealing the
-              per-subject dustbin. Every other pencil on this screen is gone — the "+" portal
-              owns class, section, periods a week and the annual budget, and two doors onto one
-              record is how they drift. So this is no longer "edit profile"; it is "remove a
-              subject", and it says so, because a control that promises editing and delivers
-              only deletion is a trap.
+          {/* ★ THE TOGGLE IS A PENCIL AGAIN, BECAUSE IT NOW DOES BOTH (founder, 2026-08-30).
+              On 2026-08-27 it became a dustbin, on the reasoning that "a control that promises
+              editing and delivers only deletion is a trap" — removal really was all it did,
+              because the "+" portal had taken every other pencil and adding a subject was
+              assumed to be a purchase and therefore not a profile act at all.
+              That assumption was wrong for the teacher who ALREADY HOLDS the subscription: she
+              deleted her way down to one subject and then found no way back, with entitlement
+              for the others sitting unused (account 1000000002, live). Edit mode now reveals
+              the per-subject dustbins AND "+ add a subject" below them, so the pencil is
+              truthful — it opens editing, and editing means both directions.
               `!lapsed`: an expired subscription makes the profile READ-ONLY — she keeps seeing
               what she taught, but this hides (§2.5 as amended; the server refuses writes
               regardless). */}
@@ -1446,8 +1573,8 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
               <button className="tp-edit-toggle on" onClick={() => setEditing(false)} aria-label="Done">Done</button>
             ) : (
               <button className="tp-edit-pencil" onClick={() => setEditing(true)}
-                aria-label="Remove a subject" title="Remove a subject">
-                <Bin />
+                aria-label="Edit your subjects" title="Add or remove subjects">
+                <Pencil size={15} />
               </button>
             )
           )}
@@ -1469,7 +1596,8 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
 
       {canon.map((s, si) => {
         const open = s.name === openSubject;
-        const subPpw = (s.grades || []).reduce((a, g) => a + (g.periods_per_week || 0), 0);
+        // per SECTION, like the headline stat — see `gradePpw` above.
+        const subPpw = (s.grades || []).reduce((a, g) => a + gradePpw(g), 0);
         return (
           <div className={`tp-sub ${open ? "open" : ""}`} key={s.name}>
             <div className="tp-sub-hd" onClick={() => setOpenSubject(open ? null : s.name)}>
@@ -1527,8 +1655,23 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
                       <div className="tp-chips">
                         {(g.sections || []).map((x) => {
                           const sec = secLetter(x);
+                          const nm = secName(x);
+                          const tag = `${classNum(g.grade)}${sec}`;
+                          /* ★ A NAMED SECTION SHOWS HER NAME AND NOTHING ELSE (founder,
+                             2026-08-30) — REVERSING the "tag first, name appended" rule of
+                             earlier the same day. That rule argued the profile is where she
+                             audits her set-up, so the key belongs in front. The founder's
+                             correction: the CLASS is already stated, in display serif, at the
+                             top of this very card — so the "6" in "6A · Rose" is the third time
+                             the same fact appears on one card, and it pushes her own word to
+                             third place behind it. The letter is not lost: it is in `title`,
+                             which is also what the screen reader announces, and every chip
+                             without a name still reads as the plain tag. */
                           return (
-                            <span className="tp-chip" key={sec}>{classNum(g.grade)}{sec}</span>
+                            <span className={`tp-chip${nm ? " named" : ""}`} key={sec}
+                              title={`Section ${tag}`}>
+                              {nm || tag}
+                            </span>
                           );
                         })}
                       </div>
@@ -1536,7 +1679,10 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
                   </div>
                   <div className="tp-cc-cols">
                     <div className="tp-cc-col tp-cc-col--center">
-                      <div className="tp-cc-col-l">Periods / week
+                      {/* "per section" is load-bearing, not decoration: the subject header
+                          above sums the sections, so without it a class of three sections
+                          reading "8 × 45 min" makes the 24 up there look like a mistake. */}
+                      <div className="tp-cc-col-l">Periods / week per section
                       </div>
                       <div className="tp-cc-col-v">{perWeek || (ppw ? `${ppw} a week` : "—")}</div>
                     </div>
@@ -1556,9 +1702,27 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
         );
       })}
 
-      {/* Empty profile keeps ONE way in — nothing else to edit yet. */}
-      {canon.length === 0 && (
-        <button className="tp-add tp-add-subject" onClick={startAddSubject}>+ add a subject</button>
+      {/* ★ ADDING A SUBJECT IS AN EMPTY SUBJECT ROW, NOT A BUTTON (founder, 2026-08-30).
+          The green pill said "here is a control"; the row says "here is where the next subject
+          goes" — the same card, the same padding, the same display-serif name as every subject
+          above it, so the list reads as a list with one slot still open. Only two things mark
+          it as not-yet-a-subject: a DASHED edge (the .sc-proposed idiom — structure, not
+          colour) and pine ink on the name, because it is the one row on this screen that acts
+          rather than opens. No periods/week and no caret: it has neither.
+          It renders on an EMPTY profile (where it is the only way in) and inside edit mode —
+          the fix for 1000000002, who removed her way down to one subject and found the door
+          gone, with entitlement for four more sitting unused. The chooser it opens is already
+          scoped to what she has paid for, so nothing here needs to know about billing. */}
+      {(canon.length === 0 || (editing && !lapsed)) && (
+        <div className="tp-sub tp-sub-add">
+          <div className="tp-sub-hd" role="button" tabIndex={0}
+            onClick={startAddSubject}
+            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); startAddSubject(); } }}>
+            <span className="tp-sub-left">
+              <span className="tp-sub-name">+ add a subject</span>
+            </span>
+          </div>
+        </div>
       )}
 
       {/* ★ REMOVE A SUBJECT — TWO CONFIRMATIONS (founder, 2026-08-27). This is the only

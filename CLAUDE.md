@@ -440,6 +440,107 @@ generic look.
 - The on-screen plan/assessment view is a React renderer in `web/app/page.jsx`
   (`ViewModelView` and friends). `aruvi_core/render/html.py` is the separate **export/PDF**
   renderer — keep the two visually aligned.
+- ★ **THE SECTION CARD IS A SURFACE NOW — level-2 fills, state-hued edges, one constant grid
+  (founder, 2026-08-30).** Mockup: `docs/mockups/my-classes-card-contrast.html`. The founder's
+  read — "perhaps the issue is not difference among the section cards but overall colour
+  difference with background" — measured out worse than it looked: against `--paper` the fills
+  sat at **1.10** (unstarted), **1.04** (ONGOING) and **1.17** (complete). Under ~1.2 nothing
+  reads as a separate plane, so the card was held up almost entirely by a 1px border — and the
+  ranking was INVERTED, the card she teaches from separating least and the one she has finished
+  with most. Three changes, in order of how much they actually do: (a) **the edge** — it was
+  `--line-soft` at **1.05:1 against its own fill**, which is not an edge; each state now has one
+  in its own hue (`--card-*-edge`) at ~1.3–1.4, and it costs nothing in text contrast, which is
+  why it is the cheap win; (b) **the fills** levelled at **1.32**, each darkened toward its own
+  accent rather than toward grey so the tints read as green and terracotta instead of tinted
+  white; (c) **a constant 11px graph rule on every card** (`--card-grid`, 7.5% — 5% vanishes,
+  13% competes with the serif title). Constant is the whole point: it is a MATERIAL, not a code
+  — it says nothing, needs no legend, and cannot collide with status the way a per-class colour
+  or pattern would. Paper keeps its grain, cards get their rule, each surface its own substance.
+  ★ **The rejected sibling is worth keeping:** distinguishing CLASSES by colour or by per-class
+  texture (`docs/mockups/my-classes-class-grid.html`, three options) was struck because colour
+  on that screen is already spoken for — a fourth hue meaning "6B" makes green stop reliably
+  meaning "teaching now" — and because a teacher tops out at ~6 sections, which fit one phone
+  screen, so there was no problem to solve. **Scope:** new `--card-*` tokens, NOT edits to
+  `--paper-sunk` / `--tint-pine` (37 and 35 other uses); My Lessons shares this palette on
+  purpose and moves with it. Dark was measured separately against `#161d19` (it had the same
+  defect: 1.06 / 1.18 / 1.09) and the grid inverts to a light rule there. ⚠️ **Two traps this
+  cost:** every card background is now **`background-color`, never the `background` shorthand**
+  — the shorthand resets `background-image` and would silently erase the grid on exactly the
+  cards that have a status, i.e. all of them (the `--sel-chevron` trap of 2026-08-27, in a
+  second place); and **darkening a surface breaks whatever was drawn in a hairline ON it** — the
+  unit rail's empty ticks were `--line`, already weak at 1.08–1.21 and 1.04 at the new depth,
+  and those ticks ARE the denominator of "unit 3 of 6", so they moved to `--card-tick`.
+  `--card-muted` is `--ink-soft` darkened just enough to hold 4.5:1 on the deeper fills, applied
+  by re-pointing `--ink-soft` **on `.sc-card` itself** so every muted descendant follows without
+  a list that can drift. STATIC + contrast-verified (light and dark, every foreground on every
+  fill); live + 360px pass owed — the one thing to look for is **moiré on the 1px grid** when
+  the list scrolls on a low-DPI Android; if it shimmers, redraw it as an SVG data-URI at a
+  device-pixel-friendly pitch rather than a CSS gradient.
+- ★ **MY CLASSES BANDS BY SUBJECT — but only for a teacher who teaches more than one (founder,
+  2026-08-30).** "Teachers compartmentalize subjects", and the flat list made her read the
+  subject off every card to find the three that belong together. A **single-subject teacher —
+  the common case — sees exactly what she saw before**: no heading, no band, nothing added to a
+  screen where the grouping would have one member (`banded = bands.length > 1`). Under a band the
+  existing rules are untouched: same cards, same three status colours, same "+".
+  ★ **NOTHING MOVES.** `classesFromReadiness` already walks subjects → grades → sections in
+  profile order, so same-subject cards were always adjacent; this only inserts headings into an
+  order that already existed. Bands are built by **ADJACENCY, not by a map keyed on subject** —
+  a map would silently reorder if that walk ever changed, where adjacency can only mis-SPLIT,
+  which is visible on screen. Each item keeps its **ORIGINAL index**: the guided tour addresses
+  its target card by position (`i === tourIdx`, on three separate elements), so re-indexing
+  inside a band would put the hand on the wrong card. The card is ONE renderer (`renderCard`,
+  a hoisted declaration below the return) for both paths, so they cannot drift; the only thing
+  the band changes is the **kicker** — the subject is overhead, so a banded card reads "Ch 4",
+  and an unattached one carries no kicker at all rather than an empty line. The heading is the
+  house mono-uppercase kicker in `--pine-d` under a ledger hairline, never a display-serif title
+  that would compete with the chapter names below it. STATIC + unit-verified (5 grouping cases);
+  live + 360px pass owed.
+- ★ **A LESSON PLAN IS A DOCUMENT, NOT A CLASS — MY LESSONS GOES PLAIN (founder, 2026-08-30).**
+  The two tabs shared one status palette ("reused verbatim so the two tabs share one status
+  palette"), so a lesson card and a section card were the same object to the eye while affording
+  different things — no bookmark on one, no export on the other — and the founder's worry was
+  that she acts on a card without registering which tab she is on. The tab bar cannot settle it
+  either, because the two genuinely co-occur: the "+" attach picker inside My Classes lists
+  lessons, and prior-year lessons render as `.sc-card`s. **The PLANE now says what KIND of thing
+  a card is; only the 4px spine says where it stands.** ★ The asymmetry that makes this free:
+  the lesson card ALREADY spells its status out in words ("Completed 6A, 6C · Teaching now 6B"),
+  where the section card has no such line and colour is its only carrier — so the tint was
+  redundant on one side and load-bearing on the other. **Three planes were built and compared
+  live in one hour** — **manila** `#f1e7cf` (the folder metaphor, and the nicest idea; but a WARM
+  neighbour of the unstarted sand card, the one thing it exists to be told apart from — a mid
+  manila sits 1.08 away, near-identical in weight, and only the lightest of three depths keeps a
+  usable 1.15 gap), **cool slate** `#e6eaef` (the only COOL candidate, so unmistakable in any
+  light, at the cost of a new hue in the app), and **PLAIN PAPER, where it settled**: `--card-doc`
+  now ALIASES `--paper-2` / `--edge`, so the dark theme needs no second pair and "plain paper"
+  means the ordinary card surface in whichever theme is on. Plain measures strongest of the three
+  — **1.41 from every status fill in LUMINANCE**, so it holds in sunlight, on a cheap screen and
+  for colour-blind eyes, where a same-weight hue swap vanishes — and it states the idea plainly:
+  the tint is what marks a class she teaches, so the document is the one card with no tint at
+  all. Swapping the tone again is two lines, and the two rejected values are in the token's own
+  comment.
+  ⚠️ **Three things this cost, all from one root — a light plane carries nothing by itself:**
+  (a) at 1.07 against the page the fill cannot hold the card up at all, so the EDGE is the whole
+  of the separation (`--edge` at 1.82 against the fill, never `--line-soft` — do not soften it
+  back); (b)
+  `.sc-card:hover` is (0,2,0) and the plane rule is (0,4,0), so the hover affordance had to be
+  **restated at the higher specificity** or the card would silently stop answering the pointer;
+  (c) the shelf spine was a hardcoded `#8aa79b` at **2.60:1** on a light plane — under the 3:1 a
+  non-text mark needs, and now the ONLY carrier of the lifecycle — so it darkened to
+  `--spine-shelf` (#75998c, 3.14 on white) in light and kept the lighter value in dark, where it
+  was already at 5.97. ⚠️ **Re-measure that spine whenever the plane's tone changes**: sage was
+  re-solved three times in one hour (white → manila → slate → white) because the plane kept
+  moving under it, and every darkening walks sage toward pine — which is the shelf-versus-
+  teaching distinction it exists to hold. #75998c is the LIGHTEST value that clears 3:1 on white,
+  chosen for exactly that reason: it stays as far from pine as the threshold allows.
+  Scoped `.mlp2 .sc-card:not(.mlp2-arch):not(.sc-proposed)`: the archive keeps its sunk plane and
+  a re-preparing card keeps `.sc-proposed`'s. The `:not()`s are load-bearing, not tidiness —
+  `.sc-card.mlp2-arch` ties on specificity and sits EARLIER in the file, so without them source
+  order alone would decide it (the `.ap-row-line` bug of 2026-08-27). Options considered and
+  parked, with numbers: the chat-only comparison covered slate · plain · manila · ledger rules ·
+  a top rule instead of the spine · a folded corner; **ledger rules + a dog-ear remain the
+  strongest pair if plain proves too quiet**, since both differ by material or silhouette and so
+  survive greyscale without spending a colour. STATIC + contrast-verified both themes; live +
+  360px pass owed.
 - ★ **A NATIVE `<select>` CANNOT BE THEMED ON macOS — so Aruvi stopped using one
   (`Dropdown.jsx`, 2026-08-27).** Reported as "the dropdowns use a dark background"
   (Support's category chooser, the subscribe flow's Subject/Stage) and chased in the
@@ -1082,6 +1183,67 @@ library** — ten files carried their own flat globs and matched ZERO plans afte
 making them run surfaced three pre-existing content defects (4 empty-stem items in 13,115, 8
 re-ordered plans, 1 unitize corruption) that are REAL and unfixed. Suite 37 green (was 20).
 Static + unit-verified; live + mobile pass owed on the `YearStamp` change.
+
+**THE PROFILE PENCIL IS A PENCIL AGAIN — ADDING A SUBJECT IS A PROFILE ACT WHEN SHE ALREADY
+PAID FOR IT (founder, 2026-08-30).** Reported live on **account 1000000002**: she removed every
+subject but English and then had no way to add one back, with an `individual_annual` entitlement
+covering all 11 subject-stages sitting unused. **The bug was one condition** — `+ add a subject`
+rendered only on an EMPTY profile (`canon.length === 0`), so one surviving subject closed the
+door; and the "+" portal deliberately has no Subject row (2026-08-27: "a new subject is a
+purchase, so removal would be its only working half"). That reasoning holds for a teacher who
+must BUY the subject and is simply wrong for one who already holds it. Now: the master toggle is
+a **Pencil again** (it became a `Bin` on 2026-08-27 because removal really was all it did — the
+"trap" objection dissolves once editing goes both ways), and edit mode reveals the per-subject
+dustbins **and** an add-a-subject row beneath them. ★ **That row is a `.tp-sub`, not a button**
+(founder, same day): the green pill said "here is a control", where an empty subject row says
+"here is where the next subject goes" — same card, same padding, same display-serif name as the
+subjects above it, so the list reads as a list with one slot still open. Only a DASHED edge (the
+`.sc-proposed` idiom — structure, never colour) and pine ink mark it as not-yet-a-subject; it
+carries no periods/week and no caret because it has neither. It renders on an empty profile too,
+where it is the only way in, so there is ONE add affordance rather than two. The green pills
+(`.tp-add*`) went with their last caller. The chooser needed no new billing logic — its
+`paidScopes` filter has scoped the wheel since 2026-08-24 — only an honest EMPTY state: unscoped
+it still reads "every subject Aruvi offers is already in your profile", but **scoped** that
+sentence is a false claim about the catalogue, so it now says her subscription covers what she
+already teaches and offers `onSubscribe`, the SAME `SubscribeFlow` the front door and Settings
+open (passed from page.jsx; the screen learns nothing about billing beyond asking for it). The
+`scoped` upsell line is gated to `options.length > 0` so it cannot restate the empty block.
+⚠️ Still open, found in the same data: two `the_world_around_us/iii` plans sit in her
+`prepared.json` for a subject not in her profile — detached, archivable, and unreachable,
+because My Lessons' subject wheel only offers what she teaches. STATIC-verified; live pass owed.
+
+**A WEEKLY TOTAL IS COUNTED PER SECTION, AND A SECTION MAY CARRY HER OWN NAME (2026-08-30).**
+Two founder asks on the teaching profile, one data shape between them.
+★ **The totals were counting classes.** `periods_per_week` is a property of the CLASS — it is what
+she was ASKED for ("How many periods a week does Class 9 get for Science?") — but she does not
+teach Class 9; she teaches 9A, 9B and 9C, and each of them gets those 8. The headline stat and the
+subject header summed the class figure, so a teacher of three sections was told her week is 8
+periods long when she stands in front of 24. Both aggregates now multiply by the enrolled section
+count (`gradePpw`); the per-class card still states the per-SECTION week (that is the figure she
+entered and the one the budget derives from) and its label says **"Periods / week per section"**,
+or the subject header would not add up from the rows beneath it. `.length` is safe as the
+multiplier because removing a class's last section cascades the class away. ⚠️ The annual budget
+has the same per-class-not-per-section reading and is UNTOUCHED — a 245-period year is per section
+too, and nothing yet shows her the subject's true annual load.
+★ **Sections can be renamed, and the LETTER stays the key.** The pick screens stopped repeating
+"Section" on all 26 options (the word moved to `leadingHeader`, once), and ticking a row now opens
+a box in a **"customize"** trailing column — PickWheel's existing two-column mechanism, the same
+one the duration question uses for its periods/week split, so sections and durations are ONE
+format. Up to **8 characters** (it has to sit in a card corner and in the 96px column on a 360px
+phone). Stored as an optional `name` on the section record beside `tag`/`sec`; blank is ABSENT,
+never `""`, so "has a name" is one truthiness test. **Nothing keys off it** — every bookmark,
+chapter binding and localStorage row is still built from `tag`, which is exactly why a rename can
+never orphan the work attached to a section, and why the server's `_diff_profiles` (which reads
+tags) does not see a rename as a removal. Display rule, and the two directions are deliberate:
+**My Classes shows the class number with her name in fine print BELOW it** (she scans that list
+for "Rose"; "6A · Rose" would be two labels for one card), while the **profile chip keeps the tag
+FIRST** and appends the name (that screen is where she audits her set-up). `readinessFingerprint`
+gained the name the same day — a rename changes nothing else about the record, so without it the
+read-after-write check would be silent about the one thing that edit changed. Not autofocused on
+tick: PickWheel re-rests the wheel on every toggle, and pulling focus into a field inside that
+animating scroller throws the phone keyboard over the list she is still picking from.
+STATIC + unit-verified (15 helper cases, 5 fingerprint cases; babel-parse clean on
+TeachingProfile/MyPlans/verify/wheels, CSS braces 2281/2281) — live + 360px pass owed.
 
 **Persistence + tenanting groundwork (2026-06-28) — the front-end-only state is now
 server-persisted and per-tenant, ahead of full Phase-4 auth.** Built: (a) a **user-ID login

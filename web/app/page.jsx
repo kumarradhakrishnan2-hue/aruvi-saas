@@ -1158,7 +1158,11 @@ export default function Home() {
                 onBack={profileViaSettings ? null : goPortalHome} lapsed={entLapsed} paidScopes={paidScopes}
                 autoAddClassSubject={profileAutoAdd} onConsumeAutoAdd={() => setProfileAutoAdd(null)}
                 portalIntent={profilePortal} onConsumePortal={() => setProfilePortal(null)}
-                portalScope={profilePortalScope} />
+                portalScope={profilePortalScope}
+                /* The add-a-subject chooser needs a way out when her subscription covers
+                   nothing she has not already added — the SAME SubscribeFlow the front door
+                   and Settings open, never a second one. */
+                onSubscribe={() => setSubscribeOpen(true)} />
             </div>
           ) : (editFlow === "settings" && ready) ? (
             <div className="editflow">

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Section cards — lifting them off the paper</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --paper:#faf7f1; --paper-2:#ffffff;
+  --ink:#1f2a24; --ink-soft:#6b6a63;
+  --line:#e4ddd0; --line-soft:#ece7dc;
+  --pine:#1e5c4a; --pine-d:#164436; --clay:#b65a31; --ochre:#9a7321;
+  --edge:#cbbfa6; --edge-clay:#ecccb9;
+  --f-display:"Fraunces",Georgia,serif; --f-body:"Newsreader",Georgia,serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background-color:var(--paper);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");
+  color:var(--ink); font-family:var(--f-body); font-size:17px; line-height:1.55;
+  padding:34px 20px 70px;
+}
+.wrap{max-width:1240px;margin:0 auto}
+h1{font-family:var(--f-display);font-weight:500;font-size:29px;line-height:1.2;margin:0 0 6px}
+.kicker{font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.18em;color:var(--pine);font-weight:500}
+.rule{height:2px;background:var(--ink);opacity:.85;margin:0 0 22px}
+.sub{color:var(--ink-soft);font-size:16.5px;margin:0 0 24px;max-width:70ch}
+.note{border-left:3px solid var(--clay);background:#f3ede0;padding:13px 16px;border-radius:0 8px 8px 0;margin:0 0 30px;max-width:80ch}
+.note p{margin:0 0 8px;font-size:15.5px} .note p:last-child{margin:0}
+.note b{color:var(--pine-d)}
+.mono{font-family:var(--f-mono);font-size:13px}
+
+/* ── column shelf ──────────────────────────────────────────────── */
+.shelf{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start}
+.col{flex:0 0 auto;width:290px;max-width:100%}
+.col-hd{display:flex;align-items:baseline;gap:8px;margin:0 0 3px}
+.col-t{font-family:var(--f-display);font-size:19px;font-weight:500}
+.col-n{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;color:var(--ink-soft);text-transform:uppercase}
+.col-v{font-size:13.5px;color:var(--ink-soft);margin:0 0 11px;min-height:58px;line-height:1.45}
+.badge{display:inline-block;font-family:var(--f-mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:#f2f7f4;background:var(--pine);border-radius:999px;padding:3px 8px;vertical-align:2px}
+
+/* the phone: the SAME paper + grain the app has, so the comparison is honest */
+.phone{border:1px solid var(--line);border-radius:16px;padding:14px 12px 16px;
+  background-color:var(--paper);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E")}
+.hd{font-family:var(--f-display);font-size:16px;font-weight:500;margin:0 0 10px}
+
+/* ── the card, written ONCE; each column only re-points the tokens ── */
+.set{--f-new:#f1ece2; --f-going:#eef4f0; --f-done:#f6e2d6;
+     --e-new:#ece7dc; --e-going:#ece7dc; --e-done:#ecccb9; --muted:#6b6a63}
+.set.gentle{--f-new:#e9e3d5; --f-going:#dae5e0; --f-done:#f4dfd2;
+            --e-new:#cbbfa6; --e-going:#aec6bd; --e-done:#e2b7a2; --muted:#65655e}
+.set.clear {--f-new:#e1d8c8; --f-going:#ceddd6; --f-done:#efd4c4;
+            --e-new:#cbbfa6; --e-going:#a2bdb4; --e-done:#ddac95; --muted:#60605a}
+.set.firm  {--f-new:#d6cdb8; --f-going:#bfd1ca; --f-done:#e9c7b5;
+            --e-new:#c2b49a; --e-going:#96b4aa; --e-done:#d7a187; --muted:#565851}
+
+.sc-list{display:flex;flex-direction:column;gap:9px}
+.sc-card{position:relative;display:flex;align-items:center;gap:12px;padding:10px 13px 10px 16px;
+  border-radius:11px;border:1px solid var(--line-soft)}
+.sc-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:11px 0 0 11px;background:var(--edge)}
+.set .st-new  {background:var(--f-new);  border-color:var(--e-new)}
+.set .st-going{background:var(--f-going);border-color:var(--e-going)}
+.set .st-done {background:var(--f-done); border-color:var(--e-done)}
+.st-going::before{background:var(--pine)}
+.st-done::before{background:var(--clay)}
+.sc-tag{flex:none;min-width:36px;font-family:var(--f-display);font-weight:500;font-size:20px;color:var(--pine-d);line-height:1.2}
+.st-new .sc-tag{color:var(--muted)}
+.sc-tag-name{display:block;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-family:var(--f-mono);font-size:9.5px;color:var(--muted);line-height:1.3;margin-top:2px}
+.sc-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.sc-kicker{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.sc-title{font-family:var(--f-body);font-size:14.5px;line-height:1.28;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.st-new .sc-title{color:var(--muted)}
+.sc-rail{display:flex;gap:2px}
+.sc-tick{height:5px;flex:1;max-width:24px;border-radius:2px;background:var(--line)}
+.sc-tick.done{background:var(--pine)} .sc-tick.cur{background:var(--ochre)}
+.sc-add{flex:none;width:25px;height:25px;border-radius:50%;border:1px solid var(--edge);background:transparent;
+  color:var(--pine);font-size:14px;line-height:1;font-family:var(--f-body)}
+
+.meas{margin:10px 2px 0;font-family:var(--f-mono);font-size:9.5px;color:var(--ink-soft);line-height:1.75}
+.meas b{color:var(--pine-d);font-weight:500}
+.meas .lo{color:var(--clay)}
+
+/* squint strip */
+.squint{display:flex;gap:0;margin:6px 2px 0;border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.squint i{flex:1;height:26px;display:block}
+
+.tbl{width:100%;border-collapse:collapse;margin:34px 0 0;font-size:15px}
+.tbl th{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);
+  text-align:left;font-weight:400;padding:0 12px 7px 0;border-bottom:1px solid var(--line)}
+.tbl td{padding:9px 12px 9px 0;border-bottom:1px solid var(--line-soft);vertical-align:top}
+.tbl td:first-child{font-family:var(--f-mono);font-size:11px;color:var(--ink-soft);white-space:nowrap}
+.tbl .num{font-family:var(--f-mono);font-size:12.5px}
+.bad{color:var(--clay)} .good{color:var(--pine-d)}
+.scroll{overflow-x:auto}
+@media(max-width:660px){.col{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="kicker">My Classes · section cards · 30 Aug 2026</div>
+  <h1>Lifting the cards off the paper</h1>
+  <div class="rule"></div>
+
+  <p class="sub">Not a problem of telling classes apart — six cards fit on one phone screen and the section
+  letter already carries the identity. The problem is that the card and the page are nearly the same plane.</p>
+
+  <div class="note">
+    <p><b>Measured, and worse than it looks — the green card is the faintest thing on the screen.</b>
+    Contrast against the page (<span class="mono">#faf7f1</span>): ongoing green
+    <b class="mono">1.04&#8202;:&#8202;1</b> · unstarted grey <b class="mono">1.10&#8202;:&#8202;1</b> ·
+    complete terracotta <b class="mono">1.17&#8202;:&#8202;1</b>. Anything under about 1.2 does not read as a
+    separate surface at all, so today the card is held up almost entirely by its 1px border. And the ranking
+    is upside down: the card she is actually <i>teaching from</i> separates least, the one she has
+    <i>finished with</i> separates most.</p>
+    <p><b>Two dials, and the cheap one is the border.</b> Darkening the fill trades against the muted text
+    on it ("Pick a chapter to begin"), which is at 4.61&#8202;:&#8202;1 today and has almost no room left.
+    Firming the 1px edge costs nothing at all — today it is <span class="mono">#ece7dc</span>, which sits at
+    <span class="mono">1.05&#8202;:&#8202;1</span> against its own fill and is very nearly invisible. Each
+    level below moves both, and nudges the muted ink just enough to hold 4.5&#8202;:&#8202;1.</p>
+  </div>
+
+  <div class="shelf">
+
+    <!-- TODAY -->
+    <div class="col">
+      <div class="col-hd"><span class="col-n">Now</span><span class="col-t">Today</span></div>
+      <p class="col-v">Fills 1.04–1.17. The three states differ from each other, but barely from the page.</p>
+      <div class="phone set">
+        <div class="hd">My Classes</div>
+        <div class="sc-list">
+          <div class="sc-card st-going"><div class="sc-tag">6A</div><div class="sc-body">
+            <span class="sc-kicker">Science · Ch 4</span><div class="sc-title">Electricity &amp; Circuits</div>
+            <div class="sc-rail"><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick cur"></i><i class="sc-tick"></i><i class="sc-tick"></i><i class="sc-tick"></i></div>
+          </div><button class="sc-add">+</button></div>
+          <div class="sc-card st-going"><div class="sc-tag">6B<span class="sc-tag-name">Rose</span></div><div class="sc-body">
+            <span class="sc-kicker">Science · Ch 4</span><div class="sc-title">Electricity &amp; Circuits</div>
+            <div class="sc-rail"><i class="sc-tick done"></i><i class="sc-tick cur"></i><i class="sc-tick"></i><i class="sc-tick"></i><i class="sc-tick"></i><i class="sc-tick"></i></div>
+          </div><button class="sc-add">+</button></div>
+          <div class="sc-card st-new"><div class="sc-tag">6C</div><div class="sc-body">
+            <span class="sc-kicker">Science</span><div class="sc-title">Pick a chapter to begin</div>
+          </div><button class="sc-add">+</button></div>
+          <div class="sc-card st-done"><div class="sc-tag">9A</div><div class="sc-body">
+            <span class="sc-kicker">Science · Ch 1</span><div class="sc-title">Matter Around Us</div>
+            <div class="sc-rail"><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick done"></i></div>
+          </div><button class="sc-add">+</button></div>
+        </div>
+        <div class="squint"><i style="background:#f1ece2"></i><i style="background:#eef4f0"></i><i style="background:#f6e2d6"></i></div>
+      </div>
+      <p class="meas">fill vs page &nbsp;<span class="lo">1.10 · 1.04 · 1.17</span><br>
+        edge vs fill &nbsp;<span class="lo">1.05</span><br>muted text &nbsp;<b>4.61</b></p>
+    </div>
+
+    <!-- GENTLE -->
+    <div class="col">
+      <div class="col-hd"><span class="col-n">1</span><span class="col-t">Gentle</span></div>
+      <p class="col-v">All three levelled to 1.20 — the green stops being the faintest — and a real edge in
+      each state's own hue.</p>
+      <div class="phone set gentle">
+        <div class="hd">My Classes</div>
+        <div class="sc-list">
+          <div class="sc-card st-going"><div class="sc-tag">6A</div><div class="sc-body">
+            <span class="sc-kicker">Science · Ch 4</span><div class="sc-title">Electricity &amp; Circuits</div>
+            <div class="sc-rail"><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick cur"></i><i class="sc-tick"></i><i class="sc-tick"></i><i class="sc-tick"></i></div>
+          </div><button class="sc-add">+</button></div>
+          <div class="sc-card st-going"><div class="sc-tag">6B<span class="sc-tag-name">Rose</span></div><div class="sc-body">
+            <span class="sc-kicker">Science · Ch 4</span><div class="sc-title">Electricity &amp; Circuits</div>
+            <div class="sc-rail"><i class="sc-tick done"></i><i class="sc-tick cur"></i><i class="sc-tick"></i><i class="sc-tick"></i><i class="sc-tick"></i><i class="sc-tick"></i></div>
+          </div><button class="sc-add">+</button></div>
+          <div class="sc-card st-new"><div class="sc-tag">6C</div><div class="sc-body">
+            <span class="sc-kicker">Science</span><div class="sc-title">Pick a chapter to begin</div>
+          </div><button class="sc-add">+</button></div>
+          <div class="sc-card st-done"><div class="sc-tag">9A</div><div class="sc-body">
+            <span class="sc-kicker">Science · Ch 1</span><div class="sc-title">Matter Around Us</div>
+            <div class="sc-rail"><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick done"></i></div>
+          </div><button class="sc-add">+</button></div>
+        </div>
+        <div class="squint"><i style="background:#e9e3d5"></i><i style="background:#dae5e0"></i><i style="background:#f4dfd2"></i></div>
+      </div>
+      <p class="meas">fill vs page &nbsp;<b>1.20 · 1.21 · 1.20</b><br>
+        edge vs fill &nbsp;<b>1.41</b><br>muted text &nbsp;<b>4.55</b></p>
+    </div>
+
+    <!-- CLEAR -->
+    <div class="col">
+      <div class="col-hd"><span class="col-n">2</span><span class="col-t">Clear</span>
+        <span class="badge">Recommended</span></div>
+      <p class="col-v">1.32. The card is unmistakably a surface laid on the page, and the tints finally read
+      as green and terracotta rather than as tinted white.</p>
+      <div class="phone set clear">
+        <div class="hd">My Classes</div>
+        <div class="sc-list">
+          <div class="sc-card st-going"><div class="sc-tag">6A</div><div class="sc-body">
+            <span class="sc-kicker">Science · Ch 4</span><div class="sc-title">Electricity &amp; Circuits</div>
+            <div class="sc-rail"><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick cur"></i><i class="sc-tick"></i><i class="sc-tick"></i><i class="sc-tick"></i></div>
+          </div><button class="sc-add">+</button></div>
+          <div class="sc-card st-going"><div class="sc-tag">6B<span class="sc-tag-name">Rose</span></div><div class="sc-body">
+            <span class="sc-kicker">Science · Ch 4</span><div class="sc-title">Electricity &amp; Circuits</div>
+            <div class="sc-rail"><i class="sc-tick done"></i><i class="sc-tick cur"></i><i class="sc-tick"></i><i class="sc-tick"></i><i class="sc-tick"></i><i class="sc-tick"></i></div>
+          </div><button class="sc-add">+</button></div>
+          <div class="sc-card st-new"><div class="sc-tag">6C</div><div class="sc-body">
+            <span class="sc-kicker">Science</span><div class="sc-title">Pick a chapter to begin</div>
+          </div><button class="sc-add">+</button></div>
+          <div class="sc-card st-done"><div class="sc-tag">9A</div><div class="sc-body">
+            <span class="sc-kicker">Science · Ch 1</span><div class="sc-title">Matter Around Us</div>
+            <div class="sc-rail"><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick done"></i></div>
+          </div><button class="sc-add">+</button></div>
+        </div>
+        <div class="squint"><i style="background:#e1d8c8"></i><i style="background:#ceddd6"></i><i style="background:#efd4c4"></i></div>
+      </div>
+      <p class="meas">fill vs page &nbsp;<b>1.32 · 1.31 · 1.32</b><br>
+        edge vs fill &nbsp;<b>1.29–1.43</b><br>muted text &nbsp;<b>4.50</b></p>
+    </div>
+
+    <!-- FIRM -->
+    <div class="col">
+      <div class="col-hd"><span class="col-n">3</span><span class="col-t">Firm</span></div>
+      <p class="col-v">1.48. Reads instantly in sunlight or on a cheap screen — but the page starts to feel
+      like coloured tiles rather than paper with cards on it.</p>
+      <div class="phone set firm">
+        <div class="hd">My Classes</div>
+        <div class="sc-list">
+          <div class="sc-card st-going"><div class="sc-tag">6A</div><div class="sc-body">
+            <span class="sc-kicker">Science · Ch 4</span><div class="sc-title">Electricity &amp; Circuits</div>
+            <div class="sc-rail"><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick cur"></i><i class="sc-tick"></i><i class="sc-tick"></i><i class="sc-tick"></i></div>
+          </div><button class="sc-add">+</button></div>
+          <div class="sc-card st-going"><div class="sc-tag">6B<span class="sc-tag-name">Rose</span></div><div class="sc-body">
+            <span class="sc-kicker">Science · Ch 4</span><div class="sc-title">Electricity &amp; Circuits</div>
+            <div class="sc-rail"><i class="sc-tick done"></i><i class="sc-tick cur"></i><i class="sc-tick"></i><i class="sc-tick"></i><i class="sc-tick"></i><i class="sc-tick"></i></div>
+          </div><button class="sc-add">+</button></div>
+          <div class="sc-card st-new"><div class="sc-tag">6C</div><div class="sc-body">
+            <span class="sc-kicker">Science</span><div class="sc-title">Pick a chapter to begin</div>
+          </div><button class="sc-add">+</button></div>
+          <div class="sc-card st-done"><div class="sc-tag">9A</div><div class="sc-body">
+            <span class="sc-kicker">Science · Ch 1</span><div class="sc-title">Matter Around Us</div>
+            <div class="sc-rail"><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick done"></i><i class="sc-tick done"></i></div>
+          </div><button class="sc-add">+</button></div>
+        </div>
+        <div class="squint"><i style="background:#d6cdb8"></i><i style="background:#bfd1ca"></i><i style="background:#e9c7b5"></i></div>
+      </div>
+      <p class="meas">fill vs page &nbsp;<b>1.48 · 1.49 · 1.48</b><br>
+        edge vs fill &nbsp;<b>1.15–1.42</b><br>muted text &nbsp;<b>4.53</b></p>
+    </div>
+
+  </div>
+
+  <div class="scroll">
+  <table class="tbl">
+    <thead><tr><th>Contrast vs the page</th><th>Today</th><th>1 · Gentle</th><th>2 · Clear</th><th>3 · Firm</th></tr></thead>
+    <tbody>
+      <tr><td>Unstarted (grey)</td><td class="num bad">1.10</td><td class="num">1.20</td><td class="num good">1.32</td><td class="num">1.48</td></tr>
+      <tr><td>Ongoing (green)</td><td class="num bad">1.04</td><td class="num">1.21</td><td class="num good">1.31</td><td class="num">1.49</td></tr>
+      <tr><td>Complete (terracotta)</td><td class="num">1.17</td><td class="num">1.20</td><td class="num good">1.32</td><td class="num">1.48</td></tr>
+      <tr><td>Spread between states</td><td class="bad">0.13 — uneven,<br>green weakest</td><td class="good">0.01 — level</td><td class="good">0.01 — level</td><td class="good">0.01 — level</td></tr>
+      <tr><td>1px edge vs its fill</td><td class="num bad">1.05</td><td class="num">1.41</td><td class="num good">1.29–1.43</td><td class="num">1.15–1.42</td></tr>
+      <tr><td>Muted text on card</td><td class="num">4.61</td><td class="num">4.55</td><td class="num">4.50</td><td class="num">4.53</td></tr>
+      <tr><td>Still "warm paper"?</td><td>yes</td><td class="good">yes</td><td class="good">yes</td><td class="bad">drifting to tiles</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note" style="margin-top:30px">
+    <p><b>What I would build: level 2, and the edge change at any level.</b> The fills are the visible half,
+    but the border is where the separation is actually being lost — a <span class="mono">1.05&#8202;:&#8202;1</span>
+    edge is not an edge. Giving each state an edge in its own hue is what makes the card read as a
+    <i>plane</i> rather than as a slightly different patch of paper.</p>
+    <p><b>Scope, and one thing to check.</b> These would be new surface tokens on the card
+    (<span class="mono">--card-new / --card-going / --card-done</span> plus their edges), NOT changes to
+    <span class="mono">--paper-sunk</span> and <span class="mono">--tint-pine</span> — those two are used in
+    37 and 35 other places and would drag half the app with them. My Lessons deliberately shares this status
+    palette, so it moves too, which is right. The dark theme needs its own three values measured the same
+    way against <span class="mono">#161d19</span>; a light-mode lift does not transfer.</p>
+  </div>
+
+</div>
+</body>
+</html>

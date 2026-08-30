@@ -107,8 +107,16 @@ export function readinessFingerprint(subjects) {
         grades: (s?.grades || [])
           .map((g) => ({
             grade: String(g?.grade || "").toUpperCase(),
+            /* Tag AND her own name for it (2026-08-30). The name had to join the fingerprint
+               the day it became storable: a rename changes nothing else about the record, so
+               without it a save that dropped the label would read back as verified — the
+               read-after-write check would be silent about the ONE thing that edit changed. */
             sections: (g?.sections || [])
-              .map((x) => String(x?.tag || x?.sec || "").trim())
+              .map((x) => {
+                const tag = String(x?.tag || x?.sec || "").trim();
+                const name = String(x?.name || "").trim();
+                return name ? `${tag}:${name}` : tag;
+              })
               .filter(Boolean)
               .sort(),
             durations: [...(g?.durations || [])].map(Number).sort((a, b) => a - b),
