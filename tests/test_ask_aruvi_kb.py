@@ -1,27 +1,29 @@
-"""The Ask Aruvi question bank — one official file, one embedded copy (2026-08-30).
+"""The Ask Aruvi question bank — ONE file, signed-in only, cached on the device (2026-08-30).
 
 Run: python3 tests/test_ask_aruvi_kb.py
 
 ★ THE ONE THING THESE TESTS EXIST TO PROTECT.
 
-The question bank is hand-written, and it lives in TWO places on purpose:
+The bank is hand-written and lives in exactly ONE place:
 
-    data/cloud/content/ask_aruvi/qa_knowledge_base.json   ← official; the file you edit
-    web/app/ask-aruvi/qa_knowledge_base.json              ← embedded; what the app imports
+    data/cloud/content/ask_aruvi/qa_knowledge_base.json   ← the file you edit
 
-The second copy exists because Ask Aruvi is the HELP screen and must answer when the API is
-unreachable or the network is poor — so it is bundled into the web build rather than fetched.
-The price of that choice is drift: a founder edits the official file, forgets to sync, and the
-app keeps serving last month's answers with nobody the wiser. `test_embedded_copy_is_identical`
-is the whole reason that cannot happen quietly — it turns a memory problem into a red test.
+`GET /ask-aruvi` serves it from there, behind X-Aruvi-User, and the client caches it in
+localStorage so the help screen still works offline (web/app/ask-aruvi/bank.js).
 
-`test_index_is_current` covers the second half of the same failure. Keywords are tf-idf derived
-and score 3 against a query where the question scores 2 and the answer 1, so they are what make
-a teacher's own word reach the right pair. They are corpus-relative: editing ONE pair shifts the
-ranking for every other. A hand-edit that skips the re-index leaves the bank looking correct and
-searching worse.
+It used to ALSO be copied into web/app/ask-aruvi/ and imported at build time — which compiled
+all 120 answers into the main page chunk, a PUBLIC url served before sign-in. The bank states
+how period allocation is weighted and how each subject's assessment is built; that is founder
+IP, and it was downloadable by any crawler in machine-readable form.
+`test_bank_is_not_bundled` is what stops that returning: it is the security guard of this
+file, not a tidiness check. If someone re-adds the import for convenience, the exposure comes
+back silently and nothing else would notice.
 
-Both are fixed the same way: python3 aruvi-scripts/sync_ask_aruvi.py
+`test_index_is_current` guards the other half. Keywords are tf-idf derived and score 3 against
+a query where the question scores 2 and the answer 1, so they are what make a teacher's own
+word reach the right pair. They are corpus-relative: editing ONE pair shifts the ranking for
+every other. A hand-edit that skips the re-index leaves the bank looking correct and searching
+worse. Fixed by: python3 aruvi-scripts/sync_ask_aruvi.py
 
 ★ ON test_teacher_words_reach_their_pair.
 
@@ -46,7 +48,7 @@ sys.path.insert(0, str(REPO_ROOT / "aruvi-scripts"))
 import sync_ask_aruvi as sync  # noqa: E402
 
 OFFICIAL = sync.OFFICIAL
-EMBEDDED = sync.EMBEDDED
+BUNDLED = sync.BUNDLED
 
 # Teacher phrasing -> the pair it must reach (top 2). See the module docstring.
 LANDINGS = [
@@ -64,6 +66,7 @@ LANDINGS = [
     ("end of year",                   "d42"),
     ("chapter notes",                 "d11"),
     ("who writes the plans",          "a33"),
+    ("how are plans generated",       "a33"),
     ("too few periods",               "c21"),
     ("maximum periods",               "c22"),
     ("edit the plan",                 "e19"),
@@ -144,25 +147,46 @@ def test_index_is_current():
     print("  ok  search index current on all %d pairs" % len(kb["pairs"]))
 
 
-def test_embedded_copy_is_identical():
-    assert EMBEDDED.exists(), (
-        "The web app's copy is missing: %s\n"
-        "Ask Aruvi is bundled on purpose — it must answer when the network does not."
-        % EMBEDDED)
-    assert EMBEDDED.read_text() == OFFICIAL.read_text(), (
-        "The web app is serving a DIFFERENT question bank from the official file.\n"
-        "This is the drift these tests exist to catch. Run:\n"
-        "  python3 aruvi-scripts/sync_ask_aruvi.py")
-    print("  ok  embedded copy is byte-identical to the official file")
+def test_bank_is_not_bundled():
+    """The security guard. The bank must never ship inside the web build.
+
+    A static import puts it in a public page chunk served BEFORE sign-in, which is how the
+    allocation weighting and the per-subject assessment blueprint became downloadable by
+    anyone. If this fails, the exposure is live — do not "fix" it by deleting the test.
+    """
+    assert not BUNDLED.exists(), (
+        "The bank is back in the web app: %s\n"
+        "It would ship in a public chunk, readable without an account. It is served by "
+        "GET /ask-aruvi and cached on the device instead." % BUNDLED)
+    web = REPO_ROOT / "web" / "app"
+    offenders = []
+    for f in list(web.rglob("*.jsx")) + list(web.rglob("*.js")):
+        if ".next" in f.parts:
+            continue
+        txt = f.read_text()
+        if "qa_knowledge_base.json" in txt and "import" in txt.split("qa_knowledge_base.json")[0][-120:]:
+            offenders.append(str(f.relative_to(REPO_ROOT)))
+    assert not offenders, (
+        "These files import the bank into the web build: %s" % ", ".join(offenders))
+    print("  ok  bank is not bundled and nothing imports it")
 
 
-def test_app_imports_the_embedded_copy():
-    jsx = (REPO_ROOT / "web" / "app" / "ask-aruvi" / "AskAruvi.jsx").read_text()
-    assert 'from "./qa_knowledge_base.json"' in jsx, (
-        "AskAruvi.jsx no longer imports ./qa_knowledge_base.json.\n"
-        "If the bank moved to an HTTP fetch, this test and sync_ask_aruvi.py both need "
-        "revisiting — and keep a bundled fallback, or offline help dies.")
-    print("  ok  AskAruvi.jsx imports the embedded copy")
+def test_the_route_and_the_client_agree():
+    """The bank is only reachable if all three pieces line up: a route that serves it, a
+    reader in api/data.py, and a client that fetches THAT path."""
+    main = (REPO_ROOT / "api" / "main.py").read_text()
+    dat = (REPO_ROOT / "api" / "data.py").read_text()
+    bank_js = (REPO_ROOT / "web" / "app" / "ask-aruvi" / "bank.js").read_text()
+    assert '@app.get("/ask-aruvi")' in main, "GET /ask-aruvi is missing from api/main.py"
+    assert "_current_identity" in main.split('@app.get("/ask-aruvi")')[1][:600], (
+        "GET /ask-aruvi must depend on _current_identity — without it the bank is public "
+        "again, which is the whole reason it left the bundle.")
+    assert "ask_aruvi_bank_bytes" in dat, "api/data.py has no ask_aruvi_bank_bytes()"
+    assert '"/ask-aruvi"' in bank_js, "bank.js does not fetch /ask-aruvi"
+    assert "If-None-Match" in bank_js, (
+        "bank.js must send If-None-Match — without it every app load re-downloads ~90KB "
+        "instead of getting a 304.")
+    print("  ok  route is identity-gated, reader exists, client fetches it with an ETag")
 
 
 def test_teacher_words_reach_their_pair():

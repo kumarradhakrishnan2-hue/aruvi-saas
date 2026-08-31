@@ -15,6 +15,7 @@ import GuidedTour from "./components/GuidedTour";
 import ProfilePortal, { queueSetupCheck, takeSetupCheck, pruneSetupCheck, setupKey, SETUP_CHECK_DELAY_MS } from "./components/ProfilePortal";
 // ThemeToggle moved into Settings (App › Appearance) — no longer on the shell's bar.
 import AskAruvi from "./ask-aruvi/AskAruvi";
+import { primeBank, clearBank, refreshBank } from "./ask-aruvi/bank";
 
 /* ───────── app shell ─────────
  * The app is gated behind a user-ID portal (Login). No password yet: the entered ID is the
@@ -97,6 +98,17 @@ export default function Home() {
      anywhere (no pointer advanced, nothing done). It self-closes forever the moment she
      actually teaches — no stored flag, no localStorage desync trap (2026-07-06 rule).
      null = not yet answered / unreachable → no offer (unknown must never look new). */
+  /* Ask Aruvi's bank: check for a newer one on every app load of a signed-in session.
+   * Normally a 304 with no body (bank.js sends If-None-Match), so this costs a few hundred
+   * bytes; the ~90KB download happens only when the answers have actually changed. Fire and
+   * forget — Ask Aruvi opens from the stored copy regardless, and offline this fails silent.
+   * Covers the teacher who stays signed in for months: without it, a corrected answer would
+   * never reach her, which is half the reason the bank moved off the bundle. */
+  useEffect(() => {
+    if (!user) return;
+    refreshBank();
+  }, [user]);
+
   const [tourEligible, setTourEligible] = useState(null);
   useEffect(() => {
     if (!ready || !user) { setTourEligible(null); return; }
@@ -596,9 +608,16 @@ export default function Home() {
     setTab("myplans");
   };
 
-  const onEnter = (id) => { setUser(id); setUserState(id); };
+  const onEnter = (id) => {
+    setUser(id); setUserState(id);
+    // Pull the Ask Aruvi bank down NOW, at the one moment she is certainly online (she has
+    // just authenticated over the network). It is signed-in-only content cached on the
+    // device, so this fetch is the whole offline guarantee — see ask-aruvi/bank.js.
+    primeBank();
+  };
   const onSignOut = () => {
     clearUser(); setUserState("");
+    clearBank();   // licensed content behind an account: never leave it in a shared browser
     setReady(false); setReadiness(null); setReadinessLoaded(false);
     setSubjects([]); setSubject(""); setTab("myplans"); setEditFlow(null);
     setTour(null); setTourDismissed(false);

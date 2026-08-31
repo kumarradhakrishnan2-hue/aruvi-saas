@@ -865,3 +865,24 @@ def save_generated_plan(subject: str, grade: str, plan: Dict[str, Any],
                        json.dumps(plan, ensure_ascii=False, indent=2).encode("utf-8"),
                        "application/json")
     return filename
+
+
+# ── Ask Aruvi question bank ─────────────────────────────────────────────────
+# Bucket A-serve content, exactly like content/legal/: founder-authored, shared,
+# read-only, served to every signed-in teacher, and it travels inside the migration
+# unit. It was the one Bucket-A asset never classified in CLOUD_DATA_MODEL — it lived
+# inside the web bundle until 2026-08-30 and so was public before sign-in.
+ASK_ARUVI_BANK = "ask_aruvi/qa_knowledge_base.json"
+
+
+def ask_aruvi_bank_bytes() -> bytes:
+    """The question bank as raw bytes, for GET /ask-aruvi.
+
+    Bytes, not a parsed dict: the route hashes them for an ETag and streams them
+    through untouched, so what the teacher's device caches is byte-identical to the
+    file the founder edits. Re-serialising would change the hash on every restart and
+    defeat the 304.
+    """
+    if not _st().exists(ASK_ARUVI_BANK):
+        raise FileNotFoundError(ASK_ARUVI_BANK)
+    return _st().get_bytes(ASK_ARUVI_BANK)

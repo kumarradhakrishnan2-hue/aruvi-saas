@@ -2,7 +2,8 @@
 
 /* ───────── Ask Aruvi — deterministic Q&A screen ─────────
  * Opened from the "?" on the right of the My Classes / My Lessons row. A full-screen,
- * Settings-style panel over the app. Two modes, one dataset (qa_knowledge_base.json):
+ * Settings-style panel over the app. Two modes, one dataset — the question bank, which is
+ * FETCHED once after sign-in and cached on the device (./bank.js), never bundled:
  *
  *   • BROWSE (search empty): five collapsible categories. Opening one FREEZES its header
  *     (sticky) so it can be collapsed again from anywhere while its questions scroll.
@@ -17,29 +18,49 @@
  */
 
 import { useState, useMemo, useEffect } from "react";
-import kb from "./qa_knowledge_base.json";
 import { search } from "./askAruviSearch";
+import { loadBank } from "./bank";
 
 export default function AskAruvi({ onClose }) {
   const [query, setQuery] = useState("");
   const [openCat, setOpenCat] = useState(null);   // the frozen (expanded) category id
   const [openPair, setOpenPair] = useState(null); // the expanded answer id
+
+  /* The bank is no longer bundled (2026-08-30) — it is fetched once after sign-in and kept
+   * in localStorage; see ./bank.js for why. `loadBank()` returns the STORED copy
+   * synchronously when there is one, so opening this panel never waits on the network. It
+   * is only empty for a teacher whose very first session lost signal between signing in and
+   * the fetch landing — page.jsx primes it at sign-in precisely to make that rare. */
+  const [kb, setKb] = useState(() => loadBank());
+  useEffect(() => {
+    if (kb) return;
+    let live = true;
+    import("./bank").then((m) => m.refreshBank()).then((b) => { if (live && b) setKb(b); }).catch(() => {});
+    return () => { live = false; };
+  }, [kb]);
+
+  const cats = kb?.categories || [];
+  const pairs = kb?.pairs || [];
+
   // The accent rail is a SINGLE moving marker, not one bar per category: it starts beside the
   // first category and hops to whichever header is tapped (open or collapse — it marks
   // "where you are", so it never disappears).
-  const [markedCat, setMarkedCat] = useState(kb.categories[0]?.id ?? null);
+  const [markedCat, setMarkedCat] = useState(null);
+  useEffect(() => {
+    if (!markedCat && cats.length) setMarkedCat(cats[0].id);
+  }, [cats, markedCat]);
 
-  const result = useMemo(() => search(kb.pairs, query), [query]);
+  const result = useMemo(() => search(pairs, query), [pairs, query]);
   const searching = result !== null;
 
   // category id → {title, description, tag, accent} (all driven by the JSON, no hardcoding)
-  const catMap = useMemo(() => Object.fromEntries(kb.categories.map((c) => [c.id, c])), []);
+  const catMap = useMemo(() => Object.fromEntries(cats.map((c) => [c.id, c])), [cats]);
 
   const byCat = useMemo(() => {
     const m = {};
-    kb.pairs.forEach((p) => (m[p.category] = m[p.category] || []).push(p));
+    pairs.forEach((p) => (m[p.category] = m[p.category] || []).push(p));
     return m;
-  }, []);
+  }, [pairs]);
 
   // Esc closes; lock body scroll while open.
   useEffect(() => {
@@ -91,7 +112,15 @@ export default function AskAruvi({ onClose }) {
 
         {/* scroll region */}
         <div className="aa-body">
-          {searching ? (
+          {!kb ? (
+            /* The ONLY state with no answers: a first session that lost signal between
+               sign-in and the priming fetch. Say what is true and what fixes it — never a
+               spinner that implies something is arriving, because offline nothing is. */
+            <div className="aa-empty">
+              <p>Ask Aruvi needs to download its answers once before it can work offline.</p>
+              <p>Open it again when you next have a connection, and it will be ready from then on.</p>
+            </div>
+          ) : searching ? (
             /* ── SEARCH MODE — ranked list only, no categories ── */
             <div className="aa-results">
               {result.results.map((p) => (
@@ -100,7 +129,7 @@ export default function AskAruvi({ onClose }) {
             </div>
           ) : (
             /* ── BROWSE MODE — five collapsible, freezable categories ── */
-            kb.categories.map((c) => {
+            cats.map((c) => {
               const pairs = byCat[c.id] || [];
               const isOpen = openCat === c.id;
               return (
@@ -153,6 +182,12 @@ export default function AskAruvi({ onClose }) {
         .aa-panel { width: 100%; max-width: 720px; height: 100%; background: var(--paper);
           display: flex; flex-direction: column; box-shadow: 0 0 60px rgba(0,0,0,.28); }
         @media (min-width: 721px) { .aa-panel { border-radius: 0 0 16px 16px; overflow: hidden; } }
+
+        /* Only ever seen on a first session that lost signal before the bank arrived. Set as
+           quiet prose, not an error: nothing is broken, it simply has not downloaded yet. */
+        .aa-empty { padding: 34px 22px; color: var(--ink-soft); font-family: var(--f-body);
+          font-size: 15px; line-height: 1.6; max-width: 46ch; }
+        .aa-empty p { margin: 0 0 10px; }
 
         .aa-top { display: flex; align-items: center; justify-content: space-between;
           padding: 16px 20px 12px; border-bottom: 1px solid var(--line); background: var(--paper); }

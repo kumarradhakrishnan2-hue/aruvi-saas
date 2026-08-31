@@ -339,8 +339,10 @@ def render_lesson_pdf_html(
 
   .phase-tbl {{ width: 100%; margin-top: 5px; }}
   .phase-tbl td {{ vertical-align: top; padding: 4px 0; border-bottom: 0.5px solid #f0ede9; }}
-  .ph-band {{ width: 60px; font-size: 6.5pt; color: #8a8a86; padding-right: 12px; }}
-  .ph-text {{ font-size: 7.5pt; color: #2a2a2a; line-height: 1.45; }}
+  .ph-band {{ width: 60px; font-size: 7.5pt; color: #8a8a86; padding-right: 12px; }}
+  .ph-text {{ font-size: 8.5pt; color: #2a2a2a; line-height: 1.45; }}  /* matches td.pc-v (teacher notes) — founder 2026-08-30: the timed spine is
+     read mid-class and must not be the smallest text on the page. Kept in step
+     with the integrated PDF, which renders the same plan. */
 
   .u-hw {{ margin-top: 6px; padding: 5px 8px; background-color: {GREY_BAND}; }}
   .u-hw-k {{ font-weight: bold; color: {INK}; font-size: 7.5pt; }}

@@ -1,6 +1,6 @@
-"""Re-index the Ask Aruvi question bank and copy it into the web app (2026-08-30).
+"""Re-index the Ask Aruvi question bank in place (2026-08-30).
 
-    python3 aruvi-scripts/sync_ask_aruvi.py            # re-index + copy
+    python3 aruvi-scripts/sync_ask_aruvi.py            # re-index
     python3 aruvi-scripts/sync_ask_aruvi.py --check    # verify only, write nothing (exit 1 if stale)
 
 ★ WHAT THIS IS, AND WHAT IT DELIBERATELY IS NOT.
@@ -10,12 +10,17 @@ answers are authored by a person, directly in the official file:
 
     data/cloud/content/ask_aruvi/qa_knowledge_base.json     ← the one you edit
 
-This script NEVER writes a question, an answer, a category or an id. It does exactly two
-mechanical things after you have finished writing:
+This script NEVER writes a question, an answer, a category or an id. It does exactly ONE
+mechanical thing after you have finished writing: **re-indexes** — recomputes the six search
+keywords on every pair, in place.
 
-  1. **Re-indexes** — recomputes the six search keywords on every pair.
-  2. **Copies** — writes the result to web/app/ask-aruvi/qa_knowledge_base.json, which the
-     app imports at build time.
+★ THE COPY STEP IS GONE (2026-08-30). It used to also write the bank into
+web/app/ask-aruvi/, which the app imported at build time. That put all 120 answers into a
+PUBLIC page chunk, readable before sign-in. The bank is now served by `GET /ask-aruvi`
+straight from DATA_DIR and cached on the teacher's device (api/main.py, web/app/ask-aruvi/
+bank.js), so there is exactly ONE copy of the file and drift between copies is no longer
+possible — which is why tests/test_ask_aruvi_kb.py lost its byte-identity check and gained
+a guard that the bank has NOT come back into the bundle.
 
 It replaces `build_kb.py`, which was retired the same day: that script flattened a nested
 "V3" master file which no longer exists (and whose path, `data/content/ask_aruvi/`, had been
@@ -33,14 +38,14 @@ teacher queries, 8 failed to reach the right pair until the wording was adjusted
 rebuilt ("rename" appeared nowhere in the sections pair; "support" nowhere in its question;
 "cost" nowhere at all).
 
-★ WHY A COPY RATHER THAN A FETCH.
+★ SERVED, THEN CACHED — BOTH REQUIREMENTS MET.
 
-Ask Aruvi is the HELP screen. It must answer when the API is unreachable or the network is
-poor — which, on a budget Android in an Indian school, is exactly when a teacher needs it. So
-the bank is bundled into the web app (`import kb from "./qa_knowledge_base.json"`) rather than
-served over HTTP. The cost of that choice is a second copy, and a second copy can drift; that
-is what `--check` and tests/test_ask_aruvi_kb.py exist to prevent. Do not "fix" the drift by
-deleting the web copy — the offline guarantee is the point.
+Ask Aruvi is the HELP screen: it must answer when the network does not, which on a budget
+Android in an Indian school is exactly when a teacher needs it. It is also founder IP that
+should not sit on a public url. So the route is signed-in only and the client fetches the
+bank ONCE and keeps it in localStorage, re-checking with an ETag on each app load (a 304 and
+no body, normally). Do not "simplify" this back into a bundled import — that is what made it
+public.
 
 ★ THE OFFICIAL FILE LIVES IN THE MIGRATION UNIT.
 
@@ -66,7 +71,7 @@ from api import config  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 OFFICIAL = Path(config.DATA_DIR) / "ask_aruvi" / "qa_knowledge_base.json"
-EMBEDDED = REPO_ROOT / "web" / "app" / "ask-aruvi" / "qa_knowledge_base.json"
+BUNDLED = REPO_ROOT / "web" / "app" / "ask-aruvi" / "qa_knowledge_base.json"   # must NOT exist
 
 KEYWORDS_PER_PAIR = 6
 
@@ -192,29 +197,27 @@ def main():
         p['keywords'] = fresh[p['id']]
     text = serialize(kb)
 
-    embedded_matches = EMBEDDED.exists() and EMBEDDED.read_text() == text
-
     if args.check:
         ok = True
         if stale:
             ok = False
             print("STALE INDEX: %d pair(s) need re-indexing: %s"
                   % (len(stale), ", ".join(stale[:8]) + (" …" if len(stale) > 8 else "")))
-        if not embedded_matches:
+        if BUNDLED.exists():
             ok = False
-            print("OUT OF SYNC: the web app's copy differs from the official file.")
+            print("BUNDLED COPY IS BACK: %s\n"
+                  "The bank must not ship in the web build — it would be public before "
+                  "sign-in. It is served by GET /ask-aruvi." % BUNDLED)
         if ok:
-            print("in sync · %d pairs · index current · web copy identical" % len(pairs))
+            print("ok · %d pairs · index current · not bundled" % len(pairs))
             return 0
         print("\nRun: python3 aruvi-scripts/sync_ask_aruvi.py")
         return 1
 
     OFFICIAL.write_text(text)
-    EMBEDDED.parent.mkdir(parents=True, exist_ok=True)
-    EMBEDDED.write_text(text)
 
     print("official : %s" % OFFICIAL)
-    print("embedded : %s" % EMBEDDED)
+    print("served   : GET /ask-aruvi (signed-in only; cached on the device)")
     print("pairs    : %d  %s" % (len(pairs), dict(Counter(p['category'] for p in pairs))))
     print("re-indexed: %d pair(s) changed" % len(stale))
     if stale:

@@ -11,6 +11,7 @@ Data comes from local disk (api/data.py) for now; live generation and the DB com
 """
 from __future__ import annotations
 
+import hashlib
 from datetime import date, datetime, timezone
 from typing import Any, Dict, List, Optional
 
@@ -1647,6 +1648,43 @@ def _consent_status(tenant_id: str) -> Dict[str, Any]:
 def _consent_outstanding(tenant_id: str) -> bool:
     """True when the current version has NOT been accepted by this tenant."""
     return not _consent_status(tenant_id)["accepted"]
+
+
+@app.get("/ask-aruvi")
+def get_ask_aruvi(response: Response,
+                  if_none_match: Optional[str] = Header(default=None),
+                  identity: tuple = Depends(_current_identity)) -> Any:
+    """The Ask Aruvi question bank — SIGNED-IN ONLY, and cached on the device (2026-08-30).
+
+    ★ WHY THIS IS A ROUTE AND NOT A BUNDLED IMPORT. It used to be
+    `import kb from "./qa_knowledge_base.json"` inside AskAruvi.jsx, which put all 120
+    answers into the main page chunk — a PUBLIC url, served before anyone signs in, and
+    machine-readable. The bank states how period allocation is weighted and how each
+    subject's assessment is built; that is founder IP and it was downloadable by any
+    crawler. Serving it here puts it behind `X-Aruvi-User`: a free trial still reaches it,
+    so this is a fence and not a wall, but nothing reaches it without an account.
+
+    ★ AND IT MUST STILL WORK OFFLINE. Ask Aruvi is the HELP screen — it is needed exactly
+    when the network is poor, on a school Android. So the client fetches this ONCE after
+    sign-in and keeps it in localStorage, reading the stored copy thereafter; see
+    AskAruvi.jsx. The ETag below is what makes that cheap: the browser sends
+    If-None-Match on each app load and normally gets a 304 with no body, so a teacher
+    pays for the ~90KB only in the month the answers actually change.
+
+    Not gated on entitlement, ever — the same reasoning as data rights and support
+    (§2.5): a teacher whose subscription is the broken thing must still be able to read
+    how the product works.
+    """
+    try:
+        raw = data.ask_aruvi_bank_bytes()
+    except FileNotFoundError:
+        raise HTTPException(status_code=503,
+                            detail="The Ask Aruvi question bank is not installed on this server.")
+    etag = '"%s"' % hashlib.sha256(raw).hexdigest()[:32]
+    if if_none_match and if_none_match.strip() == etag:
+        return Response(status_code=304, headers={"ETag": etag, "Cache-Control": "no-cache"})
+    return Response(content=raw, media_type="application/json",
+                    headers={"ETag": etag, "Cache-Control": "no-cache"})
 
 
 @app.get("/legal/consent")

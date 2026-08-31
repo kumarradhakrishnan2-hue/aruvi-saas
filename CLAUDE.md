@@ -659,6 +659,8 @@ data/                  ★ the data root, laid out along the CLOUD/LOCAL boundar
     content/           Bucket A-serve → object store (DATA_DIR): allocation_norms,
                        chapters/**/mappings, framework, saved_plans (libraries + serve cache)
     content/legal/     ★ the user agreement, ONE copy, versioned by FILENAME (2026-08-27)
+    content/ask_aruvi/ ★ the Ask Aruvi question bank, ONE copy, hand-written (2026-08-30) —
+                       served by GET /ask-aruvi behind X-Aruvi-User, never bundled
     state/             Bucket B → Supabase Postgres (STATE_DIR): accounts, academic_years,
                        readiness, allocations, section_state, prepared_plans, plan_archive,
                        plan_notes, support — all {tenant}/{user}[/{year}]-keyed; PLUS three
@@ -712,7 +714,9 @@ runtime NEVER reads. `api/config.py` exposes three seams:
   RUNTIME reads: `allocation_norms/`, `chapters/**/mappings/`, `framework/` (the runtime
   reads its competency glossaries + english `spine_to_cg.json`; the NCF-derived cg/pedagogy
   .txt ride along — public-source, not worth splitting a second tree), `saved_plans/`
-  (certified canonical libraries + the served-plan cache). Defaults to
+  (certified canonical libraries + the served-plan cache), `legal/`, and
+  `ask_aruvi/` (the Ask Aruvi question bank — served by `GET /ask-aruvi` to signed-in
+  teachers only, and cached on the device; never bundled into the web build). Defaults to
   `data/cloud/content/`. The app never writes here except `save_generated_plan` (the shared
   serve cache). Cloud home: object store.
 - **`STATE_DIR`** (env `ARUVI_STATE_DIR`) — **Bucket B**, per-user/tenant STATE. Defaults to
@@ -848,6 +852,33 @@ rights never gated). **Enforcement default OFF** (`ARUVI_ENTITLEMENT_ENFORCED`;
 test_entitlement.py green. Remaining: Steps 2, 6 — Step 6 next (trial counter,
 exhausted state, upsell screen, subscription status, export/erase buttons), then the
 persona pass with enforcement ON. Full entry: MEMORY.md 2026-08-24.
+
+**ASK ARUVI IS SIGNED-IN CONTENT NOW, CACHED ON THE DEVICE — AND THE QUESTION BANK
+FINALLY HAS A HOME (2026-08-30).** The bank was `import kb from "./qa_knowledge_base.json"`
+inside `AskAruvi.jsx`, so all 120 answers compiled into the **main page chunk — a public url,
+served before sign-in, machine-readable**. It states how period allocation is weighted (the
+four effort-index signals, the bounded-tier normalisation, SS's 3/2/1) and how each subject's
+assessment is built; that is the cheapest half of the IP to copy and the most expensive to
+derive. ★ **The two requirements pull opposite ways and both are met:** `GET /ask-aruvi`
+(api/main.py) sits behind `X-Aruvi-User` — a free trial still reaches it, so this is a fence
+and not a wall; what ends is it being PUBLIC — and `web/app/ask-aruvi/bank.js` fetches it ONCE
+and keeps it in localStorage, so the help screen still answers when the network does not,
+which on a school Android is exactly when it is needed. **The ETag is what makes freshness
+free**: page.jsx re-checks on every app load with `If-None-Match` and normally gets a 304 with
+no body, so the ~90KB is paid only in the month the answers change. Primed at SIGN-IN (the one
+moment she is certainly online), cleared at sign-out (licensed content in a shared browser).
+★ **A side effect worth having:** the bank had ALSO been living in two places — official +
+bundled copy — with `sync_ask_aruvi.py` copying and a test guarding drift. Serving from
+DATA_DIR leaves exactly ONE copy, so drift is now impossible by construction; the helper
+shrank to re-indexing and the test swapped its byte-identity check for
+`test_bank_is_not_bundled`, **a security guard, not tidiness** — both sabotage-verified.
+⚠️ **Transport is only half of it.** Every parameter is still readable by anyone who signs
+up. The redaction pass over the Tier-1/Tier-2 answers (the effort-index signals, the
+per-weight item tables) is OWED and is the fix that actually works. Bucket-A row added to
+CLOUD_DATA_MODEL §1 — the bank had never been classified, which is why the 2026-08-23
+restructure walked straight past it. STATIC + unit-verified (7 tests green, babel-parse clean
+on AskAruvi.jsx/bank.js/page.jsx); **live pass owed** — sign in, confirm the bank downloads,
+kill the network, confirm Ask Aruvi still answers.
 
 **The user agreement — six ticks before the subject cart, kept as evidence (2026-08-27).**
 `data/cloud/content/legal/consent_and_disclaimer_v0.1.md` is the ONE copy (Bucket A-serve —
