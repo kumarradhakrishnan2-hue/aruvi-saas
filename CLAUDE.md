@@ -1159,8 +1159,12 @@ pick screens would re-ask what the pane has answered. Written as a narrower FILT
 `portalPickClass`'s existing "straight in when only ONE class is in play" and the skip test
 cannot drift from the screen; a named class since removed falls back to the stage filter.
 `win: null` in `portalOriginRef` (she came from a page, not a window), and the return to the
-PLAN pane is free because My Lessons persists `pane` under `LS_PANE` — ⚠️ **if that persistence
-ever goes, the pencil becomes the one-way door the portal rows were just fixed for.**
+PLAN pane rides the one-shot `lessonsPaneIntentRef` (★ amended 2026-08-29: **the pane is no
+longer persisted** — founder: My Lessons defaults to "Your lessons" on EVERY ordinary revisit,
+so a Year Plan left open yesterday cannot hide the repository today; `LS_PANE` is retired,
+`onEditYearBudget` stamps the intent, the MyLessonPlans remount consumes it, `goClasses` clears
+it) — ⚠️ **if that stamp ever goes, the pencil becomes the one-way door the portal rows were
+just fixed for.**
 ★ **WHERE IT ENDED UP, after three placements (founder, live).** First beside the "a budget of
 N periods" sentence — which labels the number in words, and was wrong: that sentence sits in the
 "Your plan" note, which defaulted CLOSED, so the control was invisible on arrival ("cant see

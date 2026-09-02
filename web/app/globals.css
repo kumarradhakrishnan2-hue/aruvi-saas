@@ -344,7 +344,11 @@ select:disabled { cursor: default; }
 .tabs { display: flex; align-items: center; gap: 26px; padding: 0 34px; background: transparent; border-bottom: 1px solid var(--line); position: relative; z-index: 2; }
 .tab {
   font-family: var(--f-mono); font-size: 15px; letter-spacing: .08em; text-transform: uppercase; padding: 15px 2px;
-  border: none; background: none; color: var(--ink-soft); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  /* 3px, deliberately heavier than the pane switch's 1px (.mlp2-vtab), 2026-08-31. Both rules
+     were 2px, but the nav's short mono caps read LIGHTER than "Your lessons" in 23px serif, so
+     equal borders did not land as equal weight. The top nav is the outer level and now carries
+     the heavier rule; the pane switch inside it carries the finer one. */
+  border: none; background: none; color: var(--ink-soft); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -1px;
   transition: color .18s ease, border-color .18s ease;
 }
 .tab:hover { color: var(--ink); }
@@ -4577,7 +4581,10 @@ select option { background-color: var(--field-bg); color: var(--ink); }
   font-family: var(--f-display); font-weight: 500; font-size: 23px; line-height: 1.15;
   color: var(--ink-soft); text-align: left; white-space: nowrap;
   margin: 0; padding: 2px 0 4px; background: none; border: 0;
-  border-bottom: 2px solid transparent; border-radius: 0; cursor: pointer;
+  /* 1px against the top nav's 3px (2026-08-31). This word is 23px serif and the live pane also
+     inks to --ink, so the rule is a marker, not the whole signal — it can afford to be fine.
+     If it reads too faint on a phone, 2px here is the one-line revert. */
+  border-bottom: 1px solid transparent; border-radius: 0; cursor: pointer;
   transition: color .12s ease, border-color .12s ease;
 }
 .mlp2-vtab.on { color: var(--ink); border-bottom-color: var(--clay); cursor: default; }

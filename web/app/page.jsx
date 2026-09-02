@@ -625,7 +625,15 @@ export default function Home() {
 
   // The three destinations: the two centre tabs + the settings gear. Each leaves any
   // in-progress Generate flow and clears its pending entry/scope.
-  const goClasses = () => { setEditFlow(null); setTab("myplans"); setGenerateEntry(null); };
+  /* ★ My Lessons always OPENS on "Your lessons" (founder, 2026-08-29) — the pane is no longer
+     persisted, so leaving for My Classes/Settings and coming back lands on the repository, not
+     on a Year Plan left open yesterday. The ONE exception is the Year-Plan budget pencil's
+     round trip: onEditYearBudget stamps this one-shot ref and the MyLessonPlans remount
+     consumes it (see its pane state), so the pencil still returns to the plan she was reading.
+     goClasses clears it — a detour through My Classes is an ordinary visit, not the round trip. */
+  const lessonsPaneIntentRef = useRef(null);
+  const goClasses = () => { setEditFlow(null); setTab("myplans"); setGenerateEntry(null);
+    lessonsPaneIntentRef.current = null; };
   const goLessons = () => { setEditFlow("lessonplans"); setTab("myplans"); setGenerateEntry(null); };
 
   // Tour Next — the guide performs the move each step implies before advancing. The view-level
@@ -895,12 +903,14 @@ export default function Home() {
      a question the screen has already answered. `win: null` because she came from a page, not
      a window — goPortalHome then restores only the tab.
 
-     Coming back to the PLAN PANE is free: MyLessonPlans persists `pane` under LS_PANE, so
-     goLessons() lands on the lens she left. If that persistence ever goes, this returns her to
-     the card list and the pencil becomes a one-way door — the thing the portal rows were just
-     fixed for. */
+     Coming back to the PLAN PANE rides the one-shot `lessonsPaneIntentRef` (pane persistence
+     was retired 2026-08-29 — My Lessons now defaults to "Your lessons" on every ordinary
+     visit): stamped here, consumed by the MyLessonPlans remount, cleared by goClasses. Without
+     the stamp the return would land on the card list and the pencil becomes a one-way door —
+     the thing the portal rows were just fixed for. */
   const onEditYearBudget = (subject, grade) => {
     portalOriginRef.current = { home: editFlow, win: null };
+    lessonsPaneIntentRef.current = "plan";
     // `exact` — narrow to THIS class, not merely its stage (see portalGradeIdxs). Without it a
     // Science·Middle teacher tapping the pencil on Class 7's year plan would be asked whether
     // she meant 6, 7 or 8 — from the screen that is already showing 7's chapters.
@@ -1161,6 +1171,7 @@ export default function Home() {
                 tourStep={tour} preparing={preparingCard} lapsed={entLapsed} yearInfo={yearInfo}
                 onStartTour={tourOnOffer ? startTour : undefined} tourActive={!!tour}
                 onScope={onLessonsScope} onEditYearBudget={onEditYearBudget}
+                paneIntent={lessonsPaneIntentRef}
                 onDismissPrepareError={onDismissPrepareError} />
             </div>
           ) : (editFlow === "profile" && ready) ? (

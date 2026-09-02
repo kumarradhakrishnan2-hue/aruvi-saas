@@ -1142,12 +1142,15 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
           <p className="fr-hint">Every class Aruvi offers for {draft.name}
             {portalStage ? " at this stage" : ""} is already in your profile.</p>
         )}
-        {/* Same mode rule as the subject wheel. Adding (including the add-subject run, where the
-            list starts empty) clusters; managing does not, because it pre-ticks the enrolled classes
-            and clustering would hide exactly the grades she came to add — VI + IX ticked makes VII
-            and VIII vanish. */}
+        {/* ★ REVERSED 2026-08-29 (founder, knowingly): manage mode clusters again. The
+            2026-07-26 rule ("never cluster an add/remove wheel over a full list") was struck for
+            classes and sections — the founder prefers the picked classes gathered adjacent on
+            top, accepting the recorded cost: with VI + IX ticked, VII and VIII are hidden inside
+            the cluster until IX is unticked. The subject manage wheel above KEEPS the old rule —
+            it is the site of the original swallowed-Mathematics defect and was not part of the
+            reversal. */}
         {options.length > 0 && (
-          <PickWheel options={options} selected={picked} onToggle={toggle} cluster={!manageC}
+          <PickWheel options={options} selected={picked} onToggle={toggle}
             ariaLabel={`Classes for ${draft.name}`} labelFor={(g) => `Class ${classNum(g)}`}>
             {/* ★ "Save", not "Continue", in manage mode (founder, 2026-08-27): the word states
                 whether anything follows. Manage ENDS here now — the tick applies and the window
@@ -1378,9 +1381,10 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
         <div className="kicker kicker-ochre">{sub.name} · Class {classNum(g.grade)} · sections</div>
         <h1 className="fr-q">Edit sections of Class {classNum(g.grade)}</h1>
         <p className="fr-hint">Tick to keep or add a section, untick to remove one. A removed section loses its bookmark — your lessons stay in the library. To remove the whole class, use the basket on the class.</p>
-        {/* Pre-ticked over the whole A–Z list, so clustering would hide B…Q for a class that has
-            A and R — the sections she is most likely to be adding. */}
-        <PickWheel options={SECTION_LETTERS} selected={picked} onToggle={toggle} cluster={false}
+        {/* ★ REVERSED 2026-08-29 (founder, knowingly): clusters again — picked sections gather
+            adjacent on top (6C + 6E side by side, 6F… below), accepting the recorded cost that
+            a class holding A and R hides B…Q inside the cluster until R is unticked. */}
+        <PickWheel options={SECTION_LETTERS} selected={picked} onToggle={toggle}
           ariaLabel="Sections" labelFor={(s) => `${classNum(g.grade)}${s}`}
           leadingHeader="Section" trailingHeader="customize"
           summaryFor={(s) => secSummary(g.grade, s, secNames)}

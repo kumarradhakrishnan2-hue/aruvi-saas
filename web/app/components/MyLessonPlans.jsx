@@ -278,10 +278,9 @@ function ProposedCard({ preparing, onDismiss }) {
 
 export default function MyLessonPlans({ readiness, onAllocate, tourStep, preparing,
                                         onStartTour, tourActive, onDismissPrepareError, lapsed,
-                                        yearInfo, onScope, onEditYearBudget }) {
+                                        yearInfo, onScope, onEditYearBudget, paneIntent }) {
   const LS_SUBJECT = userKey("mylessons_subject");
   const LS_CLASS = userKey("mylessons_class");
-  const LS_PANE = userKey("mylessons_pane");
   const subjects = useMemo(() => (readiness && readiness.subjects) || [], [readiness]);
 
   // Subject in focus (by display name); class in focus (uppercase Roman). RESTORE the last choice
@@ -323,10 +322,18 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
   // (plan.archived); there is no hard delete. "active" is the default — a teacher lives here.
   const [view, setView] = useState("active");
   // Which pane is showing: the prepared-chapter card list ("lessons") or the whole-year "plan"
-  // (YearPlan) — the same Subject·Class scope, two lenses. Persisted per user so a flip survives
-  // the unmount/remount on tab switch and a full refresh (mirrors LS_SUBJECT/LS_CLASS above).
-  const [pane, setPane] = useState(() => (lsGet(LS_PANE) === "plan" ? "plan" : "lessons"));
-  const onPane = (p) => { setPane(p); lsSet(LS_PANE, p); };
+  // (YearPlan) — the same Subject·Class scope, two lenses.
+  // ★ NOT persisted (founder, 2026-08-29): every ordinary revisit of My Lessons opens on
+  // "Your lessons" — a teacher who checked the Year Plan yesterday should not find the
+  // repository hiding behind it today. The ONE exception is the Year-Plan budget pencil's
+  // round trip (pencil → profile budget step → back): page.jsx marks that departure in the
+  // one-shot `paneIntent` ref, and the remount consumes it here so the pencil is not a
+  // one-way door. Consumed in an effect (not the initialiser) so a double-invoked dev
+  // render can't burn it before the state captures it.
+  const [pane, setPane] = useState(() =>
+    (paneIntent && paneIntent.current === "plan") ? "plan" : "lessons");
+  useEffect(() => { if (paneIntent) paneIntent.current = null; }, [paneIntent]);
+  const onPane = (p) => { setPane(p); };
   const [toast, setToast] = useState(null);         // { kind:"ok"|"block", text } | null
 
   // ── follow the lesson being prepared into view (2026-08-06) ──────────────────────
@@ -335,8 +342,8 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
   // looking at English VI and prepares Science IX, the proposed card would be drawn into
   // a list she is not on and she would arrive to an unchanged screen — a worse outcome
   // than the screen she used to wait on. So a new preparing descriptor STEERS the panes:
-  // its subject·class, the lessons pane, the live view. Persisted like any other switch,
-  // because after it resolves this is genuinely where she is. Runs on the descriptor's
+  // its subject·class, the lessons pane, the live view. Subject/class persist like any
+  // other switch (the pane deliberately doesn't — see above). Runs on the descriptor's
   // identity, so it fires once per prepare and never fights her wheels mid-wait.
   const prepKey = preparing ? `${preparing.subject}|${preparing.grade}|${preparing.chapterNo}` : "";
   useEffect(() => {
@@ -346,7 +353,7 @@ export default function MyLessonPlans({ readiness, onAllocate, tourStep, prepari
     const g = (preparing.grade || "").toUpperCase();
     if (g && g !== activeGrade) { setActiveGrade(g); lsSet(LS_CLASS, g); }
     setView("active");
-    setPane("lessons"); lsSet(LS_PANE, "lessons");
+    setPane("lessons");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prepKey]);
 

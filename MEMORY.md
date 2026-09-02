@@ -687,7 +687,47 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-27 (newest) — THE USER AGREEMENT IS A STEP, NOT A CHECKBOX:
+## 2026-08-29 (newest) — THE COMPLETION TOAST WAS TELLING THE TRUTH: our own stale
+push was clobbering the done-flag (found live, 1000000002, Class 6 Roja + Neithal, ch 1)
+
+**The report.** Marking the LAST unit complete sometimes raised "That didn't save — your
+classes are as Aruvi has them"; doing it again succeeded. Two live instances, both on the
+completion transition, never on ordinary unit advances.
+
+**The mechanism.** `markComplete` on the last unit ran `writePointer(...)` then `setDone(true)`.
+Each calls `pushSectionState`, and each push SNAPSHOTTED localStorage at call time — so push #1
+carried `done:false` (lu_done not yet written) and push #2 `done:true`. Two in-flight POSTs,
+different payloads, racing: whenever the network delivered the stale one second, the server
+ended `done:false`, the read-after-write verifier (2026-08-10 doctrine) truthfully found the
+mismatch, and the toast fired. **"Random" because it needed the reorder; completion-only
+because ordinary advances push two IDENTICAL payloads, which converge under any ordering.**
+The server file adapter's process-wide lock keeps the file whole but decides nothing about
+arrival order — the race was purely client-side.
+
+**The fix — at the shared writer, not the dozen call sites** (`web/app/lib/sectionState.js`):
+`pushSectionState` now COALESCES same-tick calls (the snapshot is taken in a microtask, after
+every localStorage write of the tick has settled → one push, final state) and SERIALIZES
+pushes per section (a call landing mid-flight queues one follow-up that snapshots fresh,
+instead of racing the wire). Cross-section pushes still parallel. Queue-logic unit-tested in
+isolation (one push with `done:true` for the markComplete sequence; serialized follow-up for
+mid-flight calls); babel-parse clean. **Live pass owed**: complete a chapter's last unit and
+confirm no toast + server row `done:true`.
+
+★ **The keep-lesson: a fire-and-forget writer that snapshots at CALL time turns any
+multi-write UI action into a payload race.** Coalesce at the writer, snapshot after settle.
+Same class as the 2026-08-21 seeding-effects clobber (two writers, one value, no ordering) —
+this one just needed the network to shuffle it.
+
+**Same session, two founder-driven UI reversals, both recorded in-code:** (a) My Lessons no
+longer persists its pane (`LS_PANE` retired) — every ordinary revisit opens on "Your lessons";
+the Year-Plan budget pencil's round trip survives via the one-shot `lessonsPaneIntentRef`
+(page.jsx stamps, MyLessonPlans remount consumes, `goClasses` clears) — CLAUDE.md's pencil
+bullet amended. (b) The manage-mode class + section wheels CLUSTER again (founder overrode
+his own 2026-07-26 "never cluster an add/remove wheel" rule, knowingly accepting that A+R
+ticked hides B–Q); the SUBJECT manage wheel keeps the old rule — it is the site of the
+original swallowed-Mathematics defect. Both static-verified only; live + 360px pass owed.
+
+## 2026-08-27 — THE USER AGREEMENT IS A STEP, NOT A CHECKBOX:
 ## SIX TICKS BEFORE SHE CHOOSES SUBJECTS, KEPT AS EVIDENCE
 
 **What changed.** `docs/legal/aruvi_consent_and_disclaimer_v0.1.md` — the founder's draft

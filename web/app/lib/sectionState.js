@@ -104,8 +104,37 @@ export function readLocalSection(sectionKey) {
 let onSectionMismatch = null;
 export function setSectionMismatchHandler(fn) { onSectionMismatch = fn; }
 
+/* ★ COALESCED AND SERIALIZED PER SECTION (2026-08-29 — the "that didn't save" ghost,
+ * found live on 1000000002, Class 6 Roja, ch 1). Completing a chapter's LAST unit fires
+ * TWO pushes in one tick: writePointer's (snapshotted BEFORE lu_done is set → done:false)
+ * and setDone's (done:true). Two in-flight POSTs with DIFFERENT payloads race; whenever
+ * the network delivered the stale one second, the server ended done:false, the read-back
+ * truthfully disagreed with her screen, and the mismatch toast fired — "randomly",
+ * because it needed the reorder. On ordinary units both payloads are identical, so any
+ * ordering converges — which is why only chapter COMPLETION ever complained.
+ *
+ * The fix is here, not at the callers (a dozen call sites, any pair can race):
+ *   · same-tick calls COALESCE — the snapshot is taken in a microtask, after every
+ *     localStorage write of the tick has settled, so one push carries the final state;
+ *   · pushes for the SAME section SERIALIZE — a call landing mid-flight queues one
+ *     follow-up push (which snapshots fresh) instead of racing the wire.
+ * Cross-section pushes still run in parallel; the server's per-process lock keeps the
+ * file whole, and different sections are different rows. */
+const pushQueues = new Map();   // sectionKey → { queued, chain }
+
 export function pushSectionState(sectionKey) {
   if (typeof window === "undefined" || !sectionKey) return;
+  let q = pushQueues.get(sectionKey);
+  if (!q) { q = { queued: false, chain: Promise.resolve() }; pushQueues.set(sectionKey, q); }
+  if (q.queued) return;          // a push is already scheduled — it will snapshot the final state
+  q.queued = true;
+  q.chain = q.chain.then(() => {
+    q.queued = false;            // from here a new call schedules a fresh push AFTER this one
+    return syncSectionNow(sectionKey);
+  }).catch(() => {});
+}
+
+function syncSectionNow(sectionKey) {
   const { chapter, unit, done } = readLocalSection(sectionKey);
   const bm = readLocalBookmark(sectionKey);
   // Y, known upfront: this section tracks `chapter` and is (or is not) done — or, when there is
@@ -120,11 +149,10 @@ export function pushSectionState(sectionKey) {
   });
   try {
     if (!chapter) {
-      verify(() => fetch(`${API}/section-state/${encodeURIComponent(sectionKey)}`,
+      return verify(() => fetch(`${API}/section-state/${encodeURIComponent(sectionKey)}`,
         withUser({ method: "DELETE" })).then((r) => { if (!r.ok) throw new Error(String(r.status)); }));
-      return;
     }
-    verify(() => fetch(`${API}/section-state`, withUser({
+    return verify(() => fetch(`${API}/section-state`, withUser({
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -139,7 +167,7 @@ export function pushSectionState(sectionKey) {
         bookmark_phase: bm ? bm.phase : null,
       }),
     })).then((r) => { if (!r.ok) throw new Error(String(r.status)); }));
-  } catch {}
+  } catch { return Promise.resolve(); }
 }
 
 /* ★ CUTOVER'S ONE EXCEPTION (founder, 2026-08-26). `pullSectionState` below deliberately
