@@ -122,6 +122,87 @@ def test_html_part_says_everything_the_text_does():
     print("✓ The HTML part carries every fact the text does, in mail-client markup")
 
 
+def test_letterhead_wordmark_travels_inline_by_cid():
+    """★ THE LETTERHEAD IS THE MEYY WORDMARK (2026-09-03), and it must ARRIVE. Both HTML
+    frames reference it as `cid:`; `mail_templates.inline_images()` is the matching
+    image; SmtpNotifier embeds it as a multipart/related part of the HTML alternative
+    (the one inline form Gmail renders — data: URIs are stripped, and there is no host
+    yet for a URL). Three things are pinned: (a) every frame that references the cid is
+    paired with the image; (b) the built MIME message really is
+    alternative[text, related[html, image/png with that Content-ID]]; (c) the image is
+    NOT an attachment — a plain-text client must not receive a stray PNG, and the
+    invoice count in test_invoice stays honest."""
+    from aruvi_core import brand
+    from aruvi_core.ports import Attachment
+
+    sub = mail_templates.subscription_confirmation(
+        name="Kumar", scopes=["english/middle"], amount_inr=500, valid_until="2027-08-26",
+        mobile="1000000000", scope_valid_until={"english/middle": "2027-08-26"},
+        added=None, invoice_number="", unit_amount=500, has_attachment=False)
+    sup = mail_templates.support_acknowledgement(
+        name="Kumar", reference="ARV-S-742", category="problem", message="It broke.",
+        reply_days=2, received_on="2026-09-03", context={})
+    cid = f"cid:{brand.EMAIL_CID}"
+    for html in (sub["html"], sup["html"]):
+        assert cid in html, "frame references the wordmark by cid"
+        assert "Meyy</span>" not in html, "the typeset name is gone from the letterhead"
+        assert 'alt="Meyy"' in html, "images-off clients still read the name"
+    imgs = mail_templates.inline_images()
+    assert len(imgs) == 1 and isinstance(imgs[0], Attachment)
+    assert imgs[0].content_id == brand.EMAIL_CID and imgs[0].mime_type == "image/png"
+    assert imgs[0].content[:8] == b"\x89PNG\r\n\x1a\n", "a real PNG, from the shipped raster"
+
+    # (b) + (c): build the MIME message exactly as SmtpNotifier does, capturing instead
+    # of sending. smtplib is patched at the module the adapter imported it into.
+    import smtplib
+    from aruvi_core.adapters import smtp_notifier as mod
+    captured = {}
+
+    class _FakeSMTP:
+        def __init__(self, *a, **k): pass
+        def __enter__(self): return self
+        def __exit__(self, *a): return False
+        def ehlo(self): pass
+        def starttls(self, context=None): pass
+        def login(self, u, p): pass
+        def send_message(self, m): captured["msg"] = m
+
+    real = mod.smtplib.SMTP
+    mod.smtplib.SMTP = _FakeSMTP
+    try:
+        r = SmtpNotifier("smtp.example.com", 587, "u", "p", from_addr="a@example.com").send(
+            EmailMessage(to="t@example.com", subject="s", text="plain", html=sub["html"],
+                         attachments=[Attachment("Meyy-invoice-1.pdf", b"%PDF-1.4")],
+                         inline=imgs))
+    finally:
+        mod.smtplib.SMTP = real
+    assert r["status"] == "sent", r
+    m = captured["msg"]
+    assert m.get_content_type() == "multipart/mixed", m.get_content_type()
+    alt = m.get_payload()[0]
+    assert alt.get_content_type() == "multipart/alternative"
+    text_part, html_holder = alt.get_payload()
+    assert text_part.get_content_type() == "text/plain"
+    assert html_holder.get_content_type() == "multipart/related", html_holder.get_content_type()
+    html_part, img_part = html_holder.get_payload()
+    assert html_part.get_content_type() == "text/html"
+    assert img_part.get_content_type() == "image/png"
+    assert img_part["Content-ID"] == f"<{brand.EMAIL_CID}>"
+    # the invoice is the ONLY thing attached; the wordmark is not one of her files
+    attached = [p for p in m.iter_attachments()]
+    assert [p.get_filename() for p in attached] == ["Meyy-invoice-1.pdf"], \
+        [p.get_filename() for p in attached]
+    # and a mail with NO html part carries no orphan image at all
+    mod.smtplib.SMTP = _FakeSMTP
+    try:
+        SmtpNotifier("smtp.example.com", 587, "u", "p").send(
+            EmailMessage(to="t@example.com", subject="s", text="plain", inline=imgs))
+    finally:
+        mod.smtplib.SMTP = real
+    assert captured["msg"].get_content_type() == "text/plain"
+    print("✓ The wordmark rides inline by cid inside the HTML part — never as an attachment")
+
+
 if __name__ == "__main__":
     test_adapters_satisfy_the_port()
     test_file_notifier_writes_a_readable_message()
@@ -131,4 +212,5 @@ if __name__ == "__main__":
     test_confirmation_singular_and_enterprise()
     test_copy_never_claims_certification()
     test_html_part_says_everything_the_text_does()
+    test_letterhead_wordmark_travels_inline_by_cid()
     print("\n✅ All notifier tests passed!")

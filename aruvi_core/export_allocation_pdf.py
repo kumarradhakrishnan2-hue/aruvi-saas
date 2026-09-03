@@ -316,8 +316,8 @@ def render_pdf_html(report: CompetencyAllocationReport) -> str:
 
   <table class="hdr"><tr>
     <td width="60%">
-      {brand.pdf_img_html(16)}&nbsp;&nbsp;<span class="brand-studio">LESSON STUDIO</span><br/>
-      <span class="brand-ncf">NCF 2023 aligned</span>
+      {brand.pdf_img_html(16)}<br/>
+      <span class="brand-studio">LESSON STUDIO</span>
     </td>
     <td width="40%" align="right">
       <span class="rep-title">Allocation &amp; Competency report</span><br/>

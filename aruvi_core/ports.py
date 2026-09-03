@@ -517,6 +517,10 @@ class Attachment:
     filename: str
     content: bytes
     mime_type: str = "application/pdf"
+    # Set on an INLINE image (2026-09-03): the HTML references it as `cid:{content_id}`
+    # and the transport embeds it as a `multipart/related` part of the HTML body rather
+    # than a downloadable file. Empty for an ordinary attachment.
+    content_id: str = ""
 
 
 @dataclass
@@ -527,13 +531,20 @@ class EmailMessage:
 
     `attachments` (2026-08-26) carries the invoice PDF. A transport that cannot attach
     must still deliver the TEXT — the body always states the invoice number, so the mail
-    is complete on its own and the file is a convenience, never the message."""
+    is complete on its own and the file is a convenience, never the message.
+
+    `inline` (2026-09-03) carries images the HTML body references by `cid:` — today
+    the MEYY wordmark in the letterhead. Kept apart from `attachments` on purpose: an
+    inline image is part of the HTML's rendering, not something she receives, so a
+    caller counting "what came with this mail" (the invoice test does) never sees it,
+    and a plain-text transport drops it with the HTML it belongs to."""
     to: str
     subject: str
     text: str
     html: str = ""
     reply_to: str = ""
     attachments: List["Attachment"] = field(default_factory=list)
+    inline: List["Attachment"] = field(default_factory=list)
 
 
 @runtime_checkable

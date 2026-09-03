@@ -110,7 +110,15 @@ def add_wordmark(paragraph: Any, height_pt: float = 17.0) -> Any:
     the run so a caller can keep adding text (the LESSON STUDIO kicker) after it."""
     from docx.shared import Pt  # noqa: WPS433 — python-docx is optional at import time
     run = paragraph.add_run()
-    run.add_picture(io.BytesIO(wordmark_png_bytes()), height=Pt(height_pt))
+    shape = run.add_picture(io.BytesIO(wordmark_png_bytes()), height=Pt(height_pt))
+    # python-docx emits <wp:inline> WITHOUT distL/distR/distT/distB. Word reads the
+    # absence as 0; LibreOffice does not, and pads the picture ~9pt to the left — measured
+    # 2026-09-03 (a plain black square showed the same shift, so it is the renderer, not
+    # the raster). Stating all four as 0 makes the mark sit flush over the "NCF 2023
+    # aligned" line beneath it in both, as the typeset "Meyy." did.
+    inline = shape._inline
+    for attr in ("distT", "distB", "distL", "distR"):
+        inline.set(attr, "0")
     return run
 
 

@@ -27,6 +27,7 @@ from docx.shared import Pt, RGBColor, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
+from . import brand   # the MEYY wordmark raster (2026-09-03)
 
 from .report_competency import grade_roman, subject_display
 from .compound_options import display_label, group_of, grouped_option_sets
@@ -182,11 +183,14 @@ def _header(doc, right_title, grade, subject, dt, title_color=PINE):
     t = doc.add_table(rows=1, cols=2)
     _no_borders(t)
     lc = t.cell(0, 0).paragraphs[0]
-    r = _run(lc, "Meyy", bold=True, size=17, color=PINE, font=SERIF)
-    _run(lc, ".", bold=True, size=17, color=CLAY, font=SERIF)
-    _run(lc, "  LESSON STUDIO", size=7.5, color=SOFT, caps=True)
+    lc.paragraph_format.space_after = Pt(0)
+    brand.add_wordmark(lc, 17)   # the MEYY wordmark (2026-09-03)
+    # LESSON STUDIO beneath the mark, as the web bar (founder, 2026-09-03; the NCF line is
+    # gone). Spacing tightened to match the other three builders — the document default
+    # left a paragraph's worth of air between mark and kicker.
     lc2 = t.cell(0, 0).add_paragraph()
-    _run(lc2, "NCF 2023 aligned", italic=True, size=8, color=SOFT, font=SERIF)
+    lc2.paragraph_format.space_before = Pt(1)
+    _run(lc2, "LESSON STUDIO", size=7.5, color=SOFT, caps=True)
     rc = t.cell(0, 1).paragraphs[0]
     rc.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     _run(rc, right_title, bold=True, size=12, color=title_color, font=SERIF)

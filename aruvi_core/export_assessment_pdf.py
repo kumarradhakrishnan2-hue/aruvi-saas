@@ -475,8 +475,8 @@ def render_assessment_pdf_html(
 
   <table class="hdr" width="100%"><tr>
     <td width="60%">
-      {brand.pdf_img_html(16)}&nbsp;&nbsp;<span class="brand-studio">LESSON STUDIO</span><br/>
-      <span class="brand-ncf">NCF 2023 aligned</span>
+      {brand.pdf_img_html(16)}<br/>
+      <span class="brand-studio">LESSON STUDIO</span>
     </td>
     <td width="40%" align="right">
       <span class="rep-title">Chapter Assessment</span><br/>

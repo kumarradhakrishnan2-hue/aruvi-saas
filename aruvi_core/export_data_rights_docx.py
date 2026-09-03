@@ -33,6 +33,7 @@ from typing import Any, Dict, List
 from docx import Document
 from docx.shared import Pt, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
+from . import brand   # the MEYY wordmark raster (2026-09-03)
 
 from .export_allocation_docx import (
     _cell, _hairlines, _no_borders, _rule, _run, _section_head, _set_widths,
@@ -92,11 +93,9 @@ def build_export_docx(payload: Dict[str, Any]) -> bytes:
     lc = ht.rows[0].cells[0]
     lc.paragraphs[0].clear()
     lp = lc.paragraphs[0]; lp.paragraph_format.space_after = Pt(0)
-    _run(lp, "Meyy", size=17, bold=True, color=PINE, font=SERIF)
-    _run(lp, ".", size=17, bold=True, italic=True, color=CLAY, font=SERIF)
-    _run(lp, "  LESSON STUDIO", size=7, color=GRAY, font="Calibri")
-    lp2 = lc.add_paragraph(); lp2.paragraph_format.space_before = Pt(1)
-    _run(lp2, "NCF 2023 aligned", size=8, italic=True, color=GRAY, font=SERIF)
+    brand.add_wordmark(lp, 17)   # the MEYY wordmark (2026-09-03)
+    lp2 = lc.add_paragraph(); lp2.paragraph_format.space_before = Pt(1)   # kicker beneath the mark; NCF line gone (founder, 2026-09-03)
+    _run(lp2, "LESSON STUDIO", size=7, color=GRAY, font="Calibri")
     rc = ht.rows[0].cells[1]
     rc.paragraphs[0].clear()
     rp = rc.paragraphs[0]; rp.alignment = WD_ALIGN_PARAGRAPH.RIGHT

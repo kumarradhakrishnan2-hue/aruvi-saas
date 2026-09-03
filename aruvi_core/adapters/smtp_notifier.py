@@ -67,6 +67,21 @@ class SmtpNotifier(Notifier):
             # nothing else (2026-08-26).
             if (msg.html or "").strip():
                 m.add_alternative(msg.html, subtype="html")
+                # Inline images (the MEYY wordmark, 2026-09-03) ride INSIDE the HTML
+                # alternative as multipart/related parts, addressed by Content-ID —
+                # the one inline form Gmail renders (it strips data: URIs). They are
+                # added only when there IS an HTML part, because a cid: has nothing to
+                # point at otherwise; and the stdlib addresses the HTML part as the
+                # last payload once add_alternative has run.
+                inline = [a for a in (msg.inline or []) if a.content_id and a.content]
+                if inline:
+                    html_part = m.get_payload()[-1]
+                    for att in inline:
+                        maintype, _, subtype = (att.mime_type or "image/png").partition("/")
+                        html_part.add_related(att.content, maintype=maintype,
+                                              subtype=subtype or "png",
+                                              cid=f"<{att.content_id}>",
+                                              filename=att.filename)
             for att in (msg.attachments or []):
                 maintype, _, subtype = (att.mime_type or "application/octet-stream").partition("/")
                 m.add_attachment(att.content, maintype=maintype,

@@ -68,7 +68,9 @@ class FileNotifier(Notifier):
                     written.append(f"{stamp}-{_slug(msg.to)}.html")
                 except Exception:                    # noqa: BLE001
                     pass
-            for att in (msg.attachments or []):
+            # Inline images (the letterhead wordmark) are written beside the message like
+            # any attachment — on disk there is no HTML to embed them in (2026-09-03).
+            for att in list(msg.attachments or []) + list(msg.inline or []):
                 name = f"{stamp}-{_slug(att.filename or 'attachment')}"
                 try:
                     with open(self.outbox_dir / name, "wb") as af:

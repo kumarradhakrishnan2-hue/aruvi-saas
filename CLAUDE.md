@@ -456,8 +456,27 @@ generic look.
   still reads **MyAruvi.com** because that is a legal name, not copy — change it only when the
   registered entity does. Tests that pin the wording (data_rights · invoice · notifier ·
   support · year_plan_export) moved with it; backend suite green bar the three pre-existing
-  content defects of 2026-08-27. The exports' typeset "Meyy." + dot brand block is the one
-  place the WORDMARK has not yet replaced text — a follow-on. Store icons: `icons/apple-icon.png` is now the
+  content defects of 2026-08-27. ★ **AND THE WORDMARK REACHED EVERY LETTERHEAD, same day:**
+  `aruvi_core/brand.py` + ONE shipped raster `aruvi_core/brand/meyy-wordmark-pine.png`
+  (pine stroke, brand-red dots, transparent; drawn from the SAME paths as MeyyMark.jsx, trimmed
+  to the ink so its bottom IS the baseline; `render_png()` regenerates it — cairosvg at
+  authoring time only, the runtime just reads the file, bundled like `fonts/`). Six PDF
+  templates use `brand.pdf_img_html(16)` — ⚠️ it emits **`align="top"`, deliberately not
+  `baseline`**: xhtml2pdf maps an inline image's `baseline` to `bottom` and hangs it 0.2×its
+  height below the text, and `top` computes to exactly zero for an inline image (fontSize is
+  its draw height); every CSS `vertical-align` value, keyword or length, CRASHES the library.
+  Four DOCX builders use `brand.add_wordmark(p, 17)`, which sets `distL/R/T/B="0"` on
+  `wp:inline` because LibreOffice pads a python-docx picture ~9pt left when they are absent
+  (Word reads absence as 0). Email: the frames reference `cid:meyy-wordmark`; the image is a
+  new **`EmailMessage.inline`** list (`Attachment.content_id`), embedded by SmtpNotifier as a
+  `multipart/related` part INSIDE the HTML alternative — never an attachment, so the invoice
+  count stays honest and a text-only client gets no stray PNG; data: URIs were rejected because
+  Gmail strips them. `mail_templates.inline_images()` is what the two teacher-mail routes pass;
+  `test_letterhead_wordmark_travels_inline_by_cid` pins the MIME shape. ★ **The export lockup is STACKED, as the web bar is** (founder, same day): the mark on
+  its own line, LESSON STUDIO beneath it, and the "NCF 2023 aligned" line is GONE from all ten
+  letterheads (the `.brand-ncf` CSS rules remain, unused). Email frames still carry the
+  side-by-side kicker + NCF line — not asked for. All ten exports were
+  rasterised and inspected (PDFs via pdftoppm, DOCX via LibreOffice); suite 42 green. Store icons: `icons/apple-icon.png` is now the
   4a LIGHT tile at 1024² RGB (App Store: no alpha) and `icons/play-icon.png` the same at 512²
   (Play's exact size); light because a dark tile vanishes on a dark wallpaper. `icons/icon.png`
   (the old spiral, 512²) is untouched. ⚠️ **`web/app/icon.png` and `web/app/apple-icon.png`

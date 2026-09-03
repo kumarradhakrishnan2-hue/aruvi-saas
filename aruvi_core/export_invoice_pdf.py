@@ -160,8 +160,8 @@ def render_invoice_html(inv: Invoice) -> str:
 </style></head><body>
 
   <table class="hdr"><tr>
-    <td>{brand.pdf_img_html(16)}&nbsp;&nbsp;<span class="brand-studio">LESSON STUDIO</span><br/>
-        <span class="brand-ncf">NCF 2023 aligned</span>{gstin}</td>
+    <td>{brand.pdf_img_html(16)}<br/>
+      <span class="brand-studio">LESSON STUDIO</span>{gstin}</td>
     <td><div class="doc-t">Invoice</div>
         <div class="doc-n">{_esc(inv.number)}<br/>{_date(inv.issued_at)}</div></td>
   </tr></table>

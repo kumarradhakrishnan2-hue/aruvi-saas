@@ -45,6 +45,7 @@ from docx import Document
 from docx.shared import Pt, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.table import WD_TABLE_ALIGNMENT
+from . import brand   # the MEYY wordmark raster (2026-09-03)
 
 from .export_allocation_docx import (
     _bg, _cell, _hairlines, _no_borders, _rule, _run, _set_widths,
@@ -116,12 +117,10 @@ def export_year_plan_docx(payload: Dict[str, Any]) -> bytes:
     lc.paragraphs[0].clear()
     lp = lc.paragraphs[0]
     lp.paragraph_format.space_after = Pt(0)
-    _run(lp, "Meyy", size=17, bold=True, color=PINE, font=SERIF)
-    _run(lp, ".", size=17, bold=True, italic=True, color=CLAY, font=SERIF)
-    _run(lp, "  LESSON STUDIO", size=7, color=GRAY, font="Calibri")
-    lp2 = lc.add_paragraph()
+    brand.add_wordmark(lp, 17)   # the MEYY wordmark (2026-09-03)
+    lp2 = lc.add_paragraph()   # kicker beneath the mark; NCF line gone (founder, 2026-09-03)
     lp2.paragraph_format.space_before = Pt(1)
-    _run(lp2, "NCF 2023 aligned", size=8, italic=True, color=GRAY, font=SERIF)
+    _run(lp2, "LESSON STUDIO", size=7, color=GRAY, font="Calibri")
 
     rc = ht.rows[0].cells[1]
     rc.paragraphs[0].clear()

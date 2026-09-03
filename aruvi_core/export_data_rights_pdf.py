@@ -183,8 +183,8 @@ def render_pdf_html(payload: Dict[str, Any]) -> str:
 </style></head>
 <body>
   <table class="hdr"><tr>
-    <td>{brand.pdf_img_html(16)}&nbsp;&nbsp;<span class="brand-studio">LESSON STUDIO</span><br/>
-        <span class="brand-ncf">NCF 2023 aligned</span></td>
+    <td>{brand.pdf_img_html(16)}<br/>
+      <span class="brand-studio">LESSON STUDIO</span></td>
     <td align="right"><span class="rep-title">Your data export</span><br/>
         <span class="rep-sub">{_esc(who)} · {_esc(date_long(when))}</span></td>
   </tr></table>

@@ -8,6 +8,8 @@ and scopes spelled the way the teacher bought them ("Social Sciences · Middle")
 from __future__ import annotations
 
 import html as _html
+
+from aruvi_core import brand   # the MEYY wordmark, inline by cid (2026-09-03)
 from datetime import date
 from typing import Dict, List, Tuple
 
@@ -186,12 +188,8 @@ def _html_body(*, hello: str, headline: str, new: List[str], also: List[str],
                 border:1px solid {_LINE};border-radius:4px;">
 
    <tr><td style="padding:26px 30px 0;">
-     <span style="font-family:Georgia,'Times New Roman',serif;font-size:24px;
-           font-weight:bold;color:{_PINE};">Meyy</span><span
-           style="font-family:Georgia,serif;font-size:24px;font-style:italic;
-           color:{_CLAY};">.</span>
-     <span style="font-family:Helvetica,Arial,sans-serif;font-size:10px;
-           letter-spacing:2px;color:{_SOFT};padding-left:6px;">LESSON STUDIO</span>
+     {brand.email_img_html(24)}&nbsp;&nbsp;<span style="font-family:Helvetica,Arial,sans-serif;font-size:10px;
+           letter-spacing:2px;color:{_SOFT};padding-left:8px;">LESSON STUDIO</span>
      <div style="font-family:Georgia,serif;font-style:italic;font-size:12px;
           color:{_SOFT};padding-top:4px;">NCF 2023 aligned</div>
    </td></tr>
@@ -298,12 +296,8 @@ def _html_shell(*, hello: str, lead: str, rows: List[Tuple[str, str]],
                 border:1px solid {_LINE};border-radius:4px;">
 
    <tr><td style="padding:26px 30px 0;">
-     <span style="font-family:Georgia,'Times New Roman',serif;font-size:24px;
-           font-weight:bold;color:{_PINE};">Meyy</span><span
-           style="font-family:Georgia,serif;font-size:24px;font-style:italic;
-           color:{_CLAY};">.</span>
-     <span style="font-family:Helvetica,Arial,sans-serif;font-size:10px;
-           letter-spacing:2px;color:{_SOFT};padding-left:6px;">LESSON STUDIO</span>
+     {brand.email_img_html(24)}&nbsp;&nbsp;<span style="font-family:Helvetica,Arial,sans-serif;font-size:10px;
+           letter-spacing:2px;color:{_SOFT};padding-left:8px;">LESSON STUDIO</span>
      <div style="font-family:Georgia,serif;font-style:italic;font-size:12px;
           color:{_SOFT};padding-top:4px;">NCF 2023 aligned</div>
    </td></tr>
@@ -541,3 +535,11 @@ this mail if anything looks wrong and it will be put right.
         valid_until=(svu.get(new[0]) if new and svu.get(new[0]) else valid_until),
         mobile=mobile, invoice_number=invoice_number, has_attachment=has_attachment)
     return {"subject": subject, "text": text, "html": html}
+
+
+def inline_images() -> list:
+    """What every HTML mail built here must travel with: the letterhead wordmark the
+    frames reference as `cid:` (2026-09-03). Pass as `EmailMessage(inline=...)`. A
+    caller that forgets it sends a broken image — so the two frames and this list are
+    kept in one module, and test_notifier checks the pairing."""
+    return [brand.email_inline_attachment()]

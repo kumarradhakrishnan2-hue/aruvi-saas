@@ -253,7 +253,7 @@ export default function Login({ onEnter }) {
               placeholder="98xxxxxxxx or you@example.com" autoComplete="off" spellCheck={false} />
           </label>
           <button type="submit" className="primary login-btn" disabled={!signinOk}>
-            Enter Meyy →
+            Enter →
           </button>
         </form>
         {signinErr && <p className="ob-err" role="alert">{signinErr}</p>}

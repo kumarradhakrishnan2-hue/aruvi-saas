@@ -1965,7 +1965,8 @@ def create_support_request(req: SupportMessage,
             reply_days=days, received_on=now[:10], context=record.context)
         result = notifier.send(EmailMessage(
             to=to, subject=body["subject"], text=body["text"],
-            html=body.get("html", ""), reply_to=config.SUPPORT_ADDRESS))
+            html=body.get("html", ""), reply_to=config.SUPPORT_ADDRESS,
+            inline=mail_templates.inline_images()))
         emailed = str(result.get("status", "")) in ("sent", "written")
         if emailed:
             record.acknowledged = True
@@ -2419,7 +2420,8 @@ def _send_subscription_confirmation(to: str, name: str, scopes: List[str],
     result = notifier.send(EmailMessage(
         to=to.strip(), subject=body["subject"], text=body["text"],
         html=body.get("html", ""),
-        reply_to=config.MAIL_REPLY_TO, attachments=list(attachments)))
+        reply_to=config.MAIL_REPLY_TO, attachments=list(attachments),
+        inline=mail_templates.inline_images()))
     if config.MAIL_BCC_FOUNDER and config.MAIL_FROM \
             and config.MAIL_FROM.strip().lower() != to.strip().lower():
         # The founder's copy is a SALES LOG, so it leads with who bought — and stays
