@@ -68,10 +68,10 @@ _KEPT = [
      "why": "The record that you read and accepted the agreement — its version, the "
             "date, and which points you confirmed — is kept as evidence of the "
             "agreement itself. It holds no teaching content, notes or profile details. "
-            "It no longer applies from today: if you use Aruvi again, you will be asked "
+            "It no longer applies from today: if you use Meyy again, you will be asked "
             "to read and accept the agreement afresh."},
     {"what": "Shared lesson-plan library content",
-     "why": "Lesson plans are Aruvi's shared library, not personal data; your account "
+     "why": "Lesson plans are Meyy's shared library, not personal data; your account "
             "held references to them, and those references are erased."},
 ]
 

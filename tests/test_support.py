@@ -132,12 +132,12 @@ def test_billing_gets_the_firmer_window_and_no_ask_aruvi_line():
         name="", reference="ARV-S-743", category="billing", message="Charged twice.",
         reply_days=1)
     assert "1 working day" in b["text"] and "1 working days" not in b["text"]
-    assert "Ask Aruvi" not in b["text"]
+    assert "Ask Meyy" not in b["text"]
     assert "Hello," in b["text"], "no name is still a greeting, not a blank"
     p = mail_templates.support_acknowledgement(
         name="", reference="ARV-S-744", category="problem", message="Broken.")
-    assert "Ask Aruvi" in p["text"], "and it IS offered where it can help"
-    print("✓ Billing carries the firmer promise; the Ask Aruvi line appears only where it helps")
+    assert "Ask Meyy" in p["text"], "and it IS offered where it can help"
+    print("✓ Billing carries the firmer promise; the Ask Meyy line appears only where it helps")
 
 
 def test_an_unknown_category_is_prettified_not_dropped():
@@ -218,6 +218,14 @@ def test_a_case_is_filed_even_with_no_address_on_the_account():
     # She is given somewhere to write FROM her own mail app instead of a dead end —
     # the common case on trial, where the account holds a mobile and nothing else.
     assert "@" in r.json()["address"], "the support address is offered as the fallback"
+    # ★ And it is THE support address (support@meyy.in, founder 2026-09-03) — the same
+    # one GET /support tells the screen and the acknowledgement's reply-to — never the
+    # sending account, which is the founder's own mailbox.
+    from api import config as api_config
+    assert r.json()["address"] == api_config.SUPPORT_ADDRESS
+    assert c.get("/support", headers=H).json()["address"] == api_config.SUPPORT_ADDRESS
+    if not os.environ.get("ARUVI_SUPPORT_ADDRESS"):
+        assert api_config.SUPPORT_ADDRESS == "support@meyy.in"
     stored = api_main.support_repo.load_all("SupportNoMail", "SupportNoMail")
     assert len(stored) == 1, "the message is kept regardless"
     assert stored[0].acknowledged is False, "and we know it was never acknowledged"

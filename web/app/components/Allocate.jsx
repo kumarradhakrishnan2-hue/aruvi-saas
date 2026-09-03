@@ -423,7 +423,7 @@ export default function Allocate({ subject, grade, readiness, onNavigate, single
       console.error(`${fmt.toUpperCase()} export error:`, err);
       const msg = err?.message
         ? err.message
-        : "Couldn't reach the Aruvi engine (is the API running on :8000?).";
+        : "Couldn't reach the Meyy engine (is the API running on :8000?).";
       alert(`Couldn't generate the ${fmt.toUpperCase()} report.\n\n${msg}`);
     } finally {
       setExporting((p) => ({ ...p, [fmt]: false }));
@@ -608,7 +608,7 @@ export default function Allocate({ subject, grade, readiness, onNavigate, single
       <div>
         <button className="back" onClick={() => setStep("final")}>← back to allocation</button>
         <p className="h2">Make a lesson plan</p>
-        <p className="h2-sub">Pick a chapter you&rsquo;ve allocated. Aruvi builds the lesson plan + its assessment. (Live generation is coming soon — allocated chapters with a saved plan open as a preview.)</p>
+        <p className="h2-sub">Pick a chapter you&rsquo;ve allocated. Meyy builds the lesson plan + its assessment. (Live generation is coming soon — allocated chapters with a saved plan open as a preview.)</p>
         {!allocatedList.length ? (
           <div className="empty">No allocated chapters yet — allocate some first.</div>
         ) : (
@@ -740,18 +740,18 @@ export default function Allocate({ subject, grade, readiness, onNavigate, single
         {basis ? (
           <div className="howbox">
             <button className="howtoggle" onClick={() => setShowHow(!showHow)}>
-              <span className="howchevron">{showHow ? "▾" : "▸"}</span> How does Aruvi allocate?
+              <span className="howchevron">{showHow ? "▾" : "▸"}</span> How does Meyy allocate?
             </button>
             {showHow ? (
               <div className="howbody">
                 <p className="howbasis">
-                  Aruvi splits your periods across chapters by each chapter&rsquo;s <b>{basis.basis || "effort index"}</b> — heavier chapters get more time. For {pretty(subject)}, it weighs:
+                  Meyy splits your periods across chapters by each chapter&rsquo;s <b>{basis.basis || "effort index"}</b> — heavier chapters get more time. For {pretty(subject)}, it weighs:
                 </p>
                 <ul className="howfactors">
                   {basis.factors.map((f, i) => <li key={i}>{f}</li>)}
                 </ul>
                 <p className="howmore">
-                  Other subjects weigh different things. Want the deeper &ldquo;why&rdquo; for a chapter? Open the &ldquo;How time is allocated across chapters&rdquo; tab of <b className="howlink">Ask Aruvi</b>.
+                  Other subjects weigh different things. Want the deeper &ldquo;why&rdquo; for a chapter? Open the &ldquo;How time is allocated across chapters&rdquo; tab of <b className="howlink">Ask Meyy</b>.
                 </p>
               </div>
             ) : null}
@@ -925,10 +925,10 @@ export default function Allocate({ subject, grade, readiness, onNavigate, single
           ? "Re-allocate periods across these chapters"
           : "How many periods do these chapters get in total?"}</p>
       <p className="h2-sub">{singleChapter
-        ? "Start with what feels right. In the next screen, Aruvi will give you its recommendation."
+        ? "Start with what feels right. In the next screen, Meyy will give you its recommendation."
         : showReco
-          ? "Aruvi has scored each chapter on its effort index. Here is the suggested split for your total — adjust the number below, or carry the recommendation into the next step."
-          : "Your weekly schedule already tells Aruvi how long each period is — just give the total number of periods. Aruvi splits it across your period lengths, then across chapters in the next steps."}</p>
+          ? "Meyy has scored each chapter on its effort index. Here is the suggested split for your total — adjust the number below, or carry the recommendation into the next step."
+          : "Your weekly schedule already tells Meyy how long each period is — just give the total number of periods. Meyy splits it across your period lengths, then across chapters in the next steps."}</p>
 
       {/* Both budget boxes on top, each a single inline "N periods / N hours" line with the
           hour calculation in small mono print beneath. */}

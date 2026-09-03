@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { API, getJSON, pretty, stageOfGrade, idInUse, errDetail } from "../lib/format";
 import Agreement from "./Agreement";
 import Dropdown from "./Dropdown";
+import MeyyMark from "./MeyyMark";
 import { dateWords as consentDateWords } from "../lib/legalmd";
 
 /* The "already in use" sentence, said the same way wherever a credential clashes
@@ -11,7 +12,7 @@ import { dateWords as consentDateWords } from "../lib/legalmd";
  * sentence of its own to return; the server's text stays the authority on the Pay path.
  * If one is reworded, reword both: api/main.py `_guard_email_not_taken`. */
 export const EMAIL_TAKEN =
-  "This email is already in use by another Aruvi account. Use a different address.";
+  "This email is already in use by another Meyy account. Use a different address.";
 /* Founder, 2026-08-26: this screen CREATES a sign-in, so its refusal stays inside that
  * job — "use a different number". The first cut sent her to the sign-in door with a
  * link; she is standing at the create door, and the instruction there is to create. */
@@ -105,7 +106,7 @@ const DefaultBar = () => (
   <div className="fr-brand ob-bar">
     <header className="hdr">
       <div className="brand">
-        <span className="brand-row">Aruvi<em>.</em></span>
+        <MeyyMark />
         <span className="hdr-brand-tag">lesson studio</span>
       </div>
     </header>
@@ -358,7 +359,7 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
     <div className="modal-backdrop ob-offer-back" role="dialog" aria-modal="true"
       aria-labelledby="ob-offer-t">
       <div className="modal-box ob-offer-box">
-        <h2 className="ob-offer-title" id="ob-offer-t">Would you like to try Aruvi free first?</h2>
+        <h2 className="ob-offer-title" id="ob-offer-t">Would you like to try Meyy free first?</h2>
         <p className="ob-offer-body">
           The free trial gives you any 3 chapters, unlimited lesson plans in each, and
           every feature you need to plan and assess — at no cost, with no time limit.

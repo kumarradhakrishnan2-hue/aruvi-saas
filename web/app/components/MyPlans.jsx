@@ -426,9 +426,9 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
       // Screen 2a — welcome / readiness-incomplete empty state.
       return (
         <div className="welcome">
-          <div className="kicker kicker-ochre welcome-kicker">Welcome to Aruvi</div>
+          <div className="kicker kicker-ochre welcome-kicker">Welcome to Meyy</div>
           <div className="welcome-title">Let&rsquo;s get your week set up</div>
-          <div className="welcome-sub">Aruvi needs two quick things before it can plan with you — your weekly grid of classes, and how long your teaching year is.</div>
+          <div className="welcome-sub">Meyy needs two quick things before it can plan with you — your weekly grid of classes, and how long your teaching year is.</div>
           <div className="welcome-sub">This only takes a few minutes, and you&rsquo;ll only do it once.</div>
           <button className="welcome-begin" onClick={() => setSetupStarted(true)}>Let&rsquo;s begin →</button>
         </div>

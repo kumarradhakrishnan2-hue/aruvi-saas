@@ -74,7 +74,7 @@ export default function AskAruvi({ onClose }) {
   const togglePair = (id) => setOpenPair((cur) => (cur === id ? null : id));
 
   return (
-    <div className="aa-scrim" role="dialog" aria-modal="true" aria-label="Ask Aruvi">
+    <div className="aa-scrim" role="dialog" aria-modal="true" aria-label="Ask Meyy">
       {/* data-tour: guided-tour step 18 rings the OPEN panel (page.jsx opens it on 17→18). */}
       <div className="aa-panel" data-tour="ask-aruvi-root">
 
@@ -88,9 +88,9 @@ export default function AskAruvi({ onClose }) {
                 <circle cx="17.3" cy="8.6" r="1.6" fill="#e8b4a0" stroke="none" />
               </svg>
             </span>
-            <span>Ask Aruvi</span>
+            <span>Ask Meyy</span>
           </div>
-          <button className="aa-close" onClick={onClose} aria-label="Close Ask Aruvi">✕</button>
+          <button className="aa-close" onClick={onClose} aria-label="Close Ask Meyy">✕</button>
         </div>
 
         {/* sticky search bar */}
@@ -98,7 +98,7 @@ export default function AskAruvi({ onClose }) {
           <input
             type="search" value={query} autoFocus
             onChange={(e) => { setQuery(e.target.value); setOpenPair(null); }}
-            placeholder="Search Ask Aruvi…"
+            placeholder="Search Ask Meyy…"
             aria-label="Search questions"
           />
           {searching && (
@@ -117,7 +117,7 @@ export default function AskAruvi({ onClose }) {
                sign-in and the priming fetch. Say what is true and what fixes it — never a
                spinner that implies something is arriving, because offline nothing is. */
             <div className="aa-empty">
-              <p>Ask Aruvi needs to download its answers once before it can work offline.</p>
+              <p>Ask Meyy needs to download its answers once before it can work offline.</p>
               <p>Open it again when you next have a connection, and it will be ready from then on.</p>
             </div>
           ) : searching ? (

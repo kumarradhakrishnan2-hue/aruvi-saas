@@ -84,7 +84,7 @@ def test_export_contains_everything_hers():
                        "Chapter 3",                              # note's bold identity line
                        "Ch. 3",                                  # teaching-state table
                        "at Learning Unit 5",                     # per-section status
-                       "deleting your Aruvi account"):           # pre-deletion advisory
+                       "deleting your Meyy account"):           # pre-deletion advisory
             assert needle in text, f"export missing: {needle}"
         # Founder direction (2026-08-22): reader-facing only — no filenames, no
         # canonical identities, no raw section keys, no period internals.

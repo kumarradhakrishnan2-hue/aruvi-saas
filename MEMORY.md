@@ -687,7 +687,25 @@ must confirm · source entry.
 
 ---
 
-## 2026-08-29 (newest) — THE COMPLETION TOAST WAS TELLING THE TRUTH: our own stale
+## 2026-09-03 (newest) — THE SUPPORT ADDRESS IS support@meyy.in, AS ONE TOKEN
+
+Founder: "amend the email ID of support of Aruvi to support@meyy.in". Until now the
+address a teacher was told to write to was `config.MAIL_REPLY_TO`, which fell through to
+`MAIL_FROM` → `SMTP_USER` → the founder's Gmail — the support ID was a side effect of the
+sending account. Now `config.SUPPORT_ADDRESS` (env `ARUVI_SUPPORT_ADDRESS`, default
+`support@meyy.in`) is the ONE token, used in three places that must agree: the `address`
+both `/support` routes hand the screen (the no-email trial fallback), the acknowledgement's
+reply-to, and the destination of every filed case's copy (was `MAIL_FROM`). `MAIL_REPLY_TO`
+now defaults to it, so subscription confirmations reply there too. `MAIL_FROM` deliberately
+UNCHANGED — Gmail rewrites a From it does not own, so the SMTP account keeps sending and
+the support address receives; do not set them equal unless the mailbox itself sends.
+⚠️ The mailbox must actually exist and be read — case copies go nowhere else now.
+Not touched: `consent_and_disclaimer_v0.1.md` still carries `[support email]` /
+`[founder contact email]` placeholders — the agreement is versioned by FILENAME and
+already ticked, so filling them is a v0.2 file, never an edit. test_support.py pins the
+address (14 green).
+
+## 2026-08-29 — THE COMPLETION TOAST WAS TELLING THE TRUTH: our own stale
 push was clobbering the done-flag (found live, 1000000002, Class 6 Roja + Neithal, ch 1)
 
 **The report.** Marking the LAST unit complete sometimes raised "That didn't save — your

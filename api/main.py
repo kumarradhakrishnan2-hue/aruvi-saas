@@ -1481,7 +1481,7 @@ def data_rights_erase(req: EraseRequest,
                             detail='Confirmation required: send {"confirm": "erase"}.')
     if not req.downloaded_confirmed:
         raise HTTPException(status_code=400, detail=(
-            "Please confirm you have downloaded your Aruvi data. Deletion cannot be "
+            "Please confirm you have downloaded your Meyy data. Deletion cannot be "
             "undone and the download is the only copy you can keep."))
     tenant_id, user_id = identity
     # Record the consent BEFORE destroying anything: written after the fact it could be
@@ -1679,7 +1679,7 @@ def get_ask_aruvi(response: Response,
         raw = data.ask_aruvi_bank_bytes()
     except FileNotFoundError:
         raise HTTPException(status_code=503,
-                            detail="The Ask Aruvi question bank is not installed on this server.")
+                            detail="The Ask Meyy question bank is not installed on this server.")
     etag = '"%s"' % hashlib.sha256(raw).hexdigest()[:32]
     if if_none_match and if_none_match.strip() == etag:
         return Response(status_code=304, headers={"ETag": etag, "Cache-Control": "no-cache"})
@@ -1855,7 +1855,7 @@ def _guard_email_not_taken(email: str, self_id: str) -> None:
     for other in account_repo.find_all_by_email(needle):
         if other.account_id != self_id:
             raise HTTPException(status_code=409, detail=(
-                "This email is already in use by another Aruvi account. "
+                "This email is already in use by another Meyy account. "
                 "Use a different address."))
 
 
@@ -1965,19 +1965,19 @@ def create_support_request(req: SupportMessage,
             reply_days=days, received_on=now[:10], context=record.context)
         result = notifier.send(EmailMessage(
             to=to, subject=body["subject"], text=body["text"],
-            html=body.get("html", ""), reply_to=config.MAIL_REPLY_TO))
+            html=body.get("html", ""), reply_to=config.SUPPORT_ADDRESS))
         emailed = str(result.get("status", "")) in ("sent", "written")
         if emailed:
             record.acknowledged = True
             support_repo.save(record)
 
-    # The founder's copy — plain text, and it leads with how to reach her, because the
-    # single most common next action on reading it is replying. Sent even when she has
-    # no address on file: a case with no way back is exactly the one worth seeing.
-    if config.MAIL_FROM:
+    # The support inbox's copy — plain text, and it leads with how to reach her, because
+    # the single most common next action on reading it is replying. Sent even when she
+    # has no address on file: a case with no way back is exactly the one worth seeing.
+    if config.SUPPORT_ADDRESS:
         ctx = "\n".join(f"{k}: {v}" for k, v in sorted(record.context.items()))
         notifier.send(EmailMessage(
-            to=config.MAIL_FROM,
+            to=config.SUPPORT_ADDRESS,
             subject=f"[{reference}] {mail_templates.support_category_label(category)}"
                     f" — {name or user_id}",
             text=(f"Reply to: {to or '(no email on the account)'}\n"
@@ -1987,7 +1987,7 @@ def create_support_request(req: SupportMessage,
                   f"Promised: within {mail_templates.reply_window_words(days)}\n"
                   + (f"\n{ctx}\n" if ctx else "")
                   + f"\n----\n{text}\n"),
-            reply_to=(to or config.MAIL_REPLY_TO)))
+            reply_to=(to or config.SUPPORT_ADDRESS)))
 
     return {"reference": reference, "emailed": emailed, "email": to,
             "reply_days": days,
@@ -1995,7 +1995,7 @@ def create_support_request(req: SupportMessage,
             # The address itself, so a teacher with no email on her account (every
             # TRIAL teacher — the trial asks for a mobile and nothing else) has
             # somewhere to write from her own mail app rather than a dead end.
-            "address": config.MAIL_REPLY_TO}
+            "address": config.SUPPORT_ADDRESS}
 
 
 @app.get("/support")
@@ -2015,7 +2015,7 @@ def list_support_requests(identity: tuple = Depends(_current_identity)) -> Dict[
             "reply_days": config.SUPPORT_REPLY_DAYS,
             "billing_reply_days": config.SUPPORT_BILLING_REPLY_DAYS,
             "email": (acct.email if acct else "") or "",
-            "address": config.MAIL_REPLY_TO,
+            "address": config.SUPPORT_ADDRESS,
             "requests": [
         {"reference": r.reference, "category": r.category,
          "label": r.category_label or mail_templates.support_category_label(r.category),
@@ -2293,7 +2293,7 @@ def _build_invoice(tenant_id: str, user_id: str, acct: Any, scopes: List[str],
     else:
         subtotal = total = charged
         tax = 0
-        note = "No tax charged — Aruvi is not registered for GST."
+        note = "No tax charged — Meyy is not registered for GST."
 
     place = ", ".join(p for p in [getattr(acct, "city", ""), getattr(acct, "state", "")] if p)
     number = invoice_repo.next_number(_financial_year(_today()))
@@ -2414,7 +2414,7 @@ def _send_subscription_confirmation(to: str, name: str, scopes: List[str],
     attachments = []
     if invoice is not None and invoice_pdf:
         attachments.append(Attachment(
-            filename=f"Aruvi-invoice-{invoice.number.replace('/', '-')}.pdf",
+            filename=f"Meyy-invoice-{invoice.number.replace('/', '-')}.pdf",
             content=invoice_pdf, mime_type="application/pdf"))
     result = notifier.send(EmailMessage(
         to=to.strip(), subject=body["subject"], text=body["text"],
@@ -2579,7 +2579,7 @@ def download_invoice(number: str, identity: tuple = Depends(_current_identity)):
     pdf = invoice_repo.load_pdf(tenant_id, user_id, num)
     if pdf is None:
         raise HTTPException(status_code=404, detail="Invoice not found.")
-    fname = f"Aruvi-invoice-{num.replace('/', '-')}.pdf"
+    fname = f"Meyy-invoice-{num.replace('/', '-')}.pdf"
     return Response(content=pdf, media_type="application/pdf", headers={
         "Content-Disposition": f'attachment; filename="{fname}"'})
 

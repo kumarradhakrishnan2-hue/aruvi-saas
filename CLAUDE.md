@@ -430,6 +430,56 @@ Calm, credible, academic-but-warm, content-first (the plan is the hero). Defined
 `web/app/globals.css` (CSS variables). Keep new UI consistent with this — don't drift to a
 generic look.
 
+- ★ **THE BRAND MARK IS THE MEYY WORDMARK (2026-09-03).** Source assets live in
+  `web/app/icons/`: `3a-wordmark-{light,dark}.svg/.png` (web/mobile) and
+  `4a/4b-app-icon-{light,dark}` (the store tile). The typeset "Aruvi." + red dot is GONE from
+  all four bars (shell `page.jsx` · `Login` · `FirstRun` · `SubscribeFlow`); each renders
+  `<MeyyMark/>` (`components/MeyyMark.jsx`) — the wordmark's paths INLINED with
+  `stroke="currentColor"`, so ONE component serves both variants (the two SVGs differ only in
+  stroke colour) and on the pine bar it is simply `--bar-ink` in either theme. Sizing is in
+  globals.css (`.brand-mark` 22px / 19px ≤600px — first cut at 26/22 matched the Fraunces
+  line's box and read "a wee bit larger than Aruvi was", so one notch down; the bar is ~4px
+  shorter and the measured `--nav-h`/`--fr-bar-h` absorb it). The dots are `--brand-dot`: the brand's #d63a2f by
+  default, lifted to #e0705f on the bar (2.35:1 → 3.48:1 on pine — the same call the old dot
+  got). "lesson studio" kicker kept. ★ **AND THE NAME FOLLOWED THE MARK, same day: every
+  TEACHER-FACING "Aruvi" is now "Meyy"** (title case in prose, matching support@meyy.in; the
+  wordmark alone is MEYY). Done by AST, not sed — Babel string/JSX-text nodes in the web (67),
+  Python STRING tokens in the emails, PDF/DOCX exports, reports, data-rights receipt and the
+  API's teacher-visible `detail`s (64) — so code comments, docstrings, identifiers, the
+  `X-Aruvi-User` header, localStorage keys, CSS classes, file/module names, LLM prompt
+  preambles, the OpenAPI title and the founder's own `[Aruvi] New subscription` notice are all
+  deliberately UNTOUCHED (grep will still find "Aruvi" everywhere it should). Ask Aruvi is
+  "Ask Meyy"; its bank is renamed in place (V3.2, `meyy` added beside `aruvi` in the indexer's
+  stop-list) and the ETag ships it. The user agreement is republished as
+  `consent_and_disclaimer_v0.2.md` (v0.1 kept beside it, as the version-by-filename rule
+  requires — every existing signer re-takes the six ticks once); its contracting-entity line
+  still reads **MyAruvi.com** because that is a legal name, not copy — change it only when the
+  registered entity does. Tests that pin the wording (data_rights · invoice · notifier ·
+  support · year_plan_export) moved with it; backend suite green bar the three pre-existing
+  content defects of 2026-08-27. The exports' typeset "Meyy." + dot brand block is the one
+  place the WORDMARK has not yet replaced text — a follow-on. Store icons: `icons/apple-icon.png` is now the
+  4a LIGHT tile at 1024² RGB (App Store: no alpha) and `icons/play-icon.png` the same at 512²
+  (Play's exact size); light because a dark tile vanishes on a dark wallpaper. `icons/icon.png`
+  (the old spiral, 512²) is untouched. ⚠️ **`web/app/icon.png` and `web/app/apple-icon.png`
+  are Next.js CONVENTION files** (favicon · iPhone home-screen icon) — they had been moved
+  into `icons/`, which silently removed both from the app; restored at the convention paths
+  with the MEYY tile (512² / 180²). Do not move them again. STATIC-verified (babel-parse
+  clean ×5, CSS braces 2297/2297, mark rasterised on pine at both heights) — live + 360px
+  bar pass owed.
+- ★ **THE SETTINGS BAR NAMES THE CHOSEN ITEM, AND SUBVIEWS HAVE NO HEADING (founder,
+  2026-09-03).** The frozen bar reads "⚙ Support" / "⚙ Subscription & billing" / "⚙ Teaching
+  profile" — `settingsBarLabel` in page.jsx, the card's own words — with ✕ right; "Settings"
+  shows only at the home list. Every subview `<h1 class="set-title">` and the frozen
+  `.set-title-stick` (2026-08-26) are GONE from the subviews (only "Message sent" keeps a
+  heading — it is a state, not the item); each subview's first element carries `.set-first`,
+  which hands back most of `main`'s top padding (18px air desktop / 12px phone). Do not
+  reintroduce a per-screen title under the bar. **Support is mail-shaped** the same day:
+  `TO  support@meyy.in` on one row (hardcoded `SUPPORT_ADDRESS` in Settings.jsx mirroring
+  `api/config.SUPPORT_ADDRESS` — the running API had served the founder's Gmail from a
+  pre-change process, and an address a teacher is told must not depend on which server
+  answered; both `--ink-soft`, so the row reads frozen) · **Subject** dropdown · message
+  box opening at 4 lines on a phone so Send sits inside the 360×800 fold. STATIC-verified;
+  live + 360px pass owed.
 - **Type:** Fraunces (`--f-display`, headings/titles) · Newsreader (`--f-body`, lesson prose)
   · IBM Plex Mono (`--f-mono`, structural labels/kickers/numbers). No Inter/system fonts.
 - **Palette tokens:** `--paper` warm cream + subtle grain · `--ink` warm near-black ·

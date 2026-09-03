@@ -92,7 +92,7 @@ def build_export_docx(payload: Dict[str, Any]) -> bytes:
     lc = ht.rows[0].cells[0]
     lc.paragraphs[0].clear()
     lp = lc.paragraphs[0]; lp.paragraph_format.space_after = Pt(0)
-    _run(lp, "Aruvi", size=17, bold=True, color=PINE, font=SERIF)
+    _run(lp, "Meyy", size=17, bold=True, color=PINE, font=SERIF)
     _run(lp, ".", size=17, bold=True, italic=True, color=CLAY, font=SERIF)
     _run(lp, "  LESSON STUDIO", size=7, color=GRAY, font="Calibri")
     lp2 = lc.add_paragraph(); lp2.paragraph_format.space_before = Pt(1)
@@ -110,10 +110,10 @@ def build_export_docx(payload: Dict[str, Any]) -> bytes:
 
     # ── Purpose (founder point 2 — the spirit, no regulation names) ──
     _body_para(doc,
-        "Everything you create in Aruvi belongs to you — your notes, your teaching "
+        "Everything you create in Meyy belongs to you — your notes, your teaching "
         "profile, your progress through the year. This document is a complete, "
         "editable copy of all of it, in one place, so your work is always yours to "
-        "keep, carry and continue — with Aruvi or without it.",
+        "keep, carry and continue — with Meyy or without it.",
         italic=True, space_after=10)
 
     # ── Your account ──
@@ -216,7 +216,7 @@ def build_export_docx(payload: Dict[str, Any]) -> bytes:
     if support:
         _section_head(doc, "Messages you sent us")
         _body_para(doc,
-            "Support messages you have written to Aruvi, newest first, with the "
+            "Support messages you have written to Meyy, newest first, with the "
             "reference each was given.", size=9, color=GRAY, italic=True, space_after=6)
         for s in support:
             hp = doc.add_paragraph()
@@ -233,10 +233,10 @@ def build_export_docx(payload: Dict[str, Any]) -> bytes:
     # ── Closing note (founder point 6: current text + pre-deletion advisory) ──
     _section_head(doc, "About lesson plan content")
     _body_para(doc,
-        "Lesson plans and assessments themselves are Aruvi's shared library content "
+        "Lesson plans and assessments themselves are Meyy's shared library content "
         "and are not personal data; export them any time as PDFs from the app. "
-        "If you are considering deleting your Aruvi account, we suggest you export "
-        "this document first and keep it safely: when an account is deleted, Aruvi "
+        "If you are considering deleting your Meyy account, we suggest you export "
+        "this document first and keep it safely: when an account is deleted, Meyy "
         "removes all personal data relating to your activity within a short period "
         "of time, and it cannot be recovered afterwards.",
         size=9, color=GRAY, italic=True)

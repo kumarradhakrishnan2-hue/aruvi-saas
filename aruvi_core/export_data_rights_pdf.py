@@ -22,6 +22,7 @@ from datetime import datetime, timezone
 from typing import Any, Dict
 
 from .pdf_fonts import font_face_css
+from . import brand   # the MEYY wordmark raster (2026-09-03)
 from .report_competency import date_long, subject_display
 
 
@@ -128,7 +129,7 @@ def render_pdf_html(payload: Dict[str, Any]) -> str:
             + '</div>')
     if support_html:
         support_html = ('<div class="section-head">Messages you sent us</div>'
-                        '<p class="closing">Support messages you have written to Aruvi, '
+                        '<p class="closing">Support messages you have written to Meyy, '
                         'newest first, with the reference each was given.</p>'
                         + support_html)
 
@@ -182,7 +183,7 @@ def render_pdf_html(payload: Dict[str, Any]) -> str:
 </style></head>
 <body>
   <table class="hdr"><tr>
-    <td><span class="brand-aruvi">Aruvi</span><span class="brand-dot">.</span>
+    <td>{brand.pdf_img_html(16)}
         <span class="brand-studio">LESSON STUDIO</span><br/>
         <span class="brand-ncf">NCF 2023 aligned</span></td>
     <td align="right"><span class="rep-title">Your data export</span><br/>
@@ -190,10 +191,10 @@ def render_pdf_html(payload: Dict[str, Any]) -> str:
   </tr></table>
   <table class="rule-tbl"><tr><td></td></tr></table>
 
-  <p class="purpose">Everything you create in Aruvi belongs to you — your notes, your
+  <p class="purpose">Everything you create in Meyy belongs to you — your notes, your
   teaching profile, your progress through the year. This document is a complete copy of
   all of it, in one place, so your work is always yours to keep, carry and continue —
-  with Aruvi or without it.</p>
+  with Meyy or without it.</p>
 
   <div class="section-head">Your account</div>
   {acct_html}
@@ -206,14 +207,14 @@ def render_pdf_html(payload: Dict[str, Any]) -> str:
   {support_html}
 
   <div class="section-head">About lesson plan content</div>
-  <p class="closing">Lesson plans and assessments themselves are Aruvi's shared library
+  <p class="closing">Lesson plans and assessments themselves are Meyy's shared library
   content and are not personal data; export them any time as PDFs from the app. If you
-  are considering deleting your Aruvi account, we suggest you export this document first
-  and keep it safely: when an account is deleted, Aruvi removes all personal data
+  are considering deleting your Meyy account, we suggest you export this document first
+  and keep it safely: when an account is deleted, Meyy removes all personal data
   relating to your activity within a short period of time, and it cannot be recovered
   afterwards.</p>
 
-  <div id="footerContent" class="footer-line">Aruvi · Your data export · Confidential</div>
+  <div id="footerContent" class="footer-line">Meyy · Your data export · Confidential</div>
 </body></html>"""
 
 

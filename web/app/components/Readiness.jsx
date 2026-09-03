@@ -361,7 +361,7 @@ export default function Readiness({ subject: subjectProp, onComplete, initialRea
         <div className="rd-hd">
           <div className="kicker">Let’s set up your year</div>
           <h2 className="rd-q">Tell us what you teach.</h2>
-          <p className="rd-ask">Pick every subject you plan with Aruvi. You’ll only do this once.</p>
+          <p className="rd-ask">Pick every subject you plan with Meyy. You’ll only do this once.</p>
         </div>
         <MultiDropdown
           choices={SUBJECT_CHOICES}
@@ -568,7 +568,7 @@ export default function Readiness({ subject: subjectProp, onComplete, initialRea
         <div className="kicker">{curSubject.name} · Grade {bGrade.grade} · annual budget</div>
         <h2 className="rd-q">How many periods do you expect to teach {curSubject.name} to Grade {bGrade.grade} this year?</h2>
         <p className="rd-ask">{(si === 0 && bi === 0)
-          ? "There are many ways to know this number including Aruvi’s own estimation. Choose the option that suits you below."
+          ? "There are many ways to know this number including Meyy’s own estimation. Choose the option that suits you below."
           : "Same method as before. Enter this grade’s number — or tap below to use a different method."}</p>
       </div>
 
@@ -584,7 +584,7 @@ export default function Readiness({ subject: subjectProp, onComplete, initialRea
               </div>
               <div className="mbody">
                 {m === "auto" ? (
-                  <div className="md">Schools typically have between 28–33 working weeks. Aruvi uses <b>{ESTIMATE_WEEKS} weeks</b> as the estimate — adjust later if you like.</div>
+                  <div className="md">Schools typically have between 28–33 working weeks. Meyy uses <b>{ESTIMATE_WEEKS} weeks</b> as the estimate — adjust later if you like.</div>
                 ) : (
                   <div className="inrow">
                     <span className="steppermini">

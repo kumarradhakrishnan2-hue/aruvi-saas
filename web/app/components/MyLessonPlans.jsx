@@ -137,7 +137,7 @@ function ReportModal({ sSlug, gSlug, filename, onClose }) {
       setTimeout(() => URL.revokeObjectURL(u), 8000);
       onClose();
     } catch (e) {
-      alert(`Couldn't create the report.\n\n${e?.message || "Is the Aruvi engine running on :8000?"}`);
+      alert(`Couldn't create the report.\n\n${e?.message || "Is the Meyy engine running on :8000?"}`);
     } finally { setBusy(false); }
   };
 

@@ -37,7 +37,7 @@ def _sample(number="ARV/2026-27/7834") -> Invoice:
         bill_to_email="k@example.com", bill_to_phone="1000000000",
         lines=[InvoiceLine("science/middle", "Science · Middle — Classes 6, 7 and 8",
                            1, 500, "2026-08-26", "2027-08-26")],
-        subtotal=500, tax_amount=0, tax_note="No tax charged — Aruvi is not registered for GST.",
+        subtotal=500, tax_amount=0, tax_note="No tax charged — Meyy is not registered for GST.",
         total=500, amount_paid=500, payment_method="Recorded manually")
 
 
@@ -198,7 +198,7 @@ def test_mail_carries_the_invoice():
     msg = sent["msg"]
     assert len(msg.attachments) == 1
     att = msg.attachments[0]
-    assert att.filename == "Aruvi-invoice-ARV-2026-27-7834.pdf"
+    assert att.filename == "Meyy-invoice-ARV-2026-27-7834.pdf"
     assert att.mime_type == "application/pdf" and att.content[:4] == b"%PDF"
     assert inv.number in msg.text
     print("✓ The confirmation mail carries the PDF and names the number in the body")

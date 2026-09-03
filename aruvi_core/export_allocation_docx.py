@@ -136,7 +136,7 @@ def export_allocation_report_docx(report: CompetencyAllocationReport) -> bytes:
     lc = ht.rows[0].cells[0]
     lc.paragraphs[0].clear()
     lp = lc.paragraphs[0]; lp.paragraph_format.space_after = Pt(0)
-    _run(lp, "Aruvi", size=17, bold=True, color=PINE, font=SERIF)
+    _run(lp, "Meyy", size=17, bold=True, color=PINE, font=SERIF)
     _run(lp, ".", size=17, bold=True, italic=True, color=CLAY, font=SERIF)
     _run(lp, "  LESSON STUDIO", size=7, color=GRAY, font="Calibri")
     lp2 = lc.add_paragraph(); lp2.paragraph_format.space_before = Pt(1)

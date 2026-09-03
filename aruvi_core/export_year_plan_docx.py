@@ -116,7 +116,7 @@ def export_year_plan_docx(payload: Dict[str, Any]) -> bytes:
     lc.paragraphs[0].clear()
     lp = lc.paragraphs[0]
     lp.paragraph_format.space_after = Pt(0)
-    _run(lp, "Aruvi", size=17, bold=True, color=PINE, font=SERIF)
+    _run(lp, "Meyy", size=17, bold=True, color=PINE, font=SERIF)
     _run(lp, ".", size=17, bold=True, italic=True, color=CLAY, font=SERIF)
     _run(lp, "  LESSON STUDIO", size=7, color=GRAY, font="Calibri")
     lp2 = lc.add_paragraph()
@@ -222,10 +222,10 @@ def _note(doc, rows: List[Dict[str, Any]], budget: Optional[int]) -> None:
         _run(p, "your periods", size=9, color=BODY, font=SERIF)
     _run(p, f" spread across all {len(rows)} chapters. ", size=9, color=BODY, font=SERIF)
     _run(p, "Suggested periods", size=9, bold=True, color=INK, font=SERIF)
-    _run(p, " is Aruvi's proposal, giving heavier chapters more room. Each time you "
+    _run(p, " is Meyy's proposal, giving heavier chapters more room. Each time you "
             "prepare a lesson you set your own periods for that chapter; those appear in ",
          size=9, color=BODY, font=SERIF)
     _run(p, "Your plan", size=9, bold=True, color=INK, font=SERIF)
     _run(p, ", beside the suggestion, so you can see where you've adjusted and how much "
-            "of the year you've committed. To know how Aruvi suggests, refer to Ask Aruvi "
+            "of the year you've committed. To know how Meyy suggests, refer to Ask Meyy "
             "time allocation section.", size=9, color=BODY, font=SERIF)

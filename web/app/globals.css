@@ -167,10 +167,12 @@ body {
    under .topbar — .fr-brand caps to the first-run column instead, in its own block. */
 .topbar .hdr { width: 100%; max-width: var(--shell-w); margin: 0 auto; }
 .topbar .main-tabs { background: var(--paper); border-bottom: none; } /* opaque paper over the fill — tabs keep their normal treatment, minus the full-width hairline under the row */
-.topbar .brand-row, .fr-brand .brand-row { color: var(--bar-ink); }
-/* The brand dot: the one-logo red (#c0392b) goes muddy on a pine fill, so the bar alone
-   uses the dark palette's brighter red of the same family. */
-.topbar .brand-row em, .fr-brand .brand-row em { color: #e0705f; }
+/* The MEYY wordmark (MeyyMark.jsx, 2026-09-03) strokes in currentColor, so on the bar it is
+   simply the bar ink — cream in both themes (9.6:1 light / 11.9:1 dark on the pine fill).
+   Its two dots: the brand's own red (#d63a2f) measures 2.35:1 on #164436 — the same "goes
+   muddy on a pine fill" defect the old Aruvi dot had — so the bar alone lifts them to the
+   dark palette's brighter red of the same family (#e0705f, 3.48:1 light / 4.33:1 dark). */
+.topbar .brand-mark, .fr-brand .brand-mark { color: var(--bar-ink); --brand-dot: #e0705f; }
 .topbar .hdr-brand-tag, .fr-brand .hdr-brand-tag { color: var(--bar-ink-soft); }
 .topbar .hdr-user-name, .fr-brand .hdr-user-name { color: var(--bar-ink); }
 .topbar .hdr-theme, .topbar .hdr-gear, .topbar .hdr-user-logout,
@@ -207,7 +209,6 @@ html.app-shell .dash-success,
 html.app-shell .lv-stick,
 html.app-shell .uv-assess-stick,
 html.app-shell .co-stick,
-html.app-shell .set-title-stick,
 html.app-shell .mlp2-frozen { top: 0; }
 /* Year Plan head sticks under My Lessons' frozen header alone — the bar no longer overlays. */
 html.app-shell .yp-head { top: var(--mlp2-frozen-h, 132px); }
@@ -219,14 +220,26 @@ html.app-shell .yp-head { top: var(--mlp2-frozen-h, 132px); }
 }
 @media (max-width: 600px) {
   .hdr { padding: 14px 18px; }
-  .brand-row { font-size: 21px; }
+  .brand-mark { height: 19px; }
   .brand small { display: none; } /* "lesson studio" kicker — drop on phones, brand name + NCF line carry it */
 }
 .brand { display: flex; flex-direction: column; line-height: 1.1; }
-.brand-row { display: flex; align-items: baseline; font-family: var(--f-display); font-weight: 600; font-size: 25px; letter-spacing: -.4px; color: var(--pine-d); }
-/* The brand dot is the SAME everywhere as the first-run page: upright, red (#c0392b) —
-   one logo, one voice (2026-07-02). */
-.brand-row em, .brand em { font-style: normal; color: #c0392b; font-weight: 500; }
+/* ★ THE BRAND IS THE MEYY WORDMARK (2026-09-03) — `MeyyMark.jsx`, an inline SVG, replaces the
+   typeset "Aruvi." + red-dot `.brand-row` in all four bars (shell · login · first run ·
+   subscribe). Heights are set to match the box the 25px / 21px Fraunces line used to occupy
+   — then taken one notch DOWN (founder, same day: "a wee bit larger than Aruvi was"):
+   26→22px desktop, 22→19px ≤600px (≈ 15px / 13px cap height; ≈ 75px / 64px wide — the
+   viewBox is trimmed to the ink so the M sits flush over the L of the kicker). The bar
+   gets ~4px shorter — --nav-h / --fr-bar-h are MEASURED at runtime, so nothing else needs
+   retuning. `color` is the stroke (currentColor); `--brand-dot` is the two dots' fill — the
+   brand red here, lifted to #e0705f on the pine bar above, exactly as the old dot was. */
+/* ⚠️ align-self is load-bearing: .brand is a flex COLUMN, and its default `stretch` widened
+   the SVG to the column's width (set by the ~100px LESSON STUDIO line beneath) — and an SVG
+   CENTRES its drawing inside a wider box, so the 75px mark floated ~13px right of the L.
+   Text never had this problem; a replaced element does. flex-start sizes it to its own
+   aspect; preserveAspectRatio="xMinYMid" on the element pins the ink left regardless. */
+.brand-mark { display: block; height: 22px; width: auto; align-self: flex-start; color: var(--pine-d); }
+.brand-mark-dot { fill: var(--brand-dot, #d63a2f); }
 .brand small { font-family: var(--f-mono); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-soft); margin-left: 10px; }
 .brand-ncf { font-family: var(--f-body); font-style: italic; font-size: 11px; color: var(--ink-soft); margin-top: 3px; }
 .hdr .sel { margin-left: auto; display: flex; gap: 14px; }
@@ -4289,17 +4302,15 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 /* ── Settings screen (the gear's own view — founder 2026-08-24; mockup frame 2) ── */
 .setwrap { max-width: 560px; }
 .set-title { font-family: var(--f-display); font-size: 24px; font-weight: 600; color: var(--ink); }
-/* ★ FROZEN SUBVIEW TITLE (founder, 2026-08-26). Subscription & billing is the one
-   Settings screen that GROWS — a card per subscription, plus the Add button — so its
-   heading was the first thing to scroll away, leaving a list of cards with nothing
-   naming them. Same idiom as every other frozen row in the app (.mlp2-frozen, .lv-stick,
-   .dash-hd): sticky at var(--nav-h), which page.jsx measures per breakpoint so the
-   offset clears the fixed Settings bar exactly. Opaque paper + a hairline, so cards
-   pass UNDER it rather than showing through. The negative margins let the background
-   span the column's full width while the text keeps the column's own padding. */
-.set-title-stick { position: sticky; top: var(--nav-h, 118px); z-index: 4;
-  background: var(--paper); padding: 10px 14px 10px; margin: 0 -14px 8px;
-  border-bottom: 1px solid var(--line); }
+/* ★ SUBVIEWS HAVE NO HEADING — THE BAR NAMES THEM (founder, 2026-09-03: "why should
+   the word Settings take so much real estate"). The fixed Settings bar now reads
+   "⚙ Support" / "⚙ Subscription & billing" / …, so the per-screen `.set-title` and the
+   frozen `.set-title-stick` of 2026-08-26 (a second sticky row saying the same word,
+   and on a phone the row that pushed Send under the fold) are both gone from the
+   subviews. What remains of them is the PULL-UP: main's 40px top padding read as the
+   page starting late once nothing stood in it, so the first element of each subview
+   carries `.set-first`, which hands most of that padding back (18px of air on desktop,
+   12px on a phone). Declared after `.set-hint` so it wins its margin-top. */
 .set-sub { font-family: var(--f-body); font-style: italic; font-size: 13px; color: var(--ink-soft);
   margin: 2px 0 18px; }
 .set-group { margin-bottom: 18px; }
@@ -4310,6 +4321,7 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 .set-back { display: inline-block; margin-bottom: 10px; }
 .set-hint { font-family: var(--f-body); font-style: italic; font-size: 12.5px;
   color: var(--ink-soft); margin: 12px 0; line-height: 1.55; }
+.set-first { margin-top: -22px; }
 /* The big cards (founder's structure, Aruvi voice): plain --card-bg fill distinct
  * from the paper page, icon · title over small text · chevron. COMPACT on purpose
  * (founder 2026-08-24): tight padding and gaps so the whole list fits one phone
@@ -4329,7 +4341,10 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
   border-bottom: none; }   /* no hairline under the Settings bar (founder) */
 .topbar .main-tabs.set-bar { border-bottom: none; }
 .set-bar-title { font-family: var(--f-display); font-size: 19px; font-weight: 600;
-  color: var(--ink); padding: 10px 0 10px 4px; display: inline-flex; align-items: center; gap: 9px; }
+  color: var(--ink); padding: 10px 0 10px 4px; display: inline-flex; align-items: center; gap: 9px;
+  /* The bar carries the chosen item's name now ("Subscription & billing" is the
+     longest); one line, clipped before it can push the ✕ off a 360px bar. */
+  min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .set-bar-gear { font-size: 20px; color: var(--ink-soft); }
 .set-bar-x { all: unset; cursor: pointer; color: var(--ink-soft); font-size: 15px;
   line-height: 1; padding: 10px 6px; }
@@ -4378,12 +4393,8 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
    category CHIPS (a choice, not a subject line to compose) and the REFERENCE, set in
    mono at ledger scale — the same face the invoice number uses, because it is the same
    kind of object: a number she may have to read out. */
-/* ★ THE TITLE FREEZES, AND ONLY THE TITLE (founder, 2026-08-27). Rides
-   `.set-title-stick` (sticky at var(--nav-h), opaque paper, hairline) and adds the pull
-   UP: main's 40px top padding left a visible gap between the Settings bar and the one
-   word naming the screen, which read as the page starting late. -26px leaves ~14px of
-   air. The bottom margin is the stick's own. */
-.sup-title { margin-top: -26px; }
+/* (The frozen "Support" title and its `.sup-title` pull-up went on 2026-09-03 — the
+   Settings bar names the screen now; see `.set-first` above.) */
 
 /* The Ask Aruvi row carries the MARK, not a generic icon — same stream-and-dot as the
    tab row, so the row and the panel it opens read as one object. Pine like every other
@@ -4405,6 +4416,19 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
    font-size rule below. */
 .sup-select { cursor: pointer; }
 .sup-field { margin-top: 2px; }
+/* The To line (2026-09-03): kicker and address on ONE row — "To  support@meyy.in" — a
+   VALUE, deliberately not a field: same face as `.dd-btn`'s text so it belongs to the
+   form, but no plane and no border, so nothing invites a tap on an address she cannot
+   change. `.login-field.sup-to-row` (0,2,0) overrides `.login-field`'s column
+   direction and sits AFTER it in this file — a same-specificity override placed
+   earlier does nothing (the `.ap-row-line` lesson). One line's worth of space to the
+   Subject row below (founder: "just one row separating"), not the 20px field gap. */
+.login-field.sup-to-row { flex-direction: row; align-items: baseline; gap: 10px;
+  margin-bottom: 14px; }
+.sup-to { font-family: var(--f-body); font-size: 14px; line-height: 1.3;
+  /* --ink-soft, the same as the To kicker beside it (founder): a value in the
+     label's own colour reads as fixed, where full ink reads as something typed. */
+  color: var(--ink-soft); min-width: 0; word-break: break-all; }
 
 /* The OPTIONS inside an open list. Styleable on Chrome/Windows, Linux and Android;
    ignored on macOS, where the popup is drawn entirely by the OS (which is why
@@ -4435,7 +4459,12 @@ select option { background-color: var(--field-bg); color: var(--ink); }
      and a teacher typing a bug report should not have the layout jump under her. The
      select is the same rule — iOS zooms on a small <select> too. */
   .sup-text, .sup-select { font-size: 16px; }
-  .sup-title { margin-top: -22px; }
+  /* Four lines, not seven, on a phone (founder, 2026-09-03): with the To and Subject
+     rows above it, a 7-row box at 16px pushed Send under the fold at 360×800. The box
+     still grows by the resize handle and by typing past four lines — this is the
+     opening height, not a cap. Desktop keeps rows={7}. */
+  .sup-text { height: 104px; min-height: 80px; }
+  .set-first { margin-top: -14px; }   /* main is 26px here; leave 12px of air */
 }
 
 /* ── Unit view: the standard anatomy ── */

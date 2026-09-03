@@ -220,7 +220,7 @@ export default function YearPlan({ subjectName, sSlug, gSlug, readiness, onAlloc
         } catch { /* not JSON — the status alone is what we have */ }
         console.error("[year-plan export]", resp.status, detail || resp.statusText);
         throw new Error(
-          resp.status === 404 ? "This Aruvi server doesn't have the export yet."
+          resp.status === 404 ? "This Meyy server doesn't have the export yet."
             : resp.status === 501 ? "Word export isn't available on this server."
             : `${resp.status}${detail ? ` — ${detail}` : ""}`
         );
@@ -242,7 +242,7 @@ export default function YearPlan({ subjectName, sSlug, gSlug, readiness, onAlloc
       // is the honest sentence, and it must not be printed for a server that answered 500.
       console.error("[year-plan export]", e);
       setExportErr(e && e.message && !/^Failed to fetch/i.test(e.message)
-        ? e.message : "Couldn't reach Aruvi just now.");
+        ? e.message : "Couldn't reach Meyy just now.");
       setExporting("failed");
     }
   };
@@ -370,10 +370,10 @@ export default function YearPlan({ subjectName, sSlug, gSlug, readiness, onAlloc
             names the number in words, which is why the control started here, but two pencils
             for one action is clutter and the totals row is where she is looking. */}
         Your teaching year at a glance — how{budget != null ? <> a budget of <b>{budget} periods</b></> : <> your periods</>} spread
-        across all {rows.length} chapters. <b>Suggested periods</b> is Aruvi&rsquo;s proposal, giving heavier chapters more
+        across all {rows.length} chapters. <b>Suggested periods</b> is Meyy&rsquo;s proposal, giving heavier chapters more
         room. Each time you prepare a lesson you set your own periods for that chapter; those appear
         in <b>Your plan</b>, beside the suggestion, so you can see where you&rsquo;ve adjusted and how much of
-        the year you&rsquo;ve committed. To know how Aruvi suggests, refer to Ask Aruvi time allocation section.
+        the year you&rsquo;ve committed. To know how Meyy suggests, refer to Ask Meyy time allocation section.
       </p>
     </div>
   );

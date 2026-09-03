@@ -87,7 +87,7 @@ export default function ProfilePortal({ mode = "change", sub, values, onPick, on
           </div>
           <div className="ap-sub">
             {check
-              ? (sub || <>Aruvi started you off with its own suggested set-up. You can change any of
+              ? (sub || <>Meyy started you off with its own suggested set-up. You can change any of
                   it — or leave it and carry on teaching.</>)
               : <>Each item changes only itself — pick another for the next. Your lessons always
                   stay in the library.</>}

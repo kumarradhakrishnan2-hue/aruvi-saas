@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { API, getJSON, idInUse } from "../lib/format";
 import SubscribeFlow, { MOBILE_TAKEN } from "./SubscribeFlow";
+import MeyyMark from "./MeyyMark";
 
 /* ───────── The front door — onboarding + sign-in (founder, 2026-08-24/25) ─────────
  *
@@ -33,7 +34,7 @@ const Bar = () => (
   <div className="fr-brand ob-bar">
     <header className="hdr">
       <div className="brand">
-        <span className="brand-row">Aruvi<em>.</em></span>
+        <MeyyMark />
         <span className="hdr-brand-tag">lesson studio</span>
       </div>
     </header>
@@ -128,7 +129,7 @@ export default function Login({ onEnter }) {
           <button type="button" className={`ob-plan ${mode === "trial" ? "on" : ""}`}
             onClick={() => setMode("trial")}>
             <span className="ob-plan-hd"><b>Free to try</b></span>
-            <span className="ob-plan-sub">Try Aruvi with no cost. Perfect to explore and get started.</span>
+            <span className="ob-plan-sub">Try Meyy with no cost. Perfect to explore and get started.</span>
             <span className="ob-plan-points">Any 3 chapters · unlimited lesson plans per chapter · all core features to plan &amp; assess</span>
           </button>
 
@@ -229,12 +230,12 @@ export default function Login({ onEnter }) {
       if (d && d.known) { enter(d.id || trimmed); return; }
       if (d && d.reason === "ambiguous_email") {
         // More than one account carries this address — only the mobile identifies her.
-        setSigninErr("More than one Aruvi account uses this email. Please sign in with your mobile number.");
+        setSigninErr("More than one Meyy account uses this email. Please sign in with your mobile number.");
         return;
       }
-      setSigninErr("We don't recognise this mobile or email yet — tap “New to Aruvi? Get started” below to create your sign in.");
+      setSigninErr("We don't recognise this mobile or email yet — tap “New to Meyy? Get started” below to create your sign in.");
     } catch {
-      setSigninErr("Couldn't reach Aruvi right now. Try again in a moment.");
+      setSigninErr("Couldn't reach Meyy right now. Try again in a moment.");
     }
   };
   return (
@@ -252,14 +253,14 @@ export default function Login({ onEnter }) {
               placeholder="98xxxxxxxx or you@example.com" autoComplete="off" spellCheck={false} />
           </label>
           <button type="submit" className="primary login-btn" disabled={!signinOk}>
-            Enter Aruvi →
+            Enter Meyy →
           </button>
         </form>
         {signinErr && <p className="ob-err" role="alert">{signinErr}</p>}
         <p className="fr-secure">🛡 Your data is private and secure</p>
       </div>
       <div className="ob-foot">
-        <button className="fr-link" onClick={() => setScreen("choose")}>New to Aruvi? Get started →</button>
+        <button className="fr-link" onClick={() => setScreen("choose")}>New to Meyy? Get started →</button>
       </div>
     </div>
   );

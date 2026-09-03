@@ -229,14 +229,14 @@ def _allocation_factors(report: "CompetencyAllocationReport") -> str:
                        "and teacher demonstrations it involves, and the in-class workload of "
                        "its exercises")
         return (
-            f"Aruvi looks at the teaching effort each chapter is likely to need — {factors} — "
+            f"Meyy looks at the teaching effort each chapter is likely to need — {factors} — "
             f"and turns that into a single effort index for the chapter. Chapters with a higher "
             f"effort index are given a larger share of the available periods, so that harder "
             f"chapters get more classroom time, and periods are then distributed across all the "
             f"selected chapters in proportion to their effort index."
         )
     return (
-        "Aruvi looks at the competencies each chapter develops and how strongly the chapter "
+        "Meyy looks at the competencies each chapter develops and how strongly the chapter "
         "addresses each one. Chapters that carry heavier or more central competencies are given "
         "a larger share of the available periods, so that the most important learning gets more "
         "classroom time, and periods are then distributed across all the selected chapters in "

@@ -83,7 +83,7 @@ three four five six all any some more most other another use used uses using mak
 get gets got give gives given also only just very much many few both same own about over under
 between during before after out up down off above below because while where whether can cannot
 not no yes if then than so such each per within across need needs want wants work works thing
-things help helps helped teacher teachers lesson lessons plan plans aruvi whole full'''.split())
+things help helps helped teacher teachers lesson lessons plan plans aruvi meyy whole full'''.split())
 ROMAN = set('i ii iii iv v vi vii viii ix x xi xii'.split())
 GRADEWORD = re.compile(r'^(ncf|ncert)$')
 

@@ -122,7 +122,7 @@ function PersonalProfile({ onSaved }) {
   if (!acct) return <div className="setwrap"><div className="fr-loading">Loading…</div></div>;
   return (
     <div className="setwrap setwrap-tight">
-      <h1 className="set-title">Personal profile</h1>
+      {/* No heading — the Settings bar names this screen (2026-09-03). */}
       {/* Labels ABOVE the boxes (founder, 2026-08-26 — placeholder-only left fields
           ambiguous once filled; reverted same day). */}
       <label className="login-field ob-field"><span>Your name</span>
@@ -255,6 +255,9 @@ const SUPPORT_FALLBACK = [
   { key: "other", label: "Something else" },
 ];
 const SUPPORT_MAX = 4000;
+/* Hardcoded by decision (founder, 2026-09-03) — mirrors api/config.SUPPORT_ADDRESS.
+   Move one, move the other. */
+const SUPPORT_ADDRESS = "support@meyy.in";
 const replyWords = (n) => `${n} working day${Number(n) === 1 ? "" : "s"}`;
 
 /* The Ask Aruvi mark — the same hand-drawn stream-and-dot that sits on the tab row
@@ -350,7 +353,7 @@ function SupportForm({ onOpenProfile, onAsk }) {
               : <>Your message is with us and you can expect a response within{" "}
                   {sent.reply_window || replyWords(sent.reply_days || 2)}, Monday to
                   Friday. There is no email address on your account, so write to us at{" "}
-                  <strong>{sent.address}</strong> — quote your reference — and we will
+                  <strong>{SUPPORT_ADDRESS}</strong> — quote your reference — and we will
                   reply there.</>}
           </p>
         </div>
@@ -370,21 +373,19 @@ function SupportForm({ onOpenProfile, onAsk }) {
 
   return (
     <div className="setwrap">
-      {/* ★ THE TITLE IS FROZEN, AND ONLY THE TITLE (founder, 2026-08-27). The same
-          `.set-title-stick` idiom Subscription & billing uses: sticky at var(--nav-h),
-          opaque paper so the form passes UNDER it. `.sup-title` additionally pulls the
-          heading up out of main's 40px top padding, which read as dead space between
-          the Settings bar and the one word naming the screen. Everything below —
-          including the Ask Aruvi row — scrolls. */}
-      <h1 className="set-title set-title-stick sup-title">Support</h1>
+      {/* No heading (founder, 2026-09-03): the Settings bar reads "⚙ Support" — the
+          frozen `.set-title-stick` title of 2026-08-27 was a second sticky row saying
+          the same word, and on a phone it was the row that pushed Send under the fold.
+          `.set-first` pulls the first line up into main's top padding, which is what
+          `.sup-title`'s -26px used to do for the heading. */}
 
       {/* 1 · the fast door first */}
-      <p className="set-hint">Most questions about how Aruvi works are answered straight
-        away by Ask Aruvi. For anything else, write to us below.</p>
+      <p className="set-hint set-first">Most questions about how Meyy works are answered straight
+        away by Ask Meyy. For anything else, write to us below.</p>
       <button className="set-bigcard sup-ask" onClick={() => onAsk && onAsk()}>
         <span className="sup-askmark"><AskMark /></span>
-        <span className="set-bigtext"><span className="set-biglab">Ask Aruvi</span>
-          <span className="set-bigsub">Answers about how Aruvi works — instantly</span></span>
+        <span className="set-bigtext"><span className="set-biglab">Ask Meyy</span>
+          <span className="set-bigsub">Answers about how Meyy works — instantly</span></span>
         <span className="set-chev">›</span>
       </button>
 
@@ -392,12 +393,22 @@ function SupportForm({ onOpenProfile, onAsk }) {
       <div className="set-group">
         <div className="set-cap">Write to us</div>
         <div className="set-card set-card-pad">
+          {/* ★ THE FORM IS SHAPED LIKE A MAIL (founder, 2026-09-03): To · Subject ·
+              message. The To line is HARDCODED, not read from GET /support — the
+              running API had handed the screen the founder's Gmail (a process older
+              than the config change), and an address a teacher is told to write to
+              must not depend on which server answered. A read-only VALUE, not a field:
+              no plane, no border, nothing that invites a tap. */}
+          <div className="login-field ob-field sup-field sup-to-row">
+            <span>To</span>
+            <div className="sup-to">{SUPPORT_ADDRESS}</div>
+          </div>
           <label className="login-field ob-field sup-field">
-            <span>What is this about?</span>
+            <span>Subject</span>
             {/* No preselection — a dropdown that answers for her files a suggestion as
                 a fault, and the choice also sets which reply window she is promised. */}
             <Dropdown value={cat} onChange={setCat} placeholder="Choose one"
-              ariaLabel="What is this about?"
+              ariaLabel="Subject"
               options={cats.map((c) => ({ value: c.key, label: c.label }))} />
           </label>
           <label className="login-field ob-field sup-field">
@@ -432,7 +443,7 @@ function SupportForm({ onOpenProfile, onAsk }) {
           {emailKnown && !hasEmail && (
             <p className="ob-quiet">There is no email address on your account, so we
               cannot write back — add one under Personal profile, or write to us
-              directly at {meta.address || "support"}.</p>
+              directly at {SUPPORT_ADDRESS}.</p>
           )}
           {err && <p className="ob-err" role="alert">{err}</p>}
           <button className="primary fr-cta ob-cta"
@@ -573,7 +584,7 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
       const url = URL.createObjectURL(await r.blob());
       const a = document.createElement("a");
       a.href = url;
-      a.download = `Aruvi-invoice-${String(number).replace(/\//g, "-")}.pdf`;
+      a.download = `Meyy-invoice-${String(number).replace(/\//g, "-")}.pdf`;
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -666,10 +677,10 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
     return (
       <div className="setwrap">
         {back}
-        {/* Frozen: this screen grows a card per subscription, so the heading must stay
-            with the list it names (founder, 2026-08-26). */}
-        <h1 className="set-title set-title-stick">Subscription &amp; billing</h1>
-        <div className="set-card set-card-pad">
+        {/* No heading — the fixed Settings bar names this screen (2026-09-03), which
+            also retires the frozen title of 2026-08-26: the list it named is now named
+            by a row that never scrolls at all. */}
+        <div className="set-card set-card-pad set-first">
           {onTrial && (
             <div className="set-plan"><span className="set-pill">Free trial</span>
               <span className="set-plan-txt">{ent.trial_chapters_used} of {ent.trial_chapter_cap} chapters used</span></div>
@@ -768,8 +779,7 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
     return (
       <div className="setwrap">
         {back}
-        <h1 className="set-title">Your data &amp; export</h1>
-        <p className="set-hint">Everything you've created — your profile, notes and teaching
+        <p className="set-hint set-first">Everything you've created — your profile, notes and teaching
           progress — in one document.</p>
         <div className="set-card">
           <button className="set-row" disabled={!!busy} onClick={() => download("docx")}>
@@ -798,9 +808,8 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
     return (
       <div className="setwrap">
         {back}
-        <h1 className="set-title">About Aruvi</h1>
-        <div className="set-card set-card-pad">
-          <p className="set-plan-txt">Aruvi · Lesson Studio — preview build.<br />
+        <div className="set-card set-card-pad set-first">
+          <p className="set-plan-txt">Meyy · Lesson Studio — preview build.<br />
             NCF 2023 aligned.</p>
         </div>
         <p className="set-hint">Version details will live here. The user agreement and
@@ -860,13 +869,13 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
       {!onTrial && (
       <button className="set-bigcard" onClick={() => setView("data")}>
         <span className="set-bigtext"><span className="set-biglab">Your data &amp; export</span>
-          <span className="set-bigsub">Download your Aruvi data</span></span>
+          <span className="set-bigsub">Download your Meyy data</span></span>
         <span className="set-chev">›</span>
       </button>
       )}
       <button className="set-bigcard" onClick={() => onAsk && onAsk()}>
         <span className="set-bigtext"><span className="set-biglab">Help</span>
-          <span className="set-bigsub">Ask Aruvi guide</span></span>
+          <span className="set-bigsub">Ask Meyy guide</span></span>
         <span className="set-chev">›</span>
       </button>
       <button className="set-bigcard" onClick={() => setView("support")}>
@@ -875,7 +884,7 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
         <span className="set-chev">›</span>
       </button>
       <button className="set-bigcard" onClick={() => setView("about")}>
-        <span className="set-bigtext"><span className="set-biglab">About Aruvi</span>
+        <span className="set-bigtext"><span className="set-biglab">About Meyy</span>
           <span className="set-bigsub">Version info</span></span>
         <span className="set-chev">›</span>
       </button>
@@ -945,7 +954,7 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
         <div className="acct-final-bg" onClick={() => setFinalOpen(false)}>
           <div className="acct-final" onClick={(e) => e.stopPropagation()}>
             <div className="kicker kicker-soft">Last step</div>
-            <h2 className="acct-final-t">Have you downloaded your Aruvi data?</h2>
+            <h2 className="acct-final-t">Have you downloaded your Meyy data?</h2>
             <p className="acct-final-p">
               Everything — your lesson plans, your teaching profile, your chapter notes and
               your progress — is deleted permanently and cannot be recovered. The download
@@ -968,7 +977,7 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
             <label className="acct-final-check">
               <input type="checkbox" checked={downloadConfirmed}
                 onChange={(e) => setDownloadConfirmed(e.target.checked)} />
-              <span>I confirm I have downloaded my Aruvi data.</span>
+              <span>I confirm I have downloaded my Meyy data.</span>
             </label>
             <p className="acct-final-note">
               Your confirmation is recorded against your account.

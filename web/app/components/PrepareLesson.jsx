@@ -563,7 +563,7 @@ export default function PrepareLesson({ subject, grade, readiness, onNavigate, o
                   </div>
                   {showInfo && (
                     <div className="prep-tip" role="note">
-                      Aruvi shares your annual budget for this class across its chapters by each
+                      Meyy shares your annual budget for this class across its chapters by each
                       chapter&rsquo;s effort index — heavier chapters get more periods. It&rsquo;s a
                       starting point, so you can change it freely.
                     </div>

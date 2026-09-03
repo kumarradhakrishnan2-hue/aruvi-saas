@@ -8,6 +8,7 @@ which the founder sets himself:
     ARUVI_SMTP_USER      kumar.radhakrishnan2@gmail.com
     ARUVI_SMTP_PASSWORD  a Google APP PASSWORD (never the account password)
     ARUVI_MAIL_FROM      kumar.radhakrishnan2@gmail.com   (defaults to SMTP_USER)
+    ARUVI_SUPPORT_ADDRESS  support@meyy.in  (the default; reply-to + the support inbox)
 
 Gmail requires an app password with 2-step verification on; the ordinary account
 password will be refused. Without ARUVI_SMTP_HOST/USER/PASSWORD set, api/main.py

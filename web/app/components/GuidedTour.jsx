@@ -131,17 +131,17 @@ const STEPS = [
     body: () => "Your profile is built from what you do — read it whole here, at any time. Changes are made with the button above; removing a subject is the one thing done here." },
   // Step 17 — Ask Aruvi (the bare stream-a mark on the tab row). Transparent hand centred on it.
   { anchor: "ask-aruvi", place: "below",
-    title: "Use Ask Aruvi to answer your queries",
+    title: "Use Ask Meyy to answer your queries",
     body: () => "Get answers for up to 100 questions across 5 categories and use intelligent search to narrow your query." },
   // Step 18 — the panel is now OPEN (page.jsx opened it on Next from 17), so she sees the thing
   // itself rather than a mark that promises it. "over" because the target IS the whole modal.
   { anchor: "ask-aruvi-root", place: "over",
-    title: "Use Ask Aruvi to answer your queries",
+    title: "Use Ask Meyy to answer your queries",
     body: () => "Use either the categories or the intelligent search to look for answers to your queries." },
   // Step 19 — the sign-off. No anchor and no hand: nothing to point at, so the scrim dims the whole
   // screen and the greeting sits dead centre. `center` is the third placement mode (see tipStyle).
   { anchor: null, place: "center", center: true, welcome: true,
-    title: "Welcome to Aruvi",
+    title: "Welcome to Meyy",
     body: null },
 ];
 const TOTAL = STEPS.length;

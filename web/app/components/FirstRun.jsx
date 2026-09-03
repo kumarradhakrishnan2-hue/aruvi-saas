@@ -5,6 +5,7 @@ import { getJSON, postJSON, markPrepared, pretty, gradeUp, ROMAN, stageOfGrade, 
          ppwFromAnnual } from "../lib/format";
 import { bindSectionChapter, pushSectionState } from "../lib/sectionState";
 import { RollWheel, normPpw, ppwMapSum, lowestDuration, DEFAULT_PPW } from "./wheels";
+import MeyyMark from "./MeyyMark";
 
 /* ───────── FirstRun — shell-less Guided First Experience (Phase 1, 2026-07-01) ─────────
  * The mobile-first, progressive-acquisition entry point (CLAUDE.md §0). Until the teacher has
@@ -519,7 +520,7 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
     <div className="fr-brand">
       <header className="hdr">
         <div className="brand">
-          <span className="brand-row">Aruvi<em>.</em></span>
+          <MeyyMark />
           <span className="hdr-brand-tag">lesson studio</span>
         </div>
         <div className="hdr-user">
@@ -569,7 +570,7 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
             card renders ONLY for a trial teacher — a subscribed entrant gets the clean
             version (title · To get started · CTA). */}
         <div className="fr-welcome-body">
-          <h1 className="fr-welcome-title">Welcome to Aruvi!</h1>
+          <h1 className="fr-welcome-title">Welcome to Meyy!</h1>
           {trialInfo && trialInfo.enforced && trialInfo.status === "trial" ? (
             <>
               <div className="fr-welcome-rule" aria-hidden="true" />
@@ -582,7 +583,7 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
                 </p>
                 <h2 className="fr-trial-h">To get started</h2>
                 <p className="fr-trial-p">
-                  Answer three quick questions and Aruvi will create your first lesson plan.
+                  Answer three quick questions and Meyy will create your first lesson plan.
                 </p>
               </div>
             </>
@@ -590,7 +591,7 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
             <>
               <h2 className="fr-welcome-h2">To get started</h2>
               <p className="fr-welcome-sub">
-                Answer three quick questions and Aruvi will create your first lesson plan.
+                Answer three quick questions and Meyy will create your first lesson plan.
               </p>
             </>
           )}
@@ -742,7 +743,7 @@ export default function FirstRun({ user, onComplete, onPrepared, onPrepareError,
                   keeps the NCF attribution. The PERIOD count is genuinely our own calibration —
                   the master plan's effort-weighted share of this class's annual budget — so it is
                   credited to Aruvi. Do not "harmonise" these two strings. */}
-              {periods === defaultPeriods && <span className="fr-tag-recommended">Aruvi recommended</span>}
+              {periods === defaultPeriods && <span className="fr-tag-recommended">Meyy recommended</span>}
             </span>
             {editingField !== "periods" ? (
               <div className="fr-default-row">

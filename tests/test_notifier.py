@@ -64,7 +64,7 @@ def test_confirmation_names_what_she_bought():
         "meera krishnan", ["social_sciences/middle", "english/middle"],
         1000, "2027-08-26", "9876543210")
     t = m["text"]
-    assert m["subject"] == "Your Aruvi subscriptions are active", m["subject"]
+    assert m["subject"] == "Your Meyy subscriptions are active", m["subject"]
     assert "Hello Meera," in t                       # first name only, capitalised
     assert "Social Sciences · Middle" in t
     assert "English · Middle" in t
@@ -78,7 +78,7 @@ def test_confirmation_names_what_she_bought():
 def test_confirmation_singular_and_enterprise():
     one = mail_templates.subscription_confirmation(
         "ravi", ["science/secondary"], 500, "2027-01-01", "9000000000")
-    assert one["subject"] == "Your Aruvi subscription is active"
+    assert one["subject"] == "Your Meyy subscription is active"
     assert "Class 9 (Class 10 coming soon)" in one["text"]
     star = mail_templates.subscription_confirmation("", ["*"], 5000, "2027-01-01", "9000000000")
     assert "All subjects · All stages" in star["text"]

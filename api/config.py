@@ -91,10 +91,15 @@ SMTP_HOST = os.environ.get("ARUVI_SMTP_HOST", "").strip()
 SMTP_PORT = int(os.environ.get("ARUVI_SMTP_PORT", "587"))
 SMTP_USER = os.environ.get("ARUVI_SMTP_USER", "").strip()
 SMTP_PASSWORD = os.environ.get("ARUVI_SMTP_PASSWORD", "")
-# The address teachers see as sender / reply-to. The founder's own mail id for now
-# (founder, 2026-08-26); a support@ address replaces it without touching code.
+# ★ THE ONE SUPPORT ADDRESS (founder, 2026-09-03: support@meyy.in). It is what a teacher
+# is told to write to, where every Aruvi mail's replies land, and where each filed
+# support case is delivered. Sender identity (MAIL_FROM) stays separate: Gmail rewrites
+# a From it does not own, so the SMTP account keeps sending and this address receives.
+SUPPORT_ADDRESS = os.environ.get("ARUVI_SUPPORT_ADDRESS", "").strip() or "support@meyy.in"
+# The address mail is SENT from — the SMTP account itself unless overridden.
 MAIL_FROM = os.environ.get("ARUVI_MAIL_FROM", "").strip() or SMTP_USER or "kumar.radhakrishnan2@gmail.com"
-MAIL_REPLY_TO = os.environ.get("ARUVI_MAIL_REPLY_TO", "").strip() or MAIL_FROM
+# Where a reply to any Aruvi mail goes: the support inbox, never the sending account.
+MAIL_REPLY_TO = os.environ.get("ARUVI_MAIL_REPLY_TO", "").strip() or SUPPORT_ADDRESS
 # Send the founder a copy of every subscription confirmation (his own sales log).
 MAIL_BCC_FOUNDER = os.environ.get("ARUVI_MAIL_BCC_FOUNDER", "1").strip().lower() in (
     "1", "true", "yes", "on")

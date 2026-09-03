@@ -16,6 +16,7 @@ import ProfilePortal, { queueSetupCheck, takeSetupCheck, pruneSetupCheck, setupK
 // ThemeToggle moved into Settings (App › Appearance) — no longer on the shell's bar.
 import AskAruvi from "./ask-aruvi/AskAruvi";
 import { primeBank, clearBank, refreshBank } from "./ask-aruvi/bank";
+import MeyyMark from "./components/MeyyMark";
 
 /* ───────── app shell ─────────
  * The app is gated behind a user-ID portal (Login). No password yet: the entered ID is the
@@ -268,7 +269,7 @@ export default function Home() {
   useEffect(() => {
     setSectionMismatchHandler((sectionKey) => {
       pullSectionState([sectionKey]).finally(() => {
-        setSectionFailed("That didn’t save — your classes are as Aruvi has them.");
+        setSectionFailed("That didn’t save — your classes are as Meyy has them.");
       });
     });
     return () => setSectionMismatchHandler(null);
@@ -855,6 +856,15 @@ export default function Home() {
     else goClasses();
   };
   const inSettingsBar = editFlow === "settings" || (editFlow === "profile" && profileViaSettings);
+  /* What the bar says (2026-09-03): the chosen item's own card name, verbatim — the
+     same words she tapped — so the bar reads as the card she opened. The teaching
+     profile is reached through Settings but rendered by TeachingProfile, which is why
+     it is decided here and not inside Settings.jsx. Unknown view → "Settings", never
+     blank. */
+  const settingsBarLabel = (editFlow === "profile" && profileViaSettings) ? "Teaching profile"
+    : ({ personal: "Personal profile", subscription: "Subscription & billing",
+         data: "Your data & export", support: "Support", about: "About Meyy",
+         legal: "Legal" }[settingsView] || "Settings");
   // (The "add more classes in this subject" prompt that used to call in here was removed on
   // 2026-08-21 along with its one-time window — see the plusShow note in MyPlans.jsx. Nothing
   // sets `profileAutoAdd` to a subject any more, so TeachingProfile's `autoAddClassSubject`
@@ -987,7 +997,7 @@ export default function Home() {
         ? <>Section <b>{tags[0]}</b> and its own suggested periods for the year</>
         : <><b>{tags.length} sections</b> and its own suggested periods for the year</>;
     return (
-      <>Aruvi started you off with {phrase}. You can change any of it — or leave it and
+      <>Meyy started you off with {phrase}. You can change any of it — or leave it and
         carry on teaching.</>
     );
   })();
@@ -1072,12 +1082,13 @@ export default function Home() {
               shell mode. Do not "simplify" any of this back to sticky or fixed-on-document.
           (--hdr-h/--nav-h are still published — inner views use them for their own offsets.) */}
       <div className="topbar">
-      {/* Shell header: the brand exactly as the first-run page renders it (Aruvi + red dot,
-          LESSON STUDIO tag beneath); settings gear (→ teaching profile) + log out right. No
-          hamburger, no drawer — the two tabs below the header are the whole nav. */}
+      {/* Shell header: the brand exactly as the first-run page renders it (the MEYY wordmark —
+          MeyyMark.jsx, 2026-09-03 — LESSON STUDIO tag beneath); settings gear (→ teaching
+          profile) + log out right. No hamburger, no drawer — the two tabs below the header
+          are the whole nav. */}
       <header className="hdr">
         <div className="brand">
-          <span className="brand-row">Aruvi<em>.</em></span>
+          <MeyyMark />
           <span className="hdr-brand-tag">lesson studio</span>
         </div>
         <div className="hdr-user">
@@ -1106,11 +1117,16 @@ export default function Home() {
            Settings back to where she came from; every option keeps this row. Same nav
            slot and classes, so it stays pinned exactly as the tab row does. */
         <nav className="tabs main-tabs set-bar" aria-label="Settings">
-          {/* ONE "Settings" only (founder): the bar's large title, gear glyph beside it
-              the way the Ask mark sits beside its title; the screen below carries no
-              second heading. ✕ right closes to origin. No hairline under this bar. */}
+          {/* ★ THE BAR NAMES THE CHOSEN ITEM, NOT THE MENU (founder, 2026-09-03: "why
+              should the word Settings take so much real estate"). The gear is the
+              "you are in Settings" mark; beside it sits the name of the screen she is
+              actually on — "⚙ Support", "⚙ Teaching profile" — and the screen below
+              carries NO heading of its own. "Settings" appears only at the home list,
+              where it is the item. This is what removed every subview's frozen title:
+              a fixed bar naming the screen makes a second sticky row naming it again
+              pure cost, on a phone most of all. ✕ right closes to origin. */}
           <span className="set-bar-title">
-            <span className="set-bar-gear" aria-hidden="true">⚙</span>Settings
+            <span className="set-bar-gear" aria-hidden="true">⚙</span>{settingsBarLabel}
           </span>
           <button className="set-bar-x" onClick={settingsClose} aria-label="Close settings">✕</button>
         </nav>
@@ -1129,7 +1145,7 @@ export default function Home() {
           My Lessons
         </button>
         {/* Ask Aruvi — permanent "?" at the right of the tab row; opens the deterministic Q&A screen. */}
-        <button className="ask-q" onClick={() => setAskOpen(true)} aria-label="Ask Aruvi" title="Ask Aruvi" data-tour="ask-aruvi">
+        <button className="ask-q" onClick={() => setAskOpen(true)} aria-label="Ask Meyy" title="Ask Meyy" data-tour="ask-aruvi">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M7 6.5c6 1 6 5 3.5 7.5S6 18 6 18" />
             <path d="M10.5 14c3.5 0 5.5-1.8 6.5-4" />
@@ -1151,7 +1167,7 @@ export default function Home() {
               actually stored, so this is a caption for the screen she is now looking at. */}
           {saveFailed && (
             <div className="tp-savefail" role="alert">
-              <span>Your teaching set-up didn’t save — this is what Aruvi has for you.</span>
+              <span>Your teaching set-up didn’t save — this is what Meyy has for you.</span>
               <button type="button" onClick={() => setSaveFailed(false)}>Dismiss</button>
             </div>
           )}
@@ -1204,7 +1220,7 @@ export default function Home() {
                 onAsk={() => setAskOpen(true)} onSignOut={onSignOut} />
             </div>
           ) :
-            !subject ? <div className="empty">Connecting to the Aruvi engine…</div> :
+            !subject ? <div className="empty">Connecting to the Meyy engine…</div> :
             tab === "generate" ? <GenerateTab subject={subject} grade={grade} ready={ready} readiness={readiness}
               onNavigate={setTab} entry={generateEntry} onScope={(s, g) => { setSubject(s); setGrade(g); }}
               onConsumeEntry={() => setGenerateEntry(null)} onPrepared={onPrepared}

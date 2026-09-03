@@ -35,6 +35,7 @@ from typing import Any, Dict, List, Optional
 
 from .report_competency import grade_roman, subject_display
 from .pdf_fonts import font_face_css
+from . import brand   # the MEYY wordmark raster (2026-09-03)
 from .export_lesson_pdf import (
     PINE, KRAFT, GREY_BAND, GREY_HEAD, INK, LINE,
     _metadata_table, _competency_table, _english_competency_table, _stage_table, _period_block,
@@ -382,7 +383,7 @@ def render_integrated_pdf_html(
 
   <table class="hdr" width="100%"><tr>
     <td width="60%">
-      <span class="brand-aruvi">Aruvi</span><span class="brand-dot">.</span>
+      {brand.pdf_img_html(16)}
       <span class="brand-studio">LESSON STUDIO</span><br/>
       <span class="brand-ncf">NCF 2023 aligned</span>
     </td>
@@ -397,7 +398,7 @@ def render_integrated_pdf_html(
   {body}
 
   <div id="footerContent" class="footer">
-    Aruvi · Lesson plan &amp; assessment · Grade {_esc(grade)} · {_esc(subject)} · Ch {_esc(ch_no)} · {scope}{ans_flag} · Confidential
+    Meyy · Lesson plan &amp; assessment · Grade {_esc(grade)} · {_esc(subject)} · Ch {_esc(ch_no)} · {scope}{ans_flag} · Confidential
   </div>
 </body></html>"""
 

@@ -191,7 +191,7 @@ def subject_display(subject: str) -> str:
 
 def allocation_note(basis: str) -> str:
     if basis == "Effort Index":
-        return ("Aruvi estimates the teaching effort required for each chapter and allocates "
+        return ("Meyy estimates the teaching effort required for each chapter and allocates "
                 "periods proportionally to its effort index — chapters with a higher effort "
                 "index receive more time to ensure mastery.")
     if basis == "Competency Weights":
@@ -203,7 +203,7 @@ def allocation_note(basis: str) -> str:
 
 EXEC_SUMMARY_WHY = (
     "This report explains how the available instructional time has been distributed across "
-    "the selected chapters for the chosen time period. Aruvi estimates the teaching effort "
+    "the selected chapters for the chosen time period. Meyy estimates the teaching effort "
     "required for each chapter and allocates periods proportionally. The factors considered "
     "vary by subject and may include task complexity, practice requirements, projects, "
     "assessments and activity load."
@@ -217,5 +217,5 @@ EXEC_SUMMARY_CONTENTS = [
 
 EXEC_SUMMARY_POINTER = (
     'For a detailed explanation of how time has been distributed across specific chapters, '
-    'open Ask Aruvi and select: "How time is allocated across chapters".'
+    'open Ask Meyy and select: "How time is allocated across chapters".'
 )

@@ -24,6 +24,7 @@ from .report_competency import (
     grade_roman, subject_display, date_long, executive_summary_paragraphs,
 )
 from .pdf_fonts import font_face_css
+from . import brand   # the MEYY wordmark raster (2026-09-03)
 
 
 # ── HTML template ──────────────────────────────────────────────────────────
@@ -78,7 +79,7 @@ def render_report_html(report: CompetencyAllocationReport, *, for_pdf: bool = Tr
     page_css = """
   @page {
     size: A4; margin: 18mm 14mm 16mm 14mm;
-    @bottom-left { content: "Aruvi · Period Allocation Report"; font-size: 6pt; color: #bbb; }
+    @bottom-left { content: "Meyy · Period Allocation Report"; font-size: 6pt; color: #bbb; }
     @bottom-right { content: "Page " counter(page) " of " counter(pages) " · Confidential"; font-size: 6pt; color: #bbb; }
   }
 """ if for_pdf else ""
@@ -251,7 +252,7 @@ def render_pdf_html(report: CompetencyAllocationReport) -> str:
   }}
   body {{ font-family: Helvetica; font-size: 8pt; color: #1a1917; }}
 
-  /* ── header / brand (point 5: match the site's "Aruvi.lesson studio") ── */
+  /* ── header / brand (point 5: match the site's "Meyy.lesson studio") ── */
   .hdr {{ width: 100%; }}
   .brand-aruvi {{ font-family: Georgia, "Times New Roman", serif; font-size: 16pt; font-weight: bold; color: #164436; }}
   .brand-dot {{ font-family: Georgia, serif; font-size: 16pt; font-style: italic; color: #b65a31; }}
@@ -315,7 +316,7 @@ def render_pdf_html(report: CompetencyAllocationReport) -> str:
 
   <table class="hdr"><tr>
     <td width="60%">
-      <span class="brand-aruvi">Aruvi</span><span class="brand-dot">.</span>
+      {brand.pdf_img_html(16)}
       <span class="brand-studio">LESSON STUDIO</span><br/>
       <span class="brand-ncf">NCF 2023 aligned</span>
     </td>
@@ -340,7 +341,7 @@ def render_pdf_html(report: CompetencyAllocationReport) -> str:
   {comp_blocks}
 
   <div id="footerContent" class="footer">
-    Aruvi · Allocation &amp; Competency report · Grade {esc(g)} · {esc(subj)} · Confidential
+    Meyy · Allocation &amp; Competency report · Grade {esc(g)} · {esc(subj)} · Confidential
   </div>
 </body></html>"""
 

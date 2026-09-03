@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Aruvi",
+  title: "Meyy",
   description: "NCF-aligned lesson plans & assessments",
 };
 

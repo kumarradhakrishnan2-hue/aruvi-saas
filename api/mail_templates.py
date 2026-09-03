@@ -158,7 +158,7 @@ def _html_body(*, hello: str, headline: str, new: List[str], also: List[str],
       <tr><td style="padding:26px 0 0;">
         <div style="font-family:Helvetica,Arial,sans-serif;font-size:11px;
              letter-spacing:1.2px;text-transform:uppercase;color:{_PINE};
-             padding-bottom:6px;">Everything you have with Aruvi now</div>
+             padding-bottom:6px;">Everything you have with Meyy now</div>
         <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
           {_html_rows(held, svu, dates=True)}
         </table>
@@ -187,7 +187,7 @@ def _html_body(*, hello: str, headline: str, new: List[str], also: List[str],
 
    <tr><td style="padding:26px 30px 0;">
      <span style="font-family:Georgia,'Times New Roman',serif;font-size:24px;
-           font-weight:bold;color:{_PINE};">Aruvi</span><span
+           font-weight:bold;color:{_PINE};">Meyy</span><span
            style="font-family:Georgia,serif;font-size:24px;font-style:italic;
            color:{_CLAY};">.</span>
      <span style="font-family:Helvetica,Arial,sans-serif;font-size:10px;
@@ -227,7 +227,7 @@ def _html_body(*, hello: str, headline: str, new: List[str], also: List[str],
        whole year. Everything you prepare stays yours.</p>
      <p style="margin:0 0 12px;font-family:Helvetica,Arial,sans-serif;font-size:13px;
         line-height:1.6;color:{_SOFT};">
-       Aruvi&rsquo;s plans follow the National Curriculum Framework and the NCERT
+       Meyy&rsquo;s plans follow the National Curriculum Framework and the NCERT
        textbooks. If a chapter does not look right for your class, prepare it again with
        different periods &mdash; it costs nothing.</p>
      {f'<p style="margin:0 0 12px;font-family:Helvetica,Arial,sans-serif;font-size:13px;line-height:1.6;color:{_SOFT};">{_html.escape(attach_line)}</p>' if attach_line else ''}
@@ -240,7 +240,7 @@ def _html_body(*, hello: str, headline: str, new: List[str], also: List[str],
    <tr><td style="padding:22px 30px 26px;">
      <div style="border-top:1px solid {_LINE};padding-top:12px;
           font-family:Helvetica,Arial,sans-serif;font-size:11px;color:#9a968c;">
-       Aruvi &middot; Lesson Studio{f' &nbsp;&middot;&nbsp; {_html.escape(invoice_number)}' if invoice_number else ''}
+       Meyy &middot; Lesson Studio{f' &nbsp;&middot;&nbsp; {_html.escape(invoice_number)}' if invoice_number else ''}
      </div>
    </td></tr>
 
@@ -299,7 +299,7 @@ def _html_shell(*, hello: str, lead: str, rows: List[Tuple[str, str]],
 
    <tr><td style="padding:26px 30px 0;">
      <span style="font-family:Georgia,'Times New Roman',serif;font-size:24px;
-           font-weight:bold;color:{_PINE};">Aruvi</span><span
+           font-weight:bold;color:{_PINE};">Meyy</span><span
            style="font-family:Georgia,serif;font-size:24px;font-style:italic;
            color:{_CLAY};">.</span>
      <span style="font-family:Helvetica,Arial,sans-serif;font-size:10px;
@@ -429,8 +429,8 @@ def support_acknowledgement(name: str, reference: str, category: str, message: s
     if str(category or "").strip().lower() != "billing":
         # Said only where it is true: Ask Aruvi answers "how does this work?", not
         # "why was I charged twice?".
-        tail.insert(1, "In the meantime, Ask Aruvi — the guide inside the app — answers "
-                       "most questions about how Aruvi works, straight away.")
+        tail.insert(1, "In the meantime, Ask Meyy — the guide inside the app — answers "
+                       "most questions about how Meyy works, straight away.")
 
     ledger = "\n".join(f"  {k:<10} {v}" for k, v in rows if v)
     quoted = "\n".join(f"  > {ln}" for ln in body.splitlines()) if body else ""
@@ -446,13 +446,13 @@ This is what you sent, so you have your own copy:
 
 {quoted}
 ''' if quoted else ''}
-— Aruvi
+— Meyy
 """
     return {
-        "subject": f"[{reference}] We have your message — Aruvi support",
+        "subject": f"[{reference}] We have your message — Meyy support",
         "text": text,
         "html": _html_shell(hello=hello, lead=lead, rows=rows, quote=body, tail=tail,
-                            footer=f"Aruvi · Lesson Studio  ·  {reference}"),
+                            footer=f"Meyy · Lesson Studio  ·  {reference}"),
     }
 
 
@@ -493,9 +493,9 @@ def subscription_confirmation(name: str, scopes: List[str], amount_inr: int,
     valid_line = f"  Valid to  {fmt_date(svu.get(new[0]) if new and svu.get(new[0]) else valid_until)}\n"
     plural = "subscriptions" if len(new) > 1 else "subscription"
     verb = "are" if len(new) > 1 else "is"
-    opening = ("Your Aruvi {p} {v} active. Here is what you have:"
+    opening = ("Your Meyy {p} {v} active. Here is what you have:"
                if not also else
-               "Your Aruvi {p} {v} active. Here is what you have just added:").format(
+               "Your Meyy {p} {v} active. Here is what you have just added:").format(
                    p=plural, v=verb)
     # The invoice number is in the BODY, not only on the attachment (2026-08-26): the
     # number is how she refers to this purchase in any question she ever asks about it,
@@ -503,7 +503,7 @@ def subscription_confirmation(name: str, scopes: List[str], amount_inr: int,
     invoice_line = f"  Invoice   {invoice_number}\n" if invoice_number else ""
     holding = ""
     if also:
-        holding = ("\nEverything you have with Aruvi now:\n\n"
+        holding = ("\nEverything you have with Meyy now:\n\n"
                    + _scope_block(held, svu, dates=True) + "\n")
 
     text = f"""{hello}
@@ -518,7 +518,7 @@ def subscription_confirmation(name: str, scopes: List[str], amount_inr: int,
 Within {'each of these' if len(held) > 1 else 'that scope'} you can prepare as many lesson plans as you like, for every class
 and section you teach, for the whole year. Everything you prepare stays yours.
 
-Aruvi's plans follow the National Curriculum Framework and the NCERT textbooks. If a
+Meyy's plans follow the National Curriculum Framework and the NCERT textbooks. If a
 chapter does not look right for your class, prepare it again with different periods —
 it costs nothing.
 
@@ -526,10 +526,10 @@ it costs nothing.
 Online payments are not open yet, so this activation was recorded by hand. Reply to
 this mail if anything looks wrong and it will be put right.
 
-— Aruvi
+— Meyy
 """
-    subject = ("Your Aruvi subscription is active"
-               if len(new) == 1 else "Your Aruvi subscriptions are active")
+    subject = ("Your Meyy subscription is active"
+               if len(new) == 1 else "Your Meyy subscriptions are active")
     html = _html_body(
         hello=hello, headline=opening, new=new, also=also, held=held, svu=svu,
         amount_inr=amount_inr,

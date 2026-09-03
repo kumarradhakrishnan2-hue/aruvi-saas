@@ -1299,7 +1299,7 @@ function ChapterNotesModal({ chapterTitle, subjectGrade, initial, onSave, onClos
                 child. Aruvi holds these on the server, so the boundary has to be stated
                 where she types, not buried in a policy page. Wording is the founder's. */}
             <div className="cn-scope cn-warn">
-              Private data like name, age of child must not be recorded. Aruvi reserves
+              Private data like name, age of child must not be recorded. Meyy reserves
               right to delete if entered.
             </div>
           </div>

@@ -94,7 +94,7 @@ def test_opens_as_a_word_document():
 
 def test_header_identifies_the_pane():
     text = _all_text(_doc())
-    assert "Aruvi" in text
+    assert "Meyy" in text
     assert "Year plan" in text
     # Class, not Grade — the teacher-facing word on this pane.
     assert "Class IX" in text
@@ -213,7 +213,7 @@ def test_note_matches_the_panes_own_words():
 
 def test_note_carries_the_ask_aruvi_pointer():
     """Pinned by name because this is the sentence that went missing."""
-    assert ("To know how Aruvi suggests, refer to Ask Aruvi time allocation section."
+    assert ("To know how Meyy suggests, refer to Ask Meyy time allocation section."
             in _all_text(_doc()))
 
 

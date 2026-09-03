@@ -769,7 +769,7 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
       // ★ "based on general norms" (founder, 2026-08-28) — the figure is a calibrated standard
       // for the class, not a reading of HER year, and the line has to say so: she is being
       // invited to disagree with it, which she cannot do if it sounds like a fact about her.
-      return `Aruvi recommends ${recTotal} periods a year based on general norms for this class.`
+      return `Meyy recommends ${recTotal} periods a year based on general norms for this class.`
         + (ncfTotal != null && ncfTotal !== recTotal ? ` (NCF norm: ${ncfTotal})` : "");
     }
     if (ncfTotal != null) return `As per NCF, this class requires ${ncfTotal} periods.`;
@@ -1041,7 +1041,7 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
             )}
           </div>
         ) : (
-          <p className="fr-hint">Every subject Aruvi offers is already in your profile.</p>
+          <p className="fr-hint">Every subject Meyy offers is already in your profile.</p>
         ))}
         {/* ★ Clustering is keyed to the MODE, not the screen (founder, 2026-07-26).
             ADD  → options already exclude what she has and `picked` starts empty, so she is building
@@ -1139,7 +1139,7 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
         {!manageC && adding && <p className="fr-hint">Your current classes stay as they are — pick only the new ones.</p>}
         {gradeOptions.length === 0 && <div className="fr-loading">Loading classes…</div>}
         {gradeOptions.length > 0 && options.length === 0 && (
-          <p className="fr-hint">Every class Aruvi offers for {draft.name}
+          <p className="fr-hint">Every class Meyy offers for {draft.name}
             {portalStage ? " at this stage" : ""} is already in your profile.</p>
         )}
         {/* ★ REVERSED 2026-08-29 (founder, knowingly): manage mode clusters again. The
@@ -1248,7 +1248,7 @@ export default function TeachingProfile({ readiness, onChange, onBack, lapsed, p
         <div className="tp">
           <div className="kicker kicker-ochre">{kicker}</div>
           <h1 className="fr-q">How many periods a week does Class {classNum(g.grade)} get for {draft.name}?</h1>
-          <p className="fr-hint">A number, not a timetable — Aruvi never asks which days.</p>
+          <p className="fr-hint">A number, not a timetable — Meyy never asks which days.</p>
           <PpwTotalWheel value={total} onChange={setTotal} />
           <div className="fr-foot">
             <button className="primary fr-cta" onClick={() => setClassStep("durations")}>Continue</button>

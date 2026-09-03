@@ -215,7 +215,7 @@ def render_view_fragment(vm: ViewModel) -> str:
     return f'{_STYLE}<div class="aruvi">{render_lesson_plan(vm.lesson_plan)}{render_assessment(vm.assessment)}</div>'
 
 
-def render_view(vm: ViewModel, title: str = "Aruvi") -> str:
+def render_view(vm: ViewModel, title: str = "Meyy") -> str:
     """A full standalone HTML document."""
     return (f'<!doctype html><html lang="en"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width, initial-scale=1">'

@@ -24,6 +24,7 @@ from datetime import date, datetime
 from typing import Any, Dict
 
 from .pdf_fonts import font_face_css
+from . import brand   # the MEYY wordmark raster (2026-09-03)
 from .ports import Invoice
 
 PINE = "#164436"
@@ -159,7 +160,7 @@ def render_invoice_html(inv: Invoice) -> str:
 </style></head><body>
 
   <table class="hdr"><tr>
-    <td><span class="brand-aruvi">Aruvi</span><span class="brand-dot">.</span>
+    <td>{brand.pdf_img_html(16)}
         <span class="brand-studio">LESSON STUDIO</span><br/>
         <span class="brand-ncf">NCF 2023 aligned</span>{gstin}</td>
     <td><div class="doc-t">Invoice</div>
@@ -198,7 +199,7 @@ def render_invoice_html(inv: Invoice) -> str:
   in that stage, every section you teach, unlimited lesson plans.
   <span class="note-em">Questions about this invoice? Reply to the email it came with.</span></p>
 
-  <div id="footerContent" class="footer-line">Aruvi · Lesson Studio &nbsp;·&nbsp; {_esc(inv.number)}</div>
+  <div id="footerContent" class="footer-line">Meyy · Lesson Studio &nbsp;·&nbsp; {_esc(inv.number)}</div>
 </body></html>"""
 
 

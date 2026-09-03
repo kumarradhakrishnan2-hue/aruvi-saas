@@ -182,7 +182,7 @@ def _header(doc, right_title, grade, subject, dt, title_color=PINE):
     t = doc.add_table(rows=1, cols=2)
     _no_borders(t)
     lc = t.cell(0, 0).paragraphs[0]
-    r = _run(lc, "Aruvi", bold=True, size=17, color=PINE, font=SERIF)
+    r = _run(lc, "Meyy", bold=True, size=17, color=PINE, font=SERIF)
     _run(lc, ".", bold=True, size=17, color=CLAY, font=SERIF)
     _run(lc, "  LESSON STUDIO", size=7.5, color=SOFT, caps=True)
     lc2 = t.cell(0, 0).add_paragraph()
