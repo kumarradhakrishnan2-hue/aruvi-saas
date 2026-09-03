@@ -2,8 +2,8 @@
 
 Layout, under ARUVI_STATE_DIR:
 
-    invoices/{tenant}/{user}/ARV-2026-27-0001.json    the record
-    invoices/{tenant}/{user}/ARV-2026-27-0001.pdf     the exact bytes she was sent
+    invoices/{tenant}/{user}/MEY-2026-27-0001.json    the record
+    invoices/{tenant}/{user}/MEY-2026-27-0001.pdf     the exact bytes she was sent
     invoices/_series/2026-27.json                     the seller's counter
 
 Two deliberate choices:
@@ -18,7 +18,7 @@ erase walks `{tenant}` trees, and a counter inside one would take the seller's b
 it. `invoices/_series/` is not a valid tenant slug (`_slug` strips the leading
 underscore), so no tenant can ever collide with it.
 
-Numbers are formatted ARV/2026-27/0001 for humans and ARV-2026-27-0001 on disk — the
+Numbers are formatted MEY/2026-27/0001 for humans and MEY-2026-27-0001 on disk — the
 filesystem has no business holding slashes.
 """
 from __future__ import annotations
@@ -41,18 +41,18 @@ def _slug(s: str) -> str:
 
 
 def number_to_file(number: str) -> str:
-    """ARV/2026-27/0001 → ARV-2026-27-0001 (also guards a hand-passed number)."""
+    """MEY/2026-27/0001 → MEY-2026-27-0001 (also guards a hand-passed number)."""
     return _slug(str(number).replace("/", "-"))
 
 
 class InvoiceRepositoryFileImpl(InvoiceRepository):
     """Per-teacher invoice store plus the seller's shared number series."""
 
-    def __init__(self, data_dir: str, prefix: str = "ARV", start: int = 7834):
+    def __init__(self, data_dir: str, prefix: str = "MEY", start: int = 7834):
         """
         Args:
             data_dir: ARUVI_STATE_DIR — the invoices/ folder lives here.
-            prefix:   the seller's series prefix ("ARV/2026-27/7834").
+            prefix:   the seller's series prefix ("MEY/2026-27/7834").
             start:    ★ the FIRST number of each financial year (founder, 2026-08-26).
                       Not 1. A number is the one part of an invoice a customer can read
                       volume from, and "0001" tells every early teacher she is the first
@@ -64,7 +64,7 @@ class InvoiceRepositoryFileImpl(InvoiceRepository):
         """
         self.base_dir = Path(data_dir) / "invoices"
         self.series_dir = self.base_dir / "_series"
-        self.prefix = (prefix or "ARV").strip() or "ARV"
+        self.prefix = (prefix or "MEY").strip() or "MEY"
         self.start = int(start)
         self._lock = threading.Lock()
 

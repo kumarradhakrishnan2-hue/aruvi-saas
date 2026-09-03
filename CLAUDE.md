@@ -452,9 +452,14 @@ generic look.
   "Ask Meyy"; its bank is renamed in place (V3.2, `meyy` added beside `aruvi` in the indexer's
   stop-list) and the ETag ships it. The user agreement is republished as
   `consent_and_disclaimer_v0.2.md` (v0.1 kept beside it, as the version-by-filename rule
-  requires — every existing signer re-takes the six ticks once); its contracting-entity line
-  still reads **MyAruvi.com** because that is a legal name, not copy — change it only when the
-  registered entity does. Tests that pin the wording (data_rights · invoice · notifier ·
+  requires — every existing signer re-takes the six ticks once). ★ **v0.3 the same day** names
+  the contracting entity **Meyy (OPC) Private Limited** (founder) — a THIRD file, because two
+  test accounts had already ticked v0.2 that afternoon and ticked text is never edited. The same
+  legal name is `config.SELLER_NAME`, printed on the invoice under the letterhead (new
+  `Invoice.seller_name`; blank on records issued before the field) and in the GST note. **The
+  invoice series is `MEY/2026-27/NNNN`** (`INVOICE_PREFIX` default; the `_series/` counter is
+  keyed by year only, so numbering continues from 7864 — ARV-numbered records stay valid). The
+  support reference series is still `ARV-S-…` — not asked for. Tests that pin the wording (data_rights · invoice · notifier ·
   support · year_plan_export) moved with it; backend suite green bar the three pre-existing
   content defects of 2026-08-27. ★ **AND THE WORDMARK REACHED EVERY LETTERHEAD, same day:**
   `aruvi_core/brand.py` + ONE shipped raster `aruvi_core/brand/meyy-wordmark-pine.png`
@@ -474,8 +479,9 @@ generic look.
   Gmail strips them. `mail_templates.inline_images()` is what the two teacher-mail routes pass;
   `test_letterhead_wordmark_travels_inline_by_cid` pins the MIME shape. ★ **The export lockup is STACKED, as the web bar is** (founder, same day): the mark on
   its own line, LESSON STUDIO beneath it, and the "NCF 2023 aligned" line is GONE from all ten
-  letterheads (the `.brand-ncf` CSS rules remain, unused). Email frames still carry the
-  side-by-side kicker + NCF line — not asked for. All ten exports were
+  letterheads (the `.brand-ncf` CSS rules remain, unused). The two email frames were
+  stacked the same way an hour later (founder) — mark as a block image, LESSON STUDIO beneath,
+  NCF line gone; every letterhead in the product now shares one lockup. All ten exports were
   rasterised and inspected (PDFs via pdftoppm, DOCX via LibreOffice); suite 42 green. Store icons: `icons/apple-icon.png` is now the
   4a LIGHT tile at 1024² RGB (App Store: no alpha) and `icons/play-icon.png` the same at 512²
   (Play's exact size); light because a dark tile vanishes on a dark wallpaper. `icons/icon.png`

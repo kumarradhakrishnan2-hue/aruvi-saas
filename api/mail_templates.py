@@ -9,7 +9,9 @@ from __future__ import annotations
 
 import html as _html
 
-from aruvi_core import brand   # the MEYY wordmark, inline by cid (2026-09-03)
+from aruvi_core import brand   # the MEYY wordmark, inline by cid (2026-09-03); the lockup is
+                                # STACKED — mark, LESSON STUDIO beneath, no NCF line — as the web bar
+                                # and every export are (founder, same day)
 from datetime import date
 from typing import Dict, List, Tuple
 
@@ -188,10 +190,9 @@ def _html_body(*, hello: str, headline: str, new: List[str], also: List[str],
                 border:1px solid {_LINE};border-radius:4px;">
 
    <tr><td style="padding:26px 30px 0;">
-     {brand.email_img_html(24)}&nbsp;&nbsp;<span style="font-family:Helvetica,Arial,sans-serif;font-size:10px;
-           letter-spacing:2px;color:{_SOFT};padding-left:8px;">LESSON STUDIO</span>
-     <div style="font-family:Georgia,serif;font-style:italic;font-size:12px;
-          color:{_SOFT};padding-top:4px;">NCF 2023 aligned</div>
+     {brand.email_img_html(24, "display:block;")}
+     <div style="font-family:Helvetica,Arial,sans-serif;font-size:10px;letter-spacing:2px;
+          color:{_SOFT};padding-top:4px;">LESSON STUDIO</div>
    </td></tr>
 
    <tr><td style="padding:20px 30px 0;">
@@ -296,10 +297,9 @@ def _html_shell(*, hello: str, lead: str, rows: List[Tuple[str, str]],
                 border:1px solid {_LINE};border-radius:4px;">
 
    <tr><td style="padding:26px 30px 0;">
-     {brand.email_img_html(24)}&nbsp;&nbsp;<span style="font-family:Helvetica,Arial,sans-serif;font-size:10px;
-           letter-spacing:2px;color:{_SOFT};padding-left:8px;">LESSON STUDIO</span>
-     <div style="font-family:Georgia,serif;font-style:italic;font-size:12px;
-          color:{_SOFT};padding-top:4px;">NCF 2023 aligned</div>
+     {brand.email_img_html(24, "display:block;")}
+     <div style="font-family:Helvetica,Arial,sans-serif;font-size:10px;letter-spacing:2px;
+          color:{_SOFT};padding-top:4px;">LESSON STUDIO</div>
    </td></tr>
 
    <tr><td style="padding:20px 30px 0;">

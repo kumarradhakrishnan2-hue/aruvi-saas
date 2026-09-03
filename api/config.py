@@ -75,7 +75,14 @@ TAX_INCLUSIVE = os.environ.get("ARUVI_TAX_INCLUSIVE", "1").strip().lower() in (
 TAX_LABEL = os.environ.get("ARUVI_TAX_LABEL", "GST").strip() or "GST"
 # What the seller's books call this financial year's series. Indian FY runs April→March,
 # which is also the academic-year anchor already in the code.
-INVOICE_PREFIX = os.environ.get("ARUVI_INVOICE_PREFIX", "ARV").strip() or "ARV"
+# ★ MEY since 2026-09-03 (founder: the series follows the name). The counter under
+# invoices/_series/ is keyed by financial year only, so the prefix change does not restart
+# it — numbers issued as ARV/… stay valid records; new ones read MEY/2026-27/NNNN.
+INVOICE_PREFIX = os.environ.get("ARUVI_INVOICE_PREFIX", "MEY").strip() or "MEY"
+# ★ THE SELLER'S LEGAL NAME (founder, 2026-09-03). Printed on the invoice and in the tax
+# note — an Indian invoice names the registered entity, not the brand. "Meyy" alone is the
+# brand; this is the company. Change it only when the registered entity does.
+SELLER_NAME = os.environ.get("ARUVI_SELLER_NAME", "").strip() or "Meyy (OPC) Private Limited"
 # ★ Each financial year's series OPENS here, not at 1 (founder, 2026-08-26). The number
 # is the one part of an invoice a customer can read volume from, and "0001" tells an
 # early teacher she is the first sale Aruvi ever made. An offset, not a fiction: the

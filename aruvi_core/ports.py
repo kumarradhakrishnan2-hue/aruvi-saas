@@ -585,7 +585,7 @@ class Invoice:
     `seller_gstin` empty while Aruvi is not GST-registered; the fields exist so the day
     it registers is a config change and a template branch, not a schema migration.
 
-    `number` is a gapless per-financial-year series (ARV/2026-27/0001) — what an Indian
+    `number` is a gapless per-financial-year series (MEY/2026-27/0001) — what an Indian
     seller's books are expected to show. It is assigned once, at issue, and never reused
     even if the purchase it records is later refunded or revoked: a numbered series with
     holes in it is worse than useless."""
@@ -606,6 +606,7 @@ class Invoice:
     amount_paid: int = 0
     payment_method: str = ""   # "Recorded manually" until a gateway exists
     seller_gstin: str = ""
+    seller_name: str = ""     # the registered entity ("Meyy (OPC) Private Limited"), 2026-09-03
     currency: str = "INR"
 
 

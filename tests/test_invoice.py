@@ -30,14 +30,15 @@ from aruvi_core.adapters.invoice_repository_file import InvoiceRepositoryFileImp
 from tests.test_consent import accept_current  # noqa: E402
 
 
-def _sample(number="ARV/2026-27/7834") -> Invoice:
+def _sample(number="MEY/2026-27/7834") -> Invoice:
     return Invoice(
         number=number, issued_at="2026-08-26T10:30:00+00:00",
         tenant_id="T1", user_id="T1", bill_to_name="Kumar R",
         bill_to_email="k@example.com", bill_to_phone="1000000000",
         lines=[InvoiceLine("science/middle", "Science · Middle — Classes 6, 7 and 8",
                            1, 500, "2026-08-26", "2027-08-26")],
-        subtotal=500, tax_amount=0, tax_note="No tax charged — Meyy is not registered for GST.",
+        subtotal=500, tax_amount=0, tax_note="No tax charged — Meyy (OPC) Private Limited is not registered for GST.",
+        seller_name="Meyy (OPC) Private Limited",
         total=500, amount_paid=500, payment_method="Recorded manually")
 
 
@@ -49,23 +50,23 @@ def test_repo_roundtrip_series_and_isolation():
         # "0001" announces that she is the first sale ever made. An offset, not a
         # fiction — the series still counts real invoices, one per purchase.
         assert [repo.next_number("2026-27") for _ in range(3)] == [
-            "ARV/2026-27/7834", "ARV/2026-27/7835", "ARV/2026-27/7836"]
-        assert repo.next_number("2027-28") == "ARV/2027-28/7834"
+            "MEY/2026-27/7834", "MEY/2026-27/7835", "MEY/2026-27/7836"]
+        assert repo.next_number("2027-28") == "MEY/2027-28/7834"
 
         repo.save("T1", "T1", _sample(), b"%PDF-fake")
         got = repo.load_all("T1", "T1")
-        assert len(got) == 1 and got[0].number == "ARV/2026-27/7834"
+        assert len(got) == 1 and got[0].number == "MEY/2026-27/7834"
         assert got[0].lines[0].valid_until == "2027-08-26", "lines survive the roundtrip"
-        assert repo.load_pdf("T1", "T1", "ARV/2026-27/7834") == b"%PDF-fake"
+        assert repo.load_pdf("T1", "T1", "MEY/2026-27/7834") == b"%PDF-fake"
         # Another teacher sees nothing of hers.
         assert repo.load_all("T2", "T2") == []
-        assert repo.load_pdf("T2", "T2", "ARV/2026-27/7834") is None
+        assert repo.load_pdf("T2", "T2", "MEY/2026-27/7834") is None
         # Newest first.
-        second = _sample("ARV/2026-27/7835")
+        second = _sample("MEY/2026-27/7835")
         second.issued_at = "2026-09-01T09:00:00+00:00"
         repo.save("T1", "T1", second, b"%PDF-2")
         assert [i.number for i in repo.load_all("T1", "T1")] == [
-            "ARV/2026-27/7835", "ARV/2026-27/7834"]
+            "MEY/2026-27/7835", "MEY/2026-27/7834"]
         print("✓ Invoice repo: gapless FY series, roundtrip, newest-first, isolated")
 
 
@@ -80,7 +81,7 @@ def test_series_survives_an_erase():
         from pathlib import Path
         repo.save("T1", "T1", _sample(), b"%PDF")
         shutil.rmtree(Path(tmp) / "invoices" / "T1")        # she erases her account
-        assert repo.next_number("2026-27") == "ARV/2026-27/7835", "numbers never rewind"
+        assert repo.next_number("2026-27") == "MEY/2026-27/7835", "numbers never rewind"
         print("✓ The number series outlives the teacher who triggered it")
 
 
@@ -135,7 +136,7 @@ def test_checkout_issues_stores_attaches_and_serves():
             "city": "Kochi", "school": "KV"}
     accept_current(c, H)          # the agreement gate (2026-08-27)
     r = c.post("/onboarding/checkout", headers=H, json=body).json()
-    assert r["invoice_number"].startswith("ARV/"), r
+    assert r["invoice_number"].startswith("MEY/"), r
     assert r["amount_inr"] == 2 * 500
 
     listed = c.get("/invoices", headers=H).json()["invoices"]
@@ -173,8 +174,8 @@ def test_mail_carries_the_invoice():
         name="Kumar", scopes=["science/middle"], amount_inr=500,
         valid_until="2027-08-26", mobile="1000000000",
         scope_valid_until={"science/middle": "2027-08-26"},
-        added=["science/middle"], invoice_number="ARV/2026-27/0007")
-    assert "ARV/2026-27/0007" in body["text"]
+        added=["science/middle"], invoice_number="MEY/2026-27/0007")
+    assert "MEY/2026-27/0007" in body["text"]
     assert "invoice is attached" in body["text"]
 
     sent = {}
@@ -198,7 +199,7 @@ def test_mail_carries_the_invoice():
     msg = sent["msg"]
     assert len(msg.attachments) == 1
     att = msg.attachments[0]
-    assert att.filename == "Meyy-invoice-ARV-2026-27-7834.pdf"
+    assert att.filename == "Meyy-invoice-MEY-2026-27-7834.pdf"
     assert att.mime_type == "application/pdf" and att.content[:4] == b"%PDF"
     assert inv.number in msg.text
     print("✓ The confirmation mail carries the PDF and names the number in the body")

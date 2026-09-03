@@ -94,6 +94,10 @@ def render_invoice_html(inv: Invoice) -> str:
 
     gstin = (f'<div class="seller-gstin">GSTIN {_esc(inv.seller_gstin)}</div>'
              if inv.seller_gstin else "")
+    # The registered entity, under the brand (founder, 2026-09-03): an invoice names the
+    # company that sold, not only the brand it sold under. Blank on records issued before
+    # the field existed — an old invoice is never re-worded.
+    seller = (f'<div class="seller-name">{_esc(inv.seller_name)}</div>' if inv.seller_name else "")
 
     return f"""<!DOCTYPE html><html><head><meta charset="UTF-8"><style>{font_face_css()}
   @page {{ size: a4 portrait; margin: 1.6cm 1.5cm 1.9cm 1.5cm;
@@ -107,6 +111,7 @@ def render_invoice_html(inv: Invoice) -> str:
   .brand-dot {{ font-family: Georgia, serif; font-size: 16pt; font-style: italic; color: {CLAY}; }}
   .brand-studio {{ font-size: 7pt; letter-spacing: 1.5px; color: #6b6a63; }}
   .brand-ncf {{ font-family: Georgia, serif; font-style: italic; font-size: 7.5pt; color: #6b6a63; }}
+  .seller-name {{ font-size: 7.5pt; color: {INK}; margin-top: 6px; }}
   .seller-gstin {{ font-size: 7pt; color: #6b6a63; margin-top: 2px; }}
   .doc-t {{ font-family: Georgia, serif; font-size: 13pt; font-weight: bold; color: {PINE};
             text-align: right; }}
@@ -161,7 +166,7 @@ def render_invoice_html(inv: Invoice) -> str:
 
   <table class="hdr"><tr>
     <td>{brand.pdf_img_html(16)}<br/>
-      <span class="brand-studio">LESSON STUDIO</span>{gstin}</td>
+      <span class="brand-studio">LESSON STUDIO</span>{seller}{gstin}</td>
     <td><div class="doc-t">Invoice</div>
         <div class="doc-n">{_esc(inv.number)}<br/>{_date(inv.issued_at)}</div></td>
   </tr></table>

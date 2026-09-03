@@ -2294,7 +2294,7 @@ def _build_invoice(tenant_id: str, user_id: str, acct: Any, scopes: List[str],
     else:
         subtotal = total = charged
         tax = 0
-        note = "No tax charged — Meyy is not registered for GST."
+        note = f"No tax charged — {config.SELLER_NAME} is not registered for GST."
 
     place = ", ".join(p for p in [getattr(acct, "city", ""), getattr(acct, "state", "")] if p)
     number = invoice_repo.next_number(_financial_year(_today()))
@@ -2310,6 +2310,7 @@ def _build_invoice(tenant_id: str, user_id: str, acct: Any, scopes: List[str],
         total=total, amount_paid=total,
         payment_method="Recorded manually (online payment not yet open)",
         seller_gstin=config.GSTIN,
+        seller_name=config.SELLER_NAME,
     )
 
 
@@ -2571,7 +2572,7 @@ def list_invoices(identity: tuple = Depends(_current_identity)) -> Dict[str, Any
 @app.get("/invoices/{number:path}")
 def download_invoice(number: str, identity: tuple = Depends(_current_identity)):
     """The stored PDF — the exact bytes she was mailed, never a re-render (see the
-    adapter's docstring). `:path` because the number contains slashes (ARV/2026-27/0001)
+    adapter's docstring). `:path` because the number contains slashes (MEY/2026-27/0001)
     and the adapter's own slugging is what maps it to a filename; a traversal cannot
     escape, since `_slug` strips every path character on the way in."""
     tenant_id, user_id = identity

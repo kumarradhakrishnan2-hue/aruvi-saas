@@ -107,11 +107,11 @@ def test_html_part_says_everything_the_text_does():
         valid_until="2027-08-26", mobile="1000000000",
         scope_valid_until={"english/middle": "2027-02-01",
                            "science/middle": "2027-08-26"},
-        added=["science/middle"], invoice_number="ARV/2026-27/0009",
+        added=["science/middle"], invoice_number="MEY/2026-27/0009",
         unit_amount=500, has_attachment=True)
     html = body["html"]
     assert html.lstrip().startswith("<!DOCTYPE html>")
-    for fact in ("Kumar", "Science", "English", "1000000000", "ARV/2026-27/0009", "500"):
+    for fact in ("Kumar", "Science", "English", "1000000000", "MEY/2026-27/0009", "500"):
         assert fact in html, fact
         assert fact in body["text"], fact
     # The holding block dates every row — that is the whole reason it exists.
