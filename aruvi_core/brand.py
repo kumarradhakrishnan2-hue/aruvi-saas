@@ -89,9 +89,19 @@ def render_png(path: str = PNG_PATH) -> str:
 def pdf_img_html(height_pt: float = 16.0, extra_style: str = "") -> str:
     """An <img> for the xhtml2pdf templates, sized by HEIGHT in points (width follows
     the aspect). Both dimensions are stated because xhtml2pdf sizes replaced elements
-    from their attributes, not from the file's pixel size."""
+    from their attributes, not from the file's pixel size.
+
+    ⚠️ `align="top"` is load-bearing and deliberately NOT `baseline`. Measured on
+    2026-09-03 against the typeset "Meyy." it replaces: xhtml2pdf maps an inline image's
+    `baseline` to `bottom` (tags.py, "absbottom"/"baseline" → "bottom"), which hangs the
+    picture 0.2 × its own height BELOW the text baseline — the kicker beside it then read
+    as centred on the mark rather than sharing its baseline. In `imgVRange` the `top`
+    case is `fontSize − h`, and for an inline image fontSize IS its draw height, so `top`
+    computes to exactly zero: the image's bottom on the baseline, as the old text was.
+    CSS `vertical-align` is no alternative — every keyword AND every length crashes the
+    library (`imgVRange` receives a tuple) — so the HTML attribute is the only lever."""
     w = round(height_pt * WORDMARK_ASPECT, 1)
-    return (f'<img src="{PNG_PATH}" alt="Meyy" '
+    return (f'<img src="{PNG_PATH}" alt="Meyy" align="top" '
             f'style="width:{w}pt;height:{height_pt}pt;{extra_style}"/>')
 
 
