@@ -54,22 +54,43 @@ _YEAR_KINDS = ("plan_notes", "section_state", "allocations", "prepared_plans", "
 
 # §2.6 verbatim — the receipt's wording is pinned by test_data_rights and must match
 # what the privacy policy promises. Change both together or neither.
+# ★ FOUR PLACES SAY WHAT SURVIVES AN ERASURE, AND THEY MUST AGREE (2026-09-04): this
+#   list · the Privacy Notice §7 (data/cloud/content/legal/privacy_policy_v*.md) · §G of
+#   the user agreement · the placement of the consent ledger. tests/test_privacy_notice.py
+#   reads the notice and checks every row here against it — the receipt is the one
+#   document a teacher holds AFTER her account is gone, so it may not name less than the
+#   notice did, and it may not name more.
 _KEPT = [
     {"what": "Disaster-recovery backups",
      "why": "Deleted from the live system immediately; purged from backups within 30 days."},
     {"what": "Tax records for payments made",
-     "why": "GST invoices carry a statutory retention period and outlive the account."},
+     "why": "Invoices are books of account and outlive the account for the period the law "
+            "requires (8 years under the Companies Act, 2013); they carry your name, "
+            "email, mobile, school name if given, place and amount."},
+    # ★ Settled 2026-09-04 (founder): mail copies are kept WITH the invoice records, for
+    #   the same period — not deleted at erasure, not on a shorter clock of their own.
+    {"what": "Email we exchanged",
+     "why": "Payment confirmations with their invoices, and support threads, stay in our "
+            "business mailbox as part of the same records, for the same 8 years, then "
+            "are deleted."},
+    # ★ Settled 2026-09-04 (founder): the erasure log keeps the MOBILE NUMBER as the
+    #   identifier and SAYS so — the alternative (a one-way hash) was declined. Its
+    #   store is erasure_log/{tenant}.json, outside every folder this walk visits.
+    {"what": "The record that you asked us to erase",
+     "why": "Your sign-in mobile number, the time you confirmed, and a count of what was "
+            "removed — kept as evidence of the erasure itself. Nothing else."},
     # ★ 2026-08-27 — the consent ledger. Retained deliberately (founder), and therefore
     # named here: an erase that quietly leaves something behind is the one kind of
     # erasure receipt that is worse than none. Its store sits outside every {tenant}
     # folder this traversal walks (consent_repository_file.py), so this entry and that
     # placement must always agree, along with §G of the agreement itself.
     {"what": "Your acceptance of the User Agreement",
-     "why": "The record that you read and accepted the agreement — its version, the "
-            "date, and which points you confirmed — is kept as evidence of the "
-            "agreement itself. It holds no teaching content, notes or profile details. "
-            "It no longer applies from today: if you use Meyy again, you will be asked "
-            "to read and accept the agreement afresh."},
+     "why": "The record that you read and accepted the agreement — your sign-in mobile "
+            "number, its version, the date, which points you confirmed, and your "
+            "browser's identification string — is kept as evidence of the agreement "
+            "itself. It holds no teaching content, notes or profile details. It no "
+            "longer applies from today: if you use Meyy again, you will be asked to "
+            "read and accept the agreement afresh."},
     {"what": "Shared lesson-plan library content",
      "why": "Lesson plans are Meyy's shared library, not personal data; your account "
             "held references to them, and those references are erased."},

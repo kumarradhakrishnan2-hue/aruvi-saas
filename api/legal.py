@@ -253,3 +253,99 @@ def acknowledgement_ids(version: Optional[str] = None) -> List[str]:
     """The ids every acceptance must carry — the five, in order. The final tick is
     recorded separately (it accepts the body, not one point)."""
     return [a["id"] for a in load_consent_document(version)["acknowledgements"]]
+
+
+# ── The Privacy Notice — the SECOND document family (2026-09-04) ─────────────────
+# `data/cloud/content/legal/privacy_policy_v{V}.md`, beside the agreement, under the
+# same rules: one copy, the version is the FILENAME, a new version is a new file, the
+# `> …` front matter is a note to the lawyer and is never shown.
+#
+# ★ IT IS GIVEN, NOT SIGNED. DPDP §5 makes the notice something a fiduciary GIVES at or
+# before collection; consent (§6) is a separate act and, in Meyy, is asked for only where
+# consent is the basis (marketing email — the agreement's optional tick). So there are no
+# acknowledgement blocks to parse, no ticks, and no ledger: the whole document is ONE body
+# rendered as-is, and the only record kept is which version was SHOWN to her and when
+# (`Account.privacy_notice`, erased with the account). Asking her to tick "I accept the
+# privacy policy" would imply the service runs on her consent — which is withdrawable —
+# and put the account itself on a footing the notice deliberately does not claim.
+#
+# ★ SERVED WITHOUT AN IDENTITY. A notice must be readable BEFORE she gives us anything —
+# the sign-in screen links to it while the mobile field is still empty — so
+# GET /legal/privacy takes no X-Aruvi-User (api/main.py). The agreement route keeps its
+# dependency because it also reports HER acceptance state.
+
+PRIVACY_DOCUMENT_ID = "privacy_policy"
+_PRIVACY_FILE_RE = re.compile(r"^privacy_policy_v([0-9][0-9.]*)\.md$")
+# The dated footer: "*Draft v0.1 · 2026-09-04 · For legal review before publication.*"
+_DATE_RE = re.compile(r"(\d{4}-\d{2}-\d{2})")
+
+
+def privacy_versions() -> List[str]:
+    """Every published notice version, oldest first."""
+    from . import data
+    names = [k.rsplit("/", 1)[-1]
+             for k in data.storage().list_prefix(_LEGAL_PREFIX, ".md")]
+    out = [m.group(1) for m in (_PRIVACY_FILE_RE.match(n) for n in names) if m]
+    return sorted(out, key=_version_key)
+
+
+def current_privacy_version() -> str:
+    """The version shown to a teacher today — the highest published."""
+    vs = privacy_versions()
+    if not vs:
+        raise ConsentDocumentError(
+            f"No privacy notice found under {_LEGAL_PREFIX}/ "
+            f"(expected privacy_policy_v{{version}}.md).")
+    return vs[-1]
+
+
+_privacy_cache: Dict[str, Dict[str, Any]] = {}
+
+
+def load_privacy_document(version: Optional[str] = None) -> Dict[str, Any]:
+    """The notice, front matter dropped, as one markdown body plus its title and date.
+    Cached per version — a version's text never changes once published."""
+    from . import data
+    version = version or current_privacy_version()
+    if version in _privacy_cache:
+        return _privacy_cache[version]
+    raw = data.storage().get_text(f"{_LEGAL_PREFIX}/privacy_policy_v{version}.md")
+    if raw is None:
+        raise ConsentDocumentError(f"Privacy notice v{version} is not readable.")
+    lines = [ln for ln in raw.splitlines() if not ln.lstrip().startswith(">")]
+    title = ""
+    body: List[str] = []
+    for ln in lines:
+        s = ln.strip()
+        # The first `# ` line is the document's title; the UI sets it as the heading.
+        # "(Draft v0.1)" and the like belong to the file, not the screen — the version
+        # is stated once, in the footer line the component renders.
+        if not title and s.startswith("# "):
+            title = re.sub(r"\s*\((?:Draft\s+)?v[0-9.]+\)\s*$", "", s[2:].strip())
+            continue
+        body.append(ln)
+    # The dated footer line is the file's own stamp; the UI prints "Version · date" from
+    # `published`, so the line itself is taken OUT of the body rather than shown twice.
+    published = ""
+    for i in range(len(body) - 1, -1, -1):
+        s = body[i].strip()
+        if not s or s == "---":
+            continue
+        if s.startswith("*") and s.endswith("*") and _DATE_RE.search(s):
+            published = _DATE_RE.search(s).group(1)
+            del body[i]
+        break
+    if not title or not "".join(body).strip():
+        raise ConsentDocumentError(
+            f"Privacy notice v{version} has no title or no body — the file is not the "
+            "document the UI expects.")
+    doc = {
+        "document_id": PRIVACY_DOCUMENT_ID,
+        "version": version,
+        "language": LANGUAGE,
+        "title": title,
+        "published": published,
+        "body": _strip(body),
+    }
+    _privacy_cache[version] = doc
+    return doc

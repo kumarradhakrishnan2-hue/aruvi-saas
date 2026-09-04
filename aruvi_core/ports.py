@@ -196,6 +196,15 @@ class Account:
     # eligibility from having no bound sections, which is exactly what a new academic
     # year recreates, so the tour came back every June and every time she cleared a card.
     tour_offered_at: str = ""
+    # ★ WHICH PRIVACY NOTICE SHE WAS SHOWN, AND WHEN (2026-09-04): {version, seen_at,
+    # context}. A defensive record, NOT a consent — the notice is given, never signed
+    # (api/legal.py) — so it lives on the account, is rendered in her export, and is
+    # ERASED with her, unlike the agreement's ledger. Stamped at first sign-in (the
+    # moment the mobile is collected, which is when DPDP §5 wants the notice given) and
+    # re-stamped when she dismisses the "updated" note for a newer version. Empty on
+    # records from before the field: the shell treats that as "never shown" and shows
+    # the note once.
+    privacy_notice: Dict[str, Any] = field(default_factory=dict)
 
 
 @runtime_checkable

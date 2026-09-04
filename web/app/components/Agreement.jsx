@@ -2,6 +2,29 @@
 import { useEffect, useState } from "react";
 import { API, getJSON, postJSON, errDetail } from "../lib/format";
 import { renderMarkdown, dateWords } from "../lib/legalmd";
+import PrivacyNotice from "./PrivacyNotice";
+
+/* ★ THE FINAL TICK'S OWN WORDS ARE A LINK (2026-09-04). The tick reads "I have read the
+ * full User Agreement and Privacy Notice …" — so the notice must be one tap from those
+ * words, or the sentence asks her to confirm reading something she was never shown.
+ * The phrase is found in the document's text rather than hard-coded, so a future
+ * version that rewords the tick still links wherever the two words appear; a version
+ * without them renders the plain sentence. Opens the notice in a SHEET over the wizard
+ * (below), not a navigation — she is mid-signature and must land back on the tick. */
+const NOTICE_WORDS = "Privacy Notice";
+function withNoticeLink(text, onOpen, keyBase = "fin") {
+  const s = String(text || "");
+  const i = s.indexOf(NOTICE_WORDS);
+  if (i < 0) return s;
+  return [
+    s.slice(0, i),
+    <button type="button" className="lgl-link" key={`${keyBase}-pn`}
+      onClick={(e) => { e.preventDefault(); e.stopPropagation(); onOpen(); }}>
+      {NOTICE_WORDS}
+    </button>,
+    s.slice(i + NOTICE_WORDS.length),
+  ];
+}
 
 /* ── The user agreement, on screen (founder, 2026-08-27) ──
  *
@@ -51,6 +74,7 @@ export default function Agreement({ mode = "read", userId = "", onAccepted, onBa
   const [marketing, setMarketing] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
+  const [showPrivacy, setShowPrivacy] = useState(false);
 
   useEffect(() => {
     let live = true;
@@ -185,7 +209,7 @@ export default function Agreement({ mode = "read", userId = "", onAccepted, onBa
           <label className="lgl-check lgl-check-final">
             <input type="checkbox" checked={final}
               onChange={(e) => setFinal(e.target.checked)} />
-            <span>{doc.final?.text}</span>
+            <span>{withNoticeLink(doc.final?.text, () => setShowPrivacy(true))}</span>
           </label>
         </div>
       )}
@@ -245,6 +269,22 @@ export default function Agreement({ mode = "read", userId = "", onAccepted, onBa
             {busy ? "Recording…" : "I accept — continue →"}
           </button>
           {onBack && <button className="fr-link" onClick={onBack}>{backLabel}</button>}
+        </div>
+      )}
+
+      {/* ── The notice, as a sheet over the wizard ── Its own scroll, its own ✕; the
+          agreement and its ticks are untouched underneath, so closing lands her exactly
+          where she was. */}
+      {showPrivacy && (
+        <div className="lgl-sheet" role="dialog" aria-modal="true" aria-label="Privacy Notice">
+          <div className="lgl-sheet-bar">
+            <span className="lgl-sheet-title">Privacy Notice</span>
+            <button type="button" className="ap-close" aria-label="Close"
+              onClick={() => setShowPrivacy(false)}>✕</button>
+          </div>
+          <div className="lgl-sheet-body">
+            <PrivacyNotice />
+          </div>
         </div>
       )}
     </div>

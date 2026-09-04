@@ -117,9 +117,13 @@ def build_export_docx(payload: Dict[str, Any]) -> bytes:
 
     # ── Your account ──
     _section_head(doc, "Your account")
+    # Role / State / City joined 2026-09-04: they were gathered but never rendered, and
+    # an access right that omits three fields the record holds is not complete
+    # (privacy_policy_considerations.md §3.4).
     rows = [(label, acct.get(key)) for label, key in (
         ("Name", "display_name"), ("User ID", "account_id"), ("Email", "email"),
-        ("Phone", "phone"), ("School", "school_name"), ("Member since", "created_at"))
+        ("Phone", "phone"), ("School", "school_name"), ("Role", "role"),
+        ("State", "state"), ("City", "city"), ("Member since", "created_at"))
         if acct.get(key)]
     # The agreement she accepted (2026-08-27). Part of what Aruvi holds about her, so it
     # belongs in what she can download — and it is the one item on this page that is
@@ -142,6 +146,14 @@ def build_export_docx(payload: Dict[str, Any]) -> bytes:
                      "You can turn this off at any time in Settings."))
     else:
         rows.append(("Marketing emails", "No — you have not opted in."))
+    # Which Privacy Notice she was shown (2026-09-04). Not a consent — the notice is
+    # given, never signed — so it is stated as a fact about the record and, unlike the
+    # agreement row above, it is erased with her account.
+    _pn = acct.get("privacy_notice") or {}
+    if _pn.get("version"):
+        _when = str(_pn.get("seen_at") or "")[:10]
+        rows.append(("Privacy notice shown",
+                     f"Version {_pn.get('version')}{' on ' + _when if _when else ''}"))
     if rows:
         at = doc.add_table(rows=len(rows), cols=2)
         _hairlines(at, "DDDDDD")

@@ -209,6 +209,7 @@ html.app-shell .dash-success,
 html.app-shell .lv-stick,
 html.app-shell .uv-assess-stick,
 html.app-shell .co-stick,
+html.app-shell .lgl-stick,
 html.app-shell .mlp2-frozen { top: 0; }
 /* Year Plan head sticks under My Lessons' frozen header alone — the bar no longer overlays. */
 html.app-shell .yp-head { top: var(--mlp2-frozen-h, 132px); }
@@ -5041,13 +5042,20 @@ select option { background-color: var(--field-bg); color: var(--ink); }
 /* The step rail sits in the frozen top band with the heading; only .lgl may flex. */
 .ob-body-lock > * { flex: 0 0 auto; }
 .ob-body-lock > .lgl { flex: 1 1 auto; min-height: 0; }
-.lgl-sign { display: flex; flex-direction: column; min-height: 0; }
-.lgl-sign .lgl-head { flex: 0 0 auto; }
-.lgl-sign .lgl-head .ob-title { margin-top: 0; }
+/* `.lgl-frame` (2026-09-04) is the SAME frame worn by the Privacy Notice when it opens
+ * from the sign-in screen — pinned head, scrolling document — without implying a
+ * signature: it has no accept bar, and its Back sits in the head. */
+.lgl-sign, .lgl-frame { display: flex; flex-direction: column; min-height: 0; }
+.lgl-sign .lgl-head, .lgl-frame .lgl-head { flex: 0 0 auto; }
+.lgl-sign .lgl-head .ob-title, .lgl-frame .lgl-head .ob-title { margin-top: 0; }
+/* Back at the TOP of the framed notice (founder, 2026-09-04): a quiet link above the
+ * title, inside the pinned band, with a hairline closing the band under the title. */
+.lgl-frame .lgl-back { display: inline-block; margin: 0 0 6px; padding: 0; }
+.lgl-frame .lgl-head { padding-bottom: 8px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
 /* The scrolling band. Its own bottom padding is the breathing room between the last
  * line of the document and the pinned bar — without it text stops flush against the
  * rule and reads as if it were cut off rather than ended. */
-.lgl-sign .lgl-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto;
+.lgl-sign .lgl-scroll, .lgl-frame .lgl-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto;
   -webkit-overflow-scrolling: touch; padding-bottom: 20px;
   /* The negative gutters let the scrollbar ride the column edge rather than inset it. */
   margin-left: -20px; margin-right: -20px; padding-left: 20px; padding-right: 20px; }
@@ -5085,6 +5093,96 @@ select option { background-color: var(--field-bg); color: var(--ink); }
 .ob-consent-note { display: flex; flex-wrap: wrap; gap: 4px; align-items: baseline;
   margin-top: 12px; line-height: 1.6; }
 
+/* ── The Privacy Notice (2026-09-04) ──
+ * Given, not signed: the same `.lgl` document dress as the agreement, no ticks. What is
+ * new is the furniture around it — an inline LINK that reads as one (the notice is
+ * reached from inside sentences: the OTP screen's line, the final tick's own words), a
+ * two-pill SWITCH in Settings › Legal, a SHEET over the wizard, TABLES for the itemised
+ * sections, and the shell's quiet "updated" bar. */
+.lgl-link { all: unset; cursor: pointer; color: var(--pine); font: inherit;
+  text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px; }
+.lgl-link:hover { color: var(--pine-d); }
+.lgl-link:focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; border-radius: 2px; }
+/* The OTP screen's notice line: the same quiet grey as the line above it, so it reads
+ * as information and not as a demand — only the two linked words carry colour. */
+.ob-legal { line-height: 1.6; }
+.lgl-privacy .lgl-head .ob-title { margin-top: 0; }
+/* The notice body is the whole document — no rule above it as the agreement's body has,
+ * because there is nothing above it to be divided from. */
+.lgl-privacy-body { margin-top: 4px; padding-top: 0; border-top: 0; }
+.lgl-privacy-foot { margin-top: 18px; display: flex; }
+
+/* Tables — DPDP Rule 3's itemised account (data · purpose · basis). Ledger hairlines,
+ * mono kicker heads, nothing boxed. On a wide screen a real table; the wrap scrolls
+ * sideways only if a cell cannot wrap at all (it should never need to). */
+.lgl-tablewrap { margin: 6px 0 14px; overflow-x: auto; }
+.lgl-table { width: 100%; border-collapse: collapse; font-size: 13px; line-height: 1.55; }
+.lgl-table th { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em;
+  text-transform: uppercase; font-weight: 500; color: var(--pine-d); text-align: left;
+  padding: 6px 10px 6px 0; border-bottom: 1.5px solid var(--ink); vertical-align: bottom; }
+.lgl-table td { padding: 8px 10px 8px 0; border-bottom: 1px solid var(--line);
+  vertical-align: top; }
+.lgl-table th:last-child, .lgl-table td:last-child { padding-right: 0; }
+.lgl-table td:first-child { color: var(--ink); }
+
+/* Settings › Legal: two documents, one card. Pills, not tabs — the tab row is the
+ * app's nav and this is a choice inside one card. */
+.lgl-switch { display: flex; gap: 6px; margin: 0 0 14px; }
+.lgl-switch-btn { all: unset; box-sizing: border-box; cursor: pointer; padding: 6px 12px;
+  border-radius: 999px; border: 1px solid var(--line); background: var(--card-bg);
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+  /* --ink, not --ink-soft (founder, 2026-09-04: "grey is too light") — the unselected
+     pill is the OTHER document's name, and a name must be readable, not a hint. */
+  color: var(--ink); }
+.lgl-switch-btn.on { background: var(--pine); border-color: var(--pine); color: var(--paper); }
+.lgl-switch-btn:focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; }
+/* Settings › Legal's pinned band — pills + the document heading — frozen under the
+ * Settings bar while the document scrolls (founder, 2026-09-04, two passes). The
+ * `.dash-hd` idiom: sticky at the measured --nav-h, paper fill so text slides under it, a
+ * hairline to close it. Lives OUTSIDE `.set-card` (overflow:hidden would pin it to the
+ * card, not the page). ★ It begins FLUSH under the bar: main's top padding (40px / 26px)
+ * is pulled up into the band and re-issued as the band's own padding, because a sticky
+ * band that starts 18px below the bar leaves an 18px slot above it through which the
+ * scrolled document shows — which is the "moving above it" the founder saw. */
+.lgl-stick { position: sticky; top: var(--nav-h, 118px); z-index: 4;
+  background: var(--paper); margin: -40px 0 10px; padding: 18px 0 10px;
+  border-bottom: 1px solid var(--line); }
+.lgl-stick .lgl-switch { margin-bottom: 10px; }
+.lgl-stick-title { margin: 0; font-size: 20px; }
+/* The band carries the heading, so the document's own is hidden here — and only here. */
+.set-legal-headless .lgl-head { display: none; }
+@media (max-width: 600px) {
+  .lgl-stick { top: var(--nav-h, 108px); margin: -26px 0 8px; padding: 12px 0 8px; }
+  .lgl-stick .lgl-switch { margin-bottom: 8px; }
+  .lgl-stick-title { font-size: 18px; }
+}
+
+/* The sheet over the wizard: fixed, full-screen, its own scroll. `.ap-close` is the
+ * app's ✕ (absolute inside a relative bar). Under the frozen brand bar? No — over
+ * everything: mid-signature she is reading a document, and the way back is the ✕. */
+.lgl-sheet { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column;
+  background: var(--paper); }
+.lgl-sheet-bar { position: relative; flex: 0 0 auto; padding: 14px 52px 12px 20px;
+  border-bottom: 1px solid var(--line); font-family: var(--f-mono); font-size: 11px;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+.lgl-sheet-body { flex: 1 1 auto; min-height: 0; overflow-y: auto;
+  -webkit-overflow-scrolling: touch; padding: 16px 20px calc(24px + env(safe-area-inset-bottom));
+  max-width: var(--shell-w); width: 100%; margin: 0 auto; box-sizing: border-box; }
+
+/* The shell's "notice updated" bar. Quiet — nothing is wrong — so paper, a hairline in
+ * pine, and two mono actions; it sits where the save-failed bars sit and yields to them. */
+.pn-note { display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  margin: 0 0 12px 0; padding: 9px 12px; border: 1px solid var(--line); border-left: 3px solid var(--pine);
+  border-radius: 8px; background: var(--paper-2);
+  font-family: var(--f-body); font-size: 13px; color: var(--ink); }
+.pn-note > span:first-child { flex: 1 1 200px; min-width: 0; }
+.pn-note-acts { flex: 0 0 auto; display: flex; gap: 14px; }
+.pn-note-acts > button { cursor: pointer; background: none; border: 0; padding: 2px 0 1px 0;
+  border-bottom: 1px solid var(--line); font-family: var(--f-mono); font-size: 11px;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+.pn-note-acts > button.pn-note-read { color: var(--pine); border-bottom-color: var(--pine); }
+.pn-note-acts > button:hover { color: var(--ink); border-bottom-color: var(--ink); }
+
 @media (max-width: 480px) {
   .lgl-ack { padding: 12px 13px; }
   .lgl-ack-title { font-size: 14px; }
@@ -5092,8 +5190,29 @@ select option { background-color: var(--field-bg); color: var(--ink); }
   .set-legal { padding: 12px 12px 16px; }
   /* On a phone the frame is most of the value and the chrome is the cost: a smaller
      title and a tighter bar keep the scrolling band tall enough to read in. */
-  .lgl-sign .lgl-head .ob-title { font-size: 18px; margin-bottom: 2px; }
+  .lgl-sign .lgl-head .ob-title, .lgl-frame .lgl-head .ob-title { font-size: 18px; margin-bottom: 2px; }
   .lgl-sign .lgl-foot { padding-top: 10px; }
   .lgl-tally { gap: 8px; }
   .lgl-box { width: 24px; height: 24px; }
+}
+
+/* ★ TABLES STACK ON A PHONE (2026-09-04). A four-column table at 360px is either
+ * unreadable or a sideways scroll, and the notice's §2 is the one part of it a teacher
+ * most needs to read. Each row becomes a card; each cell prints its column heading
+ * (carried as `data-th` by legalmd.js) as a mono kicker above its text. Structure only —
+ * the same nodes, no second render. */
+@media (max-width: 600px) {
+  .lgl-tablewrap { overflow-x: visible; }
+  .lgl-table, .lgl-table tbody, .lgl-table tr, .lgl-table td { display: block; width: 100%; }
+  .lgl-table thead { display: none; }
+  .lgl-table tr { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px 6px;
+    margin: 0 0 8px; background: var(--card-bg); }
+  .lgl-table td { padding: 4px 0 8px; border-bottom: 0; }
+  .lgl-table td::before { content: attr(data-th); display: block;
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--pine-d); margin-bottom: 2px; }
+  .lgl-table td:empty { display: none; }
+  .lgl-sheet-bar { padding: 12px 52px 10px 16px; }
+  .lgl-sheet-body { padding: 12px 16px calc(20px + env(safe-area-inset-bottom)); }
+  .lgl-switch-btn { padding: 6px 10px; font-size: 10.5px; }
 }

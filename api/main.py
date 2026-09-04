@@ -1805,8 +1805,93 @@ def post_legal_consent(req: ConsentAccept,
         notify["marketing_email_version"] = current if req.marketing_email else ""
         acct.notify = notify
         account_repo.save(acct)
+    # The final tick's own words are "…the full User Agreement and Privacy Notice", and
+    # the notice is linked from that line — so the version current at this moment is
+    # the one she was shown. Stamped after the save above (it re-reads the record).
+    _stamp_privacy_seen(tenant_id, user_id, (req.context or "subscription_checkout").strip())
     return {"status": "accepted", "version": current, "accepted_at": now,
             "marketing_email": bool(req.marketing_email)}
+
+
+# ── The Privacy Notice: given, not signed (2026-09-04) ───────────────────────────
+# Three routes and one stamp. GET /legal/privacy has NO identity dependency — a notice
+# must be readable before she gives us anything, and the sign-in screen links to it
+# while the mobile field is still empty. The status/seen pair is what lets the shell
+# say "the notice was updated" exactly once per version, and `_stamp_privacy_seen` is
+# the ONE writer of `Account.privacy_notice`, called at first registration (the moment
+# the mobile is collected) and on dismissal of the note. See api/legal.py for why there
+# is no tick and no ledger.
+
+def _stamp_privacy_seen(tenant_id: str, user_id: str, context: str) -> Dict[str, Any]:
+    """Record that the CURRENT notice version was shown. Overwrites — the record answers
+    "which version has she seen?", not "which versions has she ever seen?"; the ledger
+    idiom is for consents, and this is not one."""
+    try:
+        version = legal.current_privacy_version()
+    except legal.ConsentDocumentError:
+        return {}
+    acct = account_repo.load(tenant_id, user_id)
+    if acct is None:
+        return {}
+    now = datetime.now(timezone.utc).isoformat()
+    acct.privacy_notice = {"version": version, "seen_at": now,
+                           "context": (context or "").strip() or "app"}
+    account_repo.save(acct)
+    return dict(acct.privacy_notice)
+
+
+@app.get("/legal/privacy")
+def get_legal_privacy(version: Optional[str] = None) -> Dict[str, Any]:
+    """The Privacy Notice, front matter dropped, as one markdown body. OPEN — no
+    X-Aruvi-User — because it is linked from the sign-in screen and must be readable by
+    someone who has not yet told us her number. `?version=` serves an older published
+    version (what her account says she was shown)."""
+    try:
+        doc = legal.load_privacy_document(version)
+        return {"document": doc, "current_version": legal.current_privacy_version(),
+                "versions": legal.privacy_versions()}
+    except legal.ConsentDocumentError as exc:
+        raise HTTPException(status_code=503, detail=str(exc))
+
+
+@app.get("/legal/privacy/status")
+def get_legal_privacy_status(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Which version she has been shown against which is current — WITHOUT the document.
+    The shell asks this on load; `updated` is true when a newer version has been
+    published since the one on her record (or none is recorded at all)."""
+    tenant_id, user_id = identity
+    try:
+        current = legal.current_privacy_version()
+    except legal.ConsentDocumentError as exc:
+        raise HTTPException(status_code=503, detail=str(exc))
+    acct = account_repo.load(tenant_id, user_id)
+    seen = dict((acct.privacy_notice if acct else None) or {})
+    seen_version = str(seen.get("version") or "")
+    # ★ `updated` means "a NEWER version than the one she was shown" — and ONLY that
+    #   (founder, 2026-09-04: "do not show the pop up for existing users … internal demo
+    #   only"). An account with NO record (every account from before the field, every
+    #   dev account) is silent: it is stamped the next time she registers, signs the
+    #   agreement or is shown a bump, never nagged for a document that predates it.
+    return {"current_version": current, "seen_version": seen_version,
+            "seen_at": str(seen.get("seen_at") or ""),
+            "updated": bool(seen_version) and seen_version != current}
+
+
+class PrivacySeen(BaseModel):
+    """Body for POST /legal/privacy/seen — where the notice was shown."""
+    context: str = "app"
+
+
+@app.post("/legal/privacy/seen")
+def post_legal_privacy_seen(req: PrivacySeen,
+                            identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """She has seen (or dismissed the note about) the current version. Stamps the
+    account; the next status call answers `updated: false` until a newer file exists."""
+    tenant_id, user_id = identity
+    rec = _stamp_privacy_seen(tenant_id, user_id, req.context)
+    if not rec:
+        raise HTTPException(status_code=503, detail="The privacy notice is not installed on this server.")
+    return {"status": "seen", **rec}
 
 
 class AccountUpdate(BaseModel):
@@ -2115,6 +2200,11 @@ def onboarding_verified(identity: tuple = Depends(_current_identity)) -> Dict[st
     IS the registration. In production the real OTP/app auth replaces the 0000 stub;
     this contract stays."""
     tenant_id, user_id = identity
+    # The notice was linked on the screen she just typed her number into — the moment
+    # of first collection, which is when DPDP §5 wants it given. Recorded here, on the
+    # server, so the record names the version that was CURRENT at that moment rather
+    # than whatever a client thought it was. Never blocks registration.
+    _stamp_privacy_seen(tenant_id, user_id, "trial_signin")
     return {"status": "registered", "tenant_id": tenant_id, "user_id": user_id}
 
 

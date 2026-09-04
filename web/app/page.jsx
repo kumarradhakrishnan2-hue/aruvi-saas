@@ -836,10 +836,41 @@ export default function Home() {
   const settingsOriginRef = useRef(null);          // "lessonplans" | "profile" | null
   const [settingsView, setSettingsView] = useState("home");
   const [profileViaSettings, setProfileViaSettings] = useState(false);
+  // Which document Settings › Legal shows ("agreement" | "privacy") — lifted here so the
+  // privacy note below can open Legal ON the notice; the gear always opens the agreement.
+  const [legalDoc, setLegalDoc] = useState("agreement");
   const goSettings = () => {
     if (editFlow !== "settings" && !profileViaSettings) settingsOriginRef.current = editFlow;
-    setProfileViaSettings(false); setSettingsView("home");
+    setProfileViaSettings(false); setSettingsView("home"); setLegalDoc("agreement");
     setEditFlow("settings"); setTab("myplans"); setGenerateEntry(null);
+  };
+
+  /* ★ "THE PRIVACY NOTICE WAS UPDATED" — once per version, acknowledged not signed
+     (2026-09-04). The notice is GIVEN (DPDP §5), so a new version is announced, never
+     re-ticked: one quiet bar at the top of the shell, "Read it" opens Settings › Legal
+     on the notice, "Dismiss" stamps the version as seen. Both stamp — a teacher who
+     reads it has plainly seen it. The server decides `updated` by comparing the version
+     on her account with the highest file on disk (`/legal/privacy/status`) — and ONLY
+     a real bump counts: an account with no recorded version (every existing account)
+     is silent (founder, same day: internal demo, no pop-up for existing users). Asked
+     once per sign-in, not on a cadence: a notice changes a few times a year, and the
+     bar is not the place for a version race with a founder mid-publish. */
+  const [privacyNote, setPrivacyNote] = useState(null);
+  useEffect(() => {
+    if (!user) { setPrivacyNote(null); return; }
+    let live = true;
+    getJSON("/legal/privacy/status")
+      .then((d) => { if (live && d && d.updated) setPrivacyNote(d); })
+      .catch(() => {});     // an old server without the route shows nothing — never invents
+    return () => { live = false; };
+  }, [user]);
+  const stampPrivacySeen = (context) => {
+    setPrivacyNote(null);
+    postJSON("/legal/privacy/seen", { context }).catch(() => {});
+  };
+  const readPrivacyNote = () => {
+    goSettings(); setSettingsView("legal"); setLegalDoc("privacy");
+    stampPrivacySeen("updated_note_read");
   };
   const openProfileFromSettings = () => {
     setProfileViaSettings(true); setProfileAutoAdd(null); setProfilePortal(null); setProfilePortalScope(null);
@@ -1177,6 +1208,19 @@ export default function Home() {
               <button type="button" onClick={() => setSectionFailed("")}>Dismiss</button>
             </div>
           )}
+          {/* The privacy-notice bar (see `privacyNote` above). Not an alert — nothing
+              is wrong — so it wears its own quiet class, not `.tp-savefail`'s. Hidden
+              inside Settings › Legal itself, where it would sit above the very
+              document it points at. */}
+          {privacyNote && !(editFlow === "settings" && settingsView === "legal") && (
+            <div className="pn-note" role="status">
+              <span>Meyy&rsquo;s Privacy Notice has been updated (version {privacyNote.current_version}).</span>
+              <span className="pn-note-acts">
+                <button type="button" className="pn-note-read" onClick={readPrivacyNote}>Read it</button>
+                <button type="button" onClick={() => stampPrivacySeen("updated_note_dismissed")}>Dismiss</button>
+              </span>
+            </div>
+          )}
           {/* Edit-flow views (My Lessons / teaching profile) require a set-up profile. A
            * not-ready user is always routed to the setup flow instead of a dead-end empty
            * view — readiness gates these the same way it gates Generate. */}
@@ -1213,6 +1257,7 @@ export default function Home() {
           ) : (editFlow === "settings" && ready) ? (
             <div className="editflow">
               <Settings view={settingsView} setView={setSettingsView}
+                legalDoc={legalDoc} setLegalDoc={setLegalDoc}
                 onAccountSaved={() => setEntSyncTick((n) => n + 1)}
                 onOpenProfile={openProfileFromSettings} syncTick={entSyncTick}
                 trial={entTrial}

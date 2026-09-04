@@ -140,4 +140,6 @@ class AccountRepositoryFileImpl(AccountRepository):
             # Absent on every record written before 2026-08-26 — an empty string there
             # correctly means "never offered", so old accounts get their one offer.
             tour_offered_at=str(raw.get("tour_offered_at") or ""),
+            # Absent before 2026-09-04 — empty means "no notice version recorded".
+            privacy_notice=dict(raw.get("privacy_notice") or {}),
         )

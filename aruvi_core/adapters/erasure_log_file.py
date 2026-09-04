@@ -10,9 +10,14 @@ data_rights_service_file) and holds the minimum that makes the record meaningful
 
     tenant_id · user_id · confirmed_downloaded · confirmed_at · erased_at · counts
 
-**It carries NO personal data** — no name, no email, no school, no content. Identifiers
-and timestamps only, which is what a consent record needs and no more. Writing more here
-would quietly reintroduce the very data the teacher asked to have destroyed.
+**It carries the identifier and nothing else** — no name, no email, no school, no
+content. ★ The identifier IS personal data: `user_id` is her sign-in MOBILE NUMBER
+(account_id == mobile, Login.jsx), and calling it "no personal data" was wrong
+(privacy_policy_considerations.md §3.5). The founder's decision (2026-09-04) was to KEEP
+the number rather than hash it, and to SAY so: the Privacy Notice §7 and the erasure
+receipt's `_KEPT` both name this record, plainly, as one of the things that survive.
+Writing more here would quietly reintroduce the very data the teacher asked to have
+destroyed.
 
 Append-only, one file per tenant so a school's deletions sit together (founder,
 2026-08-26: "digital confirmation to be captured tenant/user wise").

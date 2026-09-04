@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { API, getJSON, idInUse } from "../lib/format";
 import SubscribeFlow, { MOBILE_TAKEN } from "./SubscribeFlow";
 import MeyyMark from "./MeyyMark";
+import PrivacyNotice from "./PrivacyNotice";
 
 /* ───────── The front door — onboarding + sign-in (founder, 2026-08-24/25) ─────────
  *
@@ -59,6 +60,14 @@ export default function Login({ onEnter }) {
   const [id, setId] = useState("");
   const [signinErr, setSigninErr] = useState("");
   const inputRef = useRef(null);
+  /* ★ THE NOTICE IS GIVEN WHERE THE NUMBER IS ASKED FOR (2026-09-04). DPDP §5 wants the
+     privacy notice at or before first collection, and the mobile — the account's
+     identity — is collected on the OTP screen, not at subscription. So that screen and
+     the returning sign-in both link to the notice, and it opens as a screen of its own
+     with no account yet (GET /legal/privacy needs none). `privacyFrom` is the screen to
+     return to; every field she has typed survives, because the screens are state. */
+  const [privacyFrom, setPrivacyFrom] = useState("");
+  const openPrivacy = () => { setPrivacyFrom(screen); setScreen("privacy"); };
 
   // First-time device → the choose screen; returning → sign-in.
   useEffect(() => {
@@ -117,6 +126,21 @@ export default function Login({ onEnter }) {
       onTrial={() => enter(mobile.trim())} />;
   }
 
+  /* ── THE PRIVACY NOTICE, before any account exists ── */
+  if (screen === "privacy") {
+    /* Locked frame (the agreement step's idiom): bar + title pinned, the document
+       scrolls between them, Back pinned below. The lock lives here because the notice
+       cannot reach its own container. */
+    return (
+      <div className="ob-wrap ob-wrap-lock">
+        <Bar />
+        <div className="ob-body ob-body-lock">
+          <PrivacyNotice frame onBack={() => setScreen(privacyFrom || "signin")} />
+        </div>
+      </div>
+    );
+  }
+
   /* ── 1 · CHOOSE ── */
   if (screen === "choose") {
     return (
@@ -168,6 +192,12 @@ export default function Login({ onEnter }) {
             </div>
           </label>
           <p className="ob-quiet">We&rsquo;ll never share your number.</p>
+          {/* The notice, at the moment of first collection. A statement, not a tick:
+              the mobile is processed to provide the service (DPDP §7(a)), and a consent
+              box here would claim a basis the notice does not (see PrivacyNotice.jsx). */}
+          <p className="ob-quiet ob-legal">By continuing you confirm you are 18 or older and
+            have read Meyy&rsquo;s{" "}
+            <button type="button" className="lgl-link" onClick={openPrivacy}>Privacy Notice</button>.</p>
 
           {mobErr && <p className="ob-err" role="alert">{mobErr}</p>}
           {!otpSent ? (
@@ -257,7 +287,8 @@ export default function Login({ onEnter }) {
           </button>
         </form>
         {signinErr && <p className="ob-err" role="alert">{signinErr}</p>}
-        <p className="fr-secure">🛡 Your data is private and secure</p>
+        <p className="fr-secure">🛡 Your data is private and secure ·{" "}
+          <button type="button" className="lgl-link" onClick={openPrivacy}>Privacy Notice</button></p>
       </div>
       <div className="ob-foot">
         <button className="fr-link" onClick={() => setScreen("choose")}>New to Meyy? Get started →</button>

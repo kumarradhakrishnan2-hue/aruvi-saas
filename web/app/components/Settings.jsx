@@ -4,6 +4,7 @@ import { API, withUser, fetchEntitlement, getJSON, pretty, idInUse, errDetail } 
 import ThemeToggle from "./ThemeToggle";
 import { ROLES, STATES, EMAIL_TAKEN } from "./SubscribeFlow";
 import Agreement from "./Agreement";
+import PrivacyNotice from "./PrivacyNotice";
 import Dropdown from "./Dropdown";
 
 const EMAIL_OK = (e) => /^\S+@\S+\.\S+$/.test((e || "").trim());
@@ -516,7 +517,11 @@ const scopeRows = (scope) => {
  * level is showing). Values: home | subscription | data | support | about. */
 export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOut,
                                    onSubscribe, onAccountSaved, syncTick = 0,
-                                   trial = false }) {
+                                   trial = false,
+                                   /* Which document the Legal card shows — "agreement" |
+                                      "privacy". Lifted to page.jsx so the shell's
+                                      "notice updated" note can open Legal ON the notice. */
+                                   legalDoc = "agreement", setLegalDoc = () => {} }) {
   const [ent, setEnt] = useState(null);
   const [invoices, setInvoices] = useState([]);
   const [busy, setBusy] = useState("");        // "docx" | "pdf" | "erase" | ""
@@ -898,8 +903,43 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
         {/* No "Legal" page title (founder, 2026-08-27): the document's own heading —
             "Legal Agreement with User" — is the title, and a settings label stacked
             above it made the screen read as two headings for one thing. */}
-        <div className="set-card set-card-pad set-legal">
-          <Agreement mode="read" />
+        {/* ★ TWO DOCUMENTS, ONE CARD (2026-09-04). The Privacy Notice is a document of
+            its own — DPDP Rule 3(a) wants it readable independently of the agreement —
+            but it is not a second Settings card: "Legal" is where a teacher looks for
+            what Meyy holds her to, and both belong under that word. A two-pill switch
+            above the document; the bar keeps saying "⚙ Legal".
+            ★ THE SWITCH IS FROZEN under the Settings bar (founder, same day: "freeze
+            the legal screen from above … when scrolling") — both documents are long,
+            and the other one must stay one tap away from anywhere in this one. It sits
+            OUTSIDE the card because `.set-card` is overflow:hidden, which makes the
+            card the sticky container and pins nothing (the `.dash-hd` idiom instead:
+            sticky at --nav-h, paper fill, hairline below). It is the subview's first
+            element, so it carries `.set-first`. Not a title — the bar names the screen
+            (2026-09-03); this is the choice inside it. */}
+        {/* ★ ONE PINNED BAND: pills + the document's heading (founder, same day, second
+            pass: "the buttons are frozen but rest all are moving above and below it …
+            top down to the button and the words … visible at all times"). Two sticky
+            elements at different offsets would need the pills' height known; one band
+            needs nothing. It starts FLUSH under the Settings bar — main's top padding is
+            pulled into the band as its own padding, so the air above the pills is
+            painted paper and no scrolled line shows through it. The components' own
+            `.lgl-head` is hidden under `.set-legal-headless`; the heading here is the
+            band's, and says exactly what the document's would. */}
+        <div className="lgl-stick">
+          <div className="lgl-switch" role="tablist" aria-label="Legal documents">
+            <button type="button" role="tab" aria-selected={legalDoc !== "privacy"}
+              className={`lgl-switch-btn ${legalDoc !== "privacy" ? "on" : ""}`}
+              onClick={() => setLegalDoc("agreement")}>User agreement</button>
+            <button type="button" role="tab" aria-selected={legalDoc === "privacy"}
+              className={`lgl-switch-btn ${legalDoc === "privacy" ? "on" : ""}`}
+              onClick={() => setLegalDoc("privacy")}>Privacy notice</button>
+          </div>
+          <h1 className="ob-title lgl-stick-title">
+            {legalDoc === "privacy" ? "Privacy Notice" : "Legal Agreement with User"}
+          </h1>
+        </div>
+        <div className="set-card set-card-pad set-legal set-legal-headless">
+          {legalDoc === "privacy" ? <PrivacyNotice /> : <Agreement mode="read" />}
         </div>
       </div>
     );

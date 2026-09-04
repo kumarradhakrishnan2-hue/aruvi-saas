@@ -48,7 +48,48 @@ export function renderMarkdown(md, keyBase = "md") {
   const nodes = [];
   let para = [];
   let bullets = [];
+  let table = null;   // { head: [], rows: [[]] } while a pipe table is open
   let k = 0;
+
+  /* ── Pipe tables (2026-09-04) — the Privacy Notice's §2/§6/§7 are tables, because
+   * DPDP Rule 3 wants an ITEMISED account (data · purpose · basis per row) and prose
+   * cannot be itemised. Header row, `|---|` separator (skipped), body rows; cells go
+   * through `inline` like everything else, so nothing here can emit a tag either.
+   * Each td carries its column heading as `data-th` — at phone widths the CSS stacks
+   * a row into a card and prints that heading before each cell, so a four-column table
+   * stays readable at 360px without a sideways scroll. */
+  const splitRow = (s) => {
+    const cells = s.split("|");
+    if (cells.length && !cells[0].trim()) cells.shift();
+    if (cells.length && !cells[cells.length - 1].trim()) cells.pop();
+    return cells.map((c) => c.trim());
+  };
+  const isSep = (cells) => cells.length > 0 && cells.every((c) => /^:?-{2,}:?$/.test(c));
+  const flushTable = () => {
+    if (!table) return;
+    const t = table;
+    table = null;
+    if (!t.head.length) return;
+    nodes.push(
+      <div className="lgl-tablewrap" key={`${keyBase}-tw-${k++}`}>
+        <table className="lgl-table">
+          <thead>
+            <tr>{t.head.map((h, i) => <th key={i}>{inline(h, `${keyBase}-th-${k}-${i}`)}</th>)}</tr>
+          </thead>
+          <tbody>
+            {t.rows.map((r, ri) => (
+              <tr key={ri}>
+                {t.head.map((h, ci) => (
+                  <td key={ci} data-th={h.replace(/\*\*/g, "")}>
+                    {inline(r[ci] ?? "", `${keyBase}-td-${k}-${ri}-${ci}`)}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>);
+  };
 
   const flushPara = () => {
     if (!para.length) return;
@@ -65,12 +106,22 @@ export function renderMarkdown(md, keyBase = "md") {
         {items.map((b, i) => <li key={i}>{inline(b, `${keyBase}-${k}-${i}`)}</li>)}
       </ul>);
   };
-  const flush = () => { flushPara(); flushBullets(); };
+  const flush = () => { flushPara(); flushBullets(); flushTable(); };
 
   for (const raw of lines) {
     const s = raw.trim();
 
     if (!s) { flush(); continue; }
+
+    if (s.startsWith("|")) {
+      flushPara(); flushBullets();
+      const cells = splitRow(s);
+      if (!table) { table = { head: cells, rows: [] }; continue; }
+      if (isSep(cells)) continue;
+      table.rows.push(cells);
+      continue;
+    }
+    if (table) flushTable();   // a non-pipe line closes an open table
     if (s === "---") { flush(); nodes.push(<hr className="lgl-hr" key={`${keyBase}-hr-${k++}`} />); continue; }
 
     const h = /^(#{1,4})\s+(.*)$/.exec(s);
