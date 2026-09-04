@@ -23,6 +23,20 @@ That is its one and only home. Editing rules:
   document, `_KEPT` in `aruvi_core/adapters/data_rights_service_file.py`, and the
   placement of the ledger in `aruvi_core/adapters/consent_repository_file.py`.
 
+**The Privacy Notice (2026-09-04)** follows the same rules and sits beside it:
+
+    data/cloud/content/legal/privacy_policy_v0.1.md
+
+Draft for legal review, **served** (same day): `GET /legal/privacy` is OPEN — no
+`X-Aruvi-User` — because the sign-in screen links it before a number is typed. It is
+**given, not signed**: no ticks, no ledger; the only record is which version she was shown
+(`Account.privacy_notice`, erased with her). A new version is a new file; the shell shows
+a one-line "updated" bar once per version. Its `[value]` / `[AT LAUNCH: …]` brackets must
+be resolved before publication; the reasoning, the audit findings and the wiring are in
+`privacy_policy_considerations.md` in this folder. **Four** places must agree on what
+survives an erasure — notice §7, agreement §G, `_KEPT` (six rows), the ledger's placement —
+and `tests/test_privacy_notice.py` pins the first to the third in both directions.
+
 It sits under `data/cloud/content/` (Bucket A-serve, CLAUDE.md §7) because the runtime
 serves it to every teacher before she pays — so it has to travel inside the migration
 unit. It is shared, read-only, versioned content, which is exactly what Bucket A is for.

@@ -739,7 +739,9 @@ data/                  ★ the data root, laid out along the CLOUD/LOCAL boundar
   cloud/               ★ THE MIGRATION UNIT — everything here goes to production, byte for byte
     content/           Bucket A-serve → object store (DATA_DIR): allocation_norms,
                        chapters/**/mappings, framework, saved_plans (libraries + serve cache)
-    content/legal/     ★ the user agreement, ONE copy, versioned by FILENAME (2026-08-27)
+    content/legal/     ★ the user agreement, ONE copy, versioned by FILENAME (2026-08-27);
+                       + privacy_policy_v0.1.md (2026-09-04, DRAFT, not yet served — its
+                       brackets + audit findings: docs/legal/privacy_policy_considerations.md)
     content/ask_aruvi/ ★ the Ask Aruvi question bank, ONE copy, hand-written (2026-08-30) —
                        served by GET /ask-aruvi behind X-Aruvi-User, never bundled
     state/             Bucket B → Supabase Postgres (STATE_DIR): accounts, academic_years,
@@ -992,6 +994,30 @@ data-rights export renders it. ★ **The front door has no localStorage identity
 `X-Aruvi-User` header on that path — without it a signature files against the fallback
 identity and the gate then refuses a teacher who just ticked all six boxes. Tests:
 `tests/test_consent.py`. Web half STATIC-verified only — live + mobile pass owed.
+
+**THE PRIVACY NOTICE — GIVEN, NOT SIGNED (2026-09-04).** `data/cloud/content/legal/
+privacy_policy_v0.1.md` (draft for counsel; decisions settled, see `docs/legal/
+privacy_policy_considerations.md` §7; `[value]` blanks + `[AT LAUNCH]` code items remain).
+DPDP §5 makes a notice something a fiduciary GIVES at or before collection; consent (§6) is
+asked only where consent is the basis (the agreement's marketing tick). So: **no tick, no
+ledger** — `api/legal.py`'s second document family, `GET /legal/privacy` **OPEN** (no
+`X-Aruvi-User`; the OTP screen links it before a number is typed), and the ONE record is
+`Account.privacy_notice` {version, seen_at, context} — stamped server-side at
+`/onboarding/verified`, `POST /legal/consent` and on dismissing the update bar; in the
+export; erased with her. Surfaces: `PrivacyNotice.jsx` — pre-sign-in as a LOCKED FRAME
+(`.lgl-frame`: bar + "Privacy Notice" pinned, Back at the TOP, document scrolls); a SHEET
+over the wizard from the final tick's own words; Settings › Legal as two pills (User
+agreement · Privacy notice) + the document heading as ONE band FROZEN flush under the bar
+(`.lgl-stick`, outside the card — `.set-card` is overflow:hidden and would pin it to the
+card). ⚠️ In the shell `.bodycontent` is the scroller (app-shell rule, 2026-08-09), so every
+inner sticky must be in the `html.app-shell … { top: 0 }` list — `.lgl-stick` floated by
+exactly the bar's height (115px) until it was, found live.
+`legalmd.js` renders pipe tables (`data-th`; ≤600px stacks rows into cards). The shell's
+`.pn-note` bar appears ONLY on a real version bump — an account with no recorded version is
+silent (founder: internal demo). **`_KEPT` is SIX rows** and `tests/test_privacy_notice.py`
+pins it to notice §7 both ways; four places must agree: notice §7 · agreement §G · `_KEPT` ·
+the ledger's placement. Owed: agreement v0.5 (§F/§G → the notice), self-hosted fonts,
+dormancy job, ids out of URLs, sign-out clearing; live + 360px pass on every new screen.
 
 **Settings › Support — email is the ONLY channel, and the acknowledgement is the
 feature (2026-08-27).** No phone, no WhatsApp, no chat, no LLM answering tickets; Ask

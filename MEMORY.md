@@ -687,7 +687,78 @@ must confirm · source entry.
 
 ---
 
-## 2026-09-03 (newest) — THE SUPPORT ADDRESS IS support@meyy.in, AS ONE TOKEN
+## 2026-09-04 (newest) — PRIVACY NOTICE DRAFTED, v0.1, WITH ITS AUDIT
+
+Founder: "now its time to draft a specific privacy policy keeping in mind the nature of
+the service". Two files. **`data/cloud/content/legal/privacy_policy_v0.1.md`** — the
+teacher-facing notice, written to the DPDP Rules 2025 standard (Rule 3: standalone,
+itemised data + purpose + basis per row, the three links) for the LAUNCH state, with
+every not-yet-true statement bracketed `[AT LAUNCH: …]` and every open call `[DECIDE: …]`;
+Grievance Officer = the founder by name (answered). Safe beside the agreement:
+`api/legal.py`'s `_FILE_RE` matches only `consent_and_disclaimer_v*.md` (verified — versions
+still 0.1–0.4, current 0.4). Not served yet. **`docs/legal/privacy_policy_considerations.md`**
+— legal frame in dates (DPDP hard date 14 May 2027; SPDI Rules till then; E-Commerce Rules;
+Companies Act §128 = 8 years for invoices), why Meyy's shape keeps the notice short (adults
+only, fiduciary direct to the teacher, ONE free-text field, no runtime LLM, no analytics,
+one person), and **15 audit findings** the notice must disclose or the code must fix first.
+The ones that matter: sign-in ids in `?id=` query strings land in uvicorn access logs with
+IPs (3.2); sign-out leaves notes/pointers on a shared device (3.3); the erasure log stores
+the MOBILE while its docstring says "no personal data" (3.5); Google Fonts `@import` sends
+every pre-login visitor's IP to Google (3.6 — self-host, all three faces are OFL);
+`outbox/` retains full mail copies outside the erase walk (3.7); the notice is not shown at
+trial sign-in where the mobile is first collected (3.13); the export card is hidden on
+trial (3.14); `_KEPT` must grow to match notice §7 (3.15). **Four places must now agree on
+what survives erasure:** notice §7 · agreement §G · `_KEPT` · the ledger's placement.
+Consent claimed ONLY for marketing email; everything else on DPDP §7(a) — counsel to confirm.
+**Same day, eleven decisions settled one by one (considerations §7):** role/state/city on the
+service basis · dormancy 3 y → email → 48 h → erase · grievance resolved in 30 days ·
+support@meyy.in only · mail copies kept 8 y with the invoices · erasure log keeps the mobile
+and SAYS so · trial export: ignore · invoices 8 y [accountant] · fonts self-hosted · English
+only · registered office `[ ]`. **Hosting: unknown and law-neutral** — DPDP has no
+localisation duty for a non-SDF (Act §16 blacklist, Rules r.15), so the notice reads
+`[country / region]`. No `[DECIDE]` remains; only `[value]` blanks and `[AT LAUNCH]` code
+items. `_KEPT` must grow to six rows.
+**Then BUILT, same day — GIVEN, NOT SIGNED.** Founder asked the normal practice (sign at
+subscription vs. lives under Settings): the second, because DPDP §5 makes a notice something
+a fiduciary GIVES at or before collection and consent (§6) is asked only where consent is the
+basis (marketing). A tick would put the account on a withdrawable footing the notice does not
+claim. `api/legal.py` second document family (`privacy_policy_v{V}.md`, no acks, title =
+first `# `, dated footer → `published`); `GET /legal/privacy` OPEN (no identity — linked from
+the OTP screen before a number is typed) · `/legal/privacy/status` · `POST /legal/privacy/seen`;
+`Account.privacy_notice = {version, seen_at, context}` stamped server-side at
+`/onboarding/verified`, at `POST /legal/consent`, on dismissal — rendered in the export,
+erased with her. Web: `PrivacyNotice.jsx`; `legalmd.js` grew pipe TABLES (`data-th` per
+cell; ≤600px stacks rows into cards — 3 tables/30 rows/90 cells smoke-rendered via sucrase);
+Login: "By continuing you confirm you are 18 or older and have read Meyy's Privacy Notice"
+on the OTP screen + a link beside "private and secure"; Agreement: the final tick's own
+words "Privacy Notice" open a SHEET over the wizard; Settings › Legal: two pills, one card.
+`_KEPT` → SIX rows; `tests/test_privacy_notice.py` pins it to notice §7 BOTH ways
+(sabotage-verified); role/state/city now in the export; erasure-log docstring corrected.
+**Three founder asks mid-build:** (1) the Legal pill switch is FROZEN under the Settings bar
+(`.lgl-switch-stick`, the `.dash-hd` sticky idiom; OUTSIDE `.set-card` — overflow:hidden
+would pin it to the card); (2) **no "updated" bar for existing accounts** — internal demo:
+`updated = bool(seen_version) and seen_version != current`, an account with no record is
+silent; (3) the pre-sign-in notice is a LOCKED FRAME (`.lgl-frame`, shares the sign frame's
+CSS) — bar + "Privacy Notice" title pinned (title is now bare "Privacy Notice", not "Meyy —
+…"), document scrolls, **Back at the TOP** inside the pinned head. All backend suites green
+(fastapi/xhtml2pdf/python-docx now installed in the sandbox — the TestClient tests RUN here);
+babel-parse clean ×6, CSS braces 2348/2348.
+**Fourth ask + the live find (same evening, Chrome on the founder's localhost, 288×592 CSS
+px):** "the buttons are fixed and texts are still floating" — the Legal band stuck 115px
+BELOW the Settings bar with the document scrolling through the gap. Root cause is the
+2026-08-09 **app-shell scroll ownership rule**: in the signed-in shell the document never
+scrolls, `.bodycontent` is the scroller and the bar sits above it in flow, so every inner
+sticky must be `top: 0` there — `html.app-shell .dash-hd/.lv-stick/.co-stick/… { top: 0 }`.
+The new `.lgl-stick` was missing from that list and honoured `--nav-h` (115px) inside a
+scrollport that already starts under the bar. ⚠️ **Any new inner sticky in the shell must be
+added to that `html.app-shell … { top: 0 }` list, or it floats by exactly the bar's height.**
+Band is now ONE pinned unit — pills + "Legal Agreement with User" / "Privacy Notice" heading
+(hardcoded in Settings; the components' own `.lgl-head` hidden via `.set-legal-headless`) —
+flush under the bar, verified live on both documents with the table stacking at 288px.
+
+---
+
+## 2026-09-03 — THE SUPPORT ADDRESS IS support@meyy.in, AS ONE TOKEN
 
 Founder: "amend the email ID of support of Aruvi to support@meyy.in". Until now the
 address a teacher was told to write to was `config.MAIL_REPLY_TO`, which fell through to
