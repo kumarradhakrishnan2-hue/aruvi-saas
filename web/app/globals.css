@@ -4358,6 +4358,16 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 .set-row:disabled { opacity: .5; cursor: default; }
 .set-row-static { cursor: default; }
 .set-row-static:hover { background: transparent; }
+/* ⓘ beside a row's word (2026-09-04): a circled mono "i" that opens the row's explanation
+ * as a `.set-hint` below the card. Sized for a thumb via padding-free hit area on a
+ * 20px ring plus the row's own height; ink-soft at rest, pine when open. */
+.set-info { all: unset; box-sizing: border-box; display: inline-flex; align-items: center;
+  justify-content: center; width: 20px; height: 20px; margin-left: 8px; border-radius: 50%;
+  border: 1px solid var(--ink-soft); color: var(--ink-soft); cursor: pointer;
+  font-family: var(--f-mono); font-size: 11px; line-height: 1; vertical-align: middle;
+  font-style: italic; }
+.set-info:hover, .set-info[aria-expanded="true"] { color: var(--pine); border-color: var(--pine); }
+.set-info:focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; }
 .set-ric { width: 24px; text-align: center; font-size: 14px; flex: none; }
 .set-lab { flex: 1; }
 .set-row-danger .set-lab { color: var(--danger); }

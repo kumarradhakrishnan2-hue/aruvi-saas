@@ -547,6 +547,7 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
   const [marketing, setMarketing] = useState(null);   // null = not yet known
   const [mktBusy, setMktBusy] = useState(false);
   const [mktNote, setMktNote] = useState("");
+  const [mktInfo, setMktInfo] = useState(false);   // the ⓘ beside "Marketing emails"
 
   useEffect(() => {
     let live = true;
@@ -1014,7 +1015,14 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
         <div className="set-cap">Emails</div>
         <div className="set-card">
           <div className="set-row set-row-static">
-            <span className="set-lab">Marketing emails</span>
+            {/* The explanation lives behind an ⓘ beside the word (founder, 2026-09-04:
+                "remove text under marketing emails … put it in 'i' in a circle next to
+                the word so that someone can click and open it"). The row stays one line;
+                the save/failure note below is transient feedback and keeps its place. */}
+            <span className="set-lab">Marketing emails
+              <button type="button" className="set-info" aria-label="What are marketing emails?"
+                aria-expanded={mktInfo} onClick={() => setMktInfo((v) => !v)}>i</button>
+            </span>
             <label className="set-switch">
               <input type="checkbox" checked={marketing} disabled={mktBusy}
                 onChange={(e) => saveMarketing(e.target.checked)}
@@ -1022,11 +1030,12 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
             </label>
           </div>
         </div>
-        <p className="set-hint">
-          {mktNote || "Occasional emails about new subjects, features and teaching ideas. "
-                    + "Receipts, replies to your messages and notices about the agreement "
-                    + "are sent either way."}
-        </p>
+        {mktInfo && (
+          <p className="set-hint">Occasional emails about new subjects, features and teaching
+            ideas. Receipts, replies to your messages and notices about the agreement are sent
+            either way.</p>
+        )}
+        {mktNote && <p className="set-hint">{mktNote}</p>}
       </div>
       )}
 
