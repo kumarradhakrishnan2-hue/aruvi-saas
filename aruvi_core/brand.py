@@ -10,9 +10,9 @@ cairosvg only at that authoring moment — never at runtime). Bundled beside the
 `aruvi_core/fonts/` for the same reason they are: a deploy with no system dependencies.
 
 Geometry: the source viewBox is 0 0 400 110; this raster is TRIMMED to the ink
-(x 12.5–385.5, y 0–102.5), so the M's edge is the image's edge and the letters' baseline is
+(x 12.5–425.5 incl. the circled ™, y 0–102.5), so the M's edge is the image's edge and the letters' baseline is
 the image's bottom — an inline picture then sits on the text baseline beside its kicker, as
-the typeset "Meyy." used to. Aspect ratio is `WORDMARK_ASPECT` (width / height ≈ 3.64).
+the typeset "Meyy." used to. Aspect ratio is `WORDMARK_ASPECT` (width / height ≈ 4.03).
 
 Sizing rule of thumb: the letters are 73 / 102.5 ≈ 0.71 of the image height, so to match a
 serif at N pt (cap height ≈ 0.7 N) use an image height ≈ N.
@@ -33,7 +33,7 @@ _PATHS = (
     '<path d="M148 22h64M148 58h64M148 94h64"/>'                              # E
     '<path d="M268 95V60L240 26M268 60l28-34M350 95V60L322 26M350 60l28-34"/>'  # Y Y
 )
-_TRIM_X, _TRIM_W, _TRIM_H = 12.5, 373.0, 102.5
+_TRIM_X, _TRIM_W, _TRIM_H = 12.5, 413.0, 102.5   # 413: to the circled ™'s outer edge at x 425.5 (2026-09-03)
 WORDMARK_ASPECT = _TRIM_W / _TRIM_H
 
 
@@ -50,6 +50,12 @@ def wordmark_svg(stroke: str = PINE, dot: str = BRAND_RED, width: int | None = N
         f'{_PATHS}'
         f'<circle cx="268" cy="9" r="9" fill="{dot}" stroke="none"/>'
         f'<circle cx="350" cy="9" r="9" fill="{dot}" stroke="none"/>'
+        # ™ — circled, top-right of the cap height (founder, 2026-09-03). Same geometry as
+        # MeyyMark.jsx; the raster's TM is set in DejaVu Sans Bold (cairosvg's font), the
+        # web's in Helvetica/Arial — indistinguishable at 13 units.
+        f'<circle cx="409" cy="30" r="15" fill="none" stroke="{stroke}" stroke-width="2.5"/>'
+        f'<text x="409" y="34.7" text-anchor="middle" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" '
+        f'font-weight="bold" font-size="13" fill="{stroke}" stroke="none">TM</text>'
         f'</svg>'
     )
 
@@ -60,7 +66,7 @@ WORDMARK_SVG = wordmark_svg()
 _DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "brand")
 PNG_NAME = "meyy-wordmark-pine.png"
 PNG_PATH = os.path.join(_DIR, PNG_NAME).replace("\\", "/")
-_PNG_SCALE = 4            # 1492 × 410 px — crisp at any print size the exports use
+_PNG_SCALE = 4            # 1652 × 410 px — crisp at any print size the exports use
 
 
 def wordmark_png_path() -> str:

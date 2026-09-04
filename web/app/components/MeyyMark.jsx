@@ -22,7 +22,7 @@ export default function MeyyMark({ className = "brand-mark", label = "MEYY" }) {
   return (
     <svg
       className={className}
-      viewBox="12.5 0 373 110"
+      viewBox="12.5 0 413 110"
       preserveAspectRatio="xMinYMid meet"
       role="img"
       aria-label={label}
@@ -42,6 +42,12 @@ export default function MeyyMark({ className = "brand-mark", label = "MEYY" }) {
       {/* the two red dots */}
       <circle className="brand-mark-dot" cx="268" cy="9" r="9" stroke="none" />
       <circle className="brand-mark-dot" cx="350" cy="9" r="9" stroke="none" />
+      {/* ™ — circled, at the top-right of the cap height (founder, 2026-09-03; chosen over
+          the plain superscript from three placements shown). Ring ≈ 40% of the cap height,
+          in the stroke colour; the viewBox grew 373 → 413 units to hold it. */}
+      <circle cx="409" cy="30" r="15" strokeWidth="2.5" />
+      <text x="409" y="34.7" textAnchor="middle" fontFamily="Helvetica, Arial, sans-serif"
+            fontWeight="700" fontSize="13" fill="currentColor" stroke="none">TM</text>
     </svg>
   );
 }

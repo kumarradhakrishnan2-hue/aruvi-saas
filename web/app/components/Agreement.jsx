@@ -44,6 +44,11 @@ export default function Agreement({ mode = "read", userId = "", onAccepted, onBa
   const [failed, setFailed] = useState("");
   const [ticks, setTicks] = useState({});        // ack id → bool
   const [final, setFinal] = useState(false);
+  /* ★ The OPTIONAL marketing tick (v0.4+). Its own state, never merged into `ticks` —
+     `allTicked` is computed from `ticks`, so anything living there becomes mandatory by
+     construction, and a marketing consent that gates the service is exactly what DPDP §6
+     forbids. Default false, and it stays false unless she says otherwise. */
+  const [marketing, setMarketing] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
 
@@ -76,6 +81,8 @@ export default function Agreement({ mode = "read", userId = "", onAccepted, onBa
       final: true,
       context,
       language: doc.language || "en",
+      // Sent beside the ticks, never among them (see the state note above).
+      marketing_email: !!marketing,
     };
     try {
       if (userId) {
@@ -179,6 +186,24 @@ export default function Agreement({ mode = "read", userId = "", onAccepted, onBa
             <input type="checkbox" checked={final}
               onChange={(e) => setFinal(e.target.checked)} />
             <span>{doc.final?.text}</span>
+          </label>
+        </div>
+      )}
+
+      {/* ── The OPTIONAL tick (v0.4+) ── Its own block, below the final acknowledgement
+          and outside `.lgl-final`, because everything inside that box is required and a
+          box that mixes the two teaches her that the optional one is required too. It
+          does not appear at all on v0.1–v0.3, which have no "## Optional" section, so an
+          older version renders exactly as it always did. Marked OPTIONAL in words rather
+          than by styling alone — the one property she has to be sure of is the one a
+          faint border cannot state. */}
+      {signing && doc.optional && (
+        <div className="lgl-optional">
+          <span className="lgl-optional-tag">Optional</span>
+          <label className="lgl-check lgl-check-opt">
+            <input type="checkbox" checked={marketing}
+              onChange={(e) => setMarketing(e.target.checked)} />
+            <span>{doc.optional.text}</span>
           </label>
         </div>
       )}

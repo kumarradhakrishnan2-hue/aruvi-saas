@@ -703,7 +703,11 @@ the support address receives; do not set them equal unless the mailbox itself se
 Not touched: `consent_and_disclaimer_v0.1.md` still carries `[support email]` /
 `[founder contact email]` placeholders — the agreement is versioned by FILENAME and
 already ticked, so filling them is a v0.2 file, never an edit. test_support.py pins the
-address (14 green).
+address (14 green). **Same session: the support reference series is `MEY-S-…`**
+(`SUPPORT_PREFIX` default + the adapter's fallback; the invoice series' ARV → MEY move).
+The counter is one plain integer (`support/_series/support.json`, `{"last": 743}`), not
+keyed by prefix, so numbering continues at MEY-S-744 and the two ARV-S records stay valid
+handles — never renamed.
 
 ## 2026-08-29 — THE COMPLETION TOAST WAS TELLING THE TRUTH: our own stale
 push was clobbering the done-flag (found live, 1000000002, Class 6 Roja + Neithal, ch 1)

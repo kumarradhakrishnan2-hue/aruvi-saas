@@ -203,6 +203,74 @@ def test_letterhead_wordmark_travels_inline_by_cid():
     print("✓ The wordmark rides inline by cid inside the HTML part — never as an attachment")
 
 
+def test_from_header_carries_the_sender_name():
+    """The From reads "MEYY support <support@meyy.in>", not the bare address.
+
+    Founder, 2026-09-04: mail composed in Gmail arrived as "MEYY support" and mail the
+    API sent arrived as "support@meyy.in", so one correspondence showed two senders —
+    and the machine-sent half, the half carrying case references, looked the less
+    legitimate of the two.
+
+    Both adapters are pinned together because the outbox is only useful as a PREVIEW of
+    the live mail if its headers are the live headers; they drifted once already.
+    """
+    import tempfile
+    from pathlib import Path
+
+    mod = sys.modules["aruvi_core.adapters.smtp_notifier"]
+    captured = {}
+
+    class _FakeSMTP:
+        def __init__(self, *a, **k): pass
+        def __enter__(self): return self
+        def __exit__(self, *a): return False
+        def ehlo(self): return (250, b"ok")
+        def starttls(self, **k): pass
+        def login(self, *a): pass
+        def send_message(self, m): captured["msg"] = m
+
+    real = mod.smtplib.SMTP
+    mod.smtplib.SMTP = _FakeSMTP
+    try:
+        SmtpNotifier("smtp.example.com", 587, "u", "p", from_addr="support@meyy.in",
+                     from_name="MEYY support").send(
+            EmailMessage(to="t@example.com", subject="s", text="body"))
+    finally:
+        mod.smtplib.SMTP = real
+    assert captured["msg"]["From"] == "MEYY support <support@meyy.in>", \
+        captured["msg"]["From"]
+
+    # No name configured → exactly the behaviour every caller had before this existed.
+    mod.smtplib.SMTP = _FakeSMTP
+    try:
+        SmtpNotifier("smtp.example.com", 587, "u", "p",
+                     from_addr="support@meyy.in").send(
+            EmailMessage(to="t@example.com", subject="s", text="body"))
+    finally:
+        mod.smtplib.SMTP = real
+    assert captured["msg"]["From"] == "support@meyy.in", captured["msg"]["From"]
+
+    # A name needing quoting or encoding must go through formataddr, never an f-string:
+    # a hand-built From is how a message ends up silently undisplayable in some clients.
+    mod.smtplib.SMTP = _FakeSMTP
+    try:
+        SmtpNotifier("smtp.example.com", 587, "u", "p", from_addr="a@b.in",
+                     from_name="Meyy, support").send(
+            EmailMessage(to="t@example.com", subject="s", text="body"))
+    finally:
+        mod.smtplib.SMTP = real
+    assert captured["msg"]["From"] == '"Meyy, support" <a@b.in>', captured["msg"]["From"]
+
+    # And the outbox writes the SAME header, so a preview is a preview.
+    with tempfile.TemporaryDirectory() as d:
+        FileNotifier(d, from_addr="support@meyy.in", from_name="MEYY support").send(
+            EmailMessage(to="t@example.com", subject="s", text="body"))
+        written = next(Path(d, "outbox").glob("*.txt")).read_text()
+    assert "From: MEYY support <support@meyy.in>" in written, written
+
+    print("✓ From carries the sender's name, in both adapters, quoted by formataddr")
+
+
 if __name__ == "__main__":
     test_adapters_satisfy_the_port()
     test_file_notifier_writes_a_readable_message()
@@ -213,4 +281,5 @@ if __name__ == "__main__":
     test_copy_never_claims_certification()
     test_html_part_says_everything_the_text_does()
     test_letterhead_wordmark_travels_inline_by_cid()
+    test_from_header_carries_the_sender_name()
     print("\n✅ All notifier tests passed!")

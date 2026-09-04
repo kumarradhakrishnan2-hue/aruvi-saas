@@ -22,6 +22,20 @@ API_PORT=8000
 WEB_PORT=3000
 mkdir -p "$LOGS"
 
+# ── secrets, once (2026-09-04) ─────────────────────────────────────────────────
+# Mail credentials are read by api/main.py ONCE, at startup, so a server started
+# without them installs FileNotifier and nothing sends — silently, as far as any
+# screen is concerned. Typing them on the command line every time is how a server
+# ends up running with last week's values (it happened: two uvicorn processes, one
+# holding the port with credentials from before the fix).
+#
+# `.env` is gitignored. Copy .env.example to .env, fill it in, and every ./dev.sh
+# from then on starts with mail configured. `set -a` exports what the file sets,
+# so nohup's children inherit it; nothing here is ever echoed.
+if [ -f .env ]; then
+  set -a; . ./.env; set +a
+fi
+
 lan_ip() {
   for i in en0 en1; do
     ip=$(ipconfig getifaddr "$i" 2>/dev/null) && [ -n "$ip" ] && { echo "$ip"; return; }
@@ -29,6 +43,17 @@ lan_ip() {
 }
 
 port_pid() { lsof -ti tcp:"$1" -sTCP:LISTEN 2>/dev/null; }
+
+# Said at every start and in `status`. Never prints the password — only whether the
+# three variables the notifier seam checks are present, and who it will send as.
+mail_mode() {
+  if [ -n "${ARUVI_SMTP_HOST:-}" ] && [ -n "${ARUVI_SMTP_USER:-}" ] \
+     && [ -n "${ARUVI_SMTP_PASSWORD:-}" ]; then
+    echo "SENDS as ${ARUVI_MAIL_FROM:-$ARUVI_SMTP_USER}"
+  else
+    echo "FILE OUTBOX — nothing will send (no .env, or it is incomplete)"
+  fi
+}
 
 kill_port() {
   local pid; pid=$(port_pid "$1")
@@ -69,6 +94,7 @@ start_all() {
   local ip; ip=$(lan_ip)
   echo
   echo "  entitlement enforcement: $([ "$enforced" = 1 ] && echo ON || echo OFF)"
+  echo "  mail: $(mail_mode)"
   echo "  web   http://localhost:$WEB_PORT"
   echo "  api   http://localhost:$API_PORT/docs"
   [ -n "$ip" ] && echo "  phone http://$ip:$WEB_PORT   (same WiFi)"
@@ -83,6 +109,7 @@ case "${1:-start}" in
   restart) start_all ;;
   status)
     echo "entitlement enforcement: $([ "$(cat "$FLAG" 2>/dev/null || echo 0)" = 1 ] && echo ON || echo OFF)"
+    echo "mail: $(mail_mode)"
     echo "api  (:$API_PORT): $(port_pid $API_PORT || echo 'not running')"
     echo "web  (:$WEB_PORT): $(port_pid $WEB_PORT || echo 'not running')"
     ;;

@@ -49,11 +49,11 @@ def reference_to_file(reference: str) -> str:
 class SupportRepositoryFileImpl(SupportRepository):
     """Per-teacher support store plus the shared reference series."""
 
-    def __init__(self, data_dir: str, prefix: str = "ARV-S", start: int = 742):
+    def __init__(self, data_dir: str, prefix: str = "MEY-S", start: int = 742):
         """
         Args:
             data_dir: ARUVI_STATE_DIR — the support/ folder lives here.
-            prefix:   the reference prefix ("ARV-S-742").
+            prefix:   the reference prefix ("MEY-S-742"; ARV-S until 2026-09-03).
             start:    ★ the FIRST reference ever issued (founder, 2026-08-27). Not 1.
                       A reference number is the one part of an acknowledgement a teacher
                       can read volume from, and "ARV-S-1" tells her she is the first
@@ -65,7 +65,7 @@ class SupportRepositoryFileImpl(SupportRepository):
         """
         self.base_dir = Path(data_dir) / "support"
         self.series_dir = self.base_dir / "_series"
-        self.prefix = (prefix or "ARV-S").strip() or "ARV-S"
+        self.prefix = (prefix or "MEY-S").strip() or "MEY-S"
         self.start = int(start)
         self._lock = threading.Lock()
 

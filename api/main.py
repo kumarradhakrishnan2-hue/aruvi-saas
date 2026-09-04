@@ -179,10 +179,12 @@ erasure_log = ErasureLogFileImpl(config.STATE_DIR)
 # no credential ever enters the repo. One decision, made once, at the seam.
 if config.SMTP_HOST and config.SMTP_USER and config.SMTP_PASSWORD:
     notifier = SmtpNotifier(config.SMTP_HOST, config.SMTP_PORT, config.SMTP_USER,
-                            config.SMTP_PASSWORD, from_addr=config.MAIL_FROM)
+                            config.SMTP_PASSWORD, from_addr=config.MAIL_FROM,
+                            from_name=config.MAIL_FROM_NAME)
     print(f"[aruvi] mail: SMTP {config.SMTP_HOST} as {config.SMTP_USER} — mail WILL send")
 else:
-    notifier = FileNotifier(config.STATE_DIR, from_addr=config.MAIL_FROM)
+    notifier = FileNotifier(config.STATE_DIR, from_addr=config.MAIL_FROM,
+                            from_name=config.MAIL_FROM_NAME)
     # ★ SAID OUT LOUD AT STARTUP (2026-08-26). Nothing on screen distinguishes a mail
     #   that was sent from one that was written to disk — a subscription succeeds either
     #   way, by design — so a missing SMTP variable looked exactly like a mail that
@@ -1732,6 +1734,11 @@ class ConsentAccept(BaseModel):
     final: bool = False
     context: str = "subscription_checkout"
     language: str = "en"
+    # ★ The OPTIONAL marketing tick (v0.4+). Deliberately its own field and NOT a member
+    #   of `acknowledgements`: DPDP §6 requires consent to be free and unconditional, so
+    #   this may never be one of the ticks the acceptance is validated against. False —
+    #   or absent, which is what every older client sends — is a complete acceptance.
+    marketing_email: bool = False
 
 
 @app.post("/legal/consent")
@@ -1782,8 +1789,24 @@ def post_legal_consent(req: ConsentAccept,
     if acct is not None:
         acct.consent = {"policy_version": current, "accepted_at": now,
                         "document_id": legal.DOCUMENT_ID}
+        # ★ THE MARKETING CHOICE LIVES ON THE ACCOUNT, NOT IN THE LEDGER (2026-09-04).
+        #   The two records have opposite lifetimes and that is the whole reason they are
+        #   kept apart: the ledger is append-only and RETAINED through erasure, because it
+        #   is proof she agreed. A marketing consent must be the reverse — withdrawable at
+        #   any moment, and gone when she erases her account. Writing it into the ledger
+        #   would make it un-withdrawable evidence of a preference, which is neither
+        #   lawful nor useful. `notify` already existed for contact preferences, so this
+        #   joins it rather than inventing a field, and the export renders it from there.
+        #   The version and timestamp ride along: "she opted in" is a weaker fact than
+        #   "she opted in on this date, against this version of the agreement".
+        notify = dict(acct.notify or {})
+        notify["marketing_email"] = bool(req.marketing_email)
+        notify["marketing_email_at"] = now if req.marketing_email else ""
+        notify["marketing_email_version"] = current if req.marketing_email else ""
+        acct.notify = notify
         account_repo.save(acct)
-    return {"status": "accepted", "version": current, "accepted_at": now}
+    return {"status": "accepted", "version": current, "accepted_at": now,
+            "marketing_email": bool(req.marketing_email)}
 
 
 class AccountUpdate(BaseModel):
@@ -1809,7 +1832,43 @@ def get_account(identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
             "role": a.role, "state": a.state, "city": a.city,
             "school_name": a.school_name, "created_at": a.created_at,
             # Has the guided tour already had its one showing? (2026-08-26)
-            "tour_offered_at": a.tour_offered_at}
+            "tour_offered_at": a.tour_offered_at,
+            # The optional marketing choice (v0.4), so Settings can show and change it.
+            "marketing_email": bool((a.notify or {}).get("marketing_email")),
+            "marketing_email_at": (a.notify or {}).get("marketing_email_at", "")}
+
+
+class MarketingPref(BaseModel):
+    enabled: bool
+
+
+@app.post("/account/marketing-email")
+def set_marketing_email(req: MarketingPref,
+                        identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """Turn the optional marketing emails on or off (§K of the agreement).
+
+    ★ ITS OWN ROUTE, and never gated — not on subscription, not on trial, not on
+    entitlement. DPDP §6 requires withdrawal to be as easy as consent was, so this must
+    not sit behind anything the consent itself did not sit behind; the same reasoning
+    that keeps data rights and support ungated (§2.5). A lapsed teacher who wants the
+    mail to stop must be able to stop it.
+
+    Turning it OFF clears the date and version too: those record WHEN she opted in, and
+    a stale opt-in date beside a false flag is a record that contradicts itself. What
+    remains is simply "not opted in", which is the truth."""
+    tenant_id, user_id = identity
+    a = account_repo.load(tenant_id, user_id)
+    if a is None:
+        raise HTTPException(status_code=404, detail="No account.")
+    now = datetime.now(timezone.utc).isoformat()
+    notify = dict(a.notify or {})
+    notify["marketing_email"] = bool(req.enabled)
+    notify["marketing_email_at"] = now if req.enabled else ""
+    notify["marketing_email_version"] = (legal.current_version() if req.enabled else "")
+    a.notify = notify
+    account_repo.save(a)
+    return {"marketing_email": bool(req.enabled),
+            "marketing_email_at": notify["marketing_email_at"]}
 
 
 @app.post("/account/tour-offered")

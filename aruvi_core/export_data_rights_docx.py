@@ -130,6 +130,18 @@ def build_export_docx(payload: Dict[str, Any]) -> bytes:
         rows.append(("Agreement accepted",
                      f"User Agreement v{_consent.get('policy_version') or '—'} "
                      f"on {str(_consent.get('accepted_at'))[:10]}"))
+    # The OPTIONAL marketing choice (§K, 2026-09-04). Stated either way, never only when
+    # it is on: "Aruvi holds no marketing consent from me" is exactly the kind of fact a
+    # teacher opens this document to check, and a row that appears only on opt-in cannot
+    # answer it. Unlike the agreement above, this one IS deleted with her account.
+    _notify = acct.get("notify") or {}
+    if _notify.get("marketing_email"):
+        _when = str(_notify.get("marketing_email_at") or "")[:10]
+        rows.append(("Marketing emails",
+                     f"Yes — chosen{' on ' + _when if _when else ''}. "
+                     "You can turn this off at any time in Settings."))
+    else:
+        rows.append(("Marketing emails", "No — you have not opted in."))
     if rows:
         at = doc.add_table(rows=len(rows), cols=2)
         _hairlines(at, "DDDDDD")

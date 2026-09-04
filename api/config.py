@@ -105,6 +105,15 @@ SMTP_PASSWORD = os.environ.get("ARUVI_SMTP_PASSWORD", "")
 SUPPORT_ADDRESS = os.environ.get("ARUVI_SUPPORT_ADDRESS", "").strip() or "support@meyy.in"
 # The address mail is SENT from — the SMTP account itself unless overridden.
 MAIL_FROM = os.environ.get("ARUVI_MAIL_FROM", "").strip() or SMTP_USER or "kumar.radhakrishnan2@gmail.com"
+# ★ THE SENDER'S NAME (founder, 2026-09-04). Mail composed in Gmail arrives as
+# "MEYY support"; mail the API sent arrived as the bare "support@meyy.in", so one
+# correspondence showed two senders and the machine-sent half looked the less legitimate
+# of the two — exactly backwards, since it is the half carrying case references. This is
+# the display name only; the address is still MAIL_FROM, and Gmail still rewrites a From
+# the authenticated account does not own. Spelled MEYY (the wordmark), matching the
+# Workspace account's own name rather than the "Meyy" used in prose — the inbox shows
+# these side by side and the account name is the one already in her thread list.
+MAIL_FROM_NAME = os.environ.get("ARUVI_MAIL_FROM_NAME", "").strip() or "MEYY support"
 # Where a reply to any Aruvi mail goes: the support inbox, never the sending account.
 MAIL_REPLY_TO = os.environ.get("ARUVI_MAIL_REPLY_TO", "").strip() or SUPPORT_ADDRESS
 # Send the founder a copy of every subscription confirmation (his own sales log).
@@ -117,7 +126,10 @@ MAIL_BCC_FOUNDER = os.environ.get("ARUVI_MAIL_BCC_FOUNDER", "1").strip().lower()
 # use afterwards; SUPPORT_START is where the series opens (see support_repository_file
 # for why it is not 1). SUPPORT_REPLY_DAYS is the promise the screen and the mail BOTH
 # make — one value, so they cannot drift apart and leave the teacher with two answers.
-SUPPORT_PREFIX = os.environ.get("ARUVI_SUPPORT_PREFIX", "ARV-S").strip() or "ARV-S"
+# ★ MEY-S since 2026-09-03 (founder) — the invoice series' own move (ARV → MEY). The
+# counter is one plain integer, not keyed by prefix, so numbering CONTINUES; records
+# filed as ARV-S-… stay valid handles and are never renamed.
+SUPPORT_PREFIX = os.environ.get("ARUVI_SUPPORT_PREFIX", "MEY-S").strip() or "MEY-S"
 SUPPORT_START = int(os.environ.get("ARUVI_SUPPORT_START", "742"))
 SUPPORT_REPLY_DAYS = int(os.environ.get("ARUVI_SUPPORT_REPLY_DAYS", "2"))
 # Billing questions get the firmer promise: money carries a different anxiety, and a

@@ -16,9 +16,11 @@ Run standalone:  python3 tests/test_consent.py     (also pytest-compatible)
 """
 from __future__ import annotations
 
+import json
 import os
 import sys
 import tempfile
+from dataclasses import asdict
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -122,6 +124,71 @@ def test_repo_appends_and_isolates_tenants():
         assert repo.latest("Kumar1", "consent_and_disclaimer", "0.9") is None
         assert repo.load_all("Priya2") == [], "tenant-keyed, isolated"
         print("✓ Consent records append, keep every version, and never cross tenants")
+
+
+def test_the_optional_tick_is_optional():
+    """★ The marketing consent, pinned as SEPARABLE (founder, 2026-09-04).
+
+    DPDP §6 requires consent to be free, specific and unconditional, so a marketing
+    choice may not gate the service. Everything this asserts is a way of saying that
+    once:
+      * it is parsed into `optional`, never into `acknowledgements` — anything in there
+        is mandatory by construction (Agreement.jsx's `allTicked`, and the five-box
+        tally both map over it);
+      * `acknowledgement_ids()` stays five, so an acceptance validates without it;
+      * an acceptance that DECLINES it is complete, not partial;
+      * the answer lands on the ACCOUNT (withdrawable, erased with her) and never in the
+        retained ledger, which exists to be un-erasable;
+      * versions that predate it parse exactly as they did.
+    """
+    from fastapi.testclient import TestClient
+    from api import main as api_main
+
+    doc = legal.load_consent_document()
+    assert doc["optional"], "v0.4+ carries the optional tick"
+    assert doc["optional"]["id"] == "marketing_email"
+    ids = legal.acknowledgement_ids()
+    assert len(ids) == 5 and "marketing_email" not in ids, \
+        "the optional tick is not one of the five — putting it there would bundle it"
+    for v in legal.available_versions():
+        d = legal.load_consent_document(v)
+        assert len(d["acknowledgements"]) == 5, f"v{v} still parses as five"
+
+    c = TestClient(api_main.app, raise_server_exceptions=False)
+
+    # DECLINED — a complete acceptance, and nothing is switched on.
+    H = _headers("OptOutTeacher")
+    body = {"version": doc["version"], "acknowledgements": ids, "final": True,
+            "context": "subscription_checkout", "language": "en"}
+    assert c.post("/legal/consent", headers=H, json=body).status_code == 200, \
+        "declining marketing is a COMPLETE acceptance, not a partial one"
+    acct = api_main.account_repo.load("OptOutTeacher", "OptOutTeacher")
+    assert acct.notify.get("marketing_email") is False
+    assert not acct.notify.get("marketing_email_at"), "no opt-in date when she declined"
+
+    # ACCEPTED — recorded with the date and the version she saw.
+    H2 = _headers("OptInTeacher")
+    r = c.post("/legal/consent", headers=H2, json=dict(body, marketing_email=True))
+    assert r.status_code == 200 and r.json()["marketing_email"] is True
+    acct2 = api_main.account_repo.load("OptInTeacher", "OptInTeacher")
+    assert acct2.notify.get("marketing_email") is True
+    assert acct2.notify.get("marketing_email_at"), "when she opted in is part of the fact"
+    assert acct2.notify.get("marketing_email_version") == doc["version"]
+
+    # …and NEVER in the ledger, which is retained through erasure. A marketing consent
+    # that cannot be withdrawn is the one thing this must never become.
+    for row in api_main.consent_repo.load_all("OptInTeacher"):
+        blob = json.dumps(asdict(row)).lower()
+        assert "marketing" not in blob, \
+            "the marketing choice must not reach the un-erasable record"
+        # (the tenant ids above deliberately avoid the word, or this would self-trigger)
+
+    # Erasing her takes the preference with it — the account is where it lives.
+    c.post("/data-rights/erase", headers=H2,
+           json={"confirm": "erase", "downloaded_confirmed": True})
+    assert api_main.account_repo.load("OptInTeacher", "OptInTeacher") is None, \
+        "and the preference goes with the account, unlike the signature"
+    print("✓ The marketing tick is optional, separately stored, and erasable")
 
 
 def test_consent_survives_an_erase_but_stops_binding():
@@ -270,6 +337,7 @@ if __name__ == "__main__":
     test_document_parses_into_five_plus_one()
     test_a_malformed_document_refuses_to_serve()
     test_repo_appends_and_isolates_tenants()
+    test_the_optional_tick_is_optional()
     test_consent_survives_an_erase_but_stops_binding()
     test_status_route_and_recording()
     test_partial_acceptance_is_refused()

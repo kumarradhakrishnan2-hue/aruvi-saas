@@ -228,7 +228,7 @@ html.app-shell .yp-head { top: var(--mlp2-frozen-h, 132px); }
    typeset "Aruvi." + red-dot `.brand-row` in all four bars (shell · login · first run ·
    subscribe). Heights are set to match the box the 25px / 21px Fraunces line used to occupy
    — then taken one notch DOWN (founder, same day: "a wee bit larger than Aruvi was"):
-   26→22px desktop, 22→19px ≤600px (≈ 15px / 13px cap height; ≈ 75px / 64px wide — the
+   26→22px desktop, 22→19px ≤600px (≈ 15px / 13px cap height; ≈ 83px / 71px wide incl. the circled ™ — the
    viewBox is trimmed to the ink so the M sits flush over the L of the kicker). The bar
    gets ~4px shorter — --nav-h / --fr-bar-h are MEASURED at runtime, so nothing else needs
    retuning. `color` is the stroke (currentColor); `--brand-dot` is the two dots' fill — the
@@ -4441,13 +4441,16 @@ select option { background-color: var(--field-bg); color: var(--ink); }
   background: var(--paper); border: 1px solid var(--line); border-radius: 3px;
   padding: 10px 12px; }
 .sup-text:focus { outline: none; border-color: var(--edge-green); }
-.sup-promise { margin-top: 10px; }
 .sup-refcap { font-family: var(--f-mono); font-size: 10px; letter-spacing: .08em;
   text-transform: uppercase; color: var(--ink-soft); }
 .sup-ref { font-family: var(--f-mono); font-size: 22px; letter-spacing: .04em;
   color: var(--pine); padding: 4px 0 10px; word-break: break-all; }
-.sup-rowref { font-family: var(--f-mono); font-size: 11px; color: var(--ink-soft);
-  padding-left: 8px; }
+/* .sup-rowref retired 2026-09-04 with the "Your earlier messages" list. */
+/* The reply-to address, shown IN FULL so she can check it before writing. `anywhere`
+   rather than `break-word`: an address has no spaces, so a long one on a 360px phone
+   has nothing to wrap at and would widen the card instead. Ink is the body colour, not
+   `--ink-soft`, because it is the one word in the line she is meant to read. */
+.sup-replyto { color: var(--ink); overflow-wrap: anywhere; }
 .sup-addmail { margin-top: 10px; display: inline-block; }
 
 @media (max-width: 600px) {
@@ -4999,6 +5002,25 @@ select option { background-color: var(--field-bg); color: var(--ink); }
   border-radius: 12px; padding: 14px 15px; margin-top: 18px; }
 .lgl-need { font-family: var(--f-body); font-size: 12px; font-style: italic;
   color: var(--ink-soft); margin: 8px 0 0; }
+/* ★ The optional marketing tick (v0.4, 2026-09-04). Deliberately NOT `.lgl-final`'s sunk
+ * box: everything in that box is required, and sharing the surface would teach the eye
+ * that this one is too. Plain paper, a hairline, and the word "Optional" in the house
+ * mono kicker — said in WORDS, because "this cannot affect your subscription" is not a
+ * thing a border can state. It is also outside the five-box tally by construction: the
+ * tally maps over `acks`, and this tick was never put there. */
+.lgl-optional { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+.lgl-optional-tag { display: block; font-family: var(--f-mono); font-size: 10.5px;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft);
+  margin-bottom: 6px; }
+.lgl-check-opt { border-top: 0; padding-top: 0; font-weight: 400;
+  color: var(--ink-soft); }
+.lgl-check-opt input { accent-color: var(--ink-soft); }
+/* The marketing switch on the Settings home (§K). Sized like the tap targets beside it —
+ * 22px is the checkbox measure the agreement's own ticks use, and this is the same act. */
+.set-switch { display: inline-flex; align-items: center; margin: 0; cursor: pointer; }
+.set-switch input { width: 22px; height: 22px; margin: 0; accent-color: var(--pine);
+  cursor: pointer; }
+.set-switch input:disabled { cursor: default; opacity: 0.6; }
 .lgl-version { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.04em;
   color: var(--ink-soft); margin: 16px 0 0; line-height: 1.6; }
 /* ── Sign mode is a THREE-BAND FRAME (founder, 2026-08-27) ──

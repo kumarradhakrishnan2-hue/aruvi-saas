@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import re
 from datetime import datetime, timezone
+from email.utils import formataddr
 from pathlib import Path
 from typing import Any, Dict
 
@@ -27,15 +28,19 @@ def _slug(s: str) -> str:
 class FileNotifier(Notifier):
     """Writes messages to an outbox folder; never sends, never raises."""
 
-    def __init__(self, data_dir: str, from_addr: str = ""):
+    def __init__(self, data_dir: str, from_addr: str = "", from_name: str = ""):
         """
         Args:
             data_dir: Base directory (ARUVI_STATE_DIR) — the outbox/ folder lives here.
             from_addr: The address the real transport would send AS; recorded in the
                 file so the preview shows the same header the live mail will carry.
+            from_name: The display name the real transport would send under. Same
+                reasoning: the outbox is only useful as a preview if its headers are the
+                headers, so it formats From exactly as SmtpNotifier does (2026-09-04).
         """
         self.outbox_dir = Path(data_dir) / "outbox"
         self.from_addr = from_addr
+        self.from_name = from_name
 
     def send(self, msg: EmailMessage) -> Dict[str, Any]:
         """Write the message to the outbox. Returns a result dict; never raises."""
@@ -46,7 +51,8 @@ class FileNotifier(Notifier):
             stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%f")
             path = self.outbox_dir / f"{stamp}-{_slug(msg.to)}.txt"
             header = [
-                f"From: {self.from_addr}" if self.from_addr else "From: (unset)",
+                f"From: {formataddr((self.from_name, self.from_addr))}"
+                if self.from_addr else "From: (unset)",
                 f"To: {msg.to}",
                 f"Reply-To: {msg.reply_to}" if msg.reply_to else "",
                 f"Subject: {msg.subject}",

@@ -82,7 +82,6 @@ function PersonalProfile({ onSaved }) {
   const [emailBusy, setEmailBusy] = useState(false);   // the "already in use" round-trip
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState("");
-
   useEffect(() => {
     fetch(`${API}/account`, withUser()).then((r) => (r.ok ? r.json() : null)).then((a) => {
       if (!a) return;
@@ -202,6 +201,10 @@ function PersonalProfile({ onSaved }) {
         <input type="text" value={school} placeholder="Enter your school name"
           onChange={(e) => setSchool(e.target.value)} /></label>
 
+      {/* Marketing emails (§K) deliberately do NOT live here — see the "Emails" group on
+          the Settings home. Personal profile is hidden on trial, and a withdrawal right
+          that disappears with a subscription state is not a withdrawal right. */}
+
       {/* Save never waits on the email step (founder, 2026-08-26): other fields save
           freely; a half-done email change is simply not saved until Verify completes —
           the previously confirmed email (or none) stays. */}
@@ -237,10 +240,13 @@ function PersonalProfile({ onSaved }) {
  *      does not have to compose a title for her own problem, and billing can carry its
  *      own faster promise. "Something else" is the last option deliberately — a list
  *      with no escape hatch gets the nearest wrong bucket picked instead.
- *   4. THE PROMISE IS STATED, AND IT COMES FROM THE SERVER. "Within 2 working days" is
- *      read from GET /support, the same value the acknowledgement quotes. A stated
- *      window beats a fast unstated one: the anxiety is not the wait, it is not knowing
- *      there is an end to it.
+ *   4. THE PROMISE IS STATED ONCE, AFTER SENDING, AND IT COMES FROM THE SERVER.
+ *      "Within 2 working days" is the value POST /support returns, the same one the
+ *      acknowledgement quotes. A stated window beats a fast unstated one: the anxiety is
+ *      not the wait, it is not knowing there is an end to it — but the moment that
+ *      matters is when she is actually waiting, i.e. after the send. It was stated twice
+ *      until 2026-09-04 (once above the button, once on "Message sent", in the same
+ *      words), and a promise repeated verbatim two screens apart reads as two promises.
  *   5. THE CONFIRMATION IS A REFERENCE. Not "thanks, we'll be in touch" — a case
  *      number, on screen and in her inbox, which is what turns a message into something
  *      somebody owes an answer on.
@@ -302,11 +308,12 @@ function SupportForm({ onOpenProfile, onAsk }) {
 
   const cats = (meta && meta.categories && meta.categories.length)
     ? meta.categories : SUPPORT_FALLBACK;
-  /* Billing's own window, resolved the same way the server resolves it — one rule, two
-     places, and they read it from the same payload so they cannot disagree. */
-  const days = (cat === "billing"
-    ? (meta && meta.billing_reply_days) || 1
-    : (meta && meta.reply_days) || 2);
+  /* ★ NO LOCAL `days` (2026-09-04). It existed to resolve billing's firmer window for
+     the pre-send promise; with that promise gone the confirmation screen reads
+     `sent.reply_window` straight off the POST response, so the window is resolved in ONE
+     place — the server — and the two can no longer disagree. `meta.reply_days` /
+     `meta.billing_reply_days` still arrive from GET /support and are deliberately left
+     unread here: they are the screen's furniture if the promise is ever restated. */
   // Three states, not two: has one · known to have none · we could not ask.
   const emailKnown = !!meta && !metaErr;
   const hasEmail = emailKnown && !!meta.email;
@@ -424,16 +431,28 @@ function SupportForm({ onOpenProfile, onAsk }) {
           {text.length > SUPPORT_MAX - 500 && (
             <p className="ob-quiet">{SUPPORT_MAX - text.length} characters left</p>
           )}
-          {/* 4 · the promise, in the same words the email will use — including the
-                 verb. "You can expect a response", never "a person will reply": the
-                 second promises WHO answers, which is not ours to promise and not the
-                 thing she is waiting to hear (founder, 2026-08-27). */}
-          <p className="ob-quiet sup-promise">
-            You can expect a response within {replyWords(days)}, Monday to Friday (IST).
-            {cat === "billing" && " Billing questions come first."}
-          </p>
+          {/* ★ THE PROMISE IS MADE ONCE, AFTER SENDING (founder, 2026-09-04). It used
+                 to be stated here too, above the button, and then again on the "Message
+                 sent" screen in the same words — so the only thing the second telling
+                 added was the suspicion that it was a different promise. The moment it
+                 is load-bearing is the one where she is waiting, which is after she has
+                 sent, and that screen quotes the SERVER's own `reply_window` rather than
+                 a locally-derived guess. Removed with it: billing's "Billing questions
+                 come first", which was true and unactionable before sending — she cannot
+                 make her problem a billing problem, and the confirmation still states
+                 billing's own firmer window because the SERVER resolves it. */}
+          {/* ★ IN FULL, NOT MASKED (founder, 2026-09-04). It read "k•••@gmail.com", a
+                 privacy treatment borrowed from the subscribe flow's confirmation —
+                 where the address is being CONFIRMED BACK to her and the only job is
+                 recognition. Here the job is the opposite: this is the last moment she
+                 can catch a wrong or stale address, before spending effort writing to
+                 somewhere she will never be answered. A mask defeats exactly that check,
+                 since "k•••@gmail.com" matches every address she owns.
+                 `overflow-wrap` because an address has no spaces to break at, and a long
+                 one would otherwise push the card sideways at 360px. */}
           {hasEmail && (
-            <p className="ob-quiet">Our reply goes to {maskEmail(meta.email)}.</p>
+            <p className="ob-quiet">Our reply goes to{" "}
+              <span className="sup-replyto">{meta.email}</span>.</p>
           )}
           {/* ONLY when the server actually told us she has none. Said BEFORE she
               writes, not after: a teacher who types out a problem and only then learns
@@ -452,21 +471,20 @@ function SupportForm({ onOpenProfile, onAsk }) {
         </div>
       </div>
 
-      {/* 3 · what she has already asked — so she does not write twice */}
-      {meta && Array.isArray(meta.requests) && meta.requests.length > 0 && (
-        <div className="set-group set-group-tail">
-          <div className="set-cap">Your earlier messages</div>
-          <div className="set-card">
-            {meta.requests.map((r) => (
-              <div className="set-row set-row-static" key={r.reference}>
-                <span className="set-lab">{r.label}
-                  <span className="sup-rowref">{r.reference}</span></span>
-                <span className="set-val">{fmtValidity(r.created_at)}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* ★ THE "YOUR EARLIER MESSAGES" LIST IS GONE (founder, 2026-09-04). It listed
+             category · reference · date and opened nothing — a row that cannot be
+             read is furniture, and it invited the tap it then refused. Building the
+             detail view was the obvious repair and is the wrong one, because the list
+             CANNOT be complete: support is an email channel and a teacher may write
+             to {SUPPORT_ADDRESS} straight from her own mail app, at which point Aruvi
+             never sees the message and has nothing to file. A history that silently
+             omits half of what she remembers sending is worse than none — she reads
+             the absence as "they lost it".
+             Her inbox already holds the whole record, both directions, searchable, and
+             every acknowledgement carries its reference. That IS the history, and it is
+             the one place that has all of it. GET /support still returns `requests`
+             (unread here) — the cases are stored either way, and the founder-side view
+             is where they belong. */}
     </div>
   );
 }
@@ -512,6 +530,54 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
   // Did she actually download in this session? Used only to word the question honestly —
   // the confirmation is HERS to give either way (she may have exported last week).
   const [didDownload, setDidDownload] = useState(false);
+  /* ★ MARKETING EMAILS (§K) LIVE AT THIS LEVEL, NOT IN PERSONAL PROFILE (2026-09-04).
+     It was built inside Personal profile — the obvious home, since it is a contact
+     preference — and that was wrong twice over. Personal profile is HIDDEN ON TRIAL, so
+     the withdrawal disappeared for the teachers most likely to want it; and DPDP §6
+     requires withdrawing to be as easy as consenting was, which one tap on the agreement
+     screen is and two levels of navigation is not. It is now a row on the Settings HOME
+     list, ungated, beside Appearance — the existing pattern for a preference you flip in
+     place. ONE door: it was removed from Personal profile rather than shown in both,
+     because two doors onto one record is how they drift. */
+  const [marketing, setMarketing] = useState(null);   // null = not yet known
+  const [mktBusy, setMktBusy] = useState(false);
+  const [mktNote, setMktNote] = useState("");
+
+  useEffect(() => {
+    let live = true;
+    fetch(`${API}/account`, withUser())
+      .then((r) => (r.ok ? r.json() : null))
+      .then((a) => { if (live && a) setMarketing(!!a.marketing_email); })
+      .catch(() => {});
+    return () => { live = false; };
+  }, [syncTick]);
+
+  /* Optimistic, then reconciled: the box moves the instant she taps it and reverts only
+     if the write actually failed. A withdrawal that appears not to have registered is
+     the one outcome worth spending a rollback on — she will tap it again, and again. */
+  const saveMarketing = async (next) => {
+    const prev = marketing;
+    setMarketing(next); setMktBusy(true); setMktNote("");
+    try {
+      const r = await fetch(`${API}/account/marketing-email`, withUser({
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ enabled: next }),
+      }));
+      if (!r.ok) {
+        setMarketing(prev);
+        setMktNote(await errDetail(r, "Couldn't save that just now — try again."));
+        return;
+      }
+      setMktNote(next ? "Saved — you'll hear from us occasionally."
+                      : "Saved — no more marketing emails.");
+    } catch {
+      setMarketing(prev);
+      setMktNote("Couldn't save that just now — try again.");
+    } finally {
+      setMktBusy(false);
+    }
+  };
 
   // Re-fetch when the shell signals a subscription change (in-app subscribe done).
   useEffect(() => { fetchEntitlement().then(setEnt); }, [syncTick]);
@@ -895,6 +961,34 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
           <span className="set-bigsub">User agreement &amp; privacy notice</span></span>
         <span className="set-chev">›</span>
       </button>
+
+      {/* ── Emails (§K, 2026-09-04) ── The withdrawal half of the optional marketing
+          consent. UNGATED on purpose: shown on trial and to a lapsed teacher, unlike
+          Personal profile, because a right to withdraw that depends on subscription
+          state is not a right. Rendered only once the answer is KNOWN — an unchecked box
+          drawn while the fetch is in flight is a screen inventing an answer about her
+          record, which is the Support `metaErr` rule. Saves ON TAP, so it needs no Save
+          button: consent was one tap, and withdrawal must be no harder. */}
+      {marketing !== null && (
+      <div className="set-group set-group-tail">
+        <div className="set-cap">Emails</div>
+        <div className="set-card">
+          <div className="set-row set-row-static">
+            <span className="set-lab">Marketing emails</span>
+            <label className="set-switch">
+              <input type="checkbox" checked={marketing} disabled={mktBusy}
+                onChange={(e) => saveMarketing(e.target.checked)}
+                aria-label="Send me occasional emails about new subjects and features" />
+            </label>
+          </div>
+        </div>
+        <p className="set-hint">
+          {mktNote || "Occasional emails about new subjects, features and teaching ideas. "
+                    + "Receipts, replies to your messages and notices about the agreement "
+                    + "are sent either way."}
+        </p>
+      </div>
+      )}
 
       <div className="set-group set-group-tail">
         <div className="set-cap">App</div>

@@ -52,7 +52,7 @@ def test_series_opens_at_the_offset_and_is_gapless():
 
         # A NEW repository object over the same folder continues the series — the
         # counter is on disk, not in the process.
-        assert SupportRepositoryFileImpl(tmp, start=742).next_reference() == "ARV-S-746"
+        assert SupportRepositoryFileImpl(tmp, start=742).next_reference() == "MEY-S-746", "default prefix is MEY-S now; the counter, not the prefix, carries the series"
         print("✓ References open at the three-digit offset and count on, gaplessly")
 
 
@@ -64,7 +64,7 @@ def test_a_corrupt_counter_restarts_but_never_rewinds():
         repo.next_reference()
         with open(os.path.join(tmp, "support", "_series", "support.json"), "w") as f:
             f.write("{ this is not json")
-        assert repo.next_reference() == "ARV-S-742", "restarts at the floor, not at 1"
+        assert repo.next_reference() == "MEY-S-742", "restarts at the floor, not at 1"
         print("✓ A corrupt counter restarts at the offset and never rewinds below it")
 
 
@@ -186,7 +186,7 @@ def test_route_files_a_case_and_acknowledges_it():
         "context": {"screen": "Settings › Support"}})
     assert r.status_code == 200, r.json()
     got = r.json()
-    assert got["reference"].startswith("ARV-S-"), got
+    assert got["reference"].startswith("MEY-S-"), got
     assert got["emailed"] is True, "FileNotifier counts — the message left the app"
     assert got["email"] == "latha@example.com"
     # ★ The window the SCREEN was told and the window the MAIL promises are one value.

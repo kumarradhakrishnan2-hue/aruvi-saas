@@ -23,7 +23,7 @@ from __future__ import annotations
 import smtplib
 import ssl
 from email.message import EmailMessage as StdEmailMessage
-from email.utils import formatdate, make_msgid
+from email.utils import formataddr, formatdate, make_msgid
 from typing import Any, Dict
 
 from aruvi_core.ports import EmailMessage, Notifier
@@ -33,13 +33,26 @@ class SmtpNotifier(Notifier):
     """Sends over SMTP with STARTTLS. Never raises — failures come back as a result."""
 
     def __init__(self, host: str, port: int, user: str, password: str,
-                 from_addr: str = "", timeout: int = 20):
+                 from_addr: str = "", timeout: int = 20, from_name: str = ""):
         self.host = host
         self.port = int(port or 587)
         self.user = user
         self.password = password
         self.from_addr = from_addr or user
+        # Display name only — the envelope sender is still from_addr. Empty means the
+        # bare address, which is what every caller got before 2026-09-04.
+        self.from_name = from_name
         self.timeout = timeout
+
+    def _from_header(self) -> str:
+        """"MEYY support <support@meyy.in>", or the bare address when unnamed.
+
+        formataddr, never an f-string: it quotes a name containing a comma or a quote,
+        and RFC-2047-encodes a non-ASCII one. Hand-built From headers are a classic way
+        to produce a message some clients silently refuse to display.
+        """
+        return formataddr((self.from_name, self.from_addr)) if self.from_name \
+            else self.from_addr
 
     def send(self, msg: EmailMessage) -> Dict[str, Any]:
         """Deliver one message. Returns a result dict; never raises."""
@@ -53,7 +66,7 @@ class SmtpNotifier(Notifier):
             # a plain text/plain part when there is not — so a mail with no invoice
             # looks exactly as it did before attachments existed (2026-08-26).
             m = StdEmailMessage()
-            m["From"] = self.from_addr
+            m["From"] = self._from_header()
             m["To"] = msg.to
             m["Subject"] = msg.subject
             m["Date"] = formatdate(localtime=True)

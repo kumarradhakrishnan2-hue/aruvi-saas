@@ -30,10 +30,25 @@ files stay readable by `load_consent_document("0.1")`.
     # Full User Agreement …            the body the final tick accepts
     ## Final acknowledgement
     ### ☐ I have read …                the sixth tick
+    ## Optional                        …and, from v0.4, anything below this heading
+    ### ☐ Send me occasional emails …  the OPTIONAL tick — never one of the six
 
 Anything that breaks that shape raises ConsentDocumentError at read time rather than
 serving a half-document — a consent screen missing a tick is worse than a 500, because
 nobody would notice.
+
+★ THE OPTIONAL TICK IS NOT AN ACKNOWLEDGEMENT (founder, 2026-09-04). Marketing consent is
+parsed into its own `optional` slot and never into `acknowledgements`, for reasons that
+are legal before they are structural: DPDP §6 requires consent to be free, specific and
+unconditional, so a marketing choice may not gate the service. Everything in `acks` is
+mandatory by construction — Agreement.jsx computes `allTicked` from it and the five-box
+tally counts it — so putting marketing there would bundle it into the accept button, which
+is the exact thing the law forbids. It is also the reason the five-count guard below stays
+at 5 and must not be relaxed to "5 or 6": the guard is what would catch someone quietly
+promoting an optional term into a required one.
+
+Its ANSWER is stored on the Account (withdrawable, erased with her), never in the retained
+consent ledger — see POST /legal/consent in api/main.py.
 """
 from __future__ import annotations
 
@@ -43,6 +58,9 @@ from typing import Any, Dict, List, Optional
 DOCUMENT_ID = "consent_and_disclaimer"
 LANGUAGE = "en"          # English governs until certified translations exist (§ front matter)
 FINAL_ACK_ID = "final"
+# The optional marketing tick (v0.4+). Deliberately not in `acknowledgement_ids()` — an
+# acceptance is valid whether or not this was ticked.
+OPTIONAL_ID = "marketing_email"
 
 _FILE_RE = re.compile(r"^consent_and_disclaimer_v([0-9][0-9.]*)\.md$")
 # "### ☐ 1. Aruvi is a teaching aid — …"  (the box may be ☐ or ☑ in a future draft)
@@ -133,6 +151,8 @@ def load_consent_document(version: Optional[str] = None) -> Dict[str, Any]:
     cur: Optional[Dict[str, Any]] = None
     cur_body: List[str] = []
     in_final = False
+    in_optional = False
+    optional_text = ""
 
     def close_ack() -> None:
         nonlocal cur, cur_body
@@ -153,6 +173,13 @@ def load_consent_document(version: Optional[str] = None) -> Dict[str, Any]:
             continue
         if s.startswith("## Final acknowledgement"):
             in_final = True
+            continue
+        # ★ v0.4: everything below "## Optional" is the marketing tick, which is NOT one
+        #   of the six. Absent in v0.1–v0.3, so `optional` is simply None there and every
+        #   already-signed version keeps parsing exactly as it did.
+        if s.startswith("## Optional"):
+            in_final = False
+            in_optional = True
             continue
 
         if section == "intro":
@@ -177,6 +204,11 @@ def load_consent_document(version: Optional[str] = None) -> Dict[str, Any]:
             continue
 
         if section == "agreement":
+            if in_optional:
+                m = _FINAL_RE.match(s)
+                if m and not optional_text:
+                    optional_text = m.group(1)
+                continue
             if in_final:
                 m = _FINAL_RE.match(s)
                 if m and not final_text:
@@ -187,6 +219,10 @@ def load_consent_document(version: Optional[str] = None) -> Dict[str, Any]:
 
     close_ack()
 
+    # ★ STAYS AT 5 — do not relax this to "5 or 6" when the optional tick is present.
+    #   The optional tick is parsed elsewhere precisely so that this guard keeps meaning
+    #   what it means: it is what would catch an optional term being quietly promoted
+    #   into a required one, which for a marketing consent is a DPDP §6 violation.
     if len(acks) != 5:
         raise ConsentDocumentError(
             f"Consent document v{version} has {len(acks)} acknowledgements; expected 5. "
@@ -205,6 +241,9 @@ def load_consent_document(version: Optional[str] = None) -> Dict[str, Any]:
         "acknowledgements": acks,
         "agreement": _strip(agreement),
         "final": {"id": FINAL_ACK_ID, "text": final_text},
+        # None on v0.1–v0.3 (they have no "## Optional" section). The UI renders the
+        # box only when this is present, so an older version shows exactly what it did.
+        "optional": ({"id": OPTIONAL_ID, "text": optional_text} if optional_text else None),
     }
     _cache[version] = doc
     return doc

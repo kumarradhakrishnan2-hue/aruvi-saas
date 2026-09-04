@@ -459,13 +459,19 @@ generic look.
   `Invoice.seller_name`; blank on records issued before the field) and in the GST note. **The
   invoice series is `MEY/2026-27/NNNN`** (`INVOICE_PREFIX` default; the `_series/` counter is
   keyed by year only, so numbering continues from 7864 — ARV-numbered records stay valid). The
-  support reference series is still `ARV-S-…` — not asked for. Tests that pin the wording (data_rights · invoice · notifier ·
+  support reference series followed on 2026-09-03: `MEY-S-…` (`SUPPORT_PREFIX`; same plain counter, so numbering continues and ARV-S records stay valid). Tests that pin the wording (data_rights · invoice · notifier ·
   support · year_plan_export) moved with it; backend suite green bar the three pre-existing
   content defects of 2026-08-27. ★ **AND THE WORDMARK REACHED EVERY LETTERHEAD, same day:**
   `aruvi_core/brand.py` + ONE shipped raster `aruvi_core/brand/meyy-wordmark-pine.png`
   (pine stroke, brand-red dots, transparent; drawn from the SAME paths as MeyyMark.jsx, trimmed
   to the ink so its bottom IS the baseline; `render_png()` regenerates it — cairosvg at
-  authoring time only, the runtime just reads the file, bundled like `fonts/`). Six PDF
+  authoring time only, the runtime just reads the file, bundled like `fonts/`). ★ **The mark carries a CIRCLED ™** at the top-right of the
+  cap height (founder, same day — chosen from three placements and a plain/circled pair shown
+  as visuals first; ring ≈ 40% of cap, in the stroke colour, `TM` in bold sans; ~4px on the
+  phone bar, which is the convention). Drawn in BOTH sources — MeyyMark.jsx and
+  `brand.wordmark_svg` — with the trimmed box widened 373 → 413 units to the ring's outer
+  edge; every export width follows from `WORDMARK_ASPECT` automatically. NOT on the store
+  tiles or favicons (app icons carry no ™ by convention). Six PDF
   templates use `brand.pdf_img_html(16)` — ⚠️ it emits **`align="top"`, deliberately not
   `baseline`**: xhtml2pdf maps an inline image's `baseline` to `bottom` and hangs it 0.2×its
   height below the text, and `top` computes to exactly zero for an inline image (fontSize is
