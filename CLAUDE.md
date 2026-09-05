@@ -1491,7 +1491,10 @@ allocate → accept → hub → generate → My Plans dashboard → teach (Learn
    already lifted per subject); wire it into the G7 generate spoke (which currently serves
    saved-plan previews).
 3. **LP + assessment PDFs** (same language; screen ↔ print parity).
-4. **Payments** (Razorpay) → **mobile** (Expo).
+4. **Payments** (Razorpay) → **mobile** (Expo). ★ Reuse assessment + migration path measured
+   against the code 2026-09-04: `docs/mobile_migration_assessment.md` — the seam is clean
+   (Next is a static host, zero `next/*` imports, 57 REST routes), backend untouched; first
+   task is a deployed API, not UI; beta on manual grants, no in-app purchase screen.
 5. **Deferred polish:** G6 selective-reset screen still uses the old modal (not yet the
    G2-aligned select-to-clear danger-zone screen from the mockup); "sample plans" pre-readiness
    surface deliberately parked (it shows only an LP, not the execution/My-Plans value — needs
