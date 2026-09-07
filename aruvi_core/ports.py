@@ -959,6 +959,80 @@ class SectionStateRepository(Protocol):
         ...
 
 
+# ── Section chapter-history (the teaching ledger) ──────────────────────────────────
+# SectionState above holds only the CURRENT chapter binding; the moment a chapter leaves
+# that slot (untrack, or move-on from a completed chapter) the row is deleted, so the trail
+# of what a section has actually TAUGHT lived nowhere but the browser (web/app/lib/
+# sectionHistory.js, whose own header said a server mirror was owed). This store is that
+# mirror: the same ledger, keyed tenant/user/year, so the trail follows a teacher across
+# devices exactly as her pointer already does.
+#
+# ★ IT MERGES; IT DOES NOT SNAPSHOT — the one deliberate difference from
+#   SectionStateRepository, and the reason `record` takes ENTRIES rather than a whole map.
+#   Section state is CURRENT state, so a full per-section snapshot is right: the last writer
+#   holds the truth. History is CUMULATIVE, so a full-map write would let a phone that has
+#   never seen the laptop's rows delete them. Each entry is upserted under its own chapter
+#   FILE with latest-`ts`-wins, which converges from any device in any order without loss.
+#
+# One row per chapter per section, so a re-taught chapter overwrites rather than duplicating.
+# `status` ∈ {"completed", "untracked"} — "ongoing" is never stored (it is live state the UI
+# overlays from the current binding). `units_done`/`total_units` stamp the progress reached,
+# so a row can say "set aside at unit 2 of 10". The anti-noise gate (a chapter earns its row
+# only if ≥1 unit was completed) lives in the CLIENT, where the pointer is known; this store
+# keeps what it is handed.
+SectionHistoryEntry = Dict[str, Any]  # {file: str, chapter_number: Optional[int],
+                                      #  chapter_title: str, status: str,
+                                      #  units_done: Optional[int],
+                                      #  total_units: Optional[int], ts: int}
+
+
+@runtime_checkable
+class SectionHistoryRepository(Protocol):
+    """Persists each section's ledger of chapters already taught, keyed by tenant_id +
+    user_id + year_id (year-scoped for the same reason the pointer is: a new academic year
+    is a new cohort, and last year's trail belongs to last year).
+
+    File-based (JSON) implementation for now; a cloud adapter (a `section_history` table
+    keyed `(tenant, user, year, section_key, chapter_file)`) swaps in behind this same port
+    with no change to the API routes or the React components.
+    """
+    def load_all(self, tenant_id: str, user_id: str,
+                 year_id: str) -> Dict[str, Dict[str, "SectionHistoryEntry"]]:
+        """The whole ledger for this teacher's year:
+        {section_key: {chapter_file: entry}}. Empty dict if she has taught nothing yet."""
+        ...
+
+    def record(self, tenant_id: str, user_id: str, year_id: str, section_key: str,
+               entries: List["SectionHistoryEntry"]) -> None:
+        """MERGE entries into one section's ledger, each keyed by its own `file`.
+
+        Latest `ts` wins, so a stale push (a device that was offline while the same chapter
+        was re-taught elsewhere) can never overwrite a newer row. Accepts a LIST so the one
+        route serves both cases: a single new entry as it happens, and a device pushing its
+        whole local ledger up once on first reconcile."""
+        ...
+
+    def delete_section(self, tenant_id: str, user_id: str, year_id: str,
+                       section_key: str) -> None:
+        """Drop one section's whole ledger. No-op if absent.
+
+        ⚠️ NOT the untrack reversal — untracking a chapter must never erase the record that
+        it was once taught, which is why `record` has no per-entry delete. This is for the
+        stronger act: the SECTION itself leaving the teaching profile (edited away, or
+        purged when a trialled subject is not bought). Its pointer is already deleted at
+        both those sites; without this the trail survives, and a teacher who later re-adds
+        a section with the same tag inherits a phantom history of chapters her new class
+        never sat through."""
+        ...
+
+    def clear_all(self, tenant_id: str, user_id: str, year_id: str) -> None:
+        """Erase this teacher's whole ledger for the year. Used by the 'start setup over'
+        profile reset (DELETE /readiness), so a section key reused by a rebuilt profile
+        cannot inherit another class's teaching trail, and by the academic-year cutover's
+        start-fresh. No-op if nothing is stored."""
+        ...
+
+
 # ── Plan archive ───────────────────────────────────────────────────────────────────
 # A teacher can ARCHIVE a lesson plan from My Lessons to declutter without ever losing it
 # (there is deliberately NO hard delete — plans carry real generation cost, and the teacher-

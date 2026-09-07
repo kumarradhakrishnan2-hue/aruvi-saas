@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getJSON, pretty, pad, classNum, markPrepared } from "../lib/format";
 import { pullSectionState, bindSectionChapter, unbindSection } from "../lib/sectionState";
-import { readHistory, recordHistory, hasHistory } from "../lib/sectionHistory";
+import { readHistory, recordHistory, hasHistory, pullSectionHistory } from "../lib/sectionHistory";
 import Readiness from "./Readiness";
 import LessonView from "./LessonView";
 
@@ -253,6 +253,15 @@ export default function MyPlans({ subject, grade, ready, readiness, onReady, onN
         if (!live) return;
         if (ok) setReconciled(true);
         setSyncTick((t) => t + 1);
+      });
+      // The teaching LEDGER reconciles on the same beat — it is read during this very render
+      // (the history glyph on every card, and the popup), so a device that has not pulled it
+      // shows a class as never having taught anything. Fired ALONGSIDE, not chained: the
+      // ledger is a card ORNAMENT, and `reconciled` gates the tour offer and the "nothing
+      // attached yet" copy, which must not wait on it. Its own tick keeps the glyph honest
+      // without re-rendering on the section pull's schedule.
+      pullSectionHistory(keys).then((ok) => {
+        if (live && ok) setSyncTick((t) => t + 1);
       });
     };
     sync(); // initial reconcile

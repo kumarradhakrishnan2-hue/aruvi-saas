@@ -893,6 +893,51 @@ optional `?year_id=`, absent → the teacher's current year, bootstrapped April-
 (idempotent, re-runnable). New tests: test_account / test_academic_year / test_year_scope /
 test_migration. Full entry: MEMORY.md 2026-08-22.
 
+**THE TEACHING LEDGER LEAVES THE BROWSER — `section_history` is server-backed (2026-09-07).**
+The last teaching state living in localStorage alone. `SectionState` holds only the CURRENT
+binding and deletes the row the moment a chapter leaves the slot, so this ledger is the ONLY
+record that a chapter was ever taught — and every other store already reconciled from the
+server, meaning a teacher on a phone AND a laptop agreed about everything except what her
+classes had been taught (`docs/mobile_migration_assessment.md` §4; sectionHistory.js's own
+header had said the mirror was owed). Built to the sectionState pattern:
+`SectionHistoryRepository` + file adapter (`section_history/{tenant}/{user}/{year}/
+history.json`; atomic write, process lock, `raw_decode` self-heal) + `GET`/`POST
+/section-history` + localStorage as a **synchronous** optimistic cache (`readHistory`/
+`hasHistory` run during render and must never become promises).
+★ **THE ONE DELIBERATE DIFFERENCE — IT MERGES, IT DOES NOT SNAPSHOT.** Section state is CURRENT
+state, so the last writer rightly holds the truth; history is CUMULATIVE, so a whole-map write
+from a phone that has never seen the laptop's rows would DELETE them. Entries upsert under their
+own chapter FILE with latest-`ts`-wins on both sides of the wire (`_ts_of` / `tsOf`, pinned
+against each other by a test that reads the JS — a malformed `ts` LOSES: *a merge may not
+destroy what it cannot prove is stale*); a TIE keeps the stored row, so a replay is a true
+no-op and the client can push fire-and-forget. The pull UNIONS, which is why **sectionState's
+wholesale-empty guard is unnecessary here by construction**.
+⚠️ **THE PUSH-BACK IS A CROSS-ACCOUNT WRITE IF LEFT UNGUARDED.** The reconcile must push rows
+the server lacks (an existing teacher's ledger has been accumulating in one browser since
+2026-07-04), but sign-out does not clear the section caches — the privacy notice's own
+"sign-out residue" FIX item — so on a shared browser teacher A's leftover rows would merge
+into B's server ledger. The owner stamp (`section_history_owner`) CLAIMS the cache before every
+reconcile and wipes it first if it belongs to someone else; an ABSENT stamp counts as the
+current teacher's (the pre-migration browser, which is exactly what the push-back is for).
+Sign-out clears it too. **Whenever a sync gains a push-back, ask whose rows it is pushing.**
+★ **UNTRACK STILL CANNOT REACH IT, STRUCTURALLY** — "untracking a chapter must not erase the
+record that it was once taught", so the port has NO per-entry delete and a test asserts the
+absence. `delete_section` exists for the stronger act (the SECTION leaving the profile) and is
+wired at the two sites that already delete its POINTER; the trial purge needed a SECOND sweep
+over the ledger's own keys, since a taught-then-untracked section has a trail but no pointer.
+★ **Cutover carries then clears**: `_auto_roll_year` carries the ledger with the bindings (until
+she starts fresh she is still teaching the old cohort), `start_fresh` clears both, and the
+browser needs `clearLocalHistoryCache()` because a UNION can never delete a local row itself.
+★ **Export folds history into the SAME teaching rows**, current binding winning — ⚠️ a test
+caught the dedupe keyed on chapter NUMBER, which derives from the filename and can be `None`
+for a legacy row while the ledger carries the stamped number, so one class appeared twice
+("set aside" beside "at Learning Unit 3"). **The file is the identity; the number is a display
+value.** `_YEAR_KINDS` + receipt label ("chapters taught") moved with it.
+`tests/test_section_history.py` 16 green, two sabotages verified biting; backend suite green;
+babel-parse clean; routes/export/receipt/both cutover halves exercised end to end via
+TestClient. **Live + 360px pass owed** — sign in on two devices, complete a chapter on one,
+confirm the glyph and popup on the other.
+
 **Administrative architecture Step 3 (2026-08-22, same session) — chapter notes
 server-backed.** `PlanNoteRepository` + file adapter (`plan_notes/{tenant}/{user}/{year}/
 notes.json`) + GET/POST `/plan-notes`. **ONE note per chapter per academic year** (founder:

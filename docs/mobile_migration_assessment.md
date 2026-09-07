@@ -64,10 +64,16 @@ Nothing else. No camera, mic, geolocation, clipboard, print, or web workers are 
 Server-backed with a local cache already — fine: section state (chapter, pointer, done,
 bookmark), chapter notes, readiness, prepared plans, archive, consent, tour-offered.
 
-**localStorage only:** `section_history_*` (the "what has this section taught" ledger — its own
-header says a server mirror is owed), `plus_portal_*` / portal queue, theme, the Ask Meyy bank +
-ETag (a cache — fine). **Mirror `section_history` server-side before the beta**, or a teacher on
-phone + laptop gets the exact two-device disagreement `sectionState.js` was built to end.
+**localStorage only:** ~~`section_history_*`~~ (**✅ DONE 2026-09-07** — server-backed behind
+`SectionHistoryRepository` + `GET`/`POST /section-history`, localStorage kept as the synchronous
+cache; it MERGES rather than snapshots, because the ledger is cumulative. CLAUDE.md §9 /
+MEMORY.md 2026-09-07), `plus_portal_*` / portal queue, theme, the Ask Meyy bank + ETag (a cache
+— fine). The two survivors are per-device by nature and need no mirror.
+
+⚠️ **One thing that migration surfaced, still open and NOT specific to history:** sign-out does
+not clear the section caches (the privacy notice's own "sign-out residue" FIX item). The history
+store defends itself with an owner stamp because its reconcile PUSHES rows up; the others are
+merely stale. Anything else that gains a push-back must ask whose rows it is pushing.
 
 ## 5. Two things the generic advice missed — both bigger than any UI item
 

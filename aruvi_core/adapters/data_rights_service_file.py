@@ -35,6 +35,7 @@ from aruvi_core.adapters.academic_year_repository_file import AcademicYearReposi
 from aruvi_core.adapters.readiness_repository_file import ReadinessRepositoryFileImpl
 from aruvi_core.adapters.allocation_repository_file import AllocationRepositoryFileImpl
 from aruvi_core.adapters.section_state_repository_file import SectionStateRepositoryFileImpl
+from aruvi_core.adapters.section_history_repository_file import SectionHistoryRepositoryFileImpl
 from aruvi_core.adapters.plan_archive_repository_file import PlanArchiveRepositoryFileImpl
 from aruvi_core.adapters.prepared_plans_repository_file import PreparedPlansRepositoryFileImpl
 from aruvi_core.adapters.plan_note_repository_file import PlanNoteRepositoryFileImpl
@@ -50,7 +51,8 @@ def _slug(s: str) -> str:
 
 # The year-scoped teaching-state kinds, in erase order. readiness (the profile) is
 # tenant-keyed but NOT year-scoped; accounts/academic_years are handled explicitly.
-_YEAR_KINDS = ("plan_notes", "section_state", "allocations", "prepared_plans", "plan_archive")
+_YEAR_KINDS = ("plan_notes", "section_state", "section_history", "allocations",
+               "prepared_plans", "plan_archive")
 
 # §2.6 verbatim — the receipt's wording is pinned by test_data_rights and must match
 # what the privacy policy promises. Change both together or neither.
@@ -146,6 +148,10 @@ class DataRightsServiceFileImpl(DataRightsService):
         self.readiness = ReadinessRepositoryFileImpl(data_dir)
         self.allocations = AllocationRepositoryFileImpl(data_dir)
         self.sections = SectionStateRepositoryFileImpl(data_dir)
+        # The teaching ledger — the ONLY record that a chapter was ever taught, since the
+        # pointer above deletes its row when a chapter leaves the slot. An export without it
+        # would show her only what she is teaching today and call that everything we hold.
+        self.history = SectionHistoryRepositoryFileImpl(data_dir)
         self.archive = PlanArchiveRepositoryFileImpl(data_dir)
         self.prepared = PreparedPlansRepositoryFileImpl(data_dir)
         self.notes = PlanNoteRepositoryFileImpl(data_dir)
@@ -203,18 +209,20 @@ class DataRightsServiceFileImpl(DataRightsService):
         for year_id in self._year_ids(tenant_id, user_id):
             notes = self.notes.load_all(tenant_id, user_id, year_id)
             states = self.sections.load_all(tenant_id, user_id, year_id)
+            history = self.history.load_all(tenant_id, user_id, year_id)
             payload["years"].append({
                 "year_id": year_id,
                 "notes": {k: {"text": n.text, "updated_at": n.updated_at,
                               "chapter_title": self._title_for_key(k)}
                           for k, n in notes.items()},
-                "teaching": self._teaching_rows(states),
+                "teaching": self._teaching_rows(states, history),
                 # Raw stores ride along for completeness (the erase walk and any future
                 # machine-readable export); the Word renderer shows the reader-facing
                 # `teaching` rows instead — no filenames, no period internals (founder,
                 # 2026-08-22).
                 "allocations": self._allocation_registers(tenant_id, user_id, year_id),
                 "section_state": states,
+                "section_history": history,
                 "prepared": self.prepared.load_all(tenant_id, user_id, year_id),
                 "archived": self.archive.load_all(tenant_id, user_id, year_id),
             })
@@ -231,29 +239,73 @@ class DataRightsServiceFileImpl(DataRightsService):
                 return ""
         return ""
 
-    def _teaching_rows(self, states: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def _teaching_rows(self, states: Dict[str, Any],
+                       history: Optional[Dict[str, Any]] = None) -> List[Dict[str, Any]]:
         """Reader-facing teaching-state rows, one per subject·grade·chapter, with the
         sections teaching it and each section's plain-words status. Deliberately free
-        of filenames, canonical identities and period counts."""
+        of filenames, canonical identities and period counts.
+
+        `history` (the teaching ledger) is folded into the SAME rows, so the document reads
+        as one account of the year rather than two tables the teacher has to reconcile — a
+        chapter she finished in July and one she is teaching today are the same kind of fact
+        about the same class. The CURRENT binding wins wherever both describe one
+        section·chapter: the ledger is by definition the past, and only the pointer knows
+        where she stands now."""
         grouped: Dict[Tuple[str, str, Optional[int]], Dict[str, Any]] = {}
-        for key in sorted(states):
-            st = states[key] or {}
-            subject, grade, tag = _parse_section_key(key)
-            num = _chapter_num_from_file(st.get("chapter"))
-            gk = (subject, grade, num)
-            row = grouped.setdefault(gk, {
+
+        def row_for(subject: str, grade: str, num: Optional[int]) -> Dict[str, Any]:
+            return grouped.setdefault((subject, grade, num), {
                 "subject": subject, "grade": grade, "chapter_number": num,
                 "chapter_title": (self.chapter_title(subject, grade, num) or ""
                                   if self.chapter_title and num else ""),
                 "sections": [],
             })
+
+        # The CURRENT bindings first, claiming their (section, chapter-file) pairs.
+        # ★ Claimed by FILE, never by chapter number: the number is DERIVED here from the
+        #   filename and a legacy row's shape can derive None, while the ledger carries the
+        #   number the app stamped. Deduping on the number therefore missed — the same class
+        #   on the same chapter landed in two different rows and the export said both "set
+        #   aside" and "at Learning Unit 3" about it. The file is the identity; the number is
+        #   a display value.
+        claimed: set = set()
+        for key in sorted(states):
+            st = states[key] or {}
+            subject, grade, tag = _parse_section_key(key)
+            fname = st.get("chapter")
+            num = _chapter_num_from_file(fname)
             if st.get("done"):
                 status = "completed"
             elif st.get("unit_index") is None:
                 status = "started"
             else:
                 status = f"at Learning Unit {int(st['unit_index']) + 1}"
-            row["sections"].append({"tag": tag or key, "status": status})
+            row_for(subject, grade, num)["sections"].append(
+                {"tag": tag or key, "status": status})
+            claimed.add((key, str(fname or "")))
+
+        # …then the ledger, for every section·chapter the present tense did not claim.
+        for key in sorted(history or {}):
+            subject, grade, tag = _parse_section_key(key)
+            rows = (history or {}).get(key) or {}
+            for fname in sorted(rows):
+                if (key, str(fname)) in claimed:
+                    continue                    # she is teaching it now; that reading wins
+                h = rows.get(fname) or {}
+                num = h.get("chapter_number")
+                if num is None:
+                    num = _chapter_num_from_file(fname)
+                done_n, total_n = h.get("units_done"), h.get("total_units")
+                if str(h.get("status")) == "completed":
+                    status = "taught"
+                elif done_n and total_n:
+                    status = f"set aside after {int(done_n)} of {int(total_n)} learning units"
+                elif done_n:
+                    status = f"set aside after {int(done_n)} learning units"
+                else:
+                    status = "set aside"
+                row_for(subject, grade, num)["sections"].append(
+                    {"tag": tag or key, "status": status})
         return list(grouped.values())
 
     # ── export ────────────────────────────────────────────────────────────────────
@@ -299,8 +351,8 @@ class DataRightsServiceFileImpl(DataRightsService):
         t, u = _slug(tenant_id), _slug(user_id)
         erased: List[str] = []
         label = {"plan_notes": "chapter notes", "section_state": "section progress",
-                 "allocations": "period allocations", "prepared_plans": "prepared plans",
-                 "plan_archive": "archived-plan flags"}
+                 "section_history": "chapters taught", "allocations": "period allocations",
+                 "prepared_plans": "prepared plans", "plan_archive": "archived-plan flags"}
         year_ids = self._year_ids(tenant_id, user_id)
         for kind in _YEAR_KINDS:
             root = self.data_dir / kind

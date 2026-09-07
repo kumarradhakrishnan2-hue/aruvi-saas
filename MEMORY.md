@@ -687,7 +687,87 @@ must confirm · source entry.
 
 ---
 
-## 2026-09-04 (newest) — PRIVACY NOTICE DRAFTED, v0.1, WITH ITS AUDIT
+## 2026-09-07 (newest) — THE TEACHING LEDGER LEAVES THE BROWSER
+
+The last piece of teaching state living in localStorage alone. `sectionHistory.js`'s own
+header had said the mirror was owed "when Phase 4 lands"; the mobile-migration assessment
+(§4) made the cost concrete — **every other store already reconciles from the server, so a
+teacher on a phone AND a laptop would have agreed about everything except what her classes
+have actually been taught.** The exact two-device split-brain `sectionState.js` was built to
+end, surviving in the one store nobody had migrated. Founder: "do it right away".
+
+Built to the sectionState pattern — `SectionHistoryRepository` port + file adapter
+(`section_history/{tenant}/{user}/{year}/history.json`, atomic write, process lock,
+`raw_decode` self-heal) + `GET`/`POST /section-history` + localStorage as a **synchronous**
+optimistic cache (`readHistory`/`hasHistory` are called during render and must never become
+promises).
+
+★ **THE ONE DELIBERATE DIFFERENCE: IT MERGES, IT DOES NOT SNAPSHOT.** Section state is
+CURRENT state, so a per-section snapshot is right — the last writer holds the truth. History
+is CUMULATIVE, so a whole-map write from a phone that has never seen the laptop's rows would
+DELETE them. Every entry is upserted under its own chapter FILE with latest-`ts`-wins, both
+sides of the wire; the pull UNIONS rather than replaces. Three consequences worth keeping:
+(a) convergence from any device in any order with no loss; (b) every write is idempotent, so
+the client can push fire-and-forget and replay freely (a TIE keeps the stored row — that is
+what makes a replay a true no-op rather than a churn); (c) **the wholesale-empty guard
+sectionState needs is unnecessary here by construction** — a merge that adopts nothing
+changes nothing, so a transient empty read cannot wipe a ledger the way a corrupt state.json
+once flashed every card back to "pick a chapter". A malformed `ts` LOSES, in both languages
+(`_ts_of` / `tsOf`, pinned against each other by a test that reads the JS): *a merge may not
+destroy what it cannot prove is stale.*
+
+★ **THE BUG I ALMOST SHIPPED — the push-back is a cross-account WRITE.** The reconcile must
+push rows the server is missing, or an existing teacher's ledger (accumulating in one browser
+since 2026-07-04) would look empty on her second device and she would conclude the feature
+lost it. But sign-out does not clear the section caches (the privacy notice's own "sign-out
+residue" FIX item), so on a shared staff-room browser teacher A's leftover rows for any
+section key B also teaches would be merged **into B's server ledger**. For sectionState the
+same residue is merely stale — its pull OVERWRITES local from the server and only pushes on
+an explicit act of hers. Fixed with an owner stamp (`section_history_owner`): the cache is
+CLAIMED before every reconcile and wiped first if it belongs to someone else. An ABSENT stamp
+counts as the current teacher's — that is the pre-migration browser, whose ledger is exactly
+what the push-back exists to carry up, and before this feature a cache could only have come
+from the one teacher using that browser. Sign-out clears it too, as the belt to that brace.
+**Whenever a sync gains a push-back, ask whose rows it is pushing.**
+
+★ **UNTRACK STILL DOES NOT REACH THE STORE, AND THAT IS STRUCTURAL.** "Untracking a chapter
+must not erase the record that it was once taught" — so the port has **no per-entry delete**,
+and a test asserts its absence rather than trusting the convention. What DOES reach it is the
+stronger act: the SECTION leaving the profile (`delete_section`, wired at the two sites that
+already delete its POINTER — the readiness profile drop and the trial purge), or re-adding the
+same tag would inherit a phantom trail. The trial purge needed a SECOND sweep over the
+ledger's own keys: a section she taught and then untracked has a trail but no pointer, so the
+pointer-keyed sweep walked straight past it.
+
+★ **CUTOVER: CARRY, THEN CLEAR — and the two halves are different moments.** `_auto_roll_year`
+carries the ledger with the bindings, because until she chooses to start fresh she is still
+teaching the old cohort and a trail that emptied itself at midnight on 1 April would tell her
+she had taught nothing all year. `start_fresh` clears both — *that* is where a new cohort
+begins. The browser cache needs the explicit `clearLocalHistoryCache()` for the same reason
+`clearLocalSectionCache()` exists, and one it does not: the pull UNIONS, so it can never
+delete a local row on its own.
+
+★ **EXPORT: FOLDED INTO THE SAME TEACHING ROWS, NOT A SECOND TABLE.** It is the ONLY record
+that a chapter was ever taught (the pointer deletes its row when a chapter leaves the slot),
+so an export without it would show her today's classes and call that everything Meyy holds.
+A chapter finished in July and one she is teaching today are the same kind of fact about the
+same class, so they share a row; the CURRENT binding wins. ⚠️ **A test caught the dedupe being
+keyed on the wrong thing**: chapter NUMBER is derived from the filename and a legacy row's
+shape derives `None`, while the ledger carries the number the app stamped — so the same class
+on the same chapter landed in two rows and the document said both "set aside" and "at Learning
+Unit 3" about it. **The file is the identity; the number is a display value.** `_YEAR_KINDS`
+and the receipt label ("chapters taught") moved with it.
+
+Verified: `tests/test_section_history.py` 16 green, two sabotages confirmed biting (merge →
+replace; the store dropped from the erase traversal); backend suite green; babel-parse clean
+on sectionHistory.js / page.jsx / MyPlans.jsx; the routes, export document, erasure receipt
+and both cutover halves exercised end to end through TestClient. **Live + 360px pass owed** —
+the one thing to check is a real second device: sign in on two, complete a chapter on one,
+confirm the history glyph and popup appear on the other.
+
+---
+
+## 2026-09-04 — PRIVACY NOTICE DRAFTED, v0.1, WITH ITS AUDIT
 
 Founder: "now its time to draft a specific privacy policy keeping in mind the nature of
 the service". Two files. **`data/cloud/content/legal/privacy_policy_v0.1.md`** — the

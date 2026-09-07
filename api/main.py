@@ -32,6 +32,7 @@ from aruvi_core.view_model import ViewModel
 from aruvi_core.adapters.allocation_repository_file import AllocationRepositoryFileImpl
 from aruvi_core.adapters.readiness_repository_file import ReadinessRepositoryFileImpl
 from aruvi_core.adapters.section_state_repository_file import SectionStateRepositoryFileImpl
+from aruvi_core.adapters.section_history_repository_file import SectionHistoryRepositoryFileImpl
 from aruvi_core.adapters.plan_archive_repository_file import PlanArchiveRepositoryFileImpl
 from aruvi_core.adapters.prepared_plans_repository_file import PreparedPlansRepositoryFileImpl
 from aruvi_core.adapters.account_repository_file import AccountRepositoryFileImpl
@@ -104,6 +105,14 @@ readiness_repo = ReadinessRepositoryFileImpl(config.STATE_DIR)
 # devices (CLOUD_DATA_MODEL.md §2.4). File-based now; Supabase adapter swaps in at Phase 4
 # behind the same SectionStateRepository port.
 section_state_repo = SectionStateRepositoryFileImpl(config.STATE_DIR)
+
+# Per-section chapter-HISTORY repository — the ledger of what each section has already been
+# taught. Its sibling above holds only the CURRENT binding and deletes the row the moment a
+# chapter leaves the slot, so this is the only record that a chapter was ever taught. It was
+# the last teaching state living in the browser alone (sectionHistory.js's own header said the
+# mirror was owed); without it a phone and a laptop keep two disagreeing accounts of the same
+# class. Bucket-B STATE under STATE_DIR (data/section_history/).
+section_history_repo = SectionHistoryRepositoryFileImpl(config.STATE_DIR)
 
 # Plan-archive repository — which saved plans a teacher has archived from My Lessons (to
 # declutter without ever hard-deleting a costly, back-referenced plan). A per-tenant FLAG, not
@@ -332,6 +341,23 @@ def _auto_roll_year(tenant_id: str, user_id: str, current: AcademicYear) -> Acad
                       flush=True)
     except Exception as e:                  # noqa: BLE001
         print(f"[cutover] tracking carry-forward failed for "
+              f"{tenant_id}/{user_id} → {to_year}: {e}", flush=True)
+    # The teaching LEDGER carries with the bindings, and for the same reason: until she
+    # chooses to start fresh she is still teaching the old cohort, and a trail that emptied
+    # itself at midnight on 1 April would tell her she had taught nothing all year. Starting
+    # fresh clears both together (see start_fresh below) — that is where a new cohort begins,
+    # not here. Same per-row try/except: one bad row must not cost her the rest.
+    try:
+        carried_hist = section_history_repo.load_all(tenant_id, user_id, current.year_id) or {}
+        for skey, rows in carried_hist.items():
+            try:
+                section_history_repo.record(tenant_id, user_id, to_year, skey,
+                                            list((rows or {}).values()))
+            except Exception as row_err:    # noqa: BLE001
+                print(f"[cutover] could not carry history {skey!r} into {to_year}: {row_err}",
+                      flush=True)
+    except Exception as e:                  # noqa: BLE001
+        print(f"[cutover] history carry-forward failed for "
               f"{tenant_id}/{user_id} → {to_year}: {e}", flush=True)
     return opened
 
@@ -1202,6 +1228,9 @@ def clear_readiness(identity: tuple = Depends(_current_identity)) -> Dict[str, s
     year = _resolve_year(tenant_id, user_id)
     readiness_repo.clear_profile(tenant_id, user_id)
     section_state_repo.clear_all(tenant_id, user_id, year)
+    # …and the teaching ledger with it, for the same reason: a section key reused by the
+    # rebuilt profile would otherwise inherit another class's trail of taught chapters.
+    section_history_repo.clear_all(tenant_id, user_id, year)
     return {"status": "cleared"}
 
 
@@ -1262,6 +1291,64 @@ def clear_section_state(section_key: str, year_id: Optional[str] = None,
     year = _resolve_year(tenant_id, user_id, year_id)
     section_state_repo.delete_one(tenant_id, user_id, year, section_key)
     return {"status": "cleared"}
+
+
+# ── Section chapter-history (the teaching ledger) — per-user, cross-device ────────
+# What each section has ALREADY been taught. The pointer above is the present tense and
+# deletes its row the moment a chapter leaves the slot; this is the past tense, and until
+# now it existed only in the browser. localStorage stays a synchronous cache; these rows
+# are authoritative on reconcile.
+class SectionHistoryEntryModel(BaseModel):
+    """One chapter's row in a section's ledger. `file` is the saved-plan filename, which is
+    the row's identity (one row per chapter, latest action wins)."""
+    file: str
+    status: str                          # "completed" | "untracked"
+    chapter_number: Optional[int] = None
+    chapter_title: str = ""
+    units_done: Optional[int] = None
+    total_units: Optional[int] = None
+    # Client-stamped epoch ms. It is the MERGE ORDER, not a display value: the store keeps
+    # the higher `ts` for a given file, so a device pushing a stale queue after being offline
+    # cannot overwrite a newer row. Optional so a malformed client still records something
+    # (it simply loses every tie).
+    ts: Optional[int] = None
+
+
+class SectionHistoryRequest(BaseModel):
+    """Body for POST /section-history — entries to MERGE into ONE section's ledger.
+
+    A list rather than a single entry, so the one route serves both callers: the app
+    recording a chapter as it is completed or set aside, and a device pushing its whole
+    local ledger up once when it first reconciles."""
+    section_key: str
+    entries: List[SectionHistoryEntryModel]
+
+
+@app.get("/section-history")
+def get_section_history(year_id: Optional[str] = None,
+                        identity: tuple = Depends(_current_identity)) -> Dict[str, Any]:
+    """This teacher's whole ledger for the year (?year_id=, defaulting to her current):
+    {"history": {section_key: {chapter_file: entry}}}. The app reconciles it into its
+    localStorage cache on load, so a fresh device shows the same teaching trail."""
+    tenant_id, user_id = identity
+    year = _resolve_year(tenant_id, user_id, year_id)
+    return {"history": section_history_repo.load_all(tenant_id, user_id, year)}
+
+
+@app.post("/section-history")
+def save_section_history(req: SectionHistoryRequest, year_id: Optional[str] = None,
+                         identity: tuple = Depends(_current_identity)) -> Dict[str, str]:
+    """Merge entries into one section's ledger. Called when a chapter is completed or set
+    aside, and once per device on first reconcile."""
+    tenant_id, user_id = identity
+    _check_productivity(tenant_id)     # lapsed: tracking is locked (§2.5 amended)
+    year = _resolve_year(tenant_id, user_id, year_id)
+    try:
+        section_history_repo.record(tenant_id, user_id, year, req.section_key,
+                                    [e.model_dump() for e in req.entries])
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to save section history: {str(e)}")
+    return {"status": "saved"}
 
 
 class PlanArchiveRequest(BaseModel):
@@ -1569,6 +1656,9 @@ def do_cutover(req: CutoverRequest,
         carried = section_state_repo.load_all(tenant_id, user_id, current_id) or {}
         cleared = len(carried)
         section_state_repo.clear_all(tenant_id, user_id, current_id)
+        # Starting fresh IS the moment a new cohort begins, so the teaching ledger goes with
+        # the bindings: 9A's trail of chapters belongs to the children who sat through them.
+        section_history_repo.clear_all(tenant_id, user_id, current_id)
         cur.cleanup_pending = False
         academic_year_repo.open_year(tenant_id, user_id, cur)   # idempotent in-place update
     except Exception as e:
@@ -2345,6 +2435,10 @@ def _apply_subscription_profile(tenant_id: str, user_id: str,
                 if key not in kept_keys:
                     try:
                         section_state_repo.delete_one(tenant_id, user_id, year, key)
+                        # The section itself is gone from the profile, so its teaching
+                        # ledger goes too — otherwise re-adding the same tag later inherits
+                        # a phantom trail. (Untrack never does this; see the port's note.)
+                        section_history_repo.delete_section(tenant_id, user_id, year, key)
                     except Exception:
                         pass
 
@@ -2510,7 +2604,18 @@ def _purge_trial_artifacts(tenant_id: str, user_id: str, scopes: List[str]) -> D
         for key in list((section_state_repo.load_all(tenant_id, user_id, year) or {})):
             if str(key).split("_")[0].lower() not in bought:
                 section_state_repo.delete_one(tenant_id, user_id, year, key)
+                section_history_repo.delete_section(tenant_id, user_id, year, key)
                 counts["sections"] += 1
+    except Exception:
+        pass
+    # …and again over the LEDGER's own keys: a section she taught and then untracked has a
+    # trail but no pointer, so the sweep above would walk straight past it and leave an
+    # out-of-scope subject's history behind. Not counted — `counts["sections"]` reports
+    # live bindings cleared, and inflating it with ledger-only rows would misreport the act.
+    try:
+        for key in list((section_history_repo.load_all(tenant_id, user_id, year) or {})):
+            if str(key).split("_")[0].lower() not in bought:
+                section_history_repo.delete_section(tenant_id, user_id, year, key)
     except Exception:
         pass
     try:

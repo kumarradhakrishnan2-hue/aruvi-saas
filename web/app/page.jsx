@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { getJSON, postJSON, pretty, gradeUp, ROMAN, stageOfGrade, classNum, annualBudgetPeriods, projectReadiness, API, withUser, getUser, setUser, clearUser, fetchEntitlement } from "./lib/format";
 import { verifiedWrite, readinessFingerprint } from "./lib/verify";
 import { setSectionMismatchHandler, pullSectionState, clearLocalSectionCache } from "./lib/sectionState";
+import { clearLocalHistoryCache } from "./lib/sectionHistory";
 import GenerateTab from "./components/GenerateTab";
 import MyPlans from "./components/MyPlans";
 import Login from "./components/Login";
@@ -619,6 +620,13 @@ export default function Home() {
   const onSignOut = () => {
     clearUser(); setUserState("");
     clearBank();   // licensed content behind an account: never leave it in a shared browser
+    // Her teaching ledger goes too. The server copy is authoritative and this device rebuilds
+    // it on her next sign-in, so nothing is lost — and leaving it behind is worse here than
+    // for the other caches, because the history reconcile PUSHES owed rows UP: rows left in a
+    // staff-room browser would be merged into the NEXT teacher's account. sectionHistory's
+    // owner stamp already refuses that; this is the belt to its braces, and the one that also
+    // stops the next teacher merely SEEING what these classes were taught.
+    clearLocalHistoryCache();
     setReady(false); setReadiness(null); setReadinessLoaded(false);
     setSubjects([]); setSubject(""); setTab("myplans"); setEditFlow(null);
     setTour(null); setTourDismissed(false);
@@ -765,6 +773,11 @@ export default function Home() {
            year is legitimately empty — without this, My Classes keeps reading "Teaching
            now Ch 5" out of the browser while the server has no such row. Found live. */
         clearLocalSectionCache();
+        // …and the teaching ledger with it. The server cleared the year's ledger as part of
+        // the cutover (a new cohort has taught nothing yet); this browser would otherwise
+        // keep showing last cohort's trail on every card, because the pull UNIONS and so can
+        // never delete a local row on its own.
+        clearLocalHistoryCache();
         // She has just emptied her current year on purpose — she is emphatically not a
         // new teacher, so the first-gen heuristic must never re-arm on the way out.
         everGeneratedRef.current = true;
