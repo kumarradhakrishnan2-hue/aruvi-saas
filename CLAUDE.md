@@ -511,6 +511,17 @@ generic look.
   answered; both `--ink-soft`, so the row reads frozen) · **Subject** dropdown · message
   box opening at 4 lines on a phone so Send sits inside the 360×800 fold. STATIC-verified;
   live + 360px pass owed.
+  ★ **AND THE ✕ NOW CLOSES THE ITEM THE BAR NAMES (founder, 2026-09-07).** It closed Settings
+  ENTIRELY from anywhere inside it, so ✕ on "⚙ Personal profile" landed her on My Classes — a
+  screen she had not asked for, two taps from the list she came in by. Once the bar names the
+  chosen item, "close" must be read against THAT screen: a subview (and the teaching profile
+  reached through the list, which restores `editFlow` as well) closes back to the Settings
+  list; only the list itself closes to the tab she was on at gear-press. One control in one
+  slot — the 2026-08-24 rule (no back-and-title pair; one titled row, one ✕) is untouched, and
+  no back arrow was added. `settingsClose` in page.jsx is the single branch point; the
+  `aria-label` is now "Close {the named screen}", and Settings.jsx's stale "page.jsx
+  settingsBack" comment (a control that never existed) went with it. STATIC-verified
+  (babel-parse clean ×2); live + 360px pass owed.
 - **Type:** Fraunces (`--f-display`, headings/titles) · Newsreader (`--f-body`, lesson prose)
   · IBM Plex Mono (`--f-mono`, structural labels/kickers/numbers). No Inter/system fonts.
 - **Palette tokens:** `--paper` warm cream + subtle grain · `--ink` warm near-black ·

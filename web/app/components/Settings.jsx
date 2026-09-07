@@ -706,8 +706,9 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
     );
   }
 
-  // No in-content back links: the frozen Settings bar above carries the one back
-  // button (hierarchical — page.jsx settingsBack).
+  // No in-content back links: the frozen Settings bar above carries the one exit — its ✕,
+  // which closes the screen the bar names, so a subview lands back on this list
+  // (page.jsx settingsClose, 2026-09-07).
   const back = null;
 
   /* ── PERSONAL PROFILE subview (founder, 2026-08-25): her account details, editable.

@@ -889,10 +889,28 @@ export default function Home() {
     setProfileViaSettings(true); setProfileAutoAdd(null); setProfilePortal(null); setProfilePortalScope(null);
     setEditFlow("profile"); setTab("myplans"); setGenerateEntry(null);
   };
-  /* ✕ closes Settings ENTIRELY, from anywhere in it — home, a subview, or the profile
-     reached through it — back to wherever she was at gear-press. Same idiom as Ask
-     Aruvi's ✕ (founder, 2026-08-24: no back-and-title pair; one titled row, one ✕). */
+  /* ★ THE ✕ CLOSES THE ITEM THE BAR NAMES (founder, 2026-09-07). It used to close Settings
+     ENTIRELY from anywhere inside it, so tapping ✕ on "⚙ Personal profile" landed her on My
+     Classes — a screen she had not asked for and two taps from the list she came in by. The
+     bar has named the chosen item since 2026-09-03 ("⚙ Support", "⚙ Teaching profile"), and
+     the ✕ now agrees with it: close Personal profile → the Settings list; close Settings →
+     the tab she was standing on at gear-press. Still ONE control in ONE slot — the 2026-08-24
+     rule (no back-and-title pair; one titled row, one ✕) is untouched; what changed is that
+     "close" is read against the named screen rather than against the whole of Settings. */
   const settingsClose = () => {
+    // The teaching profile is reached THROUGH the list, so it closes back to it (it renders
+    // under editFlow "profile", which is why this branch restores editFlow as well).
+    if (editFlow === "profile" && profileViaSettings) {
+      setProfileViaSettings(false); setSettingsView("home"); setLegalDoc("agreement");
+      setEditFlow("settings"); setTab("myplans"); setGenerateEntry(null);
+      return;
+    }
+    // Any other subview — Personal profile, Subscription, Your data, Support, About, Legal.
+    if (editFlow === "settings" && settingsView !== "home") {
+      setSettingsView("home"); setLegalDoc("agreement");
+      return;
+    }
+    // The list itself: closing it leaves Settings for wherever she was at gear-press.
     setProfileViaSettings(false); setSettingsView("home");
     const o = settingsOriginRef.current;
     if (o === "lessonplans") goLessons();
@@ -1157,9 +1175,10 @@ export default function Home() {
       {inSettingsBar ? (
         /* The frozen Settings bar (founder, 2026-08-24): while in Settings — or the
            profile reached through it — the tabs and the Ask mark are replaced by the
-           Ask-Aruvi idiom: title left, ✕ at the right end. The ✕ closes the whole of
-           Settings back to where she came from; every option keeps this row. Same nav
-           slot and classes, so it stays pinned exactly as the tab row does. */
+           Ask-Aruvi idiom: title left, ✕ at the right end. The ✕ closes whatever the bar
+           NAMES — a subview back to the Settings list, the list back to where she came
+           from (2026-09-07); every option keeps this row. Same nav slot and classes, so
+           it stays pinned exactly as the tab row does. */
         <nav className="tabs main-tabs set-bar" aria-label="Settings">
           {/* ★ THE BAR NAMES THE CHOSEN ITEM, NOT THE MENU (founder, 2026-09-03: "why
               should the word Settings take so much real estate"). The gear is the
@@ -1168,11 +1187,14 @@ export default function Home() {
               carries NO heading of its own. "Settings" appears only at the home list,
               where it is the item. This is what removed every subview's frozen title:
               a fixed bar naming the screen makes a second sticky row naming it again
-              pure cost, on a phone most of all. ✕ right closes to origin. */}
+              pure cost, on a phone most of all. ✕ right closes the named screen. */}
           <span className="set-bar-title">
             <span className="set-bar-gear" aria-hidden="true">⚙</span>{settingsBarLabel}
           </span>
-          <button className="set-bar-x" onClick={settingsClose} aria-label="Close settings">✕</button>
+          {/* The ✕ closes the item the bar NAMES — a subview back to the Settings list, the
+              list itself back to origin (see settingsClose) — so the label says which. */}
+          <button className="set-bar-x" onClick={settingsClose}
+            aria-label={`Close ${settingsBarLabel}`}>✕</button>
         </nav>
       ) : (
       <nav className="tabs main-tabs" aria-label="Primary">
