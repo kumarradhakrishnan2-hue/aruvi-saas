@@ -687,7 +687,36 @@ must confirm · source entry.
 
 ---
 
-## 2026-09-07 (newest) — THE TEACHING LEDGER LEAVES THE BROWSER
+## 2026-09-09 (newest) — MOBILE MIGRATION BEGINS: THE STACK IS CHOSEN, TRACK A IS BUILT
+
+**Founder settled the external stack:** Render (FastAPI + aruvi_core) · Supabase (Postgres,
+Auth, RLS/backups/admin) · an Indian SMS provider for OTP · payments deferred. Plan:
+`docs/mobile_migration_plan.md` (four tracks A–D, 7-week phasing). Two defaults taken there
+pending objection: the web channel moves to Supabase Auth with the app, and the first mobile
+screens ship against the Render disk while Postgres adapters land underneath, port by port.
+
+**Track A built, not yet deployed:** `Dockerfile` (named COPYs only), `.dockerignore`,
+`render.yaml` (Singapore, starter, 1 GB disk at `/var/aruvi`, `/health` check),
+`deploy/entrypoint.sh` (seeds ONLY `invoices/_series` · `support/_series` ·
+`consents/_ledger` onto an empty disk, so numbering continues), `deploy/smoke.sh`,
+`deploy/README.md`. `config.CORS_ORIGINS` (`ARUVI_CORS_ORIGINS`) replaces the hardcoded `*`
+and the middleware now exposes `ETag` + `Content-Disposition` — cross-origin JS could not read
+either before, which means bank.js's `If-None-Match` was probably never conditional across
+the :3000→:8000 split (worth a live check).
+★ **Two stale beliefs corrected:** (1) `data/cloud/` — and `data/authoring/` — ARE tracked in
+git (`.gitignore` says so; CLAUDE.md §5 said the opposite). Render therefore has the content
+with no sync step, and the image must never `COPY . .`. (2) The serve cache lives in the
+image's content tree and is lost on redeploy — fine by CLOUD_DATA_MODEL §1's own reading.
+★ **Verified on Python 3.12 + dash (the image's runtime; the Mac is 3.10):** seeding; second
+boot does not re-seed; smoke green; SS·ix ch 4 serve at 16×60 → 200 in 34 ms; DOCX export;
+erase leaves only the seller-side stores + erasure log; CORS refuses a foreign origin, allows
+the configured one. Docker Hub was 403 from the sandbox, so the first real `docker build` is
+Render's — watch that log. **Owed:** push, Blueprint deploy, `deploy/smoke.sh` against the
+public URL; then Track B (file DLT registration first — it is the long pole).
+
+---
+
+## 2026-09-07 — THE TEACHING LEDGER LEAVES THE BROWSER
 
 The last piece of teaching state living in localStorage alone. `sectionHistory.js`'s own
 header had said the mirror was owed "when Phase 4 lands"; the mobile-migration assessment

@@ -779,8 +779,11 @@ CLAUDE.md MEMORY.md CLOUD_DATA_MODEL.md   standing docs (stay at root by convent
 ```
 
 Cleanup/reorg done 2026-06-28: junk purged (out/, .next/, caches, others/), docs consolidated
-under `docs/`. `data/` is now the self-contained root (§7). Everything under `data/` except
-the README is git-ignored.
+under `docs/`. `data/` is now the self-contained root (§7). ★ **Everything under `data/` IS
+TRACKED in git** (corrected 2026-09-09 — `.gitignore` had said so since the GitHub-backup
+decision; only `/textbooks/` and regenerable/secret items are excluded). Consequence: a
+container image must copy NAMED runtime paths, never `COPY . .` — `data/authoring/` is in
+the same clone. `Dockerfile` + `.dockerignore` enforce it.
 
 ---
 
@@ -791,6 +794,11 @@ Two dev servers (use the Cowork preview, configs in `.claude/launch.json`):
 - **Web:** `npm --prefix web run dev`  → http://localhost:3000  (preview name `aruvi-web`)
 
 First time: `pip install -r api/requirements.txt` and `npm --prefix web install`.
+
+**Deploying (Track A, 2026-09-09):** `render.yaml` + `Dockerfile` + `deploy/` — one Render
+Docker service with a persistent disk at `/var/aruvi` for Bucket B. Steps and the
+container's layout: `deploy/README.md`; the plan it belongs to: `docs/mobile_migration_plan.md`.
+`ARUVI_CORS_ORIGINS` fences the web channel on the deployed host (`*` locally).
 Web fonts load via a Google Fonts `@import` (needs internet, else serif fallbacks).
 
 ---
@@ -1551,6 +1559,10 @@ allocate → accept → hub → generate → My Plans dashboard → teach (Learn
    against the code 2026-09-04: `docs/mobile_migration_assessment.md` — the seam is clean
    (Next is a static host, zero `next/*` imports, 57 REST routes), backend untouched; first
    task is a deployed API, not UI; beta on manual grants, no in-app purchase screen.
+   ★ **STARTED 2026-09-09** — stack chosen (Render · Supabase · Indian SMS OTP · payments
+   deferred), plan in `docs/mobile_migration_plan.md`, Track A (the deployable container)
+   built and rehearsed; deploy + Supabase Auth next. Phase 4 (item 1) now runs INSIDE this
+   track, port by port under the screens.
 5. **Deferred polish:** G6 selective-reset screen still uses the old modal (not yet the
    G2-aligned select-to-clear danger-zone screen from the mockup); "sample plans" pre-readiness
    surface deliberately parked (it shows only an LP, not the execution/My-Plans value — needs

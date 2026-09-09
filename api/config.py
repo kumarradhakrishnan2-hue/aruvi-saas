@@ -42,6 +42,15 @@ STATE_DIR = os.environ.get("ARUVI_STATE_DIR", _DEFAULT_STATE)
 _DEFAULT_TESTING = str(_REPO_ROOT / "data" / "testing")
 TESTING_DIR = os.environ.get("ARUVI_TESTING_DIR", _DEFAULT_TESTING)
 
+# ── CORS (Track A, 2026-09-09) ─────────────────────────────────────────────────
+# Browser origins allowed to call the API, comma-separated. "*" (the default, and what
+# every local dev setup wants) keeps the open behaviour the API has always had. On the
+# deployed host set it to the web channel's origin(s). Native apps send no Origin header,
+# so this fences the WEB channel only — the identity check (_current_identity) is the
+# fence that applies to everyone.
+CORS_ORIGINS = [o.strip() for o in os.environ.get("ARUVI_CORS_ORIGINS", "*").split(",")
+                if o.strip()] or ["*"]
+
 # ── Entitlement (administrative architecture Step 5) ────────────────────────────
 # ENTITLEMENT_ENFORCED: the gate in front of generation. Default OFF — the seam is
 # fully built and tested, but daily dev is undisturbed until the founder flips it

@@ -64,7 +64,8 @@ from . import data, config, legal
 
 app = FastAPI(title="Aruvi API", version="0.1.0")
 app.add_middleware(
-    CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"],
+    CORSMiddleware, allow_origins=config.CORS_ORIGINS, allow_methods=["*"],
+    allow_headers=["*"], expose_headers=["ETag", "Content-Disposition"],
 )
 
 # Test-campaign tracker state (docs/testing.md §6a) — campaign tooling, not a teacher

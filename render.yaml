@@ -1,0 +1,54 @@
+# Render Blueprint — the Meyy API as one Docker web service with one persistent disk
+# (Track A of docs/mobile_migration_plan.md, 2026-09-09).
+#
+# Apply once from the Render dashboard: New → Blueprint → this repo. Every later git push
+# to the branch redeploys. Secrets marked `sync: false` are typed into the dashboard once
+# and never live in the repo (.env.example's rule, kept).
+#
+# Region: singapore is Render's nearest to Chennai. Plan: a persistent disk needs a paid
+# instance (free instances have no disk and sleep) — `starter` is the smallest that fits.
+# A disk pins the service to ONE instance and deploys restart it (a few seconds of
+# downtime per push) — acceptable for a beta; Supabase Postgres (Track C) removes the disk.
+
+services:
+  - type: web
+    name: meyy-api
+    runtime: docker
+    region: singapore
+    plan: starter
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeploy: true
+    disk:
+      name: aruvi-state
+      mountPath: /var/aruvi
+      sizeGB: 1
+    envVars:
+      - key: ARUVI_STATE_DIR
+        value: /var/aruvi/state
+      - key: ARUVI_DATA_DIR
+        value: /app/data/cloud/content
+      # Comma-separated browser origins allowed to call the API. Native apps send no
+      # Origin header, so this fences the WEB channel only. Set to the deployed web
+      # origin(s); "*" keeps today's open dev behaviour.
+      - key: ARUVI_CORS_ORIGINS
+        value: "*"
+      - key: ARUVI_ENTITLEMENT_ENFORCED
+        value: "0"
+      - key: ARUVI_LP_YEAR
+        value: "2026-27"
+      # Outbound mail — same three-variable seam as dev.sh; absent → file outbox.
+      - key: ARUVI_SMTP_HOST
+        sync: false
+      - key: ARUVI_SMTP_PORT
+        value: "587"
+      - key: ARUVI_SMTP_USER
+        sync: false
+      - key: ARUVI_SMTP_PASSWORD
+        sync: false
+      - key: ARUVI_MAIL_FROM
+        sync: false
+      - key: ARUVI_SUPPORT_ADDRESS
+        value: support@meyy.in

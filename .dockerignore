@@ -1,0 +1,23 @@
+# Second lock on the Dockerfile's door: even a careless `COPY . .` must not ship these.
+# Founder-secure — never in any image, on any host.
+data/authoring/
+data/testing/
+textbooks/
+cowork prompts/
+genon/
+# Not runtime.
+web/
+tests/
+docs/
+backup/
+out/
+runtime_data/
+aruvi-scripts/
+.claude/
+.devlogs/
+.git/
+.env
+*.key
+**/__pycache__/
+*.pyc
+*.docx
