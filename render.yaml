@@ -35,6 +35,15 @@ services:
       # origin(s); "*" keeps today's open dev behaviour.
       - key: ARUVI_CORS_ORIGINS
         value: "*"
+      # Identity (Track B). `header` = the dev stub; flip to `supabase` once the project
+      # exists and ARUVI_SUPABASE_URL is set (+ ARUVI_SUPABASE_JWT_SECRET only for a
+      # project still signing with the legacy HS256 secret).
+      - key: ARUVI_AUTH_PROVIDER
+        value: header
+      - key: ARUVI_SUPABASE_URL
+        sync: false
+      - key: ARUVI_SUPABASE_JWT_SECRET
+        sync: false
       - key: ARUVI_ENTITLEMENT_ENFORCED
         value: "0"
       - key: ARUVI_LP_YEAR

@@ -42,6 +42,18 @@ STATE_DIR = os.environ.get("ARUVI_STATE_DIR", _DEFAULT_STATE)
 _DEFAULT_TESTING = str(_REPO_ROOT / "data" / "testing")
 TESTING_DIR = os.environ.get("ARUVI_TESTING_DIR", _DEFAULT_TESTING)
 
+# ── Identity provider (Track B, 2026-09-09) ────────────────────────────────────
+# AUTH_PROVIDER picks the adapter behind the AuthProvider port:
+#   header    — the X-Aruvi-User dev stub (default; what every local run and test uses)
+#   supabase  — Supabase Auth: the request carries `Authorization: Bearer <access token>`,
+#               verified offline (aruvi_core/adapters/supabase_auth_provider.py). X-Aruvi-User
+#               is IGNORED in this mode, so a forged header buys nothing.
+# SUPABASE_URL is the project URL (https://<ref>.supabase.co); SUPABASE_JWT_SECRET is the
+# legacy HS256 secret, needed only for projects (or tests) still signing with it.
+AUTH_PROVIDER = os.environ.get("ARUVI_AUTH_PROVIDER", "header").strip().lower() or "header"
+SUPABASE_URL = os.environ.get("ARUVI_SUPABASE_URL", "").strip()
+SUPABASE_JWT_SECRET = os.environ.get("ARUVI_SUPABASE_JWT_SECRET", "")
+
 # ── CORS (Track A, 2026-09-09) ─────────────────────────────────────────────────
 # Browser origins allowed to call the API, comma-separated. "*" (the default, and what
 # every local dev setup wants) keeps the open behaviour the API has always had. On the

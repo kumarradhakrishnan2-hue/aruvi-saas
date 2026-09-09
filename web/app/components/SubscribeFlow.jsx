@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { authHeaders } from "../lib/auth";
 import { API, getJSON, pretty, stageOfGrade, idInUse, errDetail } from "../lib/format";
 import Agreement from "./Agreement";
 import Dropdown from "./Dropdown";
@@ -171,7 +172,7 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
      empty fields → About-you shows as normal. */
   useEffect(() => {
     let live = true;
-    fetch(`${API}/account`, { headers: { "X-Aruvi-User": userId } })
+    fetch(`${API}/account`, { headers: authHeaders(userId) })
       .then((r) => (r.ok ? r.json() : null))
       .then((a) => {
         if (!live || !a) return;
@@ -210,7 +211,7 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
        calls setUser only after checkout), so the ambient identity is not hers. Same
        reason the /account fetch above does it, and the same reason Agreement takes a
        userId prop — a signature filed against the wrong tenant is worse than no answer. */
-    fetch(`${API}/legal/consent/status`, { headers: { "X-Aruvi-User": userId } })
+    fetch(`${API}/legal/consent/status`, { headers: authHeaders(userId) })
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => { if (live) setConsent(d || { accepted: false }); })
       .catch(() => { if (live) setConsent({ accepted: false }); });
@@ -268,7 +269,7 @@ export default function SubscribeFlow({ userId, chrome = <DefaultBar />, onDone,
     try {
       const r = await fetch(`${API}/onboarding/checkout`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "X-Aruvi-User": userId },
+        headers: { "Content-Type": "application/json", ...authHeaders(userId) },
         body: JSON.stringify({ scopes: cartScopes, name, email: email.trim(),
                                role, state: stateName, city, school }),
       });

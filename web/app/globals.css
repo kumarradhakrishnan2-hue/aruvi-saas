@@ -4131,8 +4131,10 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 /* OTP — four auto-advancing boxes (founder 2026-08-25) */
 .ob-otp-label { display: block; font-family: var(--f-mono); font-size: 10.5px;
   letter-spacing: .07em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; }
-.ob-otp-row { display: flex; gap: 10px; }
-.ob-otp-box { width: 52px; height: 56px; text-align: center; font-family: var(--f-mono);
+/* Six boxes live (Supabase's code length), four under the stub: 6 × 44 + 5 × 8 = 304px
+   sits inside the 360px column with the field padding; 52px boxes did not. */
+.ob-otp-row { display: flex; gap: 8px; }
+.ob-otp-box { width: 44px; height: 56px; text-align: center; font-family: var(--f-mono);
   font-size: 22px; border: 1px solid var(--line); border-radius: 10px;
   background: var(--card-bg); color: var(--ink); }
 .ob-otp-box:focus { outline: none; border-color: var(--pine); box-shadow: 0 0 0 1px var(--pine); }

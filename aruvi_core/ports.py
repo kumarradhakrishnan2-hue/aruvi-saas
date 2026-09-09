@@ -147,6 +147,9 @@ class Identity:
     user_id: str
     tenant_id: str
     role: str = "teacher"
+    # The verified mobile, when the provider knows it (Supabase phone auth, 2026-09-09) —
+    # copied onto the account record at JIT creation. Empty under the header stub.
+    phone: str = ""
 
 
 @runtime_checkable

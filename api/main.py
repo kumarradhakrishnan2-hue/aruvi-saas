@@ -234,10 +234,29 @@ academic_year_repo = AcademicYearRepositoryFileImpl(config.STATE_DIR)
 year_cutover = YearCutoverFileImpl(academic_year_repo, readiness_repo,
                                    prepared_plans_repo, section_state_repo)
 
-# Identity provider behind the AuthProvider port. The reference impl treats the raw
-# X-Aruvi-User header value as the credential (no password — dev). A partner's IdP adapter
-# replaces THIS LINE and nothing else.
-auth_provider = HeaderAuthProvider()
+# Identity provider behind the AuthProvider port (config.AUTH_PROVIDER, Track B 2026-09-09).
+# `header` — the raw X-Aruvi-User value is the credential (no password; dev + tests).
+# `supabase` — a Supabase access token in `Authorization: Bearer`, verified offline; the
+# identity is the token's verified mobile. This block is the whole swap.
+if config.AUTH_PROVIDER == "supabase":
+    from aruvi_core.adapters.supabase_auth_provider import SupabaseAuthProvider
+    if not config.SUPABASE_URL:
+        raise RuntimeError("ARUVI_AUTH_PROVIDER=supabase needs ARUVI_SUPABASE_URL")
+    auth_provider = SupabaseAuthProvider(config.SUPABASE_URL, config.SUPABASE_JWT_SECRET)
+    print(f"[aruvi] auth: SUPABASE ({config.SUPABASE_URL}) — X-Aruvi-User is ignored")
+else:
+    auth_provider = HeaderAuthProvider()
+    print("[aruvi] auth: HEADER STUB (X-Aruvi-User) — dev only")
+
+
+def _credential(x_aruvi_user: Optional[str], authorization: Optional[str]) -> str:
+    """Pick the credential the configured provider verifies. Under Supabase only the
+    bearer token counts; under the header stub only X-Aruvi-User does — never both, so
+    neither mode can be talked into honouring the other's header."""
+    if config.AUTH_PROVIDER == "supabase":
+        a = (authorization or "").strip()
+        return a[7:].strip() if a.lower().startswith("bearer ") else ""
+    return x_aruvi_user or ""
 
 
 # Identity (administrative architecture Step 0). The credential still arrives in the
@@ -250,15 +269,21 @@ auth_provider = HeaderAuthProvider()
 #
 # Falls back to "local" when no header is present (e.g. health checks, curl) so nothing
 # 500s; a real teacher always has one because the frontend gates the app behind login.
-def _current_identity(x_aruvi_user: Optional[str] = Header(default=None)) -> tuple[str, str]:
-    """Return (tenant_id, user_id) for the caller, resolved via the account record."""
-    ident = auth_provider.verify_token(x_aruvi_user or "")
+def _current_identity(x_aruvi_user: Optional[str] = Header(default=None),
+                      authorization: Optional[str] = Header(default=None)) -> tuple[str, str]:
+    """Return (tenant_id, user_id) for the caller, resolved via the account record.
+    A credential the provider refuses is a 401 in the provider's own words."""
+    try:
+        ident = auth_provider.verify_token(_credential(x_aruvi_user, authorization))
+    except ValueError as e:
+        raise HTTPException(status_code=401, detail=str(e) or "Sign in to continue.")
     account = account_repo.load(ident.tenant_id, ident.user_id)
     if account is None:
         account = Account(
             account_id=ident.user_id,
             tenant_id=ident.tenant_id,
             display_name=ident.user_id,
+            phone=ident.phone or "",
             created_at=datetime.now(timezone.utc).isoformat(),
         )
         account_repo.save(account)

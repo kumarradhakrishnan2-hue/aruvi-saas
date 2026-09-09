@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { authHeaders } from "../lib/auth";
 import { API, getJSON, postJSON, errDetail } from "../lib/format";
 import { renderMarkdown, dateWords } from "../lib/legalmd";
 import PrivacyNotice from "./PrivacyNotice";
@@ -79,7 +80,7 @@ export default function Agreement({ mode = "read", userId = "", onAccepted, onBa
   useEffect(() => {
     let live = true;
     const load = userId
-      ? fetch(`${API}/legal/consent`, { headers: { "X-Aruvi-User": userId } })
+      ? fetch(`${API}/legal/consent`, { headers: authHeaders(userId) })
           .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
       : getJSON("/legal/consent");
     load
@@ -112,7 +113,7 @@ export default function Agreement({ mode = "read", userId = "", onAccepted, onBa
       if (userId) {
         const r = await fetch(`${API}/legal/consent`, {
           method: "POST",
-          headers: { "Content-Type": "application/json", "X-Aruvi-User": userId },
+          headers: { "Content-Type": "application/json", ...authHeaders(userId) },
           body: JSON.stringify(body),
         });
         /* The server's own sentence when it wrote one for her (a superseded version is a

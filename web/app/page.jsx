@@ -4,6 +4,7 @@ import { getJSON, postJSON, pretty, gradeUp, ROMAN, stageOfGrade, classNum, annu
 import { verifiedWrite, readinessFingerprint } from "./lib/verify";
 import { setSectionMismatchHandler, pullSectionState, clearLocalSectionCache } from "./lib/sectionState";
 import { clearLocalHistoryCache } from "./lib/sectionHistory";
+import { signOutAuth } from "./lib/auth";
 import GenerateTab from "./components/GenerateTab";
 import MyPlans from "./components/MyPlans";
 import Login from "./components/Login";
@@ -619,6 +620,7 @@ export default function Home() {
   };
   const onSignOut = () => {
     clearUser(); setUserState("");
+    signOutAuth();   // the Supabase session, when there is one (lib/auth.js)
     clearBank();   // licensed content behind an account: never leave it in a shared browser
     // Her teaching ledger goes too. The server copy is authoritative and this device rebuilds
     // it on her next sign-in, so nothing is lost — and leaving it behind is worse here than

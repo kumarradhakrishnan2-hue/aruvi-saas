@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { API, getJSON, idInUse } from "../lib/format";
+import { authEnabled, sendOtp, verifyOtp as verifyOtpRemote, OTP_LEN, authHeaders } from "../lib/auth";
 import SubscribeFlow, { MOBILE_TAKEN } from "./SubscribeFlow";
 import MeyyMark from "./MeyyMark";
 import PrivacyNotice from "./PrivacyNotice";
@@ -14,8 +15,13 @@ import PrivacyNotice from "./PrivacyNotice";
  * paywall's Subscribe button, which passes no `onTrial` and so never sees the offer).
  * OTP verification REGISTERS the number in the tenant database (/onboarding/verified);
  * the SIGN-IN screen (returning device) admits registered identities only
- * (/onboarding/known) and points unknown numbers at Create sign in. Production: the
- * app identifies the number itself + face/biometrics; the contracts stay. */
+ * (/onboarding/known) and points unknown numbers at Create sign in.
+ *
+ * ★ TRACK B (2026-09-09): with Supabase configured (lib/auth.js `authEnabled()`), the OTP is
+ * REAL — Supabase sends it and checks it, six boxes — and the returning sign-in ALSO verifies
+ * by OTP (under the stub it admitted a known number on sight). The id the session runs under
+ * comes back from /onboarding/verified (the API derives the mobile from the verified token),
+ * not from the box she typed in. Without the env vars the 0000 stub stays, labelled. */
 
 const Benefits = () => (
   <>
@@ -47,15 +53,21 @@ const SEEN_KEY = "aruvi_device_seen";
 export default function Login({ onEnter }) {
   const [screen, setScreen] = useState("signin");   // choose | signin | otp | subscribe
   const [mode, setMode] = useState("trial");        // trial | subscribe (the page-1 choice)
+  // create = the front-door Create path (number typed here); return = a known number
+  // arriving from the sign-in screen, which only needs the OTP.
+  const [flow, setFlow] = useState("create");
+  const live = authEnabled();
+  const otpLen = live ? OTP_LEN : 4;
   // OTP — four boxes, auto-advance (founder, 2026-08-25). `otp` is the joined string.
   const [mobile, setMobile] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
   const [otpErr, setOtpErr] = useState("");
+  const [otpBusy, setOtpBusy] = useState(false);
   // "Already in use" on the CREATE path, checked before the OTP goes out.
   const [mobErr, setMobErr] = useState("");
   const [mobBusy, setMobBusy] = useState(false);
-  const otpRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
+  const otpRefs = useRef([]);   // one per box; the count follows otpLen
   // Sign-in
   const [id, setId] = useState("");
   const [signinErr, setSigninErr] = useState("");
@@ -90,28 +102,49 @@ export default function Login({ onEnter }) {
 
   /* One OTP box changed: keep digits only, write it into position i, advance. */
   const setOtpDigit = (i, v) => {
-    const d = v.replace(/\D/g, "").slice(-1);
+    const digits = v.replace(/\D/g, "");
+    // A pasted/autofilled whole code lands in one box: spread it.
+    if (digits.length >= otpLen) { setOtp(digits.slice(0, otpLen)); otpRefs.current[otpLen - 1]?.focus(); return; }
+    const d = digits.slice(-1);
     setOtp((cur) => {
-      const arr = [cur[0] || "", cur[1] || "", cur[2] || "", cur[3] || ""];
+      const arr = Array.from({ length: otpLen }, (_, k) => cur[k] || "");
       arr[i] = d;
       return arr.join("");
     });
-    if (d && i < 3) otpRefs[i + 1].current?.focus();
+    if (d && i < otpLen - 1) otpRefs.current[i + 1]?.focus();
   };
   const otpKeyDown = (i, e) => {
-    if (e.key === "Backspace" && !(otp[i] || "") && i > 0) otpRefs[i - 1].current?.focus();
+    if (e.key === "Backspace" && !(otp[i] || "") && i > 0) otpRefs.current[i - 1]?.focus();
   };
 
-  /* OTP verified → the number JOINS THE TENANT DATABASE; then route by mode. */
-  const verifyOtp = () => {
-    if (otp !== "0000") { setOtpErr("That code didn't match. (Preview build: use 0000.)"); return; }
-    setOtpErr("");
+  /* Ask for the code (live) or just open the boxes (stub). Returns true when sent. */
+  const requestOtp = async (num) => {
+    if (!live) return true;
+    const err = await sendOtp(num);
+    if (err) { setMobErr(err); return false; }
+    return true;
+  };
+
+  /* OTP verified → the number JOINS THE TENANT DATABASE; then route by mode. Live, the
+     verdict is Supabase's and the session id is the API's; the stub keeps its 0000. */
+  const verifyOtp = async () => {
     const num = mobile.trim();
-    fetch(`${API}/onboarding/verified`, {
-      method: "POST", headers: { "X-Aruvi-User": num },
-    }).catch(() => {});
-    if (mode === "subscribe") setScreen("subscribe");
-    else enter(num);
+    setOtpErr("");
+    if (live) {
+      setOtpBusy(true);
+      const err = await verifyOtpRemote(num, otp);
+      if (err) { setOtpBusy(false); setOtpErr(err); return; }
+    } else if (otp !== "0000") {
+      setOtpErr("That code didn't match. (Preview build: use 0000.)"); return;
+    }
+    let uid = num;
+    try {
+      const r = await fetch(`${API}/onboarding/verified`, { method: "POST", headers: authHeaders(num) });
+      if (r.ok) { const d = await r.json(); if (d && d.user_id) uid = d.user_id; }
+    } catch {}
+    setOtpBusy(false);
+    if (mode === "subscribe" && flow === "create") { setMobile(uid); setScreen("subscribe"); }
+    else enter(uid);
   };
 
   /* ── SUBSCRIBE — the shared wizard (also reachable in-app from the paywall) ── */
@@ -165,7 +198,7 @@ export default function Login({ onEnter }) {
           </button>
         </div>
         <div className="ob-foot">
-          <button className="primary fr-cta" onClick={() => setScreen("otp")}>
+          <button className="primary fr-cta" onClick={() => { setFlow("create"); setOtpSent(false); setOtp(""); setScreen("otp"); }}>
             Create sign in →
           </button>
           <button className="fr-link" onClick={() => setScreen("signin")}>Already have an ID? Sign in</button>
@@ -187,6 +220,7 @@ export default function Login({ onEnter }) {
             <div className="ob-mobile-row">
               <span className="ob-cc">+91</span>
               <input type="tel" inputMode="numeric" maxLength={10} value={mobile}
+                readOnly={flow === "return"}
                 onChange={(e) => { setMobile(e.target.value.replace(/\D/g, "")); setMobErr(""); }}
                 placeholder="Enter mobile number" />
             </div>
@@ -200,7 +234,7 @@ export default function Login({ onEnter }) {
             <button type="button" className="lgl-link" onClick={openPrivacy}>Privacy Notice</button>.</p>
 
           {mobErr && <p className="ob-err" role="alert">{mobErr}</p>}
-          {!otpSent ? (
+          {!otpSent && flow === "create" ? (
             /* ★ A REGISTERED NUMBER CANNOT CREATE A SECOND SIGN-IN (founder, 2026-08-26).
                This screen's button says "Create sign in", and the mobile IS the account
                id — so a number already in the tenant database is not a new teacher, it
@@ -210,37 +244,47 @@ export default function Login({ onEnter }) {
               onClick={async () => {
                 setMobErr(""); setMobBusy(true);
                 const taken = await idInUse(mobile.trim());
+                if (taken) { setMobBusy(false); setMobErr(MOBILE_TAKEN); return; }
+                const sent = await requestOtp(mobile.trim());
                 setMobBusy(false);
-                if (taken) { setMobErr(MOBILE_TAKEN); return; }
-                setOtpSent(true);
+                if (sent) { setOtp(""); setOtpSent(true); }
               }}>
-              {mobBusy ? "Checking…" : "Generate OTP →"}
+              {mobBusy ? (live ? "Sending…" : "Checking…") : "Generate OTP →"}
             </button>
           ) : (
             <>
-              {/* Four boxes, auto-advance; backspace steps back (founder, 2026-08-25). */}
+              {/* Boxes auto-advance; backspace steps back (founder, 2026-08-25); a pasted
+                  code spreads across them. Six live, four under the stub. */}
               <div className="ob-field">
                 <span className="ob-otp-label">Enter the OTP</span>
                 <div className="ob-otp-row">
-                  {[0, 1, 2, 3].map((i) => (
-                    <input key={i} ref={otpRefs[i]} className="ob-otp-box" type="tel"
-                      inputMode="numeric" maxLength={1} value={otp[i] || ""}
+                  {Array.from({ length: otpLen }, (_, i) => (
+                    <input key={i} ref={(el) => { otpRefs.current[i] = el; }} className="ob-otp-box" type="tel"
+                      inputMode="numeric" autoComplete={i === 0 ? "one-time-code" : "off"}
+                      maxLength={i === 0 ? otpLen : 1} value={otp[i] || ""}
                       onChange={(e) => setOtpDigit(i, e.target.value)}
                       onKeyDown={(e) => otpKeyDown(i, e)}
                       aria-label={`OTP digit ${i + 1}`} />
                   ))}
                 </div>
               </div>
-              {/* Honest stub — no SMS goes out in the preview. */}
-              <p className="ob-quiet">Preview build: enter <b>0000</b>.</p>
+              {live ? (
+                <p className="ob-quiet">Sent by SMS to +91 {mobile.trim()}.{" "}
+                  <button type="button" className="lgl-link" disabled={otpBusy}
+                    onClick={async () => { setOtpErr(""); setOtp(""); const ok = await requestOtp(mobile.trim()); if (ok) setOtpErr(""); }}>
+                    Resend</button></p>
+              ) : (
+                /* Honest stub — no SMS goes out in the preview. */
+                <p className="ob-quiet">Preview build: enter <b>0000</b>.</p>
+              )}
               {otpErr && <p className="ob-err" role="alert">{otpErr}</p>}
-              <button className="primary fr-cta ob-cta" disabled={otp.length !== 4}
-                onClick={verifyOtp}>Verify &amp; continue →</button>
+              <button className="primary fr-cta ob-cta" disabled={otp.length !== otpLen || otpBusy}
+                onClick={verifyOtp}>{otpBusy ? "Verifying…" : "Verify & continue →"}</button>
             </>
           )}
         </div>
         <div className="ob-foot">
-          <button className="fr-link" onClick={() => setScreen("choose")}>← Back</button>
+          <button className="fr-link" onClick={() => { setOtpSent(false); setOtp(""); setScreen(flow === "return" ? "signin" : "choose"); }}>← Back</button>
         </div>
       </div>
     );
@@ -257,7 +301,16 @@ export default function Login({ onEnter }) {
     setSigninErr("");
     try {
       const d = await getJSON(`/onboarding/known?id=${encodeURIComponent(trimmed)}`);
-      if (d && d.known) { enter(d.id || trimmed); return; }
+      if (d && d.known) {
+        const uid = d.id || trimmed;
+        if (!live) { enter(uid); return; }
+        // Known number, so no "already in use" check — straight to the code.
+        setMobile(uid); setFlow("return"); setMode("trial"); setMobErr(""); setOtp("");
+        const err = await sendOtp(uid);
+        if (err) { setSigninErr(err); return; }
+        setOtpSent(true); setScreen("otp");
+        return;
+      }
       if (d && d.reason === "ambiguous_email") {
         // More than one account carries this address — only the mobile identifies her.
         setSigninErr("More than one Meyy account uses this email. Please sign in with your mobile number.");

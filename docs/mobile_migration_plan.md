@@ -31,7 +31,7 @@ against the live API** — is kept, and the Postgres move happens port by port u
 
 ## 2. Tracks
 
-### Track A — deployed API on Render ★ BUILT 2026-09-09 (not yet deployed)
+### Track A — deployed API on Render ★ LIVE 2026-09-09 — https://meyy-api.onrender.com
 
 `Dockerfile` · `.dockerignore` · `render.yaml` · `deploy/entrypoint.sh` · `deploy/smoke.sh` ·
 `deploy/README.md` (the deploy steps). `api/config.CORS_ORIGINS` (env `ARUVI_CORS_ORIGINS`,
@@ -52,12 +52,44 @@ Three facts the repo settled while building it:
 
 Verified (Python 3.12 + dash, the image's runtime; Docker Hub was unreachable from the
 sandbox so the first real `docker build` is Render's): seeding, no re-seed on second boot,
-smoke green, plan serve 34 ms, DOCX export, erase, CORS fencing. **Owed: the deploy itself,
-then `deploy/smoke.sh https://meyy-api.onrender.com`.**
+smoke green, plan serve 34 ms, DOCX export, erase, CORS fencing. **Deployed the same day** via Blueprint from `Meyy-in/aruvi-saas` (repo transferred to the
+new GitHub org that afternoon; Render signed up under the meyy.in Google identity): the
+smoke, a plan serve and an erase all passed against the public host, ~100–200 ms per call.
+⚠️ `onrender.com` is unreachable from the Cowork sandboxes (proxy 403) — verify through the
+browser, not curl.
 
-### Track B — Supabase Auth + Indian OTP (start the paperwork FIRST)
+### Track B — Supabase Auth + Indian OTP ★ CODE BUILT 2026-09-09 (awaiting the Supabase project)
 
-- **DLT is the long pole.** Transactional SMS in India needs TRAI DLT entity registration, a
+Built, both halves, behind a mode switch so nothing changes until it is flipped:
+- **API:** `aruvi_core/adapters/supabase_auth_provider.py` verifies the Supabase access
+  token offline (ES256/RS256 via cached JWKS, HS256 legacy secret); `config.AUTH_PROVIDER`
+  (`ARUVI_AUTH_PROVIDER` = `header` | `supabase`) picks the adapter in `api/main.py`'s one
+  wiring block; `_current_identity()` reads `Authorization: Bearer` in supabase mode and
+  X-Aruvi-User in header mode — never both, so neither header can be forged into the other
+  mode. A refused credential is a 401 in the provider's words. `Identity.phone` (new,
+  optional) lands on the account record at JIT creation. `PyJWT[crypto]` added to
+  `api/requirements.txt`. `tests/test_supabase_auth.py` (14 checks, no network).
+- **Web:** `web/app/lib/auth.js` (supabase-js client, `sendOtp`/`verifyOtp`, a SYNCHRONOUS
+  `accessToken()` because `withUser()` is sync, `authHeaders()` for the pre-sign-in fetches,
+  `signOutAuth()`); `withUser()` sends the bearer when a session exists (the dev header rides
+  along — the API honours exactly one); Login.jsx does the real OTP when
+  `NEXT_PUBLIC_SUPABASE_URL/ANON_KEY` are set (six boxes, paste/autofill-aware, Resend) and
+  **the returning sign-in now verifies by OTP too** — under the stub it admitted a known
+  number on sight; the session id comes back from `/onboarding/verified`, not from the box
+  she typed. Agreement/SubscribeFlow's hand-built headers go through `authHeaders`.
+  `web/.env.local.example` documents the two public vars. `next build` clean.
+- ★ **THE IDENTITY STAYS THE MOBILE.** Supabase verifies the number; the account key is the
+  10-digit national number derived from the token's `phone` claim (`identity_from_claims`,
+  the ONE decision point — flipping to `sub` is one line there). Every existing contract
+  (`/onboarding/known`, email→mobile, invoices, localStorage keys) is untouched.
+  Consequence: a changed number is a new account; Supabase's phone-change flow stays OFF.
+
+**Still owed:** the Supabase project itself (founder, under the meyy.in Google login), the
+env on Render (`ARUVI_AUTH_PROVIDER=supabase` + URL [+ secret]) and on the web
+(`web/.env.local`), a live pass with a Supabase *test phone number* (fixed OTP, no SMS),
+then — after company registration → DLT — the real SMS provider in Supabase's Auth settings.
+
+- **DLT is the long pole** — and it waits on the company registration (in progress). Transactional SMS in India needs TRAI DLT entity registration, a
   sender header and an approved OTP template — days to weeks, regardless of provider. File
   it before writing code.
 - Supabase issues/verifies/rate-limits the OTP; the provider only delivers. Textlocal is a

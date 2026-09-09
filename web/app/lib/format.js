@@ -1,4 +1,5 @@
 /* ───────── shared formatting helpers ───────── */
+import { accessToken } from "./auth";
 /* Derive the API host from whatever host the browser loaded the page from, so this works
  * unmodified on localhost, on the Mac's LAN IP (mobile testing over WiFi), and later on a
  * real domain — no hand-editing an IP address per session. */
@@ -79,10 +80,15 @@ export function boldMarks(text) {
   return out;
 }
 
-/* Merge the X-Aruvi-User header into any fetch options, preserving caller-set headers. */
+/* Merge the identity into any fetch options, preserving caller-set headers. Under Supabase
+ * Auth (lib/auth.js) that is `Authorization: Bearer <access token>`; the X-Aruvi-User dev
+ * header still rides along so a header-mode API keeps working — the API honours exactly one
+ * of them by its own config, never both. */
 export function withUser(opts = {}) {
   const user = getUser();
   const headers = { ...(opts.headers || {}) };
+  const t = accessToken();
+  if (t) headers["Authorization"] = `Bearer ${t}`;
   if (user) headers["X-Aruvi-User"] = user;
   return { ...opts, headers };
 }

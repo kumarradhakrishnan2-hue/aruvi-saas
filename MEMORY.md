@@ -711,8 +711,22 @@ image's content tree and is lost on redeploy — fine by CLOUD_DATA_MODEL §1's 
 boot does not re-seed; smoke green; SS·ix ch 4 serve at 16×60 → 200 in 34 ms; DOCX export;
 erase leaves only the seller-side stores + erasure log; CORS refuses a foreign origin, allows
 the configured one. Docker Hub was 403 from the sandbox, so the first real `docker build` is
-Render's — watch that log. **Owed:** push, Blueprint deploy, `deploy/smoke.sh` against the
-public URL; then Track B (file DLT registration first — it is the long pole).
+Render's — watch that log. ★ **DEPLOYED the same afternoon — https://meyy-api.onrender.com is LIVE.** GitHub org
+`Meyy-in` created (business: Meyy (OPC) Private Limited, contact support@meyy.in), repo
+transferred there, clone re-pointed; Render account under the meyy.in Google login, free
+workspace + Starter instance + 1 GB disk; Blueprint applied with the four SMTP secrets. Smoke,
+SS·ix ch 4 serve and erase all green against the public host (~100–200 ms/call). ⚠️ Neither
+Cowork sandbox can reach `onrender.com` (proxy 403) — checks go through Claude in Chrome
+(`fetch` with the header from a page on the host). `deploy/smoke.sh` was rewritten to fail
+loudly (it had printed "ok" on a failed curl). **Track B code BUILT the same evening** (see the plan doc §Track B): `SupabaseAuthProvider`
+(offline JWT verification, JWKS + HS256) behind `ARUVI_AUTH_PROVIDER=header|supabase`;
+`_current_identity` reads bearer OR header, never both; identity = the 10-digit mobile from
+the token's `phone` claim (`identity_from_claims` is the one place to flip to `sub`);
+web `lib/auth.js` + real six-box OTP in Login.jsx, returning sign-in now OTP-verified too;
+`next build` clean on the Mac; `tests/test_supabase_auth.py` 14 green. ⚠️ `PyJWT[crypto]` is a
+new API dependency — Render rebuilds with it on the next push. Owed: the Supabase project
+(founder), env on Render + `web/.env.local`, live pass with a test phone number; DLT waits on
+company registration.
 
 ---
 
