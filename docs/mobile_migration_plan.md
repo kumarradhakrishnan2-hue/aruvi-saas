@@ -98,9 +98,11 @@ header alone → 401; account file carries `phone`; returning sign-in → OTP (p
 across six boxes) → in; a STALE stub session (localStorage id, no token) now bounces to the
 front door — the readiness rehydrate treats 401 as "refused", not "no profile" (page.jsx).
 Phone width by arithmetic (320px content, 304px row); live 360px screenshot owed.
-**Still owed:** Render env flip (`ARUVI_AUTH_PROVIDER=supabase`, `ARUVI_SUPABASE_URL`)
-once the current build with PyJWT is live — after that only bearer callers reach the
-deployed API (`deploy/smoke.sh` takes `SMOKE_TOKEN`); real SMS after company registration →
+★ **Render flipped to `ARUVI_AUTH_PROVIDER=supabase` 2026-09-10** and verified from Chrome:
+dev header 401, no credential 401, a real Supabase session (test number, via Auth's REST)
+→ `/onboarding/verified` registered `9000000002`, account/entitlement 200, erase 200. Only
+bearer callers reach the deployed API now (`deploy/smoke.sh` takes `SMOKE_TOKEN`).
+**Still owed:** real SMS after company registration →
 DLT (Textlocal key + DLT header + approved template into Supabase's Phone settings; remove
 the test numbers then).
 
@@ -117,7 +119,7 @@ the test numbers then).
 - `Account.privacy_notice` stamping at `/onboarding/verified` and the consent ledger are
   keyed by the identity — they move unchanged; the ONLY thing that changes is what an id IS.
 
-### Track C — Postgres under the ports ★ BUILT 2026-09-09 (Supabase cut-over owed)
+### Track C — Postgres under the ports ★ LIVE ON SUPABASE 2026-09-10
 
 **Decision (founder, 2026-09-09): individual ports, ONE shared storage underneath.** Not
 fifteen tables — one document table. Every file adapter was domain logic around the same
@@ -140,7 +142,17 @@ founder CLIs (`entitlement.py`, `erase.py`) use the same. `psycopg[binary,pool]`
 - RLS enabled on `documents`, no policies: the API connects as the table owner (bypasses),
   the anon key sees nothing — the fence stays `_current_identity()`, as decided.
 - `repair_ppw.py` / `migrate_step01.py` are file-layout tools and stay so.
-- **Owed:** the cut-over itself — run the migration against Supabase from the Mac
+- ★ **CUT OVER 2026-09-10 (founder, from the Mac):** `migrate_state_to_postgres.py` against the
+  Supabase session pooler — 198 copied, 0 missing, 0 differing; Render env
+  `ARUVI_STATE_BACKEND=postgres` + `ARUVI_DATABASE_URL`; smoke through Chrome read the
+  migrated accounts, profile, entitlement and support history back from the public host
+  (100–600 ms/call). Two lessons: a mistyped password made the pool retry until Supabase's
+  circuit breaker blocked the host for minutes — `PostgresBackend` now probes ONCE and fails
+  fast; and the password was pasted into chat, so it was reset before the cut-over. The Render
+  disk is a dead snapshot: keep it a week as the rollback (unset the two vars), then drop it
+  from `render.yaml`. `data/cloud/state/` on the Mac is dev data + the pre-migration snapshot;
+  production never writes there.
+- **Was owed (kept for the record):** run the migration against Supabase from the Mac
   (`ARUVI_DATABASE_URL` = the project's *session pooler* string; Render is IPv4-only, the
   direct `db.<ref>` host is IPv6), verify, set `ARUVI_STATE_BACKEND=postgres` +
   `ARUVI_DATABASE_URL` on Render, smoke through Chrome; then the Render disk is a

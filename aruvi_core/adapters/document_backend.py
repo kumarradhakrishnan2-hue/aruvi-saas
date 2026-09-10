@@ -319,8 +319,18 @@ class PostgresBackend(DocumentBackend):
             raise RuntimeError("PostgresBackend needs psycopg[binary,pool] "
                                "(api/requirements.txt)") from e
         self.dsn = dsn
+        # FAIL FAST on a bad DSN. A pool retries a refused connection in the background,
+        # and against Supabase's pooler ten refusals trip a circuit breaker that blocks
+        # the host for minutes (2026-09-10, a mistyped password) — so one plain connect
+        # first, whose error is the one the operator needs to read.
+        try:
+            with psycopg.connect(dsn, connect_timeout=15) as _probe:
+                _probe.execute("select 1")
+        except Exception as e:
+            raise RuntimeError(f"Cannot connect to Postgres: {e}") from e
         self.pool = ConnectionPool(dsn, min_size=min_size, max_size=max_size,
-                                   kwargs={"autocommit": True}, open=True)
+                                   kwargs={"autocommit": True}, open=True,
+                                   reconnect_timeout=20)
         self._tls = threading.local()
         self._locks: Dict[str, threading.RLock] = {}
         self._locks_guard = threading.Lock()

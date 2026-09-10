@@ -702,8 +702,15 @@ equal, API journey on postgres end to end, and the EXISTING API suites in postgr
 nested lock in one thread; (b) the erase tidy-up climbs only through EMPTY ancestors —
 a school tenant with other teachers keeps its folder, and a test that forgot that was
 the test's bug, not the code's. Postgres does neither (a DELETE by prefix is the whole
-erase). Docs: CLOUD_DATA_MODEL §4 header rewritten to say how it actually landed. Owed:
-the Supabase cut-over (migrate from the Mac via the session pooler, flip Render), Pro plan.
+erase). Docs: CLOUD_DATA_MODEL §4 header rewritten to say how it actually landed. ★ **CUT OVER 2026-09-10** — 198/198 into Supabase (session pooler, from the Mac), Render on
+`ARUVI_STATE_BACKEND=postgres`, migrated accounts read back from the public host. Lessons: pool
+retries tripped Supabase's circuit breaker on a bad password → `PostgresBackend` now fails
+fast; DB password was pasted into chat → reset. Render disk = rollback for a week, then drop.
+`ARUVI_AUTH_PROVIDER=supabase` flipped on Render the same hour and verified from Chrome: dev
+header → 401, no credential → 401, a Supabase OTP session (test number) → registered, account,
+entitlement, erase all 200. **The production stack is now complete on the stub-free path:
+Render API · Supabase Auth · Supabase Postgres.** Still owed: Supabase Pro before teachers;
+drop the Render disk after a week; real SMS after DLT.
 
 ---
 
