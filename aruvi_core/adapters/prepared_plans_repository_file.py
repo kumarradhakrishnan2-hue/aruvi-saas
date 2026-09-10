@@ -1,4 +1,4 @@
-"""File-based implementation of PreparedPlansRepository.
+"""Document-backend implementation (file or Postgres — Track C, 2026-09-09) of PreparedPlansRepository.
 
 Persists which saved plans a teacher has actually PREPARED as JSON at
 ARUVI_STATE_DIR/prepared_plans/{tenant_id}/{user_id}/{year_id}/prepared.json, shaped as
@@ -26,74 +26,49 @@ tenant_id == user_id (the X-Aruvi-User value); the partner's cloud adapter repla
 file (behind the same port) with a `prepared_at` column on the saved-plan row — or, once
 live generation lands, the mere existence of the teacher's own generated plan row.
 """
-import json
-import os
-import tempfile
-import threading
 from datetime import datetime, timezone
-from pathlib import Path
 from typing import Any, Dict
 
 from aruvi_core.ports import PreparedPlansRepository
+from aruvi_core.adapters.document_backend import as_backend, slug as _slug
 
 
-def _slug(s: str) -> str:
-    """Filesystem-safe slug for a tenant/user id (defends against path traversal)."""
-    s = str(s).strip() or "local"
-    return "".join(c if c.isalnum() or c in "-_" else "-" for c in s).strip("-") or "local"
 
 
 class PreparedPlansRepositoryFileImpl(PreparedPlansRepository):
     """File-based per-tenant prepared-plans store."""
 
-    def __init__(self, data_dir: str):
+    def __init__(self, data_dir):
         """
         Args:
-            data_dir: Base directory where the prepared_plans/ folder lives (e.g. ARUVI_STATE_DIR).
+            data_dir: a DocumentBackend, or a directory (→ FileBackend at that root, e.g.
+                      ARUVI_STATE_DIR — every existing call site and test). Read-modify-
+                      write is serialised per DOCUMENT through backend.lock(): a thread
+                      lock on files (one process, as before) and additionally a
+                      transaction-scoped advisory lock on Postgres, so two API instances
+                      cannot lose each other's update (the DB row-lock the file version
+                      always said was "later").
         """
-        self.data_dir = Path(data_dir)
-        self.base_dir = self.data_dir / "prepared_plans"
-        # Serialize read-modify-write of the shared prepared.json within this process (FastAPI
-        # runs handlers on a threadpool). One module-level repo instance → process-wide lock; a
-        # multi-instance deployment moves this to the DB row-lock at Phase 4.
-        self._lock = threading.Lock()
+        self.backend = as_backend(data_dir)
 
-    def _path(self, tenant_id: str, user_id: str, year_id: str) -> Path:
-        return self.base_dir / _slug(tenant_id) / _slug(user_id) / _slug(year_id) / "prepared.json"
+    def _key(self, tenant_id: str, user_id: str, year_id: str) -> str:
+        return f"prepared_plans/{_slug(tenant_id)}/{_slug(user_id)}/{_slug(year_id)}/prepared.json"
+
+    # File-backend diagnostic (tests inspect the raw document on disk).
+    def _path(self, tenant_id: str, user_id: str, year_id: str):
+        return self.backend._path(self._key(tenant_id, user_id, year_id))
+
+    def _locked(self, tenant_id: str, user_id: str, year_id: str):
+        return self.backend.lock(self._key(tenant_id, user_id, year_id))
 
     def _read(self, tenant_id: str, user_id: str, year_id: str) -> Dict[str, Any]:
-        path = self._path(tenant_id, user_id, year_id)
-        if not path.exists():
-            return {}
-        try:
-            with open(path, "r") as f:
-                return json.load(f) or {}
-        except (IOError, json.JSONDecodeError):
-            return {}
+        """The whole document, or {} when absent. Corruption is self-healed by the file
+        backend (raw_decode keeps the valid leading object — the 2026-07-03 rule)."""
+        data = self.backend.get_json(self._key(tenant_id, user_id, year_id))
+        return data if isinstance(data, dict) else {}
 
     def _write(self, tenant_id: str, user_id: str, year_id: str, data: Dict[str, Any]) -> None:
-        # ATOMIC write: temp file in the same dir, then os.replace() over the target (atomic on
-        # POSIX/Windows), so a reader always sees the complete old or complete new file — never a
-        # half-written one — and concurrent writers can't interleave into corrupt JSON.
-        path = self._path(tenant_id, user_id, year_id)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        tmp = None
-        try:
-            fd, tmp = tempfile.mkstemp(dir=str(path.parent), prefix=".prepared-", suffix=".tmp")
-            with os.fdopen(fd, "w") as f:
-                json.dump(data, f, indent=2)
-                f.flush()
-                os.fsync(f.fileno())
-            os.replace(tmp, path)
-            tmp = None
-        except IOError as e:
-            raise ValueError(f"Failed to save prepared-plans register to {path}: {e}")
-        finally:
-            if tmp is not None and os.path.exists(tmp):
-                try:
-                    os.remove(tmp)
-                except OSError:
-                    pass
+        self.backend.put_json(self._key(tenant_id, user_id, year_id), data)
 
     def load_all(self, tenant_id: str, user_id: str, year_id: str) -> Dict[str, Any]:
         """All prepared plan keys for this teacher's year. Value is either a legacy prepared_at
@@ -113,7 +88,7 @@ class PreparedPlansRepositoryFileImpl(PreparedPlansRepository):
         set: re-preparing does not silently erase where a plan came from, and only a genuinely
         NEW generation (which passes no source_year for a plan that never had one) leaves it
         absent."""
-        with self._lock:
+        with self._locked(tenant_id, user_id, year_id):
             data = self._read(tenant_id, user_id, year_id)
             existing = data.get(plan_key)
             # Preserve the original prepared_at across shapes (str = legacy, dict = new record).
@@ -142,7 +117,7 @@ class PreparedPlansRepositoryFileImpl(PreparedPlansRepository):
         """Forget that this plan was prepared (2026-08-26, the trial purge). No-op when
         absent. Removes the RECORD only — the saved plan is shared library content, not
         hers to delete, and another teacher may be served the same file tomorrow."""
-        with self._lock:
+        with self._locked(tenant_id, user_id, year_id):
             data = self._read(tenant_id, user_id, year_id)
             if plan_key in data:
                 del data[plan_key]

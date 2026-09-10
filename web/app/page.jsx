@@ -332,8 +332,14 @@ export default function Home() {
         setReadiness(projectReadiness(d.readiness));
         setReady(true);
       }
-    }).catch(() => {})  // no saved profile / API down → stay in the not-ready setup flow
-      .finally(() => setReadinessLoaded(true));
+    }).catch((e) => {
+      // A 401 is not "no profile": the server REFUSED this session (a stale stub id in
+      // localStorage once the API moved to Supabase Auth, or an expired token). Showing
+      // first-run to a teacher the server does not recognise would let her build a profile
+      // every save then rejects — so she goes back to the front door instead (Track B).
+      if (e && e.message === "401") { onSignOut(); return; }
+      // Otherwise (no saved profile / API down) → stay in the not-ready setup flow.
+    }).finally(() => setReadinessLoaded(true));
   }, [user]);
 
   // First-run complete: FirstRun has now walked the FULL sequence (subject → grade → chapter →

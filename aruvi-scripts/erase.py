@@ -41,16 +41,17 @@ def main() -> int:
                     help="also delete the retained consent-ledger entry (testing only)")
     args = ap.parse_args()
     tenant = user = args.user
+    state = config.state_backend()
 
     if not args.yes:
         print(f"This permanently erases EVERYTHING for '{user}': profile, notes, section "
               f"progress, allocations, prepared plans, subscription and account record.")
-        print(f"State dir: {config.STATE_DIR}")
+        print(f"State: {state.describe()}")
         if input('Type "erase" to confirm: ').strip().lower() != "erase":
             print("aborted — nothing was touched.")
             return 1
 
-    service = DataRightsServiceFileImpl(config.STATE_DIR)
+    service = DataRightsServiceFileImpl(state)
     receipt = service.erase(tenant, user)
 
     out = {
@@ -61,9 +62,8 @@ def main() -> int:
     }
 
     if args.with_consent:
-        path = ConsentRepositoryFileImpl(config.STATE_DIR)._path(tenant)
-        if path.exists():
-            path.unlink()
+        key = ConsentRepositoryFileImpl(state)._key(tenant)
+        if state.delete(key):
             out["consent_ledger"] = "deleted outright (testing) — no trace of the signature"
         else:
             out["consent_ledger"] = "none on file"

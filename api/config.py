@@ -42,6 +42,27 @@ STATE_DIR = os.environ.get("ARUVI_STATE_DIR", _DEFAULT_STATE)
 _DEFAULT_TESTING = str(_REPO_ROOT / "data" / "testing")
 TESTING_DIR = os.environ.get("ARUVI_TESTING_DIR", _DEFAULT_TESTING)
 
+# ── State backend (Track C, 2026-09-09) ─────────────────────────────────────────
+# Where Bucket B lives. Every repository adapter takes a DocumentBackend
+# (aruvi_core/adapters/document_backend.py) and `state_backend()` below builds THE one:
+#   file      — the folder tree at STATE_DIR (default; local dev, tests, the Render disk)
+#   postgres  — one `documents` table at DATABASE_URL (Supabase). Migration:
+#               aruvi-scripts/migrate_state_to_postgres.py
+# The ports and every route are identical in both; only this switch differs.
+STATE_BACKEND = os.environ.get("ARUVI_STATE_BACKEND", "file").strip().lower() or "file"
+DATABASE_URL = os.environ.get("ARUVI_DATABASE_URL", "").strip()
+
+
+def state_backend():
+    """Construct the configured Bucket-B backend. Called once by api/main.py (and by
+    the founder scripts), never per request."""
+    from aruvi_core.adapters.document_backend import FileBackend, PostgresBackend
+    if STATE_BACKEND == "postgres":
+        if not DATABASE_URL:
+            raise RuntimeError("ARUVI_STATE_BACKEND=postgres needs ARUVI_DATABASE_URL")
+        return PostgresBackend(DATABASE_URL)
+    return FileBackend(STATE_DIR)
+
 # ── Identity provider (Track B, 2026-09-09) ────────────────────────────────────
 # AUTH_PROVIDER picks the adapter behind the AuthProvider port:
 #   header    — the X-Aruvi-User dev stub (default; what every local run and test uses)

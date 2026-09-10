@@ -1,6 +1,6 @@
-"""File-based implementation of InvoiceRepository (2026-08-26).
+"""InvoiceRepository over the document backend (file or Postgres — Track C, 2026-09-09).
 
-Layout, under ARUVI_STATE_DIR:
+Layout (document keys; folders on disk, row keys in Postgres):
 
     invoices/{tenant}/{user}/MEY-2026-27-0001.json    the record
     invoices/{tenant}/{user}/MEY-2026-27-0001.pdf     the exact bytes she was sent
@@ -23,21 +23,11 @@ filesystem has no business holding slashes.
 """
 from __future__ import annotations
 
-import json
-import os
-import tempfile
-import threading
 from dataclasses import asdict
-from pathlib import Path
 from typing import List, Optional
 
 from aruvi_core.ports import Invoice, InvoiceLine, InvoiceRepository
-
-
-def _slug(s: str) -> str:
-    """Filesystem-safe slug for a tenant/user id (defends against path traversal)."""
-    s = str(s).strip() or "local"
-    return "".join(c if c.isalnum() or c in "-_" else "-" for c in s).strip("-_") or "local"
+from aruvi_core.adapters.document_backend import as_backend, slug as _slug
 
 
 def number_to_file(number: str) -> str:
@@ -62,75 +52,58 @@ class InvoiceRepositoryFileImpl(InvoiceRepository):
                       real invoices, so the books remain auditable — the only thing
                       hidden is where the count began.
         """
-        self.base_dir = Path(data_dir) / "invoices"
-        self.series_dir = self.base_dir / "_series"
+        self.backend = as_backend(data_dir)
         self.prefix = (prefix or "MEY").strip() or "MEY"
         self.start = int(start)
-        self._lock = threading.Lock()
 
-    # ── paths ──
-    def _dir(self, tenant_id: str, user_id: str) -> Path:
-        return self.base_dir / _slug(tenant_id) / _slug(user_id)
+    # ── keys ──
+    def _prefix(self, tenant_id: str, user_id: str) -> str:
+        return f"invoices/{_slug(tenant_id)}/{_slug(user_id)}"
 
     # ── numbering ──
     def next_number(self, financial_year: str) -> str:
         """Next in the seller's gapless series for that financial year.
 
-        Process-locked and written whole via a temp file + atomic replace. That is
-        honest for one uvicorn process and is NOT enough for two: the partner's DB
-        adapter must take this from a sequence or a row lock. Said here because a
-        duplicated invoice number is the kind of thing nobody notices until an audit.
+        Read-modify-write under the backend's per-document lock: a process lock on
+        files (honest for one uvicorn process) and, on Postgres, a transaction-scoped
+        advisory lock — the "sequence or row lock" the file version always said the DB
+        adapter must bring. Said here because a duplicated invoice number is the kind of
+        thing nobody notices until an audit.
         """
         fy = _slug(financial_year or "0000-00")
-        path = self.series_dir / f"{fy}.json"
-        with self._lock:
-            n = 0
-            if path.exists():
-                try:
-                    with open(path, "r") as f:
-                        n = int((json.load(f) or {}).get("last", 0))
-                except (json.JSONDecodeError, IOError, TypeError, ValueError):
-                    n = 0
+        key = f"invoices/_series/{fy}.json"
+        with self.backend.lock(key):
+            raw = self.backend.get_json(key)
+            try:
+                n = int((raw or {}).get("last", 0)) if isinstance(raw, dict) else 0
+            except (TypeError, ValueError):
+                n = 0
             # A fresh year opens at `start`; thereafter it is a plain +1. A corrupt or
             # missing counter can only ever RESTART the year, never rewind past a number
             # already issued — which is why `start` is the floor, not just the seed.
             n = max(n + 1, self.start)
-            self.series_dir.mkdir(parents=True, exist_ok=True)
-            fd, tmp = tempfile.mkstemp(dir=str(self.series_dir), suffix=".tmp")
-            try:
-                with os.fdopen(fd, "w") as f:
-                    json.dump({"last": n}, f)
-                os.replace(tmp, path)
-            except Exception:
-                if os.path.exists(tmp):
-                    os.unlink(tmp)
-                raise
+            self.backend.put_json(key, {"last": n})
         return f"{self.prefix}/{financial_year}/{n:04d}"
 
     # ── read / write ──
     def save(self, tenant_id: str, user_id: str, invoice: Invoice,
              pdf: Optional[bytes] = None) -> None:
-        d = self._dir(tenant_id, user_id)
-        d.mkdir(parents=True, exist_ok=True)
         stem = number_to_file(invoice.number)
-        with open(d / f"{stem}.json", "w") as f:
-            json.dump(asdict(invoice), f, indent=2)
+        base = self._prefix(tenant_id, user_id)
+        self.backend.put_json(f"{base}/{stem}.json", asdict(invoice))
         if pdf:
-            with open(d / f"{stem}.pdf", "wb") as f:
-                f.write(pdf)
+            self.backend.put_bytes(f"{base}/{stem}.pdf", pdf)
 
     def load_all(self, tenant_id: str, user_id: str) -> List[Invoice]:
         """Every invoice for this teacher, NEWEST FIRST (by issue time, then number —
         the number breaks ties within a same-second double purchase)."""
-        d = self._dir(tenant_id, user_id)
-        if not d.exists():
-            return []
+        base = self._prefix(tenant_id, user_id)
         out: List[Invoice] = []
-        for path in sorted(d.glob("*.json")):
-            try:
-                with open(path, "r") as f:
-                    raw = json.load(f) or {}
-            except (json.JSONDecodeError, IOError):
+        for key in self.backend.list_keys(base):
+            if not key.endswith(".json") or "/" in key[len(base) + 1:]:
+                continue
+            raw = self.backend.get_json(key)
+            if not isinstance(raw, dict):
                 continue          # one unreadable invoice must not hide the others
             lines = [InvoiceLine(**{k: v for k, v in (ln or {}).items()
                                     if k in InvoiceLine.__dataclass_fields__})
@@ -146,11 +119,4 @@ class InvoiceRepositoryFileImpl(InvoiceRepository):
         return out
 
     def load_pdf(self, tenant_id: str, user_id: str, number: str) -> Optional[bytes]:
-        path = self._dir(tenant_id, user_id) / f"{number_to_file(number)}.pdf"
-        if not path.exists():
-            return None
-        try:
-            with open(path, "rb") as f:
-                return f.read()
-        except IOError:
-            return None
+        return self.backend.get_bytes(f"{self._prefix(tenant_id, user_id)}/{number_to_file(number)}.pdf")

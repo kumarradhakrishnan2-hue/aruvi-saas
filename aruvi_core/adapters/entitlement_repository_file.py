@@ -1,7 +1,7 @@
-"""File-based implementation of EntitlementRepository.
+"""EntitlementRepository over the document backend (file or Postgres — Track C, 2026-09-09).
 
-Persists a tenant's entitlement as JSON at
-ARUVI_STATE_DIR/entitlements/{tenant_id}/entitlement.json — keyed by TENANT only
+Persists a tenant's entitlement as one JSON document at key
+entitlements/{tenant_id}/entitlement.json — keyed by TENANT only
 (the subscription belongs to the tenant, every user under it rides it), and NOT
 year-scoped (a subscription is rolling, admin architecture §2.5).
 
@@ -10,44 +10,33 @@ dataclass growth the same way the account adapter does. The partner's cloud adap
 (one row per tenant, written by their BillingProvider webhook handler) swaps in behind
 the same port.
 """
-import json
 from dataclasses import asdict
-from pathlib import Path
 from typing import Optional
 
 from aruvi_core.ports import Entitlement, EntitlementRepository
-
-
-def _slug(s: str) -> str:
-    """Filesystem-safe slug for a tenant id (defends against path traversal)."""
-    s = str(s).strip() or "local"
-    return "".join(c if c.isalnum() or c in "-_" else "-" for c in s).strip("-") or "local"
+from aruvi_core.adapters.document_backend import as_backend, slug as _slug
 
 
 class EntitlementRepositoryFileImpl(EntitlementRepository):
-    """File-based per-tenant entitlement store."""
+    """Per-tenant entitlement store over a document backend."""
 
-    def __init__(self, data_dir: str):
+    def __init__(self, data_dir):
         """
         Args:
-            data_dir: Base directory where the entitlements/ folder lives (e.g. ARUVI_STATE_DIR).
+            data_dir: a DocumentBackend, or a directory (→ FileBackend, e.g. ARUVI_STATE_DIR).
         """
-        self.data_dir = Path(data_dir)
-        self.base_dir = self.data_dir / "entitlements"
+        self.backend = as_backend(data_dir)
 
-    def _path(self, tenant_id: str) -> Path:
-        return self.base_dir / _slug(tenant_id) / "entitlement.json"
+    def _key(self, tenant_id: str) -> str:
+        return f"entitlements/{_slug(tenant_id)}/entitlement.json"
 
     def load(self, tenant_id: str) -> Optional[Entitlement]:
         """The tenant's entitlement, or None if never granted."""
-        path = self._path(tenant_id)
-        if not path.exists():
+        raw = self.backend.get_json(self._key(tenant_id))
+        if raw is None:
             return None
-        try:
-            with open(path, "r") as f:
-                raw = json.load(f) or {}
-        except (json.JSONDecodeError, IOError) as e:
-            raise ValueError(f"Failed to load entitlement from {path}: {e}")
+        if not isinstance(raw, dict):
+            raw = {}
         return Entitlement(
             plan_id=str(raw.get("plan_id", "")),
             status=str(raw.get("status", "expired")),
@@ -65,10 +54,4 @@ class EntitlementRepositoryFileImpl(EntitlementRepository):
 
     def save(self, tenant_id: str, ent: Entitlement) -> None:
         """Create or fully replace the tenant's entitlement."""
-        path = self._path(tenant_id)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        try:
-            with open(path, "w") as f:
-                json.dump(asdict(ent), f, indent=2)
-        except IOError as e:
-            raise ValueError(f"Failed to save entitlement to {path}: {e}")
+        self.backend.put_json(self._key(tenant_id), asdict(ent))

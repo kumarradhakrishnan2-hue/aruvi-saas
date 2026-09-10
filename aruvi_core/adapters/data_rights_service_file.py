@@ -23,10 +23,9 @@ Erase notes:
   * Idempotent: erasing an empty identity returns an empty `erased` list, no error.
 """
 import re
-import shutil
 from dataclasses import asdict
 from datetime import datetime, timezone
-from pathlib import Path
+from aruvi_core.adapters.document_backend import as_backend, slug as _slug_shared
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from aruvi_core.ports import DataRightsService, ErasureReceipt
@@ -43,10 +42,7 @@ from aruvi_core.adapters.consent_repository_file import ConsentRepositoryFileImp
 from aruvi_core.adapters.support_repository_file import SupportRepositoryFileImpl
 
 
-def _slug(s: str) -> str:
-    """Filesystem-safe slug — must match the repository adapters'."""
-    s = str(s).strip() or "local"
-    return "".join(c if c.isalnum() or c in "-_" else "-" for c in s).strip("-") or "local"
+_slug = _slug_shared
 
 
 # The year-scoped teaching-state kinds, in erase order. readiness (the profile) is
@@ -142,7 +138,10 @@ class DataRightsServiceFileImpl(DataRightsService):
                 titles simply render empty.
         """
         self.chapter_title = chapter_title
-        self.data_dir = Path(data_dir)
+        # One backend (file or Postgres — Track C, 2026-09-09) shared by every store the
+        # walk reads, so export and erase address exactly the documents the API wrote.
+        self.backend = as_backend(data_dir)
+        data_dir = self.backend
         self.accounts = AccountRepositoryFileImpl(data_dir)
         self.years = AcademicYearRepositoryFileImpl(data_dir)
         self.readiness = ReadinessRepositoryFileImpl(data_dir)
@@ -170,11 +169,9 @@ class DataRightsServiceFileImpl(DataRightsService):
         never be invisible to its owner because a year record went missing)."""
         ids = [y.year_id for y in self.years.list_years(tenant_id, user_id)]
         for kind in _YEAR_KINDS:
-            d = self.data_dir / kind / _slug(tenant_id) / _slug(user_id)
-            if d.is_dir():
-                for p in d.iterdir():
-                    if p.is_dir() and p.name not in ids:
-                        ids.append(p.name)
+            for name in self.backend.list_children(f"{kind}/{_slug(tenant_id)}/{_slug(user_id)}"):
+                if name not in ids:
+                    ids.append(name)
         return sorted(ids)
 
     def _allocation_registers(self, tenant_id: str, user_id: str,
@@ -182,12 +179,12 @@ class DataRightsServiceFileImpl(DataRightsService):
         """{"subject/grade": register} for one year — enumerated from the folder
         layout, loaded through the port."""
         out: Dict[str, Any] = {}
-        base = (self.data_dir / "allocations" / _slug(tenant_id) / _slug(user_id)
-                / _slug(year_id))
-        if not base.is_dir():
-            return out
-        for reg_file in sorted(base.glob("*/*/allocation.json")):
-            subject, grade = reg_file.parent.parent.name, reg_file.parent.name
+        base = f"allocations/{_slug(tenant_id)}/{_slug(user_id)}/{_slug(year_id)}"
+        for key in self.backend.list_keys(base):
+            rel = key[len(base) + 1:].split("/")
+            if len(rel) != 3 or rel[2] != "allocation.json":
+                continue
+            subject, grade = rel[0], rel[1]
             reg = self.allocations.load_register(tenant_id, user_id, year_id, subject, grade)
             if reg:
                 out[f"{subject}/{grade}"] = reg
@@ -328,22 +325,13 @@ class DataRightsServiceFileImpl(DataRightsService):
 
     # ── erase ─────────────────────────────────────────────────────────────────────
 
-    def _rm(self, path: Path, stop: Path) -> bool:
-        """Remove a folder if present, then climb: remove each now-empty ancestor up
-        to (never including) `stop`, the store root — an empty folder named after her
-        is still a remnant. A school tenant with other teachers keeps its folder
-        (non-empty, so the climb halts there). Returns whether anything was removed."""
-        if not path.is_dir():
-            return False
-        shutil.rmtree(path)
-        parent = path.parent
-        try:
-            while parent != stop and parent.is_dir() and not any(parent.iterdir()):
-                parent.rmdir()
-                parent = parent.parent
-        except OSError:
-            pass  # never let tidying the shell fail the erasure itself
-        return True
+    def _rm(self, prefix: str) -> bool:
+        """Remove every document under a key prefix. On the file backend this is the
+        folder plus a climb that removes each now-empty ancestor up to the store root —
+        an empty folder named after her is still a remnant, while a school tenant with
+        other teachers keeps its folder (non-empty, so the climb halts). On Postgres it
+        is one DELETE by prefix. Returns whether anything was removed."""
+        return self.backend.delete_prefix(prefix)
 
     def erase(self, tenant_id: str, user_id: str) -> ErasureReceipt:
         """Destroy everything export() reaches — teaching state per year, profile,
@@ -355,21 +343,19 @@ class DataRightsServiceFileImpl(DataRightsService):
                  "prepared_plans": "prepared plans", "plan_archive": "archived-plan flags"}
         year_ids = self._year_ids(tenant_id, user_id)
         for kind in _YEAR_KINDS:
-            root = self.data_dir / kind
             for year_id in year_ids:
-                if self._rm(root / t / u / _slug(year_id), stop=root):
+                if self._rm(f"{kind}/{t}/{u}/{_slug(year_id)}"):
                     erased.append(f"{label[kind]} ({year_id})")
-            self._rm(root / t / u, stop=root)   # any stray un-year-scoped leftovers
-        if self._rm(self.data_dir / "readiness" / t / u, stop=self.data_dir / "readiness"):
+            self._rm(f"{kind}/{t}/{u}")   # any stray un-year-scoped leftovers
+        if self._rm(f"readiness/{t}/{u}"):
             erased.append("teaching profile")
         # Support requests — hers, so they go. The reference SERIES is untouched: it
         # lives in support/_series/, which is not under any {tenant}/{user} path this
         # walk visits (support_repository_file.py), so the next teacher's reference
         # still follows the last one issued rather than repeating it.
-        if self._rm(self.data_dir / "support" / t / u, stop=self.data_dir / "support"):
+        if self._rm(f"support/{t}/{u}"):
             erased.append("support messages")
-        if self._rm(self.data_dir / "academic_years" / t / u,
-                    stop=self.data_dir / "academic_years"):
+        if self._rm(f"academic_years/{t}/{u}"):
             erased.append("academic-year records")
         # Subscription/entitlement record (Step 5, added to the walk 2026-08-24 — a new
         # Bucket-B store MUST join this traversal the day it is born, or an erased
@@ -377,8 +363,7 @@ class DataRightsServiceFileImpl(DataRightsService):
         # segment, so remove it ONLY for an individual (tenant == user): erasing one
         # teacher of a school must never destroy the school's subscription.
         if _slug(tenant_id) == _slug(user_id):
-            if self._rm(self.data_dir / "entitlements" / t,
-                        stop=self.data_dir / "entitlements"):
+            if self._rm(f"entitlements/{t}"):
                 erased.append("subscription record")
         # ★ The consent ledger is NOT walked — it is STAMPED (founder, 2026-08-27). Its
         #   rows survive (they are the proof the agreement was accepted, and _KEPT says
@@ -392,7 +377,7 @@ class DataRightsServiceFileImpl(DataRightsService):
             self.consents.supersede(tenant_id)
         # Account record LAST — identity must outlive its data during the walk.
         if self.accounts.load(tenant_id, user_id) is not None:
-            self._rm(self.data_dir / "accounts" / t / u, stop=self.data_dir / "accounts")
+            self._rm(f"accounts/{t}/{u}")
             erased.append("account record")
         return ErasureReceipt(
             erased=erased,

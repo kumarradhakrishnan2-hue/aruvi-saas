@@ -388,6 +388,29 @@ safe.
 
 ## 4. Migration checklist (do in this order)
 
+> ★ **HOW IT ACTUALLY LANDED — 2026-09-09 (Track C of `docs/mobile_migration_plan.md`).**
+> Items 1 and 3 are DONE, but not as the per-table adapters below imagined. Every Bucket-B
+> file adapter had the same shape — domain logic around a private "read JSON at path /
+> atomic write / delete / list folder" — so that private copy was lifted ONCE into
+> `aruvi_core/adapters/document_backend.py` with two implementations: **FileBackend**
+> (this folder tree, byte for byte, the default) and **PostgresBackend** (ONE `documents`
+> table: `key text primary key, kind, tenant_id, user_id, year_id, body jsonb, blob bytea,
+> updated_at`, keyed by the SAME '/'-joined key the folder layout used). The fifteen
+> repository classes keep their ports and their `*FileImpl` names and address the backend
+> by key. `ARUVI_STATE_BACKEND=file|postgres` + `ARUVI_DATABASE_URL` choose; migration is
+> `aruvi-scripts/migrate_state_to_postgres.py` (copy every key, verify every document —
+> 198/198 equal on the dev estate, idempotent). `tenant_id` is parsed from the key for
+> RLS/ops; a `_`-prefixed second segment (`_series`, `_ledger`) files with NO tenant — the
+> "outside the tenant shape" rule of §0.5, carried over literally. Locks: per-document,
+> a process lock on files and a transaction-scoped advisory lock on Postgres, so two API
+> instances are safe. **The per-table shapes in §2 remain the graduation path**: a store
+> that needs real columns (analytics, relational queries) gets its own table behind its
+> own port, one at a time. Item 1's identity half is Track B (Supabase Auth, the mobile as
+> the key). Items 4–7: 4 and 5 open (content stays in the image for the beta); 6 open;
+> 7 — RLS is ENABLED on `documents` with no policies (the API holds the owner role and
+> bypasses; the anon key sees nothing), cross-tenant isolation is exercised by
+> `tests/test_document_backend.py`'s API-on-Postgres journey.
+
 1. **Auth + tenancy**: Supabase Auth; create `tenant` / `app_user`; derive `ready` from a
    persisted `readiness_profile` instead of the front-end flag.
 2. **Persist the teaching profile** (§2.1): create `readiness_*` tables; have the shell call a

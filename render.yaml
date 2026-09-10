@@ -28,6 +28,14 @@ services:
     envVars:
       - key: ARUVI_STATE_DIR
         value: /var/aruvi/state
+      # Bucket B backend (Track C): `file` = the disk above; `postgres` = Supabase, with
+      # ARUVI_DATABASE_URL set to the project's SESSION-POOLER connection string (Render is
+      # IPv4-only; the direct db.<ref> host is IPv6). Migrate first:
+      # aruvi-scripts/migrate_state_to_postgres.py, then flip.
+      - key: ARUVI_STATE_BACKEND
+        value: file
+      - key: ARUVI_DATABASE_URL
+        sync: false
       - key: ARUVI_DATA_DIR
         value: /app/data/cloud/content
       # Comma-separated browser origins allowed to call the API. Native apps send no

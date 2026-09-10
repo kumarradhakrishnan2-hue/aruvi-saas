@@ -687,7 +687,27 @@ must confirm · source entry.
 
 ---
 
-## 2026-09-09 (newest) — MOBILE MIGRATION BEGINS: THE STACK IS CHOSEN, TRACK A IS BUILT
+## 2026-09-09 (newest, third entry) — TRACK C: ONE DOCUMENT BACKEND UNDER FIFTEEN PORTS
+
+**Founder chose "individual ports, combined storage".** `document_backend.py`: FileBackend
+(the tree, byte for byte, default) + PostgresBackend (one `documents` table, jsonb body,
+bytea blob, key = the folder path). All 15 adapters refactored to it — domain logic
+untouched, private read/write/lock copies gone, `slug` centralised (now strips `_` too, so
+no tenant can slug into `_series`/`_ledger`). `config.state_backend()` +
+`ARUVI_STATE_BACKEND` + `ARUVI_DATABASE_URL`; main.py's wiring block builds it once.
+`migrate_state_to_postgres.py` (copy + verify, idempotent). ★ **Verified in the cloud
+sandbox on a real Postgres 16:** contract on both backends, 198/198 documents migrate
+equal, API journey on postgres end to end, and the EXISTING API suites in postgres mode
+14/14. ⚠️ Two lessons: (a) `lock()` must be an RLock — the first cut deadlocked on a
+nested lock in one thread; (b) the erase tidy-up climbs only through EMPTY ancestors —
+a school tenant with other teachers keeps its folder, and a test that forgot that was
+the test's bug, not the code's. Postgres does neither (a DELETE by prefix is the whole
+erase). Docs: CLOUD_DATA_MODEL §4 header rewritten to say how it actually landed. Owed:
+the Supabase cut-over (migrate from the Mac via the session pooler, flip Render), Pro plan.
+
+---
+
+## 2026-09-09 — MOBILE MIGRATION BEGINS: THE STACK IS CHOSEN, TRACK A IS BUILT
 
 **Founder settled the external stack:** Render (FastAPI + aruvi_core) · Supabase (Postgres,
 Auth, RLS/backups/admin) · an Indian SMS provider for OTP · payments deferred. Plan:
@@ -724,9 +744,11 @@ loudly (it had printed "ok" on a failed curl). **Track B code BUILT the same eve
 the token's `phone` claim (`identity_from_claims` is the one place to flip to `sub`);
 web `lib/auth.js` + real six-box OTP in Login.jsx, returning sign-in now OTP-verified too;
 `next build` clean on the Mac; `tests/test_supabase_auth.py` 14 green. ⚠️ `PyJWT[crypto]` is a
-new API dependency — Render rebuilds with it on the next push. Owed: the Supabase project
-(founder), env on Render + `web/.env.local`, live pass with a test phone number; DLT waits on
-company registration.
+new API dependency — Render rebuilds with it on the next push. ★ **LIVE LOCALLY the same night.** Supabase project `meyy` (Mumbai, Free, ES256 keys, phone
+provider on with Textlocal placeholders, test numbers 919000000001–3 = 123456): Create→OTP→in,
+returning→OTP→in, stale stub session→front door (page.jsx rehydrate now treats 401 as REFUSED,
+not "no profile" — before this a rejected id got first-run). Full record: plan doc §Track B.
+Owed: flip Render to supabase mode; live 360px screenshot; real SMS after DLT.
 
 ---
 

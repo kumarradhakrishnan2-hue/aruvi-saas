@@ -1,4 +1,4 @@
-"""File-based implementation of SectionHistoryRepository.
+"""Document-backend implementation (file or Postgres — Track C, 2026-09-09) of SectionHistoryRepository.
 
 Persists each section's ledger of chapters already taught as JSON at
 ARUVI_STATE_DIR/section_history/{tenant_id}/{user_id}/{year_id}/history.json, shaped as
@@ -25,20 +25,12 @@ is a new cohort, and last year's trail belongs to last year. The API layer resol
 year is current; this adapter just addresses by it. With no auth yet tenant_id == user_id
 (the X-Aruvi-User value).
 """
-import json
-import os
-import tempfile
-import threading
-from pathlib import Path
 from typing import Any, Dict, List
 
 from aruvi_core.ports import SectionHistoryEntry, SectionHistoryRepository
+from aruvi_core.adapters.document_backend import as_backend, slug as _slug
 
 
-def _slug(s: str) -> str:
-    """Filesystem-safe slug for a tenant/user id (defends against path traversal)."""
-    s = str(s).strip() or "local"
-    return "".join(c if c.isalnum() or c in "-_" else "-" for c in s).strip("-") or "local"
 
 
 def _ts_of(entry: Dict[str, Any]) -> int:
@@ -56,73 +48,37 @@ def _ts_of(entry: Dict[str, Any]) -> int:
 class SectionHistoryRepositoryFileImpl(SectionHistoryRepository):
     """File-based per-section chapter-history store."""
 
-    def __init__(self, data_dir: str):
+    def __init__(self, data_dir):
         """
         Args:
-            data_dir: Base directory where section_history/ lives (e.g. ARUVI_STATE_DIR).
+            data_dir: a DocumentBackend, or a directory (→ FileBackend at that root, e.g.
+                      ARUVI_STATE_DIR — every existing call site and test). Read-modify-
+                      write is serialised per DOCUMENT through backend.lock(): a thread
+                      lock on files (one process, as before) and additionally a
+                      transaction-scoped advisory lock on Postgres, so two API instances
+                      cannot lose each other's update (the DB row-lock the file version
+                      always said was "later").
         """
-        self.data_dir = Path(data_dir)
-        self.base_dir = self.data_dir / "section_history"
-        # Serialize the read-modify-write of the shared history.json WITHIN this process,
-        # for the reason section_state_repository_file spells out: FastAPI runs handlers on
-        # a threadpool, so two near-simultaneous merges would otherwise both read the same
-        # snapshot and the second write would lose the first section's row. os.replace keeps
-        # a write from tearing the file; this lock keeps writes from losing each other.
-        # One module-level repo instance (api/main.py) → the lock is process-wide. A
-        # multi-process deployment moves this to the DB row-lock (Supabase, §2.4).
-        self._lock = threading.Lock()
+        self.backend = as_backend(data_dir)
 
-    def _path(self, tenant_id: str, user_id: str, year_id: str) -> Path:
-        return (self.base_dir / _slug(tenant_id) / _slug(user_id) / _slug(year_id)
-                / "history.json")
+    def _key(self, tenant_id: str, user_id: str, year_id: str) -> str:
+        return f"section_history/{_slug(tenant_id)}/{_slug(user_id)}/{_slug(year_id)}/history.json"
+
+    # File-backend diagnostic (tests inspect the raw document on disk).
+    def _path(self, tenant_id: str, user_id: str, year_id: str):
+        return self.backend._path(self._key(tenant_id, user_id, year_id))
+
+    def _locked(self, tenant_id: str, user_id: str, year_id: str):
+        return self.backend.lock(self._key(tenant_id, user_id, year_id))
 
     def _read(self, tenant_id: str, user_id: str, year_id: str) -> Dict[str, Any]:
-        path = self._path(tenant_id, user_id, year_id)
-        if not path.exists():
-            return {}
-        try:
-            with open(path, "r") as f:
-                data = json.load(f)
-            return data if isinstance(data, dict) else {}
-        except IOError:
-            return {}
-        except json.JSONDecodeError:
-            # SELF-HEAL a file torn by a legacy non-atomic write, exactly as the section-state
-            # adapter does: raw_decode parses the VALID leading object and ignores trailing
-            # garbage, so a damaged file still returns the real ledger instead of {}. Returning
-            # {} is what lets a corrupt file look like "she has taught nothing".
-            try:
-                with open(path, "r") as f:
-                    raw = f.read()
-                obj, _ = json.JSONDecoder().raw_decode(raw.lstrip())
-                return obj if isinstance(obj, dict) else {}
-            except Exception:               # noqa: BLE001
-                return {}
+        """The whole document, or {} when absent. Corruption is self-healed by the file
+        backend (raw_decode keeps the valid leading object — the 2026-07-03 rule)."""
+        data = self.backend.get_json(self._key(tenant_id, user_id, year_id))
+        return data if isinstance(data, dict) else {}
 
-    def _write(self, tenant_id: str, user_id: str, year_id: str,
-               data: Dict[str, Any]) -> None:
-        # ATOMIC write: temp file in the same dir, then os.replace over the target, which is
-        # atomic on POSIX/Windows — a reader always sees the complete old file or the
-        # complete new one, never a half-written one.
-        path = self._path(tenant_id, user_id, year_id)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        tmp = None
-        try:
-            fd, tmp = tempfile.mkstemp(dir=str(path.parent), prefix=".history-", suffix=".tmp")
-            with os.fdopen(fd, "w") as f:
-                json.dump(data, f, indent=2)
-                f.flush()
-                os.fsync(f.fileno())
-            os.replace(tmp, path)
-            tmp = None
-        except IOError as e:
-            raise ValueError(f"Failed to save section history to {path}: {e}")
-        finally:
-            if tmp is not None and os.path.exists(tmp):
-                try:
-                    os.remove(tmp)
-                except OSError:
-                    pass
+    def _write(self, tenant_id: str, user_id: str, year_id: str, data: Dict[str, Any]) -> None:
+        self.backend.put_json(self._key(tenant_id, user_id, year_id), data)
 
     def load_all(self, tenant_id: str, user_id: str,
                  year_id: str) -> Dict[str, Dict[str, SectionHistoryEntry]]:
@@ -136,7 +92,7 @@ class SectionHistoryRepositoryFileImpl(SectionHistoryRepository):
         identity has nowhere to live and would silently accumulate under an empty key."""
         if not section_key or not entries:
             return
-        with self._lock:
+        with self._locked(tenant_id, user_id, year_id):
             data = self._read(tenant_id, user_id, year_id)
             rows = dict(data.get(section_key) or {})
             changed = False
@@ -177,7 +133,7 @@ class SectionHistoryRepositoryFileImpl(SectionHistoryRepository):
         sectionHistory.js — "untracking a chapter must not erase the record that it was once
         taught"). This exists only for the two sites that already delete the section's
         POINTER, where the section itself is gone."""
-        with self._lock:
+        with self._locked(tenant_id, user_id, year_id):
             data = self._read(tenant_id, user_id, year_id)
             if section_key in data:
                 data.pop(section_key, None)
@@ -185,12 +141,6 @@ class SectionHistoryRepositoryFileImpl(SectionHistoryRepository):
 
     def clear_all(self, tenant_id: str, user_id: str, year_id: str) -> None:
         """Erase this teacher's whole ledger for the year (profile reset / start fresh)."""
-        with self._lock:
-            path = self._path(tenant_id, user_id, year_id)
-            if not path.exists():
-                return
-            try:
-                path.unlink()
-            except OSError:
-                # mounts that allow overwrite but not unlink → write an empty map instead
-                self._write(tenant_id, user_id, year_id, {})
+        with self._locked(tenant_id, user_id, year_id):
+            # (the file backend writes an empty map where unlink is forbidden)
+            self.backend.delete(self._key(tenant_id, user_id, year_id))

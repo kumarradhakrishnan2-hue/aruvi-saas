@@ -1,7 +1,8 @@
 """Founder entitlement CLI — grant, expire, revoke and inspect access with no gateway.
 
 Administrative architecture Step 5's "done" test: the founder can operate subscriptions
-by hand. Runs against the same file adapters the API uses (honours ARUVI_STATE_DIR).
+by hand. Runs against the same adapters and the same state backend the API uses
+(honours ARUVI_STATE_DIR, and ARUVI_STATE_BACKEND=postgres + ARUVI_DATABASE_URL).
 
 Usage (from the repo root):
   python3 aruvi-scripts/entitlement.py status  <tenant>
@@ -45,7 +46,7 @@ def main() -> int:
                     help="discard scopes she already holds instead of adding to them")
     args = ap.parse_args()
 
-    repo = EntitlementRepositoryFileImpl(config.STATE_DIR)
+    repo = EntitlementRepositoryFileImpl(config.state_backend())
     provider = ManualBillingProvider(repo)
 
     if args.action == "status":

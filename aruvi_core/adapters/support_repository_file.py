@@ -1,4 +1,4 @@
-"""File-based implementation of SupportRepository (2026-08-27).
+"""SupportRepository over the document backend (file or Postgres — Track C, 2026-09-09).
 
 Layout, under ARUVI_STATE_DIR:
 
@@ -24,21 +24,13 @@ book that has to balance, and 742 → 1000 is a counter growing, not a format br
 """
 from __future__ import annotations
 
-import json
-import os
-import tempfile
-import threading
 from dataclasses import asdict
-from pathlib import Path
 from typing import List
 
 from aruvi_core.ports import SupportRepository, SupportRequest
+from aruvi_core.adapters.document_backend import as_backend, slug as _slug
 
 
-def _slug(s: str) -> str:
-    """Filesystem-safe slug for a tenant/user id (defends against path traversal)."""
-    s = str(s).strip() or "local"
-    return "".join(c if c.isalnum() or c in "-_" else "-" for c in s).strip("-_") or "local"
 
 
 def reference_to_file(reference: str) -> str:
@@ -63,71 +55,55 @@ class SupportRepositoryFileImpl(SupportRepository):
                       series is gapless and counts real cases, so it stays auditable;
                       the only thing hidden is where the count began.
         """
-        self.base_dir = Path(data_dir) / "support"
-        self.series_dir = self.base_dir / "_series"
+        self.backend = as_backend(data_dir)
         self.prefix = (prefix or "MEY-S").strip() or "MEY-S"
         self.start = int(start)
-        self._lock = threading.Lock()
 
-    # ── paths ──
-    def _dir(self, tenant_id: str, user_id: str) -> Path:
-        return self.base_dir / _slug(tenant_id) / _slug(user_id)
+    # ── keys ──
+    def _prefix(self, tenant_id: str, user_id: str) -> str:
+        return f"support/{_slug(tenant_id)}/{_slug(user_id)}"
 
     # ── numbering ──
     def next_reference(self) -> str:
-        """Next in the gapless series. Process-locked and written whole via a temp file
-        + atomic replace — honest for one uvicorn process and NOT enough for two; the
-        partner's DB adapter must take this from a sequence or a row lock. A duplicated
+        """Next in the gapless series, under the backend's per-document lock — a process
+        lock on files, a transaction-scoped advisory lock on Postgres (the "sequence or
+        row lock" the file version said the DB adapter must bring). A duplicated
         reference is worse here than in most places: two teachers quoting the same
         number in two threads is a support system quietly lying to both of them."""
-        path = self.series_dir / "support.json"
-        with self._lock:
-            n = 0
-            if path.exists():
-                try:
-                    with open(path, "r") as f:
-                        n = int((json.load(f) or {}).get("last", 0))
-                except (json.JSONDecodeError, IOError, TypeError, ValueError):
-                    n = 0
+        key = "support/_series/support.json"
+        with self.backend.lock(key):
+            raw = self.backend.get_json(key)
+            try:
+                n = int((raw or {}).get("last", 0)) if isinstance(raw, dict) else 0
+            except (TypeError, ValueError):
+                n = 0
             # `start` is the FLOOR, not just the seed: a corrupt or missing counter can
             # only ever restart the series, never rewind past a reference already given
             # to somebody.
             n = max(n + 1, self.start)
-            self.series_dir.mkdir(parents=True, exist_ok=True)
-            fd, tmp = tempfile.mkstemp(dir=str(self.series_dir), suffix=".tmp")
-            try:
-                with os.fdopen(fd, "w") as f:
-                    json.dump({"last": n}, f)
-                os.replace(tmp, path)
-            except Exception:
-                if os.path.exists(tmp):
-                    os.unlink(tmp)
-                raise
+            self.backend.put_json(key, {"last": n})
         return f"{self.prefix}-{n}"
 
     # ── read / write ──
     def save(self, request: SupportRequest) -> None:
-        d = self._dir(request.tenant_id, request.user_id)
-        d.mkdir(parents=True, exist_ok=True)
-        with open(d / f"{reference_to_file(request.reference)}.json", "w") as f:
-            json.dump(asdict(request), f, indent=2)
+        self.backend.put_json(
+            f"{self._prefix(request.tenant_id, request.user_id)}/{reference_to_file(request.reference)}.json",
+            asdict(request))
 
     def load_all(self, tenant_id: str, user_id: str) -> List[SupportRequest]:
         """Every request for this teacher, NEWEST FIRST (by creation time, then
         reference — the reference breaks ties within a same-second double send)."""
-        d = self._dir(tenant_id, user_id)
-        if not d.exists():
-            return []
+        base = self._prefix(tenant_id, user_id)
         out: List[SupportRequest] = []
-        for path in sorted(d.glob("*.json")):
-            try:
-                with open(path, "r") as f:
-                    raw = json.load(f) or {}
-            except (json.JSONDecodeError, IOError):
+        for key in self.backend.list_keys(base):
+            if not key.endswith(".json") or "/" in key[len(base) + 1:]:
+                continue
+            raw = self.backend.get_json(key)
+            if not isinstance(raw, dict):
                 continue          # one unreadable request must not hide the others
             fields = {k: v for k, v in raw.items()
                       if k in SupportRequest.__dataclass_fields__}
-            fields.setdefault("reference", path.stem)
+            fields.setdefault("reference", key.rsplit("/", 1)[-1][:-5])
             fields.setdefault("tenant_id", tenant_id)
             fields.setdefault("user_id", user_id)
             fields.setdefault("category", "")

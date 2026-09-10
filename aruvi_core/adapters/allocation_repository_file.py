@@ -1,7 +1,7 @@
-"""File-based implementation of AllocationRepository.
+"""AllocationRepository over the document backend (file or Postgres — Track C, 2026-09-09).
 
-Persists the Persistent Annual Allocation Register as JSON at
-STATE_DIR/allocations/{tenant_id}/{user_id}/{year_id}/{subject}/{grade}/allocation.json.
+Persists the Persistent Annual Allocation Register as one JSON document per subject·grade
+at key allocations/{tenant_id}/{user_id}/{year_id}/{subject}/{grade}/allocation.json.
 
 The register is per-user/tenant STATE (Bucket B), so it is keyed by tenant_id + user_id —
 the same identity readiness uses — so two teachers never share or overwrite each other's
@@ -19,36 +19,28 @@ Merge semantics: chapters in the new allocation overwrite existing allocations
 for those chapters; chapters not in the new allocation retain their previous
 allocations.
 """
-import json
-from pathlib import Path
 from typing import Dict, Union
 
 from aruvi_core.ports import AllocationRecord, AllocationRepository, AllocationSummary
 from aruvi_core.grades import stage_for
-
-
-def _slug(s: str) -> str:
-    """Filesystem-safe slug for a tenant/user id (defends against path traversal)."""
-    s = str(s).strip() or "local"
-    return "".join(c if c.isalnum() or c in "-_" else "-" for c in s).strip("-") or "local"
+from aruvi_core.adapters.document_backend import as_backend, slug as _slug
 
 
 class AllocationRepositoryFileImpl(AllocationRepository):
-    """File-based Persistent Annual Allocation Register, keyed per tenant + user."""
+    """Persistent Annual Allocation Register over a document backend, keyed per tenant + user."""
 
-    def __init__(self, data_dir: str):
+    def __init__(self, data_dir):
         """
         Args:
-            data_dir: Base directory where allocations/ folder lives (e.g., STATE_DIR).
+            data_dir: a DocumentBackend, or a directory (→ FileBackend, e.g. STATE_DIR).
         """
-        self.data_dir = Path(data_dir)
-        self.allocations_dir = self.data_dir / "allocations"
+        self.backend = as_backend(data_dir)
 
-    def _register_path(self, tenant_id: str, user_id: str, year_id: str,
-                       subject: str, grade: Union[str, int]) -> Path:
-        """Return the path to this teacher's allocation register file for one year."""
-        return (self.allocations_dir / _slug(tenant_id) / _slug(user_id) / _slug(year_id)
-                / subject / str(grade) / "allocation.json")
+    def _key(self, tenant_id: str, user_id: str, year_id: str,
+             subject: str, grade: Union[str, int]) -> str:
+        """The register document's key for one teacher-year-subject-grade."""
+        return (f"allocations/{_slug(tenant_id)}/{_slug(user_id)}/{_slug(year_id)}"
+                f"/{subject}/{grade}/allocation.json")
 
     def load_register(self, tenant_id: str, user_id: str, year_id: str,
                       subject: str, grade: Union[str, int]) -> Dict[str, AllocationRecord]:
@@ -56,15 +48,9 @@ class AllocationRepositoryFileImpl(AllocationRepository):
 
         Returns empty dict if no register exists yet.
         """
-        path = self._register_path(tenant_id, user_id, year_id, subject, grade)
-        if not path.exists():
+        data = self.backend.get_json(self._key(tenant_id, user_id, year_id, subject, grade))
+        if not isinstance(data, dict):
             return {}
-
-        try:
-            with open(path, "r") as f:
-                data = json.load(f)
-        except (json.JSONDecodeError, IOError) as e:
-            raise ValueError(f"Failed to load allocation register from {path}: {e}")
 
         # Normalize each entry to the AllocationRecord shape. Tolerates legacy registers
         # written before this schema (plain int = total periods only) by upgrading them
@@ -97,16 +83,7 @@ class AllocationRepositoryFileImpl(AllocationRepository):
         # Merge: update with new allocations, preserve untouched chapters
         merged = {**existing, **chapters_allocation}
 
-        # Ensure path exists
-        path = self._register_path(tenant_id, user_id, year_id, subject, grade)
-        path.parent.mkdir(parents=True, exist_ok=True)
-
-        # Write merged register
-        try:
-            with open(path, "w") as f:
-                json.dump(merged, f, indent=2)
-        except IOError as e:
-            raise ValueError(f"Failed to save allocation register to {path}: {e}")
+        self.backend.put_json(self._key(tenant_id, user_id, year_id, subject, grade), merged)
 
     def get_summary(self, tenant_id: str, user_id: str, year_id: str,
                     subject: str, grade: Union[str, int]) -> AllocationSummary:
@@ -150,17 +127,6 @@ class AllocationRepositoryFileImpl(AllocationRepository):
     def clear_register(self, tenant_id: str, user_id: str, year_id: str,
                        subject: str, grade: Union[str, int]) -> None:
         """Erase this teacher's register for a subject·grade in one year. No-op if it
-        doesn't exist.
-
-        Prefers removing the file; on filesystems where unlink is not permitted (some
-        read-restricted mounts allow overwrite but not delete) falls back to writing an
-        empty register, so "Reset allocations" never errors.
-        """
-        path = self._register_path(tenant_id, user_id, year_id, subject, grade)
-        if not path.exists():
-            return
-        try:
-            path.unlink()
-        except OSError:
-            with open(path, "w") as f:
-                json.dump({}, f)
+        doesn't exist (the file backend leaves an empty document where unlink is
+        forbidden, so "Reset allocations" never errors)."""
+        self.backend.delete(self._key(tenant_id, user_id, year_id, subject, grade))

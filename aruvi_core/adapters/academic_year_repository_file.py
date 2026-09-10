@@ -1,7 +1,7 @@
-"""File-based implementation of AcademicYearRepository.
+"""AcademicYearRepository over the document backend (file or Postgres — Track C, 2026-09-09).
 
-Persists a teacher's academic years as JSON at
-ARUVI_STATE_DIR/academic_years/{tenant_id}/{user_id}/years.json, shaped as
+Persists a teacher's academic years as one JSON document at key
+academic_years/{tenant_id}/{user_id}/years.json, shaped as
 
     {"years": [{year_id, starts_on, ends_on, is_current}, ...], "updated_at": iso}
 
@@ -15,44 +15,31 @@ invents one.
 Step 2 (cutover) extends the port with close_year() against this same file; nothing
 here anticipates it.
 """
-import json
 from dataclasses import asdict
 from datetime import datetime, timezone
-from pathlib import Path
 from typing import List, Optional
 
 from aruvi_core.ports import AcademicYear, AcademicYearRepository
-
-
-def _slug(s: str) -> str:
-    """Filesystem-safe slug for a tenant/user id (defends against path traversal)."""
-    s = str(s).strip() or "local"
-    return "".join(c if c.isalnum() or c in "-_" else "-" for c in s).strip("-") or "local"
+from aruvi_core.adapters.document_backend import as_backend, slug as _slug
 
 
 class AcademicYearRepositoryFileImpl(AcademicYearRepository):
-    """File-based academic-year store."""
+    """Academic-year store over a document backend."""
 
-    def __init__(self, data_dir: str):
+    def __init__(self, data_dir):
         """
         Args:
-            data_dir: Base directory where the academic_years/ folder lives (e.g. ARUVI_STATE_DIR).
+            data_dir: a DocumentBackend, or a directory (→ FileBackend, e.g. ARUVI_STATE_DIR).
         """
-        self.data_dir = Path(data_dir)
-        self.base_dir = self.data_dir / "academic_years"
+        self.backend = as_backend(data_dir)
 
-    def _path(self, tenant_id: str, user_id: str) -> Path:
-        return self.base_dir / _slug(tenant_id) / _slug(user_id) / "years.json"
+    def _key(self, tenant_id: str, user_id: str) -> str:
+        return f"academic_years/{_slug(tenant_id)}/{_slug(user_id)}/years.json"
 
     def _read(self, tenant_id: str, user_id: str) -> List[AcademicYear]:
-        path = self._path(tenant_id, user_id)
-        if not path.exists():
-            return []
-        try:
-            with open(path, "r") as f:
-                raw = json.load(f) or {}
-        except (json.JSONDecodeError, IOError) as e:
-            raise ValueError(f"Failed to load academic years from {path}: {e}")
+        raw = self.backend.get_json(self._key(tenant_id, user_id)) or {}
+        if not isinstance(raw, dict):
+            raw = {}
         out: List[AcademicYear] = []
         for y in raw.get("years", []):
             out.append(AcademicYear(
@@ -65,17 +52,11 @@ class AcademicYearRepositoryFileImpl(AcademicYearRepository):
         return out
 
     def _write(self, tenant_id: str, user_id: str, years: List[AcademicYear]) -> None:
-        path = self._path(tenant_id, user_id)
-        path.parent.mkdir(parents=True, exist_ok=True)
         record = {
             "years": [asdict(y) for y in years],
             "updated_at": datetime.now(timezone.utc).isoformat(),
         }
-        try:
-            with open(path, "w") as f:
-                json.dump(record, f, indent=2)
-        except IOError as e:
-            raise ValueError(f"Failed to save academic years to {path}: {e}")
+        self.backend.put_json(self._key(tenant_id, user_id), record)
 
     def current(self, tenant_id: str, user_id: str) -> Optional[AcademicYear]:
         """The teacher's current academic year, or None if none has been opened yet."""

@@ -74,12 +74,18 @@ app.add_middleware(
 from .testing_campaign import router as testing_campaign_router  # noqa: E402
 app.include_router(testing_campaign_router)
 
-# Initialize the allocation repository. The allocation register is per-user/tenant STATE
-# (Bucket B), so it writes to STATE_DIR (aruvi-saas/data/allocations/) — NOT the read-only
-# content dir. (Previously it wrote into the prototype content mirror; moved here so all
-# user data lives under data/.) File-based now; Supabase adapter swaps in behind the same
-# AllocationRepository port at Phase 4.
-allocation_repo = AllocationRepositoryFileImpl(config.STATE_DIR)
+# ── Bucket B — THE state backend (Track C, 2026-09-09) ────────────────────────────
+# One DocumentBackend for every per-teacher store below: the folder tree at STATE_DIR
+# (file mode — local dev, tests, the Render disk) or the `documents` table at
+# DATABASE_URL (postgres mode — Supabase). config.STATE_BACKEND picks; nothing else in
+# this file knows which. The repository classes keep their *FileImpl names — the
+# "file" is history, the class is the port's implementation over whichever backend.
+state = config.state_backend()
+print(f"[aruvi] state: {state.describe()}")
+
+# The allocation register is per-user/tenant STATE (Bucket B) — never the read-only
+# content tree.
+allocation_repo = AllocationRepositoryFileImpl(state)
 
 # ── Content store (Bucket A) behind the Storage port ───────────────────────────────
 # ★ The seam the provider sheet listed as declared-but-bypassed, honoured 2026-08-29.
@@ -98,14 +104,14 @@ storage = data.storage()
 # (Bucket B), so it writes to STATE_DIR (aruvi-saas/data/) — NOT the read-only content
 # mirror in DATA_DIR. File-based for now; the Supabase adapter swaps in at Phase 4 behind
 # the same ReadinessRepository port, replacing this folder. (See CLOUD_DATA_MODEL.md §0/§2.)
-readiness_repo = ReadinessRepositoryFileImpl(config.STATE_DIR)
+readiness_repo = ReadinessRepositoryFileImpl(state)
 
 # Per-section teaching-state repository (which chapter a section tracks + how far along +
 # done). Bucket-B STATE, so it also writes to STATE_DIR (data/section_state/). Moving this
 # off the browser's localStorage is what makes tracking/progress follow a teacher across
 # devices (CLOUD_DATA_MODEL.md §2.4). File-based now; Supabase adapter swaps in at Phase 4
 # behind the same SectionStateRepository port.
-section_state_repo = SectionStateRepositoryFileImpl(config.STATE_DIR)
+section_state_repo = SectionStateRepositoryFileImpl(state)
 
 # Per-section chapter-HISTORY repository — the ledger of what each section has already been
 # taught. Its sibling above holds only the CURRENT binding and deletes the row the moment a
@@ -113,7 +119,7 @@ section_state_repo = SectionStateRepositoryFileImpl(config.STATE_DIR)
 # the last teaching state living in the browser alone (sectionHistory.js's own header said the
 # mirror was owed); without it a phone and a laptop keep two disagreeing accounts of the same
 # class. Bucket-B STATE under STATE_DIR (data/section_history/).
-section_history_repo = SectionHistoryRepositoryFileImpl(config.STATE_DIR)
+section_history_repo = SectionHistoryRepositoryFileImpl(state)
 
 # Plan-archive repository — which saved plans a teacher has archived from My Lessons (to
 # declutter without ever hard-deleting a costly, back-referenced plan). A per-tenant FLAG, not
@@ -121,7 +127,7 @@ section_history_repo = SectionHistoryRepositoryFileImpl(config.STATE_DIR)
 # STATE under STATE_DIR (data/plan_archive/). File-based now; a Supabase adapter (an
 # `archived_at` column / small `plan_archive` table) swaps in at Phase 4 behind the same
 # PlanArchiveRepository port. (Design decision 2026-07-04 — no hard delete anywhere.)
-plan_archive_repo = PlanArchiveRepositoryFileImpl(config.STATE_DIR)
+plan_archive_repo = PlanArchiveRepositoryFileImpl(state)
 
 # Prepared-plans register — which saved plans THIS teacher has actually prepared. Because live
 # generation is deferred, the saved-plan library is shared read-only CONTENT (identical for
@@ -129,13 +135,13 @@ plan_archive_repo = PlanArchiveRepositoryFileImpl(config.STATE_DIR)
 # register records her own preparations (first-run writes its chapter; PrepareLesson appends on
 # each generate) so /plans can flag — and My Lessons can filter to — only her work. Swaps to a
 # Supabase-backed store behind the same PreparedPlansRepository port at Phase 4. (2026-07-05)
-prepared_plans_repo = PreparedPlansRepositoryFileImpl(config.STATE_DIR)
+prepared_plans_repo = PreparedPlansRepositoryFileImpl(state)
 
 # Chapter-notes repository (administrative architecture Step 3) — the teacher's own
 # writing on a chapter, lifted OFF browser localStorage (the last teacher data with no
 # owner, CLOUD_DATA_MODEL.md §2.8). One note per chapter per academic year; year-scoped
 # like the rest of the teaching state so notes stay with their year's plans at cutover.
-plan_note_repo = PlanNoteRepositoryFileImpl(config.STATE_DIR)
+plan_note_repo = PlanNoteRepositoryFileImpl(state)
 
 # Data rights: export + erase (administrative architecture Step 4). One traversal over
 # every Bucket-B store — DPDP portability, DPDP erasure, Apple 5.1.1(v). Both routes must
@@ -153,7 +159,7 @@ def _chapter_title_resolver(subject: str, grade: str, chapter_number: int) -> st
     return ""
 
 
-data_rights = DataRightsServiceFileImpl(config.STATE_DIR,
+data_rights = DataRightsServiceFileImpl(state,
                                         chapter_title=_chapter_title_resolver)
 
 # Entitlement (administrative architecture Step 5 — the payment-shaped hole). Model:
@@ -162,8 +168,8 @@ data_rights = DataRightsServiceFileImpl(config.STATE_DIR,
 # what costs money; nothing else is ever gated, and data rights explicitly never are.
 # Enforcement is OFF by default (config.ENTITLEMENT_ENFORCED) so the seam is real but
 # daily dev is undisturbed; the founder operates it via aruvi-scripts/entitlement.py.
-entitlement_repo = EntitlementRepositoryFileImpl(config.STATE_DIR)
-invoice_repo = InvoiceRepositoryFileImpl(config.STATE_DIR, prefix=config.INVOICE_PREFIX,
+entitlement_repo = EntitlementRepositoryFileImpl(state)
+invoice_repo = InvoiceRepositoryFileImpl(state, prefix=config.INVOICE_PREFIX,
                                         start=config.INVOICE_START)
 billing_provider = ManualBillingProvider(entitlement_repo)
 
@@ -172,17 +178,17 @@ billing_provider = ManualBillingProvider(entitlement_repo)
 # ★ Its store deliberately sits outside every folder the erase traversal walks (see
 # consent_repository_file.py): the record survives account deletion, the erasure receipt
 # says so, and §G of the agreement says so.
-consent_repo = ConsentRepositoryFileImpl(config.STATE_DIR)
+consent_repo = ConsentRepositoryFileImpl(state)
 
 # Support (2026-08-27) — email is the only channel, so every message she sends is filed
 # here with a reference before it is mailed. Bucket-B STATE (her own words), and it
 # joined the export + erase traversal the day it was born; the reference SERIES sits in
 # support/_series/, outside every folder that traversal walks, for the same reason the
 # invoice series does.
-support_repo = SupportRepositoryFileImpl(config.STATE_DIR, prefix=config.SUPPORT_PREFIX,
+support_repo = SupportRepositoryFileImpl(state, prefix=config.SUPPORT_PREFIX,
                                          start=config.SUPPORT_START)
 # The one store the erase walk must never traverse — see erasure_log_file.py.
-erasure_log = ErasureLogFileImpl(config.STATE_DIR)
+erasure_log = ErasureLogFileImpl(state)
 
 # The Notifier: real SMTP only when the founder has set all three credentials in the
 # environment; otherwise the file outbox, so the preview never needs a mail account and
@@ -222,12 +228,12 @@ if config.SIMULATED_TODAY:
 # Account + tenant record (administrative architecture Step 0) — the durable record that
 # billing, privacy, notifications and the institutional tier all hang off. NOT year-scoped
 # (a subscription is rolling). Bucket-B STATE under STATE_DIR (data/accounts/).
-account_repo = AccountRepositoryFileImpl(config.STATE_DIR)
+account_repo = AccountRepositoryFileImpl(state)
 
 # Academic years (administrative architecture Step 1) — which years exist for a teacher and
 # which is current. Every piece of TEACHING state below is filed under the current year;
 # the account and the teaching profile deliberately are not. STATE_DIR (data/academic_years/).
-academic_year_repo = AcademicYearRepositoryFileImpl(config.STATE_DIR)
+academic_year_repo = AcademicYearRepositoryFileImpl(state)
 
 # Cutover (Step 2) — composed from repositories that already exist, because it MOVES
 # NOTHING: year-scoped paths mean opening the next year is the whole operation.

@@ -24,16 +24,10 @@ Append-only, one file per tenant so a school's deletions sit together (founder,
 """
 from __future__ import annotations
 
-import json
 from datetime import datetime, timezone
-from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-
-def _slug(s: str) -> str:
-    """Filesystem-safe slug for a tenant/user id (defends against path traversal)."""
-    s = str(s).strip() or "local"
-    return "".join(c if c.isalnum() or c in "-_" else "-" for c in s).strip("-") or "local"
+from aruvi_core.adapters.document_backend import as_backend, slug as _slug
 
 
 class ErasureLogFileImpl:
@@ -45,10 +39,12 @@ class ErasureLogFileImpl:
             data_dir: Base directory (ARUVI_STATE_DIR). The erasure_log/ folder lives
                 here but is NOT part of the erase traversal — that is the whole point.
         """
-        self.log_dir = Path(data_dir) / "erasure_log"
+        self.backend = as_backend(data_dir)
 
-    def _path(self, tenant_id: str) -> Path:
-        return self.log_dir / f"{_slug(tenant_id)}.json"
+    def _key(self, tenant_id: str) -> str:
+        # erasure_log/{tenant}.json — two segments, so the backend files it with NO
+        # tenant column: outside the tenant shape, outside the erase sweep, by design.
+        return f"erasure_log/{_slug(tenant_id)}.json"
 
     # NOTE: Optional[...], never `X | None` — the founder's Mac runs Python 3.9, where
     # PEP 604 unions are a TypeError at import. Keep every annotation 3.9-safe.
@@ -65,18 +61,12 @@ class ErasureLogFileImpl:
             "erased_counts": dict(erased or {}),
         }
         try:
-            self.log_dir.mkdir(parents=True, exist_ok=True)
-            path = self._path(tenant_id)
-            existing: List[Dict[str, Any]] = []
-            if path.exists():
-                try:
-                    with open(path, "r") as f:
-                        existing = json.load(f) or []
-                except (json.JSONDecodeError, IOError):
-                    existing = []          # a corrupt log must not block a deletion
-            existing.append(entry)
-            with open(path, "w") as f:
-                json.dump(existing, f, indent=2)
+            key = self._key(tenant_id)
+            with self.backend.lock(key):
+                raw = self.backend.get_json(key)
+                existing: List[Dict[str, Any]] = raw if isinstance(raw, list) else []
+                existing.append(entry)
+                self.backend.put_json(key, existing)
             entry["logged"] = True
         except Exception:                  # noqa: BLE001 — see the docstring
             entry["logged"] = False
@@ -84,11 +74,5 @@ class ErasureLogFileImpl:
 
     def for_tenant(self, tenant_id: str) -> List[Dict[str, Any]]:
         """Every deletion recorded under this tenant, oldest first. Empty when none."""
-        path = self._path(tenant_id)
-        if not path.exists():
-            return []
-        try:
-            with open(path, "r") as f:
-                return json.load(f) or []
-        except (json.JSONDecodeError, IOError):
-            return []
+        raw = self.backend.get_json(self._key(tenant_id))
+        return raw if isinstance(raw, list) else []

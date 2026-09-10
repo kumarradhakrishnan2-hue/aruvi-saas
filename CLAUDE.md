@@ -741,7 +741,9 @@ aruvi_core/            engine (Python, no UI deps)
   view_model.py        canonical structure-preserving contract
   subjects/            base.py (Subject interface) + __init__.py (registry) + one pkg/subject
   ports.py  engine.py  normalize.py  grades.py  allocate.py  render/html.py
-  adapters/            file impls of the ports (allocation + readiness repos; Supabase later)
+  adapters/            the ports' implementations — every Bucket-B repository over ONE
+                       document_backend.py (FileBackend = the tree, PostgresBackend = one
+                       `documents` table; Track C 2026-09-09) + auth/billing/notifier/storage
 api/                   FastAPI service (main.py, data.py, config.py) — wraps the engine
 web/                   Next.js app (app/page.jsx = login gate + 2 tabs: My Plans + Generate; see §11; app/globals.css = design)
 tests/                 test_*.py + fixtures/ (real saved plans + mappings as parity fixtures)
@@ -823,7 +825,11 @@ runtime NEVER reads. `api/config.py` exposes three seams:
   serve cache). Cloud home: object store.
 - **`STATE_DIR`** (env `ARUVI_STATE_DIR`) — **Bucket B**, per-user/tenant STATE. Defaults to
   `data/cloud/state/` (accounts, academic_years, readiness, allocations, section_state,
-  prepared_plans, plan_archive, plan_notes). Cloud home: Supabase Postgres.
+  prepared_plans, plan_archive, plan_notes). ★ **Cloud home built 2026-09-09 (Track C):**
+  `ARUVI_STATE_BACKEND=postgres` + `ARUVI_DATABASE_URL` put every store on ONE Supabase
+  `documents` table keyed by the same folder path (`config.state_backend()`,
+  `aruvi_core/adapters/document_backend.py`); `aruvi-scripts/migrate_state_to_postgres.py`
+  moves and verifies. File mode stays the default for dev and tests.
 - **`TESTING_DIR`** (env `ARUVI_TESTING_DIR`) — the testing-campaign register, LOCAL-only,
   `data/testing/` — deliberately outside the migration unit.
 

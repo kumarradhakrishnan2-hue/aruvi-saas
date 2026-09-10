@@ -58,7 +58,7 @@ smoke, a plan serve and an erase all passed against the public host, ~100–200 
 ⚠️ `onrender.com` is unreachable from the Cowork sandboxes (proxy 403) — verify through the
 browser, not curl.
 
-### Track B — Supabase Auth + Indian OTP ★ CODE BUILT 2026-09-09 (awaiting the Supabase project)
+### Track B — Supabase Auth + Indian OTP ★ LIVE LOCALLY 2026-09-09 (Render flip owed)
 
 Built, both halves, behind a mode switch so nothing changes until it is flipped:
 - **API:** `aruvi_core/adapters/supabase_auth_provider.py` verifies the Supabase access
@@ -84,10 +84,25 @@ Built, both halves, behind a mode switch so nothing changes until it is flipped:
   (`/onboarding/known`, email→mobile, invoices, localStorage keys) is untouched.
   Consequence: a changed number is a new account; Supabase's phone-change flow stays OFF.
 
-**Still owed:** the Supabase project itself (founder, under the meyy.in Google login), the
-env on Render (`ARUVI_AUTH_PROVIDER=supabase` + URL [+ secret]) and on the web
-(`web/.env.local`), a live pass with a Supabase *test phone number* (fixed OTP, no SMS),
-then — after company registration → DLT — the real SMS provider in Supabase's Auth settings.
+**Supabase project `meyy`** (founder, same evening; org Meyy, Free plan, region Mumbai,
+email login under meyy.in, Data API's "auto-expose new tables" OFF — the API is the fence):
+`https://npgqolatfnpvxaehdjiu.supabase.co`, ES256 signing keys (legacy secret already
+migrated, so no `ARUVI_SUPABASE_JWT_SECRET` anywhere). Phone provider enabled with
+Textlocal placeholder credentials until DLT; OTP length 6 (Supabase's minimum — 4 was
+asked for and is not offered), expiry 300 s, message `{{ .Code }} is your Meyy sign-in
+code. Never share it with anyone.` (must later match the DLT-approved template exactly);
+test numbers `919000000001–3 = 123456`, valid to 2026-12-31.
+**Live pass on the Mac** (`.env` ARUVI_AUTH_PROVIDER=supabase, `web/.env.local` set):
+Create → OTP → in as `9000000001`; token ES256 verified by the API; bearer → 200, the dev
+header alone → 401; account file carries `phone`; returning sign-in → OTP (paste spreads
+across six boxes) → in; a STALE stub session (localStorage id, no token) now bounces to the
+front door — the readiness rehydrate treats 401 as "refused", not "no profile" (page.jsx).
+Phone width by arithmetic (320px content, 304px row); live 360px screenshot owed.
+**Still owed:** Render env flip (`ARUVI_AUTH_PROVIDER=supabase`, `ARUVI_SUPABASE_URL`)
+once the current build with PyJWT is live — after that only bearer callers reach the
+deployed API (`deploy/smoke.sh` takes `SMOKE_TOKEN`); real SMS after company registration →
+DLT (Textlocal key + DLT header + approved template into Supabase's Phone settings; remove
+the test numbers then).
 
 - **DLT is the long pole** — and it waits on the company registration (in progress). Transactional SMS in India needs TRAI DLT entity registration, a
   sender header and an approved OTP template — days to weeks, regardless of provider. File
@@ -102,7 +117,36 @@ then — after company registration → DLT — the real SMS provider in Supabas
 - `Account.privacy_notice` stamping at `/onboarding/verified` and the consent ledger are
   keyed by the identity — they move unchanged; the ONLY thing that changes is what an id IS.
 
-### Track C — Postgres adapters, in beta-flow order, under the screens
+### Track C — Postgres under the ports ★ BUILT 2026-09-09 (Supabase cut-over owed)
+
+**Decision (founder, 2026-09-09): individual ports, ONE shared storage underneath.** Not
+fifteen tables — one document table. Every file adapter was domain logic around the same
+private "read JSON / atomic write / delete / list" copy; that copy is now
+`aruvi_core/adapters/document_backend.py` (`FileBackend` = today's tree, `PostgresBackend`
+= one `documents` table keyed by the same '/'-joined key). The fifteen repository classes
+keep their ports, their names and every merge/ts/series rule; only their bottom changed.
+`config.state_backend()` builds THE backend from `ARUVI_STATE_BACKEND=file|postgres` +
+`ARUVI_DATABASE_URL`; `api/main.py` hands it to every store in its one wiring block; the
+founder CLIs (`entitlement.py`, `erase.py`) use the same. `psycopg[binary,pool]` added.
+- **Verified in the sandbox against Postgres 16:** the backend contract on both
+  implementations (incl. 8-thread counter race, nested lock, prefix boundaries, escape
+  refusal); `migrate_state_to_postgres.py` on the real dev estate — 198 documents, 0
+  differing, re-run idempotent; the API in postgres mode through a full teacher journey
+  (profile · sections · support `MEY-S-742` · invoice series · export · erase leaving
+  only the seller-side rows); and **the existing API-level suites unchanged, in postgres
+  mode: 14/14** (test_api, consent, support, data_rights, privacy, entitlement, invoice,
+  year_scope, plan_notes, supabase_auth, academic_year, year_plan_export, notifier).
+  File mode: the whole suite as before.
+- RLS enabled on `documents`, no policies: the API connects as the table owner (bypasses),
+  the anon key sees nothing — the fence stays `_current_identity()`, as decided.
+- `repair_ppw.py` / `migrate_step01.py` are file-layout tools and stay so.
+- **Owed:** the cut-over itself — run the migration against Supabase from the Mac
+  (`ARUVI_DATABASE_URL` = the project's *session pooler* string; Render is IPv4-only, the
+  direct `db.<ref>` host is IPv6), verify, set `ARUVI_STATE_BACKEND=postgres` +
+  `ARUVI_DATABASE_URL` on Render, smoke through Chrome; then the Render disk is a
+  snapshot to retire. Supabase Pro before real teachers (backups/PITR, no auto-pause).
+
+The original per-store ordering, kept for when a store graduates to its own table:
 
 Follow `CLOUD_DATA_MODEL.md` table shapes. Each adapter sits behind its existing port, is
 swapped in the one wiring block of `api/main.py`, and must pass the existing suite. Order =

@@ -6,7 +6,9 @@
 set -uo pipefail
 BASE="${1:?usage: deploy/smoke.sh <base-url> [user]}"
 USER_ID="${2:-smoke-test}"
-H="X-Aruvi-User: $USER_ID"
+# Header-mode API: the dev header. Supabase-mode API: export SMOKE_TOKEN=<access token>
+# (copy it from a signed-in browser: JSON.parse(localStorage['sb-…-auth-token']).access_token).
+if [ -n "${SMOKE_TOKEN:-}" ]; then H="Authorization: Bearer $SMOKE_TOKEN"; else H="X-Aruvi-User: $USER_ID"; fi
 FAIL=0
 
 check() {  # label, then curl args

@@ -1,7 +1,8 @@
-"""File-based implementation of AccountRepository.
+"""AccountRepository over the document backend (file or Postgres — Track C, 2026-09-09).
 
-Persists a teacher's account + tenant record as JSON at
-ARUVI_STATE_DIR/accounts/{tenant_id}/{user_id}/account.json (user_id == account_id).
+Persists a teacher's account + tenant record as one JSON document at key
+accounts/{tenant_id}/{user_id}/account.json (user_id == account_id) — on disk under
+ARUVI_STATE_DIR, or as a row of the `documents` table; see document_backend.py.
 
 This is administrative_architecture.md Step 0's reference adapter: the durable record
 that billing, privacy, notifications and the institutional tier all hang off. It is
@@ -17,55 +18,39 @@ The partner's cloud adapter swaps in behind the same AccountRepository port;
 `api/main.py:_current_identity()` is the only caller that resolves a request to an
 Account, so identity derivation never scatters.
 """
-import json
 from dataclasses import asdict
-from pathlib import Path
 from typing import Optional
 
 from aruvi_core.ports import Account, AccountRepository
-
-
-def _slug(s: str) -> str:
-    """Filesystem-safe slug for a tenant/user id (defends against path traversal)."""
-    s = str(s).strip() or "local"
-    return "".join(c if c.isalnum() or c in "-_" else "-" for c in s).strip("-") or "local"
+from aruvi_core.adapters.document_backend import as_backend, slug as _slug
 
 
 class AccountRepositoryFileImpl(AccountRepository):
-    """File-based account + tenant record store."""
+    """Account + tenant record store over a document backend."""
 
-    def __init__(self, data_dir: str):
+    def __init__(self, data_dir):
         """
         Args:
-            data_dir: Base directory where the accounts/ folder lives (e.g. ARUVI_STATE_DIR).
+            data_dir: a DocumentBackend, or a directory (→ FileBackend at that root,
+                      e.g. ARUVI_STATE_DIR — every existing call site and test).
         """
-        self.data_dir = Path(data_dir)
-        self.accounts_dir = self.data_dir / "accounts"
+        self.backend = as_backend(data_dir)
 
-    def _path(self, tenant_id: str, user_id: str) -> Path:
-        return self.accounts_dir / _slug(tenant_id) / _slug(user_id) / "account.json"
+    def _key(self, tenant_id: str, user_id: str) -> str:
+        return f"accounts/{_slug(tenant_id)}/{_slug(user_id)}/account.json"
 
     def load(self, tenant_id: str, user_id: str) -> Optional[Account]:
         """Load an account record, or None if the caller has none yet."""
-        path = self._path(tenant_id, user_id)
-        if not path.exists():
+        raw = self.backend.get_json(self._key(tenant_id, user_id))
+        if raw is None:
             return None
-        try:
-            with open(path, "r") as f:
-                raw = json.load(f)
-        except (json.JSONDecodeError, IOError) as e:
-            raise ValueError(f"Failed to load account from {path}: {e}")
+        if not isinstance(raw, dict):
+            raise ValueError(f"Malformed account record at {self._key(tenant_id, user_id)}")
         return self._from_raw(raw)
 
     def save(self, account: Account) -> None:
         """Create or fully replace an account record (small, always written whole)."""
-        path = self._path(account.tenant_id, account.account_id)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        try:
-            with open(path, "w") as f:
-                json.dump(asdict(account), f, indent=2)
-        except IOError as e:
-            raise ValueError(f"Failed to save account to {path}: {e}")
+        self.backend.put_json(self._key(account.tenant_id, account.account_id), asdict(account))
 
     def find_by_email(self, email: str) -> Optional[Account]:
         """Look an account up by email (case-insensitive), or None.
@@ -85,38 +70,32 @@ class AccountRepositoryFileImpl(AccountRepository):
         """Every account carrying this email (case-insensitive). Ordinarily 0 or 1; a
         longer list means the address is shared and cannot identify anyone on its own.
 
-        Empty emails never match — dev accounts have no email. A linear scan over the
-        account files is fine for the reference adapter; the partner's DB adapter does
-        this with an index (and can enforce a UNIQUE constraint the file store cannot).
+        Empty emails never match — dev accounts have no email. The file backend scans
+        every account document; the Postgres backend answers from an expression index
+        on lower(body->>'email') (document_backend.SCHEMA_SQL) through `find_by_field`.
         """
         needle = (email or "").strip().lower()
-        if not needle or not self.accounts_dir.exists():
+        if not needle:
             return []
-        found = []
-        for path in sorted(self.accounts_dir.glob("*/*/account.json")):
-            try:
-                with open(path, "r") as f:
-                    raw = json.load(f)
-            except (json.JSONDecodeError, IOError):
-                continue  # one corrupt record must not break lookup for everyone
-            if str(raw.get("email", "")).strip().lower() == needle:
-                found.append(self._from_raw(raw))
-        return found
+        finder = getattr(self.backend, "find_by_field", None)
+        if finder is not None:
+            raws = finder("accounts", "email", needle)
+        else:
+            raws = []
+            for key in self.backend.list_keys("accounts"):
+                if not key.endswith("/account.json"):
+                    continue
+                raw = self.backend.get_json(key)
+                if isinstance(raw, dict) and str(raw.get("email", "")).strip().lower() == needle:
+                    raws.append(raw)
+        return [self._from_raw(r) for r in raws if isinstance(r, dict)]
 
     def delete(self, tenant_id: str, user_id: str) -> None:
         """Remove the account record (administrative_architecture.md §2.6 — only the
         record itself; the full erase traversal is Step 4's DataRightsService). No-op if
-        absent. On mounts that forbid unlink, falls back to overwriting with a
-        pending_deletion tombstone so the action never errors."""
-        path = self._path(tenant_id, user_id)
-        if not path.exists():
-            return
-        try:
-            path.unlink()
-        except OSError:
-            with open(path, "w") as f:
-                json.dump({"account_id": _slug(user_id), "tenant_id": _slug(tenant_id),
-                           "display_name": "", "status": "pending_deletion"}, f, indent=2)
+        absent (the file backend leaves an empty document on mounts that forbid
+        unlink, so the action never errors)."""
+        self.backend.delete(self._key(tenant_id, user_id))
 
     @staticmethod
     def _from_raw(raw: dict) -> Account:
