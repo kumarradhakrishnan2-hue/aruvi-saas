@@ -247,7 +247,7 @@ the phone owed.** Expo managed + Expo Router, presentation only:
   proof screen: signed-in id, `/entitlement`, `/readiness`, theme switch, Sign out — with a
   LOADING state until both calls land (finding 1 designed in) and sign-out through
   `clearTeacherCaches` (finding 3). Ask Meyy search autofocus (finding 2) is a step-6 note.
-- Versions pinned for Expo SDK 54 in `mobile/package.json`; `npx expo install --fix` is the
+- Versions pinned for Expo SDK 57 in `mobile/package.json` (54 was pinned first; the store Expo Go had moved to 57); `npx expo install --fix` is the
   authority on the exact native set. Verified here: babel-parse ×16, every relative and
   `@aruvi/shared/*` import resolves. **Owed on the Mac:** `npm install` (root) →
   `cd mobile && npx expo install --fix && npx expo-doctor && npx expo start` → Expo Go on the

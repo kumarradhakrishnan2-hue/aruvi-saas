@@ -716,7 +716,7 @@ must confirm · source entry.
 - **Step 1 closed on the Mac (founder):** push, root `npm install`, `next build` clean.
 
 ### later the same day — TRACK D STEP 2: `mobile/` AUTHORED (Expo), first phone run owed
-- `mobile/` joins the workspace: Expo SDK 54 + Expo Router; `lib/boot.js` installs the shared
+- `mobile/` joins the workspace: Expo SDK 57 + Expo Router; `lib/boot.js` installs the shared
   seams; `theme/tokens.js` generated from globals.css (48 colours × 2 themes,
   `theme/gen-tokens.py`); fonts bundled; `MeyyMark`/`Bar`/`OtpBoxes`/`Markdown`/`ui`;
   screens: gate · login (choose → OTP → in; returning → known → OTP) · privacy · a proof
