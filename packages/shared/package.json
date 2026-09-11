@@ -1,0 +1,16 @@
+{
+  "name": "@aruvi/shared",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Meyy client logic shared by the web app and the phone app: API helpers, section state/history caches, verify, legal markdown, Ask Meyy bank + search. Pure ESM, no JSX, no dependencies — each app injects its storage and its Supabase client.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./*": "./src/*.js"
+  },
+  "files": ["src"],
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  }
+}

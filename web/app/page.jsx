@@ -5,6 +5,7 @@ import { verifiedWrite, readinessFingerprint } from "./lib/verify";
 import { setSectionMismatchHandler, pullSectionState, clearLocalSectionCache } from "./lib/sectionState";
 import { clearLocalHistoryCache } from "./lib/sectionHistory";
 import { signOutAuth } from "./lib/auth";
+import { clearTeacherCaches } from "@aruvi/shared/signout";
 import GenerateTab from "./components/GenerateTab";
 import MyPlans from "./components/MyPlans";
 import Login from "./components/Login";
@@ -627,14 +628,16 @@ export default function Home() {
   const onSignOut = () => {
     clearUser(); setUserState("");
     signOutAuth();   // the Supabase session, when there is one (lib/auth.js)
-    clearBank();   // licensed content behind an account: never leave it in a shared browser
-    // Her teaching ledger goes too. The server copy is authoritative and this device rebuilds
-    // it on her next sign-in, so nothing is lost — and leaving it behind is worse here than
-    // for the other caches, because the history reconcile PUSHES owed rows UP: rows left in a
-    // staff-room browser would be merged into the NEXT teacher's account. sectionHistory's
-    // owner stamp already refuses that; this is the belt to its braces, and the one that also
-    // stops the next teacher merely SEEING what these classes were taught.
-    clearLocalHistoryCache();
+    // EVERY per-teacher cache goes: the bank (licensed content behind an account — never
+    // leave it in a shared browser), the teaching ledger (the history reconcile PUSHES owed
+    // rows UP, so rows left in a staff-room browser would be merged into the NEXT teacher's
+    // account — sectionHistory's owner stamp refuses that; this is the belt to its braces),
+    // and — new on 2026-09-11, found by the live walk on the production stack — the section
+    // state (`current_chapter_*`/`lu_*`), chapter notes and the per-user screen preferences,
+    // which sign-out used to leave behind. The server copy is authoritative and this device
+    // rebuilds all of it on her next sign-in, so nothing is lost. One sweep, shared with the
+    // phone: @aruvi/shared/signout. The extra prefixes are the web's own userKey() caches.
+    clearTeacherCaches(["setup_check_pending_", "mylessons_subject_", "mylessons_class_", "allocations_"]);
     setReady(false); setReadiness(null); setReadinessLoaded(false);
     setSubjects([]); setSubject(""); setTab("myplans"); setEditFlow(null);
     setTour(null); setTourDismissed(false);

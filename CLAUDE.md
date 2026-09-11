@@ -746,6 +746,13 @@ aruvi_core/            engine (Python, no UI deps)
                        `documents` table; Track C 2026-09-09) + auth/billing/notifier/storage
 api/                   FastAPI service (main.py, data.py, config.py) — wraps the engine
 web/                   Next.js app (app/page.jsx = login gate + 2 tabs: My Plans + Generate; see §11; app/globals.css = design)
+packages/shared/       ★ @aruvi/shared (Track D step 1, 2026-09-11) — the client logic BOTH apps run:
+                       format (API helpers), sectionState, sectionHistory, verify, legalmd (parser),
+                       auth (client-injected), ask-aruvi bank+search, signout. Pure ESM, no JSX,
+                       ZERO dependencies; storage.js (sync shim: localStorage / MMKV) + config.js
+                       (API base + token provider) are the seams. web/app/lib/*.js are now thin
+                       wrappers over it (shared-setup.js installs the web's storage/API/Supabase
+                       client). `npm test` there = node --test, no platform needed.
 tests/                 test_*.py + fixtures/ (real saved plans + mappings as parity fixtures)
 data/                  ★ the data root, laid out along the CLOUD/LOCAL boundary (2026-08-23,
                        CLOUD_DATA_MODEL.md §0.5) — see §7
@@ -795,7 +802,10 @@ Two dev servers (use the Cowork preview, configs in `.claude/launch.json`):
 - **API:** `python3 -m uvicorn api.main:app --port 8000`  (preview name `aruvi-api`)
 - **Web:** `npm --prefix web run dev`  → http://localhost:3000  (preview name `aruvi-web`)
 
-First time: `pip install -r api/requirements.txt` and `npm --prefix web install`.
+First time: `pip install -r api/requirements.txt` and **`npm install` at the repo ROOT** —
+the root `package.json` is an npm workspace (`web`, `packages/*`; `mobile` joins at Track D
+step 2) and links `@aruvi/shared` into `node_modules`; `npm --prefix web install` no longer
+works on its own (the shared package is not on any registry). One root `package-lock.json`.
 
 **Deploying (Track A, 2026-09-09):** `render.yaml` + `Dockerfile` + `deploy/` — one Render
 Docker service with a persistent disk at `/var/aruvi` for Bucket B. Steps and the

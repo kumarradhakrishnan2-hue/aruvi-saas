@@ -185,11 +185,39 @@ sign-in restores 9A at unit 2 from Supabase alone. Findings (MEMORY.md 2026-09-1
 sentence lag; **My Classes flashes "Pick a chapter" until `/plans` loads on a real network**;
 sign-out residue. Track D can start.
 
-### Track D — Expo (unchanged from the assessment)
+### Track D — Expo ★ STEP 1 DONE 2026-09-11 (`packages/shared`)
 
 Assessment §7 steps 1–4: `packages/shared` + the synchronous MMKV storage shim (web stays
 green), scaffold + tokens + fonts, **LessonView first**, then the two list screens, FirstRun,
 Settings/Ask Meyy/share-sheet exports. One difference: Login/OTP in step 1 is Supabase.
+
+**Step 1 — `packages/shared` (`@aruvi/shared`, npm workspace at the repo root).** The whole of
+`web/app/lib/` (format, sectionState, sectionHistory, verify, legalmd, auth) and
+`ask-aruvi/{bank,askAruviSearch}.js` lifted verbatim except at three seams, all injected at boot:
+- `storage.js` — `setStorage({getItem,setItem,removeItem,keys})`, SYNCHRONOUS (the caches are
+  read during render — assessment §3's reason for MMKV over AsyncStorage). Web installs
+  `webStorage()` (localStorage); the phone will install an MMKV adapter; until either does, an
+  in-memory map stands in, which is how the node tests and SSR run.
+- `config.js` — `configure({apiBase, accessToken})`; `API` is a live ESM binding, so the old
+  `window.location`-derived host and the auth import are gone from shared code.
+- `auth.js` — `configureAuth({client})`: the app creates its own supabase-js client (web:
+  localStorage; phone: an MMKV adapter, `detectSessionInUrl:false`) and the package imports no
+  Supabase code. Zero dependencies in the package, so Metro and webpack both see plain ESM.
+- The two React-building helpers became data: `boldMarks` → `parseBold()` (runs), `renderMarkdown`
+  → `parseMarkdown()` (blocks; never emits markup, the legalmd header's reason survives). The web
+  wrappers render them to the same `lgl-*` elements — **byte-identical HTML on all five legal
+  documents** (react-dom/server, old vs new).
+- NEW `signout.js` — `clearTeacherCaches(extraPrefixes)`: the live walk's finding (sign-out left
+  `current_chapter_*`/`lu_*`/`chapter_notes_*` behind) fixed at the source; page.jsx's onSignOut
+  calls it and both apps share the list of per-teacher prefixes.
+- Web: `web/app/lib/*.js` are thin re-exports (`shared-setup.js` installs storage/API/client and
+  every wrapper imports it first); components untouched; `next.config` gets
+  `transpilePackages`. Verified: `packages/shared` node tests 9/9; babel-parse ×23; every
+  import in `web/app` resolves (138); CSS braces even. **`next build` on the Mac is owed** —
+  neither sandbox reaches the npm registry, so run `npm install` at the root, then
+  `npm --prefix web run build`.
+Next: step 2, the Expo scaffold (`mobile/` joins the workspace) — fonts, tokens, dark theme,
+`MeyyMark`, Login via Supabase OTP, first screen on the founder's phone via Expo Go.
 
 ## 3. Phasing
 
