@@ -809,12 +809,13 @@ Two dev servers (use the Cowork preview, configs in `.claude/launch.json`):
 - **Web:** `npm --prefix web run dev`  → http://localhost:3000  (preview name `aruvi-web`)
 
 First time: `pip install -r api/requirements.txt` and **`npm install` at the repo ROOT** —
-the root `package.json` is an npm workspace (`web`, `packages/*`; `mobile` joins at Track D
-step 2) and links `@aruvi/shared` into `node_modules`; `npm --prefix web install` no longer
+the root `package.json` is an npm workspace (`web`, `packages/*` — NOT `mobile`, see below) and links `@aruvi/shared` into `node_modules`; `npm --prefix web install` no longer
 works on its own (the shared package is not on any registry). One root `package-lock.json`.
-- **Phone:** `cd mobile && npx expo start` → scan with Expo Go (same WiFi). First time also
-  `npx expo install --fix` (aligns native packages to the SDK) and `mobile/.env.local` from
-  `.env.example` (`EXPO_PUBLIC_API_URL` = Render, or the Mac's LAN IP:8000 for the dev API).
+- **Phone:** `cd mobile && npx expo start` → scan with Expo Go (same WiFi). First time
+  `npm install` IN mobile/ (it is NOT a workspace — its React 19 tree must not hoist beside the
+  web's React 18; it links packages/shared by `file:` path), `npx expo install --fix`, and
+  `mobile/.env.local` from `.env.example` (`EXPO_PUBLIC_API_URL` = Render, or the Mac's LAN
+  IP:8000 for the dev API).
 
 **Deploying (Track A, 2026-09-09):** `render.yaml` + `Dockerfile` + `deploy/` — one Render
 Docker service with a persistent disk at `/var/aruvi` for Bucket B. Steps and the

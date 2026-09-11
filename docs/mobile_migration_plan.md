@@ -218,7 +218,7 @@ Settings/Ask Meyy/share-sheet exports. One difference: Login/OTP in step 1 is Su
   `npm --prefix web run build`.
 `next build` on the Mac: clean (2026-09-11, founder).
 
-**Step 2 — the Expo scaffold (`mobile/`, in the workspace) ★ AUTHORED 2026-09-11, first run on
+**Step 2 — the Expo scaffold (`mobile/`, installed on its own — NOT a workspace: hoisting its React 19 tree beside the web's React 18 gave react-native a stray third React, expo-doctor 2026-09-11; it links `@aruvi/shared` by `file:` path and Metro refuses hierarchical lookup) ★ AUTHORED 2026-09-11, first run on
 the phone owed.** Expo managed + Expo Router, presentation only:
 - `lib/boot.js` — the phone twin of the web's shared-setup: storage → **`expo-sqlite/kv-store`**
   (synchronous `getItemSync…`, and it ships INSIDE Expo Go). ⚠️ Decision: the plan said MMKV;

@@ -6,14 +6,19 @@ Expo managed + Expo Router. Presentation only: client logic is `@aruvi/shared`
 ## Run (first time, on the Mac)
 
 ```
-cd <repo root>
-npm install                      # workspace: web + packages/shared + mobile
-cd mobile
+cd <repo root>/mobile
+npm install                      # mobile/ has its OWN node_modules (not a workspace — see below)
 cp .env.example .env.local       # already written on the founder's Mac — Supabase + Render values
 npx expo install --fix           # aligns every native package to the installed Expo SDK
 npx expo-doctor                  # should be clean
 npx expo start                   # scan the QR with Expo Go (same WiFi as the Mac)
 ```
+
+Why not a workspace: the web runs React 18, the phone React 19. Hoisting the phone's packages
+to the repo root gave react-native a stray third React (expo-doctor, 2026-09-11) — two Reacts
+crash every hook. So mobile/ installs alone and links `@aruvi/shared` by path
+(`file:../packages/shared`); the package has zero dependencies, so nothing else is shared.
+metro.config.js watches that folder and refuses to look above mobile/node_modules.
 
 Test numbers `919000000001–3` sign in with OTP `123456` until DLT lands.
 

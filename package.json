@@ -1,11 +1,10 @@
 {
   "name": "aruvi-monorepo",
   "private": true,
-  "description": "npm workspaces root — web/ (Next.js) and packages/shared (client logic shared with the Expo phone app, Track D). The Python API is not part of this; see pyproject.toml.",
+  "description": "npm workspaces root — web/ (Next.js) and packages/shared (client logic shared with the phone app). mobile/ is deliberately NOT a workspace: its React 19 / react-native tree must not be hoisted beside the web's React 18 (expo-doctor found two Reacts, 2026-09-11) — it installs on its own and links packages/shared by path. The Python API is not part of this; see pyproject.toml.",
   "workspaces": [
     "packages/*",
-    "web",
-    "mobile"
+    "web"
   ],
   "scripts": {
     "web": "npm --prefix web run dev",
