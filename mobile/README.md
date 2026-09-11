@@ -18,7 +18,7 @@ Why not a workspace: the web runs React 18, the phone React 19. Hoisting the pho
 to the repo root gave react-native a stray third React (expo-doctor, 2026-09-11) — two Reacts
 crash every hook. So mobile/ installs alone and links `@aruvi/shared` by path
 (`file:../packages/shared`); the package has zero dependencies, so nothing else is shared.
-metro.config.js watches that folder and refuses to look above mobile/node_modules.
+metro.config.js only adds that folder to the watch list.
 
 Test numbers `919000000001–3` sign in with OTP `123456` until DLT lands.
 
