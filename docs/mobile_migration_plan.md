@@ -216,8 +216,44 @@ Settings/Ask Meyy/share-sheet exports. One difference: Login/OTP in step 1 is Su
   import in `web/app` resolves (138); CSS braces even. **`next build` on the Mac is owed** —
   neither sandbox reaches the npm registry, so run `npm install` at the root, then
   `npm --prefix web run build`.
-Next: step 2, the Expo scaffold (`mobile/` joins the workspace) — fonts, tokens, dark theme,
-`MeyyMark`, Login via Supabase OTP, first screen on the founder's phone via Expo Go.
+`next build` on the Mac: clean (2026-09-11, founder).
+
+**Step 2 — the Expo scaffold (`mobile/`, in the workspace) ★ AUTHORED 2026-09-11, first run on
+the phone owed.** Expo managed + Expo Router, presentation only:
+- `lib/boot.js` — the phone twin of the web's shared-setup: storage → **`expo-sqlite/kv-store`**
+  (synchronous `getItemSync…`, and it ships INSIDE Expo Go). ⚠️ Decision: the plan said MMKV;
+  MMKV is a native module Expo Go does not carry, so it would have made "first screen via Expo
+  Go" impossible. The shim makes it a one-adapter swap at the development-build milestone; the
+  contract that matters (sync reads during render) holds either way. API base from
+  `EXPO_PUBLIC_API_URL`; supabase-js client with the SAME kv-store as its session storage (so
+  the shared `accessToken()` cold-start fallback works), `detectSessionInUrl:false`, auto-refresh
+  tied to AppState.
+- `theme/tokens.js` — **generated** from globals.css by `theme/gen-tokens.py`: 48 colours per
+  theme (`:root`, the dark block, the pine bar's `--bar-*`, the Ask Meyy section palette),
+  aliases resolved, unflipped tokens inheriting the light value as the cascade does. The web
+  stays the source; never hand-edit. `theme/fonts.js` bundles Fraunces / Newsreader / IBM Plex
+  Mono via @expo-google-fonts (static 400/500/600 + italics; RN picks a font by NAME, so
+  `type.js` maps roles → families). `ThemeContext` = OS scheme + the `aruvi-theme` override,
+  stored through the shim (a device preference, so sign-out leaves it).
+- Components: `MeyyMark` (react-native-svg, the web's path data), `Bar` (pine, cream mark,
+  safe-area — no measured --nav-h), `OtpBoxes` (six, auto-advance, backspace, paste spread,
+  `oneTimeCode` autofill), `Markdown` (shared `parseMarkdown` blocks → Text; tables stack into
+  cards, the ≤600px rule as the only rule), `ui` (Button/Link/Field/Input/Quiet/ErrorLine).
+- Screens: `app/index.jsx` gate (sync `getUser()` → no front-door flash) · `app/login.jsx` =
+  the web's Login.jsx on native inputs (choose → OTP → in; returning sign-in → `/onboarding/known`
+  → OTP; the id comes from `/onboarding/verified`; stub 0000 when no Supabase env). **Not
+  ported by decision:** the Subscribe card + SubscribeFlow — beta on manual grants, no purchase
+  screen (§0). · `app/privacy.jsx` (GET /legal/privacy, no account) · `app/(app)/index.jsx`, a
+  proof screen: signed-in id, `/entitlement`, `/readiness`, theme switch, Sign out — with a
+  LOADING state until both calls land (finding 1 designed in) and sign-out through
+  `clearTeacherCaches` (finding 3). Ask Meyy search autofocus (finding 2) is a step-6 note.
+- Versions pinned for Expo SDK 54 in `mobile/package.json`; `npx expo install --fix` is the
+  authority on the exact native set. Verified here: babel-parse ×16, every relative and
+  `@aruvi/shared/*` import resolves. **Owed on the Mac:** `npm install` (root) →
+  `cd mobile && npx expo install --fix && npx expo-doctor && npx expo start` → Expo Go on the
+  founder's phone: sign in with a test number → the proof screen shows `9000000003`'s profile
+  and 1/3 trial chapters from Render → Dark → Sign out → returning sign-in.
+Next: step 3, LessonView against live `/plans/…/view`.
 
 ## 3. Phasing
 

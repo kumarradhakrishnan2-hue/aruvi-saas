@@ -753,6 +753,12 @@ packages/shared/       ★ @aruvi/shared (Track D step 1, 2026-09-11) — the cl
                        (API base + token provider) are the seams. web/app/lib/*.js are now thin
                        wrappers over it (shared-setup.js installs the web's storage/API/Supabase
                        client). `npm test` there = node --test, no platform needed.
+mobile/                ★ the Meyy phone app (Track D step 2, 2026-09-11): Expo managed + Expo
+                       Router, presentation only. lib/boot.js installs the shared package's seams
+                       (storage = expo-sqlite/kv-store — sync, inside Expo Go; MMKV waits for a dev
+                       build), theme/tokens.js is GENERATED from globals.css (theme/gen-tokens.py),
+                       the three faces are bundled. app/login.jsx is the front door (OTP via
+                       Supabase), app/(app)/ the signed-in shell. mobile/README.md has the run steps.
 tests/                 test_*.py + fixtures/ (real saved plans + mappings as parity fixtures)
 data/                  ★ the data root, laid out along the CLOUD/LOCAL boundary (2026-08-23,
                        CLOUD_DATA_MODEL.md §0.5) — see §7
@@ -806,6 +812,9 @@ First time: `pip install -r api/requirements.txt` and **`npm install` at the rep
 the root `package.json` is an npm workspace (`web`, `packages/*`; `mobile` joins at Track D
 step 2) and links `@aruvi/shared` into `node_modules`; `npm --prefix web install` no longer
 works on its own (the shared package is not on any registry). One root `package-lock.json`.
+- **Phone:** `cd mobile && npx expo start` → scan with Expo Go (same WiFi). First time also
+  `npx expo install --fix` (aligns native packages to the SDK) and `mobile/.env.local` from
+  `.env.example` (`EXPO_PUBLIC_API_URL` = Render, or the Mac's LAN IP:8000 for the dev API).
 
 **Deploying (Track A, 2026-09-09):** `render.yaml` + `Dockerfile` + `deploy/` — one Render
 Docker service with a persistent disk at `/var/aruvi` for Bucket B. Steps and the

@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "Meyy",
+    "slug": "meyy",
+    "version": "0.1.0",
+    "scheme": "meyy",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#164436"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "in.meyy.app"
+    },
+    "android": {
+      "package": "in.meyy.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#164436"
+      },
+      "edgeToEdgeEnabled": true
+    },
+    "plugins": ["expo-router", "expo-font", "expo-sqlite"],
+    "experiments": { "typedRoutes": false }
+  }
+}

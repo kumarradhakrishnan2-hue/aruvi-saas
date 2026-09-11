@@ -1,0 +1,27 @@
+/* The ONE bar — pine fill, cream mark, "lesson studio" tag — the chrome every screen wears
+ * (the web's .topbar / .fr-brand). Sits under the status bar via the safe-area inset; there is
+ * no measured --nav-h here, native layout does it (assessment §3). */
+import { View, Text, StyleSheet } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import MeyyMark from "./MeyyMark";
+import { useTheme } from "../theme/ThemeContext";
+import { type } from "../theme/type";
+
+export default function Bar({ right = null }) {
+  const { t } = useTheme();
+  const insets = useSafeAreaInsets();
+  return (
+    <View style={[s.bar, { backgroundColor: t.bar_fill, paddingTop: insets.top + 10 }]}>
+      <View style={s.brand}>
+        <MeyyMark height={20} color={t.bar_ink} dot="#e0705f" />
+        <Text style={[type.small, { color: t.bar_ink_soft, marginLeft: 10 }]}>lesson studio</Text>
+      </View>
+      {right}
+    </View>
+  );
+}
+
+const s = StyleSheet.create({
+  bar: { paddingHorizontal: 18, paddingBottom: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
+  brand: { flexDirection: "row", alignItems: "baseline" },
+});

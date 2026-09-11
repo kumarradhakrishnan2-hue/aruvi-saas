@@ -713,7 +713,24 @@ must confirm · source entry.
   one are local); `npm install` at the root; `npm --prefix web run build`; a quick live pass
   (sign in → LessonView → sign out → confirm localStorage is empty of `current_chapter_`,
   `lu_`, `chapter_notes_`, `section_history_`, `aruvi_ask_bank`).
-- **Next:** Track D step 2 — `mobile/` (Expo managed + Expo Router) joins the workspace.
+- **Step 1 closed on the Mac (founder):** push, root `npm install`, `next build` clean.
+
+### later the same day — TRACK D STEP 2: `mobile/` AUTHORED (Expo), first phone run owed
+- `mobile/` joins the workspace: Expo SDK 54 + Expo Router; `lib/boot.js` installs the shared
+  seams; `theme/tokens.js` generated from globals.css (48 colours × 2 themes,
+  `theme/gen-tokens.py`); fonts bundled; `MeyyMark`/`Bar`/`OtpBoxes`/`Markdown`/`ui`;
+  screens: gate · login (choose → OTP → in; returning → known → OTP) · privacy · a proof
+  screen with loading state, entitlement + readiness from the API, theme switch, sign-out via
+  `clearTeacherCaches`. Full account: docs/mobile_migration_plan.md §Track D step 2.
+- **Two decisions to confirm:** (1) storage is `expo-sqlite/kv-store` (sync, in Expo Go), not
+  MMKV — MMKV needs a development build; swap later at the shim. (2) No Subscribe card on the
+  phone's front door — beta on manual grants, no purchase screen; the web keeps its flow.
+- `mobile/.env.local` written from web/.env.local (Supabase + Render; LAN line commented) —
+  git-ignored with `mobile/.env*.local`.
+- **Owed on the Mac:** `npm install` → `cd mobile && npx expo install --fix && npx expo-doctor
+  && npx expo start` → Expo Go. Nothing in mobile/ has run yet — the sandboxes cannot install
+  Expo; expect version nits from `expo install --fix`, not logic errors.
+- **Next:** step 3, LessonView.
 
 ## 2026-09-11 (newest) — THE WHOLE PRODUCT ON THE PRODUCTION STACK, DRIVEN LIVE
 
