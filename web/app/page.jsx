@@ -823,7 +823,13 @@ export default function Home() {
         ? !!e.lapsed
         : !!(e.enforced && e.status === "expired");
       setEntLapsed(isLapsed);
-      setEntTrial(!!(e.enforced && e.status === "trial"));
+      /* ★ TRIAL IS WHAT HER RECORD SAYS, NOT WHETHER THE GATE IS ON (2026-09-11 — the
+         2026-08-26 rule for `active`, now applied to its other half). This used to require
+         `e.enforced`, so on the deployed API (enforcement OFF for the beta, by design) no
+         teacher was ever "on trial": Subscription & billing offered no Subscribe button and
+         Personal profile showed to a trial account — found by the founder on 9000000003.
+         Enforcement decides what is REFUSED; the status decides what is TRUE. */
+      setEntTrial(e.status === "trial" || e.plan_id === "trial");
       setPaidScopes((e.enforced && !isLapsed && (e.status === "active" || e.status === "grace"))
         ? (Array.isArray(e.live_scopes) ? e.live_scopes : (e.scopes || [])) : null);
     });
@@ -1350,7 +1356,9 @@ export default function Home() {
       )}
 
       {/* Ask Aruvi Q&A — full-screen deterministic helpline (browse + keyword search). */}
-      {askOpen && <AskAruvi onClose={() => setAskOpen(false)} />}
+      {/* autoFocus off while the tour drives: step 19 opens this panel to SHOW it, and a
+          focused search box raises the phone keyboard over the step's own window. */}
+      {askOpen && <AskAruvi onClose={() => setAskOpen(false)} autoFocus={tour == null} />}
       {subscribeOpen && (
         <div className="subflow-overlay">
           <SubscribeFlow userId={user}

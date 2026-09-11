@@ -4338,6 +4338,11 @@ button.prepare-cta:disabled::before, .prepare-cta:disabled::before { content: no
 .set-biglab { font-family: var(--f-display); font-size: 14.5px; font-weight: 600; color: var(--ink); }
 .set-bigsub { font-family: var(--f-body); font-size: 11px; color: var(--ink-soft); }
 .set-group-tail { margin-top: 14px; }
+/* A card that holds a CONTROL instead of opening a view (Appearance · Marketing emails,
+   2026-09-11): same plane and type as its neighbours, no pointer, no hover ring. */
+.set-bigcard-static { cursor: default; }
+.set-bigcard-static:hover { border-color: var(--line); }
+@media (min-width: 601px) { .set-appearance { display: none; } }   /* the toggle hides there too */
 /* Frozen Settings bar — replaces the tab row while in Settings (same nav slot).
  * The Ask-Aruvi idiom: title left, ✕ at the right end closes the whole of Settings. */
 .set-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px;

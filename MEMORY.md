@@ -687,7 +687,57 @@ must confirm · source entry.
 
 ---
 
-## 2026-09-09 (newest, third entry) — TRACK C: ONE DOCUMENT BACKEND UNDER FIFTEEN PORTS
+## 2026-09-11 (newest) — THE WHOLE PRODUCT ON THE PRODUCTION STACK, DRIVEN LIVE
+
+`NEXT_PUBLIC_API_URL` (web/.env.local; `format.js` falls back to `<host>:8000` when unset)
+pointed the local web at Render; Claude in Chrome walked a fresh teacher end to end against
+Render + Supabase Auth + Supabase Postgres: Create sign-in (test number) → first run
+(SS · IX · ch 1, calibrated 50 min × 15) → served + attached to 9A → chapter note saved →
+LessonView (notes, phases) → My Classes → unit 1 marked complete (server pointer → unit 2,
+bookmark set) → Settings › Support sent (`MEY-S-752` — the series CONTINUED from the migrated
+counter) → legal docs, Year Plan DOCX and data export all 200 → sign out → caches wiped →
+returning sign-in by OTP → 9A restored at unit 2 from Supabase alone. **Everything passed.**
+Three findings, none blocking: (1) the class-step sentence ("We'll start you with Section
+NA") lags the wheel by ~2 s while it rolls; (2) ★ on a real network My Classes flashes "Pick a
+chapter to begin" until `/plans` arrives — a false EMPTY state that never showed on localhost;
+give it a loading state; (3) sign-out residue (the privacy-audit FIX item) — `current_chapter_*`,
+`lu_pointer_*`, `lu_bookmark_*`, `chapter_notes_*` survive log-out; the second-device test had
+to wipe them by hand. Test teacher `9000000003` left in place for the founder's own look.
+Render free instance was NOT asleep during the walk (calls 100–600 ms).
+★ **Founder, same day, from the phone: tour step 19 was hidden behind the keyboard** — Ask Meyy's
+search box `autoFocus`ed on open, and step 19 opens the panel to SHOW it. Fix: `AskAruvi` takes
+`autoFocus` (page.jsx passes `tour == null`) and focuses only at ≥601px (the 2026-08-08 Login
+rule) — on a phone a focused field is half the screen gone. Placeholder "Search Ask Meyy…" →
+"Search…" (founder).
+★ **SETTINGS HOME REORDERED BY FREQUENCY (founder, same day):** Teaching profile · Help ·
+Support · Subscription & billing · Personal profile (subscribers) · Appearance · Marketing
+emails · Legal · About Meyy · ACCOUNT { Your data & export (subscribers) · Log out · Delete }.
+The "Emails"/"App" captions are gone; Appearance and Marketing emails now wear the SAME card
+as every other item (bold title + one-line description, `.set-bigcard-static`, the control
+where the chevron sits) — the ⓘ and its hint went, the description says it; Your data &
+export moved into the Account card as a row. Babel-parse clean, CSS 2358/2358; live + 360px
+pass owed on both.
+★ **"WHY NO SUBSCRIBE BUTTON FOR 9000000003?" (founder, same day)** — because `entTrial`
+(page.jsx) and Settings' `onTrial` required `ent.enforced`, and Render runs the beta with
+enforcement OFF: no teacher was ever "on trial" to the screens, so no Subscribe door and
+Personal profile shown to a trial account. Fixed on the 2026-08-26 principle already applied to
+`active` — **enforcement decides what is REFUSED, the record decides what is TRUE** — trial now
+= `status === "trial" || plan_id === "trial"`. The two `enforced &&` sites that remain
+(PrepareLesson's "N of 3 used", FirstRun's trial card) describe the CAP, which exists only when
+the gate is on, so they stay. ⚠️ Consequence: with the gate off locally, dev accounts without a
+grant now see the trial UI (no Personal profile / export) — that is the truth, and `./dev.sh
+grant` is one command. Decision owed: flip `ARUVI_ENTITLEMENT_ENFORCED=1` on Render for the beta
+(the persona pass CLAUDE.md §9 already lists) so trial means 3 chapters and Subscribe means it. ★ **DONE the same hour (founder: "yes render should enforce"):**
+`ARUVI_ENTITLEMENT_ENFORCED=1` on Render and in render.yaml; verified from Chrome —
+`enforced=true`, 9000000003 on trial at 1/3 (yesterday's chapter COUNTED even with the gate
+off: counting was never gated, so nobody gets a hidden extra), Subscribe button present with
+"FREE TRIAL · 1 of 3 chapters used", Personal profile + export correctly hidden. Appearance
+card now hides at ≥601px (`.set-appearance`) — ThemeToggle is phone-only, and a card with no
+control was a question with no answer. Production is now the beta configuration end to end.
+
+---
+
+## 2026-09-09 — TRACK C: ONE DOCUMENT BACKEND UNDER FIFTEEN PORTS
 
 **Founder chose "individual ports, combined storage".** `document_backend.py`: FileBackend
 (the tree, byte for byte, default) + PostgresBackend (one `documents` table, jsonb body,

@@ -17,11 +17,22 @@
  * globals.css, so light/dark follow the app automatically.
  */
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { search } from "./askAruviSearch";
 import { loadBank } from "./bank";
 
-export default function AskAruvi({ onClose }) {
+export default function AskAruvi({ onClose, autoFocus = true }) {
+  /* Focus the search box only where a focused field is free (founder, 2026-09-11): on a
+     PHONE, focus raises the keyboard over half the screen — and during the guided tour
+     it hid step 19's own window behind it. So: desktop widths only (the 2026-08-08 rule
+     Login follows), and never while the tour is driving (page.jsx passes autoFocus=false
+     for the step-19 open). A teacher who wants to type taps the box; a teacher who wants
+     to browse the five categories is not interrupted. */
+  const searchRef = useRef(null);
+  useEffect(() => {
+    if (!autoFocus || typeof window === "undefined" || !window.matchMedia) return;
+    if (window.matchMedia("(min-width: 601px)").matches) searchRef.current?.focus();
+  }, [autoFocus]);
   const [query, setQuery] = useState("");
   const [openCat, setOpenCat] = useState(null);   // the frozen (expanded) category id
   const [openPair, setOpenPair] = useState(null); // the expanded answer id
@@ -96,9 +107,9 @@ export default function AskAruvi({ onClose }) {
         {/* sticky search bar */}
         <div className="aa-search">
           <input
-            type="search" value={query} autoFocus
+            type="search" value={query} ref={searchRef}
             onChange={(e) => { setQuery(e.target.value); setOpenPair(null); }}
-            placeholder="Search Ask Meyy…"
+            placeholder="Search…"
             aria-label="Search questions"
           />
           {searching && (

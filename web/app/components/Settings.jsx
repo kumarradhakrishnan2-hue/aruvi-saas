@@ -547,7 +547,6 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
   const [marketing, setMarketing] = useState(null);   // null = not yet known
   const [mktBusy, setMktBusy] = useState(false);
   const [mktNote, setMktNote] = useState("");
-  const [mktInfo, setMktInfo] = useState(false);   // the ⓘ beside "Marketing emails"
 
   useEffect(() => {
     let live = true;
@@ -615,7 +614,8 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
      `trial` comes from the SHELL, which has already synced by the time the gear is
      pressed; this component's own `ent` is the fallback and also catches a state change
      landing while Settings is open. */
-  const onTrial = !!trial || !!(ent && ent.enforced && ent.status === "trial");
+  // Trial is her RECORD's word, not the gate's (2026-09-11; see page.jsx's setEntTrial).
+  const onTrial = !!trial || !!(ent && (ent.status === "trial" || ent.plan_id === "trial"));
 
   // If the trial answer lands while she is standing in one of those subviews, leave.
   useEffect(() => {
@@ -954,33 +954,17 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
           (founder: two different-size "Settings" texts were showing). */}
       {/* Two profiles, clearly told apart (founder, 2026-08-25): PERSONAL (who she is —
           account details, editable here) on top, TEACHING (what she teaches) below. */}
-      {/* Personal profile — hidden on trial (see `onTrial` above). */}
-      {!onTrial && (
-      <button className="set-bigcard" onClick={() => setView("personal")}>
-        <span className="set-bigtext"><span className="set-biglab">Personal profile</span>
-          <span className="set-bigsub">Your name, email, role and school details</span></span>
-        <span className="set-chev">›</span>
-      </button>
-      )}
+      {/* ★ ORDERED BY HOW OFTEN SHE OPENS IT (founder, 2026-09-11): the teaching profile
+          she returns to all year on top; Help and Support next; billing; then the
+          once-a-year items — personal details, the two quiet toggles, export, legal,
+          about — and the account rows last under the ONE caption that survives. The
+          "Emails"/"App" captions went the same day: a heading over a single row is noise
+          on a phone; "Account" stays because it sits over the destructive row. */}
       <button className="set-bigcard" onClick={() => onOpenProfile && onOpenProfile()}>
         <span className="set-bigtext"><span className="set-biglab">Teaching profile</span>
           <span className="set-bigsub">Subjects, classes, sections and periods you teach</span></span>
         <span className="set-chev">›</span>
       </button>
-      <button className="set-bigcard" onClick={() => setView("subscription")}>
-        <span className="set-bigtext"><span className="set-biglab">Subscription &amp; billing</span>
-          <span className="set-bigsub">Plan, billing &amp; usage</span></span>
-        <span className="set-chev">›</span>
-      </button>
-      {/* Your data & export — hidden on trial (see `onTrial` above). The delete-account
-          flow below keeps its own download regardless. */}
-      {!onTrial && (
-      <button className="set-bigcard" onClick={() => setView("data")}>
-        <span className="set-bigtext"><span className="set-biglab">Your data &amp; export</span>
-          <span className="set-bigsub">Download your Meyy data</span></span>
-        <span className="set-chev">›</span>
-      </button>
-      )}
       <button className="set-bigcard" onClick={() => onAsk && onAsk()}>
         <span className="set-bigtext"><span className="set-biglab">Help</span>
           <span className="set-bigsub">Ask Meyy guide</span></span>
@@ -991,11 +975,51 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
           <span className="set-bigsub">Write to us — we reply by email</span></span>
         <span className="set-chev">›</span>
       </button>
-      <button className="set-bigcard" onClick={() => setView("about")}>
-        <span className="set-bigtext"><span className="set-biglab">About Meyy</span>
-          <span className="set-bigsub">Version info</span></span>
+      <button className="set-bigcard" onClick={() => setView("subscription")}>
+        <span className="set-bigtext"><span className="set-biglab">Subscription &amp; billing</span>
+          <span className="set-bigsub">Plan, billing &amp; usage</span></span>
         <span className="set-chev">›</span>
       </button>
+      {/* Personal profile — hidden on trial (see `onTrial` above). */}
+      {!onTrial && (
+      <button className="set-bigcard" onClick={() => setView("personal")}>
+        <span className="set-bigtext"><span className="set-biglab">Personal profile</span>
+          <span className="set-bigsub">Your name, email, role and school details</span></span>
+        <span className="set-chev">›</span>
+      </button>
+      )}
+
+      {/* Appearance and Marketing emails wear the SAME card as every other item — bold
+          title, one-line description — with the control where the chevron would be
+          (founder, 2026-09-11). Marketing emails (§K, 2026-09-04) is the withdrawal half of
+          the optional marketing consent — UNGATED on purpose (shown on trial and to a lapsed
+          teacher, unlike Personal profile, because a right to withdraw that depends on
+          subscription state is not a right), rendered only once the answer is KNOWN (an
+          unchecked box drawn mid-fetch is a screen inventing an answer about her record —
+          the Support `metaErr` rule), and saved ON TAP. The description now says what the
+          ⓘ used to; the transient save note keeps its place below. */}
+      {/* Appearance is a PHONE setting (dark theme exists only ≤600px; ThemeToggle hides
+          itself at ≥601px), so the whole card hides with it — a card with no control is
+          a question with no answer. */}
+      <div className="set-bigcard set-bigcard-static set-appearance">
+        <span className="set-bigtext"><span className="set-biglab">Appearance</span>
+          <span className="set-bigsub">Light or dark, or follow your phone</span></span>
+        <ThemeToggle />
+      </div>
+      {marketing !== null && (
+      <div className="set-bigcard set-bigcard-static">
+        <span className="set-bigtext"><span className="set-biglab">Marketing emails</span>
+          <span className="set-bigsub">Occasional news on new subjects, features and teaching ideas —
+            receipts, replies and agreement notices are sent either way</span></span>
+        <label className="set-switch">
+          <input type="checkbox" checked={marketing} disabled={mktBusy}
+            onChange={(e) => saveMarketing(e.target.checked)}
+            aria-label="Send me occasional emails about new subjects and features" />
+        </label>
+      </div>
+      )}
+      {mktNote && <p className="set-hint">{mktNote}</p>}
+
       {/* Legal — its own card, per the agreement's own placement promise (see the
           `legal` view above). Shown on trial too. */}
       <button className="set-bigcard" onClick={() => setView("legal")}>
@@ -1003,56 +1027,25 @@ export default function Settings({ view, setView, onOpenProfile, onAsk, onSignOu
           <span className="set-bigsub">User agreement &amp; privacy notice</span></span>
         <span className="set-chev">›</span>
       </button>
+      <button className="set-bigcard" onClick={() => setView("about")}>
+        <span className="set-bigtext"><span className="set-biglab">About Meyy</span>
+          <span className="set-bigsub">Version info</span></span>
+        <span className="set-chev">›</span>
+      </button>
 
-      {/* ── Emails (§K, 2026-09-04) ── The withdrawal half of the optional marketing
-          consent. UNGATED on purpose: shown on trial and to a lapsed teacher, unlike
-          Personal profile, because a right to withdraw that depends on subscription
-          state is not a right. Rendered only once the answer is KNOWN — an unchecked box
-          drawn while the fetch is in flight is a screen inventing an answer about her
-          record, which is the Support `metaErr` rule. Saves ON TAP, so it needs no Save
-          button: consent was one tap, and withdrawal must be no harder. */}
-      {marketing !== null && (
-      <div className="set-group set-group-tail">
-        <div className="set-cap">Emails</div>
-        <div className="set-card">
-          <div className="set-row set-row-static">
-            {/* The explanation lives behind an ⓘ beside the word (founder, 2026-09-04:
-                "remove text under marketing emails … put it in 'i' in a circle next to
-                the word so that someone can click and open it"). The row stays one line;
-                the save/failure note below is transient feedback and keeps its place. */}
-            <span className="set-lab">Marketing emails
-              <button type="button" className="set-info" aria-label="What are marketing emails?"
-                aria-expanded={mktInfo} onClick={() => setMktInfo((v) => !v)}>i</button>
-            </span>
-            <label className="set-switch">
-              <input type="checkbox" checked={marketing} disabled={mktBusy}
-                onChange={(e) => saveMarketing(e.target.checked)}
-                aria-label="Send me occasional emails about new subjects and features" />
-            </label>
-          </div>
-        </div>
-        {mktInfo && (
-          <p className="set-hint">Occasional emails about new subjects, features and teaching
-            ideas. Receipts, replies to your messages and notices about the agreement are sent
-            either way.</p>
-        )}
-        {mktNote && <p className="set-hint">{mktNote}</p>}
-      </div>
-      )}
-
-      <div className="set-group set-group-tail">
-        <div className="set-cap">App</div>
-        <div className="set-card">
-          <div className="set-row set-row-static">
-            <span className="set-lab">Appearance</span>
-            <ThemeToggle />
-          </div>
-        </div>
-      </div>
-
+      {/* Account: her data, her session, her account — the three rows that are about the
+          ACCOUNT rather than the teaching (founder, 2026-09-11: "data & export can go to
+          account"). Export is hidden on trial (see `onTrial` above); the delete flow keeps
+          its own download regardless. */}
       <div className="set-group">
         <div className="set-cap">Account</div>
         <div className="set-card">
+          {!onTrial && (
+          <button className="set-row" onClick={() => setView("data")}>
+            <span className="set-lab">Your data &amp; export</span>
+            <span className="set-chev">›</span>
+          </button>
+          )}
           <button className="set-row" onClick={() => onSignOut && onSignOut()}>
             <span className="set-lab">Log out</span>
           </button>

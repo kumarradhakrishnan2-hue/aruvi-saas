@@ -176,6 +176,15 @@ RLS on every table, keyed `tenant_id, user_id` — and be plain about it: FastAP
 service-role key, so RLS is defence in depth; **the fence stays `_current_identity()`.**
 Point-in-time recovery on for the beta. When group 5 lands, the Render disk goes.
 
+### Product check on the production stack ★ PASSED 2026-09-11
+
+The full web product, local build pointed at Render (`NEXT_PUBLIC_API_URL`), driven live by
+Claude in Chrome as a fresh teacher: sign-in → first run → serve → note → LessonView → mark
+complete → support (`MEY-S-752`, series continued) → exports → sign out → returning OTP
+sign-in restores 9A at unit 2 from Supabase alone. Findings (MEMORY.md 2026-09-11): wheel
+sentence lag; **My Classes flashes "Pick a chapter" until `/plans` loads on a real network**;
+sign-out residue. Track D can start.
+
 ### Track D — Expo (unchanged from the assessment)
 
 Assessment §7 steps 1–4: `packages/shared` + the synchronous MMKV storage shim (web stays

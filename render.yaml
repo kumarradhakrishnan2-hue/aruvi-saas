@@ -52,8 +52,10 @@ services:
         sync: false
       - key: ARUVI_SUPABASE_JWT_SECRET
         sync: false
+      # ON for the beta (founder, 2026-09-11): trial = any 3 chapters, then a manual grant
+      # (aruvi-scripts/entitlement.py). OFF would make "trial" and "Subscribe" mean nothing.
       - key: ARUVI_ENTITLEMENT_ENFORCED
-        value: "0"
+        value: "1"
       - key: ARUVI_LP_YEAR
         value: "2026-27"
       # Outbound mail — same three-variable seam as dev.sh; absent → file outbox.
