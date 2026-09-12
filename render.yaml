@@ -32,8 +32,14 @@ services:
       # ARUVI_DATABASE_URL set to the project's SESSION-POOLER connection string (Render is
       # IPv4-only; the direct db.<ref> host is IPv6). Migrate first:
       # aruvi-scripts/migrate_state_to_postgres.py, then flip.
+      # ★ CUT OVER TO POSTGRES 2026-09-10 (Track C). The value lives IN THE FILE now: the
+      # 2026-09-10 flip was made in the Render DASHBOARD, and a Blueprint sync reverts dashboard
+      # values with an explicit `value:` back to the file — a redeploy on 2026-09-11 did exactly
+      # that and the whole product fell back to the disk (+ header auth). File = source of truth;
+      # the disk is rollback only (set back to `file` to roll back). Needs ARUVI_DATABASE_URL
+      # (sync:false, dashboard) present, or the API 500s on every state read.
       - key: ARUVI_STATE_BACKEND
-        value: file
+        value: postgres
       - key: ARUVI_DATABASE_URL
         sync: false
       - key: ARUVI_DATA_DIR
@@ -43,11 +49,16 @@ services:
       # origin(s); "*" keeps today's open dev behaviour.
       - key: ARUVI_CORS_ORIGINS
         value: "*"
-      # Identity (Track B). `header` = the dev stub; flip to `supabase` once the project
-      # exists and ARUVI_SUPABASE_URL is set (+ ARUVI_SUPABASE_JWT_SECRET only for a
-      # project still signing with the legacy HS256 secret).
+      # Identity (Track B). `header` = the dev stub (empty header → the "local" user); `supabase`
+      # verifies the real Bearer token and reads the teacher's mobile from it.
+      # ★ CUT OVER TO SUPABASE 2026-09-10 (Track B), verified from Chrome. Same story as
+      # ARUVI_STATE_BACKEND above: the dashboard flip was reverted by a Blueprint sync on
+      # 2026-09-11, so the phone (and web) came in as "local". The value lives IN THE FILE now so
+      # no redeploy can flip it back. Needs ARUVI_SUPABASE_URL (sync:false, dashboard) present,
+      # or the API refuses to boot; ARUVI_SUPABASE_JWT_SECRET only if the project still signs
+      # HS256 (this one migrated to ES256, so it stays unset).
       - key: ARUVI_AUTH_PROVIDER
-        value: header
+        value: supabase
       - key: ARUVI_SUPABASE_URL
         sync: false
       - key: ARUVI_SUPABASE_JWT_SECRET
